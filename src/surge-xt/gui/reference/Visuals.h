@@ -79,11 +79,15 @@ class Visuals
     enum class WavetableView
     {
         perspective,
-        ribbons
+        ribbons,
+        harmonicRibbons
     };
-    /** Render actual copied source frames. Perspective is a wire mesh; ribbons
-        projects the same source frames along a nearly frontal plane. Colour,
-        glow and projection are cosmetic, while every ordinate comes from samples.
+    /** Render actual copied source frames. Perspective is a lit sample mesh;
+        ribbons projects the same source frames along a nearly frontal plane,
+        and harmonicRibbons uses crisp unlit traces around the sample zero line.
+        Filled strips connect adjacent real frames. The perspective floor is
+        an unlabelled sample-range plane, not frequency or measured output.
+        Colour, glow and projection are cosmetic; ordinates come from samples.
         The highlighted row follows the actual unmodulated wavetable position.
     */
     static void wavetable(juce::Graphics &, juce::Rectangle<float>, const WavetablePreview &,

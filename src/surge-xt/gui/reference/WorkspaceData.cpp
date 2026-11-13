@@ -310,113 +310,144 @@ bool ModulationEditorModel::remove(const RouteRow &row)
 }
 
 std::vector<BrowserRow> browserRows(SurgeSynthProcessor &processor, const juce::String &query,
-                                    int maxRows)
+                                    int maxRows, BrowserFilter filter, int categoryId)
 {
     std::vector<BrowserRow> result;
     maxRows = std::clamp(maxRows, 0, browserLimit);
     if (!processor.surge || maxRows == 0)
         return result;
 
-    // refreshPatchlist and native browser operations are message-thread work;
-    // callers must obey the same ownership rather than reading from audio/background threads.
+    // Catalog and preset UI operations share the native message-thread owner.
+    // The scope is derived from actual catalog partitions, never display text.
     auto &storage = processor.surge->storage;
     const auto needle = query.trim().substring(0, 256);
+    const auto inScope = [&](int id) {
+        if (!validIndex(id, storage.patch_list.size()))
+            return false;
+        const auto &patch = storage.patch_list[id];
+        if (filter == BrowserFilter::favorites)
+            return patch.isFavorite;
+        if (filter == BrowserFilter::factory)
+            return patch.category >= 0 && patch.category < storage.firstThirdPartyCategory;
+        if (filter == BrowserFilter::user)
+            return patch.category >= storage.firstUserCategory;
+        return true;
+    };
+    const auto categoryName = [&](int id) {
+        return validIndex(id, storage.patch_category.size())
+                   ? juce::String(storage.patch_category[id].name)
+                   : juce::String();
+    };
+    const auto inCategory = [&](int patchCategory, int selectedCategory) {
+        if (!validIndex(selectedCategory, storage.patch_category.size()))
+            return true;
+        if (patchCategory == selectedCategory)
+            return true;
+        // A root may have nested folders. Restrict descendants to its catalog
+        // partition so identically named Factory/User folders do not merge.
+        const auto partition = [&](int id) {
+            return id >= storage.firstUserCategory ? 2
+                   : id >= storage.firstThirdPartyCategory ? 1 : 0;
+        };
+        if (partition(patchCategory) != partition(selectedCategory))
+            return false;
+        const auto root = categoryName(selectedCategory);
+        const auto child = categoryName(patchCategory);
+        return root.isNotEmpty() && (child.startsWith(root + "/") ||
+                                     child.startsWith(root + "\\"));
+    };
     result.reserve(static_cast<size_t>(maxRows));
     const auto &order = storage.patchOrdering;
     const size_t patchCount = order.empty() ? storage.patch_list.size() : order.size();
     const auto patchAt = [&](size_t i) { return order.empty() ? static_cast<int>(i) : order[i]; };
     const auto full = [&] { return result.size() >= static_cast<size_t>(maxRows); };
     const auto addPatch = [&](int id) {
-        if (validIndex(id, storage.patch_list.size()) && !full())
-            result.push_back(
-                {juce::String(storage.patch_list[id].name).substring(0, 200), id, false});
-    };
-
-    if (needle.isNotEmpty())
-    {
-        for (size_t i = 0; i < patchCount; ++i)
+        if (inScope(id) && !full())
         {
-            if (full())
-                break;
+            const auto &patch = storage.patch_list[id];
+            result.push_back({juce::String(patch.name).substring(0, 200), id, false,
+                              patch.category, 0, patch.isFavorite});
+        }
+    };
+    if (needle.isNotEmpty() || filter == BrowserFilter::favorites ||
+        validIndex(categoryId, storage.patch_category.size()))
+    {
+        for (size_t i = 0; i < patchCount && !full(); ++i)
+        {
             const int id = patchAt(i);
-            if (!validIndex(id, storage.patch_list.size()))
+            if (!inScope(id))
                 continue;
             const auto &patch = storage.patch_list[id];
-            const juce::String name(patch.name);
-            const juce::String category =
-                validIndex(patch.category, storage.patch_category.size())
-                    ? juce::String(storage.patch_category[patch.category].name)
-                    : juce::String();
-            if (name.containsIgnoreCase(needle) || category.containsIgnoreCase(needle))
+            if (!inCategory(patch.category, categoryId))
+                continue;
+            if (needle.isEmpty() || juce::String(patch.name).containsIgnoreCase(needle) ||
+                categoryName(patch.category).containsIgnoreCase(needle))
                 addPatch(id);
         }
         return result;
     }
 
+    const auto countInCategory = [&](int selectedCategory) {
+        if (!validIndex(selectedCategory, storage.patch_category.size()))
+            return 0;
+        const bool included = filter == BrowserFilter::all ||
+            (filter == BrowserFilter::factory && selectedCategory < storage.firstThirdPartyCategory) ||
+            (filter == BrowserFilter::user && selectedCategory >= storage.firstUserCategory);
+        // Native refresh_patchlist already counts descendants, with each root
+        // confined to one catalog partition. Reuse that metadata rather than
+        // walking the complete patch catalog for every painted folder row.
+        return included ? std::max(0, storage.patch_category[selectedCategory]
+                                          .numberOfPatchesInCategoryAndChildren) : 0;
+    };
+    const auto addCategory = [&](int id, bool expand) {
+        if (!validIndex(id, storage.patch_category.size()) || full())
+            return;
+        const auto count = countInCategory(id);
+        if (count == 0)
+            return;
+        result.push_back({categoryName(id).substring(0, 200), -1, true, id, count, false});
+        if (expand)
+        {
+            int added = 0;
+            for (size_t i = 0; i < patchCount && !full() && added < 6; ++i)
+            {
+                const auto patchId = patchAt(i);
+                if (inScope(patchId) && inCategory(storage.patch_list[patchId].category, id))
+                {
+                    addPatch(patchId);
+                    ++added;
+                }
+            }
+        }
+    };
     int currentCategory = -1;
-    const int currentId = processor.surge->patchid;
-    if (validIndex(currentId, storage.patch_list.size()))
-        currentCategory = storage.patch_list[currentId].category;
-    if (!validIndex(currentCategory, storage.patch_category.size()))
-    {
-        const auto &currentCategoryName = storage.getPatch().category;
+    if (inScope(processor.surge->patchid))
+        currentCategory = storage.patch_list[processor.surge->patchid].category;
+    if (currentCategory < 0)
         for (size_t i = 0; i < storage.patch_category.size(); ++i)
-            if (storage.patch_category[i].name == currentCategoryName)
+            if (storage.patch_category[i].name == storage.getPatch().category &&
+                countInCategory(static_cast<int>(i)) > 0)
             {
                 currentCategory = static_cast<int>(i);
                 break;
             }
-    }
-    const auto expandCategory = [&](int categoryId) {
-        if (!validIndex(categoryId, storage.patch_category.size()) || full())
-            return;
-        result.push_back(
-            {juce::String(storage.patch_category[categoryId].name).substring(0, 200), -1, true});
-        int added = 0;
-        for (size_t i = 0; i < patchCount && !full() && added < 5; ++i)
-        {
-            const int id = patchAt(i);
-            if (validIndex(id, storage.patch_list.size()) &&
-                storage.patch_list[id].category == categoryId)
-            {
-                addPatch(id);
-                ++added;
-            }
-        }
-    };
-
-    if (validIndex(currentCategory, storage.patch_category.size()))
-        expandCategory(currentCategory);
+    addCategory(currentCategory, true);
 
     const auto &categoryOrder = storage.patchCategoryOrdering;
-    const size_t categoryCount =
-        categoryOrder.empty() ? storage.patch_category.size() : categoryOrder.size();
-    for (size_t i = 0; i < categoryCount; ++i)
+    const size_t categoryCount = categoryOrder.empty() ? storage.patch_category.size()
+                                                     : categoryOrder.size();
+    for (size_t i = 0; i < categoryCount && !full(); ++i)
     {
-        if (full())
-            break;
-        const int categoryId = categoryOrder.empty() ? static_cast<int>(i) : categoryOrder[i];
-        if (!validIndex(categoryId, storage.patch_category.size()))
+        const auto id = categoryOrder.empty() ? static_cast<int>(i) : categoryOrder[i];
+        if (id == currentCategory || !validIndex(id, storage.patch_category.size()) ||
+            !storage.patch_category[id].isRoot)
             continue;
-        if (categoryId == currentCategory)
-            continue;
-        const auto &category = storage.patch_category[categoryId];
-        if (!category.isRoot || category.numberOfPatchesInCategoryAndChildren == 0)
-            continue;
-        if (result.empty())
-            expandCategory(categoryId);
-        else
-            result.push_back({juce::String(category.name).substring(0, 200), -1, true});
+        addCategory(id, result.empty());
     }
-
-    // Catalogs with no category metadata still expose real installed patches.
     if (result.empty())
-        for (size_t i = 0; i < patchCount; ++i)
-        {
-            if (full())
-                break;
+        for (size_t i = 0; i < patchCount && !full(); ++i)
             addPatch(patchAt(i));
-        }
     return result;
 }
+
 } // namespace Surge::GUI::Reference

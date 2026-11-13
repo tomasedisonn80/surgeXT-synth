@@ -4,6 +4,7 @@
  */
 #include "PreviewCurves.h"
 
+#include "DistortionEffect.h"
 #include "LFOModulationSource.h"
 #include "SurgeStorage.h"
 #include "SurgeSynthProcessor.h"
@@ -19,6 +20,7 @@ namespace Surge::GUI::Reference
 namespace
 {
 constexpr int filterPoints{256};
+constexpr int transferPoints{257};
 constexpr int lfoPoints{512};
 constexpr int maximumEnvelopeBlocks{4096};
 
@@ -40,6 +42,14 @@ struct FilterKey
 struct CachedFilter
 {
     FilterKey key;
+    PreviewCurve curve;
+};
+
+struct CachedTransfer
+{
+    const SurgeSynthProcessor *processor{nullptr};
+    int model{-1};
+    float driveDb{0};
     PreviewCurve curve;
 };
 
@@ -168,6 +178,86 @@ PreviewCurve filterResponse(SurgeSynthProcessor &processor, int scene, int filte
     }
 
     entry = {key, result};
+    return result;
+}
+
+PreviewCurve distortionTransfer(SurgeSynthProcessor &processor, int fxSlot)
+{
+    if (!processor.surge || fxSlot < 0 || fxSlot >= n_fx_slots)
+        return unavailable("Shaper transfer unavailable");
+
+    auto &storage = processor.surge->storage;
+    const auto &effect = storage.getPatch().fx[fxSlot];
+    if (effect.type.val.i != fxt_distortion)
+        return unavailable("Effect family illustration");
+
+    const auto model = effect.p[DistortionEffect::dist_model].val.i;
+    const auto &driveParameter = effect.p[DistortionEffect::dist_drive];
+    const auto driveDb = driveParameter.get_extended(driveParameter.val.f);
+    if (model < 0 || model >= n_fxws || !std::isfinite(driveDb) ||
+        !std::isfinite(driveParameter.val.f) || driveParameter.val.f < driveParameter.val_min.f ||
+        driveParameter.val.f > driveParameter.val_max.f)
+        return unavailable("Shaper settings unavailable");
+
+    using Shape = sst::waveshapers::WaveshaperType;
+    const auto shape = FXWaveShapers[model];
+    const auto name = juce::String(sst::waveshapers::wst_names[static_cast<int>(shape)]);
+    // The native Fuzz table generator owns shared static random state. Calling
+    // it for the first time from a preview can change the order in which later
+    // audible lookup tables are generated. A family icon is honest and inert.
+    if (shape == Shape::wst_fuzzsoft)
+        return unavailable(name + " - effect family illustration");
+
+    thread_local std::array<CachedTransfer, n_fx_slots> cache;
+    auto &entry = cache[static_cast<std::size_t>(fxSlot)];
+    if (entry.processor == &processor && entry.model == model && entry.driveDb == driveDb)
+        return entry.curve;
+
+    const auto drive = storage.db_to_linear(driveDb);
+    if (!std::isfinite(drive) || drive <= 0.f)
+        return unavailable(name + " - drive unavailable");
+
+    const bool vectorShaper = shape >= Shape::wst_sine;
+    const auto operation = sst::waveshapers::GetQuadWaveshaper(shape);
+    if (vectorShaper && !operation)
+        return unavailable(name + " - transfer unavailable");
+
+    auto evaluate = [&](float input, bool initialize) {
+        // All lanes and registers are private and initialized. Setting init for
+        // each independent point evaluates the underlying ADAA transfer without
+        // inventing an input history or borrowing an audible processor state.
+        sst::waveshapers::QuadWaveshaperState state{};
+        for (auto &value : state.R)
+            value = SIMD_MM(setzero_ps)();
+        state.init = initialize
+                         ? SIMD_MM(cmpeq_ps)(SIMD_MM(setzero_ps)(), SIMD_MM(setzero_ps)())
+                         : SIMD_MM(setzero_ps)();
+        alignas(16) float result[4]{};
+        SIMD_MM(store_ps)(result, operation(&state, SIMD_MM(set1_ps)(input),
+                                           SIMD_MM(set1_ps)(drive)));
+        return result[0];
+    };
+    // Match DistortionEffect's zero-input correction and DIGITAL drive path.
+    const auto dcOffset = vectorShaper ? evaluate(0.f, false) : 0.f;
+    if (!std::isfinite(dcOffset))
+        return unavailable(name + " - transfer not finite");
+
+    PreviewCurve result;
+    result.caption = name + " transfer - shaper only";
+    result.values.reserve(transferPoints);
+    for (int point = 0; point < transferPoints; ++point)
+    {
+        const auto input = -1.f + 2.f * point / (transferPoints - 1);
+        const auto output = vectorShaper
+                                ? evaluate(shape == Shape::wst_digital ? input * drive : input,
+                                           true) - dcOffset
+                                : storage.lookup_waveshape(shape, input * drive);
+        if (!std::isfinite(output))
+            return unavailable(name + " - transfer not finite");
+        result.values.push_back(output);
+    }
+    result.available = true;
+    entry = {&processor, model, driveDb, result};
     return result;
 }
 

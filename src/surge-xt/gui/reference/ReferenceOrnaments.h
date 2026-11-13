@@ -44,6 +44,14 @@ inline void effectGlyph(juce::Graphics &g, juce::Rectangle<float> area,
         for (int i = 0; i < 3; ++i)
             path.addEllipse(5.f + i * 9.f, 9, 12, 22);
     }
+    else if (name.contains("distort") || name.contains("waveshap") || name.contains("saturat"))
+    {
+        // A categorical saturation mark only. Live Distortion detail panes use
+        // the separately evaluated native transfer, never this decorative icon.
+        path.startNewSubPath(3, 31);
+        path.cubicTo(13, 31, 14, 30, 20, 20);
+        path.cubicTo(26, 10, 27, 9, 37, 9);
+    }
     else if (name.contains("eq") || name.contains("compress"))
     {
         const bool compression = name.contains("compress");

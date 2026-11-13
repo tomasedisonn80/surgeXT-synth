@@ -35,7 +35,15 @@ juce::String compactPaintValue(juce::String value)
 {
     // Abbreviate the painted caption only. Accessible values, tooltips and typed
     // entry keep Surge's complete native display string and parameter parser.
-    return value.replace(" semitones", " st")
+    if (value.endsWith(" Hz"))
+    {
+        const auto hz = value.dropLastCharacters(3).getDoubleValue();
+        if (std::isfinite(hz) && std::abs(hz) >= 1000.0)
+            return juce::String(hz / 1000.0, 2) + " kHz";
+    }
+    return value.replace(".00 dB", ".0 dB")
+        .replace(".00 %", " %")
+        .replace(" semitones", " st")
         .replace(" semitone", " st")
         .replace(" cents", " ct")
         .replace(" milliseconds", " ms")
@@ -555,7 +563,7 @@ void knob(juce::Graphics &g, const Theme &t, Rect r, float value, juce::Colour a
         g.setColour(juce::Colours::black.withAlpha(.60f));
         g.fillEllipse(face.expanded(.8f).translated(.5f, 1.5f));
     }
-    auto hi = t.knob.interpolatedWith(juce::Colours::white, glass ? .17f : .075f);
+    auto hi = t.knob.interpolatedWith(juce::Colours::white, glass ? .085f : .075f);
     auto lo = t.knob.interpolatedWith(juce::Colours::black, .60f);
     if (ivory || (space && t.knob.getPerceivedBrightness() > .35f))
     {
@@ -573,6 +581,29 @@ void knob(juce::Graphics &g, const Theme &t, Rect r, float value, juce::Colour a
     faceGradient.addColour(.48, hi.interpolatedWith(lo, .34f));
     g.setGradientFill(faceGradient);
     g.fillEllipse(face);
+    if (space)
+    {
+        // The hardware dials have a machined annulus and a recessed cap. Both
+        // are cosmetic surfaces; the pointer below still uses the native value.
+        auto rim = juce::ColourGradient(juce::Colour(0xffffedbf), face.getTopLeft(),
+                                         juce::Colour(0xff453b24), face.getBottomRight(), false);
+        rim.addColour(.25, juce::Colour(0xffa28a58));
+        rim.addColour(.48, juce::Colour(0xffe4cf9a));
+        rim.addColour(.72, juce::Colour(0xff695734));
+        g.setGradientFill(rim);
+        g.drawEllipse(face.reduced(1.2f), std::min(3.1f, faceRadius * .20f));
+        const auto cap = face.reduced(std::max(2.5f, faceRadius * .18f));
+        const bool darkCap = faceRadius > 20.f || t.knob.getPerceivedBrightness() < .35f;
+        g.setGradientFill(juce::ColourGradient(darkCap ? juce::Colour(0xff363729)
+                                                      : juce::Colour(0xffd1bc86),
+                                               cap.getTopLeft(),
+                                               darkCap ? juce::Colour(0xff11130e)
+                                                       : juce::Colour(0xff6e5e3d),
+                                               cap.getBottomRight(), false));
+        g.fillEllipse(cap);
+        g.setColour(juce::Colour(0xff282618).withAlpha(.85f));
+        g.drawEllipse(cap, .9f);
+    }
     if (!clear && !bauhaus)
     {
         // Broad upper reflection and a narrow dark lower lip make the smaller
@@ -834,6 +865,11 @@ class BoundSlider : public juce::Slider
         if (!dragging)
             setValue(bridge.value(binding), juce::dontSendNotification);
         auto name = string(spec, "label", bridge.label(binding));
+        // An empty visual caption is intentional for compact Live controls,
+        // but it must not erase their native screen-reader/keyboard identity.
+        // Keep paint()'s caption untouched and follow dynamic algorithm names.
+        if (name.trim().isEmpty())
+            name = bridge.label(binding);
         const auto sourceCaption = getProperties()["reference.source-caption"].toString();
         if (sourceCaption.isNotEmpty())
             name += " (" + sourceCaption + ")";
@@ -938,6 +974,7 @@ class BoundSlider : public juce::Slider
                                     theme.style == "bauhaus";
             bezel(g, theme, box, paperField ? theme.panel : theme.display, 3);
             auto fieldInk = paperField ? theme.text
+                                      : theme.style == "space" ? theme.accent
                                       : spec.hasProperty("ink") ? ink
                                                                 : theme.display.contrasting(.85f);
             text(g, theme, value, box.reduced(4, 0), fs, fieldInk, theme.style == "clear",
@@ -951,6 +988,9 @@ class BoundSlider : public juce::Slider
         }
         if (kind == "knob")
         {
+            if (binding.startsWith("macro") &&
+                (theme.style == "precision" || theme.style == "spectral"))
+                r.removeFromTop(14.f); // Explicit number band in these manifest bounds.
             const auto labelPosition = string(spec, "labelPosition");
             const auto valuePosition = string(spec, "valuePosition", "bottom");
             const bool hideValue = valuePosition == "hidden";
@@ -974,7 +1014,10 @@ class BoundSlider : public juce::Slider
                     (theme.style == "precision" || theme.style == "bauhaus" ||
                      theme.style == "spectral"))
                     text(g, theme, (theme.style == "spectral" ? "M" : "") + binding.substring(5),
-                         {face.getX() - 8, face.getY() - 1, 14, 14}, 10, ink, true,
+                         theme.style == "bauhaus"
+                             ? Rect(face.getX() - 8, face.getY() - 1, 14, 14)
+                             : Rect(face.getCentreX() - 12, face.getY() - 16, 24, 14),
+                         10, ink, false,
                          juce::Justification::centred);
             };
             auto valueOnRight = [&](Rect &face) {
@@ -1404,10 +1447,20 @@ class BoundMenu : public juce::ComboBox
             setColour(juce::ComboBox::textColourId, theme.color(string(spec, "ink")));
         setColour(juce::ComboBox::outlineColourId, theme.border);
         setColour(juce::ComboBox::arrowColourId, theme.accent);
+        updateSegments();
         polling = false;
     }
     void paint(juce::Graphics &g) override
     {
+        if (!segments.empty())
+        {
+            if (hasKeyboardFocus(false))
+            {
+                g.setColour(theme.accent);
+                g.drawRoundedRectangle(getLocalBounds().toFloat().reduced(.5f), 3, 1.5f);
+            }
+            return;
+        }
         auto r = getLocalBounds().toFloat().reduced(.5f);
         bezel(g, theme, r, findColour(juce::ComboBox::backgroundColourId),
               theme.style == "bauhaus" || theme.style == "tokyo" ? 2.f : 4.f);
@@ -1434,10 +1487,283 @@ class BoundMenu : public juce::ComboBox
                 label->setFont(
                     theme.type(number(spec, "fontSize", theme.style == "clear" ? 13.f : 11.f)));
                 label->setBounds(5, 0, std::max(1, getWidth() - 25), getHeight());
+                label->setVisible(segments.empty());
             }
+        if (!segments.empty())
+        {
+            const auto count = static_cast<int>(segments.size());
+            const auto vertical = presentation == segmentedRouting;
+            const auto gap = vertical ? 4.f : theme.style == "space" ? 3.f : 0.f;
+            const auto extent = static_cast<float>(vertical ? getHeight() : getWidth());
+            const auto cell = std::max(1.f, (extent - gap * (count - 1)) / count);
+            for (int index = 0; index < count; ++index)
+            {
+                const auto offset = index * (cell + gap);
+                const auto rectangle = vertical ? Rect(0, offset, getWidth(), cell)
+                                                : Rect(offset, 0, cell, getHeight());
+                segments[index].button->setBounds(rectangle.toNearestInt());
+            }
+        }
+    }
+    void mouseDown(const juce::MouseEvent &event) override
+    {
+        if (!segments.empty())
+        {
+            grabKeyboardFocus();
+            showPopup(); // The gaps still expose every native choice.
+            return;
+        }
+        juce::ComboBox::mouseDown(event);
+    }
+    bool keyPressed(const juce::KeyPress &key) override
+    {
+        if (!segments.empty())
+        {
+            if (key.getKeyCode() == juce::KeyPress::F4Key ||
+                (key.getModifiers().isAltDown() && key.getKeyCode() == juce::KeyPress::downKey))
+            {
+                showPopup();
+                return true;
+            }
+            if (key.getKeyCode() == juce::KeyPress::leftKey ||
+                key.getKeyCode() == juce::KeyPress::upKey)
+            {
+                moveSegment(-1);
+                return true;
+            }
+            if (key.getKeyCode() == juce::KeyPress::rightKey ||
+                key.getKeyCode() == juce::KeyPress::downKey)
+            {
+                moveSegment(1);
+                return true;
+            }
+        }
+        return juce::ComboBox::keyPressed(key);
     }
 
   private:
+    enum Presentation { ordinaryMenu, oscillatorFamilies, segmentedRouting, sceneModes, voiceModes };
+    class SegmentButton : public juce::TextButton
+    {
+      public:
+        SegmentButton(Theme &theme, bool routing) : theme(theme), routing(routing)
+        {
+            setWantsKeyboardFocus(true);
+            setToggleable(true);
+            setClickingTogglesState(false);
+        }
+        void paintButton(juce::Graphics &g, bool over, bool down) override
+        {
+            const auto r = getLocalBounds().toFloat().reduced(.6f);
+            const bool selected = getToggleState();
+            const bool hardware = theme.style == "space";
+            auto fill = selected ? (hardware ? juce::Colour(0xffffaa36)
+                                             : routing ? theme.red : theme.yellow)
+                                 : (hardware ? juce::Colour(0xffd6c09a)
+                                             : juce::Colour(0xfffff2d6));
+            if (over && isEnabled())
+                fill = fill.interpolatedWith(juce::Colours::white, .11f);
+            if (down && isEnabled())
+                fill = fill.interpolatedWith(juce::Colours::black, .12f);
+            bezel(g, theme, r, fill, hardware ? 2.f : routing ? 4.f : 2.f);
+            auto ink = selected && routing && !hardware ? juce::Colours::white
+                                                        : juce::Colour(0xff171812);
+            if (!isEnabled())
+                ink = ink.withAlpha(.35f);
+            if (hardware && selected)
+            {
+                g.setColour(juce::Colour(0xffffe6a8).withAlpha(.75f));
+                g.drawRoundedRectangle(r.reduced(2), 1.5f, .8f);
+            }
+            Surge::GUI::Reference::text(g, theme, getButtonText(), r.reduced(2, 0), hardware ? 11.f : 12.f,
+                 ink, true, juce::Justification::centred);
+            if (hasKeyboardFocus(true))
+            {
+                g.setColour(hardware ? theme.display : theme.text);
+                g.drawRoundedRectangle(r.reduced(2), 2.f, 1.5f);
+            }
+        }
+        void mouseDown(const juce::MouseEvent &event) override
+        {
+            contextGesture = event.mods.isPopupMenu();
+            if (contextGesture)
+            {
+                if (onContext) onContext();
+                return;
+            }
+            juce::TextButton::mouseDown(event);
+        }
+        void mouseUp(const juce::MouseEvent &event) override
+        {
+            if (contextGesture)
+            {
+                contextGesture = false;
+                return;
+            }
+            juce::TextButton::mouseUp(event);
+        }
+        bool keyPressed(const juce::KeyPress &key) override
+        {
+            if (key.getKeyCode() == juce::KeyPress::F4Key ||
+                (key.getModifiers().isAltDown() && key.getKeyCode() == juce::KeyPress::downKey))
+            {
+                if (onContext) onContext();
+                return true;
+            }
+            if (key.getKeyCode() == juce::KeyPress::leftKey || key.getKeyCode() == juce::KeyPress::upKey ||
+                key.getKeyCode() == juce::KeyPress::rightKey || key.getKeyCode() == juce::KeyPress::downKey)
+            {
+                if (onNavigate)
+                    onNavigate(key.getKeyCode() == juce::KeyPress::leftKey ||
+                               key.getKeyCode() == juce::KeyPress::upKey ? -1 : 1);
+                return true;
+            }
+            return juce::TextButton::keyPressed(key);
+        }
+        std::function<void()> onContext;
+        std::function<void(int)> onNavigate;
+      private:
+        Theme &theme;
+        bool routing{false}, contextGesture{false};
+    };
+    struct Segment
+    {
+        juce::String label, description;
+        int nativeValue{-1};
+        std::vector<int> family;
+        std::unique_ptr<SegmentButton> button;
+    };
+    Presentation requestedPresentation() const
+    {
+        if (theme.style == "bauhaus")
+        {
+            if (binding == "routing") return segmentedRouting;
+            if (binding.startsWith("osc") && binding.endsWith(".type")) return oscillatorFamilies;
+        }
+        if (theme.style == "space")
+        {
+            if (binding == "scene.mode") return sceneModes;
+            if (binding == "scene.polymode") return voiceModes;
+        }
+        return ordinaryMenu;
+    }
+    int nativeChoice() const
+    {
+        if (const auto *parameter = bridge.parameter(binding))
+            return parameter->valtype == vt_int ? parameter->val.i : -1;
+        return -1;
+    }
+    bool segmentSelected(const Segment &segment) const
+    {
+        const auto choice = nativeChoice();
+        return std::find(segment.family.begin(), segment.family.end(), choice) != segment.family.end();
+    }
+    void chooseSegment(int index)
+    {
+        if (index < 0 || index >= static_cast<int>(segments.size()) || !isEnabled()) return;
+        const auto &segment = segments[index];
+        auto *parameter = bridge.parameter(binding);
+        if (!parameter || parameter->valtype != vt_int || segment.nativeValue < parameter->val_min.i ||
+            segment.nativeValue > parameter->val_max.i || segmentSelected(segment)) return;
+        cancelPopup();
+        // Use the same ComboBox callback as every ordinary menu so native undo,
+        // host automation and algorithm initialization keep their existing path.
+        setSelectedItemIndex(segment.nativeValue - parameter->val_min.i, juce::sendNotificationSync);
+        sync();
+        repaint();
+    }
+    void moveSegment(int delta)
+    {
+        const auto count = static_cast<int>(segments.size());
+        if (!count) return;
+        int current = -1;
+        for (int i = 0; i < count; ++i)
+            if (segments[i].button->hasKeyboardFocus(true)) { current = i; break; }
+        if (current < 0)
+            for (int i = 0; i < count; ++i)
+                if (segmentSelected(segments[i])) { current = i; break; }
+        if (current < 0 && delta < 0)
+            current = 0;
+        for (int step = 1; step <= count; ++step)
+        {
+            const auto candidate = (current + delta * step + count * 2) % count;
+            if (segments[candidate].button->isEnabled())
+            {
+                chooseSegment(candidate);
+                segments[candidate].button->grabKeyboardFocus();
+                break;
+            }
+        }
+    }
+    void updateSegments()
+    {
+        const auto next = requestedPresentation();
+        if (next != presentation)
+        {
+            segments.clear();
+            presentation = next;
+            const auto add = [&](juce::String label, int value, std::vector<int> family,
+                                 juce::String description) {
+                const auto index = static_cast<int>(segments.size());
+                auto button = std::make_unique<SegmentButton>(theme, next == segmentedRouting);
+                button->setButtonText(label);
+                button->setComponentID(getComponentID() + ".segment." + juce::String(index));
+                button->onClick = [this, index] { chooseSegment(index); };
+                button->onContext = [this] { showPopup(); };
+                button->onNavigate = [this](int delta) { moveSegment(delta); };
+                addAndMakeVisible(*button);
+                segments.push_back({label, description, value, std::move(family), std::move(button)});
+            };
+            if (next == oscillatorFamilies)
+            {
+                add("WT", ot_wavetable, {ot_wavetable, ot_window}, "Wavetable or Window oscillator family");
+                add("VA", ot_classic, {ot_classic, ot_modern}, "Classic or Modern virtual-analog oscillator family");
+                add("FM", ot_FM2, {ot_FM2, ot_FM3}, "FM2 or FM3 oscillator family");
+                add("SAMPLE", -1, {}, "Unavailable: Surge has no separate Sample oscillator algorithm. Native wavetable sample files remain available through the full oscillator editor.");
+            }
+            else if (next == segmentedRouting)
+            {
+                add(utf8("A → B"), fc_serial1, {fc_serial1}, "Serial 1: Filter 1 then Filter 2");
+                add(utf8("B → A"), -1, {}, "Unavailable: this engine has no reversed Filter 2 then Filter 1 routing mode");
+                add("Parallel", fc_dual1, {fc_dual1}, "Dual 1: parallel filter paths");
+                add("Split", fc_stereo, {fc_stereo}, "Stereo: separate left and right filter paths");
+            }
+            else if (next == sceneModes)
+            {
+                add("SINGLE", sm_single, {sm_single}, "Single scene");
+                add("SPLIT", sm_split, {sm_split, sm_chsplit}, "Key split; channel split is also available in the full native menu");
+                add("STACK", sm_dual, {sm_dual}, "Dual mode: layer both scenes");
+            }
+            else if (next == voiceModes)
+            {
+                add("POLY", pm_poly, {pm_poly}, "Polyphonic voice mode");
+                add("MONO", pm_mono, {pm_mono, pm_mono_fp}, "Monophonic voice mode");
+                add("LEGATO", pm_mono_st, {pm_mono_st, pm_mono_st_fp}, "Mono Single Trigger: legato envelope triggering");
+            }
+            resized();
+        }
+        for (auto &segment : segments)
+        {
+            const auto *parameter = bridge.parameter(binding);
+            const bool supported = parameter && parameter->valtype == vt_int &&
+                segment.nativeValue >= parameter->val_min.i && segment.nativeValue <= parameter->val_max.i;
+            segment.button->setEnabled(isEnabled() && supported);
+            segment.button->setToggleState(supported && segmentSelected(segment), juce::dontSendNotification);
+            const auto label = getName() + ": " + segment.label;
+            segment.button->setName(label);
+            segment.button->setTitle(label);
+            segment.button->setDescription(segment.description);
+            segment.button->setTooltip(segment.description + ". Current: " + bridge.display(binding) +
+                                       ". Right-click or Alt+Down for every native choice.");
+        }
+        if (!segments.empty())
+        {
+            setDescription("Native segmented choices. Right-click, F4 or Alt+Down opens all native options. "
+                           "Arrow keys move between available segments.");
+            for (auto *child : getChildren())
+                if (auto *label = dynamic_cast<juce::Label *>(child)) label->setVisible(false);
+        }
+    }
     ParameterBridge &bridge;
     Theme &theme;
     juce::var spec;
@@ -1446,6 +1772,8 @@ class BoundMenu : public juce::ComboBox
     bool polling{false};
     bool popupOpen{false};
     std::uint64_t popupGeneration{0};
+    Presentation presentation{ordinaryMenu};
+    std::vector<Segment> segments;
 };
 
 class BoundToggle : public juce::TextButton
@@ -2127,23 +2455,21 @@ class PresetBrowser : public juce::Component, private juce::ListBoxModel
     PresetBrowser(SurgeSynthProcessor &p, Theme &t, const juce::String &query, int selectedPatch,
                   std::function<void(const juce::String &)> performAction)
         : processor(p), theme(t), performAction(std::move(performAction)),
-          list("Installed presets", this)
+          list("Installed presets", this), back(t, "<"), fullBrowser(t, "...")
     {
         setName("Installed preset browser");
         setTitle(getName());
         search.setComponentID("workspace.browser.search");
         search.setName("Search installed presets");
         search.setTitle(search.getName());
-        search.setDescription(
-            "Search preset names and categories. Return loads the selected preset.");
+        search.setDescription("Search real preset names and categories in the current catalog scope. Return loads the selected preset.");
         search.setTextToShowWhenEmpty("Search presets...", theme.muted);
-        search.setColour(juce::TextEditor::backgroundColourId,
-                         theme.light() && theme.style != "space" ? theme.panel : theme.display);
+        search.setColour(juce::TextEditor::backgroundColourId, browserFill());
         search.setColour(juce::TextEditor::textColourId, theme.text);
-        search.setColour(juce::TextEditor::outlineColourId, theme.border);
+        search.setColour(juce::TextEditor::outlineColourId, theme.border.withAlpha(.6f));
         search.setColour(juce::TextEditor::focusedOutlineColourId, theme.accent);
-        search.setIndents(8, 5);
-        search.setFont(theme.type(theme.style == "tokyo" ? 14.f : 13.f));
+        search.setIndents(25, 5);
+        search.setFont(theme.type(theme.style == "tokyo" ? 13.f : 12.f));
         search.setText(query, false);
         search.onTextChange = [this] { refreshRows(); };
         search.onReturnKey = [this] {
@@ -2154,38 +2480,163 @@ class PresetBrowser : public juce::Component, private juce::ListBoxModel
         search.onEscapeKey = [this] {
             if (search.getText().isNotEmpty())
                 search.clear();
+            else if (categoryId >= 0)
+                clearCategory();
             else if (auto *workspace = findParentComponentOfClass<Workspace>())
                 workspace->grabKeyboardFocus();
         };
         addAndMakeVisible(search);
         list.setComponentID("workspace.browser.list");
         list.setTitle("Installed presets");
-        list.setDescription("Use arrow keys to select. Return or double-click loads. Category rows "
-                            "filter the list.");
+        list.setDescription("Arrow keys select; Return or double-click loads a preset or opens a category.");
         list.setColour(juce::ListBox::backgroundColourId, juce::Colours::transparentBlack);
         list.setColour(juce::ListBox::outlineColourId, theme.border);
         list.setMultipleSelectionEnabled(false);
-        list.setRowHeight(theme.style == "tokyo" ? 27 : 26);
+        list.setRowHeight(theme.style == "tokyo" ? 26 : theme.style == "flow" ? 20 :
+                          theme.style == "bauhaus" ? 21 : 24);
         list.setOutlineThickness(0);
         addAndMakeVisible(list);
         status.setName("Preset search status");
         status.setColour(juce::Label::textColourId, theme.muted);
-        status.setFont(theme.type(10));
+        status.setFont(theme.type(9.5f));
+        status.setJustificationType(juce::Justification::centredLeft);
         addAndMakeVisible(status);
+        styleButton(back);
+        styleButton(fullBrowser);
+        back.setComponentID("workspace.browser.back");
+        back.setTitle("Return to all preset categories");
+        back.setTooltip("Return to all preset categories");
+        back.onClick = [this] { clearCategory(); };
+        addAndMakeVisible(back);
+        fullBrowser.setComponentID("workspace.browser.full");
+        fullBrowser.setTitle("Open the complete native preset browser");
+        fullBrowser.setTooltip(fullBrowser.getTitle());
+        fullBrowser.onClick = [this] { if (this->performAction) this->performAction("browser"); };
+        addAndMakeVisible(fullBrowser);
+
+        juce::StringArray captions;
+        if (theme.style == "bauhaus")
+            captions = {"BROWSER", "PATCH", "HISTORY"};
+        else if (theme.style == "tokyo")
+            captions = {"PRESETS", "FAVORITES", "HISTORY"};
+        else if (theme.style == "flow")
+            captions = {"PRESETS", "CATEGORIES", "FAVORITES"};
+        else if (theme.style == "space")
+            captions = {"ALL", "FACTORY", "USER"};
+        else
+            captions = {"All", "Factory", "User", "Fav"};
+        for (int i = 0; i < captions.size(); ++i)
+        {
+            auto button = std::make_unique<ThemeButton>(theme, captions[i]);
+            styleButton(*button);
+            button->setComponentID("workspace.browser.tab." + juce::String(i));
+            button->setTitle(captions[i] == "HISTORY" ? "Presets loaded during this browser session"
+                              : captions[i] == "PATCH" ? "Inspect the current patch metadata"
+                                                        : "Show " + captions[i].toLowerCase());
+            button->setTooltip(button->getTitle());
+            button->setToggleable(true);
+            button->onClick = [this, i] { setPage(i); };
+            button->setToggleState(i == 0, juce::dontSendNotification);
+            addAndMakeVisible(*button);
+            tabs.push_back(std::move(button));
+        }
+        for (auto *label : {&detailTitle, &detailCategory, &detailComment, &detailTags})
+        {
+            label->setColour(juce::Label::textColourId, theme.text);
+            label->setJustificationType(juce::Justification::topLeft);
+            label->setBorderSize(juce::BorderSize<int>(0));
+            label->setMinimumHorizontalScale(1.f);
+            addAndMakeVisible(*label);
+        }
+        detailTitle.setName("Selected or current preset name");
+        detailCategory.setName("Actual preset category and author");
+        detailComment.setName("Actual preset description");
+        detailTags.setName("Actual preset tags");
+        detailTitle.setFont(theme.type(theme.style == "flow" ? 13.f : 14.f, true));
+        detailCategory.setFont(theme.type(10.5f));
+        detailCategory.setColour(juce::Label::textColourId, theme.muted);
+        detailComment.setFont(theme.type(11.5f));
+        detailTags.setFont(theme.type(10.f));
         refreshRows();
-        selectPatch(selectedPatch);
+        selectPatch(selectedPatch >= 0 ? selectedPatch : processor.surge->patchid);
+        refreshDetails();
     }
     ~PresetBrowser() override { list.setModel(nullptr); }
     void paint(juce::Graphics &g) override
     {
+        auto area = getLocalBounds().toFloat();
         if (theme.style == "space")
         {
-            // The hardware's inset well surrounds the actual installed-preset
-            // list. Its contents, selection and search remain native controls.
-            auto well = list.getBounds().toFloat().expanded(1.f, 2.f);
-            bezel(g, theme, well, theme.display, 5.f);
-            g.setColour(theme.knob.withAlpha(.65f));
-            g.drawRoundedRectangle(well.expanded(.7f), 5.f, .7f);
+            auto insetTheme = theme;
+            insetTheme.style = "precision";
+            bezel(g, insetTheme, area, juce::Colour(0xff251a0e), 5);
+        }
+        else
+        {
+            // This component owns its tab/search/card hierarchy. Cover the old
+            // generic panel caption beneath the native top navigation tabs.
+            g.setColour(browserFill());
+            g.fillRoundedRectangle(area, theme.style == "aurora" ? 8.f : 2.f);
+        }
+        if (!detailBounds.isEmpty())
+        {
+            auto card = detailBounds.toFloat();
+            g.setColour(theme.border.withAlpha(theme.style == "bauhaus" ? .5f : .55f));
+            g.drawLine(card.getX(), card.getY(), card.getRight(), card.getY(), 1);
+            if (theme.style == "aurora" || theme.style == "flow")
+                bezel(g, theme, card.reduced(0, 3), theme.panel, 7);
+            if (!thumbnail.isEmpty())
+            {
+                auto thumb = thumbnail.toFloat();
+                if (theme.style == "bauhaus")
+                {
+                    // Original geometric patch-card ornament, containing no
+                    // waveform, preset metadata or parameter-state pixels.
+                    g.setColour(theme.red);
+                    juce::Path arc;
+                    arc.addPieSegment(thumb, -juce::MathConstants<float>::halfPi,
+                                      0.f, 0.f);
+                    g.fillPath(arc);
+                    g.setColour(theme.text);
+                    g.fillRect(thumb.withTrimmedTop(thumb.getHeight() * .45f));
+                    juce::Path triangle;
+                    triangle.addTriangle(thumb.getX(), thumb.getBottom(), thumb.getX(),
+                                         thumb.getCentreY(), thumb.getRight(), thumb.getCentreY());
+                    g.setColour(theme.secondary);
+                    g.fillPath(triangle);
+                }
+                else
+                {
+                    g.setGradientFill(juce::ColourGradient(theme.accent.withAlpha(.45f),
+                                                           thumb.getCentre(),
+                                                           theme.display, thumb.getBottomRight(), true));
+                    g.fillRoundedRectangle(thumb, 4);
+                    // A folder engraving distinguishes this decorative mark
+                    // from an analyzer or a frozen sound preview.
+                    juce::Path folder;
+                    folder.startNewSubPath(thumb.getX() + 8, thumb.getY() + 14);
+                    folder.lineTo(thumb.getX() + 8, thumb.getY() + 9);
+                    folder.lineTo(thumb.getX() + 20, thumb.getY() + 9);
+                    folder.lineTo(thumb.getX() + 25, thumb.getY() + 14);
+                    folder.lineTo(thumb.getRight() - 7, thumb.getY() + 14);
+                    folder.lineTo(thumb.getRight() - 7, thumb.getBottom() - 9);
+                    folder.lineTo(thumb.getX() + 8, thumb.getBottom() - 9);
+                    folder.closeSubPath();
+                    g.setColour(theme.text.withAlpha(.75f));
+                    g.strokePath(folder, juce::PathStrokeType(1.2f));
+                }
+            }
+        }
+    }
+    void paintOverChildren(juce::Graphics &g) override
+    {
+        if (search.isVisible())
+        {
+            auto icon = search.getBounds().toFloat().withWidth(25).reduced(7, 7);
+            g.setColour(theme.muted);
+            g.drawEllipse(icon.withSizeKeepingCentre(9, 9), 1.4f);
+            const auto centre = icon.getCentre();
+            g.drawLine(centre.x + 3, centre.y + 3, centre.x + 7, centre.y + 7, 1.4f);
         }
     }
     juce::String query() const { return search.getText(); }
@@ -2196,49 +2647,244 @@ class PresetBrowser : public juce::Component, private juce::ListBoxModel
     }
     void refreshRows()
     {
-        auto updated = browserRows(processor, search.getText(), 100);
+        rememberCurrentPatch();
+        auto updated = browserRows(processor, search.getText(), 100, filter, categoryId);
+        if (page == Page::categories)
+        {
+            updated = browserRows(processor, {}, 100, filter);
+            updated.erase(std::remove_if(updated.begin(), updated.end(),
+                                         [this](const auto &row) {
+                                             return !row.category ||
+                                                 (search.getText().isNotEmpty() &&
+                                                  !row.name.containsIgnoreCase(search.getText()));
+                                         }), updated.end());
+        }
+        else if (page == Page::history)
+        {
+            updated.clear();
+            const auto &catalog = processor.surge->storage.patch_list;
+            for (const auto &path : history)
+                for (size_t id = 0; id < catalog.size(); ++id)
+                    if (path_to_string(catalog[id].path) == path &&
+                        (search.getText().isEmpty() ||
+                         juce::String(catalog[id].name).containsIgnoreCase(search.getText())))
+                    {
+                        updated.push_back({juce::String(catalog[id].name), static_cast<int>(id),
+                                           false, catalog[id].category, 0, catalog[id].isFavorite});
+                        break;
+                    }
+        }
         const bool changed = !initialized || updated.size() != rows.size() ||
                              !std::equal(updated.begin(), updated.end(), rows.begin(),
                                          [](const BrowserRow &a, const BrowserRow &b) {
                                              return a.name == b.name && a.patchId == b.patchId &&
-                                                    a.category == b.category;
+                                                    a.category == b.category &&
+                                                    a.categoryId == b.categoryId &&
+                                                    a.patchCount == b.patchCount && a.favorite == b.favorite;
                                          });
-        if (!changed)
-            return;
-        initialized = true;
-        const auto selection = selectedPatchId();
-        rows = std::move(updated);
-        list.deselectAllRows();
-        list.updateContent();
-        selectPatch(selection);
-        const auto count = static_cast<int>(std::count_if(
-            rows.begin(), rows.end(), [](const BrowserRow &row) { return !row.category; }));
+        if (changed)
+        {
+            initialized = true;
+            const auto selection = selectedPatchId();
+            rows = std::move(updated);
+            list.deselectAllRows();
+            list.updateContent();
+            selectPatch(selection >= 0 ? selection : processor.surge->patchid);
+            list.repaint();
+        }
+        const auto count = static_cast<int>(std::count_if(rows.begin(), rows.end(),
+                                                [](const auto &row) { return !row.category; }));
         status.setText(rows.empty() ? "No matching installed presets"
-                       : rows.size() >= 100
-                           ? utf8("First 100 rows shown — refine search")
-                           : juce::String(count) + utf8(" presets shown • Enter to load"),
+                       : rows.size() >= 100 ? "First 100 rows; refine search"
+                       : page == Page::history ? juce::String(count) + " loaded in this browser session"
+                       : categoryId >= 0 ? juce::String(count) + " presets in selected folder"
+                       : juce::String(count) + " presets / " +
+                             juce::String(static_cast<int>(rows.size()) - count) + " categories",
                        juce::dontSendNotification);
-        list.repaint();
+        refreshDetails();
     }
     void resized() override
     {
-        auto r = getLocalBounds();
-        search.setBounds(r.removeFromTop(std::min(28, r.getHeight())));
-        r.removeFromTop(5);
-        status.setBounds(r.removeFromBottom(std::min(20, r.getHeight())));
+        auto r = getLocalBounds().reduced(theme.style == "space" ? 4 : 0);
+        const bool topTabs = theme.style == "bauhaus" || theme.style == "tokyo" || theme.style == "flow";
+        const int tabsHeight = theme.style == "tokyo" ? 30 : 27;
+        const auto placeTabs = [&] {
+            auto row = r.removeFromTop(std::min(tabsHeight, r.getHeight()));
+            const int gap = theme.style == "bauhaus" || theme.style == "tokyo" ? 1 : 4;
+            const int width = (row.getWidth() - gap * (static_cast<int>(tabs.size()) - 1)) /
+                              static_cast<int>(tabs.size());
+            for (size_t i = 0; i < tabs.size(); ++i)
+                tabs[i]->setBounds(row.getX() + static_cast<int>(i) * (width + gap), row.getY(),
+                                   width, row.getHeight());
+            r.removeFromTop(topTabs ? 5 : theme.style == "aurora" ? 12 : 8);
+        };
+        if (topTabs)
+            placeTabs();
+        auto searchRow = r.removeFromTop(std::min(29, r.getHeight()));
+        fullBrowser.setBounds(searchRow.removeFromRight(26));
+        searchRow.removeFromRight(4);
+        back.setVisible(categoryId >= 0);
+        if (back.isVisible())
+        {
+            back.setBounds(searchRow.removeFromLeft(23));
+            searchRow.removeFromLeft(3);
+        }
+        search.setBounds(searchRow);
+        r.removeFromTop(theme.style == "space" ? 7 : theme.style == "aurora" ? 14 :
+                        theme.style == "bauhaus" ? 15 : 8);
+        if (!topTabs)
+            placeTabs();
+        const bool showStatus = theme.style == "tokyo";
+        status.setVisible(showStatus);
+        if (showStatus)
+            status.setBounds(r.removeFromBottom(std::min(18, r.getHeight())));
+        detailBounds = {};
+        thumbnail = {};
+        const bool hasCard = theme.style == "bauhaus" || theme.style == "aurora" || theme.style == "flow";
+        if (hasCard)
+        {
+            const int height = page == Page::patch ? r.getHeight()
+                               : theme.style == "flow" ? 202 : theme.style == "bauhaus" ? 98 : 109;
+            detailBounds = r.removeFromBottom(std::min(height, r.getHeight()));
+            if (!r.isEmpty())
+                r.removeFromBottom(8);
+        }
         list.setBounds(r);
+        list.setVisible(page != Page::patch);
+        auto details = detailBounds.reduced(8, 10);
+        const bool hasThumb = hasCard && theme.style != "flow";
+        if (hasThumb)
+        {
+            thumbnail = details.removeFromLeft(theme.style == "bauhaus" ? 48 : 52);
+            thumbnail.setHeight(std::min(71, thumbnail.getHeight()));
+            details.removeFromLeft(9);
+        }
+        detailTitle.setBounds(details.removeFromTop(22));
+        detailCategory.setBounds(details.removeFromTop(theme.style == "flow" ? 31 : 17));
+        detailTags.setBounds(details.removeFromBottom(std::min(theme.style == "flow" ? 40 : 14,
+                                                              details.getHeight())));
+        detailComment.setBounds(details);
+        for (auto *label : {&detailTitle, &detailCategory, &detailComment, &detailTags})
+            label->setVisible(hasCard);
+        repaint();
     }
     bool keyPressed(const juce::KeyPress &key) override
     {
         if (key.getKeyCode() != juce::KeyPress::escapeKey)
             return false;
-        search.grabKeyboardFocus();
-        search.selectAll();
+        if (categoryId >= 0)
+            clearCategory();
+        else
+        {
+            search.grabKeyboardFocus();
+            search.selectAll();
+        }
         return true;
     }
 
   private:
+    enum class Page { presets, patch, history, categories };
+    juce::Colour browserFill() const
+    {
+        return theme.style == "space" ? juce::Colour(0xff251a0e)
+               : theme.style == "tokyo" ? juce::Colour(0xff080b0d)
+               : theme.style == "bauhaus" ? theme.panel
+               : theme.style == "aurora" ? juce::Colour(0xff21182f) : theme.display;
+    }
+    void styleButton(juce::TextButton &button)
+    {
+        button.setColour(juce::TextButton::buttonColourId,
+                         theme.style == "space" ? theme.panel : browserFill());
+        button.setColour(juce::TextButton::textColourOffId, theme.text);
+        button.setWantsKeyboardFocus(true);
+    }
+    void setPage(int index)
+    {
+        page = Page::presets;
+        filter = BrowserFilter::all;
+        categoryId = -1;
+        if (theme.style == "bauhaus")
+            page = index == 1 ? Page::patch : index == 2 ? Page::history : Page::presets;
+        else if (theme.style == "tokyo")
+        {
+            page = index == 2 ? Page::history : Page::presets;
+            filter = index == 1 ? BrowserFilter::favorites : BrowserFilter::all;
+        }
+        else if (theme.style == "flow")
+        {
+            page = index == 1 ? Page::categories : Page::presets;
+            filter = index == 2 ? BrowserFilter::favorites : BrowserFilter::all;
+        }
+        else
+            filter = index == 1 ? BrowserFilter::factory : index == 2 ? BrowserFilter::user
+                                      : index == 3 ? BrowserFilter::favorites : BrowserFilter::all;
+        for (size_t i = 0; i < tabs.size(); ++i)
+            tabs[i]->setToggleState(static_cast<int>(i) == index, juce::dontSendNotification);
+        initialized = false;
+        refreshRows();
+        resized();
+    }
+    void clearCategory()
+    {
+        categoryId = -1;
+        initialized = false;
+        refreshRows();
+        resized();
+    }
     bool validRow(int row) const { return row >= 0 && static_cast<size_t>(row) < rows.size(); }
+    void rememberCurrentPatch()
+    {
+        const auto &catalog = processor.surge->storage.patch_list;
+        const int id = processor.surge->patchid;
+        if (id < 0 || static_cast<size_t>(id) >= catalog.size())
+            return;
+        const auto path = path_to_string(catalog[id].path);
+        if (path == lastLoadedPath)
+            return;
+        lastLoadedPath = path;
+        history.erase(std::remove(history.begin(), history.end(), path), history.end());
+        history.insert(history.begin(), path);
+        if (history.size() > 32)
+            history.resize(32);
+    }
+    void refreshDetails()
+    {
+        auto &storage = processor.surge->storage;
+        const auto selected = selectedPatchId();
+        const bool current = page == Page::patch || selected < 0 || selected == processor.surge->patchid;
+        juce::String name, category, comment, tags;
+        if (current)
+        {
+            const auto &patch = storage.getPatch();
+            name = juce::String(patch.name).substring(0, 160);
+            category = juce::String(patch.category).substring(0, 160);
+            if (!patch.author.empty())
+                category += (category.isEmpty() ? "" : " / ") + juce::String(patch.author).substring(0, 100);
+            comment = juce::String(patch.comment).substring(0, 320);
+            for (const auto &tag : patch.tags)
+            {
+                if (tags.length() > 100)
+                    break;
+                tags += (tags.isEmpty() ? "" : "  /  ") + juce::String(tag.tag).substring(0, 40);
+            }
+        }
+        else if (selected >= 0 && static_cast<size_t>(selected) < storage.patch_list.size())
+        {
+            const auto &patch = storage.patch_list[selected];
+            name = juce::String(patch.name);
+            if (patch.category >= 0 && static_cast<size_t>(patch.category) < storage.patch_category.size())
+                category = juce::String(storage.patch_category[patch.category].name);
+            comment = "Enter or double-click to load this installed preset.";
+            if (patch.isFavorite)
+                tags = "Favorite";
+        }
+        if (name.isEmpty())
+            name = "Current patch";
+        detailTitle.setText(name, juce::dontSendNotification);
+        detailCategory.setText(category, juce::dontSendNotification);
+        detailComment.setText(comment, juce::dontSendNotification);
+        detailTags.setText(tags, juce::dontSendNotification);
+    }
     void selectPatch(int id)
     {
         if (id < 0)
@@ -2257,9 +2903,17 @@ class PresetBrowser : public juce::Component, private juce::ListBoxModel
         const auto entry = rows[row];
         if (entry.category)
         {
-            search.setText(entry.name, true);
-            search.grabKeyboardFocus();
-            search.selectAll();
+            categoryId = entry.categoryId;
+            if (page == Page::categories)
+            {
+                page = Page::presets;
+                for (size_t i = 0; i < tabs.size(); ++i)
+                    tabs[i]->setToggleState(i == 0, juce::dontSendNotification);
+            }
+            initialized = false;
+            refreshRows();
+            resized();
+            list.grabKeyboardFocus();
         }
         else if (entry.patchId >= 0 && performAction)
             performAction("load-preset:" + juce::String(entry.patchId));
@@ -2272,7 +2926,7 @@ class PresetBrowser : public juce::Component, private juce::ListBoxModel
     }
     juce::String getTooltipForRow(int row) override
     {
-        return validRow(row) ? rows[row].name + utf8(rows[row].category ? " — Enter to filter"
+        return validRow(row) ? rows[row].name + utf8(rows[row].category ? " — Enter to open folder"
                                                                         : " — Enter to load")
                              : juce::String();
     }
@@ -2280,47 +2934,66 @@ class PresetBrowser : public juce::Component, private juce::ListBoxModel
     {
         if (!validRow(row))
             return;
-        auto r =
-            juce::Rectangle<float>(0, 0, static_cast<float>(width), static_cast<float>(height));
+        auto r = juce::Rectangle<float>(0, 0, static_cast<float>(width), static_cast<float>(height));
+        const auto &entry = rows[row];
         if (selected)
         {
-            g.setColour(theme.accent.withAlpha(theme.light() ? .24f : .18f));
-            g.fillRoundedRectangle(r.reduced(1), 3);
-            g.setColour(theme.accent);
-            g.drawRoundedRectangle(r.reduced(1), 3, 1);
+            auto fill = theme.accent;
+            if (theme.style == "space")
+                fill = juce::Colour(0xff9a4e10);
+            g.setGradientFill(juce::ColourGradient(fill, r.getTopLeft(), fill.darker(.2f),
+                                                  r.getBottomLeft(), false));
+            g.fillRoundedRectangle(r.reduced(1, .5f), 3);
         }
-        const auto &entry = rows[row];
-        auto icon = r.removeFromLeft(entry.category ? 33.f : 25.f);
+        else if (theme.style == "tokyo" && !entry.category)
+        {
+            g.setColour(theme.border.withAlpha(.16f));
+            g.drawHorizontalLine(height - 1, 2.f, width - 2.f);
+        }
+        auto ink = selected && theme.style == "flow" ? theme.display
+                   : selected && theme.style == "bauhaus" ? juce::Colours::white : theme.text;
+        auto icon = r.removeFromLeft(entry.category ? 30.f : theme.style == "flow" ? 38.f : 33.f);
         if (entry.category)
         {
             juce::Path chevron;
             chevron.addTriangle(3, height * .5f - 3, 3, height * .5f + 3, 7, height * .5f);
-            g.setColour(theme.text.withAlpha(.7f));
+            g.setColour(ink.withAlpha(.75f));
             g.fillPath(chevron);
-            const float y = height * .5f - 5;
+            const float y = height * .5f - 4;
             juce::Path folder;
             folder.startNewSubPath(12, y + 1);
             folder.lineTo(12, y - 2);
             folder.lineTo(18, y - 2);
             folder.lineTo(20, y + 1);
-            folder.lineTo(27, y + 1);
-            folder.lineTo(27, y + 10);
-            folder.lineTo(12, y + 10);
+            folder.lineTo(26, y + 1);
+            folder.lineTo(26, y + 8);
+            folder.lineTo(12, y + 8);
             folder.closeSubPath();
-            g.setColour(theme.style == "bauhaus" ? theme.text : theme.text.withAlpha(.76f));
-            if (theme.light() && theme.style != "space")
+            if (theme.style == "bauhaus")
                 g.strokePath(folder, juce::PathStrokeType(1.2f));
             else
                 g.fillPath(folder);
+            auto count = r.removeFromRight(theme.style == "bauhaus" ? 28.f : 39.f);
+            if (theme.style == "bauhaus")
+            {
+                g.setColour(theme.border.withAlpha(.35f));
+                g.fillRoundedRectangle(count.reduced(1, 2), 3);
+            }
+            text(g, theme, juce::String(entry.patchCount), count, 10.5f, ink.withAlpha(.8f),
+                 false, juce::Justification::centredRight);
         }
-        else
+        else if (entry.favorite)
         {
-            g.setColour(theme.accent.withAlpha(selected ? 1.f : .35f));
-            g.fillRoundedRectangle(icon.getRight() - 8, height * .5f - 2, 3, 4, 1);
+            auto star = juce::Path();
+            star.addStar({width - 11.f, height * .5f}, 5, 3.f, 6.f);
+            g.setColour(ink);
+            g.strokePath(star, juce::PathStrokeType(1));
+            r.removeFromRight(20);
         }
-        text(g, theme, entry.name, r.reduced(2, 0), theme.style == "tokyo" ? 14.f : 13.f,
-             theme.text, entry.category);
+        text(g, theme, entry.name, r.reduced(2, 0), theme.style == "tokyo" ? 13.f : 12.f,
+             ink, entry.category && theme.style != "space");
     }
+    void selectedRowsChanged(int) override { refreshDetails(); }
     void listBoxItemDoubleClicked(int row, const juce::MouseEvent &) override { activate(row); }
     void returnKeyPressed(int row) override { activate(row); }
 
@@ -2330,7 +3003,15 @@ class PresetBrowser : public juce::Component, private juce::ListBoxModel
     std::vector<BrowserRow> rows;
     juce::TextEditor search;
     juce::ListBox list;
-    juce::Label status;
+    juce::Label status, detailTitle, detailCategory, detailComment, detailTags;
+    ThemeButton back, fullBrowser;
+    std::vector<std::unique_ptr<ThemeButton>> tabs;
+    juce::Rectangle<int> detailBounds, thumbnail;
+    std::vector<std::string> history;
+    std::string lastLoadedPath;
+    BrowserFilter filter{BrowserFilter::all};
+    Page page{Page::presets};
+    int categoryId{-1};
     bool initialized{false};
 };
 
@@ -2373,6 +3054,7 @@ struct Workspace::Impl
     std::vector<double> spectrumHistoryTimes;
     std::array<PreviewCurve, 2> filterCurves;
     std::array<PreviewCurve, 12> lfoCurves;
+    std::array<PreviewCurve, n_fx_slots> effectCurves;
     bool audioSubscribed{false};
     std::vector<RouteRow> routes;
     ModulationEditorModel routeEditor;
@@ -2964,13 +3646,24 @@ struct Workspace::Impl
                            r.removeFromTop(28).removeFromRight(112).reduced(3));
                 if (kind == "browser")
                 {
-                    button("Browse all presets", "browser", r.removeFromBottom(31).reduced(7, 3));
                     browser = std::make_unique<PresetBrowser>(
                         processor, theme, browserQuery, browserSelectedPatch,
                         [this](const juce::String &a) { action(a); });
                     browser->setComponentID("workspace.browser");
                     canvas.addAndMakeVisible(*browser);
-                    placements.push_back({browser.get(), r.reduced(10).withTrimmedTop(24)});
+                    // Native browser chrome follows each concept's measured
+                    // sidebar. The complete preset browser remains available
+                    // through the component's accessible ellipsis action.
+                    const auto browserBounds = theme.style == "space"
+                        ? r.reduced(12, 0).withTop(r.getY() + 44).withBottom(r.getBottom() - 18)
+                        : theme.style == "aurora"
+                            ? r.reduced(9, 0).withTop(r.getY() + 41).withBottom(r.getBottom() - 9)
+                        : theme.style == "tokyo"
+                            ? r.reduced(9, 0).withTop(r.getY() + 9).withBottom(r.getBottom() - 14)
+                        : theme.style == "bauhaus"
+                            ? r.reduced(8, 0).withTop(r.getY() + 2).withBottom(r.getBottom() - 7)
+                            : r.reduced(8, 0).withTop(r.getY() + 2).withBottom(r.getBottom() - 8);
+                    placements.push_back({browser.get(), browserBounds});
                 }
                 if (kind == "effects" && actionFits(r.withHeight(28).removeFromRight(110)))
                     button("Full FX editor", "effects",
@@ -3224,6 +3917,7 @@ struct Workspace::Impl
             visuals.right = rightPeak;
             std::array<bool, 2> filtersNeeded{};
             std::array<bool, 12> lfosNeeded{};
+            std::array<bool, n_fx_slots> effectsNeeded{};
             if (auto *panels = manifest["panels"].getArray())
                 for (const auto &panel : *panels)
                 {
@@ -3243,6 +3937,8 @@ struct Workspace::Impl
                         filtersNeeded = {true, true};
                     if ((kind == "lfo" || kind == "lfo-envelope") && index >= 0 && index < 12)
                         lfosNeeded[index] = true;
+                    if ((kind == "effects" || kind == "fx") && index >= 0 && index < n_fx_slots)
+                        effectsNeeded[index] = true;
                 }
             for (int i = 0; i < 2; ++i)
                 if (filtersNeeded[i])
@@ -3250,6 +3946,9 @@ struct Workspace::Impl
             for (int i = 0; i < 12; ++i)
                 if (lfosNeeded[i])
                     lfoCurves[i] = lfoCurve(processor, parameters.getScene(), i);
+            for (int i = 0; i < n_fx_slots; ++i)
+                if (effectsNeeded[i])
+                    effectCurves[i] = distortionTransfer(processor, i);
             auto updatedRoutes = modulationRows(processor, parameters.getScene());
             if (!routeEditor.isEditing())
                 routes = std::move(updatedRoutes);
@@ -3875,13 +4574,14 @@ struct Workspace::Impl
             }
         }
     }
-    void plotBase(juce::Graphics &g, Rect r, bool pale = false)
+    void plotBase(juce::Graphics &g, Rect r, bool pale = false, bool grid = true)
     {
         g.setColour(pale ? theme.panel.brighter(.03f) : theme.display);
         g.fillRoundedRectangle(r, 3);
         g.setColour(theme.border.withAlpha(.4f));
         g.drawRoundedRectangle(r, 3, 1);
-        Visuals::grid(g, r.reduced(2), theme.secondary.withAlpha(theme.light() ? .16f : .1f));
+        if (grid)
+            Visuals::grid(g, r.reduced(2), theme.secondary.withAlpha(theme.light() ? .12f : .065f));
     }
     void unavailableOscillator(juce::Graphics &g, Rect r, int index)
     {
@@ -3930,7 +4630,7 @@ struct Workspace::Impl
     void drawFilter(juce::Graphics &g, Rect r, int index, juce::Colour color, bool base = true)
     {
         if (base && theme.style != "aurora")
-            plotBase(g, r);
+            plotBase(g, r, false, false); // The filter draws its own logarithmic axes.
         const bool miniature = r.getHeight() < 65;
         const bool ivoryReadouts = theme.style == "ivory" && !miniature;
         const auto frame = r;
@@ -4107,12 +4807,24 @@ struct Workspace::Impl
                     {
                         const float strength = std::clamp((bins[bin] + 96.f) / 96.f, 0.f, 1.f);
                         auto colour = theme.display;
-                        if (theme.style == "clear")
+                        if (theme.style == "clear" || theme.style == "flow")
                         {
                             const std::array<juce::Colour, 6> heat{
                                 juce::Colour(0xff11122e), juce::Colour(0xff163d92),
                                 juce::Colour(0xff02adbd), juce::Colour(0xff48d868),
                                 juce::Colour(0xffffe542), juce::Colour(0xffff5734)};
+                            const auto at = std::min(4, static_cast<int>(strength * 5));
+                            colour = heat[at].interpolatedWith(heat[at + 1], strength * 5 - at);
+                        }
+                        else if (theme.style == "live")
+                        {
+                            // The performance display uses a mint-to-amber heat
+                            // scale. Colour follows measured dB strength; it is
+                            // independent of frequency and of the capture clock.
+                            const std::array<juce::Colour, 6> heat{
+                                theme.display, juce::Colour(0xff123c2c),
+                                juce::Colour(0xff50bb86), juce::Colour(0xffd38c42),
+                                juce::Colour(0xffffae58), juce::Colour(0xffffe8ae)};
                             const auto at = std::min(4, static_cast<int>(strength * 5));
                             colour = heat[at].interpolatedWith(heat[at + 1], strength * 5 - at);
                         }
@@ -4457,7 +5169,8 @@ struct Workspace::Impl
             titleColor = juce::Colours::white;
         const auto titleInset = number(v, "titleInset", 12);
         auto titleY = theme.style == "ivory" && (kind == "oscillator" || kind == "filter")
-                          ? 9.f : 3.f;
+                          ? 11.f : theme.style == "precision" ? 6.f
+                          : theme.style == "spectral" ? 5.f : 3.f;
         if (theme.style == "clear")
         {
             const auto id = string(v, "id");
@@ -4506,7 +5219,7 @@ struct Workspace::Impl
                     pr = {r.getX() + 10, r.getY() + 61, r.getWidth() - 20, r.getHeight() * .38f};
             }
             if (theme.style != "aurora")
-                plotBase(g, pr);
+                plotBase(g, pr, false, theme.style == "tokyo" || theme.style == "flow");
             if (index <= 3)
             {
                 const bool layers =
@@ -4530,11 +5243,12 @@ struct Workspace::Impl
             const auto oscillator = juce::jlimit(0, 2, index - 1);
             pr = arrayRect(v["plot"], content.withTrimmedBottom(variant == "terrain" ? 20 : 3));
             if (theme.style != "aurora" && theme.style != "live")
-                plotBase(g, pr);
+                plotBase(g, pr, false, theme.style != "bauhaus");
             if (visuals.wavetable[oscillator].available())
                 Visuals::wavetable(
                     g, pr.reduced(8), visuals.wavetable[oscillator], theme.secondary, theme.accent,
-                    theme.style == "aurora" || theme.style == "live" || theme.style == "bauhaus"
+                    theme.style == "bauhaus" ? Visuals::WavetableView::harmonicRibbons
+                    : theme.style == "aurora" || theme.style == "live"
                         ? Visuals::WavetableView::ribbons
                         : Visuals::WavetableView::perspective);
             else
@@ -4961,23 +5675,71 @@ struct Workspace::Impl
         }
         else if (kind == "routing")
             drawRouting(g, arrayRect(v["plot"], content), variant, v["flowNodes"]);
-        else if (kind == "effects" && variant == "compact")
+        else if ((kind == "effects" &&
+                  (variant == "compact" || (selected.isObject() && v["plot"].isArray()))) ||
+                 (kind == "tabs" && inheritedEffect.isObject() && v["plot"].isArray()))
         {
-            const auto algorithm = parameters.display("fx" + juce::String(index) + ".type");
-            effectGlyph(g, pr, theme.accent, algorithm);
-        }
-        else if (kind == "tabs" && inheritedEffect.isObject() && v["plot"].isArray())
-        {
-            const auto slot = static_cast<int>(number(inheritedEffect, "index", 1));
+            const auto slot = inheritedEffect.isObject()
+                                  ? static_cast<int>(number(inheritedEffect, "index", 1))
+                                  : index;
             const auto algorithm = parameters.display("fx" + juce::String(slot) + ".type");
-            bezel(g, theme, pr, theme.display, 4);
-            effectGlyph(g, pr.reduced(13, 17), theme.secondary, algorithm);
-        }
-        else if (kind == "effects" && selected.isObject() && v["plot"].isArray())
-        {
-            const auto algorithm = parameters.display("fx" + juce::String(index) + ".type");
-            bezel(g, theme, pr, theme.display, 4);
-            effectGlyph(g, pr.reduced(13, 17), theme.secondary, algorithm);
+            const auto &curve = effectCurves[juce::jlimit(0, n_fx_slots - 1, slot - 1)];
+            const auto ink = variant == "compact" ? theme.accent : theme.secondary;
+            if (variant != "compact")
+                bezel(g, theme, pr, theme.display, 4);
+            juce::Graphics::ScopedSaveState saved(g);
+            g.reduceClipRegion(pr.toNearestInt());
+            if (curve.available && curve.values.size() > 1 && pr.getHeight() >= 44)
+            {
+                const auto plot = pr.reduced(7, 5).withTrimmedTop(12).withTrimmedBottom(14);
+                const auto labelInk = theme.display.contrasting(.75f);
+                const auto axisInk = theme.display.contrasting(.32f);
+                g.setColour(axisInk.withAlpha(.55f));
+                g.drawLine(plot.getX(), plot.getCentreY(), plot.getRight(), plot.getCentreY(), .7f);
+                g.drawLine(plot.getCentreX(), plot.getY(), plot.getCentreX(), plot.getBottom(), .7f);
+                g.setColour(axisInk.withAlpha(.18f));
+                g.drawLine(plot.getX(), plot.getBottom(), plot.getRight(), plot.getY(), .7f);
+
+                juce::Path transfer;
+                bool clipped = false;
+                for (std::size_t i = 0; i < curve.values.size(); ++i)
+                {
+                    const auto value = curve.values[i];
+                    clipped = clipped || std::abs(value) > 1.f;
+                    const auto x = plot.getX() + plot.getWidth() * i / (curve.values.size() - 1);
+                    const auto y = plot.getCentreY() -
+                                   std::clamp(value, -1.f, 1.f) * plot.getHeight() * .5f;
+                    if (i == 0)
+                        transfer.startNewSubPath(x, y);
+                    else
+                        transfer.lineTo(x, y);
+                }
+                if (!theme.light())
+                {
+                    g.setColour(ink.withAlpha(.12f));
+                    g.strokePath(transfer, juce::PathStrokeType(5));
+                }
+                g.setColour(ink);
+                g.strokePath(transfer, juce::PathStrokeType(1.8f,
+                    juce::PathStrokeType::curved, juce::PathStrokeType::rounded));
+                const auto model = curve.caption.upToFirstOccurrenceOf(" transfer", false, false);
+                text(g, theme, pr.getWidth() >= 130 ? model + " transfer" : "Transfer",
+                     pr.reduced(4, 0).withHeight(16), 9, labelInk, false,
+                     juce::Justification::centred);
+                text(g, theme, clipped ? "Shaper only / clipped"
+                                      : pr.getWidth() >= 195 ? "EQ, feedback, output excluded"
+                                                            : "Shaper only",
+                     pr.reduced(4, 0).withTop(pr.getBottom() - 17), 8.5f, labelInk,
+                     false, juce::Justification::centred);
+            }
+            else
+            {
+                effectGlyph(g, pr.reduced(9, 10).withTrimmedBottom(10), ink, algorithm);
+                if (pr.getHeight() >= 38)
+                    text(g, theme, "Family icon",
+                         pr.reduced(3, 0).withTop(pr.getBottom() - 17), 8.5f,
+                         theme.display.contrasting(.7f), false, juce::Justification::centred);
+            }
         }
         else if (kind == "effects" && !selected.isObject())
         {
@@ -5078,148 +5840,538 @@ struct Workspace::Impl
     }
     void drawRouting(juce::Graphics &g, Rect r, const juce::String &variant, const juce::var &nodes)
     {
-        const auto mode = processor.surge->storage.getPatch()
-                              .scene[parameters.getScene()]
-                              .filterblock_configuration.val.i;
-        const bool parallel = mode >= fc_dual1;
-        const juce::StringArray labels =
-            parallel ? juce::StringArray{"OSC", "F1 / F2", mode == fc_ring ? "RING" : "MIX", "AMP"}
-                     : juce::StringArray{"OSC", "F1", "F2", "AMP"};
-        if (variant == "vertical")
-        {
-            float h = r.getHeight() / 4;
-            for (int j = 0; j < 4; ++j)
+        auto &patch = processor.surge->storage.getPatch();
+        const auto &scene = patch.scene[parameters.getScene()];
+        const auto mode = scene.filterblock_configuration.val.i;
+        // Wide has two stereo copies of F1 -> F2. Serial 3 puts F2 in the
+        // feedback branch, not between F1 and the output (QuadFilterChain.cpp).
+        const bool parallel = mode == fc_dual1 || mode == fc_dual2 ||
+                              mode == fc_stereo || mode == fc_ring;
+        const bool feedbackFilter = mode == fc_serial3;
+        const bool feedbackActive = mode != fc_serial1 && std::abs(scene.feedback.val.f) > .0001f;
+        const auto audioInk = theme.accent;
+        const auto controlInk = theme.secondary.interpolatedWith(theme.accent, .55f);
+        auto stroke = [&](const juce::Path &path, juce::Colour ink, bool control,
+                          bool active = true, bool arrow = true) {
+            if (path.isEmpty())
+                return;
+            const auto width = control ? 1.15f : 1.8f;
+            const auto opacity = active ? 1.f : .24f;
+            if (!control && active)
             {
-                Rect n(r.getX() + 2, r.getY() + j * h + 1, r.getWidth() - 4, std::max(12.f, h - 9));
-                bezel(g, theme, n, theme.display, 3);
-                text(g, theme, labels[j], n, 10, theme.display.contrasting(.9f), false,
-                     juce::Justification::centred);
-                if (j < 3)
-                {
-                    g.setColour(theme.accent);
-                    g.drawLine(n.getCentreX(), n.getBottom(), n.getCentreX(), n.getBottom() + 8,
-                               1.5f);
-                }
+                g.setColour(ink.withAlpha(.12f));
+                g.strokePath(path, juce::PathStrokeType(width + 4.f,
+                    juce::PathStrokeType::curved, juce::PathStrokeType::rounded));
             }
-            return;
-        }
+            g.setColour(ink.withAlpha(opacity));
+            if (control)
+            {
+                const float pattern[]{4.f, 3.f};
+                juce::Path dashes;
+                juce::PathStrokeType(width).createDashedStroke(dashes, path, pattern, 2);
+                g.fillPath(dashes);
+            }
+            else
+                g.strokePath(path, juce::PathStrokeType(width,
+                    juce::PathStrokeType::curved, juce::PathStrokeType::rounded));
+            const auto length = path.getLength();
+            if (arrow && length > 8.f)
+            {
+                const auto end = path.getPointAlongPath(length);
+                const auto before = path.getPointAlongPath(length - 4.f);
+                const auto delta = end - before;
+                const auto magnitude = std::max(.001f, delta.getDistanceFromOrigin());
+                const auto direction = delta / magnitude;
+                const auto perpendicular = juce::Point<float>(-direction.y, direction.x);
+                const auto base = end - direction * (control ? 5.f : 6.f);
+                juce::Path head;
+                head.addTriangle(end, base + perpendicular * 2.8f,
+                                 base - perpendicular * 2.8f);
+                g.fillPath(head);
+            }
+        };
+        auto wire = [&](juce::Point<float> a, juce::Point<float> b, bool active = true) {
+            juce::Path path;
+            path.startNewSubPath(a);
+            const auto middle = (a.x + b.x) * .5f;
+            path.cubicTo(middle, a.y, middle, b.y, b.x, b.y);
+            stroke(path, audioInk, false, active);
+        };
+        auto pin = [&](juce::Point<float> point, juce::Colour ink, bool active = true) {
+            g.setColour(theme.display);
+            g.fillEllipse(point.x - 3.6f, point.y - 3.6f, 7.2f, 7.2f);
+            g.setColour(ink.withAlpha(active ? 1.f : .3f));
+            if (active)
+                g.fillEllipse(point.x - 2.7f, point.y - 2.7f, 5.4f, 5.4f);
+            else
+                g.drawEllipse(point.x - 2.7f, point.y - 2.7f, 5.4f, 5.4f, 1.f);
+        };
+        auto filterOn = [&](int index) { return scene.filterunit[index].type.val.i != 0; };
+        const juce::StringArray labels =
+            feedbackFilter ? juce::StringArray{"OSC", "F1", "AMP", "F2 FB"}
+            : parallel ? juce::StringArray{"OSC", "F1 / F2", mode == fc_ring ? "RING" :
+                                            mode == fc_stereo ? "L / R" : "MIX", "AMP"}
+                       : juce::StringArray{"OSC", "F1", "F2", "AMP"};
         if (variant != "flow")
         {
+            juce::Graphics::ScopedSaveState saved(g);
+            g.reduceClipRegion(r.expanded(1.f).toNearestInt());
+            const bool vertical = variant == "vertical";
             const bool compact = r.getHeight() < 60;
-            if (!compact)
-                text(g, theme, parameters.display("routing"), r.withHeight(21), 12, theme.accent,
-                     true);
-            auto line = compact ? r : r.withTrimmedTop(27);
-            float w = line.getWidth() / 4;
-            for (int i = 0; i < 4; ++i)
+            if (!vertical && !compact)
+                text(g, theme, parameters.display("routing"), r.withHeight(21), 12,
+                     theme.accent, true);
+            auto line = vertical || compact ? r : r.withTrimmedTop(27);
+            auto stageLabels = labels;
+            // The industrial strip includes the real mixer/FX groups. The
+            // parallel filter pair remains one node to avoid implying serial DSP.
+            if (theme.style == "tokyo" && !vertical && !feedbackFilter)
+                stageLabels = parallel ? juce::StringArray{"OSC", "MIX", "F1/F2",
+                                   mode == fc_ring ? "RING" : mode == fc_stereo ? "L/R" : "SUM", "AMP", "FX"}
+                               : juce::StringArray{"OSC", "MIX", "F1", "F2", "AMP", "FX"};
+            const auto count = stageLabels.size();
+            const auto step = (vertical ? line.getHeight() : line.getWidth()) / count;
+            std::array<Rect, 6> boxes{};
+            for (int i = 0; i < count; ++i)
             {
-                Rect n(line.getX() + i * w + 3, line.getY(), w - 12,
-                       std::max(20.f, line.getHeight() - 3));
-                bezel(g, theme, n, theme.display, 3);
-                text(g, theme, labels[i], n, 11, theme.display.contrasting(.9f), false,
+                auto n = vertical
+                    ? Rect(line.getX() + 2, line.getY() + i * step + 1,
+                           line.getWidth() - 4, std::max(12.f, step - 9))
+                    : Rect(line.getX() + i * step + 3, line.getY(), step - 12,
+                           std::max(20.f, line.getHeight() - 3));
+                boxes[i] = n;
+                const auto label = stageLabels[i];
+                const bool enabled = label == "F1" ? filterOn(0) : label == "F2" || label == "F2 FB"
+                    ? filterOn(1) : label.contains("F1") ? filterOn(0) || filterOn(1) : false;
+                bezel(g, theme, n, enabled ? theme.display.interpolatedWith(audioInk, .10f)
+                                          : theme.display, 3);
+                g.setColour(audioInk.withAlpha(enabled ? .85f : .3f));
+                g.drawRoundedRectangle(n.reduced(.6f), 3, .9f);
+                text(g, theme, label, n.reduced(2, 0), vertical ? 10.f : 10.5f,
+                     enabled ? audioInk : theme.display.contrasting(.9f), enabled,
                      juce::Justification::centred);
-                if (i < 3)
+            }
+            for (int i = 0; i + 1 < count; ++i)
+            {
+                // F2 FB is a feedback stage. Do not connect it as a main-output
+                // filter merely to fill the available number of boxes.
+                if (feedbackFilter && (stageLabels[i] == "F2 FB" || stageLabels[i + 1] == "F2 FB"))
+                    continue;
+                const auto &a = boxes[i];
+                const auto &b = boxes[i + 1];
+                juce::Path link;
+                if (vertical)
                 {
-                    g.setColour(theme.accent);
-                    g.drawLine(n.getRight(), n.getCentreY(), n.getRight() + 10, n.getCentreY(),
-                               1.5f);
+                    link.startNewSubPath(a.getCentreX(), a.getBottom());
+                    link.lineTo(b.getCentreX(), b.getY());
+                }
+                else
+                {
+                    link.startNewSubPath(a.getRight(), a.getCentreY());
+                    link.lineTo(b.getX(), b.getCentreY());
+                }
+                stroke(link, audioInk, false);
+            }
+            if (feedbackFilter)
+            {
+                const auto index = stageLabels.indexOf("F2 FB");
+                const auto filter = stageLabels.indexOf("F1");
+                const auto amplifier = stageLabels.indexOf("AMP");
+                if (index >= 0 && filter >= 0 && amplifier >= 0)
+                {
+                    const auto &from = boxes[amplifier];
+                    const auto &via = boxes[index];
+                    const auto &to = boxes[filter];
+                    juce::Path send, back;
+                    if (vertical)
+                    {
+                        send.startNewSubPath(from.getCentreX(), from.getBottom());
+                        send.lineTo(via.getCentreX(), via.getY());
+                        back.startNewSubPath(via.getX(), via.getCentreY());
+                        back.lineTo(line.getX(), via.getCentreY());
+                        back.lineTo(line.getX(), to.getCentreY());
+                        back.lineTo(to.getX(), to.getCentreY());
+                    }
+                    else
+                    {
+                        send.startNewSubPath(from.getRight(), from.getCentreY());
+                        send.lineTo(via.getX(), via.getCentreY());
+                        back.startNewSubPath(via.getCentreX(), via.getBottom());
+                        back.lineTo(via.getCentreX(), line.getBottom());
+                        back.lineTo(to.getCentreX(), line.getBottom());
+                        back.lineTo(to.getCentreX(), to.getBottom());
+                    }
+                    stroke(send, audioInk, false, feedbackActive);
+                    stroke(back, audioInk, false, feedbackActive);
                 }
             }
             return;
         }
-        plotBase(g, r);
+
+        juce::Graphics::ScopedSaveState saved(g);
+        g.reduceClipRegion(r.toNearestInt());
+        const auto plot = r;
+        g.setColour(theme.display);
+        g.fillRoundedRectangle(plot, 3);
+        // The cartographer has a fine drafting grid, unlike the signal plots.
+        for (int x = 0; x <= static_cast<int>(plot.getWidth()); x += 10)
+        {
+            g.setColour(theme.secondary.withAlpha(x % 50 == 0 ? .075f : .027f));
+            g.drawVerticalLine(static_cast<int>(plot.getX()) + x, plot.getY(), plot.getBottom());
+        }
+        for (int y = 0; y <= static_cast<int>(plot.getHeight()); y += 10)
+        {
+            g.setColour(theme.secondary.withAlpha(y % 50 == 0 ? .075f : .027f));
+            g.drawHorizontalLine(static_cast<int>(plot.getY()) + y, plot.getX(), plot.getRight());
+        }
         r = r.reduced(16, 26);
-        auto node = [&](const char *key, juce::String title, float x, float y, float w, float h) {
-            auto n =
-                arrayRect(nodes[key], {r.getX() + x * r.getWidth(), r.getY() + y * r.getHeight(),
-                                       w * r.getWidth(), h * r.getHeight()});
-            bezel(g, theme, n, theme.panel, 7);
-            if (title == "MOD SOURCES" && n.getWidth() < 110)
-            {
-                g.setColour(theme.text);
-                g.setFont(theme.type(13, true));
-                g.drawFittedText("MOD\nSOURCES", n.reduced(6).toNearestInt(),
-                                 juce::Justification::centred, 2, .85f);
-            }
-            else
-                text(g, theme, title, n.reduced(8, 2).withHeight(19), 13, theme.text, true);
-            return n;
+        auto rectangle = [&](const char *key, float x, float y, float w, float h) {
+            return arrayRect(nodes[key], {r.getX() + x * r.getWidth(),
+                r.getY() + y * r.getHeight(), w * r.getWidth(), h * r.getHeight()});
         };
-        auto wire = [&](juce::Point<float> a, juce::Point<float> b) {
-            juce::Path p;
-            p.startNewSubPath(a);
-            p.cubicTo(a.x + (b.x - a.x) * .55f, a.y, b.x - (b.x - a.x) * .55f, b.y, b.x, b.y);
-            g.setColour(theme.accent.withAlpha(.15f));
-            g.strokePath(p, juce::PathStrokeType(6));
-            g.setColour(theme.accent);
-            g.strokePath(p, juce::PathStrokeType(2));
-        };
-        auto mix = node("mixer", "MIXER", .27f, .25f, .13f, .24f);
+        std::array<Rect, 3> oscillators{};
         for (int i = 0; i < 3; ++i)
-        {
-            auto key = "osc" + juce::String(i + 1);
-            auto n = node(key.toRawUTF8(), "OSC " + juce::String(i + 1), .02f, .08f + i * .23f,
-                          .20f, .13f);
-            auto preview = n.withTrimmedLeft(n.getWidth() * .52f).withHeight(22).reduced(4, 2);
-            if (!visuals.oscillator[i].empty())
-                Visuals::waveform(g, preview, visuals.oscillator[i], theme.accent, theme.secondary,
-                                  false);
-            else
-                unavailableOscillator(g, preview, i);
-            wire({n.getRight(), n.getCentreY()}, {mix.getX(), mix.getCentreY()});
-        }
-        auto f1 = node("filter1", "FILTER 1", .45f, .15f, .18f, .15f),
-             f2 = node("filter2", "FILTER 2", .45f, .43f, .18f, .15f);
-        auto amp = node("amp", "AMP", .70f, .29f, .10f, .17f),
-             fx = node("fx", "FX CHAIN", .86f, .22f, .11f, .30f);
-        for (int index = 0; index < 2; ++index)
-        {
-            const auto &curve = filterCurves[index];
-            auto plot = (index == 0 ? f1 : f2).withTrimmedTop(58).reduced(8, 2);
-            if (plot.getHeight() > 4 && curve.available && curve.values.size() > 1)
-            {
-                juce::Path trace;
-                for (size_t i = 0; i < curve.values.size(); ++i)
-                {
-                    const float x = plot.getX() + plot.getWidth() * i / (curve.values.size() - 1);
-                    const float y =
-                        plot.getBottom() -
-                        plot.getHeight() *
-                            std::clamp((curve.values[i] - filterPreviewMinimumDb) /
-                                           (filterPreviewMaximumDb - filterPreviewMinimumDb),
-                                       0.f, 1.f);
-                    if (i == 0)
-                        trace.startNewSubPath(x, y);
-                    else
-                        trace.lineTo(x, y);
-                }
-                g.setColour(theme.accent);
-                g.strokePath(trace, juce::PathStrokeType(1.2f));
-            }
-        }
-        drawEnvelope(g, amp.withTrimmedTop(22).reduced(4), 1, theme.accent);
+            oscillators[i] = rectangle(("osc" + juce::String(i + 1)).toRawUTF8(),
+                                       .02f, .08f + i * .23f, .20f, .13f);
+        const auto mix = rectangle("mixer", .27f, .25f, .13f, .24f);
+        const auto f1 = rectangle("filter1", .45f, .15f, .18f, .15f);
+        const auto f2 = rectangle("filter2", .45f, .43f, .18f, .15f);
+        const auto amp = rectangle("amp", .70f, .29f, .10f, .17f);
+        const auto fx = rectangle("fx", .86f, .22f, .11f, .30f);
+        const auto out = rectangle("output", .97f, .30f, .03f, .13f);
+        const auto sources = rectangle("modsources", .05f, .80f, .27f, .15f);
+        const auto modbus = rectangle("modbus", .46f, .80f, .30f, .15f);
+        auto node = [&](Rect n, const juce::String &title, bool active = true,
+                        float titleInset = 10.f) {
+            bezel(g, theme, n, theme.panel, 7);
+            g.setColour(theme.secondary.withAlpha(active ? .80f : .28f));
+            g.drawRoundedRectangle(n.reduced(.5f), 7, .9f);
+            if (title.isNotEmpty())
+                text(g, theme, title, n.reduced(titleInset, 4).withHeight(18), 12.5f,
+                     theme.text.withAlpha(active ? 1.f : .48f), true);
+        };
+        // Draw audio paths behind the node surfaces. Parallel paths have an
+        // explicit summing/ring junction, while Wide remains a serial pair.
+        for (int i = 0; i < 3; ++i)
+            wire({oscillators[i].getRight(), oscillators[i].getCentreY()},
+                 {mix.getX(), mix.getY() + 30.f + i * 22.f},
+                 parameters.value("osc" + juce::String(i + 1) + ".mute") < .5f);
         wire({mix.getRight(), mix.getCentreY()}, {f1.getX(), f1.getCentreY()});
+        const juce::Point<float> junction((f1.getRight() + amp.getX()) * .5f, amp.getCentreY());
         if (parallel)
         {
             wire({mix.getRight(), mix.getCentreY()}, {f2.getX(), f2.getCentreY()});
+            wire({f1.getRight(), f1.getCentreY()}, {junction.x - 10, junction.y});
+            wire({f2.getRight(), f2.getCentreY()}, {junction.x - 10, junction.y});
+            wire({junction.x + 10, junction.y}, {amp.getX(), amp.getCentreY()});
+        }
+        else if (feedbackFilter)
+        {
             wire({f1.getRight(), f1.getCentreY()}, {amp.getX(), amp.getCentreY()});
+            juce::Path feedback;
+            feedback.startNewSubPath(amp.getCentreX(), amp.getBottom());
+            feedback.cubicTo(amp.getCentreX(), f2.getCentreY(), f2.getRight() + 30,
+                             f2.getCentreY(), f2.getRight(), f2.getCentreY());
+            stroke(feedback, audioInk, false, feedbackActive);
+            juce::Path back;
+            back.startNewSubPath(f2.getX(), f2.getCentreY());
+            back.cubicTo(f1.getX() - 25, f2.getCentreY(), f1.getX() - 25,
+                         f1.getCentreY(), f1.getX(), f1.getCentreY());
+            stroke(back, audioInk, false, feedbackActive);
         }
         else
-            wire({f1.getRight(), f1.getCentreY()}, {f2.getCentreX(), f2.getY()});
-        wire({f2.getRight(), f2.getCentreY()}, {amp.getX(), amp.getCentreY()});
+        {
+            juce::Path serial;
+            serial.startNewSubPath(f1.getRight(), f1.getCentreY());
+            serial.cubicTo(f1.getRight() + 24, f1.getCentreY(), f1.getRight() + 24,
+                           f2.getY() - 12, f2.getCentreX(), f2.getY() - 12);
+            serial.lineTo(f2.getCentreX(), f2.getY());
+            stroke(serial, audioInk, false);
+            wire({f2.getRight(), f2.getCentreY()}, {amp.getX(), amp.getCentreY()});
+        }
         wire({amp.getRight(), amp.getCentreY()}, {fx.getX(), fx.getCentreY()});
         if (nodes.hasProperty("output"))
-        {
-            auto out = node("output", "OUT", .97f, .30f, .03f, .13f);
             wire({fx.getRight(), fx.getCentreY()}, {out.getX(), out.getCentreY()});
+
+        // These are read-only grouped connections from the last bounded native
+        // route snapshot. An unused chip has a hollow port and no invented wire.
+        std::array<int, 7> sourceCounts{}, sourceActive{};
+        std::array<int, 16> targetCounts{}, targetActive{};
+        std::array<Rect, 6> chips{};
+        for (int i = 0; i < 6; ++i)
+            chips[i] = {427, 454.f + i * (123.f + 4.f) / 6.f, 66, (123.f - 20.f) / 6.f};
+        // Respect the same manifest-defined positions as the actual view tabs.
+        for (const auto &selectionState : selections)
+            if (selectionState.id == "flow.mod-sources")
+            {
+                const auto area = arrayRect(selectionState.definition["tabsRect"], {});
+                for (int i = 0; i < 6 && !area.isEmpty(); ++i)
+                    chips[i] = {area.getX(), area.getY() + i * (area.getHeight() + 4.f) / 6.f,
+                                area.getWidth(), (area.getHeight() - 20.f) / 6.f};
+            }
+        const std::array<Rect, 16> targets{oscillators[0], oscillators[1], oscillators[2],
+            mix, f1, f2, amp, fx, out, chips[0], chips[1], chips[2], chips[3], chips[4], chips[5], modbus};
+        const auto sourceSlot = [&](const RouteRow &route) {
+            const auto id = route.key.sourceId;
+            if (id == ms_ampeg) return 0;
+            if (id == ms_filtereg) return 1;
+            if (id == ms_lfo3 && route.key.sourceIndex == 2 && scene.lfo[2].shape.val.i != lt_formula)
+                return 2;
+            if (id >= ms_lfo1 && id <= ms_lfo3) return 3 + id - ms_lfo1;
+            return 6; // Macros, MIDI, scene LFOs and other real sources.
+        };
+        const auto destinationSlot = [&](const RouteRow &route) {
+            if (route.key.parameterId < 0 ||
+                static_cast<size_t>(route.key.parameterId) >= patch.param_ptr.size()) return -1;
+            const auto *parameter = patch.param_ptr[route.key.parameterId];
+            if (!parameter || static_cast<int>(parameter->ctrltype) != route.key.targetType)
+                return -1;
+            const auto entry = parameter->ctrlgroup_entry;
+            switch (parameter->ctrlgroup)
+            {
+            case cg_OSC: return entry >= 0 && entry < 3 ? entry : -1;
+            case cg_MIX: return 3;
+            case cg_FILTER: return entry >= 0 && entry < 2 ? 4 + entry : -1;
+            case cg_ENV: return entry >= 0 && entry < 2 ? 9 + entry : -1;
+            case cg_LFO: return entry >= ms_lfo1 && entry <= ms_lfo3 ? 12 + entry - ms_lfo1 : 15;
+            case cg_FX: return 7;
+            default:
+                if (parameter == &scene.vca_level || parameter == &scene.vca_velsense ||
+                    parameter == &scene.volume || parameter == &scene.pan || parameter == &scene.width)
+                    return 6;
+                if (parameter == &patch.volume) return 8;
+                return 15; // A global/unpictured module stays identified at the bus.
+            }
+        };
+        for (const auto &route : routes)
+        {
+            const auto target = destinationSlot(route);
+            if (target < 0) continue;
+            const auto source = sourceSlot(route);
+            ++sourceCounts[source];
+            ++targetCounts[target];
+            if (!route.muted && std::abs(route.normalizedDepth) > .000001f)
+            {
+                ++sourceActive[source];
+                ++targetActive[target];
+            }
         }
-        node("modsources", "MOD SOURCES", .05f, .80f, .27f, .15f);
-        auto modbus = node("modbus", "MOD BUS / ROUTING", .46f, .80f, .30f, .15f);
-        text(g, theme, juce::String(static_cast<int>(routes.size())) + " route entries shown",
-             modbus.reduced(8).withTrimmedTop(20), 11, theme.muted);
-        text(g, theme,
-             "Routing: " + parameters.display("routing") + utf8("  •  schematic overview"),
-             {r.getX(), r.getBottom() + 7, r.getWidth(), 17}, 11, theme.muted);
+        for (int i = 0; i < 6; ++i)
+        {
+            const auto colour = i < 3 ? juce::Colour(0xffbca4ef) : theme.secondary;
+            if (sourceCounts[i] > 0)
+            {
+                const auto chip = chips[i];
+                juce::Path ingress, egress;
+                ingress.startNewSubPath(sources.getRight(), sources.getCentreY());
+                ingress.cubicTo(sources.getRight() + 13, chip.getCentreY(), chip.getX() - 12,
+                                chip.getCentreY(), chip.getX(), chip.getCentreY());
+                egress.startNewSubPath(chip.getRight() + 5, chip.getCentreY());
+                const auto y = modbus.getCentreY() - 9 + i * 3.f;
+                egress.cubicTo(chip.getRight() + 52, chip.getCentreY(), modbus.getX() - 125,
+                              y, modbus.getX(), y);
+                stroke(ingress, colour, true, sourceActive[i] > 0);
+                stroke(egress, colour, true, sourceActive[i] > 0);
+            }
+            pin({chips[i].getRight() + 5, chips[i].getCentreY()}, colour, sourceActive[i] > 0);
+        }
+        if (sourceCounts[6] > 0)
+        {
+            juce::Path other;
+            other.startNewSubPath(sources.getCentreX(), sources.getBottom());
+            const auto y = std::min(plot.getBottom() - 13, sources.getBottom() + 19);
+            other.cubicTo(sources.getCentreX(), y, modbus.getX() - 38, y,
+                          modbus.getX(), modbus.getBottom() - 8);
+            stroke(other, controlInk, true, sourceActive[6] > 0);
+            text(g, theme, "Other live sources", {510, y + 2, 128, 14},
+                 9.5f, controlInk);
+        }
+        for (int i = 0; i < 15; ++i)
+        {
+            if (targetCounts[i] == 0) continue;
+            const auto target = targets[i];
+            const auto ink = i >= 9 ? juce::Colour(0xffbca4ef) : controlInk;
+            juce::Path route;
+            if (i >= 9)
+            {
+                const auto start = juce::Point<float>(modbus.getX(), modbus.getBottom() - 4);
+                const auto end = juce::Point<float>(target.getRight() + 9, target.getCentreY());
+                route.startNewSubPath(start);
+                route.cubicTo(start.x - 55, start.y + 17, end.x + 45, end.y,
+                              end.x, end.y);
+            }
+            else
+            {
+                const auto x = modbus.getX() + 15 + i * (modbus.getWidth() - 30) / 8.f;
+                const auto end = juce::Point<float>(target.getCentreX(), target.getBottom() + 3);
+                const auto bendY = std::min(modbus.getY() - 18 - (i % 3) * 14.f,
+                                            std::max(end.y + 22, 405.f + (i % 3) * 12));
+                route.startNewSubPath(x, modbus.getY());
+                route.lineTo(x, bendY + 12);
+                route.quadraticTo(x, bendY, x + (end.x > x ? 12.f : -12.f), bendY);
+                if (i < 3 || i == 4)
+                {
+                    // Reach upper stacked modules around their right edge;
+                    // a vertical line through lower modules would suggest a
+                    // connection to those unrelated processors.
+                    const auto lane = target.getRight() + 14.f + (i % 3) * 7.f;
+                    route.lineTo(lane + 12.f, bendY);
+                    route.quadraticTo(lane, bendY, lane, bendY - 12);
+                    route.lineTo(lane, end.y + 24);
+                    route.quadraticTo(lane, end.y + 12, lane - 12, end.y + 12);
+                    route.lineTo(end.x + 12, end.y + 12);
+                    route.quadraticTo(end.x, end.y + 12, end.x, end.y);
+                }
+                else
+                {
+                    route.lineTo(end.x + (end.x > x ? -12.f : 12.f), bendY);
+                    route.quadraticTo(end.x, bendY, end.x, bendY - 12);
+                    route.lineTo(end);
+                }
+            }
+            stroke(route, ink, true, targetActive[i] > 0);
+        }
+
+        node(mix, "MIXER");
+        for (int i = 0; i < 3; ++i)
+        {
+            const auto n = oscillators[i];
+            const bool active = parameters.value("osc" + juce::String(i + 1) + ".mute") < .5f;
+            node(n, {}, active);
+            text(g, theme, "OSC " + juce::String(i + 1),
+                 {n.getX() + 37, n.getY() + 4, 68, 19}, 12.5f, theme.text, true);
+            const auto preview = Rect(n.getX() + 102, n.getY() + 10,
+                                      std::max(15.f, n.getWidth() - 112), 30);
+            if (!visuals.oscillator[i].empty())
+                Visuals::waveform(g, preview, visuals.oscillator[i], theme.accent,
+                                  theme.secondary, false);
+            else
+                unavailableOscillator(g, preview, i);
+            pin({n.getRight(), n.getCentreY()}, audioInk, active);
+        }
+        for (int i = 0; i < 2; ++i)
+        {
+            const auto n = i == 0 ? f1 : f2;
+            node(n, "FILTER " + juce::String(i + 1), filterOn(i), 37.f);
+            g.setColour(audioInk.withAlpha(filterOn(i) ? .8f : .2f));
+            g.fillEllipse(n.getX() + 16.f, n.getY() + 11.f, 5.f, 5.f);
+            const auto &curve = filterCurves[i];
+            const auto area = n.withTrimmedTop(40).reduced(10, 4);
+            if (area.getHeight() > 4 && curve.available && curve.values.size() > 1)
+            {
+                juce::Path trace;
+                for (size_t j = 0; j < curve.values.size(); ++j)
+                {
+                    const auto x = area.getX() + area.getWidth() * j / (curve.values.size() - 1);
+                    const auto y = area.getBottom() - area.getHeight() * std::clamp(
+                        (curve.values[j] - filterPreviewMinimumDb) /
+                        (filterPreviewMaximumDb - filterPreviewMinimumDb), 0.f, 1.f);
+                    if (j == 0) trace.startNewSubPath(x, y); else trace.lineTo(x, y);
+                }
+                g.setColour(audioInk.withAlpha(.15f));
+                g.strokePath(trace, juce::PathStrokeType(4.f));
+                g.setColour(audioInk);
+                g.strokePath(trace, juce::PathStrokeType(1.3f));
+            }
+            pin({n.getRight(), n.getCentreY()}, audioInk);
+        }
+        node(amp, "AMP");
+        drawEnvelope(g, amp.withTrimmedTop(22).reduced(4), 1, theme.accent);
+        node(fx, "FX SLOTS (1-8)");
+        for (int i = 0; i < 8; ++i)
+        {
+            const float y = fx.getY() + 40 + i * 24;
+            const bool groupEnabled = i < 4 ? patch.fx_bypass.val.i != fxb_no_fx
+                : i < 6 ? patch.fx_bypass.val.i == fxb_all_fx
+                        : patch.fx_bypass.val.i == fxb_all_fx || patch.fx_bypass.val.i == fxb_no_sends;
+            const bool enabled = groupEnabled && patch.fx[i].type.val.i != fxt_off &&
+                                 (patch.fx_disable.val.i & (1 << i)) == 0;
+            text(g, theme, juce::String(i + 1), {fx.getX() + 8, y - 9, 17, 18}, 10,
+                 theme.text, false, juce::Justification::centred);
+            g.setColour(audioInk.withAlpha(enabled ? .95f : .18f));
+            g.fillEllipse(fx.getX() + 36, y - 2.6f, 5.2f, 5.2f);
+        }
+        if (nodes.hasProperty("output"))
+        {
+            node(out, "OUT");
+            const auto c = out.getCentre().translated(0, 10);
+            juce::Path speaker;
+            speaker.startNewSubPath(c.x - 10, c.y - 4);
+            speaker.lineTo(c.x - 5, c.y - 4);
+            speaker.lineTo(c.x + 1, c.y - 10);
+            speaker.lineTo(c.x + 1, c.y + 10);
+            speaker.lineTo(c.x - 5, c.y + 4);
+            speaker.lineTo(c.x - 10, c.y + 4);
+            speaker.closeSubPath();
+            speaker.addCentredArc(c.x, c.y, 8, 10, 0, .6f, 2.55f, true);
+            g.setColour(theme.text);
+            g.strokePath(speaker, juce::PathStrokeType(1.25f));
+        }
+        for (int i = 0; i < 3; ++i)
+            pin({mix.getX(), mix.getY() + 30.f + i * 22.f}, audioInk,
+                parameters.value("osc" + juce::String(i + 1) + ".mute") < .5f);
+        for (const auto n : {mix, amp, fx})
+            pin({n.getRight(), n.getCentreY()}, audioInk);
+        pin({f1.getX(), f1.getCentreY()}, audioInk);
+        pin({amp.getX(), amp.getCentreY()}, audioInk);
+        pin({fx.getX(), fx.getCentreY()}, audioInk);
+        if (nodes.hasProperty("output")) pin({out.getX(), out.getCentreY()}, audioInk);
+        if (parallel)
+        {
+            pin({f2.getX(), f2.getCentreY()}, audioInk);
+            g.setColour(theme.panel);
+            g.fillEllipse(junction.x - 11, junction.y - 11, 22, 22);
+            g.setColour(audioInk);
+            g.drawEllipse(junction.x - 11, junction.y - 11, 22, 22, 1.2f);
+            text(g, theme, mode == fc_ring ? utf8("×") : mode == fc_stereo ? "LR" : "+",
+                 {junction.x - 9, junction.y - 9, 18, 18}, 16, theme.text, true,
+                 juce::Justification::centred);
+        }
+        node(sources, {});
+        text(g, theme, "MOD", sources.withTrimmedTop(26).withHeight(18), 13, theme.text, true,
+             juce::Justification::centred);
+        text(g, theme, "SOURCES", sources.withTrimmedTop(44).withHeight(18), 12, theme.text, true,
+             juce::Justification::centred);
+        juce::Path sourceIcon;
+        sourceIcon.startNewSubPath(sources.getCentreX() - 10, sources.getY() + 20);
+        sourceIcon.cubicTo(sources.getCentreX() - 3, sources.getY() + 6,
+                           sources.getCentreX() + 3, sources.getY() + 30,
+                           sources.getCentreX() + 10, sources.getY() + 17);
+        stroke(sourceIcon, controlInk, false, true, false);
+        node(modbus, {});
+        const auto iconX = modbus.getX() + 28, iconY = modbus.getCentreY();
+        g.setColour(controlInk);
+        g.drawRect(iconX, iconY - 10, 15.f, 17.f, 1.f);
+        for (const auto p : {juce::Point<float>(iconX, iconY - 10),
+                            juce::Point<float>(iconX + 15, iconY - 10),
+                            juce::Point<float>(iconX, iconY + 7),
+                            juce::Point<float>(iconX + 15, iconY + 7)})
+            g.fillRoundedRectangle(p.x - 2.5f, p.y - 2.5f, 5, 5, 1);
+        text(g, theme, "MOD BUS & ROUTING",
+             {modbus.getX() + 58, modbus.getY() + 12, modbus.getWidth() - 64, 20},
+             12.5f, theme.text, true);
+        int count = 0;
+        for (const auto active : targetActive) count += active;
+        text(g, theme, juce::String(count) + " active / " + juce::String(static_cast<int>(routes.size())) + " routes",
+             {modbus.getX() + 58, modbus.getY() + 35, modbus.getWidth() - 64, 18},
+             10.5f, theme.muted);
+        const auto legend = Rect(out.getRight() - 148, modbus.getCentreY() - 6, 148, 67);
+        node(legend, {});
+        for (int i = 0; i < 2; ++i)
+        {
+            const auto y = legend.getY() + 14 + i * 19;
+            juce::Path line;
+            line.startNewSubPath(legend.getX() + 12, y);
+            line.lineTo(legend.getX() + 41, y);
+            stroke(line, i == 0 ? audioInk : controlInk, i == 1, true, false);
+            text(g, theme, i == 0 ? "Audio (signal)" : "Modulation", {legend.getX() + 49, y - 8, 93, 16},
+                 9.5f, theme.text);
+        }
+        pin({legend.getX() + 26, legend.getY() + 53}, controlInk, false);
+        text(g, theme, "Module port", {legend.getX() + 49, legend.getY() + 45, 93, 16}, 9.5f,
+             theme.text);
+        text(g, theme, parameters.display("routing") + utf8(" • topology overview"),
+             {plot.getX() + 8, plot.getBottom() - 16, 156, 14}, 9.5f, theme.muted);
     }
 };
 
@@ -5397,6 +6549,18 @@ void Workspace::paint(juce::Graphics &g)
     g.addTransform(juce::AffineTransform::scale(i.scale).translated(i.offset));
     g.setColour(i.theme.background);
     g.fillRect(0, 0, 1586, 992);
+    if (i.theme.style == "precision")
+    {
+        // The exposed lower lip is part of the graphite enclosure, independent
+        // of parameter and signal state. Keep the functional panels above it.
+        g.setGradientFill(juce::ColourGradient(juce::Colour(0xff11171b), 793, 938,
+                                               juce::Colour(0xff363b41), 793, 992, false));
+        g.fillRect(0.f, 936.f, 1586.f, 56.f);
+        g.setColour(juce::Colour(0xff080d10));
+        g.fillRoundedRectangle({.5f, 31.f, 1585.f, 921.f}, 15.f);
+        g.setColour(juce::Colour(0xff5f686e).withAlpha(.55f));
+        g.drawRoundedRectangle({.5f, 31.f, 1585.f, 921.f}, 15.f, .8f);
+    }
     if (i.theme.style == "space" || i.theme.style == "ivory")
     {
         g.setColour(i.theme.text.withAlpha(.018f));

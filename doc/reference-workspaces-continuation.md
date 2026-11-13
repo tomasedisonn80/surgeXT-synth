@@ -106,3 +106,51 @@ cosmetic texture.
 Source checks and manifest validation are separate from the forthcoming linked
 run. The next checkpoint must inspect native test logs and all ten new captures,
 then continue typography, material, control, browser and routing refinements.
+
+
+## Native fidelity continuation from `786db23`
+
+The next isolated checkout recovered the already-published renderer and showcase
+fixtures at `786db231004c3370ea8acdd4bbdd046b38d650cd`; no earlier dirty checkout
+was discarded. This continuation uses numbered agent assignments in groups of
+six, with three workers at a time. Counts below describe actual completed
+assignments, not intended or simultaneous workers.
+
+The first checkpoint, `9620144008df50a158ab97a3a1d8f5ddeec07bcd`, fixes the
+Space-Age and Tokyo envelope attacks that were below the native parameter range
+and applies measured embedded-font optical sizing. Workflow `43377045262`
+built successfully and passed all 26 behavior cases (9,944,569 assertions).
+It produced all ten baseline and edited PNG pairs. The capture case still
+failed seven accessibility-name assertions for deliberately captionless Live
+controls; audio was finite, nonzero and below clipping for all ten profiles,
+and the strict reset-silence checks passed. Those images are a useful visual
+checkpoint, not a passing release or a pixel-exact fidelity claim.
+
+The following pass reconstructs native browser scopes and category navigation,
+state-derived routing cables, richer original-sample wavetable terrain and
+Bauhaus ribbons, real segmented choices, Space-Age knob materials, contrast
+corrections and accessible names for compact controls. Capture evidence is now
+checkpointed after each skin so an early failure retains diagnostic provenance.
+The Windows ARM build fix clears an RPC `small` macro reintroduced by SIMDE
+before including JUCE's `BadgeIconType::small` declaration; it does not disable
+warnings or skip platforms.
+
+| Wave | Assignment | Completed result |
+| --- | --- | --- |
+| 1 | 01 — Reference audit, Obsidian through Bauhaus | Measured typography, plot, browser and control discrepancies against genuine native captures |
+| 1 | 02 — Reference audit, Space-Age through Live | Prioritized material, browser, routing and native-widget corrections |
+| 1 | 03 — Native build investigation | Diagnosed local runtime limits and recovered exact Actions build/capture evidence |
+| 1 | 04 — Fixture range repair | Corrected two unsupported attack values with explicit native adaptations; published in `9620144` |
+| 1 | 05 — Native preset browser | Added actual scopes, categories, metadata cards, history and accessible navigation |
+| 1 | 06 — Cross-platform release audit | Identified and corrected the Windows ARM RPC macro collision |
+| 2 | 07 — State-derived routing | Added real modulation connections, audio junctions, FX status and corrected Wide/Serial3 diagrams |
+| 2 | 08 — Wavetable materials | Added actual-frame terrain surfaces, perspective floor, Bauhaus harmonic ribbons and fuller luminous ribbons |
+| 2 | 09 — Native segmented choices | Bauhaus oscillator/routing and Space mode segments preserve full native menus, accessibility and gestures |
+| 2 | 10 — Accessibility and interaction coverage | Fixed seven unnamed Live controls; added browser, scope, segment, name and transfer-state regressions |
+| 2 | 11 — Native FX transfer preview | Added cached state-derived Distortion transfer; explicitly excluded shared-random Fuzz initialization |
+| 2 | 12 — Showcase state and metadata | Added actual LFO/envelope routes with exact native identity/depth checks and real patch metadata |
+
+All twelve assignments above completed source checks. The combined linked native
+run is the next gate; source syntax checks and manifest checks are not reported
+as runtime passes. The next six agents refine individual skins against the
+reference and the newly captured native evidence.

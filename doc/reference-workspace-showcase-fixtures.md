@@ -105,6 +105,31 @@ to the amplitude envelope, for example. The default fixture used by independent
 behavior tests retains its original eight macro target bindings and eight
 active effect types.
 
+Styled profiles also contain actual voice modulation assignments. All ten add
+LFO 1 to Filter 1 cutoff at +0.025 normalized depth and Filter EG to Oscillator 1
+wavetable morph at +0.06. Cartographer and Live additionally route Amp EG to
+Oscillator 3 morph (+0.035) and a key-triggered 0.5 Hz triangle LFO 2 to
+Oscillator 2 pitch (+0.003). Cartographer adds a key-triggered 0.125 Hz sine
+LFO 3 to Filter 2 cutoff (-0.02). These deliberately modest native depths are
+not copied concept-art numbers: they preserve the eight useful macro mappings
+while providing audible movement and genuine source-to-destination connections
+for the matrix and routing schematic. The runtime audio headroom and strict
+reset checks remain unchanged.
+
+Profiles 01–08 therefore declare and resolve **10 routes**, Cartographer
+**13**, and Live **12**. The independent default fixture still has **8**. The
+fixture checks every declared parameter/source/scene/index tuple and its
+normalized depth against the engine's resolved route rows, in addition to the
+exact count and active/finite-value checks. The metadata records the declared
+native IDs, depths and resolved display labels.
+
+The current patch's category is `Reference Showcases`; its author, license,
+description and tags identify the generated showcase and its actual wavetable,
+filter routing and modulation. These fields are assigned to the real isolated
+patch and read back into `patchFixture`, so browser cards no longer inherit an
+unrelated template comment. No invented preset row, catalog ID, factory folder
+or patch count is injected into the installed browser library.
+
 These are native FX slots with the engine's actual insert/send/global topology;
 the test does not turn all eight into a fictional serial insert chain. Every
 algorithm selection and changed parameter is recorded. Some concept controls

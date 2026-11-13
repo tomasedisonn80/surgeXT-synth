@@ -39,6 +39,19 @@ struct PreviewCurve
 */
 PreviewCurve filterResponse(SurgeSynthProcessor &, int scene, int filterIndex);
 
+/** Native Distortion shaper transfer, at the current base drive, for a zero-based
+    FX storage slot. The 257 input samples are uniformly spaced from -1 to +1;
+    output values retain their actual amplitude (the renderer may display-clip).
+    This is the shaper alone, excluding pre/post EQ, feedback, oversampling and
+    output gain. Legacy models use the same lookup as DistortionEffect; newer
+    supported models use private, freshly initialized SIMD state per point.
+    The Fuzz model is deliberately unavailable: its native shared random lookup
+    table must not be initialized by changing a UI view. Other effects also
+    return unavailable. A bounded per-slot cache avoids repeat DSP work.
+    Call from the message-thread refresh, never from audio or paint().
+*/
+PreviewCurve distortionTransfer(SurgeSynthProcessor &, int fxSlot);
+
 /** Values are in [-1, 1] (extended amplitude is display-clipped). Periodic shapes
     use Surge's own private, deterministic display LFO, with current deformation,
     phase, amplitude and polarity. Their x axis is normalized shape/sequence time,

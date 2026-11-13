@@ -83,7 +83,12 @@ struct BrowserRow
     juce::String name;
     int patchId{-1};
     bool category{false};
+    int categoryId{-1};
+    int patchCount{0};
+    bool favorite{false};
 };
+
+enum class BrowserFilter { all, factory, user, favorites };
 
 /** Read-only message-thread view of the installed native patch catalog.
     Empty queries show real category headings, expanding the current category where possible.
@@ -91,6 +96,7 @@ struct BrowserRow
     use the existing dirty-checking preset loader when acting on them, not an unchecked direct load.
 */
 std::vector<BrowserRow> browserRows(SurgeSynthProcessor &, const juce::String &query,
-                                    int maxRows = 20);
+                                    int maxRows = 20, BrowserFilter = BrowserFilter::all,
+                                    int categoryId = -1);
 } // namespace Surge::GUI::Reference
 #endif

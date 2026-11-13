@@ -13,8 +13,10 @@
 #include "gui/reference/Workspace.h"
 #include "gui/reference/WorkspaceData.h"
 #include "gui/reference/Visuals.h"
+#include "gui/reference/PreviewCurves.h"
 #include "gui/reference/ModulationInteraction.h"
 #include "UndoManager.h"
+#include "DistortionEffect.h"
 #include "sst/filters/FilterConfiguration.h"
 
 #include <algorithm>
@@ -308,6 +310,51 @@ juce::var object() { return juce::var(new juce::DynamicObject()); }
 void property(juce::var &object, const char *key, const juce::var &value)
 {
     object.getDynamicObject()->setProperty(juce::Identifier(key), value);
+}
+
+/** A test-owned native catalog with deliberately identical Factory/User folder
+    names and nonsequential display order. No file is loaded or written. */
+void installBrowserTestCatalog(SurgeSynthProcessor &processor, const juce::File &directory)
+{
+    auto &storage = processor.surge->storage;
+    storage.patch_category.clear();
+    const auto category = [&](const char *name, bool root, bool factory, int count) {
+        PatchCategory entry;
+        entry.name = name;
+        entry.isRoot = root;
+        entry.isFactory = factory;
+        entry.numberOfPatchesInCategoryAndChildren = count;
+        storage.patch_category.push_back(entry);
+    };
+    category("Shared", true, true, 2);
+    category("Shared/Child", false, true, 1);
+    category("Third Party", true, false, 1);
+    category("Shared", true, false, 2);
+    category("Shared/Child", false, false, 1);
+    category("User Only", true, false, 1);
+    storage.firstThirdPartyCategory = 2;
+    storage.firstUserCategory = 3;
+    storage.patch_list.clear();
+    const auto patch = [&](const char *name, int folder, bool favorite) {
+        Patch entry;
+        entry.name = name;
+        entry.category = folder;
+        entry.isFavorite = favorite;
+        entry.path = fs::path(directory.getChildFile(juce::String(folder) + ".fxp")
+                                  .getFullPathName().toStdString());
+        storage.patch_list.push_back(entry);
+    };
+    patch("Test Factory Root", 0, true);
+    patch("Test Factory Child", 1, false);
+    patch("Test Third Party", 2, false);
+    patch("Test User Root", 3, false);
+    patch("Test User Child", 4, true);
+    patch("Test User Other", 5, false);
+    storage.patchOrdering = {4, 2, 0, 5, 1, 3};
+    storage.patchCategoryOrdering = {0, 2, 3, 5, 1, 4};
+    storage.favoritesOrdering = {4, 0};
+    processor.surge->patchid = 0;
+    storage.getPatch().category = "Shared";
 }
 
 /** An explicitly documented real patch, not a painted imitation of the concept
@@ -711,13 +758,84 @@ juce::var configureShowcaseFixture(SurgeSynthProcessor &processor,
         auto route = object();
         property(route, "macro", index + 1);
         property(route, "label", profile.macroNames[index]);
+        property(route, "sourceId", static_cast<int>(ms_ctrl1 + index));
+        property(route, "sourceScene", 0);
+        property(route, "sourceIndex", 0);
+        property(route, "parameterId", target->id);
         property(route, "target", targets[index]);
         property(route, "normalizedDepth", depths[index]);
         routes.add(route);
         record(binding);
     }
+    if (skinNumber >= 1 && skinNumber <= 10)
+    {
+        const auto addRoute = [&](modsources source, const char *binding, float depth,
+                                  const char *label) {
+            CAPTURE(binding, label, depth);
+            auto *target = bridge.parameter(binding);
+            REQUIRE(target != nullptr);
+            REQUIRE(bridge.enabled(binding));
+            REQUIRE(synth.isValidModulation(target->id, source));
+            REQUIRE(synth.setModDepth01(target->id, source, 0, 0, depth));
+            REQUIRE(synth.getModDepth01(target->id, source, 0, 0) ==
+                    Catch::Approx(depth).margin(.00001f));
+            auto route = object();
+            property(route, "label", label);
+            property(route, "sourceId", static_cast<int>(source));
+            property(route, "sourceScene", 0);
+            property(route, "sourceIndex", 0);
+            property(route, "parameterId", target->id);
+            property(route, "target", binding);
+            property(route, "normalizedDepth", depth);
+            routes.add(route);
+        };
+        // These routes are audible engine assignments, not painted matrix rows.
+        // Modest depths leave the existing capture headroom/reset assertions
+        // meaningful while giving each styled patch actual envelope/LFO motion.
+        addRoute(ms_lfo1, "filter1.cutoff", .025f, "LFO 1");
+        addRoute(ms_filtereg, "osc1.param0", .06f, "Filter EG");
+        if (skinNumber == 9 || skinNumber == 10)
+        {
+            addRoute(ms_ampeg, "osc3.param0", .035f, "Amp EG");
+            select("lfo2.shape", lt_tri);
+            setNative("lfo2.rate", std::log2(.5f));
+            select("lfo2.trigmode", lm_keytrigger);
+            addRoute(ms_lfo2, "osc2.pitch", .003f, "LFO 2");
+        }
+        if (skinNumber == 9)
+        {
+            select("lfo3.shape", lt_sine);
+            setNative("lfo3.rate", std::log2(.125f));
+            select("lfo3.trigmode", lm_keytrigger);
+            addRoute(ms_lfo3, "filter2.cutoff", -.02f, "LFO 3");
+        }
+        // Metadata belongs to this actual isolated patch. It does not add a
+        // fictional preset or folder to the installed browser catalog.
+        patch.category = "Reference Showcases";
+        patch.author = "Surge XT reference workspace fixtures";
+        patch.license = "GPL-3.0-or-later";
+        patch.comment = "Original " + std::string(profile.wavetable) +
+                        " harmonic wavetable, three native oscillators and " +
+                        bridge.display("routing").toStdString() +
+                        " filtering. Eight assigned macros with real envelope and LFO motion.";
+        patch.tags.clear();
+        for (const auto *tag : {"Wavetable", "Modulated", "Reference showcase"})
+            patch.tags.emplace_back(std::string(tag));
+    }
     const auto resolved = Surge::GUI::Reference::modulationRows(processor, 0);
-    REQUIRE(resolved.size() == 8);
+    REQUIRE(resolved.size() == static_cast<size_t>(routes.size()));
+    for (const auto &declared : routes)
+    {
+        const auto parameterId = static_cast<int>(declared["parameterId"]);
+        const auto sourceId = static_cast<int>(declared["sourceId"]);
+        const auto found = std::find_if(resolved.begin(), resolved.end(), [&](const auto &row) {
+            return row.key.parameterId == parameterId && row.key.sourceId == sourceId &&
+                   row.key.sourceScene == 0 && row.key.sourceIndex == 0;
+        });
+        REQUIRE(found != resolved.end());
+        REQUIRE(found->normalizedDepth ==
+                Catch::Approx(static_cast<float>(declared["normalizedDepth"])).margin(.00001f));
+    }
     juce::Array<juce::var> resolvedRows;
     for (const auto &row : resolved)
     {
@@ -741,6 +859,14 @@ juce::var configureShowcaseFixture(SurgeSynthProcessor &processor,
 
     auto fixture = object();
     property(fixture, "name", profile.name);
+    property(fixture, "category", juce::String(patch.category));
+    property(fixture, "author", juce::String(patch.author));
+    property(fixture, "comment", juce::String(patch.comment));
+    property(fixture, "license", juce::String(patch.license));
+    juce::Array<juce::var> tags;
+    for (const auto &tag : patch.tags)
+        tags.add(juce::String(tag.tag));
+    property(fixture, "tags", juce::var(tags));
     property(fixture, "skinId", skinId);
     property(fixture, "basePatch", templatePath);
     property(fixture, "wavetable", wavetablePath);
@@ -1499,6 +1625,210 @@ TEST_CASE("Typed native values reject missing numbers and retain native units an
     CHECK(bridge.activeGestureCount() == 0);
 }
 
+TEST_CASE("Compact blank captions retain native accessible parameter names",
+          "[reference-workspaces][reference-accessibility]")
+{
+    juce::ScopedJuceInitialiser_GUI gui;
+    IsolatedUserData testData;
+    SurgeSynthProcessor processor;
+    testData.attach(processor);
+    int blankCaptions = 0;
+    for (const auto &file : workspaceManifests())
+    {
+        const auto manifest = readManifest(file);
+        Workspace workspace(processor);
+        juce::String error;
+        REQUIRE(workspace.load(file, error));
+        workspace.setSize(referenceWidth, referenceHeight);
+        auto &bridge = workspace.bridge();
+        for (const auto &control : *manifest["controls"].getArray())
+        {
+            auto *slider = dynamic_cast<juce::Slider *>(
+                findComponent(workspace, control["id"].toString()));
+            if (slider == nullptr)
+                continue;
+            CAPTURE(manifest["id"].toString().toStdString(),
+                    control["id"].toString().toStdString());
+            CHECK(slider->getName().isNotEmpty());
+            CHECK(slider->getTitle().isNotEmpty());
+            CHECK(slider->getDescription().isNotEmpty());
+            if (control.hasProperty("label") && control["label"].toString().trim().isEmpty())
+            {
+                ++blankCaptions;
+                const auto binding = slider->getProperties()["reference.binding"].toString();
+                REQUIRE(bridge.label(binding).isNotEmpty());
+                CHECK(slider->getName().startsWith(bridge.label(binding)));
+            }
+        }
+    }
+    // The seven Live header/oscillator readouts intentionally suppress face
+    // captions. Their accessible names must survive that visual treatment.
+    CHECK(blankCaptions >= 7);
+}
+
+TEST_CASE("Native preset scopes preserve catalog partitions and stable patch identities",
+          "[reference-workspaces][reference-browser]")
+{
+    using Surge::GUI::Reference::BrowserFilter;
+    using Surge::GUI::Reference::browserRows;
+    juce::ScopedJuceInitialiser_GUI gui;
+    IsolatedUserData testData;
+    SurgeSynthProcessor processor;
+    testData.attach(processor);
+    installBrowserTestCatalog(processor, testData.directory);
+    const auto before = hostParameterValues(processor);
+    const auto ids = [](const auto &rows) {
+        std::vector<int> result;
+        for (const auto &row : rows)
+            if (!row.category)
+                result.push_back(row.patchId);
+        return result;
+    };
+    CHECK(ids(browserRows(processor, "Test", 100, BrowserFilter::all)) ==
+          std::vector<int>{4, 2, 0, 5, 1, 3});
+    CHECK(ids(browserRows(processor, "test", 100, BrowserFilter::factory)) ==
+          std::vector<int>{0, 1});
+    CHECK(ids(browserRows(processor, "Test", 100, BrowserFilter::user)) ==
+          std::vector<int>{4, 5, 3});
+    CHECK(ids(browserRows(processor, {}, 100, BrowserFilter::favorites)) ==
+          std::vector<int>{4, 0});
+    CHECK(ids(browserRows(processor, {}, 100, BrowserFilter::all, 0)) ==
+          std::vector<int>{0, 1});
+    CHECK(ids(browserRows(processor, {}, 100, BrowserFilter::all, 3)) ==
+          std::vector<int>{4, 3});
+    CHECK(ids(browserRows(processor, "Shared/Child", 100)) == std::vector<int>{4, 1});
+    CHECK(ids(browserRows(processor, {}, 100, BrowserFilter::favorites, 0)) ==
+          std::vector<int>{0});
+    CHECK(browserRows(processor, "Test", 0).empty());
+    CHECK(browserRows(processor, "No matching name", 100).empty());
+    CHECK(ids(browserRows(processor, "Test", 1)) == std::vector<int>{4});
+
+    const auto factory = browserRows(processor, {}, 100, BrowserFilter::factory);
+    REQUIRE(factory.size() == 3);
+    CHECK(factory.front().category);
+    CHECK(factory.front().categoryId == 0);
+    CHECK(factory.front().patchCount == 2);
+    const auto user = browserRows(processor, {}, 100, BrowserFilter::user);
+    std::vector<int> userFolders;
+    for (const auto &row : user)
+        if (row.category)
+        {
+            userFolders.push_back(row.categoryId);
+            CHECK(row.patchCount == (row.categoryId == 3 ? 2 : 1));
+        }
+    CHECK(userFolders == std::vector<int>{3, 5});
+    CHECK(processor.surge->patchid == 0);
+    checkHostParameterValues(processor, before);
+}
+
+TEST_CASE("Native browser tabs and keyboard navigation retain the guarded load action",
+          "[reference-workspaces][reference-browser][reference-interactions]")
+{
+    juce::ScopedJuceInitialiser_GUI gui;
+    IsolatedUserData testData;
+    SurgeSynthProcessor processor;
+    testData.attach(processor);
+    installBrowserTestCatalog(processor, testData.directory);
+    processor.surge->storage.getPatch().isDirty = true;
+    const auto before = hostParameterValues(processor);
+    Workspace workspace(processor);
+    juce::String error;
+    const auto manifest = sourceRoot().getChildFile(
+        "resources/data/skins/reference-07-aurora.surge-skin/workspace.json");
+    REQUIRE(workspace.load(manifest, error));
+    workspace.setSize(referenceWidth, referenceHeight);
+    workspace.addToDesktop(0);
+    workspace.setVisible(true);
+    juce::StringArray actions;
+    workspace.onAction = [&](const juce::String &action) { actions.add(action); };
+    auto *browser = findComponent(workspace, "workspace.browser");
+    auto *search = dynamic_cast<juce::TextEditor *>(
+        findComponent(workspace, "workspace.browser.search"));
+    auto *list = dynamic_cast<juce::ListBox *>(
+        findComponent(workspace, "workspace.browser.list"));
+    auto *back = dynamic_cast<juce::Button *>(
+        findComponent(workspace, "workspace.browser.back"));
+    auto *full = dynamic_cast<juce::Button *>(
+        findComponent(workspace, "workspace.browser.full"));
+    REQUIRE(browser != nullptr);
+    REQUIRE(search != nullptr);
+    REQUIRE(list != nullptr);
+    REQUIRE(back != nullptr);
+    REQUIRE(full != nullptr);
+#if JUCE_MAJOR_VERSION >= 8
+    auto *model = list->getListBoxModel();
+#else
+    auto *model = list->getModel();
+#endif
+    REQUIRE(model != nullptr);
+    REQUIRE(static_cast<bool>(search->onTextChange));
+    REQUIRE(static_cast<bool>(search->onReturnKey));
+    const auto query = [&](const juce::String &value) {
+        search->setText(value, false);
+        search->onTextChange();
+    };
+    const auto tab = [&](int index) {
+        auto *button = dynamic_cast<juce::Button *>(findComponent(
+            workspace, "workspace.browser.tab." + juce::String(index)));
+        REQUIRE(button != nullptr);
+        REQUIRE(static_cast<bool>(button->onClick));
+        CHECK(button->getName().isNotEmpty());
+        CHECK(button->getTitle().isNotEmpty());
+        CHECK(button->getWantsKeyboardFocus());
+        CHECK(browser->getLocalBounds().contains(button->getBounds()));
+        button->onClick();
+        CHECK(button->getToggleState());
+    };
+    query("Test");
+    const std::array<int, 4> expectedCounts{6, 2, 3, 2};
+    for (int index = 0; index < 4; ++index)
+    {
+        tab(index);
+        CHECK(model->getNumRows() == expectedCounts[index]);
+    }
+    tab(0);
+    query({});
+    const auto allRows = model->getNumRows();
+    REQUIRE(model->getNameForRow(0) == "Category: Shared");
+    CHECK_FALSE(back->isVisible());
+    list->selectRow(0);
+    REQUIRE(list->keyPressed(juce::KeyPress(juce::KeyPress::returnKey)));
+    CHECK(back->isVisible());
+    CHECK(model->getNumRows() == 2);
+    CHECK(model->getNameForRow(0) == "Preset: Test Factory Root");
+    CHECK(model->getNameForRow(1) == "Preset: Test Factory Child");
+    REQUIRE(static_cast<bool>(back->onClick));
+    back->onClick();
+    CHECK_FALSE(back->isVisible());
+    CHECK(model->getNumRows() == allRows);
+    CHECK(actions.isEmpty());
+
+    query("Test User Child");
+    REQUIRE(model->getNumRows() == 1);
+    search->onReturnKey();
+    REQUIRE(actions.size() == 1);
+    // The matching row is zero, but its native catalog identity is four. The
+    // callback belongs to the existing editor dirty-patch confirmation path.
+    CHECK(actions[0] == "load-preset:4");
+    CHECK(processor.surge->patchid == 0);
+    CHECK(processor.surge->storage.getPatch().isDirty);
+    REQUIRE(static_cast<bool>(full->onClick));
+    full->onClick();
+    REQUIRE(actions.size() == 2);
+    CHECK(actions[1] == "browser");
+    for (auto *component : {static_cast<juce::Component *>(search),
+                            static_cast<juce::Component *>(list),
+                            static_cast<juce::Component *>(full)})
+    {
+        CHECK(component->getName().isNotEmpty());
+        CHECK(component->getTitle().isNotEmpty());
+        CHECK(component->getWantsKeyboardFocus());
+        CHECK(browser->getLocalBounds().contains(component->getBounds()));
+    }
+    CHECK(workspace.bridge().activeGestureCount() == 0);
+    checkHostParameterValues(processor, before);
+}
+
 TEST_CASE("Live display refresh preserves audible state and independent audio samples",
           "[reference-workspaces][reference-audio][reference-display-isolation]")
 {
@@ -1947,6 +2277,193 @@ TEST_CASE("Native source and FX tabs preserve sound and rebind stable controls",
     processor.releaseResources();
 }
 
+TEST_CASE("Segmented native menus retain real modes and balanced host gestures",
+          "[reference-workspaces][reference-menus][reference-interactions]")
+{
+    juce::ScopedJuceInitialiser_GUI gui;
+    IsolatedUserData testData;
+    SurgeSynthProcessor processor;
+    testData.attach(processor);
+    struct SegmentCase
+    {
+        const char *control;
+        const char *binding;
+        std::vector<int> nativeValues;
+    };
+    for (const auto &style : {juce::String("04-bauhaus"), juce::String("05-space")})
+    {
+        Workspace workspace(processor);
+        juce::String error;
+        REQUIRE(workspace.load(sourceRoot().getChildFile(
+            "resources/data/skins/reference-" + style + ".surge-skin/workspace.json"), error));
+        workspace.setSize(referenceWidth, referenceHeight);
+        workspace.addToDesktop(0);
+        workspace.setVisible(true);
+        auto &bridge = workspace.bridge();
+        const std::vector<SegmentCase> cases = style.startsWith("04")
+            ? std::vector<SegmentCase>{{"osc1-type", "osc1.type", {ot_wavetable, ot_classic, ot_FM2, -1}},
+                                       {"routing-mode", "routing", {fc_serial1, -1, fc_dual1, fc_stereo}}}
+            : std::vector<SegmentCase>{{"space-scene-mode", "scene.mode", {sm_single, sm_split, sm_dual}},
+                                       {"space-poly-mode", "scene.polymode", {pm_poly, pm_mono, pm_mono_st}}};
+        for (const auto &entry : cases)
+        {
+            CAPTURE(style.toStdString(), entry.control, entry.binding);
+            auto *menu = dynamic_cast<juce::ComboBox *>(findComponent(workspace, entry.control));
+            REQUIRE(menu != nullptr);
+            auto *parameter = bridge.parameter(entry.binding);
+            auto *adapter = adapterFor(processor, bridge, entry.binding);
+            REQUIRE(parameter != nullptr);
+            REQUIRE(adapter != nullptr);
+            GestureProbe probe(*adapter);
+            CHECK(menu->getNumItems() == bridge.choices(entry.binding).size());
+            for (size_t index = 0; index < entry.nativeValues.size(); ++index)
+            {
+                CAPTURE(index);
+                auto *button = dynamic_cast<juce::Button *>(findComponent(
+                    workspace, juce::String(entry.control) + ".segment." + juce::String(index)));
+                REQUIRE(button != nullptr);
+                REQUIRE(static_cast<bool>(button->onClick));
+                CHECK(button->getName().isNotEmpty());
+                CHECK(button->getDescription().isNotEmpty());
+                CHECK(menu->getLocalBounds().contains(button->getBounds()));
+                const auto before = parameter->val.i;
+                const auto starts = probe.starts;
+                button->onClick();
+                if (entry.nativeValues[index] < 0)
+                {
+                    CHECK_FALSE(button->isEnabled());
+                    CHECK(button->getDescription().startsWith("Unavailable:"));
+                    CHECK(parameter->val.i == before);
+                    CHECK(probe.starts == starts);
+                }
+                else
+                {
+                    CHECK(button->isEnabled());
+                    CHECK(button->getWantsKeyboardFocus());
+                    CHECK(parameter->val.i == entry.nativeValues[index]);
+                    CHECK(button->getToggleState());
+                    CHECK(menu->getSelectedItemIndex() == parameter->val.i - parameter->val_min.i);
+                }
+                CHECK(probe.starts == probe.ends);
+                CHECK(probe.balance == 0);
+                CHECK(probe.minimumBalance == 0);
+                CHECK(bridge.activeGestureCount() == 0);
+                CHECK_FALSE(adapter->inEditGesture.load());
+            }
+            REQUIRE(probe.starts > 0);
+            if (juce::String(entry.binding) == "routing")
+            {
+                // From Serial, right-arrow skips the unavailable reversed
+                // topology and chooses the actual native parallel routing.
+                auto *serial = dynamic_cast<juce::Button *>(
+                    findComponent(workspace, "routing-mode.segment.0"));
+                REQUIRE(serial != nullptr);
+                serial->onClick();
+                serial->grabKeyboardFocus();
+                REQUIRE(static_cast<juce::Component *>(serial)->keyPressed(
+                    juce::KeyPress(juce::KeyPress::rightKey)));
+                CHECK(parameter->val.i == fc_dual1);
+                CHECK(probe.starts == probe.ends);
+                CHECK(bridge.activeGestureCount() == 0);
+            }
+        }
+    }
+}
+
+TEST_CASE("Native distortion transfer previews follow model and drive without editing state",
+          "[reference-workspaces][reference-visuals][reference-effects]")
+{
+    using Surge::GUI::Reference::distortionTransfer;
+    juce::ScopedJuceInitialiser_GUI gui;
+    IsolatedUserData testData;
+    SurgeSynthProcessor processor;
+    testData.attach(processor);
+    ParameterBridge bridge(processor);
+    auto &storage = processor.surge->storage;
+    const auto select = [&](const juce::String &binding, int nativeValue) {
+        auto *parameter = bridge.parameter(binding);
+        REQUIRE(parameter != nullptr);
+        const auto index = nativeValue - parameter->val_min.i;
+        REQUIRE(index >= 0);
+        REQUIRE(index < bridge.choices(binding).size());
+        edit(bridge, binding, bridge.choiceValue(binding, index));
+        processor.surge->processAudioThreadOpsWhenAudioEngineUnavailable();
+        CHECK(parameter->val.i == nativeValue);
+    };
+    select("fx1.type", fxt_distortion);
+    const auto modelBinding = "fx1.param" + juce::String(DistortionEffect::dist_model + 1);
+    const auto driveBinding = "fx1.param" + juce::String(DistortionEffect::dist_drive + 1);
+    const auto setDrive = [&](float decibels) {
+        auto *parameter = bridge.parameter(driveBinding);
+        REQUIRE(parameter != nullptr);
+        REQUIRE(parameter->valtype == vt_float);
+        auto converted = *parameter;
+        converted.val.f = decibels;
+        edit(bridge, driveBinding, converted.get_value_f01());
+        CHECK(parameter->val.f == Catch::Approx(decibels).margin(.0001f));
+    };
+    select(modelBinding, 0); // Native Soft model.
+    setDrive(0.f);
+    const auto parametersBefore = hostParameterValues(processor);
+    const auto rngBefore = storage.rngGen.g;
+    auto noiseBefore = storage.noiseRng;
+    juce::MemoryBlock stateBefore, stateAfter;
+    processor.getStateInformation(stateBefore);
+    const auto soft = distortionTransfer(processor, 0);
+    REQUIRE(soft.available);
+    REQUIRE(soft.values.size() == 257);
+    CHECK(soft.caption.contains("shaper only"));
+    CHECK(soft.values.front() < 0.f);
+    CHECK(soft.values.back() > 0.f);
+    for (const auto value : soft.values)
+        CHECK(std::isfinite(value));
+    const auto repeated = distortionTransfer(processor, 0);
+    CHECK(repeated.available);
+    CHECK(repeated.values == soft.values);
+    processor.getStateInformation(stateAfter);
+    CHECK(stateAfter == stateBefore);
+    CHECK(storage.rngGen.g == rngBefore);
+    auto noiseAfter = storage.noiseRng;
+    for (int sample = 0; sample < 16; ++sample)
+        CHECK(noiseBefore.unifU32() == noiseAfter.unifU32());
+    checkHostParameterValues(processor, parametersBefore);
+
+    setDrive(12.f);
+    const auto driven = distortionTransfer(processor, 0);
+    REQUIRE(driven.available);
+    CHECK(driven.values != soft.values);
+    select(modelBinding, 1); // Native Hard model at the same drive.
+    const auto hard = distortionTransfer(processor, 0);
+    REQUIRE(hard.available);
+    CHECK(hard.values != driven.values);
+    for (int model = 0; model <= 6; ++model)
+    {
+        CAPTURE(model);
+        select(modelBinding, model);
+        const auto rng = storage.rngGen.g;
+        const auto curve = distortionTransfer(processor, 0);
+        REQUIRE(curve.available);
+        REQUIRE(curve.values.size() == 257);
+        for (const auto value : curve.values)
+            CHECK(std::isfinite(value));
+        CHECK(distortionTransfer(processor, 0).values == curve.values);
+        CHECK(storage.rngGen.g == rng);
+    }
+    select(modelBinding, 7); // Fuzz owns a native shared random lookup table.
+    const auto fuzzRng = storage.rngGen.g;
+    std::srand(0x7a91);
+    const auto expectedRandom = std::rand();
+    std::srand(0x7a91);
+    CHECK_FALSE(distortionTransfer(processor, 0).available);
+    CHECK(std::rand() == expectedRandom);
+    CHECK(storage.rngGen.g == fuzzRng);
+    CHECK_FALSE(distortionTransfer(processor, -1).available);
+    CHECK_FALSE(distortionTransfer(processor, n_fx_slots).available);
+    select("fx1.type", fxt_chorus4);
+    CHECK_FALSE(distortionTransfer(processor, 0).available);
+    CHECK(bridge.activeGestureCount() == 0);
+}
+
 TEST_CASE("Host reset clears active effect filter and delay histories",
           "[reference-workspaces][reference-audio][reference-reset]")
 {
@@ -2010,6 +2527,33 @@ TEST_CASE("Ten reference workspaces render native controls and export evidence",
         REQUIRE(outputDirectory.createDirectory().wasOk());
 
     juce::Array<juce::var> captures;
+    // Checkpoint completed records so a later REQUIRE failure cannot orphan
+    // already-written screenshots. A complete record is not a passing-test
+    // declaration; workflow exit status and strict comparison gates still apply.
+    const auto writeEvidence = [&] {
+        if (exportImages)
+        {
+            auto report = object();
+            property(report, "schema", 1);
+            property(report, "captureMethod", "JUCE Component::createComponentSnapshot");
+            property(report, "target", "surge-xt-tests [reference-render]");
+            property(report, "generatedUtc", juce::Time::getCurrentTime().toISO8601(true));
+            property(report, "sourceRevisionAtConfigure", SURGE_REFERENCE_SOURCE_REVISION);
+            property(report, "sourceDirtyAtConfigure", static_cast<bool>(SURGE_REFERENCE_SOURCE_DIRTY));
+            property(report, "sampleRate", sampleRate);
+            property(report, "audioBlock", sampleBlock);
+            property(report, "expectedCaptures", static_cast<int>(manifests.size()));
+            property(report, "capturedCount", captures.size());
+            property(report, "complete", captures.size() == static_cast<int>(manifests.size()));
+            property(report, "captures", juce::var(captures));
+            property(report, "scope",
+                     "Native component renders and control-callback tests. Not OS desktop captures, "
+                     "not a DAW certification, not a claim of 1:1 image fidelity.");
+            REQUIRE(outputDirectory.getChildFile("capture-evidence.json")
+                        .replaceWithText(juce::JSON::toString(report, true)));
+        }
+    };
+    writeEvidence();
     for (const auto &path : manifests)
     {
         const auto manifest = readManifest(path);
@@ -2217,24 +2761,7 @@ TEST_CASE("Ten reference workspaces render native controls and export evidence",
         property(capture, "scalesRendered", juce::var(juce::Array<juce::var>{1.0, 1.25, 1.5}));
         property(capture, "fidelityAssessment", "Requires human comparison; no pixel-exact claim");
         captures.add(capture);
+        writeEvidence();
     }
 
-    if (exportImages)
-    {
-        auto report = object();
-        property(report, "schema", 1);
-        property(report, "captureMethod", "JUCE Component::createComponentSnapshot");
-        property(report, "target", "surge-xt-tests [reference-render]");
-        property(report, "generatedUtc", juce::Time::getCurrentTime().toISO8601(true));
-        property(report, "sourceRevisionAtConfigure", SURGE_REFERENCE_SOURCE_REVISION);
-        property(report, "sourceDirtyAtConfigure", static_cast<bool>(SURGE_REFERENCE_SOURCE_DIRTY));
-        property(report, "sampleRate", sampleRate);
-        property(report, "audioBlock", sampleBlock);
-        property(report, "captures", juce::var(captures));
-        property(report, "scope",
-                 "Native component renders and control-callback tests. Not OS desktop captures, "
-                 "not a DAW certification, not a claim of 1:1 image fidelity.");
-        REQUIRE(outputDirectory.getChildFile("capture-evidence.json")
-                    .replaceWithText(juce::JSON::toString(report, true)));
-    }
 }

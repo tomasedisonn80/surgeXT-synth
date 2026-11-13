@@ -31,6 +31,13 @@
 
 #include "osc/OpenSoundControl.h"
 
+// SIMDE's Windows ARM headers can pull in the RPC `small` macro after another
+// header has already loaded juce_core. Its usual macro cleanup then cannot run
+// again, and JUCE's PushNotifications::BadgeIconType::small becomes `char`.
+// Repeat that precise cleanup at the engine/JUCE module boundary.
+#if defined(_WIN32) && defined(small)
+#undef small
+#endif
 #include "juce_audio_processors/juce_audio_processors.h"
 
 #if HAS_CLAP_JUCE_EXTENSIONS

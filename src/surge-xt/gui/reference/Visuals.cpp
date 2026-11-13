@@ -435,11 +435,16 @@ void Visuals::wavetable(juce::Graphics &g, juce::Rectangle<float> bounds,
                 return {bounds.getX() + bounds.getWidth() * (.04f + .92f * u - .08f * depth),
                         bounds.getCentreY() +
                             bounds.getHeight() * (.25f * depth - .40f * amplitude)};
-            const auto inset = harmonic ? 0.f : .012f;
+            if (harmonic)
+                // A fixed camera retains the signed source's asymmetric
+                // height and real frame levels within the caller's clip.
+                return {bounds.getX() + bounds.getWidth() * u,
+                        bounds.getCentreY() +
+                            bounds.getHeight() * (-.025f + .025f * depth - .58f * amplitude)};
+            const auto inset = .012f;
             return {bounds.getX() + bounds.getWidth() * (inset + (1.f - 2.f * inset) * u),
                     bounds.getCentreY() +
-                        bounds.getHeight() * (depth * (harmonic ? .025f : .13f) -
-                                              amplitude * (harmonic ? .44f : .36f + .04f * frame))};
+                        bounds.getHeight() * (depth * .13f - amplitude * (.36f + .04f * frame))};
         }
         const float depth = 1.f - frame;
         if (terrain && !miniature)
@@ -486,10 +491,12 @@ void Visuals::wavetable(juce::Graphics &g, juce::Rectangle<float> bounds,
     const auto gradient = [&](float alpha, float frame = .5f) {
         if (aurora)
         {
-            // Frame colour separates crossing real rows without changing ordinates.
-            const auto blend = juce::jlimit(0.f, 1.f, (frame - .30f) / .65f);
+            // Keep the reference's cyan centre through the full source family.
+            // A small frame tint separates crossing wires; the nearer rows no
+            // longer wash the central crest into the right-hand violet material.
+            const auto blend = .06f + .20f * juce::jlimit(0.f, 1.f, frame);
             const auto middle = primary.interpolatedWith(secondary, blend)
-                                    .interpolatedWith(juce::Colours::white, .12f);
+                                    .interpolatedWith(juce::Colours::white, .18f);
             const auto left = juce::Colour(0xff445bf5)
                                   .interpolatedWith(juce::Colours::white, .10f);
             const auto right = juce::Colour(0xffc64ffb)
@@ -532,6 +539,20 @@ void Visuals::wavetable(juce::Graphics &g, juce::Rectangle<float> bounds,
         }
         if (harmonic)
         {
+            if (!miniature)
+            {
+                // Each real frame keeps its warm wire tint through crossings.
+                // Colour separates the rows without changing their geometry.
+                const auto wire = primary.interpolatedWith(juce::Colours::white, .50f)
+                                      .interpolatedWith(secondary.brighter(.16f), frame);
+                auto paint = juce::ColourGradient(wire.withMultipliedAlpha(alpha * .90f),
+                                                  bounds.getTopLeft(),
+                                                  wire.withMultipliedAlpha(alpha * .90f),
+                                                  bounds.getTopRight(), false);
+                paint.addColour(.35, wire.withMultipliedAlpha(alpha));
+                paint.addColour(.70, wire.brighter(.06f).withMultipliedAlpha(alpha));
+                return paint;
+            }
             auto paint = juce::ColourGradient(primary.withMultipliedAlpha(alpha),
                                               bounds.getTopLeft(),
                                               primary.withMultipliedAlpha(alpha),
@@ -613,8 +634,9 @@ void Visuals::wavetable(juce::Graphics &g, juce::Rectangle<float> bounds,
     }
     else if (harmonic)
     {
-        g.setColour(primary.interpolatedWith(juce::Colours::white, .55f).withAlpha(.58f));
-        g.drawHorizontalLine(juce::roundToInt(bounds.getCentreY()), bounds.getX(),
+        g.setColour(primary.interpolatedWith(juce::Colours::white, .70f).withAlpha(.60f));
+        g.drawHorizontalLine(juce::roundToInt(bounds.getCentreY() - bounds.getHeight() * .025f),
+                             bounds.getX(),
                              bounds.getRight());
     }
 
@@ -631,11 +653,11 @@ void Visuals::wavetable(juce::Graphics &g, juce::Rectangle<float> bounds,
             return juce::PathStrokeType(width, juce::PathStrokeType::curved,
                                         juce::PathStrokeType::rounded);
         };
-        g.setGradientFill(gradient(.035f));
+        g.setGradientFill(gradient(.055f));
         g.strokePath(haze, hazeStroke(bounds.getHeight() * .22f));
-        g.setGradientFill(gradient(.065f));
+        g.setGradientFill(gradient(.095f));
         g.strokePath(haze, hazeStroke(bounds.getHeight() * .11f));
-        g.setGradientFill(gradient(.105f));
+        g.setGradientFill(gradient(.135f));
         g.strokePath(haze, hazeStroke(bounds.getHeight() * .045f));
         g.setGradientFill(gradient(.16f));
         g.strokePath(haze, hazeStroke(2.8f));
@@ -660,8 +682,8 @@ void Visuals::wavetable(juce::Graphics &g, juce::Rectangle<float> bounds,
     // no synthesized waveform, absolute-amplitude transform or texture is added.
     // Miniature plots retain sparse wires instead of muddy overlapping surfaces.
     // Aurora's open filaments use the compound haze rather than filled sheets.
-    // Live keeps open wires too, without filling the spaces between source rows.
-    if (!miniature && !aurora && !luminous && data.frames > 1)
+    // Live and Bauhaus keep open wires without filling between source rows.
+    if (!miniature && !harmonic && !aurora && !luminous && data.frames > 1)
         for (int frame = 0; frame + 1 < data.frames; ++frame)
         {
             juce::Path strip;
@@ -672,8 +694,7 @@ void Visuals::wavetable(juce::Graphics &g, juce::Rectangle<float> bounds,
                 strip.lineTo(vertex(frame + 1, phase));
             strip.closeSubPath();
             const auto depth = static_cast<float>(frame) / std::max(1, data.frames - 1);
-            g.setGradientFill(gradient(harmonic ? .010f
-                                       : ribbons ? .008f
+            g.setGradientFill(gradient(ribbons ? .008f
                                        : terrain ? .035f + .035f * depth
                                                  : .07f + .06f * depth,
                                        depth));
@@ -714,6 +735,11 @@ void Visuals::wavetable(juce::Graphics &g, juce::Rectangle<float> bounds,
     {
         if (miniature && (frame % 2 != 0) && frame != data.frames - 1)
             continue;
+        // Keep two of each three original rows in the full harmonic view. This
+        // exposes the spaces between 32 source wires without inventing rows or
+        // changing the full snapshot, endpoints, miniature or selected trace.
+        if (harmonic && !miniature && frame % 3 == 1 && frame != data.frames - 1)
+            continue;
         const float t = static_cast<float>(frame) / std::max(1, data.frames - 1);
         juce::Path path;
         path.startNewSubPath(vertex(frame, 0));
@@ -733,14 +759,14 @@ void Visuals::wavetable(juce::Graphics &g, juce::Rectangle<float> bounds,
             g.setGradientFill(gradient(miniature ? .02f : terrain ? .025f : .05f));
             g.strokePath(path, juce::PathStrokeType(miniature ? 3.f : terrain ? 5.f : 6.f));
         }
-        g.setGradientFill(gradient(harmonic ? .84f
+        g.setGradientFill(gradient(harmonic ? .90f
                                    : aurora ? .40f + .45f * t
                                    : luminous ? .55f + .40f * t
                                    : ribbons ? .37f + .45f * t
                                    : terrain ? .56f + .38f * t
                                              : .45f + .48f * t,
                                    t));
-        g.strokePath(path, juce::PathStrokeType(miniature ? .7f : harmonic ? .8f
+        g.strokePath(path, juce::PathStrokeType(miniature ? .7f : harmonic ? .55f
                                                              : aurora ? .60f
                                                              : luminous ? .62f
                                                              : terrain ? .52f : .9f));
@@ -786,7 +812,8 @@ void Visuals::wavetable(juce::Graphics &g, juce::Rectangle<float> bounds,
         if (!luminous || aurora)
             highlight.addColour(.5, primary.interpolatedWith(juce::Colours::white, .55f));
         g.setGradientFill(highlight);
-        g.strokePath(selected, juce::PathStrokeType(miniature ? 1.3f : aurora ? 1.1f
+        g.strokePath(selected, juce::PathStrokeType(miniature ? 1.3f : harmonic ? 1.05f
+                                                                         : aurora ? 1.1f
                                                                          : luminous ? 1.05f : 1.7f));
         if (!miniature && !ribbons)
         {

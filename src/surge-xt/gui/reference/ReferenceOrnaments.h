@@ -8,6 +8,141 @@
 
 namespace Surge::GUI::Reference
 {
+enum class ClearSectionIdentity
+{
+    none,
+    oscillators,
+    filters,
+    macros,
+    modulation,
+    inspector,
+    mixer,
+    envelope,
+    lfo,
+    effects,
+    analyzer,
+    output
+};
+
+/** Small caption pictograms, drawn from fixed vector geometry. These identify
+    sections only: they have no control, selection, routing or signal input. */
+inline void clearSectionIdentityGlyph(juce::Graphics &g, juce::Rectangle<float> area,
+                                      juce::Colour ink, ClearSectionIdentity identity)
+{
+    if (area.isEmpty() || identity == ClearSectionIdentity::none)
+        return;
+    const juce::Graphics::ScopedSaveState saved(g);
+    g.reduceClipRegion(area.toNearestInt());
+    const auto size = std::min(area.getWidth(), area.getHeight());
+    const auto square = juce::Rectangle<float>(size, size).withCentre(area.getCentre());
+    g.addTransform(juce::AffineTransform::scale(size / 16.f).translated(square.getX(),
+                                                                       square.getY()));
+    g.setColour(ink);
+    juce::Path path;
+    switch (identity)
+    {
+    case ClearSectionIdentity::oscillators:
+        path.addRoundedRectangle(juce::Rectangle<float>(2, 2, 12, 12), 1.1f);
+        path.startNewSubPath(4, 8);
+        path.lineTo(6, 5);
+        path.lineTo(9, 11);
+        path.lineTo(11, 8);
+        path.lineTo(12, 8);
+        break;
+    case ClearSectionIdentity::filters:
+        path.startNewSubPath(2, 3);
+        path.lineTo(14, 3);
+        path.lineTo(9, 8);
+        path.lineTo(9, 12);
+        path.lineTo(7, 14);
+        path.lineTo(7, 8);
+        path.closeSubPath();
+        break;
+    case ClearSectionIdentity::macros:
+        for (int column = 0; column < 3; ++column)
+            for (int row = 0; row < 3; ++row)
+                g.fillEllipse(1.6f + column * 5.f, 1.6f + row * 5.f, 2.8f, 2.8f);
+        break;
+    case ClearSectionIdentity::modulation:
+        path.startNewSubPath(2, 13);
+        path.lineTo(2, 8);
+        path.lineTo(5, 8);
+        path.lineTo(5, 13);
+        path.lineTo(8, 13);
+        path.lineTo(8, 3);
+        path.lineTo(11, 3);
+        path.lineTo(11, 13);
+        path.lineTo(14, 13);
+        path.lineTo(14, 6);
+        break;
+    case ClearSectionIdentity::inspector:
+        path.addEllipse(1.5f, 1.5f, 9.f, 9.f);
+        path.startNewSubPath(9.5f, 9.5f);
+        path.lineTo(14, 14);
+        path.startNewSubPath(4, 6);
+        path.lineTo(8, 6);
+        break;
+    case ClearSectionIdentity::mixer:
+        for (int column = 0; column < 3; ++column)
+        {
+            const auto x = 3.f + column * 5.f;
+            path.startNewSubPath(x, 2);
+            path.lineTo(x, 14);
+            g.fillRoundedRectangle(juce::Rectangle<float>(x - 2, column == 1 ? 4.f : 9.f,
+                                                          4, 2.5f), .6f);
+        }
+        break;
+    case ClearSectionIdentity::envelope:
+        path.addRoundedRectangle(juce::Rectangle<float>(1.5f, 2, 13, 12), 1.f);
+        path.startNewSubPath(3, 11);
+        path.lineTo(5.5f, 5);
+        path.lineTo(9, 8);
+        path.lineTo(11, 8);
+        path.lineTo(13, 11);
+        break;
+    case ClearSectionIdentity::lfo:
+        path.startNewSubPath(1.5f, 8);
+        path.cubicTo(4, 1, 5.5f, 1, 8, 8);
+        path.cubicTo(10.5f, 15, 12, 15, 14.5f, 8);
+        break;
+    case ClearSectionIdentity::effects:
+        for (int corner = 0; corner < 32; ++corner)
+        {
+            const auto angle = juce::MathConstants<float>::twoPi * corner / 32.f;
+            const auto radius = corner % 4 == 0 || corner % 4 == 3 ? 5.2f : 6.7f;
+            const juce::Point<float> point(8.f + std::sin(angle) * radius,
+                                           8.f - std::cos(angle) * radius);
+            if (corner == 0)
+                path.startNewSubPath(point);
+            else
+                path.lineTo(point);
+        }
+        path.closeSubPath();
+        path.addEllipse(5.6f, 5.6f, 4.8f, 4.8f);
+        break;
+    case ClearSectionIdentity::analyzer:
+        path.addRectangle(juce::Rectangle<float>(2, 9, 2.5f, 5));
+        path.addRectangle(juce::Rectangle<float>(6.75f, 5.5f, 2.5f, 8.5f));
+        path.addRectangle(juce::Rectangle<float>(11.5f, 2, 2.5f, 12));
+        break;
+    case ClearSectionIdentity::output:
+        path.startNewSubPath(1.5f, 6);
+        path.lineTo(4, 6);
+        path.lineTo(8, 3);
+        path.lineTo(8, 13);
+        path.lineTo(4, 10);
+        path.lineTo(1.5f, 10);
+        path.closeSubPath();
+        path.addCentredArc(6.5f, 8, 5, 5, 0, .75f, 2.4f, true);
+        path.addCentredArc(6.5f, 8, 7.2f, 7.2f, 0, .75f, 2.4f, true);
+        break;
+    case ClearSectionIdentity::none:
+        break;
+    }
+    g.strokePath(path, juce::PathStrokeType(1.4f, juce::PathStrokeType::curved,
+                                           juce::PathStrokeType::rounded));
+}
+
 /** Static brand artwork: folded violet ribbons or an ascending aurora fan.
     These hand-built curves have no signal, parameter, time or random input. */
 inline void luminousRibbonLogo(juce::Graphics &g, juce::Rectangle<float> area,

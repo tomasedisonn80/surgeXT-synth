@@ -65,7 +65,8 @@
           }
         ],
         "fontSize": 12
-      }
+      },
+      "titleInset": 36
     },
     {
       "id": "panel.osc1",
@@ -168,7 +169,8 @@
         696,
         212
       ],
-      "fontSize": 17
+      "fontSize": 17,
+      "titleInset": 26
     },
     {
       "id": "panel.filter1",
@@ -200,7 +202,8 @@
       "y": 66,
       "w": 391,
       "h": 164,
-      "fontSize": 17
+      "fontSize": 17,
+      "titleInset": 36
     },
     {
       "id": "panel.matrix",
@@ -211,7 +214,8 @@
       "w": 391,
       "h": 303,
       "fontSize": 17,
-      "titleHeight": 23
+      "titleHeight": 23,
+      "titleInset": 36
     },
     {
       "id": "panel.mod-inspector",
@@ -229,7 +233,8 @@
         632,
         61,
         57
-      ]
+      ],
+      "titleInset": 36
     },
     {
       "id": "panel.mixer",
@@ -240,7 +245,8 @@
       "y": 587,
       "w": 419,
       "h": 174,
-      "fontSize": 17
+      "fontSize": 17,
+      "titleInset": 36
     },
     {
       "id": "panel.mixer-noise",
@@ -319,7 +325,8 @@
           }
         ],
         "fontSize": 10.5
-      }
+      },
+      "titleInset": 36
     },
     {
       "id": "panel.lfo",
@@ -374,7 +381,8 @@
           }
         ],
         "fontSize": 11.5
-      }
+      },
+      "titleInset": 36
     },
     {
       "id": "panel.fx",
@@ -558,7 +566,7 @@
       ],
       "fontSize": 17,
       "titleHeight": 23,
-      "titleInset": 28,
+      "titleInset": 30,
       "analyzerModesRect": [
         1079,
         787,
@@ -586,7 +594,8 @@
         832,
         40,
         115
-      ]
+      ],
+      "titleInset": 36
     }
   ],
   "controls": [

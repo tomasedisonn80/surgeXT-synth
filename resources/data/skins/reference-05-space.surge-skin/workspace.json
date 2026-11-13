@@ -43,9 +43,9 @@
       "title": "",
       "color": "#BFA581",
       "ink": "#211C12",
-      "x": 256,
+      "x": 255,
       "y": 85,
-      "w": 1322,
+      "w": 1323,
       "h": 68,
       "fontSize": 16
     },
@@ -450,10 +450,10 @@
     {
       "id": "space-glide",
       "binding": "scene.portamento",
-      "x": 956,
-      "y": 96,
-      "w": 128,
-      "h": 48,
+      "x": 952,
+      "y": 93,
+      "w": 130,
+      "h": 55,
       "kind": "knob",
       "label": "Glide",
       "ink": "#211C12",
@@ -464,10 +464,10 @@
     {
       "id": "space-scene-pitch",
       "binding": "scene.pitch",
-      "x": 1091,
-      "y": 96,
-      "w": 79,
-      "h": 48,
+      "x": 1093,
+      "y": 93,
+      "w": 62,
+      "h": 55,
       "kind": "value",
       "label": "Pitch",
       "ink": "#211C12",
@@ -476,10 +476,10 @@
     {
       "id": "space-scene-width",
       "binding": "scene.width",
-      "x": 1176,
-      "y": 96,
-      "w": 106,
-      "h": 48,
+      "x": 1158,
+      "y": 93,
+      "w": 101,
+      "h": 55,
       "kind": "knob",
       "label": "Width",
       "ink": "#211C12",
@@ -937,7 +937,7 @@
       "w": 26,
       "h": 24,
       "kind": "toggle",
-      "label": "Mute Ring 1×2",
+      "label": "Mute Ring 1\u00d72",
       "glyph": "power"
     },
     {
@@ -1576,13 +1576,13 @@
     "This is a native reconstruction of the supplied Space-Age 1977 concept. Brushed brass, olive wells, cream caps and metal tick rings are rendered as native vectors; photographic grain and display typography require current-source visual comparison.",
     "All three oscillators have actual algorithm menus, title power/mute controls and separate live wavetable catalog strips. Wavetable strips accurately disable for algorithms without table data; neither names nor waveforms are fixed reference pixels.",
     "The oscillator rows prioritize real Unison Voices and Unison Detune controls for Wavetable and Classic. Captions follow the selected native algorithm; no unsupported independent oscillator phase or stereo-width parameter is implied, and omitted algorithm controls remain available in Full editor.",
-    "Surge has two dedicated envelope generators. The third ADSR fader bank is labeled LFO 3 ENV and edits that modulator’s real envelope, rather than implying a third independent EG.",
+    "Surge has two dedicated envelope generators. The third ADSR fader bank is labeled LFO 3 ENV and edits that modulator\u2019s real envelope, rather than implying a third independent EG.",
     "The compact LFO rows expose actual Rate, Delay, Phase and Unipolar parameters. UNI is polarity, not a fictitious tempo-sync switch. Other LFO settings remain available in the full editor.",
-    "Four visible macro caps follow the reference. Their bindings remain native macro1–macro4; the remaining four native macros remain available in Full editor.",
+    "Four visible macro caps follow the reference. Their bindings remain native macro1\u2013macro4; the remaining four native macros remain available in Full editor.",
     "The eight-slot numbered FX rail selects the actual slot and rebinds the algorithm menu and eight parameter controls. Dynamic native labels and disabled unused parameters follow the selected algorithm. All sixteen native slots remain available through the original editor. The default FX4 Delay detail prioritizes its native Left, Right, Feedback, Mix, Low Cut, High Cut, modulation Depth and Width parameters; the remaining delay controls stay in Full FX editor. Native modulation depth and width units are retained rather than imitating the artwork values, and no fake Sync or Ping-Pong switches are painted.",
     "The upper OUTPUT rotary edits the actual master volume. The lower METERS block dedicates its full horizontal well to the independent real stereo output tap. STATUS & INFO uses genuine scene, voice and sample-rate data, with no fabricated CPU readout.",
     "Filter plots show the actual selected filter-algorithm response. FREQ and RES are live unit-aware editors; both WS DRIVE fields deliberately edit the same shared waveshaper drive, not independent per-filter drive.",
-    "The mixer retains actual oscillator faders, noise level and a native Ring 1×2 mute/power switch. Ring level remains available in the full editor. No nonexistent independent sub-oscillator or arbitrary scene/tune operation is implied. The global Width control remains labeled according to its real function.",
-    "The native preset browser, modulation editor and original full editor provide the complete installed catalog and engine operations. Their real current data does not reproduce the reference’s illustrative preset names, routes or meter activity."
+    "The mixer retains actual oscillator faders, noise level and a native Ring 1\u00d72 mute/power switch. Ring level remains available in the full editor. No nonexistent independent sub-oscillator or arbitrary scene/tune operation is implied. The global Width control remains labeled according to its real function.",
+    "The native preset browser, modulation editor and original full editor provide the complete installed catalog and engine operations. Their real current data does not reproduce the reference\u2019s illustrative preset names, routes or meter activity."
   ]
 }

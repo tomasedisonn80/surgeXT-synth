@@ -2139,6 +2139,155 @@ TEST_CASE("Painted linear handles match native pointer positions and endpoints",
     }
 }
 
+TEST_CASE("Relocated header controls retain placed bounds and pointer routing at display scales",
+          "[reference-workspaces][reference-interactions][reference-placement]")
+{
+    juce::ScopedJuceInitialiser_GUI gui;
+    IsolatedUserData testData;
+    SurgeSynthProcessor processor;
+    testData.attach(processor);
+    Workspace workspace(processor);
+    workspace.setSize(referenceWidth, referenceHeight);
+    workspace.addToDesktop(0);
+    workspace.setVisible(true);
+
+    struct PlacementCase
+    {
+        const char *package, *id, *binding;
+        juce::Rectangle<int> bounds;
+        juce::Point<float> paintedCentre;
+    };
+    // These are the reviewed logical layout and visible input points. Keep the
+    // expectations independent of paint helpers: a valid manifest alone cannot
+    // prove that a child was placed there or that an overlay does not steal input.
+    const std::array<PlacementCase, 4> cases{{
+        {"reference-02-ivory", "ivory.master.volume", "master.volume",
+         {1312, 10, 206, 72}, {1430.f, 44.f}},
+        {"reference-05-space", "space-glide", "scene.portamento",
+         {952, 93, 130, 55}, {1014.f, 123.f}},
+        {"reference-05-space", "space-scene-pitch", "scene.pitch",
+         {1093, 93, 62, 55}, {1124.f, 130.f}},
+        {"reference-05-space", "space-scene-width", "scene.width",
+         {1158, 93, 101, 55}, {1184.f, 123.f}}
+    }};
+    for (const auto &example : cases)
+    {
+        INFO("Relocated component: " << example.package << " / " << example.id);
+        const auto path = sourceRoot().getChildFile(
+            "resources/data/skins/" + juce::String(example.package) + ".surge-skin/workspace.json");
+        const auto manifest = readManifest(path);
+        const auto *controls = manifest["controls"].getArray();
+        REQUIRE(controls != nullptr);
+        const auto definition = std::find_if(controls->begin(), controls->end(),
+                                             [&](const juce::var &control) {
+                                                 return control["id"].toString() == example.id;
+                                             });
+        REQUIRE(definition != controls->end());
+        CHECK((*definition)["binding"].toString() == example.binding);
+        const juce::Rectangle<int> declared{
+            static_cast<int>((*definition)["x"]), static_cast<int>((*definition)["y"]),
+            static_cast<int>((*definition)["w"]), static_cast<int>((*definition)["h"])};
+        CHECK(declared == example.bounds);
+
+        juce::String error;
+        REQUIRE(workspace.load(path, error));
+        REQUIRE(error.isEmpty());
+        workspace.selectScene(0);
+        auto &bridge = workspace.bridge();
+        auto *slider = dynamic_cast<juce::Slider *>(findComponent(workspace, example.id));
+        REQUIRE(slider != nullptr);
+        REQUIRE(findBindingControl(workspace, manifest, example.binding) == slider);
+        REQUIRE(slider->getParentComponent() != nullptr);
+        REQUIRE(slider->isEnabled());
+        CHECK(slider->getWantsKeyboardFocus());
+        CHECK(slider->getName().isNotEmpty());
+        CHECK(slider->getProperties()["reference.binding"].toString() == example.binding);
+        auto *adapter = adapterFor(processor, bridge, example.binding);
+        REQUIRE(adapter != nullptr);
+        const int parameterIndex = processor.getParameters().indexOf(adapter);
+        REQUIRE(parameterIndex >= 0);
+        GestureProbe probe(*adapter);
+
+        for (const float scale : {1.f, 1.25f, 1.5f})
+        {
+            CAPTURE(scale);
+            edit(bridge, example.binding, .4f);
+            const auto before = hostParameterValues(processor);
+            // Round outward so the requested fractional scale fits exactly;
+            // JUCE's half-to-even rounding could otherwise reduce the scale.
+            workspace.setSize(static_cast<int>(std::ceil(referenceWidth * scale)),
+                              static_cast<int>(std::ceil(referenceHeight * scale)));
+            workspace.refresh();
+            checkHostParameterValues(processor, before);
+            REQUIRE(slider->isShowing());
+            CHECK(slider->getBounds() == example.bounds);
+            CHECK(slider->getParentComponent()->getLocalBounds().contains(slider->getBounds()));
+
+            // Rounding the 125% window width adds a quarter-pixel horizontal
+            // inset. Use the requested scale and viewport, not the child's own
+            // transform, to derive the expected workspace coordinates.
+            const juce::Point<float> offset{
+                (workspace.getWidth() - referenceWidth * scale) * .5f,
+                (workspace.getHeight() - referenceHeight * scale) * .5f};
+            const auto toWorkspace = [&](juce::Point<float> logical) {
+                return juce::Point<float>{logical.x * scale + offset.x,
+                                          logical.y * scale + offset.y};
+            };
+            const auto expectedTopLeft = toWorkspace(example.bounds.toFloat().getTopLeft());
+            const auto expectedBottomRight =
+                toWorkspace(example.bounds.toFloat().getBottomRight());
+            const auto actualTopLeft =
+                workspace.getLocalPoint(slider, slider->getLocalBounds().toFloat().getTopLeft());
+            const auto actualBottomRight = workspace.getLocalPoint(
+                slider, slider->getLocalBounds().toFloat().getBottomRight());
+            CHECK(actualTopLeft.x == Catch::Approx(expectedTopLeft.x).margin(.001f));
+            CHECK(actualTopLeft.y == Catch::Approx(expectedTopLeft.y).margin(.001f));
+            CHECK(actualBottomRight.x == Catch::Approx(expectedBottomRight.x).margin(.001f));
+            CHECK(actualBottomRight.y == Catch::Approx(expectedBottomRight.y).margin(.001f));
+
+            const auto inset = example.bounds.toFloat().reduced(1.f);
+            for (const auto point : {example.paintedCentre, inset.getTopLeft(),
+                                     inset.getTopRight(), inset.getBottomLeft(),
+                                     inset.getBottomRight()})
+            {
+                CAPTURE(point.x, point.y);
+                REQUIRE(workspace.getComponentAt(toWorkspace(point).roundToInt()) == slider);
+            }
+
+            // Start at the visible face/field through the workspace's actual
+            // hit result, then deliver JUCE mouse events in that child's local
+            // coordinates. Calling setValue directly would miss routing faults.
+            const auto start = toWorkspace(example.paintedCentre);
+            auto *hit = workspace.getComponentAt(start.roundToInt());
+            REQUIRE(hit == slider);
+            const int starts = probe.starts, ends = probe.ends, changes = probe.changes;
+            const auto down = mouseEvent(workspace, start).getEventRelativeTo(hit);
+            const auto drag = down.withNewPosition(
+                hit->getLocalPoint(&workspace, start.translated(0.f, -25.f * scale)));
+            hit->mouseDown(down);
+            hit->mouseDrag(drag);
+            hit->mouseUp(drag);
+            workspace.refresh();
+            const auto after = bridge.value(example.binding);
+            CHECK(after > before[static_cast<size_t>(parameterIndex)] + .01f);
+            CHECK(slider->getValue() == Catch::Approx(after).margin(.0011f));
+            CHECK(adapter->getValue() == Catch::Approx(after).margin(.0011f));
+            auto expectedAfter = before;
+            expectedAfter[static_cast<size_t>(parameterIndex)] = after;
+            // This includes the nearby controls and the other scene, so a
+            // correctly moving slider cannot conceal a second parameter edit.
+            checkHostParameterValues(processor, expectedAfter);
+            CHECK(probe.starts == starts + 1);
+            CHECK(probe.ends == ends + 1);
+            CHECK(probe.changes > changes);
+            CHECK(probe.minimumBalance == 0);
+            CHECK(probe.balance == 0);
+            CHECK(bridge.activeGestureCount() == 0);
+            CHECK_FALSE(adapter->inEditGesture.load());
+        }
+    }
+}
+
 TEST_CASE("Typed native values reject missing numbers and retain native units and names",
           "[reference-workspaces][reference-interactions][reference-typed-values]")
 {
@@ -3770,6 +3919,7 @@ TEST_CASE("Ten reference workspaces render native controls and export evidence",
         float editedAudioPeak = 0.f;
         for (int block = 0; block < 4; ++block)
             editedAudioPeak = std::max(editedAudioPeak, processBlock(processor));
+        CHECK(editedAudioPeak > 0.0001f);
         CHECK(editedAudioPeak < 1.0f);
         audioPeak = std::max(audioPeak, editedAudioPeak);
         workspace.refresh();
@@ -3796,6 +3946,7 @@ TEST_CASE("Ten reference workspaces render native controls and export evidence",
         float hostUpdatedAudioPeak = 0.f;
         for (int block = 0; block < 4; ++block)
             hostUpdatedAudioPeak = std::max(hostUpdatedAudioPeak, processBlock(processor));
+        CHECK(hostUpdatedAudioPeak > 0.0001f);
         CHECK(hostUpdatedAudioPeak < 1.0f);
         audioPeak = std::max(audioPeak, hostUpdatedAudioPeak);
         workspace.refresh();

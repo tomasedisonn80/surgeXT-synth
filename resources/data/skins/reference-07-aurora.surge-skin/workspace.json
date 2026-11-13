@@ -510,7 +510,7 @@
       "w": 54,
       "h": 91,
       "fontSize": 11,
-      "faceDiameter": 49
+      "faceDiameter": 43
     },
     {
       "id": "c.osc1-param1",
@@ -520,7 +520,7 @@
       "w": 49,
       "h": 70,
       "fontSize": 10.5,
-      "faceDiameter": 38
+      "faceDiameter": 30
     },
     {
       "id": "c.osc1-param2",
@@ -530,7 +530,7 @@
       "w": 49,
       "h": 70,
       "fontSize": 10.5,
-      "faceDiameter": 38
+      "faceDiameter": 30
     },
     {
       "id": "c.osc1-param3",
@@ -540,7 +540,7 @@
       "w": 49,
       "h": 70,
       "fontSize": 10.5,
-      "faceDiameter": 38
+      "faceDiameter": 30
     },
     {
       "id": "c.osc1-keytrack",
@@ -594,7 +594,7 @@
       "w": 48,
       "h": 70,
       "fontSize": 10.5,
-      "faceDiameter": 38
+      "faceDiameter": 30
     },
     {
       "id": "c.osc2-param1",
@@ -604,7 +604,7 @@
       "w": 48,
       "h": 70,
       "fontSize": 10.5,
-      "faceDiameter": 38
+      "faceDiameter": 30
     },
     {
       "id": "c.osc2-param2",
@@ -614,7 +614,7 @@
       "w": 48,
       "h": 70,
       "fontSize": 10.5,
-      "faceDiameter": 38
+      "faceDiameter": 30
     },
     {
       "id": "c.osc2-param3",
@@ -624,7 +624,7 @@
       "w": 48,
       "h": 70,
       "fontSize": 10.5,
-      "faceDiameter": 38
+      "faceDiameter": 30
     },
     {
       "id": "c.osc2-keytrack",
@@ -678,7 +678,7 @@
       "w": 54,
       "h": 91,
       "fontSize": 11,
-      "faceDiameter": 49
+      "faceDiameter": 43
     },
     {
       "id": "c.osc3-param1",
@@ -688,7 +688,7 @@
       "w": 49,
       "h": 70,
       "fontSize": 10.5,
-      "faceDiameter": 38
+      "faceDiameter": 30
     },
     {
       "id": "c.osc3-param2",
@@ -698,7 +698,7 @@
       "w": 49,
       "h": 70,
       "fontSize": 10.5,
-      "faceDiameter": 38
+      "faceDiameter": 30
     },
     {
       "id": "c.osc3-param3",
@@ -708,7 +708,7 @@
       "w": 49,
       "h": 70,
       "fontSize": 10.5,
-      "faceDiameter": 38
+      "faceDiameter": 30
     },
     {
       "id": "c.osc3-keytrack",
@@ -1127,7 +1127,7 @@
       "h": 65,
       "label": "A",
       "fontSize": 10.5,
-      "faceDiameter": 34
+      "faceDiameter": 27
     },
     {
       "id": "c.env1-decay",
@@ -1139,7 +1139,7 @@
       "h": 65,
       "label": "D",
       "fontSize": 10.5,
-      "faceDiameter": 34
+      "faceDiameter": 27
     },
     {
       "id": "c.env1-sustain",
@@ -1151,7 +1151,7 @@
       "h": 65,
       "label": "S",
       "fontSize": 10.5,
-      "faceDiameter": 34
+      "faceDiameter": 27
     },
     {
       "id": "c.env1-release",
@@ -1163,7 +1163,7 @@
       "h": 65,
       "label": "R",
       "fontSize": 10.5,
-      "faceDiameter": 34
+      "faceDiameter": 27
     },
     {
       "id": "c.env2-attack",
@@ -1175,7 +1175,7 @@
       "h": 65,
       "label": "A",
       "fontSize": 10.5,
-      "faceDiameter": 34
+      "faceDiameter": 27
     },
     {
       "id": "c.env2-decay",
@@ -1187,7 +1187,7 @@
       "h": 65,
       "label": "D",
       "fontSize": 10.5,
-      "faceDiameter": 34
+      "faceDiameter": 27
     },
     {
       "id": "c.env2-sustain",
@@ -1199,7 +1199,7 @@
       "h": 65,
       "label": "S",
       "fontSize": 10.5,
-      "faceDiameter": 34
+      "faceDiameter": 27
     },
     {
       "id": "c.env2-release",
@@ -1211,7 +1211,7 @@
       "h": 65,
       "label": "R",
       "fontSize": 10.5,
-      "faceDiameter": 34
+      "faceDiameter": 27
     },
     {
       "id": "c.lfo3-env-attack",
@@ -1224,7 +1224,7 @@
       "label": "A",
       "fontSize": 10.5,
       "labelPosition": "top",
-      "faceDiameter": 34
+      "faceDiameter": 27
     },
     {
       "id": "c.lfo3-env-decay",
@@ -1237,7 +1237,7 @@
       "label": "D",
       "fontSize": 10.5,
       "labelPosition": "top",
-      "faceDiameter": 34
+      "faceDiameter": 27
     },
     {
       "id": "c.lfo3-env-sustain",
@@ -1250,7 +1250,7 @@
       "label": "S",
       "fontSize": 10.5,
       "labelPosition": "top",
-      "faceDiameter": 34
+      "faceDiameter": 27
     },
     {
       "id": "c.lfo3-env-release",
@@ -1263,7 +1263,7 @@
       "label": "R",
       "fontSize": 10.5,
       "labelPosition": "top",
-      "faceDiameter": 34
+      "faceDiameter": 27
     },
     {
       "id": "c.lfo1-shape",

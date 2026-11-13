@@ -1487,13 +1487,15 @@
       "binding": "master.volume",
       "x": 1312,
       "y": 10,
-      "w": 150,
+      "w": 206,
       "h": 72,
       "kind": "knob",
       "label": "MASTER",
       "accent": "yellow",
       "labelPosition": "left",
-      "fontSize": 13
+      "valuePosition": "right",
+      "faceDiameter": 66,
+      "fontSize": 12
     },
     {
       "id": "ivory.envelope.curve",

@@ -275,10 +275,26 @@ void bezel(juce::Graphics &g, const Theme &t, Rect r, juce::Colour fill, float r
     const bool panel = r.getWidth() > 125 && r.getHeight() > 55;
     const bool metal = t.style == "space";
     const bool olive = metal && fill == t.panel;
+    const bool brassPanel = panel && metal && !olive &&
+                            fill.getPerceivedBrightness() > .45f;
     const bool ivory = t.style == "ivory";
+    const bool ivoryPaper = ivory && fill.getPerceivedBrightness() > .6f &&
+                            fill.getRed() >= fill.getGreen();
     const bool flat = t.style == "bauhaus" || t.style == "clear";
+    const bool precisionPanel = panel && t.style == "precision" && fill == t.panel;
+    const bool bauhausPanel = panel && t.style == "bauhaus" && fill != t.display;
+    const bool bauhausBlue = bauhausPanel && fill.getBlue() > fill.getGreen() &&
+                            fill.getGreen() > fill.getRed();
     const bool auroraPanel = panel && t.style == "aurora" && fill == t.panel;
     const bool hardwarePanel = panel && (t.style == "tokyo" || t.style == "live");
+    const bool tokyoPanel = panel && t.style == "tokyo";
+    const auto offsetColour = [](juce::Colour colour, int red, int green, int blue) {
+        return juce::Colour(
+            static_cast<juce::uint8>(std::clamp(colour.getRed() + red, 0, 255)),
+            static_cast<juce::uint8>(std::clamp(colour.getGreen() + green, 0, 255)),
+            static_cast<juce::uint8>(std::clamp(colour.getBlue() + blue, 0, 255)),
+            colour.getAlpha());
+    };
     if (panel && !flat)
     {
         g.setColour(juce::Colours::black.withAlpha(t.light() ? .08f : .22f));
@@ -295,15 +311,32 @@ void bezel(juce::Graphics &g, const Theme &t, Rect r, juce::Colour fill, float r
         top = fill.interpolatedWith(juce::Colours::white, .012f);
         bottom = fill.interpolatedWith(juce::Colours::black, .28f);
     }
-    if (ivory && fill != t.display)
+    if (precisionPanel)
+    {
+        // Measured enclosure lift in code values; the separate display wells
+        // and selected control fills retain their existing dark finish.
+        top = offsetColour(fill, 9, 9, 10);
+        bottom = offsetColour(fill, 0, -1, -2);
+    }
+    if (ivoryPaper)
     {
         top = fill.interpolatedWith(juce::Colour(0xfffffcf5), .34f);
         bottom = fill.interpolatedWith(juce::Colour(0xffd7bfa8), .13f);
     }
+    else if (ivory && fill != t.display)
+    {
+        // Green preset wells and active chips are enamel, not cream paper.
+        // Their input fill still carries selection/hover state.
+        top = fill.interpolatedWith(juce::Colour(0xff233c2b), .40f);
+        bottom = fill.interpolatedWith(juce::Colour(0xff1e2d1e), .40f);
+    }
     else if (t.style == "bauhaus")
     {
         top = fill.interpolatedWith(juce::Colours::white, .045f);
-        bottom = fill.interpolatedWith(juce::Colours::black, .018f);
+        bottom = bauhausBlue ? offsetColour(fill, 2, 0, -2)
+                 : bauhausPanel && fill == t.red ? offsetColour(fill, -8, -7, -7)
+                                                 : fill.interpolatedWith(juce::Colours::black,
+                                                                         .018f);
     }
     else if (fill == t.panel && t.style == "clear")
     {
@@ -322,13 +355,28 @@ void bezel(juce::Graphics &g, const Theme &t, Rect r, juce::Colour fill, float r
     }
     else if (metal && fill != t.display)
     {
-        top = fill.interpolatedWith(juce::Colour(0xffedce9b), .18f);
-        bottom = fill.interpolatedWith(juce::Colour(0xff7d633d), .10f);
+        // The measured brass is warmer and darker between its reflections.
+        // Small selected chips and dark instrument wells keep their own fills.
+        top = brassPanel ? offsetColour(fill, -23, -28, -28)
+                         : fill.interpolatedWith(juce::Colour(0xffedce9b), .18f);
+        bottom = brassPanel ? offsetColour(fill, -29, -32, -31)
+                            : fill.interpolatedWith(juce::Colour(0xff7d633d), .10f);
     }
     if (hardwarePanel && t.style == "live" && fill == t.panel)
         top = fill.interpolatedWith(juce::Colour(0xff4d4b4c), .18f);
     auto material = juce::ColourGradient(top, r.getTopLeft(), bottom, r.getBottomLeft(), false);
-    if (auroraPanel)
+    if (precisionPanel)
+    {
+        const auto lip = std::min(30.f / r.getHeight(), .48f);
+        const auto title = offsetColour(fill, 7, 7, 7);
+        material.addColour(lip * .40f, top);
+        material.addColour(lip * .53f, title);
+        material.addColour(lip, title);
+        material.addColour(std::min(.80f, lip + 7.f / r.getHeight()),
+                           offsetColour(fill, 2, 1, 0));
+        material.addColour(.86f, bottom);
+    }
+    else if (auroraPanel)
     {
         // The reference has a broad translucent title lip, while the body stays
         // dark. Absolute lip height prevents tall browsers becoming purple slabs.
@@ -350,7 +398,7 @@ void bezel(juce::Graphics &g, const Theme &t, Rect r, juce::Colour fill, float r
         material.addColour(.72, fill.interpolatedWith(juce::Colour(0xff73642c), .14f));
         material.addColour(.98, bottom);
     }
-    else if (panel && (metal || ivory || t.style == "tokyo" || t.style == "live"))
+    else if (panel && (metal || ivoryPaper || t.style == "tokyo" || t.style == "live"))
     {
         material.addColour(.045, top.interpolatedWith(juce::Colours::white, metal ? .09f : .04f));
         material.addColour(.14, top);
@@ -360,7 +408,7 @@ void bezel(juce::Graphics &g, const Theme &t, Rect r, juce::Colour fill, float r
     g.setGradientFill(material);
     g.fillRoundedRectangle(r, radius);
     if (panel && fill != t.display &&
-        (metal || ivory || t.style == "tokyo" || t.style == "precision" || t.style == "live"))
+        (metal || ivoryPaper || t.style == "tokyo" || t.style == "precision" || t.style == "live"))
     {
         juce::Graphics::ScopedSaveState save(g);
         juce::Path clip;
@@ -369,7 +417,25 @@ void bezel(juce::Graphics &g, const Theme &t, Rect r, juce::Colour fill, float r
         g.setTiledImageFill(materialGrain(metal), 0, 0,
                             metal ? (olive ? .09f : .27f) : ivory ? .065f : .018f);
         g.fillRect(r);
-        if (metal)
+        if (brassPanel)
+        {
+            // Local broad reflections carry the spatial contrast. Keep the
+            // fine machining grain unchanged instead of raising all its noise.
+            const auto reflection = juce::Colour(0xfffcdcb0);
+            juce::ColourGradient sheen(reflection.withAlpha(.10f), r.getX(), r.getCentreY(),
+                                       reflection.withAlpha(0.f), r.getRight(), r.getCentreY(),
+                                       false);
+            sheen.addColour(.13, reflection.withAlpha(.44f));
+            sheen.addColour(.22, reflection.withAlpha(.31f));
+            sheen.addColour(.38, reflection.withAlpha(0.f));
+            sheen.addColour(.49, reflection.withAlpha(0.f));
+            sheen.addColour(.64, reflection.withAlpha(.16f));
+            sheen.addColour(.70, reflection.withAlpha(.13f));
+            sheen.addColour(.78, reflection.withAlpha(0.f));
+            g.setGradientFill(sheen);
+            g.fillRect(r);
+        }
+        else if (metal)
         {
             // A broad reflected band breaks the old uniform horizontal stripes.
             // It follows the physical panel, not its contents or the audio clock.
@@ -384,6 +450,38 @@ void bezel(juce::Graphics &g, const Theme &t, Rect r, juce::Colour fill, float r
             g.setGradientFill(sheen);
             g.fillRect(r);
         }
+    }
+    if (bauhausPanel)
+    {
+        // Blue ink has a wider blue-channel tooth than the red/cream paper.
+        // This immutable tile is cosmetic hash noise, never engine RNG or art.
+        static const auto bluePaperGrain = [] {
+            juce::Image result(juce::Image::ARGB, 512, 256, true);
+            juce::Image::BitmapData pixels(result, juce::Image::BitmapData::writeOnly);
+            for (int y = 0; y < pixels.height; ++y)
+                for (int x = 0; x < pixels.width; ++x)
+                {
+                    auto hash = static_cast<unsigned>(x) + 0x9e3779b9u;
+                    hash ^= (static_cast<unsigned>(y) + 1u) * 0x85ebca6bu;
+                    hash ^= hash >> 16;
+                    hash *= 0x7feb352du;
+                    hash ^= hash >> 15;
+                    hash *= 0x846ca68bu;
+                    hash ^= hash >> 16;
+                    const auto grain = static_cast<float>(hash & 65535u) / 32767.5f - 1.f;
+                    pixels.setPixelColour(
+                        x, y, grain > 0 ? juce::Colours::white.withAlpha(grain * .010f)
+                                        : juce::Colours::black.withAlpha(-grain * .10f));
+                }
+            return result;
+        }();
+        const juce::Graphics::ScopedSaveState save(g);
+        juce::Path clip;
+        clip.addRoundedRectangle(r.reduced(2), std::max(0.f, radius - 1));
+        g.reduceClipRegion(clip);
+        g.setTiledImageFill(bauhausBlue ? bluePaperGrain : materialGrain(false), 0, 0,
+                            bauhausBlue ? 1.f : .065f);
+        g.fillRect(r);
     }
     if (panel && (t.style == "aurora" || t.style == "spectral"))
     {
@@ -419,12 +517,14 @@ void bezel(juce::Graphics &g, const Theme &t, Rect r, juce::Colour fill, float r
         g.reduceClipRegion(clip);
         // Lighting belongs to the enclosure, not a selected or enabled state.
         g.setGradientFill(juce::ColourGradient(
-            juce::Colours::white.withAlpha(auroraPanel ? .09f : .055f), r.getX(), r.getY() + 1,
+            juce::Colours::white.withAlpha(auroraPanel ? .09f : tokyoPanel ? .11f : .055f),
+            r.getX(), r.getY() + 1,
             juce::Colours::white.withAlpha(0.f), r.getX(), r.getY() + 7, false));
         g.fillRect(r.withHeight(7));
         g.setGradientFill(juce::ColourGradient(
             juce::Colours::black.withAlpha(0.f), r.getX(), r.getBottom() - 7,
-            juce::Colours::black.withAlpha(.28f), r.getX(), r.getBottom(), false));
+            juce::Colours::black.withAlpha(tokyoPanel ? .50f : .28f),
+            r.getX(), r.getBottom(), false));
         g.fillRect(r.withTop(r.getBottom() - 7));
         if (auroraPanel)
         {
@@ -443,7 +543,7 @@ void bezel(juce::Graphics &g, const Theme &t, Rect r, juce::Colour fill, float r
             t.border.withAlpha(.025f), r.getBottomRight(), false));
         g.drawRoundedRectangle(r.reduced(1.5f), std::max(0.f, radius - 1), .7f);
     }
-    if (panel && (metal || ivory || t.style == "tokyo"))
+    if (panel && (metal || ivoryPaper || t.style == "tokyo"))
     {
         g.setColour(metal ? t.border.withAlpha(.88f)
                           : juce::Colours::white.withAlpha(ivory ? .72f : .15f));
@@ -451,8 +551,23 @@ void bezel(juce::Graphics &g, const Theme &t, Rect r, juce::Colour fill, float r
         g.setColour(juce::Colours::black.withAlpha(metal ? .48f : .10f));
         g.drawRoundedRectangle(r.reduced(3.3f), std::max(0.f, radius - 2), .7f);
     }
-    g.setColour(juce::Colours::white.withAlpha(t.light() ? .62f : .10f));
+    g.setColour(juce::Colours::white.withAlpha(ivory && !ivoryPaper ? .12f
+                                                                : t.light() ? .62f : .10f));
     g.drawLine(r.getX() + radius, r.getY() + 1, r.getRight() - radius, r.getY() + 1, 1);
+    if (tokyoPanel)
+    {
+        // A thin reflected enclosure lip supplies the measured edge contrast;
+        // the already-matched graphite body does not become a lighter slab.
+        g.setColour(juce::Colour(0xffd0d6d9).withAlpha(.80f));
+        g.drawLine(r.getX() + radius, r.getY() + .55f,
+                   r.getRight() - radius, r.getY() + .55f, 1.1f);
+        g.setColour(juce::Colours::black.withAlpha(.56f));
+        g.drawLine(r.getX() + radius, r.getY() + 2.4f,
+                   r.getRight() - radius, r.getY() + 2.4f, .7f);
+        g.setColour(juce::Colours::black.withAlpha(.72f));
+        g.drawLine(r.getX() + radius, r.getBottom() - 1.2f,
+                   r.getRight() - radius, r.getBottom() - 1.2f, 1.3f);
+    }
 }
 void themedButton(juce::Graphics &g, const Theme &theme, juce::TextButton &button, bool highlighted,
                   bool down)
@@ -726,8 +841,10 @@ void knob(juce::Graphics &g, const Theme &t, Rect r, float value, juce::Colour a
     const bool ivory = t.style == "ivory", space = t.style == "space";
     const bool bauhaus = t.style == "bauhaus", clear = t.style == "clear";
     const bool flow = t.style == "flow";
+    const bool tokyo = t.style == "tokyo";
     const bool live = t.style == "live";
-    const bool glass = t.style == "spectral" || t.style == "aurora" || live;
+    const bool aurora = t.style == "aurora";
+    const bool glass = t.style == "spectral" || aurora || live;
     if (glass)
     {
         // The outer ring is a fixed metal/glass bezel, distinct from the live
@@ -737,25 +854,58 @@ void knob(juce::Graphics &g, const Theme &t, Rect r, float value, juce::Colour a
         const auto rim = Rect(c.x - outerRadius, c.y - outerRadius,
                               outerRadius * 2.f, outerRadius * 2.f);
         auto metal = juce::ColourGradient(
-            (live ? juce::Colour(0xffe4c594) : juce::Colour(0xffd6c3ef)).withAlpha(.72f),
+            (live ? juce::Colour(0xffa9ecc6) : juce::Colour(0xffd6c3ef))
+                .withAlpha(live ? .90f : .72f),
             rim.getTopLeft(), juce::Colour(0xff080a0c).withAlpha(.90f),
             rim.getBottomRight(), false);
-        metal.addColour(.23, juce::Colours::white.withAlpha(.52f));
-        metal.addColour(.48, t.border.withAlpha(.20f));
-        metal.addColour(.71, (live ? juce::Colour(0xff82613a) : t.border).withAlpha(.70f));
+        metal.addColour(.23, juce::Colours::white.withAlpha(live ? .68f : .52f));
+        metal.addColour(.48, t.border.withAlpha(live ? .30f : .20f));
+        metal.addColour(.71, (live ? juce::Colour(0xffac7445) : t.border)
+                                 .withAlpha(live ? .92f : .70f));
         g.setGradientFill(metal);
-        g.drawEllipse(rim, live ? 1.35f : 1.f);
+        g.drawEllipse(rim, live ? 1.9f : 1.f);
         g.setColour(juce::Colours::black.withAlpha(.65f));
         g.drawEllipse(rim.reduced(1.55f), .8f);
     }
-    if (t.glow > 0 && enabled && !ivory && !space && !bauhaus)
+    if (tokyo)
     {
+        const auto housingRadius = rad + .7f;
+        const Rect housing(c.x - housingRadius, c.y - housingRadius,
+                           housingRadius * 2.f, housingRadius * 2.f);
+        // Put the mechanical shadow behind the collar so it cannot obscure
+        // the live arc at either end of the dial's range.
+        g.setColour(juce::Colours::black.withAlpha(.65f));
+        g.fillEllipse(housing.translated(0, 1.1f));
+        g.setGradientFill(juce::ColourGradient(juce::Colour(0xff858f94).withAlpha(.58f),
+                                               housing.getTopLeft(),
+                                               juce::Colour(0xff05090b),
+                                               housing.getBottomRight(), false));
+        g.drawEllipse(housing, .9f);
+    }
+    if (live && enabled && t.glow > 0 && rad >= 20.f)
+    {
+        // Extra glass scatter for the large performance dials follows only the
+        // true value arc. Its footprint stays inside the existing dial face.
+        const juce::Graphics::ScopedSaveState haloState(g);
+        g.reduceClipRegion(r.toNearestInt());
+        g.setColour(accent.withAlpha(std::min(.14f, t.glow * .85f)));
+        g.strokePath(arc, juce::PathStrokeType(10.5f, juce::PathStrokeType::curved,
+                                                juce::PathStrokeType::rounded));
+        g.setColour(accent.withAlpha(std::min(.18f, t.glow * 1.1f)));
+        g.strokePath(arc, juce::PathStrokeType(6.5f, juce::PathStrokeType::curved,
+                                               juce::PathStrokeType::rounded));
+    }
+    if (t.glow > 0 && enabled && !ivory && !space && !bauhaus && !tokyo)
+    {
+        // Keep Aurora's halo proportional to its painted face. Miniature dials
+        // retain the same native value arc and full component hit rectangle.
+        const auto haloScale = aurora ? std::min(1.f, rad / 22.5f) : 1.f;
         g.setColour(accent.withAlpha(std::min(glass ? .13f : .10f,
                                              t.glow * (glass ? .65f : .4f))));
-        g.strokePath(arc, juce::PathStrokeType(glass ? 8.5f : 7.f));
+        g.strokePath(arc, juce::PathStrokeType((glass ? 8.5f : 7.f) * haloScale));
         g.setColour(accent.withAlpha(std::min(glass ? .32f : .26f,
                                              t.glow * (glass ? 1.5f : 1.f))));
-        g.strokePath(arc, juce::PathStrokeType(glass ? 4.7f : 4.5f));
+        g.strokePath(arc, juce::PathStrokeType((glass ? 4.7f : 4.5f) * haloScale));
     }
     if (space)
     {
@@ -773,12 +923,16 @@ void knob(juce::Graphics &g, const Theme &t, Rect r, float value, juce::Colour a
     else if ((!ivory && !bauhaus) || ((ivory || bauhaus) && coloredRim))
     {
         g.setColour(bauhaus ? juce::Colour(0xff181b17)
-                           : clear ? juce::Colour(0xff879197) : t.border.withAlpha(.32f));
-        g.strokePath(track, juce::PathStrokeType(bauhaus ? 3.6f : clear ? 3.f
-                                                                        : glass ? 2.f : 1.5f));
+                           : clear ? juce::Colour(0xff879197)
+                           : tokyo ? juce::Colour(0xff121719) : t.border.withAlpha(.32f));
+        g.strokePath(track, juce::PathStrokeType(bauhaus ? 3.6f
+                                               : clear ? 3.f
+                                               : tokyo ? std::min(4.1f, rad * .17f)
+                                               : glass ? 2.f : 1.5f));
         g.setColour(ivory ? t.accent : accent);
         g.strokePath(arc, juce::PathStrokeType(bauhaus ? 4.8f : clear ? 4.2f
                                                                : flow ? 4.f
+                                                               : tokyo ? std::min(4.1f, rad * .17f)
                                                                : glass ? 2.7f : 2.2f));
         if (glass)
         {
@@ -788,10 +942,10 @@ void knob(juce::Graphics &g, const Theme &t, Rect r, float value, juce::Colour a
                                                     juce::PathStrokeType::rounded));
         }
     }
-    const auto faceRadius = std::max(1.f, rad - (clear ? 3.4f : flow ? 6.f
+    const auto faceRadius = std::max(1.f, rad - (clear ? 3.4f : flow ? 6.f : tokyo ? 3.3f
                                                               : glass ? 4.2f : 2.f));
     auto face = Rect(c.x - faceRadius, c.y - faceRadius, faceRadius * 2, faceRadius * 2);
-    if (!clear)
+    if (!clear && !tokyo)
     {
         g.setColour(juce::Colours::black.withAlpha(.16f));
         g.fillEllipse(face.expanded(2).translated(0, 3));
@@ -809,6 +963,11 @@ void knob(juce::Graphics &g, const Theme &t, Rect r, float value, juce::Colour a
     {
         hi = bauhaus ? juce::Colour(0xfffff4d9) : juce::Colour(0xfff9fbfc);
         lo = bauhaus ? juce::Colour(0xffebd6ae) : juce::Colour(0xffd0d6da);
+    }
+    else if (tokyo)
+    {
+        hi = juce::Colour(0xff42494c);
+        lo = juce::Colour(0xff0b0f11);
     }
     auto faceGradient = juce::ColourGradient(hi, face.getX() + face.getWidth() * .27f,
                                              face.getY() + face.getHeight() * .12f, lo,
@@ -881,7 +1040,32 @@ void knob(juce::Graphics &g, const Theme &t, Rect r, float value, juce::Colour a
         g.setColour(juce::Colour(0xff282618).withAlpha(.95f));
         g.drawEllipse(cap, 1.2f);
     }
-    if (!clear && !bauhaus)
+    else if (tokyo)
+    {
+        // This fixed mechanical rim sits inside the value-dependent red collar.
+        // Its recessed dark cap changes neither the dial centre nor its angle.
+        auto rim = juce::ColourGradient(juce::Colour(0xffa9b2b6), face.getTopLeft(),
+                                         juce::Colour(0xff090d0f), face.getBottomRight(), false);
+        rim.addColour(.42, juce::Colour(0xff596267));
+        rim.addColour(.70, juce::Colour(0xff1c2428));
+        g.setGradientFill(rim);
+        g.drawEllipse(face.reduced(.5f), 1.5f);
+        const auto cap = face.reduced(std::max(2.2f, faceRadius * .13f));
+        g.setColour(juce::Colours::black.withAlpha(.85f));
+        g.fillEllipse(cap.expanded(.7f).translated(0, .5f));
+        g.setGradientFill(juce::ColourGradient(juce::Colour(0xff303639), cap.getTopLeft(),
+                                               juce::Colour(0xff111619),
+                                               cap.getBottomRight(), false));
+        g.fillEllipse(cap);
+        g.setColour(juce::Colours::black.withAlpha(.90f));
+        g.drawEllipse(cap, 1.f);
+        juce::Path capLip;
+        const auto capRadius = cap.getWidth() * .5f - .6f;
+        capLip.addCentredArc(c.x, c.y, capRadius, capRadius, 0, -1.45f, .65f, true);
+        g.setColour(juce::Colour(0xff7b878c).withAlpha(.58f));
+        g.strokePath(capLip, juce::PathStrokeType(.7f));
+    }
+    if (!clear && !bauhaus && !tokyo)
     {
         // Broad upper reflection and a narrow dark lower lip make the smaller
         // dials read as solid caps while leaving the value-dependent arc clear.
@@ -916,15 +1100,15 @@ void knob(juce::Graphics &g, const Theme &t, Rect r, float value, juce::Colour a
         g.setColour(juce::Colours::black.withAlpha(.50f));
         g.drawEllipse(face.reduced(1.5f), .65f);
     }
-    if (!clear && !bauhaus)
+    if (!clear && !bauhaus && !tokyo)
     {
         juce::Path shine;
         shine.addCentredArc(c.x, c.y, faceRadius - 1.5f, faceRadius - 1.5f, 0, -1.45f, .65f, true);
-        g.setColour(juce::Colours::white.withAlpha(
-            ivory || space ? .70f : t.style == "tokyo" ? .65f : .35f));
-        g.strokePath(shine, juce::PathStrokeType(t.style == "tokyo" ? 1.4f : .8f));
+        g.setColour(juce::Colours::white.withAlpha(ivory || space ? .70f : .35f));
+        g.strokePath(shine, juce::PathStrokeType(.8f));
     }
-    const float inner = rad * (clear ? .54f : .48f), outer = rad * .84f;
+    const float inner = rad * (clear ? .54f : tokyo ? .39f : .48f);
+    const float outer = rad * (tokyo ? .72f : .84f);
     g.setColour(ivory                ? juce::Colour(0xff264c33)
                 : bauhaus || clear   ? juce::Colour(0xff10181c)
                 : space              ? (t.knob.getPerceivedBrightness() < .35f
@@ -936,6 +1120,7 @@ void knob(juce::Graphics &g, const Theme &t, Rect r, float value, juce::Colour a
                c.y - std::cos(a) * outer,
                clear   ? 3.f
                : space ? 1.4f
+               : tokyo ? std::clamp(rad * .12f, 2.f, 2.8f)
                        : 1.8f);
     if (focus)
     {
@@ -1295,6 +1480,23 @@ class BoundSlider : public juce::Slider
         float fs = number(spec, "fontSize", theme.style == "clear" ? 15 : 11.5f);
         if (kind == "value")
         {
+            if (theme.style == "space" && binding == "scene.pitch")
+            {
+                // The physical pitch plate has its caption above the native
+                // field. Keep Surge's real display units and value-entry path.
+                text(g, theme, label.toUpperCase(), r.withTrimmedTop(1).withHeight(16), fs,
+                     ink, false, juce::Justification::centred);
+                const auto box = r.withTrimmedTop(22).withTrimmedBottom(3).reduced(2, 0);
+                bezel(g, theme, box, theme.display, 3);
+                text(g, theme, value, box.reduced(3, 0), fs + 1.f, theme.accent, false,
+                     juce::Justification::centred);
+                if (hasKeyboardFocus(true))
+                {
+                    g.setColour(accent);
+                    g.drawRoundedRectangle(box, 3, 2);
+                }
+                return;
+            }
             if (theme.style == "precision" && binding.startsWith("osc"))
             {
                 text(g, theme, label, r.withHeight(13), fs - 1.f, theme.muted,
@@ -1360,6 +1562,12 @@ class BoundSlider : public juce::Slider
                 auto faceTheme = theme;
                 if (theme.style == "space" && binding.startsWith("macro"))
                     faceTheme.knob = theme.display;
+                if (theme.style == "space" &&
+                    (binding == "scene.portamento" || binding == "scene.width"))
+                {
+                    faceTheme.knob = theme.display;
+                    faceTheme.text = ink;
+                }
                 knob(g, faceTheme, face, static_cast<float>(getValue()), accent,
                      hasKeyboardFocus(true), isEnabled(), coloredRim);
                 if (binding.startsWith("macro") &&
@@ -1378,6 +1586,42 @@ class BoundSlider : public juce::Slider
                      theme.style == "clear" ? ink : valueInk, theme.style == "clear",
                      juce::Justification::centredLeft);
             };
+            if (theme.style == "space" &&
+                (binding == "scene.portamento" || binding == "scene.width"))
+            {
+                // Measured global hardware positions: caption, real rotary and
+                // live value occupy separate parts of the same native slider.
+                const bool glide = binding == "scene.portamento";
+                const auto dialX = glide ? 62.f : 26.f;
+                drawFace(Rect(0, 0, 34, 34).withCentre({r.getX() + dialX, r.getY() + 30}));
+                text(g, theme, label.toUpperCase(),
+                     Rect(r.getX() + (glide ? 2.f : 5.f), r.getY() + (glide ? 5.f : 1.f),
+                          glide ? 45.f : 42.f, 16),
+                     fs, ink, false, glide ? juce::Justification::centredLeft
+                                           : juce::Justification::centred);
+                if (!hideValue)
+                {
+                    const auto valueX = glide ? 86.f : 53.f;
+                    text(g, theme, value,
+                         Rect(r.getX() + valueX, r.getY() + 25, r.getWidth() - valueX, 18),
+                         fs, valueInk, false, juce::Justification::centredLeft);
+                }
+                return;
+            }
+            if (theme.style == "ivory" && binding == "master.volume" &&
+                labelPosition == "left")
+            {
+                // The header is one native slider: its caption stays left of
+                // the measured dial and its current processor value sits right.
+                drawFace(Rect(0, 0, 66, 66).withCentre({r.getX() + 118, r.getY() + 34}));
+                text(g, theme, label, {r.getX() + 10, r.getY() + 24, 56, 18}, fs, ink,
+                     false, juce::Justification::centredRight);
+                if (!hideValue)
+                    text(g, theme, value,
+                         {r.getX() + 159, r.getY() + 33, r.getWidth() - 159, 18},
+                         fs + 1.5f, ink, false, juce::Justification::centredLeft);
+                return;
+            }
             if (theme.style == "space" && binding.startsWith("macro"))
             {
                 // Preserve the real caption and control bounds; match the
@@ -1406,7 +1650,12 @@ class BoundSlider : public juce::Slider
             if (labelPosition == "top")
             {
                 const float line = lineHeight;
-                text(g, theme, label, r.removeFromTop(line), fs, ink, emphasizeLabel,
+                auto caption = r.removeFromTop(line);
+                if (theme.style == "flow" && binding.startsWith("macro"))
+                    // Clear the panel's slot badge without changing the actual
+                    // name, dial placement or native control bounds.
+                    caption = caption.withTrimmedLeft(18.f);
+                text(g, theme, label, caption, fs, ink, emphasizeLabel,
                      juce::Justification::centred);
                 if (!hideValue && valueAtTop)
                     text(g, theme, value, r.removeFromTop(line), fs, valueInk,
@@ -5935,6 +6184,8 @@ struct Workspace::Impl
         };
         auto brand = [&](Rect r, float size, bool upper = true) {
             auto font = theme.type(size, style != "ivory");
+            if (style == "ivory")
+                font = font.withHorizontalScale(.985f);
             if (style == "space")
                 font = theme.fonts
                            ->getLatoAtSize(size, static_cast<juce::Font::FontStyleFlags>(
@@ -5978,8 +6229,8 @@ struct Workspace::Impl
         else if (style == "ivory")
         {
             logo(30, 23, 54, 34);
-            brand({101, 13, 200, 39}, 36);
-            text(g, theme, "HYBRID SYNTHESIZER", {102, 52, 202, 18}, 13, ink);
+            brand({102, 20, 190, 39}, 34);
+            text(g, theme, "HYBRID SYNTHESIZER", {103, 54, 202, 18}, 13, ink);
             line(322, 25, 39);
             line(1298, 25, 38);
             text(g, theme, "SCENE", {350, 31, 55, 22}, 14, ink);
@@ -6254,6 +6505,10 @@ struct Workspace::Impl
             r = frame.reduced(7, 9).withTrimmedBottom(20);
         if (externalAxes)
             r = frame.withTrimmedTop(34.f);
+        else if (outerDbLabels)
+            // Flow reserves axis gutters outside this well. Use its near-edge
+            // 242 x 134 data area instead of applying the generic inner inset.
+            r = frame.reduced(1.f);
         else if (dbReadouts && !outerDbLabels)
             r = r.withTrimmedLeft(21.f);
         if (live)
@@ -6314,6 +6569,11 @@ struct Workspace::Impl
                     text(g, theme, label, externalAxes
                              ? Rect(std::clamp(x - 16, frame.getX() - 14, frame.getRight() - 32),
                                     frame.getBottom() + 5, 32, 18)
+                             : outerDbLabels
+                             ? Rect(std::clamp(x - 13, frame.getX(),
+                                              panelClip.isEmpty() ? frame.getRight() - 26
+                                                                  : panelClip.getRight() - 27),
+                                    frame.getBottom() + 2, 26, 13)
                              : dbReadouts && !outerDbLabels
                              ? Rect(std::clamp(x - 14, r.getX() - 4, frame.getRight() - 29),
                                     frame.getBottom() - 14, 28, 13)
@@ -6337,7 +6597,7 @@ struct Workspace::Impl
                 if (dbReadouts)
                     text(g, theme, (db > 0 ? "+" : "") + juce::String(static_cast<int>(db)),
                          externalAxes ? Rect(frame.getX() - 42, y - 8, 35, 16)
-                         : outerDbLabels ? Rect(frame.getX() - 34, y - 6.5f, 27, 13)
+                         : outerDbLabels ? Rect(r.getX() - 32, y - 6.5f, 27, 13)
                                       : Rect(frame.getX() + 2, y - 6.5f,
                                              r.getX() - frame.getX() - 7, 13),
                          axisSize, axisInk, false, juce::Justification::centredRight);
@@ -6345,7 +6605,8 @@ struct Workspace::Impl
             if (dbReadouts)
                 text(g, theme, "dB", externalAxes
                          ? Rect(frame.getX() - 42, frame.getY() + 5, 35, 18)
-                         : outerDbLabels ? Rect(frame.getX() - 34, frame.getY() - 2, 27, 13)
+                         : outerDbLabels
+                         ? Rect(r.getX() - 32, frame.getBottom() + 2, 27, 13)
                          : Rect(frame.getX() + 2, frame.getBottom() - 14,
                                 r.getX() - frame.getX() - 7, 13),
                      axisSize, axisInk, false, juce::Justification::centredRight);
@@ -6837,6 +7098,7 @@ struct Workspace::Impl
             return;
         const bool continuous = theme.style == "ivory" || theme.style == "spectral" ||
                                 theme.style == "clear" || theme.style == "live";
+        const bool live = theme.style == "live";
         const bool labelsAbove = theme.style == "clear" || theme.style == "spectral";
         const float gap = theme.style == "ivory" ? std::min(14.f, r.getWidth() * .4f)
                                                  : std::max(3.f, r.getWidth() * .15f);
@@ -6852,15 +7114,34 @@ struct Workspace::Impl
             if (continuous)
             {
                 auto active = bar.reduced(theme.style == "clear" ? 2.f : 1.f);
+                if (live)
+                    active = active.withSizeKeepingCentre(std::min(9.f, active.getWidth()),
+                                                          active.getHeight());
                 active = active.removeFromBottom(active.getHeight() * proportion);
                 auto bottom = theme.style == "ivory" ? juce::Colour(0xff58c546)
-                              : theme.style == "spectral" ? theme.secondary : theme.accent;
+                              : theme.style == "spectral" ? theme.secondary
+                              : live ? juce::Colour(0xff4adf76) : theme.accent;
                 auto top = theme.style == "ivory" ? juce::Colour(0xffe5e66a)
                            : theme.style == "spectral" ? theme.accent
+                           : live ? juce::Colour(0xff75f497)
                            : theme.accent.interpolatedWith(juce::Colours::white, .65f);
                 g.setGradientFill(juce::ColourGradient(top, bar.getTopLeft(), bottom,
                                                        bar.getBottomLeft(), false));
                 g.fillRect(active);
+                if (live && !active.isEmpty())
+                {
+                    // Saturated glass is confined to the real illuminated
+                    // height; there is no independently animated meter state.
+                    auto glass = juce::ColourGradient(
+                        juce::Colours::black.withAlpha(.15f), active.getTopLeft(),
+                        juce::Colours::black.withAlpha(.24f), active.getTopRight(), false);
+                    glass.addColour(.30, juce::Colours::white.withAlpha(.10f));
+                    glass.addColour(.62, juce::Colours::transparentWhite);
+                    g.setGradientFill(glass);
+                    g.fillRect(active);
+                    g.setColour(juce::Colour(0xffc8ffd5).withAlpha(.72f));
+                    g.fillRect(active.withHeight(std::min(1.f, active.getHeight())));
+                }
                 g.setColour((theme.style == "clear" ? theme.accent : theme.border).withAlpha(.85f));
                 g.drawRoundedRectangle(bar, 1, theme.style == "clear" ? 2.f : .7f);
             }
@@ -6888,6 +7169,22 @@ struct Workspace::Impl
                   std::max(w, 27.f), 14}, theme.style == "ivory" ? 9.5f : 10.f,
                  theme.text, false, juce::Justification::centred);
         }
+        if (live)
+        {
+            // The ticks share the active core's -60..0 dB normalization and
+            // inset. Keep them in the master panel's unused right gutter.
+            const Rect scale(r.getRight() + 4.f, r.getY() + 1.f, 4.f,
+                             r.getHeight() - 18.f);
+            for (const float db : {0.f, -6.f, -12.f, -24.f, -36.f, -60.f})
+            {
+                const auto y = scale.getBottom() - (db + 60.f) / 60.f * scale.getHeight();
+                g.setColour(theme.border.withAlpha(.8f));
+                g.drawLine(scale.getX(), y, scale.getRight(), y, .8f);
+                text(g, theme, db == 0.f ? "0 dB" : juce::String(static_cast<int>(db)),
+                     Rect(scale.getRight() + 3.f, y - 6.5f, 29.f, 13.f),
+                     9.5f, theme.text);
+            }
+        }
     }
     void drawPanel(juce::Graphics &g, const juce::var &v)
     {
@@ -6897,11 +7194,123 @@ struct Workspace::Impl
             return; // Each genuine MIDI lane paints its own glass and label.
         auto fill = v.hasProperty("color") ? theme.color(string(v, "color")) : theme.panel;
         const auto panelId = string(v, "id");
+        if (theme.style == "space" && panelId == "space-global")
+        {
+            // Separate physical plates follow the measured reference. Every
+            // interactive caption/dial remains its real child component.
+            const std::array<Rect, 5> plates{
+                Rect(255, 85, 150, 68), Rect(409, 85, 256, 68), Rect(670, 85, 415, 68),
+                Rect(1088, 85, 173, 68), Rect(1266, 85, 312, 68)};
+            for (const auto &plate : plates)
+            {
+                bezel(g, theme, plate, fill, 7);
+                for (const float x : {plate.getX() + 8, plate.getRight() - 8})
+                    for (const float y : {plate.getY() + 8, plate.getBottom() - 8})
+                    {
+                        const Rect fastener(x - 1.2f, y - 1.2f, 2.4f, 2.4f);
+                        g.setColour(juce::Colours::black.withAlpha(.55f));
+                        g.fillEllipse(fastener.translated(0, .5f));
+                        g.setColour(theme.border.withAlpha(.86f));
+                        g.drawEllipse(fastener, .55f);
+                    }
+            }
+            bezel(g, theme, Rect(303, 94, 99, 52), theme.display, 4);
+            text(g, theme, "SCENE", Rect(264, 92, 39, 16), 10.f,
+                 juce::Colour(0xff211c12));
+            text(g, theme, "MODE", Rect(428, 92, 50, 16), 10.f,
+                 juce::Colour(0xff211c12));
+
+            const Rect meterWell(1418, 96, 131, 48);
+            const Rect meterBars(1430, 103, 107, 18);
+            bezel(g, theme, meterWell, theme.display, 4);
+            // The existing helper reads the current output tap's L/R peaks;
+            // its logarithmic transfer maps -60 dB to zero and 0 dB to one.
+            headerMeters(g, meterBars, true);
+            text(g, theme, "L", Rect(1421, 101, 7, 10), 7.f, theme.muted);
+            text(g, theme, "R", Rect(1421, 111, 7, 10), 7.f, theme.muted);
+            for (int tick = 0; tick < 4; ++tick)
+            {
+                const auto x = meterBars.getX() + meterBars.getWidth() * tick / 3.f;
+                g.setColour(theme.muted.withAlpha(.70f));
+                g.drawLine(x, 122.f, x, 125.f, .7f);
+                text(g, theme, juce::String(-60 + 20 * tick), Rect(x - 10, 127, 20, 12),
+                     8.f, theme.text, false, juce::Justification::centred);
+            }
+            return;
+        }
         const bool connectedLivePanel = theme.style == "live" &&
             (panelId == "p.wave" || panelId == "p.xy" || panelId == "p.scene-level" ||
              panelId == "p.filter-chain");
         if (!connectedLivePanel)
             bezel(g, theme, r, fill);
+        if (theme.style == "flow" && panelId == "panel.macros")
+        {
+            // Cell chrome identifies the eight existing macro slots. It does
+            // not paint values, names, selection states or substitute controls.
+            const auto cellWidth = (r.getWidth() - 16.f) * .25f;
+            const auto cellTop = r.getY() + 34.f;
+            g.setColour(juce::Colour(0xff192f43));
+            g.drawLine(r.getX() + 1.f, cellTop + .5f,
+                       r.getRight() - 1.f, cellTop + .5f, 1.f);
+            for (int column = 1; column < 4; ++column)
+            {
+                const auto x = r.getX() + 6.f + cellWidth * column;
+                g.drawLine(x + .5f, cellTop, x + .5f, r.getBottom() - 1.f, 1.f);
+            }
+            g.drawLine(r.getX() + 1.f, r.getY() + 130.5f,
+                       r.getRight() - 1.f, r.getY() + 130.5f, 1.f);
+            if (const auto *controls = manifest["controls"].getArray())
+                for (const auto &control : *controls)
+                {
+                    const auto binding = string(control, "binding");
+                    if (!binding.startsWith("macro") || string(control, "id") != binding ||
+                        !r.contains(bounds(control)))
+                        continue;
+                    const auto slot = binding.substring(5).getIntValue();
+                    if (slot < 1 || slot > 8)
+                        continue;
+                    const auto controlBounds = bounds(control);
+                    const Rect badge(controlBounds.getX() - 5.f, controlBounds.getY() + 4.f,
+                                     18.f, 18.f);
+                    g.setGradientFill(juce::ColourGradient(
+                        juce::Colour(0xff203c52), badge.getTopLeft(),
+                        juce::Colour(0xff10283c), badge.getBottomLeft(), false));
+                    g.fillRoundedRectangle(badge, 4.f);
+                    g.setColour(theme.border.withAlpha(.18f));
+                    g.drawRoundedRectangle(badge.reduced(.5f), 3.5f, .6f);
+                    text(g, theme, juce::String(slot), badge, 10.f, theme.text,
+                         false, juce::Justification::centred);
+                }
+        }
+        if (theme.style == "aurora" &&
+            (kind == "browser" || ((kind == "envelope" || kind == "lfo") &&
+                                    r.getHeight() == 127.f)))
+        {
+            // The browser and the six compact modulation cards need a darker
+            // title lip than the oscillator enclosures. This bounded glaze
+            // retains their original bevel, body, child bounds and live plots.
+            const bool browser = kind == "browser";
+            const auto glazeHeight = browser ? 36.f : 40.f;
+            const auto upperInk = browser ? juce::Colour(0xff210c26)
+                                          : juce::Colour(0xff2b003b);
+            const auto lowerInk = browser ? upperInk : juce::Colour(0xff0c021e);
+            const juce::Graphics::ScopedSaveState titleState(g);
+            juce::Path clip;
+            clip.addRoundedRectangle(r.reduced(2), std::max(0.f, theme.radius - 1.f));
+            g.reduceClipRegion(clip);
+            auto glaze = juce::ColourGradient(
+                upperInk.withAlpha(browser ? .28f : .20f), r.getTopLeft(),
+                lowerInk.withAlpha(0.f),
+                juce::Point<float>(r.getX(), r.getY() + glazeHeight), false);
+            glaze.addColour(.25, upperInk.withAlpha(browser ? .31f : .28f));
+            glaze.addColour(.55, lowerInk.withAlpha(browser ? .32f : .40f));
+            glaze.addColour(browser ? .80 : .73,
+                            lowerInk.withAlpha(browser ? .32f : .40f));
+            if (!browser)
+                glaze.addColour(.87, lowerInk.withAlpha(.16f));
+            g.setGradientFill(glaze);
+            g.fillRect(r.withHeight(glazeHeight));
+        }
         if (theme.style == "aurora" && kind == "macros")
         {
             auto glass = juce::ColourGradient(juce::Colour(0xff34204e), r.getTopLeft(),
@@ -7046,12 +7455,42 @@ struct Workspace::Impl
         const auto tabs = arrayRect(v["selection"]["tabsRect"], {});
         const auto titleHeight = number(v, "titleHeight", 24);
         if (!tabs.isEmpty() && tabs.intersects(titleBounds) &&
-            tabs.getX() > titleBounds.getX() + 80)
+            tabs.getX() > titleBounds.getX() + (theme.style == "clear" ? 40.f : 80.f))
             titleBounds.setRight(tabs.getX() - 8);
         if (titleHeight > 0 && (tabs.isEmpty() || !tabs.intersects(titleBounds)))
         {
             const auto headingBounds = titleBounds.withHeight(std::min(25.f, titleHeight));
             const auto headingSize = number(v, "fontSize", theme.style == "ivory" ? 18 : 15);
+            if (theme.style == "clear")
+            {
+                auto identity = ClearSectionIdentity::none;
+                if (panelId == "panel.osc-title")
+                    identity = ClearSectionIdentity::oscillators;
+                else if (panelId == "panel.filter-response")
+                    identity = ClearSectionIdentity::filters;
+                else if (panelId == "panel.macros-main")
+                    identity = ClearSectionIdentity::macros;
+                else if (panelId == "panel.matrix")
+                    identity = ClearSectionIdentity::modulation;
+                else if (panelId == "panel.mod-inspector")
+                    identity = ClearSectionIdentity::inspector;
+                else if (panelId == "panel.mixer")
+                    identity = ClearSectionIdentity::mixer;
+                else if (panelId == "panel.envelope")
+                    identity = ClearSectionIdentity::envelope;
+                else if (panelId == "panel.lfo")
+                    identity = ClearSectionIdentity::lfo;
+                else if (panelId == "panel.fx")
+                    identity = ClearSectionIdentity::effects;
+                else if (panelId == "panel.analyzer")
+                    identity = ClearSectionIdentity::analyzer;
+                else if (panelId == "panel.master")
+                    identity = ClearSectionIdentity::output;
+                const auto iconX = r.getX() + (panelId == "panel.filter-response" ? 2.f : 12.f);
+                clearSectionIdentityGlyph(
+                    g, Rect(iconX, headingBounds.getCentreY() - 8.f, 16.f, 16.f),
+                    titleColor, identity);
+            }
             if (theme.style == "bauhaus" && panelId == "output-panel")
                 weightedGlyphText(g, theme.type(headingSize, true), title, headingBounds,
                                   titleColor, juce::Justification::centredLeft,
@@ -7105,17 +7544,24 @@ struct Workspace::Impl
         else if (kind == "waveform")
         {
             const auto oscillator = juce::jlimit(0, 2, index - 1);
+            const bool harmonicHero = theme.style == "bauhaus";
             const auto primary = theme.style == "aurora" ? juce::Colour(0xff4bd1ff)
                                                         : theme.secondary;
             const auto secondary = theme.style == "aurora" ? juce::Colour(0xffef4dff)
                                                           : theme.accent;
             pr = arrayRect(v["plot"], content.withTrimmedBottom(variant == "terrain" ? 20 : 3));
-            if (theme.style != "aurora" && theme.style != "live")
+            if (harmonicHero)
+                // The harmonic field shares its panel's continuous dark well.
+                // Supply its full usable rectangle explicitly; Visuals keeps
+                // both the fixed projection and paint clipped to this contract.
+                pr = Rect(pr.getX() + 2.f, pr.getY(), std::max(1.f, pr.getWidth() - 5.f),
+                          std::max(1.f, r.getBottom() - 5.f - pr.getY()));
+            if (theme.style != "aurora" && theme.style != "live" && !harmonicHero)
                 plotBase(g, pr, false, theme.style != "bauhaus");
             if (visuals.wavetable[oscillator].available())
                 Visuals::wavetable(
                     g, pr.reduced(theme.style == "aurora" ? 1.f
-                                    : theme.style == "spectral" ? 0.f : 8.f),
+                                    : theme.style == "spectral" || harmonicHero ? 0.f : 8.f),
                     visuals.wavetable[oscillator], primary, secondary,
                     theme.style == "bauhaus" ? Visuals::WavetableView::harmonicRibbons
                     : theme.style == "spectral" ? Visuals::WavetableView::spectralTerrain
@@ -7123,7 +7569,8 @@ struct Workspace::Impl
                     : theme.style == "live" ? Visuals::WavetableView::ribbons
                         : Visuals::WavetableView::perspective);
             else
-                Visuals::waveform(g, pr.reduced(8), visuals.oscillator[oscillator], primary,
+                Visuals::waveform(g, pr.reduced(harmonicHero ? 0.f : 8.f),
+                                  visuals.oscillator[oscillator], primary,
                                   secondary,
                                   variant == "terrain" || theme.style == "bauhaus" ||
                                       theme.style == "live" || theme.style == "aurora");

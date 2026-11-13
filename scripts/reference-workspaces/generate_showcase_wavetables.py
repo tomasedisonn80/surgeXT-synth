@@ -35,20 +35,33 @@ TABLES = (
 )
 
 
-# Original finite-harmonic pulse family. Each tuple is phase, integer power,
-# amplitude, phase travel, depth rate and depth phase. An integer power of a
-# raised cosine has a finite Fourier series; no image samples enter this source.
+# Original finite-harmonic pulse family. Each tuple is phase, integer core power,
+# amplitude, phase travel, depth rate and depth phase. A lower-power shoulder
+# supports each sharp core. All powers are integers, at most 880 (below the
+# 2048-sample source Nyquist); no image samples enter this audible source.
 DUNES_PEAKS = (
-    (.075, 40, .80, .035, .70, .2),
-    (.225, 72, 1.03, .055, .94, 2.3),
-    (.395, 108, 1.20, .032, 1.13, .9),
-    (.565, 56, 1.00, .045, .81, 3.2),
-    (.740, 96, .88, .030, 1.27, 4.4),
-    (.900, 48, .65, .040, .59, 1.5),
+    (.075, 240, .80, .028, 1.20, .2),
+    (.225, 420, 1.03, .034, 1.74, 2.3),
+    (.395, 720, 1.20, .024, 2.13, .9),
+    (.565, 480, 1.00, .032, 1.51, 3.2),
+    (.740, 640, .88, .026, 2.37, 4.4),
+    (.900, 320, .65, .030, 1.09, 1.5),
+    # Subsidiary ridges have independent amplitudes and phase travel.
+    (.135, 560, .40, .018, 3.20, 1.8),
+    (.285, 820, .49, .021, 2.81, 4.1),
+    (.335, 760, .42, .014, 3.75, .6),
+    (.455, 660, .46, .018, 2.69, 2.8),
+    (.620, 880, .45, .019, 3.45, 5.0),
+    (.680, 720, .35, .016, 4.11, 2.2),
+    (.805, 840, .44, .023, 2.65, .1),
+    (.965, 580, .34, .013, 3.55, 3.9),
 )
-DUNES_MEANS = tuple(math.comb(2 * peak[1], peak[1]) / 4 ** peak[1]
-                    for peak in DUNES_PEAKS)
-GLOBAL_SCALE_FAMILIES = {"dunes", "aurora"}
+DUNES_MEANS = tuple(
+    .60 * (math.comb(2 * power, power) / 4 ** power)
+    + .40 * (math.comb(2 * (power // 8), power // 8) / 4 ** (power // 8))
+    for power in (peak[1] for peak in DUNES_PEAKS)
+)
+GLOBAL_SCALE_FAMILIES = {"dunes", "bauhaus", "aurora"}
 
 
 def signal(family: str, x: float, morph: float) -> float:
@@ -69,22 +82,44 @@ def signal(family: str, x: float, morph: float) -> float:
             zip(DUNES_PEAKS, DUNES_MEANS)
         ):
             amplitude = height * (
-                .28 + .72 * (.5 + .5 * math.cos(TAU * rate * morph + offset))
+                .15 + .44 * (.5 + .5 * math.cos(TAU * rate * morph + offset))
+                + .25 * (.5 + .5 * math.sin(TAU * (1.7 + .73 * rate) * morph + .6 * offset))
+                + .16 * (.5 + .5 * math.cos(TAU * (5.2 + .29 * index) * morph - 1.2 * offset))
             )
-            moving_centre = centre + drift * math.sin(
-                TAU * (.55 + .17 * index) * morph + offset
+            moving_centre = centre + drift * (
+                .64 * math.sin(TAU * (.47 + .13 * index) * morph + offset)
+                + .27 * math.sin(TAU * (1.9 + .17 * index) * morph - .8 * offset)
+                + .09 * math.sin(TAU * (4.3 + .13 * index) * morph + .4 * offset)
             )
-            pulse = (.5 + .5 * math.cos(TAU * (x - moving_centre))) ** power
+            raised = .5 + .5 * math.cos(TAU * (x - moving_centre))
+            pulse = .60 * raised ** power + .40 * raised ** (power // 8)
             result += amplitude * (pulse - mean)
         return (
-            result + .055 * math.sin(phase + .6 * math.sin(math.pi * morph))
-            + .025 * math.sin(5 * phase - 1.1 * math.pi * morph)
+            result + .035 * math.sin(phase + .6 * math.sin(math.pi * morph))
+            + .020 * math.sin(5 * phase - 1.1 * math.pi * morph)
+            + .030 * math.sin(17 * phase + 1.3 * math.sin(TAU * .7 * morph))
+            + .018 * math.sin(31 * phase - TAU * .8 * morph)
         )
     if family == "bauhaus":
+        # Independently evolving partials retain open crossings and asymmetric
+        # crests in the audible family. The broad periodic gate is a finite
+        # raised-cosine polynomial, so the source still joins smoothly at the
+        # phase boundary; it is not a display envelope or image-derived trace.
+        drift = (
+            .18 * math.sin(TAU * .65 * morph + .3)
+            + .07 * math.sin(TAU * 1.7 * morph + .2)
+        )
+        core = 5 * phase + 1.34 * travel + drift
+        envelope = 1.0 - (.5 + .5 * math.cos(phase)) ** 28
         return (
-            0.68 * math.sin(5 * phase + 0.75 * travel)
-            + (0.16 + 0.12 * morph) * math.sin(4 * phase - 0.6 * travel)
-            + 0.17 * math.sin(phase + travel)
+            envelope * (
+                (.59 + .09 * math.cos(.9 * math.pi * morph + .6)) * math.sin(core)
+                + (.17 + .05 * math.sin(math.pi * morph + .2))
+                * math.sin(4 * phase - .72 * travel + .2)
+                + .11 * math.sin(phase + .7 * travel)
+                + (.15 + .025 * math.cos(TAU * .7 * morph + .4)) * math.cos(2 * core)
+                + .055 * math.sin(7 * phase + .5 * travel + .4)
+            )
         )
     if family == "industrial":
         return (

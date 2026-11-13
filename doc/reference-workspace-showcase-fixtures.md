@@ -55,6 +55,15 @@ with the regenerated files. It prints SHA-256 hashes for all ten files. Generati
 uses Python's standard library and no external audio or image assets. The script
 and generated assets use the repository's GPL-3.0-or-later license.
 
+Space-Age's second oscillator additionally reuses the checked-in factory
+`resources/data/wavetables/Basic/Sine To Square.wt`. Its 31 frames of 128 int16
+samples occupy 7,948 bytes; it is not a newly generated showcase asset. At the
+fixture's real morph value of 0.612, it supplies a square harmonic family. The
+native loader retains **Sine To Square** as the actual source name; the concept's
+unavailable **Pulsar 16** name is not substituted into the UI. Per-source capture
+metadata distinguishes this reused factory table from the original generated
+families and verifies each source's frame and sample counts independently.
+
 ## Per-workspace native patch settings
 
 | Workspace | Actual patch name | Primary wavetable | Native filter routing | Oscillator mixer levels (dB) |
@@ -75,6 +84,19 @@ wavetable oscillator. Other native oscillator algorithms remain visibly named
 by the engine; a reference's unavailable algorithm is not represented by a
 fictional preset label. Noise is audible at -18 dB in 07/10 and -12 dB in 08;
 the remaining fixtures mute it. Ring modulation is muted in all fixtures.
+
+Ivory's second oscillator uses native **Classic**, with Shape 0, Width 1 at
+0.50 and four unison voices. That produces the reference's saw family through
+real Shape/Width/Unison controls. The native algorithm name is retained; the
+concept's Hybrid / Saw + FM labeling is not claimed as an additional engine mode.
+
+Space-Age now uses the actual native **Wavetable** algorithm for Oscillator 2,
+at +1 octave, and the native **Sine** algorithm for Oscillator 3, at -1 octave.
+Oscillator 3 uses Sine shape 0, zero feedback, zero detune and one voice.
+Oscillators 1/2 each use four native unison voices, with 12/7 cents of detune.
+These parameters use the normal bridge setters and native readback checks. The
+concept's generic Analog label, oscillator phase controls and independent spread
+settings are not fictionalized as unsupported parameters.
 
 Mixer gains and cutoff frequencies use the native text parser with explicit dB
 and Hz units. A value such as 0.68 in the engine's amplitude parameter is not a
@@ -104,6 +126,37 @@ Space to Reverb 2 mix, FX Mix to Chorus mix, Motion to LFO rate, and Attack/Rele
 to the amplitude envelope, for example. The default fixture used by independent
 behavior tests retains its original eight macro target bindings and eight
 active effect types.
+
+Live's Macro 1 and Macro 2 are actually set to **0.62 and 0.37**, respectively,
+so its XY position and readouts derive from the real controller values. Their
+existing Drive and Motion assignments and normalized route depths remain intact.
+The fixture records both normalized values and native displays in `settings`.
+
+The visible LFO families are also native patch settings:
+
+| Workspace | LFO 1 | LFO 2 | LFO 3 |
+| --- | --- | --- | --- |
+| 04 Bauhaus Modular | Sine, 2 Hz | Triangle, 4 Hz, 90° phase | Square, 8 Hz |
+| 05 Space-Age 1977 | Sine, 0.25 Hz | Triangle, 1 Hz, 90° phase | Sample & Hold, 4 Hz |
+| 06 Tokyo Industrial | Triangle, 2 Hz | Template default | Template default |
+| 07 Liquid Aurora | Sine, 0.24 Hz | Triangle, 2 Hz, amplitude 0.62 | Sample & Hold, 4 Hz, amplitude 0.48 |
+| 08 ClearSignal Accessible | Sine, 0.25 Hz | Template default | Template default |
+| 09 Signal Flow Cartographer | Sine, 0.25 Hz | Triangle, 0.5 Hz | Sine, 0.125 Hz |
+| 10 Live Performance Deck | Sine, 0.28 Hz | Triangle, 0.5 Hz | Template default |
+
+All explicitly configured LFOs are key-triggered; their phases are zero unless
+listed otherwise. Styled LFO 1 and the newly configured Bauhaus/Space-Age/Aurora
+LFOs use zero deform and bipolar output. Bauhaus's 2/4/8 Hz and Aurora's 4 Hz
+are free-rate equivalents of the concepts' note values at 120 BPM, not a claim
+that tempo synchronization is enabled. Sample & Hold uses the native random
+step algorithm; its preview remains a separately seeded example. The extra
+Bauhaus/Space-Age/Aurora LFO settings add no modulation routes.
+
+Live's reference draws approximately two sine periods while the native thumbnail
+currently normalizes periodic shapes to one cycle. Its actual Sine family and
+0.28 Hz rate remain correct; changing the audible rate to imitate that drawing
+would not fix the preview's time axis. Cartographer retains LP24 for its first
+filter, as named both on the reference node and in its 24 dB/oct inspector.
 
 Styled profiles also contain actual voice modulation assignments. All ten add
 LFO 1 to Filter 1 cutoff at +0.025 normalized depth and Filter EG to Oscillator 1
@@ -140,7 +193,7 @@ that every illustrated setting or audio response has been reproduced.
 
 The capture case passes the workspace ID into the fixture. `patchFixture`
 records the actual patch name, skin ID, template path, every loaded wavetable's
-file/display name/frame count/sample count/byte size, generator provenance,
+file/display name/frame count/sample count/byte size, per-source provenance,
 normalized parameter values and native displays, and resolved modulation rows.
 
 The capture plays held MIDI notes 48, 60 and 67 on channel 1 at velocity 0.65.

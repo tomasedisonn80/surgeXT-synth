@@ -50,7 +50,7 @@
         264,
         110,
         1001,
-        465
+        478
       ],
       "flowNodes": {
         "osc1": [
@@ -1056,7 +1056,7 @@
     }
   ],
   "adaptations": [
-    "The routing canvas retains the supplied node geometry and exposes Surge's eight actual filter-routing configurations. It does not implement arbitrary modular cable rewiring.",
+    "The routing canvas retains the supplied node geometry and exposes Surge's eight actual filter-routing configurations. Grouped modulation connections and source counts follow the current patch; unpictured sources enter the mod bus through their own lower lane. It does not implement arbitrary modular cable rewiring.",
     "All nineteen original node controls remain real processor operations: three oscillator algorithm selectors and power/mute controls, three mixer faders, two filter selectors and eight FX algorithm selectors.",
     "The modulation-source cluster navigates actual lower source views. ENV 1 and ENV 2 are the two dedicated envelopes; L3 ENV is LFO 3's native envelope, replacing the concept's fictional third dedicated EG. LFO 1\u20133 select their real waveforms and controls.",
     "Envelope source changes rebind the four native ADSR controls together with the preview. LFO source changes rebind rate, phase, envelope attack/fade-in, shape, trigger mode and unipolar state together with the preview, without editing audio parameters merely to navigate.",

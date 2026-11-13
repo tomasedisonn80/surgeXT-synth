@@ -57,9 +57,9 @@
       "h": 188,
       "plot": [
         338,
-        143,
+        136,
         174,
-        40
+        48
       ],
       "fontSize": 14,
       "titleInset": 40,
@@ -82,9 +82,9 @@
       "h": 188,
       "plot": [
         601,
-        143,
+        136,
         248,
-        40
+        48
       ],
       "fontSize": 14,
       "titleInset": 40,
@@ -107,9 +107,9 @@
       "h": 188,
       "plot": [
         1008,
-        143,
+        136,
         174,
-        40
+        48
       ],
       "fontSize": 14,
       "titleInset": 40,
@@ -125,6 +125,7 @@
       "kind": "waveform",
       "title": "Waveform Playground",
       "variant": "terrain",
+      "color": "#0C0A24",
       "x": 253,
       "y": 272,
       "w": 996,
@@ -587,7 +588,7 @@
     },
     {
       "id": "c.osc2-param0",
-      "binding": "osc2.param0",
+      "binding": "osc2.param1",
       "x": 605,
       "y": 185,
       "w": 48,
@@ -597,7 +598,7 @@
     },
     {
       "id": "c.osc2-param1",
-      "binding": "osc2.param1",
+      "binding": "osc2.param5",
       "x": 668,
       "y": 185,
       "w": 48,
@@ -607,7 +608,7 @@
     },
     {
       "id": "c.osc2-param2",
-      "binding": "osc2.param2",
+      "binding": "osc2.param6",
       "x": 731,
       "y": 185,
       "w": 48,
@@ -617,7 +618,7 @@
     },
     {
       "id": "c.osc2-param3",
-      "binding": "osc2.param3",
+      "binding": "osc2.param0",
       "x": 794,
       "y": 185,
       "w": 48,
@@ -1698,6 +1699,7 @@
     "The composition uses native oscillator cards, source-selectable waveform playground, compact filter/mixer column, real envelope and LFO editors, selected FX rack and eight assigned macros. Current-source captures are required to assess visual fidelity.",
     "The central OSC 1/2/3 tabs select an actual oscillator preview and rebind every visible playground parameter without changing audio. Wavetable oscillators display copied real source frames as ribbons; other algorithms display their own preview. No reference waveform is baked into the UI.",
     "Each oscillator has a real algorithm menu, independent native wavetable catalog/previous/next selector, title mute/power control, key tracking, retrigger and solo. Non-wavetable algorithms retain a truthful disabled selector caption.",
+    "OSC 2 exposes actual Classic Width 1, Unison Detune, Unison Voices and Shape parameters in that order. The fourth control is Shape rather than an unsupported independent phase control. Algorithm changes retain the native labels, ranges and availability of these parameter slots.",
     "The third envelope card is explicitly LFO 3 ENV with native LFO 3 ADSR stages. Surge has two dedicated envelope generators; the concept does not add a third independent generator.",
     "The three LFO cards use actual shape, rate, depth, delay and unipolar controls. UNI replaces the unsupported illustrated Sync button instead of falsely claiming tempo-sync behavior. Mod Overview selects the actual LFO 1, 2 or 3 preview rather than an invented summed modulation signal.",
     "Eight FX cards select native slots; the detail algorithm menu, three knobs and two value fields rebind to the chosen slot. Default FX 2 exposes actual chorus rate/depth/mix/width/feedback indices. Algorithm changes retain actual native parameter labels and disabled states; no fictional chorus voice-count or stereo switch is shown.",

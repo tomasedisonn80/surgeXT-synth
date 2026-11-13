@@ -402,7 +402,9 @@ class HeaderButton : public juce::TextButton
         caption,
         chevron,
         tool,
-        icon
+        icon,
+        search,
+        list
     };
     HeaderButton(Theme &t, const juce::String &label = {}) : juce::TextButton(label), theme(t) {}
     void present(Presentation p, float size = 12.f, bool bold = false,
@@ -421,10 +423,14 @@ class HeaderButton : public juce::TextButton
             (presentation == caption || presentation == chevron))
             ink = theme.display.contrasting(.9f);
         const bool selected = getToggleState();
-        if (presentation == chip || presentation == tool ||
+        if (presentation == chip || presentation == tool || presentation == search ||
+            presentation == list ||
             (presentation == navigation && (selected || over || down)))
         {
-            auto fill = selected ? theme.accent : findColour(juce::TextButton::buttonColourId);
+            auto fill = selected ? theme.accent
+                        : presentation == search || presentation == list
+                            ? theme.display
+                            : findColour(juce::TextButton::buttonColourId);
             if (theme.style == "precision" && presentation == navigation && selected)
                 fill = theme.accent.interpolatedWith(theme.panel, .88f);
             if (over)
@@ -432,7 +438,8 @@ class HeaderButton : public juce::TextButton
             if (down)
                 fill = fill.interpolatedWith(juce::Colours::black, .13f);
             bezel(g, theme, r, fill,
-                  theme.style == "tokyo" || theme.style == "bauhaus" ? 3.f : 5.f);
+                  presentation == search || presentation == list ? 7.f
+                  : theme.style == "tokyo" || theme.style == "bauhaus" ? 3.f : 5.f);
             if (selected)
             {
                 ink = theme.style == "precision" && presentation == navigation
@@ -449,7 +456,32 @@ class HeaderButton : public juce::TextButton
             g.setColour(theme.accent.withAlpha(down ? .17f : .08f));
             g.fillRoundedRectangle(r, 3.f);
         }
-        if (presentation == chevron)
+        if (presentation == search)
+        {
+            // This is an accessible button that opens the real native search
+            // browser, not an inert text editor painted into the header.
+            g.setFont(theme.type(fontSize));
+            g.setColour(ink);
+            g.drawFittedText(getButtonText(),
+                             r.reduced(10.f, 0).withTrimmedRight(26.f).toNearestInt(),
+                             juce::Justification::centredLeft, 1, .9f);
+            const auto lens = juce::Point<float>(r.getRight() - 17.f, r.getCentreY() - 1.f);
+            g.setColour(theme.text);
+            g.drawEllipse(lens.x - 4.7f, lens.y - 4.7f, 9.4f, 9.4f, 1.4f);
+            g.drawLine(lens.x + 3.5f, lens.y + 3.5f, lens.x + 7.3f, lens.y + 7.3f, 1.4f);
+        }
+        else if (presentation == list)
+        {
+            const auto c = r.getCentre();
+            g.setColour(ink);
+            for (int row = -1; row <= 1; ++row)
+            {
+                const float y = c.y + row * 5.f;
+                g.fillEllipse(c.x - 8.f, y - .9f, 1.8f, 1.8f);
+                g.drawLine(c.x - 3.8f, y, c.x + 8.f, y, 1.4f);
+            }
+        }
+        else if (presentation == chevron)
         {
             const auto c = r.getCentre();
             const auto direction = getComponentID().contains("previous") ? -1.f : 1.f;
@@ -3186,6 +3218,8 @@ struct Workspace::Impl
     HeaderButton presetButton{theme}, previous{theme, "<"}, next{theme, ">"};
     HeaderButton browserButton{theme, "Browser"}, saveButton{theme, "Save"},
         modButton{theme, "Mod"}, fxButton{theme, "FX"}, synthButton{theme, "Synth"};
+    HeaderButton presetSearchButton{theme, "Search presets..."},
+        presetListButton{theme, "Browse presets"};
     Rect headerPresetBounds, headerCategoryBounds;
     int ticks{0};
     float scale{1};
@@ -3197,7 +3231,8 @@ struct Workspace::Impl
         owner.addAndMakeVisible(canvas);
         canvas.setInterceptsMouseClicks(false, true);
         for (auto *b : {&skinButton, &classicButton, &sceneA, &sceneB, &presetButton, &previous,
-                        &next, &browserButton, &saveButton, &modButton, &fxButton, &synthButton})
+                        &next, &browserButton, &saveButton, &modButton, &fxButton, &synthButton,
+                        &presetSearchButton, &presetListButton})
         {
             canvas.addAndMakeVisible(b);
             b->setWantsKeyboardFocus(true);
@@ -3216,6 +3251,17 @@ struct Workspace::Impl
         modButton.setComponentID("workspace.navigation.modulation");
         fxButton.setComponentID("workspace.navigation.effects");
         synthButton.setComponentID("workspace.navigation.synth");
+        presetSearchButton.setComponentID("workspace.header.preset-search");
+        presetListButton.setComponentID("workspace.header.preset-list");
+        presetSearchButton.setName("Open preset browser to search presets");
+        presetListButton.setName("Open the native preset list");
+        for (auto *b : {&presetSearchButton, &presetListButton})
+        {
+            b->setTitle(b->getName());
+            b->setDescription("Opens the native preset browser to search and load installed presets");
+            b->setTooltip("Open the native preset browser to search and load installed presets");
+            b->onClick = [this] { action("browser"); };
+        }
         synthButton.setName("Current synthesizer workspace");
         synthButton.setTitle(synthButton.getName());
         synthButton.setTooltip("Focus the current synthesizer workspace");
@@ -3778,7 +3824,8 @@ struct Workspace::Impl
         buildViewTabs();
         syncWavetableControls();
         for (auto *b : {&skinButton, &classicButton, &sceneA, &sceneB, &presetButton, &previous,
-                        &next, &browserButton, &saveButton, &modButton, &fxButton, &synthButton})
+                        &next, &browserButton, &saveButton, &modButton, &fxButton, &synthButton,
+                        &presetSearchButton, &presetListButton})
             styleButton(*b);
         for (auto &b : actions)
             styleButton(*b);
@@ -3787,6 +3834,7 @@ struct Workspace::Impl
         presetButton.setColour(juce::TextButton::textColourOffId,
                                theme.style == "clear" ? theme.text
                                                       : theme.display.contrasting(.95f));
+        presetSearchButton.setColour(juce::TextButton::textColourOffId, theme.muted);
         owner.resized();
     }
     void clearAnalyzerCapture()
@@ -4104,12 +4152,15 @@ struct Workspace::Impl
             b.setVisible(true);
         };
         for (auto *b : {&skinButton, &classicButton, &sceneA, &sceneB, &presetButton, &previous,
-                        &next, &browserButton, &saveButton, &modButton, &fxButton, &synthButton})
+                        &next, &browserButton, &saveButton, &modButton, &fxButton, &synthButton,
+                        &presetSearchButton, &presetListButton})
         {
             b->setVisible(true);
             b->present(H::chip);
         }
         synthButton.setVisible(false);
+        presetSearchButton.setVisible(false);
+        presetListButton.setVisible(false);
         sceneA.setButtonText("A");
         sceneB.setButtonText("B");
         browserButton.setButtonText("Browser");
@@ -4279,6 +4330,8 @@ struct Workspace::Impl
         {
             headerPresetBounds = {479, 59, 449, 49};
             headerCategoryBounds = {592, 87, 278, 15};
+            put(presetSearchButton, 196, 69, 202, 30, H::search, 12);
+            put(presetListButton, 411, 69, 36, 30, H::list);
             put(browserButton, 522, 10, 94, 28, H::chip, 13);
             put(synthButton, 617, 10, 92, 28, H::chip, 13, true);
             synthButton.setButtonText("Synthesis");
@@ -4340,6 +4393,27 @@ struct Workspace::Impl
             }
         }
     }
+    void headerCpu(juce::Graphics &g, Rect label, float fontSize, Rect bar = {})
+    {
+        // cpu_level is the engine's measured process-duration / block-duration
+        // ratio. Read only; painting never changes its smoothing or audio state.
+        const float load = processor.surge->cpu_level.load(std::memory_order_relaxed);
+        const bool available = std::isfinite(load) && load >= 0.f;
+        const auto value = available ? juce::String(static_cast<double>(load) * 100.0, 1) + "%"
+                                     : juce::String("--");
+        text(g, theme, "CPU " + value, label, fontSize, theme.muted);
+        if (!bar.isEmpty())
+        {
+            bezel(g, theme, bar, theme.display, bar.getHeight() * .5f);
+            if (available && load > 0.f)
+            {
+                auto fill = bar.reduced(2.f);
+                fill.setWidth(fill.getWidth() * std::clamp(load, 0.f, 1.f));
+                g.setColour(load >= 1.f ? theme.red : theme.accent);
+                g.fillRoundedRectangle(fill, fill.getHeight() * .5f);
+            }
+        }
+    }
     void drawHeader(juce::Graphics &g)
     {
         const auto &style = theme.style;
@@ -4378,7 +4452,18 @@ struct Workspace::Impl
             bezel(g, theme, {1, 0, 1584, 47}, theme.panel, 11);
             bezel(g, theme, {3, 57, 458, 52}, theme.panel, 16);
             bezel(g, theme, {1032, 57, 548, 52}, theme.panel, 14);
-            text(g, theme, "Preset Browser", {27, 66, 166, 31}, 15, ink, true);
+            juce::Path folder;
+            folder.startNewSubPath(28, 79);
+            folder.lineTo(33, 79);
+            folder.lineTo(35, 81);
+            folder.lineTo(41, 81);
+            folder.lineTo(41, 89);
+            folder.lineTo(28, 89);
+            folder.closeSubPath();
+            g.setColour(ink);
+            g.strokePath(folder, juce::PathStrokeType(1.4f, juce::PathStrokeType::curved,
+                                                     juce::PathStrokeType::rounded));
+            text(g, theme, "Preset Browser", {51, 66, 141, 31}, 15, ink, true);
         }
         else if (style == "spectral")
             bezel(g, theme, {19, 18, 1548, 77}, theme.display, 5);
@@ -4576,8 +4661,11 @@ struct Workspace::Impl
             text(g, theme, "PRESET", {692, 3, 126, 18}, 15, ink);
             text(g, theme, "VOICES  " + parameters.display("scene.polylimit"), {1133, 11, 114, 21},
                  12, ink);
-            text(g, theme, "SCENE  " + juce::String(parameters.getScene() ? "B" : "A"),
-                 {1133, 36, 114, 20}, 12, ink);
+            headerCpu(g, {1133, 36, 114, 20}, 12);
+            text(g, theme, "OUT L", {1267, 13, 39, 15}, 10, theme.muted, false,
+                 juce::Justification::centredRight);
+            text(g, theme, "R", {1267, 33, 39, 15}, 10, theme.muted, false,
+                 juce::Justification::centredRight);
             headerMeters(g, {1312, 15, 174, 33}, true);
         }
         else if (style == "aurora")
@@ -4588,7 +4676,9 @@ struct Workspace::Impl
                  theme.muted);
             text(g, theme, "Voices  " + parameters.display("scene.polylimit"), {1321, 10, 109, 18},
                  12, theme.muted);
-            text(g, theme, "Output", {1321, 34, 76, 17}, 12, theme.muted);
+            headerCpu(g, {1321, 34, 109, 17}, 12);
+            text(g, theme, "L", {1427, 15, 12, 14}, 10, theme.muted);
+            text(g, theme, "R", {1427, 33, 12, 14}, 10, theme.muted);
             headerMeters(g, {1442, 16, 121, 31}, true);
         }
         else if (style == "clear")
@@ -4620,8 +4710,7 @@ struct Workspace::Impl
             text(g, theme, "H Y B R I D  S Y N T H E S I Z E R", {66, 31, 174, 12}, 8, ink);
             text(g, theme, "Live Performance Command Deck", {266, 13, 237, 22}, 13, theme.secondary,
                  true);
-            text(g, theme, "OUTPUT", {1168, 12, 59, 20}, 10, theme.muted);
-            headerMeters(g, {1227, 17, 62, 11}, true);
+            headerCpu(g, {1168, 12, 59, 20}, 10, {1225, 20, 62, 8});
             text(g, theme, "Scene mode", {1156, 62, 202, 17}, 11, theme.muted, false,
                  juce::Justification::centred);
             text(g, theme, parameters.display("scene.mode"), {1156, 81, 202, 20}, 15, theme.accent,
@@ -5310,19 +5399,23 @@ struct Workspace::Impl
         else if (kind == "waveform")
         {
             const auto oscillator = juce::jlimit(0, 2, index - 1);
+            const auto primary = theme.style == "aurora" ? juce::Colour(0xff4bd1ff)
+                                                        : theme.secondary;
+            const auto secondary = theme.style == "aurora" ? juce::Colour(0xffef4dff)
+                                                          : theme.accent;
             pr = arrayRect(v["plot"], content.withTrimmedBottom(variant == "terrain" ? 20 : 3));
             if (theme.style != "aurora" && theme.style != "live")
                 plotBase(g, pr, false, theme.style != "bauhaus");
             if (visuals.wavetable[oscillator].available())
                 Visuals::wavetable(
-                    g, pr.reduced(8), visuals.wavetable[oscillator], theme.secondary, theme.accent,
+                    g, pr.reduced(8), visuals.wavetable[oscillator], primary, secondary,
                     theme.style == "bauhaus" ? Visuals::WavetableView::harmonicRibbons
                     : theme.style == "aurora" || theme.style == "live"
                         ? Visuals::WavetableView::ribbons
                         : Visuals::WavetableView::perspective);
             else
-                Visuals::waveform(g, pr.reduced(8), visuals.oscillator[oscillator], theme.secondary,
-                                  theme.accent,
+                Visuals::waveform(g, pr.reduced(8), visuals.oscillator[oscillator], primary,
+                                  secondary,
                                   variant == "terrain" || theme.style == "bauhaus" ||
                                       theme.style == "live" || theme.style == "aurora");
             if (visuals.oscillator[oscillator].empty())
@@ -5754,7 +5847,8 @@ struct Workspace::Impl
                                   : index;
             const auto algorithm = parameters.display("fx" + juce::String(slot) + ".type");
             const auto &curve = effectCurves[juce::jlimit(0, n_fx_slots - 1, slot - 1)];
-            const auto ink = variant == "compact" ? theme.accent : theme.secondary;
+            const auto ink = theme.style == "clear" ? (slot % 2 ? theme.accent : theme.red)
+                            : variant == "compact" ? theme.accent : theme.secondary;
             if (variant != "compact")
                 bezel(g, theme, pr, theme.display, 4);
             juce::Graphics::ScopedSaveState saved(g);
@@ -5804,7 +5898,9 @@ struct Workspace::Impl
             }
             else
             {
-                effectGlyph(g, pr.reduced(9, 10).withTrimmedBottom(10), ink, algorithm);
+                effectGlyph(g, pr.getHeight() < 44 ? pr.reduced(4)
+                                                  : pr.reduced(9, 10).withTrimmedBottom(10),
+                            ink, algorithm);
                 if (pr.getHeight() >= 38)
                     text(g, theme, algorithm,
                          pr.reduced(3, 0).withTop(pr.getBottom() - 17), 8.5f,
@@ -5925,11 +6021,11 @@ struct Workspace::Impl
                           bool active = true, bool arrow = true) {
             if (path.isEmpty())
                 return;
-            const auto width = control ? 1.15f : 1.8f;
+            const auto width = control ? 1.15f : variant == "flow" ? 2.2f : 1.8f;
             const auto opacity = active ? 1.f : .24f;
             if (!control && active)
             {
-                g.setColour(ink.withAlpha(.12f));
+                g.setColour(ink.withAlpha(variant == "flow" ? .16f : .12f));
                 g.strokePath(path, juce::PathStrokeType(width + 4.f,
                     juce::PathStrokeType::curved, juce::PathStrokeType::rounded));
             }
@@ -5964,7 +6060,20 @@ struct Workspace::Impl
             juce::Path path;
             path.startNewSubPath(a);
             const auto middle = (a.x + b.x) * .5f;
-            path.cubicTo(middle, a.y, middle, b.y, b.x, b.y);
+            if (variant == "flow" && std::abs(b.y - a.y) > 6.f && std::abs(b.x - a.x) > 20.f)
+            {
+                const auto corner = std::min({12.f, std::abs(b.x - a.x) * .25f,
+                                              std::abs(b.y - a.y) * .5f});
+                const auto horizontal = b.x > a.x ? 1.f : -1.f;
+                const auto vertical = b.y > a.y ? 1.f : -1.f;
+                path.lineTo(middle - corner * horizontal, a.y);
+                path.quadraticTo(middle, a.y, middle, a.y + corner * vertical);
+                path.lineTo(middle, b.y - corner * vertical);
+                path.quadraticTo(middle, b.y, middle + corner * horizontal, b.y);
+                path.lineTo(b);
+            }
+            else
+                path.cubicTo(middle, a.y, middle, b.y, b.x, b.y);
             stroke(path, audioInk, false, active);
         };
         auto pin = [&](juce::Point<float> point, juce::Colour ink, bool active = true) {
@@ -6233,13 +6342,21 @@ struct Workspace::Impl
             {
                 const auto chip = chips[i];
                 juce::Path ingress, egress;
-                ingress.startNewSubPath(sources.getRight(), sources.getCentreY());
+                const auto sourceY = sources.getY() + 15 + i * (sources.getHeight() - 30) / 5.f;
+                ingress.startNewSubPath(sources.getRight(), sourceY);
                 ingress.cubicTo(sources.getRight() + 13, chip.getCentreY(), chip.getX() - 12,
                                 chip.getCentreY(), chip.getX(), chip.getCentreY());
                 egress.startNewSubPath(chip.getRight() + 5, chip.getCentreY());
                 const auto y = modbus.getCentreY() - 9 + i * 3.f;
-                egress.cubicTo(chip.getRight() + 52, chip.getCentreY(), modbus.getX() - 125,
-                              y, modbus.getX(), y);
+                const auto lane = chip.getRight() + 27 + i * 1.5f;
+                const auto corner = std::min(10.f, std::abs(y - chip.getCentreY()) * .5f);
+                const auto direction = y > chip.getCentreY() ? 1.f : -1.f;
+                egress.lineTo(lane - corner, chip.getCentreY());
+                egress.quadraticTo(lane, chip.getCentreY(), lane,
+                                   chip.getCentreY() + corner * direction);
+                egress.lineTo(lane, y - corner * direction);
+                egress.quadraticTo(lane, y, lane + corner, y);
+                egress.lineTo(modbus.getX(), y);
                 stroke(ingress, colour, true, sourceActive[i] > 0);
                 stroke(egress, colour, true, sourceActive[i] > 0);
             }
@@ -6247,13 +6364,22 @@ struct Workspace::Impl
         }
         if (sourceCounts[6] > 0)
         {
+            // The unpictured native sources use a lane below every source chip.
+            // Passing this cable through the chip column implied an LFO link.
             juce::Path other;
-            other.startNewSubPath(sources.getCentreX(), sources.getBottom());
-            const auto y = std::min(plot.getBottom() - 13, sources.getBottom() + 19);
-            other.cubicTo(sources.getCentreX(), y, modbus.getX() - 38, y,
-                          modbus.getX(), modbus.getBottom() - 8);
+            const auto start = juce::Point<float>(sources.getCentreX(), sources.getBottom());
+            const auto end = juce::Point<float>(modbus.getCentreX(), modbus.getBottom());
+            const auto y = std::min(plot.getBottom() - 6, chips.back().getBottom() + 6);
+            other.startNewSubPath(start);
+            other.lineTo(start.x, y - 10);
+            other.quadraticTo(start.x, y, start.x + 10, y);
+            other.lineTo(end.x - 10, y);
+            other.quadraticTo(end.x, y, end.x, y - 10);
+            other.lineTo(end);
             stroke(other, controlInk, true, sourceActive[6] > 0);
-            text(g, theme, "Other live sources", {510, y + 2, 128, 14},
+            text(g, theme, "Other sources" + utf8(" • ") + juce::String(sourceCounts[6]) +
+                              (sourceCounts[6] == 1 ? " route" : " routes"),
+                 {end.x + 14, y - 22, std::min(198.f, plot.getRight() - end.x - 24), 14},
                  9.5f, controlInk);
         }
         for (int i = 0; i < 15; ++i)
@@ -6441,7 +6567,7 @@ struct Workspace::Impl
         text(g, theme, "Module port", {legend.getX() + 49, legend.getY() + 45, 93, 16}, 9.5f,
              theme.text);
         text(g, theme, parameters.display("routing") + utf8(" • topology overview"),
-             {plot.getX() + 8, plot.getBottom() - 16, 156, 14}, 9.5f, theme.muted);
+             {plot.getX() + 8, plot.getY() + 8, 190, 14}, 9.5f, theme.muted);
     }
 };
 

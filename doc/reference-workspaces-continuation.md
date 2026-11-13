@@ -184,3 +184,25 @@ baseline/edited pairs and incremental provenance were retained. Behavior passed
 one-based FX parameter suffixes despite the documented zero-based adapter.
 Its model and drive bindings are corrected without weakening any assertion.
 The next combined linked run verifies that correction and the per-skin pass.
+
+
+### Passing native checkpoint and wave 4
+
+Workflow `43379965773` passed completely at
+`e9eff4f886cf8905720bcec362e93e8efb4d60d5`: 31 behavior cases / 9,953,538
+assertions, plus all ten native capture pairs / 24,095,256 assertions. This is
+a functional and capture checkpoint, not a pixel-identity assertion.
+
+| Assignment | Completed refinement |
+| --- | --- |
+| 19 — Aurora | Measured dark hero backdrop, stronger actual-frame ribbon colours, larger source previews and real Classic controls |
+| 20 — ClearSignal | Wider readable values, larger cutoff/macro typography and measured LFO geometry; intentional corner-menu overlays verified |
+| 21 — Cartographer | Separated real source cable fan, safe bottom lane/count caption and clearer orthogonal audio paths |
+| 22 — Live | Curved macro columns, truthful XY heading, contained filter controls and corrected master/meter placement |
+| 23 — Actual source families | Existing factory square-family WT plus native Sine for Space, Classic for Ivory, native LFO families/rates and real Live XY values |
+| 24 — Header interaction/status | Real accessible Live preset-browser buttons and atomic CPU telemetry in Live/Tokyo/Aurora |
+
+The coordinator corrected short ClearSignal FX plot insets so actual algorithm
+pictograms have room to render. No screenshot or reference trace is used as a
+working control or signal display. Wave 4 source and geometry checks passed;
+its altered audio fixtures require the next unchanged headroom/reset gates.

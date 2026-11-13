@@ -1,0 +1,436 @@
+{
+  "schema": 1,
+  "recordKind": "verification-record",
+  "status": "verified-with-documented-visual-differences",
+  "repository": "tomasedisonn80/surgeXT-synth",
+  "source": {
+    "sha": "453df569c977350c3a4da2caf2f0ab7cbd1a0e71",
+    "tree": "41b53daf055b5fbf9505dc43b72e06b378879901",
+    "parent": "8588c50e06902e6a924a472e76762fbc4e795313",
+    "publishedToMain": true,
+    "commitUrl": "https://github.com/tomasedisonn80/surgeXT-synth/commit/453df569c977350c3a4da2caf2f0ab7cbd1a0e71",
+    "changes": "Bounded Aurora projection/light/inset, native glyph outlines for two captions, and Spectral cap gradient coordinates; no source-asset, engine, binding or layout revision."
+  },
+  "inventory": {
+    "skinCount": 10,
+    "panels": 194,
+    "declaredControls": 779,
+    "canvas": {
+      "width": 1586,
+      "height": 992
+    },
+    "skins": [
+      {
+        "id": "01-obsidian-precision",
+        "name": "Obsidian Precision",
+        "package": "reference-01-obsidian.surge-skin",
+        "panels": 14,
+        "declaredControls": 83
+      },
+      {
+        "id": "02-ivory-atelier",
+        "name": "Ivory Atelier",
+        "package": "reference-02-ivory.surge-skin",
+        "panels": 17,
+        "declaredControls": 75
+      },
+      {
+        "id": "03-spectral-observatory",
+        "name": "Spectral Observatory",
+        "package": "reference-03-spectral.surge-skin",
+        "panels": 18,
+        "declaredControls": 69
+      },
+      {
+        "id": "04-bauhaus-modular",
+        "name": "Bauhaus Modular",
+        "package": "reference-04-bauhaus.surge-skin",
+        "panels": 25,
+        "declaredControls": 79
+      },
+      {
+        "id": "05-space-age-1977",
+        "name": "Space-Age 1977",
+        "package": "reference-05-space.surge-skin",
+        "panels": 21,
+        "declaredControls": 90
+      },
+      {
+        "id": "06-tokyo-industrial",
+        "name": "Tokyo Industrial",
+        "package": "reference-06-tokyo.surge-skin",
+        "panels": 18,
+        "declaredControls": 92
+      },
+      {
+        "id": "07-liquid-aurora",
+        "name": "Liquid Aurora",
+        "package": "reference-07-aurora.surge-skin",
+        "panels": 21,
+        "declaredControls": 99
+      },
+      {
+        "id": "08-clearsignal-accessible",
+        "name": "ClearSignal Accessible",
+        "package": "reference-08-clear.surge-skin",
+        "panels": 27,
+        "declaredControls": 77
+      },
+      {
+        "id": "09-signal-flow-cartographer",
+        "name": "Signal-Flow Cartographer",
+        "package": "reference-09-flow.surge-skin",
+        "panels": 11,
+        "declaredControls": 51
+      },
+      {
+        "id": "10-live-performance-deck",
+        "name": "Live Performance Deck",
+        "package": "reference-10-live.surge-skin",
+        "panels": 22,
+        "declaredControls": 64
+      }
+    ]
+  },
+  "process": {
+    "numberedAssignments": 60,
+    "waves": 10,
+    "assignmentsPerWave": 6,
+    "maxConcurrentChildWorkers": 3,
+    "scopedAssignmentsDelivered": 60,
+    "followupAcceptance": "Native, audio, gallery, visual reviews and seven-platform build/package gates completed; documented reference differences remain.",
+    "ledger": "ten-wave-ledger.md",
+    "reports": "agent-reports/README.md"
+  },
+  "native": {
+    "runId": "43400507719",
+    "runUrl": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43400507719",
+    "jobId": "131801876413",
+    "status": "completed",
+    "conclusion": "success",
+    "behaviorCases": 42,
+    "behaviorAssertions": 10316058,
+    "captureCases": 1,
+    "captureAssertions": 24100990,
+    "normalAudioTap": "passed",
+    "threadSanitizerAudioTap": "passed"
+  },
+  "audio": {
+    "status": "passed",
+    "activeStageCountExpected": 40,
+    "resetStageCountExpected": 10,
+    "activePeakGate": {
+      "finite": true,
+      "greaterThan": 0.0001,
+      "lessThan": 1
+    },
+    "postResetPeakGate": {
+      "absoluteLessThan": 1e-06
+    },
+    "minimumActivePeak": 0.013976696878672,
+    "maximumActivePeak": 0.692262887954712,
+    "maximumAbsoluteResetPeak": 5.429840577164669e-09
+  },
+  "captures": {
+    "status": "verified",
+    "expectedBaselines": 10,
+    "expectedEdited": 10,
+    "method": "JUCE Component::createComponentSnapshot attached to the actual SurgeSynthProcessor",
+    "scope": "Native component renders; not operating-system desktop or DAW screenshots",
+    "sourceRevisionAtConfigure": "453df569c977350c3a4da2caf2f0ab7cbd1a0e71",
+    "sourceDirtyAtConfigure": false,
+    "sampleRate": 48000,
+    "audioBlock": 512,
+    "artifactId": 14024468912,
+    "artifactZipBytes": 11019495,
+    "artifactZipSha256": "4054102ba04157671f0d3464616fdd0575514f657a8c22b089f4eeabd74b7246",
+    "allPngsDecoded": true,
+    "allPngs1586x992": true,
+    "captureGeneratedUtc": "2026-11-13T09:25:07.050Z"
+  },
+  "gallery": {
+    "status": "verified",
+    "commitSha": "29de74bee7e5a953d7d7102408ceef0541d04919",
+    "sourceShaExpected": "453df569c977350c3a4da2caf2f0ab7cbd1a0e71",
+    "mainRunIdExpected": "43400507719",
+    "artifactId": 14024468912,
+    "totalFilesExpected": 31,
+    "fileHashRecordsExpected": 30,
+    "referenceHashRecordsExpected": 10,
+    "nativePngBytesToCompare": 20,
+    "artifactFilesToCompare": 28,
+    "allNativePngBytesIdentical": true,
+    "allRecordedHashesMatch": true,
+    "allReferenceHashesMatch": true,
+    "allLocalLinksResolve": true,
+    "ancestryVerified": true,
+    "allCopiedArtifactFilesIdentical": true
+  },
+  "platform": {
+    "runId": "43400507710",
+    "runUrl": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43400507710",
+    "status": "completed",
+    "conclusion": "success",
+    "requiredJobs": [
+      {
+        "key": "linux_x64_docker",
+        "name": "Ubuntu 20 Docker",
+        "id": "131802758475",
+        "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43400507710/job/131802758475",
+        "status": "completed",
+        "conclusion": "success",
+        "buildStep": "Build in Docker",
+        "buildConclusion": "success",
+        "artifactUploadConclusion": "success"
+      },
+      {
+        "key": "windows_x64_juce7",
+        "name": "Release - Windows MSVC JUCE 7",
+        "id": "131802758498",
+        "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43400507710/job/131802758498",
+        "status": "completed",
+        "conclusion": "success",
+        "buildStep": "Build release version",
+        "buildConclusion": "success",
+        "artifactUploadConclusion": "success"
+      },
+      {
+        "key": "windows_arm64ec",
+        "name": "Release - Windows ARM64EC",
+        "id": "131802758523",
+        "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43400507710/job/131802758523",
+        "status": "completed",
+        "conclusion": "success",
+        "buildStep": "Build release version",
+        "buildConclusion": "success",
+        "artifactUploadConclusion": "success"
+      },
+      {
+        "key": "linux_arm64",
+        "name": "Release - ubuntu-arm",
+        "id": "131802758559",
+        "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43400507710/job/131802758559",
+        "status": "completed",
+        "conclusion": "success",
+        "buildStep": "Build release version",
+        "buildConclusion": "success",
+        "artifactUploadConclusion": "success"
+      },
+      {
+        "key": "windows_x64",
+        "name": "Release - Windows 64-bit",
+        "id": "131802758571",
+        "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43400507710/job/131802758571",
+        "status": "completed",
+        "conclusion": "success",
+        "buildStep": "Build release version",
+        "buildConclusion": "success",
+        "artifactUploadConclusion": "success"
+      },
+      {
+        "key": "windows_arm64",
+        "name": "Release - Windows ARM64",
+        "id": "131802758590",
+        "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43400507710/job/131802758590",
+        "status": "completed",
+        "conclusion": "success",
+        "buildStep": "Build release version",
+        "buildConclusion": "success",
+        "artifactUploadConclusion": "success"
+      },
+      {
+        "key": "macos_universal",
+        "name": "Release - macOS",
+        "id": "131802758650",
+        "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43400507710/job/131802758650",
+        "status": "completed",
+        "conclusion": "success",
+        "buildStep": "Build release version",
+        "buildConclusion": "success",
+        "artifactUploadConclusion": "success"
+      }
+    ],
+    "releaseOrNightlyPublicationClaim": "none",
+    "sourceSha": "453df569c977350c3a4da2caf2f0ab7cbd1a0e71",
+    "branch": "main",
+    "event": "push",
+    "verifiedUtc": "2026-11-13T10:09:30Z",
+    "artifacts": [
+      {
+        "id": 14027547557,
+        "name": "build-Windows ARM64EC",
+        "sizeInBytes": 44917818,
+        "apiReportedDigest": "sha256:779f93b35d10f6e37fbc82f7c44a6c50488db8251b36b567c29a76124a5d4bb6",
+        "sourceSha": "453df569c977350c3a4da2caf2f0ab7cbd1a0e71",
+        "runId": 43400507710,
+        "createdAt": "2026-11-13T10:08:57Z",
+        "expiresAt": "2027-02-11T09:20:35Z",
+        "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43400507710/artifacts/14027547557"
+      },
+      {
+        "id": 14026718414,
+        "name": "build-Windows ARM64",
+        "sizeInBytes": 44059113,
+        "apiReportedDigest": "sha256:57376c43b79022842d0c29de69bf4eac1b053bd9045df297718fd4110b860882",
+        "sourceSha": "453df569c977350c3a4da2caf2f0ab7cbd1a0e71",
+        "runId": 43400507710,
+        "createdAt": "2026-11-13T10:03:17Z",
+        "expiresAt": "2027-02-11T09:20:35Z",
+        "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43400507710/artifacts/14026718414"
+      },
+      {
+        "id": 14026661290,
+        "name": "build-docker",
+        "sizeInBytes": 1579388372,
+        "apiReportedDigest": "sha256:8baadf441feb8ce714e8c945f4288913b67cc210a73f4ea13be871a552a7ba8e",
+        "sourceSha": "453df569c977350c3a4da2caf2f0ab7cbd1a0e71",
+        "runId": 43400507710,
+        "createdAt": "2026-11-13T09:48:03Z",
+        "expiresAt": "2027-02-11T09:20:35Z",
+        "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43400507710/artifacts/14026661290"
+      },
+      {
+        "id": 14026243663,
+        "name": "build-Windows 64-bit",
+        "sizeInBytes": 647061680,
+        "apiReportedDigest": "sha256:91736ed3cc85831b07f1a5c31884c879a911096b7dfce780c731fbbfd7c392fe",
+        "sourceSha": "453df569c977350c3a4da2caf2f0ab7cbd1a0e71",
+        "runId": 43400507710,
+        "createdAt": "2026-11-13T09:50:40Z",
+        "expiresAt": "2027-02-11T09:20:35Z",
+        "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43400507710/artifacts/14026243663"
+      },
+      {
+        "id": 14026147413,
+        "name": "build-Windows MSVC JUCE 7",
+        "sizeInBytes": 43472742,
+        "apiReportedDigest": "sha256:61d64cec5de9217ec4fbd055f327b4a47ccb07819e8eaa9ae3bb4e43fe7aa21c",
+        "sourceSha": "453df569c977350c3a4da2caf2f0ab7cbd1a0e71",
+        "runId": 43400507710,
+        "createdAt": "2026-11-13T09:44:13Z",
+        "expiresAt": "2027-02-11T09:20:35Z",
+        "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43400507710/artifacts/14026147413"
+      },
+      {
+        "id": 14025504610,
+        "name": "build-macOS-unsigned",
+        "sizeInBytes": 635164061,
+        "apiReportedDigest": "sha256:baf8926553a9941c3dd1ab9f87e91464ec86ab966c6cabb253f0c62bfcc8f963",
+        "sourceSha": "453df569c977350c3a4da2caf2f0ab7cbd1a0e71",
+        "runId": 43400507710,
+        "createdAt": "2026-11-13T09:43:23Z",
+        "expiresAt": "2027-02-11T09:20:35Z",
+        "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43400507710/artifacts/14025504610"
+      },
+      {
+        "id": 14025099917,
+        "name": "build-ubuntu-arm",
+        "sizeInBytes": 767528742,
+        "apiReportedDigest": "sha256:b8ed90a1bf7d1f85ed586e908fd77603f55d63935110bebf96db513ff908c6f4",
+        "sourceSha": "453df569c977350c3a4da2caf2f0ab7cbd1a0e71",
+        "runId": 43400507710,
+        "createdAt": "2026-11-13T09:44:09Z",
+        "expiresAt": "2027-02-11T09:20:35Z",
+        "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43400507710/artifacts/14025099917"
+      }
+    ],
+    "runtimeScope": "Compile, package and artifact-upload evidence; not certification of every DAW or target OS at runtime.",
+    "macosSigning": "Universal arm64+x86_64; unsigned and unnotarized fork development artifacts.",
+    "structuredEvidence": "agent-reports/w10_a59_final_platform_evidence.json",
+    "structuredEvidenceSha256": "0937a8544536bf3ed824ca64dd37f12d8520b676563552c1b9d5bc396d7d0816",
+    "listedPackageFiles": 17,
+    "uploadLogsMatchArtifactMetadata": true
+  },
+  "visual": {
+    "status": "review_completed_with_remaining_differences",
+    "literalPixelIdentityEstablished": false,
+    "remainingReferenceDifferences": "Actual source-family crest/crossing topology, terrain texture, peripheral haze, glyph rasterization, a one-pixel Space caption-width difference, and documented native algorithms/units/features remain.",
+    "realStateBoundary": "Actual native parameters, loaded source frames, filters, MIDI inputs, routes, browser content and output-tap measurements; no reference-image backplate or frozen signal state.",
+    "reviewReports": [
+      "agent-reports/w10_a56_aurora_hero_followup.md",
+      "agent-reports/w10_a59_final_native_visual_review.md",
+      "agent-reports/w10_a59_optical_text_weight.md",
+      "agent-reports/w10_a60_completion_audit.md"
+    ],
+    "metrics": {
+      "aurora": {
+        "nativeBrightCoveragePercent": 37.005,
+        "referenceBrightCoveragePercent": 39.997,
+        "nativeYExtent": [
+          6,
+          176
+        ],
+        "referenceYExtent": [
+          4,
+          177
+        ],
+        "outsideHeroChangedPixels": 0
+      },
+      "bauhausOutput": {
+        "nativeInkBounds": [
+          1374,
+          759,
+          1549,
+          772
+        ],
+        "referenceInkBounds": [
+          1374,
+          759,
+          1549,
+          772
+        ],
+        "nativeDarkPixels": 1005,
+        "referenceDarkPixels": 1012
+      },
+      "spaceCaption": {
+        "nativeWidthHeight": [
+          44,
+          9
+        ],
+        "referenceWidthHeight": [
+          43,
+          9
+        ],
+        "nativeDarkPixels": 182,
+        "referenceDarkPixels": 160
+      }
+    },
+    "metricsAreFidelityPercentages": false
+  },
+  "installation": {
+    "requiresModifiedFork": true,
+    "requiresCompatibleFactoryData": true,
+    "stockUpstreamSkinCopyIsSufficient": false,
+    "pluginsonlyIncludesFactoryData": false,
+    "guide": "../reference-workspaces-user-guide.md"
+  },
+  "publication": {
+    "testedSourceSha": "453df569c977350c3a4da2caf2f0ab7cbd1a0e71",
+    "galleryCommitSha": "29de74bee7e5a953d7d7102408ceef0541d04919",
+    "ordinaryAncestryRequired": true,
+    "documentationOnlyDescendantReview": "The documentation delta is reviewed against gallery 29de74bee7e5a953d7d7102408ceef0541d04919; the coordinator verifies the actual published main SHA and its documentation/gallery-only ancestry after publication.",
+    "mainAtAuditSha": "29de74bee7e5a953d7d7102408ceef0541d04919",
+    "documentationCommitIdentity": "The Git commit containing this record, resolved from Git history; no self-referential SHA placeholder is stored.",
+    "finalMainIdentity": "Reported by the coordinator after publication and checked as a documentation/gallery-only descendant of the tested source.",
+    "documentationExpectedParentSha": "29de74bee7e5a953d7d7102408ceef0541d04919"
+  },
+  "previousVerifiedCheckpoint": {
+    "sourceSha": "4dbb414370c94932670e1b58cf6f5caecbe4c6f4",
+    "nativeRunId": "43398309849",
+    "gallerySha": "8588c50e06902e6a924a472e76762fbc4e795313",
+    "artifactId": 14024815233,
+    "artifactZipSha256": "07c6824546bd9b645f6b67025ed6a9e7f4d6f7bebcc5f47554a3b8ef714de3ca",
+    "behaviorCases": 42,
+    "behaviorAssertions": 10316058,
+    "captureAssertions": 24100990,
+    "nativePngsByteIdentical": 20,
+    "recordedHashesMatched": 30,
+    "referenceHashesMatched": 10,
+    "activePeaksPassed": 40,
+    "resetPeaksPassed": 10,
+    "platformResult": "not established by this checkpoint audit",
+    "scope": "Historical verified evidence; cannot certify source 453df569."
+  },
+  "generatedUtc": "2026-11-13T09:26:18.520006+00:00",
+  "updatedUtc": "2026-11-13T10:09:30Z"
+}

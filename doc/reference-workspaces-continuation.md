@@ -1,6 +1,61 @@
 # Ten-skin fidelity continuation
 
-## Current numbered continuation — 13 November 2026
+## Current delivery record — 13 November 2026
+
+All **60 numbered assignments across ten waves** have delivered their scoped
+implementation or review results. The [ten-wave ledger](reference-workspaces/ten-wave-ledger.md)
+records each assignment; the [final verification record](reference-workspaces/final-verification.md)
+separates source, native tests, platform builds, gallery provenance and visual
+fidelity. The available concurrency was three workers plus the coordinator;
+this is not a claim that sixty agents ran simultaneously.
+
+The final tested implementation is
+`453df569c977350c3a4da2caf2f0ab7cbd1a0e71`.
+[Native workflow 43400507719](https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43400507719)
+passed **42 behavior cases / 10,316,058 assertions**, all twenty baseline/edited
+native PNG captures / **24,100,990 capture assertions**, and both the normal and
+ThreadSanitizer audio-tap checks. All forty active capture stages were finite,
+nonzero and below clipping; all ten post-reset peaks remained below 1e-6.
+
+The [committed native gallery](reference-workspaces/native-gallery/README.md)
+is published in the ordinary child commit
+`29de74bee7e5a953d7d7102408ceef0541d04919`.
+Its twenty 1586 × 992 PNGs match the exact successful main-source artifact byte
+for byte. The same gallery includes the capture evidence, source/run links,
+checksums and a comparison page with separately labelled reference concepts.
+Documentation-only commits after this gallery do not change the tested source
+or regenerate the captures.
+
+[Platform workflow 43400507710](https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43400507710)
+passed all seven required build/package jobs: Linux x64, Linux ARM64, Windows
+x64, Windows ARM64, Windows ARM64EC, Windows with JUCE 7, and universal macOS.
+Each job also passed its package inspection and artifact upload.
+Build/package success is separate from testing every DAW or operating system at
+runtime. Fork macOS artifacts are unsigned and unnotarized. Upstream-owner-gated
+release/nightly publication is not claimed.
+
+All ten native skins are implemented and have current baseline and edited-state
+evidence. **The work is not literally pixel-identical to every reference.**
+The final visual reviews record remaining actual-waveform topology, texture,
+font-rendering and small optical differences, along with deliberate adaptations
+for capabilities not present in Surge XT. The engine-driven displays, parameter
+values and meters are never replaced by reference-image pixels or frozen state.
+The final Aurora, Spectral, Bauhaus and Space comparisons include explicit local
+measurements; those measurements are not whole-skin fidelity percentages.
+
+See the [user guide](reference-workspaces-user-guide.md) for selecting a skin,
+real control behavior, factory-data requirements and the per-skin adaptations.
+A binary built from this modified fork is required; installing the data files
+alone into an upstream Surge XT binary does not add the native renderer.
+
+## Archived assignment-48 and earlier checkpoint records
+
+The following text preserves the information available at each earlier
+checkpoint. Its incomplete assignment counts, pending tasks and older run
+results are historical; the current delivery record above and final verification
+record supersede them.
+
+## Archived assignment-48 continuation — 13 November 2026
 
 The [ten-wave ledger](reference-workspaces/ten-wave-ledger.md) is the current
 record for assignments 1–60 of the continuation from `786db23`. Earlier wave

@@ -1,19 +1,10 @@
 # Ten-wave continuation ledger
 
-This ledger tracks the current numbered continuation from `786db23`, with six
-substantive assignments in each of ten waves. The earlier reconstruction
-[engineering log](../reference-workspaces-work-log.md) and the historical portions
-of the [continuation](../reference-workspaces-continuation.md) describe earlier
-work; their agent counts are not added to these sixty assignments.
+This ledger records the numbered continuation from `786db23`, with six substantive assignments in each of ten waves. Earlier reconstruction work remains in the [engineering log](../reference-workspaces-work-log.md) and historical [continuation](../reference-workspaces-continuation.md); those earlier agent counts are not added to these sixty assignments.
 
-**Progress snapshot at assignment 48:** assignments 1–46 and 48 are complete;
-47 and 49 are active; 50–60 have not started. Completing a source or visual
-review assignment does not mean its later code has passed native verification,
-or that its skin matches the concept pixel for pixel.
+**All sixty numbered assignments delivered their scoped implementation or review results.** Native behavior, audio, captures and exact main-gallery provenance pass for source `453df569c977350c3a4da2caf2f0ab7cbd1a0e71`. The final-source visual follow-ups are complete with remaining differences recorded. All seven final-source platform build/package jobs passed; literal 1:1 reference identity is not established.
 
-The runtime permits three workers alongside the coordinator. Six assignments
-in a wave therefore run in batches; this is not a claim of sixty concurrent
-workers. The user authorized ordinary fast-forward publication to `main`.
+Up to three child workers ran alongside the coordinator. Six assignments per wave therefore ran in batches. Follow-up turns reused their original assignment number; no claim of sixty simultaneous workers or additional assignment counts is made.
 
 ## Verified checkpoints and publication
 
@@ -23,19 +14,17 @@ workers. The user authorized ordinary fast-forward publication to `main`.
 | Same `22b9c29` source | [Platform run 43382049249](https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43382049249) | All seven platform build jobs passed: macOS, Ubuntu 20 Docker, Windows ARM64EC, Windows ARM64, Ubuntu ARM, Windows MSVC/JUCE 7, and Windows 64-bit. Release/nightly publication jobs were skipped; no installer or nightly publication is claimed. |
 | `3ec3998877eab793f8bf2aa4acb367c69de17979` — verification branch | [Native run 43389991532](https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43389991532) | 39 behavior cases, 10,298,881 assertions; all twenty native PNGs, 24,095,754 capture assertions; normal and ThreadSanitizer checks passed. Includes the new MIDI lanes, FX-power coverage, keyboard correction and first material/gallery integration. |
 | `eccf282722f719b10a918424663244af0b5688fa` — verification branch | [Native run 43391258392](https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43391258392) | 39 behavior cases, 10,298,881 assertions; all twenty native PNGs, 24,095,766 capture assertions; normal and ThreadSanitizer checks passed. Includes the measured Spectral/Bauhaus/Space/Tokyo/Aurora integration. Fresh images exist, but a successful capture does not establish visual identity. |
+| `a9d0d0a838632daf178255561def4622cd208258` — verification branch | [Native run 43393400045](https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43393400045) | 41 behavior cases, 10,299,242 assertions; twenty native PNGs, 24,095,770 capture assertions; normal and ThreadSanitizer checks passed. Includes the aligned linear pointer geometry, rapid MIDI spring ordering and genuine Live MIDI capture inputs. |
+| Same `a9d0d0a` source — main | [Native run 43394267074](https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43394267074) | Native and gallery jobs succeeded. Independent gallery audit decoded all twenty 1586 × 992 PNGs and reproduced all thirty file hashes, ten reference hashes and ten edited-pixel counts. |
+| Gallery commit `575d63db237a8ff8e4be170a3de2f76d011015f7` | [Published a9 gallery](https://github.com/tomasedisonn80/surgeXT-synth/tree/575d63db237a8ff8e4be170a3de2f76d011015f7/doc/reference-workspaces/native-gallery) | Single-parent child of a9 with exactly 31 generated gallery files. This is a real published checkpoint; it predates the latest filter-response and Spectral/Aurora changes. |
+| Verified checkpoint `4dbb414370c94932670e1b58cf6f5caecbe4c6f4` | [Native main run 43398309849](https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43398309849) | 42 behavior cases / 10,316,058 assertions; twenty captures / 24,100,990 assertions; normal/TSAN checks passed. All 40 active and 10 reset audio peaks satisfy unchanged gates. Later Aurora and optical-text corrections follow this checkpoint; its platform run is not used to certify the final source. |
+| Verified checkpoint gallery `8588c50e06902e6a924a472e76762fbc4e795313` | Exact MAIN artifact 14024815233 / run 43398309849 | All 20 committed PNGs and all 28 copied artifact files are byte-identical; all 30 file hashes and 10 reference hashes match; all links resolve. Ordinary child of 4dbb414. |
+| Delivery source `453df569c977350c3a4da2caf2f0ab7cbd1a0e71` | Native run 43400507719; gallery 29de74bee7e5a953d7d7102408ceef0541d04919; platform run 43400507710 | Native 42 cases / 10,316,058 assertions and 20 captures / 24,100,990 assertions pass; normal/TSAN and all 40 active / 10 reset peaks pass. All 20 PNGs and 28 copied artifact files match MAIN artifact 14024468912; 30 file and 10 reference hashes match. Final visual reviews are complete with documented differences. All seven final-source platform build/package jobs passed. |
 
-Additional ClearSignal, Flow and Live refinements and the active control fixes
-follow the last verified source above. They need their own exact-source native
-run and image review before final promotion.
+The final integration includes coherent filter-response refresh, three measured cosmetic corrections, original audible Spectral/Aurora wavetable revisions and dedicated native source-data projection/material treatments. The final exact-source images and reviews establish their native appearance while retaining remaining reference differences. Earlier checkpoints remain qualified by their original source.
 
-The [gallery publication script](../../scripts/reference-workspaces/publish_native_gallery.py)
-validates the successful main run's exact artifact, complete twenty-image set,
-dimensions, logs, clean source provenance and reference names. Its dedicated
-workflow job commits unmodified PNGs, evidence, hashes, README and HTML under
-`doc/reference-workspaces/native-gallery` using an ordinary push. Verification
-branch runs intentionally skip that publication job. At this snapshot the
-pipeline is implemented and tested; publication of the final main gallery is
-still pending.
+The [gallery publication script](../../scripts/reference-workspaces/publish_native_gallery.py) validates the successful main run's exact artifact, complete twenty-image set, dimensions, logs, clean source provenance and retained references. Its dedicated workflow job commits unmodified native PNGs, evidence, hashes, README and HTML under [native-gallery](native-gallery/README.md) using an ordinary push. Verification-branch runs intentionally skip publication; obsolete-main runs must not publish over newer source.
+
 
 ## Wave 1 — audit, recovery and native foundation
 
@@ -143,56 +132,55 @@ changed pixels; inspect the new exact-source captures.
 | 44 — ClearSignal | Complete | Aligned Filter 2 cutoff by +2/−1 px; retained the matching outer graph and verified free external-axis bands. [Report](agent-reports/w08_a44_clear_final_fidelity.md) |
 | 45 — Cartographer | Complete | Aligned the cutoff center/outer radius and identified recessed caps, stronger real-value arcs and external dB captions. [Report](agent-reports/w08_a45_flow_final_fidelity.md) |
 | 46 — Live | Complete | Reduced Amp Gain face to measured diameter 56 and measured thin rails/caps. Suggested genuine MIDI demonstration inputs, explicitly not implemented by this assignment. [Report](agent-reports/w08_a46_live_final_fidelity.md) |
-| 47 — Renderer/control-state review | Active | Found a real generic linear-control mismatch between painted travel and JUCE hit geometry; implementing aligned layouts and a pointer regression. Also identified the rapid MIDI-release sequence assigned to 49. |
-| 48 — Integration ledger and report archive | Complete | Created this truthful sixty-assignment progress ledger, updated the continuation and curated reports 31–46 with source/evidence context. |
+| 47 — Renderer/control-state review | Complete | Aligned all 48 generic linear controls' painted travel with native pointer geometry and added a real pointer regression; identified the separate rapid-release defect assigned to 49. Verified in a9 native runs. [Report](agent-reports/w08_a47_renderer_state_review.md) |
+| 48 — Integration ledger and report archive | Complete | Created the assignment-48 progress snapshot, updated the continuation and curated reports 31–46 with source/evidence context. Historical pending statements remain historical. [Report](agent-reports/w08_a48_wave_ledger.md) |
 
 ## Wave 9 — verification assignments
 
-| Assignment | Status | Scope / result |
+| Assignment | Status | Substantive result / report |
 | --- | --- | --- |
-| 49 — Rapid MIDI release ordering | Active | Fix and regress release → new key before the next audio block, preserving external-input semantics and queue ordering. |
-| 50 | Not started | No assignment result recorded. |
-| 51 | Not started | No assignment result recorded. |
-| 52 | Not started | No assignment result recorded. |
-| 53 | Not started | No assignment result recorded. |
-| 54 | Not started | No assignment result recorded. |
+| 49 — Rapid MIDI release ordering | Complete | Added accepted-sequence acknowledgements so a release followed by a new key before the next audio block starts from the pending owned input, then yields to applied host input. Regressed saturation, emergency release, repeated keys and absolute inputs; a9 native run passed. [Report](agent-reports/w09_a49_midi_rapid_release.md) |
+| 50 — Native packaging and installation | Complete | Audited all ten packages, discovery, factory-data distribution, navigation, fallbacks and scaling. Deterministic packager checks passed; identified the source-frame guide correction. No unsupported all-OS installation claim. [Report](agent-reports/w09_a50_native_packaging.md) |
+| 51 — Audio, RNG and native state | Complete | Independently verified eccf282 audio/capture evidence and reviewed display taps, private previews, RNG isolation and later MIDI boundaries. Later a9 gates are recorded separately above. [Report](agent-reports/w09_a51_audio_integrity.md) |
+| 52 — Gallery and provenance | Complete | Independently regenerated the gallery from a real passing artifact; decoded all twenty PNGs, checked thirty hashes and all links, and recounted edited pixels. No new pipeline defect found. [Report](agent-reports/w09_a52_gallery_provenance.md) |
+| 53 — Platform matrix and portability | Complete | Independently inspected all seven 22b9c29 platform logs, formats and package scopes; reviewed later API portability. Distinguished build success from skipped release/nightly publication. The final-source platform results are recorded separately below. [Report](agent-reports/w09_a53_platform_matrix.md) |
+| 54 — Schema, controls and accessibility | Complete | Audited native/Python parity, all 779 declared controls, actual MIDI lane identities, 168 shared schema cases, pointer geometry and native editing paths. No manual screen-reader or DAW certification claimed. [Report](agent-reports/w09_a54_schema_accessibility.md) |
 
 ## Wave 10 — final verification and delivery
 
-| Assignment | Status | Scope / result |
+| Assignment | Status | Substantive result / report |
 | --- | --- | --- |
-| 55 | Not started | No assignment result recorded. |
-| 56 | Not started | No assignment result recorded. |
-| 57 | Not started | No assignment result recorded. |
-| 58 | Not started | No assignment result recorded. |
-| 59 | Not started | No assignment result recorded. |
-| 60 | Not started | No assignment result recorded. |
+| 55 — Visual review, skins 01–05 | Complete | Inspected actual a9 images and measured the Spectral cap, Bauhaus heading and Space caption corrections. Assignment 59 subsequently verified the changed regions on final source 453df569, preserving residual optical/material differences. [Initial report](agent-reports/w10_a55_final_visual_01_05.md), [final review](agent-reports/w10_a59_final_native_visual_review.md). |
+| 56 — Visual review, skins 06–10 | Complete | Identified the edited-curve lag; prepared and verified the genuine-source Aurora corrections. Final 453df569 review confirms improved height/light, clear controls and no outside-hero changes while retaining real source-shape/material differences. [Initial report](agent-reports/w10_a56_final_visual_06_10.md), [Aurora supplement](agent-reports/w10_a56_aurora_hero_followup.md). |
+| 57 — Artifact and gallery provenance | Complete scoped audit | Independently audited the a9 candidate artifact, actual MIDI telemetry, pixel deltas and audio peaks. Assignment 60 supplied the final 453df569 MAIN-artifact-to-gallery byte comparison. [Report](agent-reports/w10_a57_final_artifact_verification.md). |
+| 58 — Delivery documentation and assets | Complete | Corrected pluginsonly/factory-data guidance and placed genuine Live MIDI capture details in the capture section. Checked navigation, source provenance and qualified installation/fidelity claims. [Report](agent-reports/w10_a58_delivery_docs.md). |
+| 59 — Coherent filters, Spectral source and optical text | Complete | Implemented and verified native filter refresh coherence; reviewed the original audible Spectral family and exact-byte publication; measured final cap colors and actual glyph bounds/weight on 453df569. [Filter report](agent-reports/w10_a59_filter_preview_update.md), [Spectral supplement](agent-reports/w10_a59_spectral_recipe_review.md), [final visual review](agent-reports/w10_a59_final_native_visual_review.md), [optical text](agent-reports/w10_a59_optical_text_weight.md). |
+| 60 — Independent completion audit and records | Complete native/gallery/visual/platform audit | Independently verified all ten packages, exact 453df569 MAIN artifact/gallery bytes, source ancestry, forty active/ten reset audio gates and truthful visual boundaries. Prepared the ledger, curated archive and verification record. All seven final-source build/package jobs passed. [Report](agent-reports/w10_a60_completion_audit.md). |
+
+The scoped results above account for all sixty actual assignments. Follow-up native/image/artifact reviews retain their original assignment numbers and remain explicitly open until evidence exists. This is a work record, not a substitute for the user's full acceptance criteria.
 
 ## Fidelity and evidence boundaries
 
-All delivered plots, values, routes, meters, browser rows, MIDI state and control
-feedback must follow the real processor. Reference pixels are comparison inputs,
-not a frozen interface. Source-preview geometry can change its projection,
-lighting and material; it must not substitute invented samples for actual data.
+The final native and image reviews are complete for source 453df569. Aurora's measured bright/saturated coverage is 37.005% versus 39.997% reference, with vertical extent y6–176 versus y4–177. Spectral retains the real audible peak family and signed mesh, with closer sampled cap colors. Bauhaus output ink bounds now match the reference; the sampled Space caption remains one pixel wider and somewhat heavier. No new functional, caption-clipping or control-overlap defect was found in the inspected regions.
 
-Native adaptations remain material to comparison: actual algorithms and units,
-unsupported sample-player or arbitrary-routing concepts, two real scenes,
-performance operations without a direct native counterpart, and current patch
-values. The [user guide](../reference-workspaces-user-guide.md) and each manifest's
-`adaptations` list describe those distinctions. Aurora's real source ribbons,
-for example, remain simpler than the concept's crossing traces; passing the
-native gate does not erase that difference.
+These are diagnostics, not fidelity percentages. The native hero crest/crossing topology, terrain texture, peripheral haze, glyph rasterization and documented engine-feature/state differences remain. Literal 1:1 reference identity is not established.
 
-Native images are 1586 × 992 JUCE component snapshots attached to the processor.
-They are not OS-desktop or DAW screenshots. Baseline and edited images, references
-and comparison overlays must stay separately labelled. Build success, geometry,
-behavior, audio checks and visual inspection answer different questions.
+All plots, values, routes, meters, browser rows, MIDI state and control feedback follow the real processor. Native source geometry may change camera/material while retaining actual samples. Original audible wavetable assets remain distinct from display styling. Reference images are comparison inputs, not frozen UI backplates.
 
-## Next integration gate
+Actual algorithms and units, unsupported sample-player/arbitrary-routing concepts, two real scenes, performance operations without native counterparts and changing patch/signal values remain documented in the [user guide](../reference-workspaces-user-guide.md) and manifests. These boundaries do not excuse correctable typography or geometry.
 
-Finish the active control fixes, inspect their source changes, and run the
-unchanged native behavior, audio-display and ten-pair capture gates on the exact
-candidate. Review its new images, finish assignments 50–60, fast-forward the
-verified source to main, verify the required platform builds, and let the
-successful current-main gallery job publish its own evidence. Update this ledger
-with actual results as those steps occur; do not turn planned work into completion.
+Native images are 1586 × 992 JUCE snapshots attached to the actual processor, not OS-desktop or DAW screenshots. Baseline, edited, reference and engineering-study images remain separately labelled. Build, geometry, behavior, audio and visual checks establish different facts.
+
+## Final integration gates
+
+| Gate | Evidence | Status |
+| --- | --- | --- |
+| Source publication | Ordinary main descendant 453df569, tree 41b53daf055b5fbf9505dc43b72e06b378879901 | Pass |
+| Native behavior/audio/capture | Main run 43400507719; 42 cases/10,316,058 assertions; 20 captures/24,100,990 assertions; normal/TSAN and unchanged audio/reset gates | Pass |
+| Edited-response coherence | All ten plot counts/native sample deltas independently verified; real curve changes after one production refresh | Pass |
+| Final visual review | Assignments 56/59 inspected exact 453df569 images, controls and glyphs; remaining reference differences retained | Complete with documented differences |
+| Gallery bytes and ancestry | Gallery 29de74b; exact MAIN artifact 14024468912; all 20 PNG/28 artifact files byte-identical; 30 file and 10 reference hashes match | Pass |
+| Seven-platform matrix | Workflow 43400507710; all seven build, package inspection and artifact-upload jobs passed for source 453df569 | Pass |
+| Documentation publication | The commit containing these records, resolved from Git history; final main ancestry/diff reviewed separately | Recorded by this commit |
+
+The documentation commit's own SHA is not embedded as a self-referential placeholder. The coordinator reports the actual final main SHA after publication and verifies its documentation/gallery-only descendant relationship to the tested source.

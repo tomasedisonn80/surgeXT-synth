@@ -1,22 +1,12 @@
 # Curated assignment reports
 
-These reports preserve the completed work and evidence for assignments 31–46
-of the current numbered continuation. The [ten-wave ledger](../ten-wave-ledger.md)
-is the source for subsequent integration, runtime and publication status.
+This archive preserves the delivered work and source-qualified evidence for assignments 31–60 of the numbered continuation, plus the Aurora, Spectral, final visual and optical-text supplements. The [ten-wave ledger](../ten-wave-ledger.md) records all sixty assignments; the [verification record](../final-verification.md) records exact native, gallery and platform outcomes.
 
-The reports remain historical observations. A source edit can be complete while
-its linked native run or changed-pixel review is still pending. Their original
-pending/unstaged statements are retained under an explicit integration note.
-Nothing in this archive establishes pixel identity.
+Final source 453df569 has successful native/audio/capture gates and an independently verified main gallery. The exact-source visual follow-ups are complete and retain the remaining reference differences. No assignment count, test result or gallery check establishes literal pixel identity.
 
-Temporary execution service identifiers and recovery-only details were removed.
-Temporary crop inventories were omitted; no analysis JPEGs were copied.
-Normalized native-artifact labels refer to the exact source named in each report.
-Only the native gallery pipeline delivers the actual unmodified PNGs and their
-capture provenance.
+Reports remain historical records. Their original pending/unstaged statements are retained under integration preludes, followed where applicable by later exact-source addenda. Temporary execution identifiers, signed access URLs, recovery-only details and temporary image inventories are omitted or normalized. No analysis JPEGs or software-study PNGs are delivered in this archive.
 
-The SHA-256 column identifies the original textual report before this curation;
-it is not the hash of the curated Markdown file.
+The SHA-256 column identifies each original textual report before curation, not the curated Markdown file. Assignments 31–46 retain their earlier original-report hashes. The final-source supplements preserve assignment 59's exact-byte publication proof.
 
 | Assignment | Curated report | Original report SHA-256 |
 | --- | --- | --- |
@@ -36,5 +26,23 @@ it is not the hash of the curated Markdown file.
 | 44 | [w08_a44_clear_final_fidelity.md](w08_a44_clear_final_fidelity.md) | `6f89c3fc5bd33ba055c952f2aef0c03ae3879cbea1d69fef191d325fcdc4d68e` |
 | 45 | [w08_a45_flow_final_fidelity.md](w08_a45_flow_final_fidelity.md) | `405a49e75d82e4b9a55d8e4fc0cd0132e514ed1798d503fce30b0c21c282dc10` |
 | 46 | [w08_a46_live_final_fidelity.md](w08_a46_live_final_fidelity.md) | `b82452005342157d15154bee29b4741281054f9e76ed590a2a688a35269c2c3e` |
+| 47 | [w08_a47_renderer_state_review.md](w08_a47_renderer_state_review.md) | `fdb572323fa96a8babde97c8fb9e1c0bed84cb260ca9ed079d720ac3647e434d` |
+| 48 | [w08_a48_wave_ledger.md](w08_a48_wave_ledger.md) | `b71c936055112bfae56f02432b8927ee0d33e56733e113da06f09f3ae17a7821` |
+| 49 | [w09_a49_midi_rapid_release.md](w09_a49_midi_rapid_release.md) | `ffea2ec6ba8eeac689e81ee0aa3f01987366bb9fe6346e1a354099109e16fb6e` |
+| 50 | [w09_a50_native_packaging.md](w09_a50_native_packaging.md) | `7f0671774fcc3b337bd3d89a5c134c1e615605434634c0967594327a9f4dd339` |
+| 51 | [w09_a51_audio_integrity.md](w09_a51_audio_integrity.md) | `79970c79062f18d602f3b18ee224ef6f9c4bd525b61a6c1f5bba9085871a8426` |
+| 52 | [w09_a52_gallery_provenance.md](w09_a52_gallery_provenance.md) | `c35546a68f6e337f9593637ef320a67e3360944abda22f9f615a1064edf151d5` |
+| 53 | [w09_a53_platform_matrix.md](w09_a53_platform_matrix.md) | `d9a5fd995b455b4dcd272ba08454b334cb27641fdeda3d6e9f24700446ecfbd4` |
+| 54 | [w09_a54_schema_accessibility.md](w09_a54_schema_accessibility.md) | `a2b7c8e8e1f886094ac1a2a1e847683103f28f8331eebbc99812b311a196565c` |
+| 55 | [w10_a55_final_visual_01_05.md](w10_a55_final_visual_01_05.md) | `46eb12b9495f7c3f8acf3c4515c6a653476579747c9db5862381d2f11b7b50cd` |
+| 56 | [w10_a56_final_visual_06_10.md](w10_a56_final_visual_06_10.md) | `b8eaaf5617f7b950cbb482df7e4f3da1f2749cc0cbe130ff37a813700a295283` |
+| 56 — Aurora supplement | [w10_a56_aurora_hero_followup.md](w10_a56_aurora_hero_followup.md) | `954871935c3f18eebb9924f98def47f4cb8292aa63270e697ab8ae3d9fc5e375` |
+| 57 | [w10_a57_final_artifact_verification.md](w10_a57_final_artifact_verification.md) | `fa5743db4b4a6fff03abcdfe339662d4e932cb15aa5b9522f9c41377b689cc07` |
+| 58 | [w10_a58_delivery_docs.md](w10_a58_delivery_docs.md) | `e3fa1c8dcf251e49f69f152d47fa06d180cb5af17bbcf6bb396dc21b32acebf6` |
+| 59 | [w10_a59_filter_preview_update.md](w10_a59_filter_preview_update.md) | `7b2496137a8c08950edbeace69749d13cc3ca7eb8c784006f584ba337e4b2639` |
+| 59 — final visual review | [w10_a59_final_native_visual_review.md](w10_a59_final_native_visual_review.md) | `621fde5fb65f02cd8a02179d54c0e3dd4568c01cd78336b3313b7db6d2c45200` |
+| 59 — optical text supplement | [w10_a59_optical_text_weight.md](w10_a59_optical_text_weight.md) | `a0589298f8b1417956cced25af10bfb9fc0c4a21b8707bce256479bc83a32c13` |
+| 59 — Spectral supplement | [w10_a59_spectral_recipe_review.md](w10_a59_spectral_recipe_review.md) | `b0216dd3b3325c2c5f4930e7a9968ab60a2f85068a5e784ebcfc43bf27b95b9c` |
+| 60 | [w10_a60_completion_audit.md](w10_a60_completion_audit.md) | `692ed543d2bd139457484c520919d7e37a0146963a58a6f525f4520087aff686` |
 
-Assignments 47–48 and later verification work are tracked in the ledger; no unfinished report is represented as a completed review here.
+Current platform and publication status belongs to the verification record; an older passing source is not silently promoted into evidence for a later one.

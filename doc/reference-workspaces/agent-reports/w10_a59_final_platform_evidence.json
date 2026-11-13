@@ -1,0 +1,765 @@
+{
+  "schema_version": 1,
+  "assignment": 59,
+  "checked_at_utc": "2026-11-13 10:10:09 UTC",
+  "repository": "tomasedisonn80/surgeXT-synth",
+  "source_commit": "453df569c977350c3a4da2caf2f0ab7cbd1a0e71",
+  "source_tree": "41b53daf055b5fbf9505dc43b72e06b378879901",
+  "branch": "main",
+  "workflow": {
+    "id": 43400507710,
+    "name": "Build release or nightly installer",
+    "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43400507710",
+    "event": "push",
+    "attempt": 1,
+    "status": "completed",
+    "conclusion": "success",
+    "created_at": "2026-11-13T09:20:35Z",
+    "completed_metadata_updated_at": "2026-11-13T10:09:11Z",
+    "head_sha": "453df569c977350c3a4da2caf2f0ab7cbd1a0e71",
+    "head_branch": "main"
+  },
+  "gates": {
+    "exact_source_and_main_branch": true,
+    "workflow_completed_success": true,
+    "seven_build_jobs_success": true,
+    "seven_build_steps_success": true,
+    "seven_package_listing_steps_success": true,
+    "seven_upload_steps_success": true,
+    "seven_nonexpired_artifacts_from_exact_source": true,
+    "artifact_ids_names_bytes_digests_match_completed_upload_logs": true,
+    "uploaded_file_counts_match_directory_listings": true
+  },
+  "job_count": 7,
+  "artifact_count": 7,
+  "listed_package_file_count": 17,
+  "jobs": [
+    {
+      "id": 131802758475,
+      "name": "Ubuntu 20 Docker",
+      "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43400507710/job/131802758475",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "453df569c977350c3a4da2caf2f0ab7cbd1a0e71",
+      "started_at": "2026-11-13T09:22:30Z",
+      "completed_at": "2026-11-13T09:48:06Z",
+      "decisive_steps": [
+        {
+          "name": "Build in Docker",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-13T09:23:36Z",
+          "completed_at": "2026-11-13T09:47:22Z"
+        },
+        {
+          "name": "Show installer directory",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-13T09:47:22Z",
+          "completed_at": "2026-11-13T09:47:22Z"
+        },
+        {
+          "name": "Upload artifact",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-13T09:47:22Z",
+          "completed_at": "2026-11-13T09:48:03Z"
+        }
+      ],
+      "artifact": {
+        "id": 14026661290,
+        "name": "build-docker",
+        "size_in_bytes": 1579388372,
+        "api_digest": "sha256:8baadf441feb8ce714e8c945f4288913b67cc210a73f4ea13be871a552a7ba8e",
+        "logged_upload_digest": "sha256:8baadf441feb8ce714e8c945f4288913b67cc210a73f4ea13be871a552a7ba8e",
+        "logged_artifact_id": 14026661290,
+        "logged_artifact_name": "build-docker",
+        "logged_size_in_bytes": 1579388372,
+        "api_matches_log": true,
+        "expired": false,
+        "head_sha": "453df569c977350c3a4da2caf2f0ab7cbd1a0e71",
+        "head_branch": "main",
+        "workflow_run_id": 43400507710,
+        "download_url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43400507710/artifacts/14026661290"
+      },
+      "packages": [
+        {
+          "filename": "surge-xt-linux-NIGHTLY-2026-11-13-453df56-pluginsonly.tar.gz",
+          "bytes": 78636821
+        },
+        {
+          "filename": "surge-xt-linux-x64-NIGHTLY-2026-11-13-453df56.deb",
+          "bytes": 318587106
+        },
+        {
+          "filename": "surge-xt-linux-x86_64-NIGHTLY-2026-11-13-453df56.tar.gz",
+          "bytes": 426306825
+        },
+        {
+          "filename": "surge-xt-portable-content-NIGHTLY-2026-11-13-453df56.tar.gz",
+          "bytes": 347679475
+        },
+        {
+          "filename": "surge-xt-x86_64-NIGHTLY-2026-11-13-453df56.rpm",
+          "bytes": 425350711
+        }
+      ],
+      "logged_upload_file_count": 5,
+      "packaging_scope": {
+        "kind": "Linux x64 full distribution and separate plugin-only/portable-content packages",
+        "factory_data": "Included in full packages and separate portable-content archive; all ten reference manifests and both updated wavetable paths directly appear in the portable-content creation log.",
+        "compatibility_note": "Legacy job name Ubuntu 20 Docker; actual source workflow container is ubuntu22_gcc12:main."
+      },
+      "completed_log": {
+        "source_commit_present": true,
+        "decoded_log_characters": 993224,
+        "endpoint": "https://api.github.com/repos/tomasedisonn80/surgeXT-synth/actions/jobs/131802758475/logs",
+        "upload_and_packaging_lines": [
+          "2026-11-13T09:47:22.6095323Z With the provided path, there will be 5 files uploaded",
+          "2026-11-13T09:48:02.8250628Z SHA256 digest of uploaded artifact zip is 8baadf441feb8ce714e8c945f4288913b67cc210a73f4ea13be871a552a7ba8e",
+          "2026-11-13T09:48:03.2597635Z Artifact build-docker has been successfully uploaded! Final size is 1579388372 bytes. Artifact ID is 14026661290"
+        ],
+        "directory_listing_lines": [
+          "2026-11-13T09:47:22.4825992Z -rw-r--r-- 1 runner runner  78636821 Nov 13 09:46 surge-xt-linux-NIGHTLY-2026-11-13-453df56-pluginsonly.tar.gz",
+          "2026-11-13T09:47:22.4826467Z -rw-r--r-- 1 runner runner 318587106 Nov 13 09:45 surge-xt-linux-x64-NIGHTLY-2026-11-13-453df56.deb",
+          "2026-11-13T09:47:22.4826917Z -rw-r--r-- 1 runner runner 426306825 Nov 13 09:46 surge-xt-linux-x86_64-NIGHTLY-2026-11-13-453df56.tar.gz",
+          "2026-11-13T09:47:22.4827487Z -rw-r--r-- 1 runner runner 347679475 Nov 13 09:47 surge-xt-portable-content-NIGHTLY-2026-11-13-453df56.tar.gz",
+          "2026-11-13T09:47:22.4828081Z -rw-r--r-- 1 runner runner 425350711 Nov 13 09:46 surge-xt-x86_64-NIGHTLY-2026-11-13-453df56.rpm"
+        ],
+        "binary_payload_lines": []
+      },
+      "factory_content_evidence": {
+        "reference_workspace_count": 10,
+        "reference_workspace_names": [
+          "reference-01-obsidian.surge-skin",
+          "reference-02-ivory.surge-skin",
+          "reference-03-spectral.surge-skin",
+          "reference-04-bauhaus.surge-skin",
+          "reference-05-space.surge-skin",
+          "reference-06-tokyo.surge-skin",
+          "reference-07-aurora.surge-skin",
+          "reference-08-clear.surge-skin",
+          "reference-09-flow.surge-skin",
+          "reference-10-live.surge-skin"
+        ],
+        "archive_or_installer_log_lines": [
+          "2026-11-13T09:47:08.9016117Z ./Surge Synth Team/SurgeXTData/skins/reference-04-bauhaus.surge-skin/workspace.json",
+          "2026-11-13T09:47:08.9016585Z ./Surge Synth Team/SurgeXTData/skins/reference-09-flow.surge-skin/workspace.json",
+          "2026-11-13T09:47:08.9039271Z ./Surge Synth Team/SurgeXTData/skins/reference-01-obsidian.surge-skin/workspace.json",
+          "2026-11-13T09:47:08.9039730Z ./Surge Synth Team/SurgeXTData/skins/reference-10-live.surge-skin/workspace.json",
+          "2026-11-13T09:47:08.9051182Z ./Surge Synth Team/SurgeXTData/skins/reference-08-clear.surge-skin/workspace.json",
+          "2026-11-13T09:47:08.9051629Z ./Surge Synth Team/SurgeXTData/skins/reference-06-tokyo.surge-skin/workspace.json",
+          "2026-11-13T09:47:08.9052079Z ./Surge Synth Team/SurgeXTData/skins/reference-07-aurora.surge-skin/workspace.json",
+          "2026-11-13T09:47:08.9052548Z ./Surge Synth Team/SurgeXTData/skins/reference-03-spectral.surge-skin/workspace.json",
+          "2026-11-13T09:47:08.9053001Z ./Surge Synth Team/SurgeXTData/skins/reference-02-ivory.surge-skin/workspace.json",
+          "2026-11-13T09:47:08.9053450Z ./Surge Synth Team/SurgeXTData/skins/reference-05-space.surge-skin/workspace.json"
+        ],
+        "updated_wavetable_log_lines": [
+          "2026-11-13T09:47:08.7773586Z ./Surge Synth Team/SurgeXTData/wavetables/Reference Showcases/Spectral Bloom.wt",
+          "2026-11-13T09:47:08.7774794Z ./Surge Synth Team/SurgeXTData/wavetables/Reference Showcases/Aurora Waves.wt"
+        ]
+      }
+    },
+    {
+      "id": 131802758498,
+      "name": "Release - Windows MSVC JUCE 7",
+      "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43400507710/job/131802758498",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "453df569c977350c3a4da2caf2f0ab7cbd1a0e71",
+      "started_at": "2026-11-13T09:22:30Z",
+      "completed_at": "2026-11-13T09:44:26Z",
+      "decisive_steps": [
+        {
+          "name": "Build release version",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-13T09:24:25Z",
+          "completed_at": "2026-11-13T09:44:11Z"
+        },
+        {
+          "name": "Show installer directory",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-13T09:44:11Z",
+          "completed_at": "2026-11-13T09:44:11Z"
+        },
+        {
+          "name": "Upload artifact",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-13T09:44:11Z",
+          "completed_at": "2026-11-13T09:44:13Z"
+        }
+      ],
+      "artifact": {
+        "id": 14026147413,
+        "name": "build-Windows MSVC JUCE 7",
+        "size_in_bytes": 43472742,
+        "api_digest": "sha256:61d64cec5de9217ec4fbd055f327b4a47ccb07819e8eaa9ae3bb4e43fe7aa21c",
+        "logged_upload_digest": "sha256:61d64cec5de9217ec4fbd055f327b4a47ccb07819e8eaa9ae3bb4e43fe7aa21c",
+        "logged_artifact_id": 14026147413,
+        "logged_artifact_name": "build-Windows MSVC JUCE 7",
+        "logged_size_in_bytes": 43472742,
+        "api_matches_log": true,
+        "expired": false,
+        "head_sha": "453df569c977350c3a4da2caf2f0ab7cbd1a0e71",
+        "head_branch": "main",
+        "workflow_run_id": 43400507710,
+        "download_url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43400507710/artifacts/14026147413"
+      },
+      "packages": [
+        {
+          "filename": "surge-xt-win64-juce7-NIGHTLY-2026-11-13-453df56-pluginsonly.zip",
+          "bytes": 43869336
+        }
+      ],
+      "logged_upload_file_count": 1,
+      "packaging_scope": {
+        "kind": "Windows x64 JUCE 7 binaries archive",
+        "factory_data": "Omitted by exact-source CMake variant condition; no factory-data portable archive or installer.",
+        "includes_per_exact_source_packaging": "CLAP, VST3, Surge XT/Effects standalone executables and CLI; pluginsonly is the upstream filename, not a promise that only plugin files are present."
+      },
+      "completed_log": {
+        "source_commit_present": true,
+        "decoded_log_characters": 212006,
+        "endpoint": "https://api.github.com/repos/tomasedisonn80/surgeXT-synth/actions/jobs/131802758498/logs",
+        "upload_and_packaging_lines": [
+          "2026-11-13T09:44:11.5735949Z With the provided path, there will be 1 file uploaded",
+          "2026-11-13T09:44:13.1243429Z SHA256 digest of uploaded artifact zip is 61d64cec5de9217ec4fbd055f327b4a47ccb07819e8eaa9ae3bb4e43fe7aa21c",
+          "2026-11-13T09:44:13.4760017Z Artifact build-Windows MSVC JUCE 7 has been successfully uploaded! Final size is 43472742 bytes. Artifact ID is 14026147413"
+        ],
+        "directory_listing_lines": [
+          "2026-11-13T09:44:11.4009428Z -rw-r--r-- 1 runneradmin 197121 43869336 Nov 13 09:44 surge-xt-win64-juce7-NIGHTLY-2026-11-13-453df56-pluginsonly.zip"
+        ],
+        "binary_payload_lines": []
+      }
+    },
+    {
+      "id": 131802758523,
+      "name": "Release - Windows ARM64EC",
+      "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43400507710/job/131802758523",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "453df569c977350c3a4da2caf2f0ab7cbd1a0e71",
+      "started_at": "2026-11-13T09:22:30Z",
+      "completed_at": "2026-11-13T10:09:10Z",
+      "decisive_steps": [
+        {
+          "name": "Build release version",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-13T09:23:53Z",
+          "completed_at": "2026-11-13T10:08:54Z"
+        },
+        {
+          "name": "Show installer directory",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-13T10:08:54Z",
+          "completed_at": "2026-11-13T10:08:54Z"
+        },
+        {
+          "name": "Upload artifact",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-13T10:08:54Z",
+          "completed_at": "2026-11-13T10:08:57Z"
+        }
+      ],
+      "artifact": {
+        "id": 14027547557,
+        "name": "build-Windows ARM64EC",
+        "size_in_bytes": 44917818,
+        "api_digest": "sha256:779f93b35d10f6e37fbc82f7c44a6c50488db8251b36b567c29a76124a5d4bb6",
+        "logged_upload_digest": "sha256:779f93b35d10f6e37fbc82f7c44a6c50488db8251b36b567c29a76124a5d4bb6",
+        "logged_artifact_id": 14027547557,
+        "logged_artifact_name": "build-Windows ARM64EC",
+        "logged_size_in_bytes": 44917818,
+        "api_matches_log": true,
+        "expired": false,
+        "head_sha": "453df569c977350c3a4da2caf2f0ab7cbd1a0e71",
+        "head_branch": "main",
+        "workflow_run_id": 43400507710,
+        "download_url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43400507710/artifacts/14027547557"
+      },
+      "packages": [
+        {
+          "filename": "surge-xt-win64-arm64ec-NIGHTLY-2026-11-13-453df56-pluginsonly.zip",
+          "bytes": 45316802
+        }
+      ],
+      "logged_upload_file_count": 1,
+      "packaging_scope": {
+        "kind": "Windows ARM64EC binaries archive",
+        "factory_data": "Omitted by exact-source CMake variant condition; no factory-data portable archive or installer.",
+        "includes_per_exact_source_packaging": "CLAP, VST3, Surge XT/Effects standalone executables and CLI."
+      },
+      "completed_log": {
+        "source_commit_present": true,
+        "decoded_log_characters": 197997,
+        "endpoint": "https://api.github.com/repos/tomasedisonn80/surgeXT-synth/actions/jobs/131802758523/logs",
+        "upload_and_packaging_lines": [
+          "2026-11-13T09:25:59.9493370Z -- Not making portable zip with resources for arm or win7",
+          "2026-11-13T09:25:59.9493849Z -- Not making installer for arm or juce7",
+          "2026-11-13T10:08:54.6364734Z   Creating archive: D:/a/surgeXT-synth/surgeXT-synth/build/surge-xt-dist/surge-xt-win64-arm64ec-NIGHTLY-2026-11-13-453df56-pluginsonly.zip",
+          "2026-11-13T10:08:55.6385223Z With the provided path, there will be 1 file uploaded",
+          "2026-11-13T10:08:57.5568067Z SHA256 digest of uploaded artifact zip is 779f93b35d10f6e37fbc82f7c44a6c50488db8251b36b567c29a76124a5d4bb6",
+          "2026-11-13T10:08:57.9289117Z Artifact build-Windows ARM64EC has been successfully uploaded! Final size is 44917818 bytes. Artifact ID is 14027547557"
+        ],
+        "directory_listing_lines": [
+          "2026-11-13T10:08:54.9257028Z -rw-r--r-- 1 runneradmin 197121 45316802 Nov 13 10:08 surge-xt-win64-arm64ec-NIGHTLY-2026-11-13-453df56-pluginsonly.zip"
+        ],
+        "binary_payload_lines": [
+          "2026-11-13T09:41:51.5679649Z   surge-fx_CLAP.vcxproj -> D:\\a\\surgeXT-synth\\surgeXT-synth\\build\\src\\surge-fx\\surge-fx_artefacts\\Release\\CLAP\\Surge XT Effects.clap",
+          "2026-11-13T09:41:53.8825316Z   surge-fx_VST3.vcxproj -> D:\\a\\surgeXT-synth\\surgeXT-synth\\build\\src\\surge-fx\\surge-fx_artefacts\\Release\\VST3\\Surge XT Effects.vst3\\Contents\\arm64ec-win\\Surge XT Effects.vst3",
+          "2026-11-13T09:56:57.7151118Z   surge-xt_CLAP.vcxproj -> D:\\a\\surgeXT-synth\\surgeXT-synth\\build\\src\\surge-xt\\surge-xt_artefacts\\Release\\CLAP\\Surge XT.clap",
+          "2026-11-13T09:57:00.7299536Z   surge-xt_VST3.vcxproj -> D:\\a\\surgeXT-synth\\surgeXT-synth\\build\\src\\surge-xt\\surge-xt_artefacts\\Release\\VST3\\Surge XT.vst3\\Contents\\arm64ec-win\\Surge XT.vst3",
+          "2026-11-13T10:08:41.0130581Z   surge-xt_Standalone.vcxproj -> D:\\a\\surgeXT-synth\\surgeXT-synth\\build\\src\\surge-xt\\surge-xt_artefacts\\Release\\Standalone\\Surge XT.exe",
+          "2026-11-13T10:08:50.0355379Z   surge-xt-cli.vcxproj -> D:\\a\\surgeXT-synth\\surgeXT-synth\\build\\src\\surge-xt\\surge-xt_artefacts\\Release\\CLI\\surge-xt-cli.exe"
+        ]
+      }
+    },
+    {
+      "id": 131802758559,
+      "name": "Release - ubuntu-arm",
+      "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43400507710/job/131802758559",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "453df569c977350c3a4da2caf2f0ab7cbd1a0e71",
+      "started_at": "2026-11-13T09:22:33Z",
+      "completed_at": "2026-11-13T09:44:12Z",
+      "decisive_steps": [
+        {
+          "name": "Build release version",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-13T09:24:06Z",
+          "completed_at": "2026-11-13T09:43:50Z"
+        },
+        {
+          "name": "Show installer directory",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-13T09:43:50Z",
+          "completed_at": "2026-11-13T09:43:50Z"
+        },
+        {
+          "name": "Upload artifact",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-13T09:43:50Z",
+          "completed_at": "2026-11-13T09:44:09Z"
+        }
+      ],
+      "artifact": {
+        "id": 14025099917,
+        "name": "build-ubuntu-arm",
+        "size_in_bytes": 767528742,
+        "api_digest": "sha256:b8ed90a1bf7d1f85ed586e908fd77603f55d63935110bebf96db513ff908c6f4",
+        "logged_upload_digest": "sha256:b8ed90a1bf7d1f85ed586e908fd77603f55d63935110bebf96db513ff908c6f4",
+        "logged_artifact_id": 14025099917,
+        "logged_artifact_name": "build-ubuntu-arm",
+        "logged_size_in_bytes": 767528742,
+        "api_matches_log": true,
+        "expired": false,
+        "head_sha": "453df569c977350c3a4da2caf2f0ab7cbd1a0e71",
+        "head_branch": "main",
+        "workflow_run_id": 43400507710,
+        "download_url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43400507710/artifacts/14025099917"
+      },
+      "packages": [
+        {
+          "filename": "surge-xt-linux-arm64-NIGHTLY-2026-11-13-453df56-pluginsonly.tar.gz",
+          "bytes": 61481794
+        },
+        {
+          "filename": "surge-xt-linux-arm64-NIGHTLY-2026-11-13-453df56.deb",
+          "bytes": 304224504
+        },
+        {
+          "filename": "surge-xt-linux-arm64-NIGHTLY-2026-11-13-453df56.tar.gz",
+          "bytes": 408883089
+        }
+      ],
+      "logged_upload_file_count": 3,
+      "packaging_scope": {
+        "kind": "Linux ARM64 plugin-only archive, Debian package and tar distribution",
+        "factory_data": "A separate portable-content archive is not generated for SURGE_LINUX_ARM; this does not imply the full .deb/.tar.gz distributions omit their normal resource payload."
+      },
+      "completed_log": {
+        "source_commit_present": true,
+        "decoded_log_characters": 300045,
+        "endpoint": "https://api.github.com/repos/tomasedisonn80/surgeXT-synth/actions/jobs/131802758559/logs",
+        "upload_and_packaging_lines": [
+          "2026-11-13T09:43:50.2225088Z With the provided path, there will be 3 files uploaded",
+          "2026-11-13T09:44:08.8760088Z SHA256 digest of uploaded artifact zip is b8ed90a1bf7d1f85ed586e908fd77603f55d63935110bebf96db513ff908c6f4",
+          "2026-11-13T09:44:09.2957218Z Artifact build-ubuntu-arm has been successfully uploaded! Final size is 767528742 bytes. Artifact ID is 14025099917"
+        ],
+        "directory_listing_lines": [
+          "2026-11-13T09:43:50.0616143Z -rw-r--r-- 1 runner runner  61481794 Nov 13 09:43 surge-xt-linux-arm64-NIGHTLY-2026-11-13-453df56-pluginsonly.tar.gz",
+          "2026-11-13T09:43:50.0617234Z -rw-r--r-- 1 runner runner 304224504 Nov 13 09:43 surge-xt-linux-arm64-NIGHTLY-2026-11-13-453df56.deb",
+          "2026-11-13T09:43:50.0618248Z -rw-r--r-- 1 runner runner 408883089 Nov 13 09:43 surge-xt-linux-arm64-NIGHTLY-2026-11-13-453df56.tar.gz"
+        ],
+        "binary_payload_lines": []
+      }
+    },
+    {
+      "id": 131802758571,
+      "name": "Release - Windows 64-bit",
+      "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43400507710/job/131802758571",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "453df569c977350c3a4da2caf2f0ab7cbd1a0e71",
+      "started_at": "2026-11-13T09:22:31Z",
+      "completed_at": "2026-11-13T09:50:51Z",
+      "decisive_steps": [
+        {
+          "name": "Build release version",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-13T09:24:18Z",
+          "completed_at": "2026-11-13T09:50:22Z"
+        },
+        {
+          "name": "Show installer directory",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-13T09:50:22Z",
+          "completed_at": "2026-11-13T09:50:22Z"
+        },
+        {
+          "name": "Upload artifact",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-13T09:50:22Z",
+          "completed_at": "2026-11-13T09:50:40Z"
+        }
+      ],
+      "artifact": {
+        "id": 14026243663,
+        "name": "build-Windows 64-bit",
+        "size_in_bytes": 647061680,
+        "api_digest": "sha256:91736ed3cc85831b07f1a5c31884c879a911096b7dfce780c731fbbfd7c392fe",
+        "logged_upload_digest": "sha256:91736ed3cc85831b07f1a5c31884c879a911096b7dfce780c731fbbfd7c392fe",
+        "logged_artifact_id": 14026243663,
+        "logged_artifact_name": "build-Windows 64-bit",
+        "logged_size_in_bytes": 647061680,
+        "api_matches_log": true,
+        "expired": false,
+        "head_sha": "453df569c977350c3a4da2caf2f0ab7cbd1a0e71",
+        "head_branch": "main",
+        "workflow_run_id": 43400507710,
+        "download_url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43400507710/artifacts/14026243663"
+      },
+      "packages": [
+        {
+          "filename": "surge-xt-win64-NIGHTLY-2026-11-13-453df56-pluginsonly.zip",
+          "bytes": 48014639
+        },
+        {
+          "filename": "surge-xt-win64-NIGHTLY-2026-11-13-453df56-portable-install.zip",
+          "bytes": 394795306
+        },
+        {
+          "filename": "surge-xt-win64-NIGHTLY-2026-11-13-453df56-setup.exe",
+          "bytes": 210371775
+        }
+      ],
+      "logged_upload_file_count": 3,
+      "packaging_scope": {
+        "kind": "Windows x64 installer, portable installation and binaries archive",
+        "factory_data": "Included in installer and portable installation; all ten reference workspace manifests and both updated wavetable paths directly appear in Inno Setup compression logs.",
+        "installer_evidence": "Inno Setup 6.7.1 reports Successful compile (97.344 sec)."
+      },
+      "completed_log": {
+        "source_commit_present": true,
+        "decoded_log_characters": 1967275,
+        "endpoint": "https://api.github.com/repos/tomasedisonn80/surgeXT-synth/actions/jobs/131802758571/logs",
+        "upload_and_packaging_lines": [
+          "2026-11-13T09:48:23.7077584Z   Creating archive: D:/a/surgeXT-synth/surgeXT-synth/build/surge-xt-dist/surge-xt-win64-NIGHTLY-2026-11-13-453df56-pluginsonly.zip",
+          "2026-11-13T09:48:44.3758729Z   Creating archive: D:/a/surgeXT-synth/surgeXT-synth/build/surge-xt-dist/surge-xt-win64-NIGHTLY-2026-11-13-453df56-portable-install.zip",
+          "2026-11-13T09:50:21.9067728Z   Successful compile (97.344 sec). Resulting Setup program filename is:",
+          "2026-11-13T09:50:23.2600888Z With the provided path, there will be 3 files uploaded",
+          "2026-11-13T09:50:39.7840271Z SHA256 digest of uploaded artifact zip is 91736ed3cc85831b07f1a5c31884c879a911096b7dfce780c731fbbfd7c392fe",
+          "2026-11-13T09:50:40.3100657Z Artifact build-Windows 64-bit has been successfully uploaded! Final size is 647061680 bytes. Artifact ID is 14026243663"
+        ],
+        "directory_listing_lines": [
+          "2026-11-13T09:50:22.5147492Z -rw-r--r-- 1 runneradmin 197121  48014639 Nov 13 09:48 surge-xt-win64-NIGHTLY-2026-11-13-453df56-pluginsonly.zip",
+          "2026-11-13T09:50:22.5180698Z -rw-r--r-- 1 runneradmin 197121 394795306 Nov 13 09:48 surge-xt-win64-NIGHTLY-2026-11-13-453df56-portable-install.zip",
+          "2026-11-13T09:50:22.5181326Z -rwxr-xr-x 1 runneradmin 197121 210371775 Nov 13 09:50 surge-xt-win64-NIGHTLY-2026-11-13-453df56-setup.exe"
+        ],
+        "binary_payload_lines": [
+          "2026-11-13T09:48:50.4458584Z      Compressing: D:/a/surgeXT-synth/surgeXT-synth/build\\surge_xt_products\\Surge XT.clap",
+          "2026-11-13T09:48:50.6509128Z      Compressing: D:/a/surgeXT-synth/surgeXT-synth/build\\surge_xt_products\\Surge XT Effects.clap",
+          "2026-11-13T09:48:50.7426608Z      Compressing: D:/a/surgeXT-synth/surgeXT-synth/build\\surge_xt_products\\Surge XT.vst3\\desktop.ini",
+          "2026-11-13T09:48:50.7427197Z      Compressing: D:/a/surgeXT-synth/surgeXT-synth/build\\surge_xt_products\\Surge XT.vst3\\Plugin.ico",
+          "2026-11-13T09:48:50.7428920Z      Compressing: D:/a/surgeXT-synth/surgeXT-synth/build\\surge_xt_products\\Surge XT.vst3\\Contents\\x86_64-win\\Surge XT.vst3",
+          "2026-11-13T09:48:50.9491449Z      Compressing: D:/a/surgeXT-synth/surgeXT-synth/build\\surge_xt_products\\Surge XT Effects.vst3\\desktop.ini",
+          "2026-11-13T09:48:50.9492055Z      Compressing: D:/a/surgeXT-synth/surgeXT-synth/build\\surge_xt_products\\Surge XT Effects.vst3\\Plugin.ico",
+          "2026-11-13T09:48:50.9493214Z      Compressing: D:/a/surgeXT-synth/surgeXT-synth/build\\surge_xt_products\\Surge XT Effects.vst3\\Contents\\x86_64-win\\Surge XT Effects.vst3",
+          "2026-11-13T09:48:51.0423009Z      Compressing: D:/a/surgeXT-synth/surgeXT-synth/build\\surge_xt_products\\Surge XT.exe",
+          "2026-11-13T09:48:51.2512587Z      Compressing: D:/a/surgeXT-synth/surgeXT-synth/build\\surge_xt_products\\Surge XT Effects.exe"
+        ]
+      },
+      "factory_content_evidence": {
+        "reference_workspace_count": 10,
+        "reference_workspace_names": [
+          "reference-01-obsidian.surge-skin",
+          "reference-02-ivory.surge-skin",
+          "reference-03-spectral.surge-skin",
+          "reference-04-bauhaus.surge-skin",
+          "reference-05-space.surge-skin",
+          "reference-06-tokyo.surge-skin",
+          "reference-07-aurora.surge-skin",
+          "reference-08-clear.surge-skin",
+          "reference-09-flow.surge-skin",
+          "reference-10-live.surge-skin"
+        ],
+        "archive_or_installer_log_lines": [
+          "2026-11-13T09:48:46.1847498Z      Compressing: D:/a/surgeXT-synth/surgeXT-synth\\resources\\data\\skins\\reference-01-obsidian.surge-skin\\workspace.json",
+          "2026-11-13T09:48:46.1851797Z      Compressing: D:/a/surgeXT-synth/surgeXT-synth\\resources\\data\\skins\\reference-02-ivory.surge-skin\\workspace.json",
+          "2026-11-13T09:48:46.1856514Z      Compressing: D:/a/surgeXT-synth/surgeXT-synth\\resources\\data\\skins\\reference-03-spectral.surge-skin\\workspace.json",
+          "2026-11-13T09:48:46.1861406Z      Compressing: D:/a/surgeXT-synth/surgeXT-synth\\resources\\data\\skins\\reference-04-bauhaus.surge-skin\\workspace.json",
+          "2026-11-13T09:48:46.1866854Z      Compressing: D:/a/surgeXT-synth/surgeXT-synth\\resources\\data\\skins\\reference-05-space.surge-skin\\workspace.json",
+          "2026-11-13T09:48:46.1871775Z      Compressing: D:/a/surgeXT-synth/surgeXT-synth\\resources\\data\\skins\\reference-06-tokyo.surge-skin\\workspace.json",
+          "2026-11-13T09:48:46.1876855Z      Compressing: D:/a/surgeXT-synth/surgeXT-synth\\resources\\data\\skins\\reference-07-aurora.surge-skin\\workspace.json",
+          "2026-11-13T09:48:46.1881822Z      Compressing: D:/a/surgeXT-synth/surgeXT-synth\\resources\\data\\skins\\reference-08-clear.surge-skin\\workspace.json",
+          "2026-11-13T09:48:46.1885958Z      Compressing: D:/a/surgeXT-synth/surgeXT-synth\\resources\\data\\skins\\reference-09-flow.surge-skin\\workspace.json",
+          "2026-11-13T09:48:46.1890579Z      Compressing: D:/a/surgeXT-synth/surgeXT-synth\\resources\\data\\skins\\reference-10-live.surge-skin\\workspace.json"
+        ],
+        "updated_wavetable_log_lines": [
+          "2026-11-13T09:48:48.8919979Z      Compressing: D:/a/surgeXT-synth/surgeXT-synth\\resources\\data\\wavetables\\Reference Showcases\\Aurora Waves.wt",
+          "2026-11-13T09:48:48.8974148Z      Compressing: D:/a/surgeXT-synth/surgeXT-synth\\resources\\data\\wavetables\\Reference Showcases\\Spectral Bloom.wt"
+        ]
+      }
+    },
+    {
+      "id": 131802758590,
+      "name": "Release - Windows ARM64",
+      "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43400507710/job/131802758590",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "453df569c977350c3a4da2caf2f0ab7cbd1a0e71",
+      "started_at": "2026-11-13T09:22:30Z",
+      "completed_at": "2026-11-13T10:03:29Z",
+      "decisive_steps": [
+        {
+          "name": "Build release version",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-13T09:23:51Z",
+          "completed_at": "2026-11-13T10:03:14Z"
+        },
+        {
+          "name": "Show installer directory",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-13T10:03:14Z",
+          "completed_at": "2026-11-13T10:03:14Z"
+        },
+        {
+          "name": "Upload artifact",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-13T10:03:14Z",
+          "completed_at": "2026-11-13T10:03:17Z"
+        }
+      ],
+      "artifact": {
+        "id": 14026718414,
+        "name": "build-Windows ARM64",
+        "size_in_bytes": 44059113,
+        "api_digest": "sha256:57376c43b79022842d0c29de69bf4eac1b053bd9045df297718fd4110b860882",
+        "logged_upload_digest": "sha256:57376c43b79022842d0c29de69bf4eac1b053bd9045df297718fd4110b860882",
+        "logged_artifact_id": 14026718414,
+        "logged_artifact_name": "build-Windows ARM64",
+        "logged_size_in_bytes": 44059113,
+        "api_matches_log": true,
+        "expired": false,
+        "head_sha": "453df569c977350c3a4da2caf2f0ab7cbd1a0e71",
+        "head_branch": "main",
+        "workflow_run_id": 43400507710,
+        "download_url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43400507710/artifacts/14026718414"
+      },
+      "packages": [
+        {
+          "filename": "surge-xt-win64-arm64-NIGHTLY-2026-11-13-453df56-pluginsonly.zip",
+          "bytes": 44469689
+        }
+      ],
+      "logged_upload_file_count": 1,
+      "packaging_scope": {
+        "kind": "Windows ARM64 binaries archive",
+        "factory_data": "Omitted by exact-source CMake variant condition and explicit completed configure messages; no factory-data portable archive or installer.",
+        "includes_per_exact_source_packaging": "CLAP, VST3, Surge XT/Effects standalone executables and CLI."
+      },
+      "completed_log": {
+        "source_commit_present": true,
+        "decoded_log_characters": 197975,
+        "endpoint": "https://api.github.com/repos/tomasedisonn80/surgeXT-synth/actions/jobs/131802758590/logs",
+        "upload_and_packaging_lines": [
+          "2026-11-13T09:25:51.0268472Z -- Not making portable zip with resources for arm or win7",
+          "2026-11-13T09:25:51.0268941Z -- Not making installer for arm or juce7",
+          "2026-11-13T10:03:14.0514104Z   Creating archive: D:/a/surgeXT-synth/surgeXT-synth/build/surge-xt-dist/surge-xt-win64-arm64-NIGHTLY-2026-11-13-453df56-pluginsonly.zip",
+          "2026-11-13T10:03:14.9812390Z With the provided path, there will be 1 file uploaded",
+          "2026-11-13T10:03:16.8988348Z SHA256 digest of uploaded artifact zip is 57376c43b79022842d0c29de69bf4eac1b053bd9045df297718fd4110b860882",
+          "2026-11-13T10:03:17.2185928Z Artifact build-Windows ARM64 has been successfully uploaded! Final size is 44059113 bytes. Artifact ID is 14026718414"
+        ],
+        "directory_listing_lines": [
+          "2026-11-13T10:03:14.3100063Z -rw-r--r-- 1 runneradmin 197121 44469689 Nov 13 10:03 surge-xt-win64-arm64-NIGHTLY-2026-11-13-453df56-pluginsonly.zip"
+        ],
+        "binary_payload_lines": [
+          "2026-11-13T09:40:08.4372048Z   surge-fx_CLAP.vcxproj -> D:\\a\\surgeXT-synth\\surgeXT-synth\\build\\src\\surge-fx\\surge-fx_artefacts\\Release\\CLAP\\Surge XT Effects.clap",
+          "2026-11-13T09:40:14.3575921Z   surge-fx_VST3.vcxproj -> D:\\a\\surgeXT-synth\\surgeXT-synth\\build\\src\\surge-fx\\surge-fx_artefacts\\Release\\VST3\\Surge XT Effects.vst3\\Contents\\arm64-win\\Surge XT Effects.vst3",
+          "2026-11-13T09:53:04.7175865Z   surge-xt_CLAP.vcxproj -> D:\\a\\surgeXT-synth\\surgeXT-synth\\build\\src\\surge-xt\\surge-xt_artefacts\\Release\\CLAP\\Surge XT.clap",
+          "2026-11-13T09:53:09.2428352Z   surge-xt_VST3.vcxproj -> D:\\a\\surgeXT-synth\\surgeXT-synth\\build\\src\\surge-xt\\surge-xt_artefacts\\Release\\VST3\\Surge XT.vst3\\Contents\\arm64-win\\Surge XT.vst3",
+          "2026-11-13T10:02:59.3260257Z   surge-xt_Standalone.vcxproj -> D:\\a\\surgeXT-synth\\surgeXT-synth\\build\\src\\surge-xt\\surge-xt_artefacts\\Release\\Standalone\\Surge XT.exe",
+          "2026-11-13T10:03:09.6362366Z   surge-xt-cli.vcxproj -> D:\\a\\surgeXT-synth\\surgeXT-synth\\build\\src\\surge-xt\\surge-xt_artefacts\\Release\\CLI\\surge-xt-cli.exe"
+        ]
+      }
+    },
+    {
+      "id": 131802758650,
+      "name": "Release - macOS",
+      "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43400507710/job/131802758650",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "453df569c977350c3a4da2caf2f0ab7cbd1a0e71",
+      "started_at": "2026-11-13T09:27:31Z",
+      "completed_at": "2026-11-13T09:43:29Z",
+      "decisive_steps": [
+        {
+          "name": "Build release version",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-13T09:29:11Z",
+          "completed_at": "2026-11-13T09:43:08Z"
+        },
+        {
+          "name": "Show installer directory",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-13T09:43:08Z",
+          "completed_at": "2026-11-13T09:43:08Z"
+        },
+        {
+          "name": "Upload artifact",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-13T09:43:08Z",
+          "completed_at": "2026-11-13T09:43:23Z"
+        }
+      ],
+      "artifact": {
+        "id": 14025504610,
+        "name": "build-macOS-unsigned",
+        "size_in_bytes": 635164061,
+        "api_digest": "sha256:baf8926553a9941c3dd1ab9f87e91464ec86ab966c6cabb253f0c62bfcc8f963",
+        "logged_upload_digest": "sha256:baf8926553a9941c3dd1ab9f87e91464ec86ab966c6cabb253f0c62bfcc8f963",
+        "logged_artifact_id": 14025504610,
+        "logged_artifact_name": "build-macOS-unsigned",
+        "logged_size_in_bytes": 635164061,
+        "api_matches_log": true,
+        "expired": false,
+        "head_sha": "453df569c977350c3a4da2caf2f0ab7cbd1a0e71",
+        "head_branch": "main",
+        "workflow_run_id": 43400507710,
+        "download_url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43400507710/artifacts/14025504610"
+      },
+      "packages": [
+        {
+          "filename": "surge-xt-macos-NIGHTLY-2026-11-13-453df56-pluginsonly.zip",
+          "bytes": 157106527
+        },
+        {
+          "filename": "surge-xt-macOS-NIGHTLY-2026-11-13-453df56.dmg",
+          "bytes": 481056446
+        },
+        {
+          "filename": "UNSIGNED-BUILD.txt",
+          "bytes": 159
+        }
+      ],
+      "logged_upload_file_count": 3,
+      "packaging_scope": {
+        "kind": "Universal macOS distribution DMG, plugin-only ZIP and unsigned-build notice",
+        "factory_data": "Normal distribution packaging; the plugin-only ZIP omits the factory-data installer payload.",
+        "signing": "Workflow-labelled unsigned/unnotarized fork distribution: no Developer ID signature and no Apple notarization. No claim is made that bundles lack all ad-hoc code-signature metadata."
+      },
+      "completed_log": {
+        "source_commit_present": true,
+        "decoded_log_characters": 286637,
+        "endpoint": "https://api.github.com/repos/tomasedisonn80/surgeXT-synth/actions/jobs/131802758650/logs",
+        "upload_and_packaging_lines": [
+          "2026-11-13T09:43:08.4439880Z With the provided path, there will be 3 files uploaded",
+          "2026-11-13T09:43:23.2085320Z SHA256 digest of uploaded artifact zip is baf8926553a9941c3dd1ab9f87e91464ec86ab966c6cabb253f0c62bfcc8f963",
+          "2026-11-13T09:43:23.6087790Z Artifact build-macOS-unsigned has been successfully uploaded! Final size is 635164061 bytes. Artifact ID is 14025504610"
+        ],
+        "directory_listing_lines": [
+          "2026-11-13T09:43:08.1644550Z -rw-r--r--  1 runner  staff  157106527 Nov 13 09:43 surge-xt-macos-NIGHTLY-2026-11-13-453df56-pluginsonly.zip",
+          "2026-11-13T09:43:08.1646610Z -rw-r--r--@ 1 runner  staff  481056446 Nov 13 09:42 surge-xt-macOS-NIGHTLY-2026-11-13-453df56.dmg",
+          "2026-11-13T09:43:08.1647100Z -rw-r--r--  1 runner  staff        159 Nov 13 09:43 UNSIGNED-BUILD.txt"
+        ],
+        "binary_payload_lines": [
+          "2026-11-13T09:43:06.3640470Z   adding: Surge XT.app/Contents/MacOS/surge-xt-cli (deflated 64%)",
+          "2026-11-13T09:43:06.3640900Z   adding: Surge XT.app/Contents/Resources/ (stored 0%)",
+          "2026-11-13T09:43:06.3645770Z   adding: Surge XT.app/Contents/Resources/Icon.icns (deflated 6%)",
+          "2026-11-13T09:43:06.3647990Z   adding: Surge XT.app/Contents/Resources/RecentFilesMenuTemplate.nib (deflated 33%)",
+          "2026-11-13T09:43:06.3648690Z   adding: Surge XT.app/Contents/Info.plist (deflated 63%)",
+          "2026-11-13T09:43:06.3649140Z   adding: Surge XT.app/Contents/PkgInfo (stored 0%)",
+          "2026-11-13T09:43:08.0194020Z   adding: surge-xt-cli (deflated 64%)",
+          "2026-11-13T09:43:08.0291840Z [100%] Built target surge-xt-distribution",
+          "2026-11-13T09:43:08.0518830Z   'UNSIGNED AND UNNOTARIZED DEVELOPMENT BUILD' \\",
+          "2026-11-13T09:43:08.0519140Z   'This fork build has no Developer ID signature or Apple notarization.' \\",
+          "2026-11-13T09:43:08.0519710Z   > build/surge-xt-dist/UNSIGNED-BUILD.txt",
+          "2026-11-13T09:43:08.1647100Z -rw-r--r--  1 runner  staff        159 Nov 13 09:43 UNSIGNED-BUILD.txt"
+        ]
+      }
+    }
+  ],
+  "publication": {
+    "jobs": [
+      {
+        "id": 131823451085,
+        "name": "Publish Surge XT nightly",
+        "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43400507710/job/131823451085",
+        "status": "completed",
+        "conclusion": "skipped"
+      },
+      {
+        "id": 131823451365,
+        "name": "Publish Surge XT release",
+        "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43400507710/job/131823451365",
+        "status": "completed",
+        "conclusion": "skipped"
+      }
+    ],
+    "condition": "Nightly/release publication requires repository_owner == 'surge-synthesizer'; nightly also requires refs/heads/main and release also requires a release_xt tag. This fork uploads CI artifacts but did not publish an official nightly or release.",
+    "evidence_type": "Exact-source workflow conditions plus final skipped job conclusions."
+  },
+  "macos_signing": {
+    "artifact_name": "build-macOS-unsigned",
+    "developer_id_signed": false,
+    "apple_notarized": false,
+    "explicit_unsigned_notice": "UNSIGNED-BUILD.txt",
+    "notice_bytes": 159,
+    "resolve_signing_step": "success",
+    "import_certificates_step": "skipped",
+    "unsigned_label_step": "success",
+    "decisive_log_lines": [
+      "2026-11-13T09:29:10.8477890Z ##[warning]Building an unsigned, unnotarized fork distribution; no Apple signing identity is being claimed.",
+      "2026-11-13T09:43:08.0519140Z   'This fork build has no Developer ID signature or Apple notarization.' \\"
+    ],
+    "note": "No claim is made that bundles lack all ad-hoc code-signature metadata."
+  },
+  "sources": {
+    "run_api": "https://api.github.com/repos/tomasedisonn80/surgeXT-synth/actions/runs/43400507710",
+    "jobs_api": "https://api.github.com/repos/tomasedisonn80/surgeXT-synth/actions/runs/43400507710/jobs?per_page=100",
+    "artifacts_api": "https://api.github.com/repos/tomasedisonn80/surgeXT-synth/actions/runs/43400507710/artifacts?per_page=100",
+    "workflow": "https://github.com/tomasedisonn80/surgeXT-synth/blob/453df569c977350c3a4da2caf2f0ab7cbd1a0e71/.github/workflows/build-release.yml",
+    "packaging": "https://github.com/tomasedisonn80/surgeXT-synth/blob/453df569c977350c3a4da2caf2f0ab7cbd1a0e71/src/cmake/lib.cmake"
+  },
+  "scope": "Read-only exact-run GitHub metadata, completed decoded job logs and exact-source workflow/packaging rules. Uploaded artifact SHA256, ID, name and byte size were independently compared between completed upload logs and GitHub API metadata. These platform archives were not downloaded and independently rehashed or executed in this check. Directory inventories are actual completed-job listings; explicit content inclusion is recorded only where packaging logs expose it.",
+  "source_mutations": "None. No source, workflow, ref, job re-run or prior settled report was changed."
+}

@@ -31,6 +31,9 @@
 #include <version.h>
 #include "gui/widgets/CurrentFxDisplay.h"
 #include "gui/widgets/MainFrame.h"
+#include "gui/reference/Workspace.h"
+
+#include <filesystem>
 
 struct VKeyboardWheel : public juce::Component
 {
@@ -289,6 +292,8 @@ SurgeSynthEditor::SurgeSynthEditor(SurgeSynthProcessor &p)
     if (juce::Desktop::getInstance().isHeadless() == false)
         sge->open(nullptr);
 
+    updateReferenceWorkspaceFromSkin(true);
+
     idleTimer = std::make_unique<IdleTimer>(this);
     idleTimer->startTimer(1000 / 60);
 }
@@ -296,6 +301,10 @@ SurgeSynthEditor::SurgeSynthEditor(SurgeSynthProcessor &p)
 SurgeSynthEditor::~SurgeSynthEditor()
 {
     idleTimer->stopTimer();
+    // End any live parameter gestures before the processor adapters or the stock
+    // editor's look-and-feel are released. Callbacks hold SafePointers, not raw this.
+    returnToReferenceWorkspace.reset();
+    referenceWorkspace.reset();
     sge->close();
 
     if (sge->bitmapStore)
@@ -354,7 +363,8 @@ bool SurgeSynthEditor::vkbShouldTakeKeys() const
 {
     // vkbForward covers the typein overlays and the formula editor, the cast the plain
     // TextEditors such as the BPM field next to the keyboard
-    return sge->getShowVirtualKeyboard() && sge->shouldForwardKeysToVKB() &&
+    return !(referenceWorkspace && referenceWorkspace->isVisible()) &&
+           sge->getShowVirtualKeyboard() && sge->shouldForwardKeysToVKB() &&
            dynamic_cast<juce::TextEditor *>(juce::Component::getCurrentlyFocusedComponent()) ==
                nullptr;
 }
@@ -442,6 +452,16 @@ void SurgeSynthEditor::idle()
 
     sge->idle();
 
+    // Skin selection happens in the existing asynchronous Settings menu. Check
+    // its identity each tick; stat/reload unchanged packages at most once a second.
+    const auto skin = sge->currentSkin;
+    const auto key = skin ? juce::String(skin->root + skin->name) : juce::String();
+    if (key != referenceSkinKey || --referenceSkinPollCountdown <= 0)
+    {
+        referenceSkinPollCountdown = 60;
+        updateReferenceWorkspaceFromSkin();
+    }
+
     if (processor.surge->refresh_vkb)
     {
         const int curTypeinBPM = std::atoi(tempoTypein->getText().toStdString().c_str());
@@ -524,14 +544,264 @@ void SurgeSynthEditor::reapplySurgeComponentColours()
     repaint();
 }
 
+void SurgeSynthEditor::resetWindowFromSkin()
+{
+    updateReferenceWorkspaceFromSkin(true);
+    resized();
+}
+
+void SurgeSynthEditor::updateReferenceWorkspaceFromSkin(bool force)
+{
+    if (!sge || !sge->currentSkin)
+        return;
+
+    const auto skin = sge->currentSkin;
+    const auto key = juce::String(skin->root + skin->name);
+    const auto xmlFile = skin->useInMemorySkin
+                             ? juce::File()
+                             : juce::File(juce::String(skin->resourceName("skin.xml")));
+    const auto xmlTime = xmlFile.getLastModificationTime().toMilliseconds();
+    const auto layoutTime = referenceManifest.getLastModificationTime().toMilliseconds();
+    if (!force && key == referenceSkinKey && xmlTime == referenceSkinModificationTime &&
+        layoutTime == referenceLayoutModificationTime)
+        return;
+
+    referenceSkinKey = key;
+    referenceSkinModificationTime = xmlTime;
+    referenceLayoutModificationTime = layoutTime;
+    referenceWorkspaceError.clear();
+
+    const auto useStockEditor = [this]() {
+        referenceWorkspace.reset();
+        returnToReferenceWorkspace.reset();
+        referenceManifest = juce::File();
+        referenceLayoutModificationTime = 0;
+        topLevelContainer->setVisible(true);
+        resized();
+    };
+
+    // In-memory and conventional skins use the original editor unchanged. Keep
+    // this small metadata read independent of the private skin-parser internals.
+    if (skin->useInMemorySkin || !xmlFile.existsAsFile())
+    {
+        useStockEditor();
+        return;
+    }
+
+    if (xmlFile.getSize() > 1024 * 1024)
+    {
+        referenceWorkspaceError = "Skin metadata exceeds the workspace size limit.";
+        useStockEditor();
+        return;
+    }
+
+    const auto xmlText = xmlFile.loadFileAsString();
+    if (xmlText.containsIgnoreCase("<!DOCTYPE") || xmlText.containsIgnoreCase("<!ENTITY"))
+    {
+        referenceWorkspaceError = "Reference workspace metadata must not contain external entities.";
+        useStockEditor();
+        return;
+    }
+
+    auto xml = juce::parseXML(xmlText);
+    auto *globals = xml ? xml->getChildByName("globals") : nullptr;
+    auto *workspaceTag = globals ? globals->getChildByName("reference-workspace") : nullptr;
+    if (!workspaceTag)
+    {
+        useStockEditor();
+        return;
+    }
+
+    const auto layout = workspaceTag->getStringAttribute("layout");
+    // Version 1 packages use a single adjacent JSON file. Disallow absolute,
+    // traversing and nested paths; canonical checks also reject symlink escapes.
+    if (layout.isEmpty() || layout.containsAnyOf("/\\:") || layout == "." || layout == "..")
+    {
+        referenceWorkspaceError = "The workspace layout must be a file inside its skin package.";
+        useStockEditor();
+        return;
+    }
+
+    const auto file = xmlFile.getSiblingFile(layout);
+    std::error_code ec;
+    const auto canonicalPackage = std::filesystem::canonical(
+        std::filesystem::u8path(xmlFile.getParentDirectory().getFullPathName().toStdString()), ec);
+    if (ec)
+    {
+        referenceWorkspaceError = "The reference skin package could not be resolved.";
+        useStockEditor();
+        return;
+    }
+    const auto canonicalFile = std::filesystem::canonical(
+        std::filesystem::u8path(file.getFullPathName().toStdString()), ec);
+    if (ec || canonicalFile.parent_path() != canonicalPackage)
+    {
+        referenceWorkspaceError = "The reference layout is missing or outside its skin package.";
+        useStockEditor();
+        // Detect a subsequently created/repaired file without requiring a restart.
+        referenceManifest = file;
+        referenceLayoutModificationTime = file.getLastModificationTime().toMilliseconds();
+        return;
+    }
+
+    // Cache failed files too: an invalid package must not repeatedly interrupt
+    // the user or allocate a replacement component on every timer tick.
+    referenceManifest = file;
+    referenceLayoutModificationTime = file.getLastModificationTime().toMilliseconds();
+    auto next = std::make_unique<Surge::GUI::Reference::Workspace>(processor);
+    if (!next->load(file, referenceWorkspaceError))
+    {
+        referenceWorkspace.reset();
+        returnToReferenceWorkspace.reset();
+        topLevelContainer->setVisible(true);
+        resized();
+        processor.surge->storage.reportError(referenceWorkspaceError.toStdString(),
+                                             "Reference Workspace Load Error");
+        return;
+    }
+
+    const juce::Component::SafePointer<SurgeSynthEditor> safe(this);
+    next->onFullEditor = [safe]() {
+        if (safe)
+            safe->showReferenceWorkspace(false);
+    };
+    next->onChooseSkin = [safe]() {
+        if (safe)
+            safe->showReferenceSkinMenu();
+    };
+    next->onAction = [safe](const juce::String &action) {
+        if (safe)
+            safe->handleReferenceWorkspaceAction(action);
+    };
+    next->selectScene(sge->getCurrentScene());
+    referenceWorkspace = std::move(next);
+    addChildComponent(*referenceWorkspace);
+
+    returnToReferenceWorkspace = std::make_unique<juce::TextButton>("Return to reference workspace");
+    returnToReferenceWorkspace->setTitle("Return to reference workspace");
+    returnToReferenceWorkspace->setTooltip("Return to the selected reference skin (Ctrl/Command+Alt+R)");
+    returnToReferenceWorkspace->setWantsKeyboardFocus(true);
+    returnToReferenceWorkspace->onClick = [safe]() {
+        if (safe)
+            safe->showReferenceWorkspace(true);
+    };
+    addChildComponent(*returnToReferenceWorkspace);
+    showReferenceWorkspace(true);
+}
+
+void SurgeSynthEditor::showReferenceWorkspace(bool show)
+{
+    if (!referenceWorkspace)
+        return;
+
+    // Release any held virtual keyboard notes as their owning surface is hidden.
+    if (auto *vkb = dynamic_cast<SurgeVirtualKeyboard *>(keyboard.get()))
+        vkb->releaseAllHeldKeys();
+    if (!show && referenceWorkspace->isVisible())
+        referenceWorkspaceSize = {getWidth(), getHeight()};
+
+    referenceWorkspace->setVisible(show);
+    topLevelContainer->setVisible(!show);
+    returnToReferenceWorkspace->setVisible(!show);
+    auto rezoom = BlockRezoom(this);
+    if (show)
+    {
+        referenceWorkspace->selectScene(sge->getCurrentScene());
+        auto width = referenceWorkspaceSize.x;
+        auto height = referenceWorkspaceSize.y;
+        if (auto *display = juce::Desktop::getInstance().getDisplays().getDisplayForRect(getScreenBounds()))
+        {
+            const auto scale = std::min(1.0, std::min(0.95 * display->userArea.getWidth() / width,
+                                                     0.90 * display->userArea.getHeight() / height));
+            width = juce::jmax(1, juce::roundToInt(width * scale));
+            height = juce::jmax(1, juce::roundToInt(height * scale));
+        }
+        setSize(width, height);
+        referenceWorkspace->toFront(false);
+    }
+    else
+    {
+        const auto scale = sge->getZoomFactor() * 0.01;
+        setSize(juce::roundToInt(sge->getWindowSizeX() * scale),
+                juce::roundToInt((sge->getWindowSizeY() +
+                                 (sge->getShowVirtualKeyboard() ? extraYSpaceForVirtualKeyboard : 0)) *
+                                scale) +
+                    28);
+        returnToReferenceWorkspace->toFront(false);
+    }
+    resized();
+    repaint();
+}
+
+void SurgeSynthEditor::showReferenceSkinMenu()
+{
+    if (sge)
+        sge->showSettingsMenu({20, 30}, nullptr);
+}
+
+void SurgeSynthEditor::handleReferenceWorkspaceAction(const juce::String &action)
+{
+    if (action == "settings" || action == "skins")
+    {
+        showReferenceSkinMenu();
+    }
+    else if (action == "scene-a" || action == "scene-b")
+    {
+        const auto scene = action == "scene-a" ? 0 : 1;
+        sge->selectSceneFromReferenceWorkspace(scene);
+        if (referenceWorkspace)
+            referenceWorkspace->selectScene(scene);
+    }
+    else if (action == "next-preset" || action == "previous-preset")
+    {
+        // The native dirty-patch confirmation belongs to the full editor.
+        if (processor.surge->storage.getPatch().isDirty)
+            showReferenceWorkspace(false);
+        sge->loadPatchWithDirtyCheck(action == "next-preset", false);
+    }
+    else if (action == "browser" || action == "save" || action == "modulation" ||
+             action == "matrix" || action == "analyzer" || action == "effects" ||
+             action == "full-editor")
+    {
+        showReferenceWorkspace(false);
+        if (action == "browser")
+            sge->showOverlay(SurgeGUIEditor::PATCH_BROWSER);
+        else if (action == "save")
+            sge->showOverlay(SurgeGUIEditor::SAVE_PATCH);
+        else if (action == "modulation" || action == "matrix")
+            sge->showOverlay(SurgeGUIEditor::MODULATION_EDITOR);
+        else if (action == "analyzer")
+            sge->showOverlay(SurgeGUIEditor::OSCILLOSCOPE);
+    }
+}
+
 void SurgeSynthEditor::resized()
 {
-    topLevelContainer->setBounds(getLocalBounds());
+    if (referenceWorkspace && referenceWorkspace->isVisible())
+    {
+        referenceWorkspace->setBounds(getLocalBounds());
+        // Skin reload may temporarily size the hidden original editor. Do not
+        // mistake that for a user resize of the currently displayed workspace.
+        if (sge->currentSkin &&
+            referenceSkinKey == juce::String(sge->currentSkin->root + sge->currentSkin->name))
+            referenceWorkspaceSize = {getWidth(), getHeight()};
+        if (getConstrainer())
+            getConstrainer()->setFixedAspectRatio(1586.0 / 992.0);
+        return;
+    }
+
+    // The return action occupies its own footer, never an invisible hit target
+    // over a stock control. Normal skins have no footer and follow the old path.
+    const auto footer = referenceWorkspace && returnToReferenceWorkspace ? 28 : 0;
+    const auto contentBounds = getLocalBounds().withTrimmedBottom(footer);
+    if (returnToReferenceWorkspace)
+        returnToReferenceWorkspace->setBounds(getLocalBounds().removeFromBottom(footer).reduced(4, 2));
+    topLevelContainer->setBounds(contentBounds);
     drawExtendedControls = sge->getShowVirtualKeyboard();
 
-    auto w = getWidth();
+    auto w = contentBounds.getWidth();
     auto h =
-        getHeight() -
+        contentBounds.getHeight() -
         (drawExtendedControls ? 0.01 * sge->getZoomFactor() * extraYSpaceForVirtualKeyboard : 0);
 
     if (Surge::GUI::getIsStandalone())
@@ -544,7 +814,7 @@ void SurgeSynthEditor::resized()
             {
                 if (cdw->isFullScreen())
                 {
-                    auto b = getLocalBounds();
+                    auto b = contentBounds;
                     auto xw = 1.f * sge->getWindowSizeX() / b.getWidth();
                     auto xh = 1.f *
                               (sge->getWindowSizeY() +
@@ -585,14 +855,14 @@ void SurgeSynthEditor::resized()
 
     topLevelContainer->setTransform(juce::AffineTransform());
 
-    auto b = getLocalBounds();
+    auto b = contentBounds;
     auto wR = 1.0 * w / sge->getWindowSizeX();
     auto hR = 1.0 * h / sge->getWindowSizeY();
 
     auto ar = 1.f * sge->getWindowSizeX() /
               (sge->getWindowSizeY() + (drawExtendedControls ? extraYSpaceForVirtualKeyboard : 0));
     if (getConstrainer())
-        getConstrainer()->setFixedAspectRatio(ar);
+        getConstrainer()->setFixedAspectRatio(footer > 0 ? w / (w / ar + footer) : ar);
 
     auto zfn = std::min(wR, hR);
     if (wR < 1 && hR < 1)
@@ -880,6 +1150,15 @@ juce::PopupMenu SurgeSynthEditor::hostMenuForMacro(int macro)
 
 bool SurgeSynthEditor::keyPressed(const juce::KeyPress &key, juce::Component *orig)
 {
+    if (referenceWorkspace && key.getModifiers().isCommandDown() &&
+        key.getModifiers().isAltDown() && key.getKeyCode() == 'R')
+    {
+        showReferenceWorkspace(!referenceWorkspace->isVisible());
+        return true;
+    }
+    if (referenceWorkspace && referenceWorkspace->isVisible())
+        return false;
+
     /*
      * So, sigh. On Linux/Windows the keyStateChanged event of the parent isn't suppressed
      * when the keyStateChange is false. But the MIDI keyboard rescans on state change.

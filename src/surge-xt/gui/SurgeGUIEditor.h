@@ -253,6 +253,11 @@ class SurgeGUIEditor : public Surge::GUI::IComponentTagValue::Listener,
     int current_scene = 0, current_osc[n_scenes] = {0, 0}, current_fx = 0;
 
     int getCurrentScene() { return current_scene; }
+    void selectSceneFromReferenceWorkspace(int scene)
+    {
+        if (scene >= 0 && scene < n_scenes)
+            changeSelectedScene(scene);
+    }
     int getCurrentLFOIDInEditor()
     {
         auto lfo_id = modsource_editor[current_scene] - ms_lfo1;

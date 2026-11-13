@@ -1,0 +1,1229 @@
+{
+  "schema": 1,
+  "id": "05-space-age-1977",
+  "name": "05 Space-Age 1977",
+  "reference": "05_Space_Age_1977.png",
+  "width": 1586,
+  "height": 992,
+  "style": "space",
+  "font": "mono",
+  "headerHeight": 80,
+  "radius": 8,
+  "glow": 0.11,
+  "palette": {
+    "background": "#B6A078",
+    "panel": "#45432D",
+    "border": "#C6AF7D",
+    "text": "#F5E6B8",
+    "muted": "#CEB985",
+    "accent": "#FFB31A",
+    "secondary": "#FFD46A",
+    "display": "#1C1508",
+    "knob": "#B9A77A",
+    "red": "#D96C23",
+    "yellow": "#F2BF3B",
+    "blue": "#656B45"
+  },
+  "panels": [
+    {
+      "id": "space-browser",
+      "kind": "browser",
+      "title": "PRESET BROWSER",
+      "x": 5,
+      "y": 85,
+      "w": 244,
+      "h": 543
+    },
+    {
+      "id": "space-global",
+      "kind": "scene",
+      "title": "",
+      "x": 256,
+      "y": 85,
+      "w": 1322,
+      "h": 68
+    },
+    {
+      "id": "space-oscillator-1",
+      "kind": "oscillator",
+      "title": "OSC 1",
+      "x": 258,
+      "y": 158,
+      "w": 307,
+      "h": 256,
+      "index": 1,
+      "plot": [
+        270,
+        194,
+        250,
+        122
+      ]
+    },
+    {
+      "id": "space-oscillator-2",
+      "kind": "oscillator",
+      "title": "OSC 2",
+      "x": 572,
+      "y": 158,
+      "w": 307,
+      "h": 256,
+      "index": 2,
+      "plot": [
+        584,
+        194,
+        250,
+        122
+      ]
+    },
+    {
+      "id": "space-oscillator-3",
+      "kind": "oscillator",
+      "title": "OSC 3",
+      "x": 884,
+      "y": 158,
+      "w": 304,
+      "h": 256,
+      "index": 3,
+      "plot": [
+        896,
+        194,
+        250,
+        122
+      ]
+    },
+    {
+      "id": "space-filter-1",
+      "kind": "filter",
+      "title": "FILTER 1",
+      "x": 1198,
+      "y": 158,
+      "w": 380,
+      "h": 124,
+      "index": 1,
+      "variant": "horizontal",
+      "plot": [
+        1210,
+        194,
+        230,
+        74
+      ]
+    },
+    {
+      "id": "space-filter-2",
+      "kind": "filter",
+      "title": "FILTER 2",
+      "x": 1198,
+      "y": 287,
+      "w": 380,
+      "h": 127,
+      "index": 2,
+      "variant": "horizontal",
+      "plot": [
+        1210,
+        323,
+        230,
+        74
+      ]
+    },
+    {
+      "id": "space-mixer",
+      "kind": "mixer",
+      "title": "OSC MIXER",
+      "x": 256,
+      "y": 420,
+      "w": 259,
+      "h": 208,
+      "variant": "faders"
+    },
+    {
+      "id": "space-env-1",
+      "kind": "tabs",
+      "title": "ENV 1 (AMP)",
+      "x": 520,
+      "y": 420,
+      "w": 172,
+      "h": 208
+    },
+    {
+      "id": "space-env-2",
+      "kind": "tabs",
+      "title": "ENV 2 (FILTER)",
+      "x": 698,
+      "y": 420,
+      "w": 174,
+      "h": 208
+    },
+    {
+      "id": "space-lfo-envelope",
+      "kind": "tabs",
+      "title": "LFO 3 ENVELOPE",
+      "x": 878,
+      "y": 420,
+      "w": 173,
+      "h": 208
+    },
+    {
+      "id": "space-lfo-panel-1",
+      "kind": "lfo",
+      "title": "LFO 1",
+      "x": 1057,
+      "y": 420,
+      "w": 171,
+      "h": 208,
+      "index": 1,
+      "plot": [
+        1067,
+        455,
+        148,
+        51
+      ]
+    },
+    {
+      "id": "space-lfo-panel-2",
+      "kind": "lfo",
+      "title": "LFO 2",
+      "x": 1233,
+      "y": 420,
+      "w": 168,
+      "h": 208,
+      "index": 2,
+      "plot": [
+        1243,
+        455,
+        148,
+        51
+      ]
+    },
+    {
+      "id": "space-lfo-panel-3",
+      "kind": "lfo",
+      "title": "LFO 3",
+      "x": 1407,
+      "y": 420,
+      "w": 171,
+      "h": 208,
+      "index": 3,
+      "plot": [
+        1417,
+        455,
+        148,
+        51
+      ]
+    },
+    {
+      "id": "space-matrix",
+      "kind": "matrix",
+      "title": "MODULATION MATRIX",
+      "x": 5,
+      "y": 635,
+      "w": 495,
+      "h": 343
+    },
+    {
+      "id": "space-effects",
+      "kind": "effects",
+      "title": "EFFECTS RACK",
+      "x": 506,
+      "y": 635,
+      "w": 524,
+      "h": 343,
+      "variant": "vertical"
+    },
+    {
+      "id": "space-macros",
+      "kind": "macros",
+      "title": "MACROS",
+      "x": 1036,
+      "y": 635,
+      "w": 283,
+      "h": 343
+    },
+    {
+      "id": "space-meters",
+      "kind": "output",
+      "title": "METERS / MASTER",
+      "x": 1325,
+      "y": 635,
+      "w": 253,
+      "h": 151
+    },
+    {
+      "id": "space-info",
+      "kind": "scene",
+      "title": "SCENE CONTROLS",
+      "x": 1325,
+      "y": 794,
+      "w": 253,
+      "h": 184
+    }
+  ],
+  "controls": [
+    {
+      "id": "space-scene-mode",
+      "binding": "scene.mode",
+      "x": 276,
+      "y": 108,
+      "w": 142,
+      "h": 27,
+      "kind": "menu",
+      "label": "Scene mode"
+    },
+    {
+      "id": "space-poly-mode",
+      "binding": "scene.polymode",
+      "x": 435,
+      "y": 108,
+      "w": 146,
+      "h": 27,
+      "kind": "menu",
+      "label": "Voice mode"
+    },
+    {
+      "id": "space-voices",
+      "binding": "scene.polylimit",
+      "x": 600,
+      "y": 92,
+      "w": 110,
+      "h": 55,
+      "kind": "horizontal",
+      "label": "Voices"
+    },
+    {
+      "id": "space-glide",
+      "binding": "scene.portamento",
+      "x": 736,
+      "y": 92,
+      "w": 152,
+      "h": 55,
+      "kind": "horizontal",
+      "label": "Glide"
+    },
+    {
+      "id": "space-scene-pitch",
+      "binding": "scene.pitch",
+      "x": 912,
+      "y": 92,
+      "w": 145,
+      "h": 55,
+      "kind": "horizontal",
+      "label": "Scene pitch"
+    },
+    {
+      "id": "space-scene-width",
+      "binding": "scene.width",
+      "x": 1080,
+      "y": 92,
+      "w": 145,
+      "h": 55,
+      "kind": "horizontal",
+      "label": "Width"
+    },
+    {
+      "id": "space-waveshaper-drive",
+      "binding": "filter.drive",
+      "x": 1250,
+      "y": 92,
+      "w": 141,
+      "h": 55,
+      "kind": "horizontal",
+      "label": "Waveshaper drive"
+    },
+    {
+      "id": "space-scene-level",
+      "binding": "scene.volume",
+      "x": 1413,
+      "y": 92,
+      "w": 145,
+      "h": 55,
+      "kind": "horizontal",
+      "label": "Scene output"
+    },
+    {
+      "id": "space-osc1-type",
+      "binding": "osc1.type",
+      "x": 390,
+      "y": 165,
+      "w": 131,
+      "h": 23,
+      "kind": "menu",
+      "label": "Oscillator 1 algorithm"
+    },
+    {
+      "id": "space-osc1-solo",
+      "binding": "osc1.solo",
+      "x": 533,
+      "y": 230,
+      "w": 22,
+      "h": 24,
+      "kind": "toggle",
+      "label": "S"
+    },
+    {
+      "id": "space-osc1-mute",
+      "binding": "osc1.mute",
+      "x": 533,
+      "y": 264,
+      "w": 22,
+      "h": 24,
+      "kind": "toggle",
+      "label": "M"
+    },
+    {
+      "id": "space-osc1-parameter0",
+      "binding": "osc1.pitch",
+      "x": 266,
+      "y": 325,
+      "w": 47,
+      "h": 81,
+      "kind": "knob",
+      "label": "Pitch"
+    },
+    {
+      "id": "space-osc1-parameter1",
+      "binding": "osc1.param0",
+      "x": 315,
+      "y": 325,
+      "w": 47,
+      "h": 81,
+      "kind": "knob"
+    },
+    {
+      "id": "space-osc1-parameter2",
+      "binding": "osc1.param1",
+      "x": 364,
+      "y": 325,
+      "w": 47,
+      "h": 81,
+      "kind": "knob"
+    },
+    {
+      "id": "space-osc1-parameter3",
+      "binding": "osc1.param2",
+      "x": 413,
+      "y": 325,
+      "w": 47,
+      "h": 81,
+      "kind": "knob"
+    },
+    {
+      "id": "space-osc1-parameter4",
+      "binding": "osc1.param3",
+      "x": 462,
+      "y": 325,
+      "w": 47,
+      "h": 81,
+      "kind": "knob"
+    },
+    {
+      "id": "space-osc1-parameter5",
+      "binding": "osc1.param4",
+      "x": 511,
+      "y": 325,
+      "w": 47,
+      "h": 81,
+      "kind": "knob"
+    },
+    {
+      "id": "space-osc2-type",
+      "binding": "osc2.type",
+      "x": 704,
+      "y": 165,
+      "w": 131,
+      "h": 23,
+      "kind": "menu",
+      "label": "Oscillator 2 algorithm"
+    },
+    {
+      "id": "space-osc2-solo",
+      "binding": "osc2.solo",
+      "x": 847,
+      "y": 230,
+      "w": 22,
+      "h": 24,
+      "kind": "toggle",
+      "label": "S"
+    },
+    {
+      "id": "space-osc2-mute",
+      "binding": "osc2.mute",
+      "x": 847,
+      "y": 264,
+      "w": 22,
+      "h": 24,
+      "kind": "toggle",
+      "label": "M"
+    },
+    {
+      "id": "space-osc2-parameter0",
+      "binding": "osc2.pitch",
+      "x": 580,
+      "y": 325,
+      "w": 47,
+      "h": 81,
+      "kind": "knob",
+      "label": "Pitch"
+    },
+    {
+      "id": "space-osc2-parameter1",
+      "binding": "osc2.param0",
+      "x": 629,
+      "y": 325,
+      "w": 47,
+      "h": 81,
+      "kind": "knob"
+    },
+    {
+      "id": "space-osc2-parameter2",
+      "binding": "osc2.param1",
+      "x": 678,
+      "y": 325,
+      "w": 47,
+      "h": 81,
+      "kind": "knob"
+    },
+    {
+      "id": "space-osc2-parameter3",
+      "binding": "osc2.param2",
+      "x": 727,
+      "y": 325,
+      "w": 47,
+      "h": 81,
+      "kind": "knob"
+    },
+    {
+      "id": "space-osc2-parameter4",
+      "binding": "osc2.param3",
+      "x": 776,
+      "y": 325,
+      "w": 47,
+      "h": 81,
+      "kind": "knob"
+    },
+    {
+      "id": "space-osc2-parameter5",
+      "binding": "osc2.param4",
+      "x": 825,
+      "y": 325,
+      "w": 47,
+      "h": 81,
+      "kind": "knob"
+    },
+    {
+      "id": "space-osc3-type",
+      "binding": "osc3.type",
+      "x": 1016,
+      "y": 165,
+      "w": 131,
+      "h": 23,
+      "kind": "menu",
+      "label": "Oscillator 3 algorithm"
+    },
+    {
+      "id": "space-osc3-solo",
+      "binding": "osc3.solo",
+      "x": 1159,
+      "y": 230,
+      "w": 22,
+      "h": 24,
+      "kind": "toggle",
+      "label": "S"
+    },
+    {
+      "id": "space-osc3-mute",
+      "binding": "osc3.mute",
+      "x": 1159,
+      "y": 264,
+      "w": 22,
+      "h": 24,
+      "kind": "toggle",
+      "label": "M"
+    },
+    {
+      "id": "space-osc3-parameter0",
+      "binding": "osc3.pitch",
+      "x": 892,
+      "y": 325,
+      "w": 47,
+      "h": 81,
+      "kind": "knob",
+      "label": "Pitch"
+    },
+    {
+      "id": "space-osc3-parameter1",
+      "binding": "osc3.param0",
+      "x": 941,
+      "y": 325,
+      "w": 47,
+      "h": 81,
+      "kind": "knob"
+    },
+    {
+      "id": "space-osc3-parameter2",
+      "binding": "osc3.param1",
+      "x": 990,
+      "y": 325,
+      "w": 47,
+      "h": 81,
+      "kind": "knob"
+    },
+    {
+      "id": "space-osc3-parameter3",
+      "binding": "osc3.param2",
+      "x": 1039,
+      "y": 325,
+      "w": 47,
+      "h": 81,
+      "kind": "knob"
+    },
+    {
+      "id": "space-osc3-parameter4",
+      "binding": "osc3.param3",
+      "x": 1088,
+      "y": 325,
+      "w": 47,
+      "h": 81,
+      "kind": "knob"
+    },
+    {
+      "id": "space-osc3-parameter5",
+      "binding": "osc3.param4",
+      "x": 1137,
+      "y": 325,
+      "w": 47,
+      "h": 81,
+      "kind": "knob"
+    },
+    {
+      "id": "space-filter1-type",
+      "binding": "filter1.type",
+      "x": 1324,
+      "y": 164,
+      "w": 242,
+      "h": 23,
+      "kind": "menu",
+      "label": "Filter 1 type"
+    },
+    {
+      "id": "space-filter1-cutoff",
+      "binding": "filter1.cutoff",
+      "x": 1447,
+      "y": 194,
+      "w": 57,
+      "h": 82,
+      "kind": "knob",
+      "label": "Cutoff"
+    },
+    {
+      "id": "space-filter1-resonance",
+      "binding": "filter1.resonance",
+      "x": 1510,
+      "y": 194,
+      "w": 57,
+      "h": 82,
+      "kind": "knob",
+      "label": "Reso"
+    },
+    {
+      "id": "space-filter2-type",
+      "binding": "filter2.type",
+      "x": 1324,
+      "y": 293,
+      "w": 242,
+      "h": 23,
+      "kind": "menu",
+      "label": "Filter 2 type"
+    },
+    {
+      "id": "space-filter2-cutoff",
+      "binding": "filter2.cutoff",
+      "x": 1447,
+      "y": 323,
+      "w": 57,
+      "h": 82,
+      "kind": "knob",
+      "label": "Cutoff"
+    },
+    {
+      "id": "space-filter2-resonance",
+      "binding": "filter2.resonance",
+      "x": 1510,
+      "y": 323,
+      "w": 57,
+      "h": 82,
+      "kind": "knob",
+      "label": "Reso"
+    },
+    {
+      "id": "space-mixer-osc1",
+      "binding": "osc1.level",
+      "x": 270,
+      "y": 455,
+      "w": 45,
+      "h": 154,
+      "kind": "fader",
+      "label": "OSC 1"
+    },
+    {
+      "id": "space-mixer-osc2",
+      "binding": "osc2.level",
+      "x": 325,
+      "y": 455,
+      "w": 45,
+      "h": 154,
+      "kind": "fader",
+      "label": "OSC 2"
+    },
+    {
+      "id": "space-mixer-osc3",
+      "binding": "osc3.level",
+      "x": 380,
+      "y": 455,
+      "w": 45,
+      "h": 154,
+      "kind": "fader",
+      "label": "OSC 3"
+    },
+    {
+      "id": "space-mixer-noise",
+      "binding": "noise.level",
+      "x": 448,
+      "y": 452,
+      "w": 58,
+      "h": 78,
+      "kind": "knob",
+      "label": "Noise"
+    },
+    {
+      "id": "space-mixer-ring",
+      "binding": "ring12.level",
+      "x": 448,
+      "y": 537,
+      "w": 58,
+      "h": 78,
+      "kind": "knob",
+      "label": "Ring 1×2"
+    },
+    {
+      "id": "space-env1-attack",
+      "binding": "env1.attack",
+      "x": 528,
+      "y": 456,
+      "w": 35,
+      "h": 155,
+      "kind": "fader",
+      "label": "A"
+    },
+    {
+      "id": "space-env1-decay",
+      "binding": "env1.decay",
+      "x": 567,
+      "y": 456,
+      "w": 35,
+      "h": 155,
+      "kind": "fader",
+      "label": "D"
+    },
+    {
+      "id": "space-env1-sustain",
+      "binding": "env1.sustain",
+      "x": 606,
+      "y": 456,
+      "w": 35,
+      "h": 155,
+      "kind": "fader",
+      "label": "S"
+    },
+    {
+      "id": "space-env1-release",
+      "binding": "env1.release",
+      "x": 645,
+      "y": 456,
+      "w": 35,
+      "h": 155,
+      "kind": "fader",
+      "label": "R"
+    },
+    {
+      "id": "space-env2-attack",
+      "binding": "env2.attack",
+      "x": 706,
+      "y": 456,
+      "w": 35,
+      "h": 155,
+      "kind": "fader",
+      "label": "A"
+    },
+    {
+      "id": "space-env2-decay",
+      "binding": "env2.decay",
+      "x": 745,
+      "y": 456,
+      "w": 35,
+      "h": 155,
+      "kind": "fader",
+      "label": "D"
+    },
+    {
+      "id": "space-env2-sustain",
+      "binding": "env2.sustain",
+      "x": 784,
+      "y": 456,
+      "w": 35,
+      "h": 155,
+      "kind": "fader",
+      "label": "S"
+    },
+    {
+      "id": "space-env2-release",
+      "binding": "env2.release",
+      "x": 823,
+      "y": 456,
+      "w": 35,
+      "h": 155,
+      "kind": "fader",
+      "label": "R"
+    },
+    {
+      "id": "space-lfo3-attack",
+      "binding": "lfo3.attack",
+      "x": 886,
+      "y": 456,
+      "w": 35,
+      "h": 155,
+      "kind": "fader",
+      "label": "A"
+    },
+    {
+      "id": "space-lfo3-decay",
+      "binding": "lfo3.decay",
+      "x": 925,
+      "y": 456,
+      "w": 35,
+      "h": 155,
+      "kind": "fader",
+      "label": "D"
+    },
+    {
+      "id": "space-lfo3-sustain",
+      "binding": "lfo3.sustain",
+      "x": 964,
+      "y": 456,
+      "w": 35,
+      "h": 155,
+      "kind": "fader",
+      "label": "S"
+    },
+    {
+      "id": "space-lfo3-release",
+      "binding": "lfo3.release",
+      "x": 1003,
+      "y": 456,
+      "w": 35,
+      "h": 155,
+      "kind": "fader",
+      "label": "R"
+    },
+    {
+      "id": "space-lfo1-shape",
+      "binding": "lfo1.shape",
+      "x": 1067,
+      "y": 511,
+      "w": 148,
+      "h": 23,
+      "kind": "menu",
+      "label": "LFO 1 shape"
+    },
+    {
+      "id": "space-lfo1-rate",
+      "binding": "lfo1.rate",
+      "x": 1064,
+      "y": 540,
+      "w": 50,
+      "h": 79,
+      "kind": "knob",
+      "label": "Rate"
+    },
+    {
+      "id": "space-lfo1-phase",
+      "binding": "lfo1.phase",
+      "x": 1117,
+      "y": 540,
+      "w": 50,
+      "h": 79,
+      "kind": "knob",
+      "label": "Phase"
+    },
+    {
+      "id": "space-lfo1-magnitude",
+      "binding": "lfo1.magnitude",
+      "x": 1170,
+      "y": 540,
+      "w": 50,
+      "h": 79,
+      "kind": "knob",
+      "label": "Amount"
+    },
+    {
+      "id": "space-lfo2-shape",
+      "binding": "lfo2.shape",
+      "x": 1243,
+      "y": 511,
+      "w": 148,
+      "h": 23,
+      "kind": "menu",
+      "label": "LFO 2 shape"
+    },
+    {
+      "id": "space-lfo2-rate",
+      "binding": "lfo2.rate",
+      "x": 1240,
+      "y": 540,
+      "w": 50,
+      "h": 79,
+      "kind": "knob",
+      "label": "Rate"
+    },
+    {
+      "id": "space-lfo2-phase",
+      "binding": "lfo2.phase",
+      "x": 1293,
+      "y": 540,
+      "w": 50,
+      "h": 79,
+      "kind": "knob",
+      "label": "Phase"
+    },
+    {
+      "id": "space-lfo2-magnitude",
+      "binding": "lfo2.magnitude",
+      "x": 1346,
+      "y": 540,
+      "w": 50,
+      "h": 79,
+      "kind": "knob",
+      "label": "Amount"
+    },
+    {
+      "id": "space-lfo3-shape",
+      "binding": "lfo3.shape",
+      "x": 1417,
+      "y": 511,
+      "w": 148,
+      "h": 23,
+      "kind": "menu",
+      "label": "LFO 3 shape"
+    },
+    {
+      "id": "space-lfo3-rate",
+      "binding": "lfo3.rate",
+      "x": 1414,
+      "y": 540,
+      "w": 50,
+      "h": 79,
+      "kind": "knob",
+      "label": "Rate"
+    },
+    {
+      "id": "space-lfo3-phase",
+      "binding": "lfo3.phase",
+      "x": 1467,
+      "y": 540,
+      "w": 50,
+      "h": 79,
+      "kind": "knob",
+      "label": "Phase"
+    },
+    {
+      "id": "space-lfo3-magnitude",
+      "binding": "lfo3.magnitude",
+      "x": 1520,
+      "y": 540,
+      "w": 50,
+      "h": 79,
+      "kind": "knob",
+      "label": "Amount"
+    },
+    {
+      "id": "space-fx1-type",
+      "binding": "fx1.type",
+      "x": 520,
+      "y": 681,
+      "w": 126,
+      "h": 28,
+      "kind": "menu",
+      "label": "FX slot 1"
+    },
+    {
+      "id": "space-macro1",
+      "binding": "macro1",
+      "x": 1045,
+      "y": 681,
+      "w": 63,
+      "h": 113,
+      "kind": "knob",
+      "label": "Macro 1"
+    },
+    {
+      "id": "space-fx2-type",
+      "binding": "fx2.type",
+      "x": 520,
+      "y": 715,
+      "w": 126,
+      "h": 28,
+      "kind": "menu",
+      "label": "FX slot 2"
+    },
+    {
+      "id": "space-macro2",
+      "binding": "macro2",
+      "x": 1112,
+      "y": 681,
+      "w": 63,
+      "h": 113,
+      "kind": "knob",
+      "label": "Macro 2"
+    },
+    {
+      "id": "space-fx3-type",
+      "binding": "fx3.type",
+      "x": 520,
+      "y": 749,
+      "w": 126,
+      "h": 28,
+      "kind": "menu",
+      "label": "FX slot 3"
+    },
+    {
+      "id": "space-macro3",
+      "binding": "macro3",
+      "x": 1179,
+      "y": 681,
+      "w": 63,
+      "h": 113,
+      "kind": "knob",
+      "label": "Macro 3"
+    },
+    {
+      "id": "space-fx4-type",
+      "binding": "fx4.type",
+      "x": 520,
+      "y": 783,
+      "w": 126,
+      "h": 28,
+      "kind": "menu",
+      "label": "FX slot 4"
+    },
+    {
+      "id": "space-macro4",
+      "binding": "macro4",
+      "x": 1246,
+      "y": 681,
+      "w": 63,
+      "h": 113,
+      "kind": "knob",
+      "label": "Macro 4"
+    },
+    {
+      "id": "space-fx5-type",
+      "binding": "fx5.type",
+      "x": 520,
+      "y": 817,
+      "w": 126,
+      "h": 28,
+      "kind": "menu",
+      "label": "FX slot 5"
+    },
+    {
+      "id": "space-macro5",
+      "binding": "macro5",
+      "x": 1045,
+      "y": 811,
+      "w": 63,
+      "h": 113,
+      "kind": "knob",
+      "label": "Macro 5"
+    },
+    {
+      "id": "space-fx6-type",
+      "binding": "fx6.type",
+      "x": 520,
+      "y": 851,
+      "w": 126,
+      "h": 28,
+      "kind": "menu",
+      "label": "FX slot 6"
+    },
+    {
+      "id": "space-macro6",
+      "binding": "macro6",
+      "x": 1112,
+      "y": 811,
+      "w": 63,
+      "h": 113,
+      "kind": "knob",
+      "label": "Macro 6"
+    },
+    {
+      "id": "space-fx7-type",
+      "binding": "fx7.type",
+      "x": 520,
+      "y": 885,
+      "w": 126,
+      "h": 28,
+      "kind": "menu",
+      "label": "FX slot 7"
+    },
+    {
+      "id": "space-macro7",
+      "binding": "macro7",
+      "x": 1179,
+      "y": 811,
+      "w": 63,
+      "h": 113,
+      "kind": "knob",
+      "label": "Macro 7"
+    },
+    {
+      "id": "space-fx8-type",
+      "binding": "fx8.type",
+      "x": 520,
+      "y": 919,
+      "w": 126,
+      "h": 28,
+      "kind": "menu",
+      "label": "FX slot 8"
+    },
+    {
+      "id": "space-macro8",
+      "binding": "macro8",
+      "x": 1246,
+      "y": 811,
+      "w": 63,
+      "h": 113,
+      "kind": "knob",
+      "label": "Macro 8"
+    },
+    {
+      "id": "space-fx1-param0",
+      "binding": "fx1.param0",
+      "x": 666,
+      "y": 727,
+      "w": 82,
+      "h": 95,
+      "kind": "knob"
+    },
+    {
+      "id": "space-fx1-param1",
+      "binding": "fx1.param1",
+      "x": 755,
+      "y": 727,
+      "w": 82,
+      "h": 95,
+      "kind": "knob"
+    },
+    {
+      "id": "space-fx1-param2",
+      "binding": "fx1.param2",
+      "x": 844,
+      "y": 727,
+      "w": 82,
+      "h": 95,
+      "kind": "knob"
+    },
+    {
+      "id": "space-fx1-param3",
+      "binding": "fx1.param3",
+      "x": 933,
+      "y": 727,
+      "w": 82,
+      "h": 95,
+      "kind": "knob"
+    },
+    {
+      "id": "space-fx1-param4",
+      "binding": "fx1.param4",
+      "x": 666,
+      "y": 835,
+      "w": 82,
+      "h": 95,
+      "kind": "knob"
+    },
+    {
+      "id": "space-fx1-param5",
+      "binding": "fx1.param5",
+      "x": 755,
+      "y": 835,
+      "w": 82,
+      "h": 95,
+      "kind": "knob"
+    },
+    {
+      "id": "space-fx1-param6",
+      "binding": "fx1.param6",
+      "x": 844,
+      "y": 835,
+      "w": 82,
+      "h": 95,
+      "kind": "knob"
+    },
+    {
+      "id": "space-fx1-param7",
+      "binding": "fx1.param7",
+      "x": 933,
+      "y": 835,
+      "w": 82,
+      "h": 95,
+      "kind": "knob"
+    },
+    {
+      "id": "space-master-output",
+      "binding": "master.volume",
+      "x": 1340,
+      "y": 674,
+      "w": 117,
+      "h": 102,
+      "kind": "knob",
+      "label": "Master"
+    },
+    {
+      "id": "space-scene-pan",
+      "binding": "scene.pan",
+      "x": 1336,
+      "y": 843,
+      "w": 72,
+      "h": 114,
+      "kind": "knob",
+      "label": "Pan"
+    },
+    {
+      "id": "space-scene-octave",
+      "binding": "scene.octave",
+      "x": 1414,
+      "y": 843,
+      "w": 72,
+      "h": 114,
+      "kind": "knob",
+      "label": "Octave"
+    },
+    {
+      "id": "space-scene-drift",
+      "binding": "scene.drift",
+      "x": 1492,
+      "y": 843,
+      "w": 72,
+      "h": 114,
+      "kind": "knob",
+      "label": "Drift"
+    }
+  ],
+  "adaptations": [
+    "This is a live native reconstruction of the supplied concept, not a pixel-identical raster overlay. Bronze/olive material and fine grain are procedural vector treatment rather than the reference's photographic brushed-metal texture.",
+    "All three oscillators have independent actual algorithm menus and parameter controls. Algorithm names and parameter labels follow the current Surge engine, not nonexistent generic Sample or Granular modes.",
+    "Surge has two dedicated envelope generators. The concept's third ADSR bank is explicitly labeled LFO 3 ENVELOPE and edits LFO 3's actual envelope parameters; it is not a third independent EG.",
+    "All eight actual macro controls are presented in two rows of four. The concept exposes only four and leaves the lower macro panel empty.",
+    "Eight front-panel effect type menus and the first slot's dynamic parameters are exposed. All sixteen native effect slots remain available through Full FX editor.",
+    "The original editor remains available for complete preset browsing, modulation editing, advanced oscillator settings and host functions. Browser and routing displays must not be mistaken for new engine capabilities.",
+    "Displayed controls and meters show the loaded patch's real values, so they intentionally do not retain the fabricated readouts or apparent activity shown in the reference.",
+    "Filter plots are labeled response previews. The real shared waveshaper drive appears in the global strip; no nonexistent per-filter drive parameters are invented."
+  ]
+}

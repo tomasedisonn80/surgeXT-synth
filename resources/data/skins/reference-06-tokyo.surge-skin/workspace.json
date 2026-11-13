@@ -1,0 +1,1209 @@
+{
+  "schema": 1,
+  "id": "06-tokyo-industrial",
+  "name": "06 Tokyo Industrial",
+  "reference": "06_Tokyo_Industrial.png",
+  "width": 1586,
+  "height": 992,
+  "style": "tokyo",
+  "font": "sans",
+  "headerHeight": 70,
+  "radius": 5,
+  "glow": 0.08,
+  "palette": {
+    "background": "#111416",
+    "panel": "#202426",
+    "border": "#62696B",
+    "text": "#E8ECEE",
+    "muted": "#B1BBBE",
+    "accent": "#EE2B2B",
+    "secondary": "#21D9E8",
+    "display": "#050D10",
+    "knob": "#242B2D",
+    "red": "#EE2B2B",
+    "yellow": "#FFAD32",
+    "blue": "#1C8FA2"
+  },
+  "panels": [
+    {
+      "id": "tokyo-browser",
+      "kind": "browser",
+      "title": "PRESETS",
+      "x": 7,
+      "y": 75,
+      "w": 260,
+      "h": 765
+    },
+    {
+      "id": "tokyo-navigation",
+      "kind": "tabs",
+      "title": "SYNTH / SCENE",
+      "x": 277,
+      "y": 76,
+      "w": 609,
+      "h": 48
+    },
+    {
+      "id": "tokyo-routing",
+      "kind": "routing",
+      "title": "",
+      "x": 894,
+      "y": 76,
+      "w": 684,
+      "h": 48,
+      "variant": "compact",
+      "plot": [
+        1092,
+        86,
+        468,
+        28
+      ]
+    },
+    {
+      "id": "tokyo-oscillator-1",
+      "kind": "oscillator",
+      "title": "OSC 1",
+      "x": 277,
+      "y": 127,
+      "w": 280,
+      "h": 298,
+      "index": 1,
+      "variant": "terrain",
+      "plot": [
+        287,
+        164,
+        260,
+        100
+      ]
+    },
+    {
+      "id": "tokyo-oscillator-2",
+      "kind": "oscillator",
+      "title": "OSC 2",
+      "x": 562,
+      "y": 127,
+      "w": 255,
+      "h": 298,
+      "index": 2,
+      "variant": "compact",
+      "plot": [
+        572,
+        164,
+        235,
+        100
+      ]
+    },
+    {
+      "id": "tokyo-oscillator-3",
+      "kind": "oscillator",
+      "title": "OSC 3",
+      "x": 822,
+      "y": 127,
+      "w": 265,
+      "h": 298,
+      "index": 3,
+      "variant": "compact",
+      "plot": [
+        832,
+        164,
+        245,
+        100
+      ]
+    },
+    {
+      "id": "tokyo-filter-1",
+      "kind": "filter",
+      "title": "FILTER A",
+      "x": 1092,
+      "y": 127,
+      "w": 486,
+      "h": 147,
+      "index": 1,
+      "variant": "horizontal",
+      "plot": [
+        1104,
+        164,
+        260,
+        98
+      ]
+    },
+    {
+      "id": "tokyo-filter-2",
+      "kind": "filter",
+      "title": "FILTER B",
+      "x": 1092,
+      "y": 280,
+      "w": 486,
+      "h": 145,
+      "index": 2,
+      "variant": "horizontal",
+      "plot": [
+        1104,
+        317,
+        260,
+        98
+      ]
+    },
+    {
+      "id": "tokyo-mixer",
+      "kind": "mixer",
+      "title": "OSC MIXER",
+      "x": 277,
+      "y": 438,
+      "w": 316,
+      "h": 190,
+      "variant": "faders"
+    },
+    {
+      "id": "tokyo-env1",
+      "kind": "envelope",
+      "title": "ENV 1 (AMP)",
+      "x": 601,
+      "y": 438,
+      "w": 320,
+      "h": 190,
+      "index": 1,
+      "plot": [
+        613,
+        477,
+        296,
+        65
+      ]
+    },
+    {
+      "id": "tokyo-env2",
+      "kind": "envelope",
+      "title": "ENV 2 (FILTER)",
+      "x": 927,
+      "y": 438,
+      "w": 314,
+      "h": 190,
+      "index": 2,
+      "plot": [
+        939,
+        477,
+        290,
+        65
+      ]
+    },
+    {
+      "id": "tokyo-lfo3-envelope",
+      "kind": "lfo",
+      "title": "LFO 3 / ENVELOPE",
+      "x": 1247,
+      "y": 438,
+      "w": 331,
+      "h": 190,
+      "index": 3,
+      "plot": [
+        1259,
+        477,
+        307,
+        65
+      ]
+    },
+    {
+      "id": "tokyo-lfo1",
+      "kind": "lfo",
+      "title": "LFO 1",
+      "x": 277,
+      "y": 635,
+      "w": 316,
+      "h": 203,
+      "index": 1,
+      "plot": [
+        289,
+        731,
+        83,
+        61
+      ]
+    },
+    {
+      "id": "tokyo-matrix",
+      "kind": "matrix",
+      "title": "MOD MATRIX",
+      "x": 601,
+      "y": 635,
+      "w": 685,
+      "h": 203,
+      "variant": "horizontal"
+    },
+    {
+      "id": "tokyo-effects",
+      "kind": "effects",
+      "title": "FX RACK",
+      "x": 1292,
+      "y": 635,
+      "w": 286,
+      "h": 203,
+      "variant": "vertical"
+    },
+    {
+      "id": "tokyo-macros",
+      "kind": "macros",
+      "title": "MACROS",
+      "x": 7,
+      "y": 851,
+      "w": 753,
+      "h": 132,
+      "variant": "horizontal"
+    },
+    {
+      "id": "tokyo-pitchfm",
+      "kind": "scene",
+      "title": "PITCH / FM",
+      "x": 769,
+      "y": 851,
+      "w": 154,
+      "h": 132
+    },
+    {
+      "id": "tokyo-globals",
+      "kind": "scene",
+      "title": "VOICE / SCENE",
+      "x": 932,
+      "y": 851,
+      "w": 646,
+      "h": 132
+    }
+  ],
+  "controls": [
+    {
+      "id": "tokyo-scene-mode",
+      "binding": "scene.mode",
+      "x": 435,
+      "y": 88,
+      "w": 120,
+      "h": 24,
+      "kind": "menu",
+      "label": "Scene mode"
+    },
+    {
+      "id": "tokyo-voice-mode",
+      "binding": "scene.polymode",
+      "x": 564,
+      "y": 88,
+      "w": 120,
+      "h": 24,
+      "kind": "menu",
+      "label": "Voice mode"
+    },
+    {
+      "id": "tokyo-voice-limit",
+      "binding": "scene.polylimit",
+      "x": 694,
+      "y": 88,
+      "w": 85,
+      "h": 24,
+      "kind": "menu",
+      "label": "Voices"
+    },
+    {
+      "id": "tokyo-filter-routing",
+      "binding": "routing",
+      "x": 905,
+      "y": 87,
+      "w": 175,
+      "h": 24,
+      "kind": "menu",
+      "label": "Filter routing"
+    },
+    {
+      "id": "tokyo-osc1-type",
+      "binding": "osc1.type",
+      "x": 414,
+      "y": 135,
+      "w": 129,
+      "h": 22,
+      "kind": "menu",
+      "label": "Oscillator 1 algorithm"
+    },
+    {
+      "id": "tokyo-osc1-pitch",
+      "binding": "osc1.pitch",
+      "x": 286,
+      "y": 302,
+      "w": 50,
+      "h": 85,
+      "label": "PITCH"
+    },
+    {
+      "id": "tokyo-osc1-param0",
+      "binding": "osc1.param0",
+      "x": 338,
+      "y": 302,
+      "w": 50,
+      "h": 85
+    },
+    {
+      "id": "tokyo-osc1-param1",
+      "binding": "osc1.param1",
+      "x": 390,
+      "y": 302,
+      "w": 50,
+      "h": 85
+    },
+    {
+      "id": "tokyo-osc1-param2",
+      "binding": "osc1.param2",
+      "x": 442,
+      "y": 302,
+      "w": 50,
+      "h": 85
+    },
+    {
+      "id": "tokyo-osc1-param3",
+      "binding": "osc1.param3",
+      "x": 494,
+      "y": 302,
+      "w": 50,
+      "h": 85
+    },
+    {
+      "id": "tokyo-osc1-octave",
+      "binding": "osc1.octave",
+      "x": 287,
+      "y": 394,
+      "w": 50,
+      "h": 22,
+      "kind": "menu",
+      "label": "OCTAVE"
+    },
+    {
+      "id": "tokyo-osc1-keytrack",
+      "binding": "osc1.keytrack",
+      "x": 345,
+      "y": 394,
+      "w": 60,
+      "h": 22,
+      "kind": "toggle",
+      "label": "KEY"
+    },
+    {
+      "id": "tokyo-osc1-mute",
+      "binding": "osc1.mute",
+      "x": 413,
+      "y": 394,
+      "w": 45,
+      "h": 22,
+      "kind": "toggle",
+      "label": "M"
+    },
+    {
+      "id": "tokyo-osc1-solo",
+      "binding": "osc1.solo",
+      "x": 466,
+      "y": 394,
+      "w": 45,
+      "h": 22,
+      "kind": "toggle",
+      "label": "S"
+    },
+    {
+      "id": "tokyo-osc2-type",
+      "binding": "osc2.type",
+      "x": 687,
+      "y": 135,
+      "w": 117,
+      "h": 22,
+      "kind": "menu",
+      "label": "Oscillator 2 algorithm"
+    },
+    {
+      "id": "tokyo-osc2-pitch",
+      "binding": "osc2.pitch",
+      "x": 571,
+      "y": 302,
+      "w": 45,
+      "h": 85,
+      "label": "PITCH"
+    },
+    {
+      "id": "tokyo-osc2-param0",
+      "binding": "osc2.param0",
+      "x": 618,
+      "y": 302,
+      "w": 45,
+      "h": 85
+    },
+    {
+      "id": "tokyo-osc2-param1",
+      "binding": "osc2.param1",
+      "x": 665,
+      "y": 302,
+      "w": 45,
+      "h": 85
+    },
+    {
+      "id": "tokyo-osc2-param2",
+      "binding": "osc2.param2",
+      "x": 712,
+      "y": 302,
+      "w": 45,
+      "h": 85
+    },
+    {
+      "id": "tokyo-osc2-param3",
+      "binding": "osc2.param3",
+      "x": 759,
+      "y": 302,
+      "w": 45,
+      "h": 85
+    },
+    {
+      "id": "tokyo-osc2-octave",
+      "binding": "osc2.octave",
+      "x": 572,
+      "y": 394,
+      "w": 50,
+      "h": 22,
+      "kind": "menu",
+      "label": "OCTAVE"
+    },
+    {
+      "id": "tokyo-osc2-keytrack",
+      "binding": "osc2.keytrack",
+      "x": 630,
+      "y": 394,
+      "w": 60,
+      "h": 22,
+      "kind": "toggle",
+      "label": "KEY"
+    },
+    {
+      "id": "tokyo-osc2-mute",
+      "binding": "osc2.mute",
+      "x": 698,
+      "y": 394,
+      "w": 45,
+      "h": 22,
+      "kind": "toggle",
+      "label": "M"
+    },
+    {
+      "id": "tokyo-osc2-solo",
+      "binding": "osc2.solo",
+      "x": 751,
+      "y": 394,
+      "w": 45,
+      "h": 22,
+      "kind": "toggle",
+      "label": "S"
+    },
+    {
+      "id": "tokyo-osc3-type",
+      "binding": "osc3.type",
+      "x": 952,
+      "y": 135,
+      "w": 122,
+      "h": 22,
+      "kind": "menu",
+      "label": "Oscillator 3 algorithm"
+    },
+    {
+      "id": "tokyo-osc3-pitch",
+      "binding": "osc3.pitch",
+      "x": 831,
+      "y": 302,
+      "w": 47,
+      "h": 85,
+      "label": "PITCH"
+    },
+    {
+      "id": "tokyo-osc3-param0",
+      "binding": "osc3.param0",
+      "x": 880,
+      "y": 302,
+      "w": 47,
+      "h": 85
+    },
+    {
+      "id": "tokyo-osc3-param1",
+      "binding": "osc3.param1",
+      "x": 929,
+      "y": 302,
+      "w": 47,
+      "h": 85
+    },
+    {
+      "id": "tokyo-osc3-param2",
+      "binding": "osc3.param2",
+      "x": 978,
+      "y": 302,
+      "w": 47,
+      "h": 85
+    },
+    {
+      "id": "tokyo-osc3-param3",
+      "binding": "osc3.param3",
+      "x": 1027,
+      "y": 302,
+      "w": 47,
+      "h": 85
+    },
+    {
+      "id": "tokyo-osc3-octave",
+      "binding": "osc3.octave",
+      "x": 832,
+      "y": 394,
+      "w": 50,
+      "h": 22,
+      "kind": "menu",
+      "label": "OCTAVE"
+    },
+    {
+      "id": "tokyo-osc3-keytrack",
+      "binding": "osc3.keytrack",
+      "x": 890,
+      "y": 394,
+      "w": 60,
+      "h": 22,
+      "kind": "toggle",
+      "label": "KEY"
+    },
+    {
+      "id": "tokyo-osc3-mute",
+      "binding": "osc3.mute",
+      "x": 958,
+      "y": 394,
+      "w": 45,
+      "h": 22,
+      "kind": "toggle",
+      "label": "M"
+    },
+    {
+      "id": "tokyo-osc3-solo",
+      "binding": "osc3.solo",
+      "x": 1011,
+      "y": 394,
+      "w": 45,
+      "h": 22,
+      "kind": "toggle",
+      "label": "S"
+    },
+    {
+      "id": "tokyo-filter1-type",
+      "binding": "filter1.type",
+      "x": 1215,
+      "y": 135,
+      "w": 210,
+      "h": 22,
+      "kind": "menu",
+      "label": "Filter 1 type"
+    },
+    {
+      "id": "tokyo-filter1-subtype",
+      "binding": "filter1.subtype",
+      "x": 1435,
+      "y": 135,
+      "w": 134,
+      "h": 22,
+      "kind": "menu",
+      "label": "Filter 1 subtype"
+    },
+    {
+      "id": "tokyo-filter1-cutoff",
+      "binding": "filter1.cutoff",
+      "x": 1381,
+      "y": 174,
+      "w": 60,
+      "h": 88,
+      "label": "CUTOFF"
+    },
+    {
+      "id": "tokyo-filter1-resonance",
+      "binding": "filter1.resonance",
+      "x": 1446,
+      "y": 174,
+      "w": 60,
+      "h": 88,
+      "label": "RESO"
+    },
+    {
+      "id": "tokyo-filter1-third",
+      "binding": "filter.drive",
+      "x": 1511,
+      "y": 174,
+      "w": 60,
+      "h": 88,
+      "label": "WS DRIVE"
+    },
+    {
+      "id": "tokyo-filter2-type",
+      "binding": "filter2.type",
+      "x": 1215,
+      "y": 288,
+      "w": 210,
+      "h": 22,
+      "kind": "menu",
+      "label": "Filter 2 type"
+    },
+    {
+      "id": "tokyo-filter2-subtype",
+      "binding": "filter2.subtype",
+      "x": 1435,
+      "y": 288,
+      "w": 134,
+      "h": 22,
+      "kind": "menu",
+      "label": "Filter 2 subtype"
+    },
+    {
+      "id": "tokyo-filter2-cutoff",
+      "binding": "filter2.cutoff",
+      "x": 1381,
+      "y": 327,
+      "w": 60,
+      "h": 88,
+      "label": "CUTOFF"
+    },
+    {
+      "id": "tokyo-filter2-resonance",
+      "binding": "filter2.resonance",
+      "x": 1446,
+      "y": 327,
+      "w": 60,
+      "h": 88,
+      "label": "RESO"
+    },
+    {
+      "id": "tokyo-filter2-third",
+      "binding": "filter.balance",
+      "x": 1511,
+      "y": 327,
+      "w": 60,
+      "h": 88,
+      "label": "BALANCE"
+    },
+    {
+      "id": "tokyo-mixer-0",
+      "binding": "osc1.level",
+      "x": 291,
+      "y": 476,
+      "w": 41,
+      "h": 143,
+      "kind": "fader",
+      "label": "1"
+    },
+    {
+      "id": "tokyo-mixer-1",
+      "binding": "osc2.level",
+      "x": 348,
+      "y": 476,
+      "w": 41,
+      "h": 143,
+      "kind": "fader",
+      "label": "2"
+    },
+    {
+      "id": "tokyo-mixer-2",
+      "binding": "osc3.level",
+      "x": 405,
+      "y": 476,
+      "w": 41,
+      "h": 143,
+      "kind": "fader",
+      "label": "3"
+    },
+    {
+      "id": "tokyo-mixer-3",
+      "binding": "noise.level",
+      "x": 462,
+      "y": 476,
+      "w": 41,
+      "h": 143,
+      "kind": "fader",
+      "label": "NOISE"
+    },
+    {
+      "id": "tokyo-ring12",
+      "binding": "ring12.level",
+      "x": 534,
+      "y": 480,
+      "w": 50,
+      "h": 78,
+      "label": "RING"
+    },
+    {
+      "id": "tokyo-fm-mode",
+      "binding": "scene.fmmode",
+      "x": 529,
+      "y": 582,
+      "w": 57,
+      "h": 22,
+      "kind": "menu",
+      "label": "FM"
+    },
+    {
+      "id": "tokyo-env1-mode",
+      "binding": "env1.mode",
+      "x": 807,
+      "y": 446,
+      "w": 104,
+      "h": 22,
+      "kind": "menu",
+      "label": "Envelope mode"
+    },
+    {
+      "id": "tokyo-env1-attack",
+      "binding": "env1.attack",
+      "x": 618,
+      "y": 550,
+      "w": 60,
+      "h": 72,
+      "label": "A"
+    },
+    {
+      "id": "tokyo-env1-decay",
+      "binding": "env1.decay",
+      "x": 694,
+      "y": 550,
+      "w": 60,
+      "h": 72,
+      "label": "D"
+    },
+    {
+      "id": "tokyo-env1-sustain",
+      "binding": "env1.sustain",
+      "x": 770,
+      "y": 550,
+      "w": 60,
+      "h": 72,
+      "label": "S"
+    },
+    {
+      "id": "tokyo-env1-release",
+      "binding": "env1.release",
+      "x": 846,
+      "y": 550,
+      "w": 60,
+      "h": 72,
+      "label": "R"
+    },
+    {
+      "id": "tokyo-env2-mode",
+      "binding": "env2.mode",
+      "x": 1127,
+      "y": 446,
+      "w": 104,
+      "h": 22,
+      "kind": "menu",
+      "label": "Envelope mode"
+    },
+    {
+      "id": "tokyo-env2-attack",
+      "binding": "env2.attack",
+      "x": 944,
+      "y": 550,
+      "w": 60,
+      "h": 72,
+      "label": "A"
+    },
+    {
+      "id": "tokyo-env2-decay",
+      "binding": "env2.decay",
+      "x": 1020,
+      "y": 550,
+      "w": 60,
+      "h": 72,
+      "label": "D"
+    },
+    {
+      "id": "tokyo-env2-sustain",
+      "binding": "env2.sustain",
+      "x": 1096,
+      "y": 550,
+      "w": 60,
+      "h": 72,
+      "label": "S"
+    },
+    {
+      "id": "tokyo-env2-release",
+      "binding": "env2.release",
+      "x": 1172,
+      "y": 550,
+      "w": 60,
+      "h": 72,
+      "label": "R"
+    },
+    {
+      "id": "tokyo-lfo3-shape",
+      "binding": "lfo3.shape",
+      "x": 1454,
+      "y": 446,
+      "w": 114,
+      "h": 22,
+      "kind": "menu",
+      "label": "LFO 3 shape"
+    },
+    {
+      "id": "tokyo-lfo3-attack",
+      "binding": "lfo3.attack",
+      "x": 1264,
+      "y": 550,
+      "w": 62,
+      "h": 72,
+      "label": "A"
+    },
+    {
+      "id": "tokyo-lfo3-decay",
+      "binding": "lfo3.decay",
+      "x": 1342,
+      "y": 550,
+      "w": 62,
+      "h": 72,
+      "label": "D"
+    },
+    {
+      "id": "tokyo-lfo3-sustain",
+      "binding": "lfo3.sustain",
+      "x": 1420,
+      "y": 550,
+      "w": 62,
+      "h": 72,
+      "label": "S"
+    },
+    {
+      "id": "tokyo-lfo3-release",
+      "binding": "lfo3.release",
+      "x": 1498,
+      "y": 550,
+      "w": 62,
+      "h": 72,
+      "label": "R"
+    },
+    {
+      "id": "tokyo-lfo1-shape",
+      "binding": "lfo1.shape",
+      "x": 335,
+      "y": 682,
+      "w": 160,
+      "h": 24,
+      "kind": "menu",
+      "label": "LFO waveform"
+    },
+    {
+      "id": "tokyo-lfo1-rate",
+      "binding": "lfo1.rate",
+      "x": 380,
+      "y": 726,
+      "w": 49,
+      "h": 77,
+      "label": "RATE"
+    },
+    {
+      "id": "tokyo-lfo1-phase",
+      "binding": "lfo1.phase",
+      "x": 432,
+      "y": 726,
+      "w": 49,
+      "h": 77,
+      "label": "PHASE"
+    },
+    {
+      "id": "tokyo-lfo1-deform",
+      "binding": "lfo1.deform",
+      "x": 484,
+      "y": 726,
+      "w": 49,
+      "h": 77,
+      "label": "DEFORM"
+    },
+    {
+      "id": "tokyo-lfo1-delay",
+      "binding": "lfo1.delay",
+      "x": 536,
+      "y": 726,
+      "w": 49,
+      "h": 77,
+      "label": "DELAY"
+    },
+    {
+      "id": "tokyo-lfo1-mode",
+      "binding": "lfo1.trigmode",
+      "x": 459,
+      "y": 809,
+      "w": 123,
+      "h": 22,
+      "kind": "menu",
+      "label": "Trigger mode"
+    },
+    {
+      "id": "tokyo-lfo1-bipolar",
+      "binding": "lfo1.unipolar",
+      "x": 290,
+      "y": 809,
+      "w": 104,
+      "h": 22,
+      "kind": "toggle",
+      "label": "UNIPOLAR"
+    },
+    {
+      "id": "tokyo-fx1-type",
+      "binding": "fx1.type",
+      "x": 1340,
+      "y": 670,
+      "w": 225,
+      "h": 19,
+      "kind": "menu",
+      "label": "Effect 1 type"
+    },
+    {
+      "id": "tokyo-fx2-type",
+      "binding": "fx2.type",
+      "x": 1340,
+      "y": 690,
+      "w": 225,
+      "h": 19,
+      "kind": "menu",
+      "label": "Effect 2 type"
+    },
+    {
+      "id": "tokyo-fx3-type",
+      "binding": "fx3.type",
+      "x": 1340,
+      "y": 710,
+      "w": 225,
+      "h": 19,
+      "kind": "menu",
+      "label": "Effect 3 type"
+    },
+    {
+      "id": "tokyo-fx4-type",
+      "binding": "fx4.type",
+      "x": 1340,
+      "y": 730,
+      "w": 225,
+      "h": 19,
+      "kind": "menu",
+      "label": "Effect 4 type"
+    },
+    {
+      "id": "tokyo-fx5-type",
+      "binding": "fx5.type",
+      "x": 1340,
+      "y": 750,
+      "w": 225,
+      "h": 19,
+      "kind": "menu",
+      "label": "Effect 5 type"
+    },
+    {
+      "id": "tokyo-fx6-type",
+      "binding": "fx6.type",
+      "x": 1340,
+      "y": 770,
+      "w": 225,
+      "h": 19,
+      "kind": "menu",
+      "label": "Effect 6 type"
+    },
+    {
+      "id": "tokyo-fx7-type",
+      "binding": "fx7.type",
+      "x": 1340,
+      "y": 790,
+      "w": 225,
+      "h": 19,
+      "kind": "menu",
+      "label": "Effect 7 type"
+    },
+    {
+      "id": "tokyo-fx8-type",
+      "binding": "fx8.type",
+      "x": 1340,
+      "y": 810,
+      "w": 225,
+      "h": 19,
+      "kind": "menu",
+      "label": "Effect 8 type"
+    },
+    {
+      "id": "tokyo-macro1",
+      "binding": "macro1",
+      "x": 23,
+      "y": 885,
+      "w": 78,
+      "h": 92,
+      "label": "MACRO 1"
+    },
+    {
+      "id": "tokyo-macro2",
+      "binding": "macro2",
+      "x": 114,
+      "y": 885,
+      "w": 78,
+      "h": 92,
+      "label": "MACRO 2"
+    },
+    {
+      "id": "tokyo-macro3",
+      "binding": "macro3",
+      "x": 205,
+      "y": 885,
+      "w": 78,
+      "h": 92,
+      "label": "MACRO 3"
+    },
+    {
+      "id": "tokyo-macro4",
+      "binding": "macro4",
+      "x": 296,
+      "y": 885,
+      "w": 78,
+      "h": 92,
+      "label": "MACRO 4"
+    },
+    {
+      "id": "tokyo-macro5",
+      "binding": "macro5",
+      "x": 387,
+      "y": 885,
+      "w": 78,
+      "h": 92,
+      "label": "MACRO 5"
+    },
+    {
+      "id": "tokyo-macro6",
+      "binding": "macro6",
+      "x": 478,
+      "y": 885,
+      "w": 78,
+      "h": 92,
+      "label": "MACRO 6"
+    },
+    {
+      "id": "tokyo-macro7",
+      "binding": "macro7",
+      "x": 569,
+      "y": 885,
+      "w": 78,
+      "h": 92,
+      "label": "MACRO 7"
+    },
+    {
+      "id": "tokyo-macro8",
+      "binding": "macro8",
+      "x": 660,
+      "y": 885,
+      "w": 78,
+      "h": 92,
+      "label": "MACRO 8"
+    },
+    {
+      "id": "tokyo-scene-pitch",
+      "binding": "scene.pitch",
+      "x": 785,
+      "y": 881,
+      "w": 51,
+      "h": 95,
+      "kind": "fader",
+      "label": "PITCH"
+    },
+    {
+      "id": "tokyo-fm-depth",
+      "binding": "scene.fmdepth",
+      "x": 849,
+      "y": 881,
+      "w": 51,
+      "h": 95,
+      "kind": "fader",
+      "label": "FM"
+    },
+    {
+      "id": "tokyo-glide",
+      "binding": "scene.portamento",
+      "x": 948,
+      "y": 885,
+      "w": 75,
+      "h": 91,
+      "label": "GLIDE"
+    },
+    {
+      "id": "tokyo-bottom-polymode",
+      "binding": "scene.polymode",
+      "x": 1038,
+      "y": 891,
+      "w": 113,
+      "h": 24,
+      "kind": "menu",
+      "label": "Voice mode"
+    },
+    {
+      "id": "tokyo-bottom-scenemode",
+      "binding": "scene.mode",
+      "x": 1038,
+      "y": 927,
+      "w": 113,
+      "h": 24,
+      "kind": "menu",
+      "label": "Scene mode"
+    },
+    {
+      "id": "tokyo-scene-width",
+      "binding": "scene.width",
+      "x": 1161,
+      "y": 885,
+      "w": 81,
+      "h": 91,
+      "label": "WIDTH"
+    },
+    {
+      "id": "tokyo-scene-drift",
+      "binding": "scene.drift",
+      "x": 1251,
+      "y": 885,
+      "w": 81,
+      "h": 91,
+      "label": "DRIFT"
+    },
+    {
+      "id": "tokyo-scene-pan",
+      "binding": "scene.pan",
+      "x": 1340,
+      "y": 885,
+      "w": 81,
+      "h": 91,
+      "label": "PAN"
+    },
+    {
+      "id": "tokyo-bottom-polylimit",
+      "binding": "scene.polylimit",
+      "x": 1462,
+      "y": 923,
+      "w": 99,
+      "h": 24,
+      "kind": "menu",
+      "label": "Voices"
+    },
+    {
+      "id": "tokyo-master",
+      "binding": "master.volume",
+      "x": 1120,
+      "y": 2,
+      "w": 70,
+      "h": 65,
+      "label": "MASTER"
+    },
+    {
+      "id": "tokyo-scene-volume",
+      "binding": "scene.volume",
+      "x": 1214,
+      "y": 2,
+      "w": 70,
+      "h": 65,
+      "label": "SCENE"
+    }
+  ],
+  "adaptations": [
+    "Native JUCE alternative layout with live parameter controls; no reference PNG is used as a background or screenshot.",
+    "All three oscillator algorithms and parameter names come from the current patch, replacing illustrative wavetable, analogue and FM labels and made-up preset names.",
+    "The concept's third standalone envelope is an explicitly labeled LFO 3 envelope bank, using Surge's real LFO 3 ADSR controls. The real amplitude and filter envelopes remain independently visible.",
+    "Filter A and B denote Surge's two filter units within the selected scene, not two different scenes. Shared waveshaper drive and filter balance replace nonexistent independent per-filter drive or mix controls.",
+    "The compact routing strip depicts the native routing selection rather than claiming arbitrary cable editing.",
+    "Eight working macros are arranged along the bottom. The concept's pitch/mod wheels are replaced by accurately labeled scene-pitch and FM-depth faders; the full editor retains MIDI expression controls.",
+    "The eight visible effect slots use live algorithm menus; all sixteen native effect slots remain available in the full editor.",
+    "The header uses working preset, scene, skin and full-editor navigation. Hardware texture and beveled outlines are procedural native drawing, not a pixel-identical photograph.",
+    "Native parameter, automation, scaling and screenshot validation must pass before this layout is considered verified."
+  ]
+}

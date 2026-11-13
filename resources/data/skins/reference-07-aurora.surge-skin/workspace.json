@@ -1,0 +1,1345 @@
+{
+  "schema": 1,
+  "id": "07-liquid-aurora",
+  "name": "Liquid Aurora",
+  "reference": "07_Liquid_Aurora.png",
+  "width": 1586,
+  "height": 992,
+  "style": "aurora",
+  "font": "sans",
+  "headerHeight": 66,
+  "radius": 11,
+  "glow": 0.18,
+  "palette": {
+    "background": "#160D24",
+    "panel": "#2A203C",
+    "border": "#70568C",
+    "text": "#F1E8FF",
+    "muted": "#CEBDE0",
+    "accent": "#C285F4",
+    "secondary": "#77DDFB",
+    "display": "#160F25",
+    "knob": "#30233F",
+    "red": "#F49ADD",
+    "yellow": "#E0CCFF",
+    "blue": "#5A6DDC"
+  },
+  "panels": [
+    {
+      "id": "p.browser",
+      "kind": "browser",
+      "title": "PRESET BROWSER",
+      "x": 8,
+      "y": 75,
+      "w": 236,
+      "h": 610
+    },
+    {
+      "id": "p.global",
+      "kind": "scene",
+      "title": "GLOBAL",
+      "x": 8,
+      "y": 693,
+      "w": 236,
+      "h": 289
+    },
+    {
+      "id": "p.osc1",
+      "kind": "oscillator",
+      "title": "OSC 1",
+      "index": 1,
+      "variant": "terrain",
+      "x": 253,
+      "y": 75,
+      "w": 326,
+      "h": 188,
+      "plot": [
+        338,
+        143,
+        174,
+        43
+      ]
+    },
+    {
+      "id": "p.osc2",
+      "kind": "oscillator",
+      "title": "OSC 2",
+      "index": 2,
+      "variant": "terrain",
+      "x": 588,
+      "y": 75,
+      "w": 326,
+      "h": 188,
+      "plot": [
+        673,
+        143,
+        174,
+        43
+      ]
+    },
+    {
+      "id": "p.osc3",
+      "kind": "oscillator",
+      "title": "OSC 3",
+      "index": 3,
+      "variant": "terrain",
+      "x": 923,
+      "y": 75,
+      "w": 326,
+      "h": 188,
+      "plot": [
+        1008,
+        143,
+        174,
+        43
+      ]
+    },
+    {
+      "id": "p.playground",
+      "kind": "waveform",
+      "title": "WAVEFORM PLAYGROUND",
+      "variant": "terrain",
+      "x": 253,
+      "y": 272,
+      "w": 996,
+      "h": 280,
+      "plot": [
+        266,
+        309,
+        969,
+        179
+      ]
+    },
+    {
+      "id": "p.filter1",
+      "kind": "filter",
+      "title": "FILTER 1",
+      "index": 1,
+      "x": 1259,
+      "y": 75,
+      "w": 320,
+      "h": 138,
+      "plot": [
+        1271,
+        112,
+        178,
+        62
+      ]
+    },
+    {
+      "id": "p.filter2",
+      "kind": "filter",
+      "title": "FILTER 2",
+      "index": 2,
+      "x": 1259,
+      "y": 220,
+      "w": 320,
+      "h": 139,
+      "plot": [
+        1271,
+        257,
+        178,
+        62
+      ]
+    },
+    {
+      "id": "p.mixer",
+      "kind": "mixer",
+      "title": "MIXER",
+      "variant": "faders",
+      "x": 1259,
+      "y": 369,
+      "w": 320,
+      "h": 183
+    },
+    {
+      "id": "p.amp-env",
+      "kind": "envelope",
+      "title": "AMP ENV",
+      "index": 1,
+      "x": 253,
+      "y": 560,
+      "w": 232,
+      "h": 127,
+      "plot": [
+        268,
+        591,
+        201,
+        28
+      ]
+    },
+    {
+      "id": "p.filter-env",
+      "kind": "envelope",
+      "title": "ENV 2",
+      "index": 2,
+      "x": 494,
+      "y": 560,
+      "w": 225,
+      "h": 127,
+      "plot": [
+        508,
+        591,
+        197,
+        28
+      ]
+    },
+    {
+      "id": "p.lfo3-env",
+      "kind": "tabs",
+      "title": "LFO 3 ENVELOPE",
+      "x": 728,
+      "y": 560,
+      "w": 213,
+      "h": 127
+    },
+    {
+      "id": "p.lfo1",
+      "kind": "lfo",
+      "title": "LFO 1",
+      "index": 1,
+      "x": 950,
+      "y": 560,
+      "w": 203,
+      "h": 127,
+      "plot": [
+        961,
+        595,
+        180,
+        28
+      ]
+    },
+    {
+      "id": "p.lfo2",
+      "kind": "lfo",
+      "title": "LFO 2",
+      "index": 2,
+      "x": 1161,
+      "y": 560,
+      "w": 204,
+      "h": 127,
+      "plot": [
+        1172,
+        595,
+        182,
+        28
+      ]
+    },
+    {
+      "id": "p.lfo3",
+      "kind": "lfo",
+      "title": "LFO 3",
+      "index": 3,
+      "x": 1373,
+      "y": 560,
+      "w": 206,
+      "h": 127,
+      "plot": [
+        1385,
+        595,
+        182,
+        28
+      ]
+    },
+    {
+      "id": "p.matrix",
+      "kind": "matrix",
+      "title": "MODULATION MATRIX",
+      "x": 253,
+      "y": 695,
+      "w": 599,
+      "h": 194
+    },
+    {
+      "id": "p.fx",
+      "kind": "effects",
+      "title": "EFFECTS RACK",
+      "variant": "vertical",
+      "index": 1,
+      "x": 860,
+      "y": 695,
+      "w": 719,
+      "h": 194
+    },
+    {
+      "id": "p.macros",
+      "kind": "macros",
+      "title": "MACROS",
+      "x": 253,
+      "y": 897,
+      "w": 996,
+      "h": 85
+    },
+    {
+      "id": "p.mod-overview",
+      "kind": "lfo",
+      "title": "MOD OVERVIEW / LFO 1",
+      "index": 1,
+      "x": 1259,
+      "y": 897,
+      "w": 320,
+      "h": 85,
+      "plot": [
+        1271,
+        930,
+        296,
+        40
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "id": "c.osc1-type",
+      "binding": "osc1.type",
+      "x": 266,
+      "y": 108,
+      "w": 130,
+      "h": 25,
+      "kind": "menu"
+    },
+    {
+      "id": "c.osc1-octave",
+      "binding": "osc1.octave",
+      "x": 408,
+      "y": 108,
+      "w": 106,
+      "h": 25,
+      "kind": "menu",
+      "label": "OSC 1 octave"
+    },
+    {
+      "id": "c.osc1-param0",
+      "binding": "osc1.param0",
+      "x": 263,
+      "y": 148,
+      "w": 65,
+      "h": 107,
+      "fontSize": 11
+    },
+    {
+      "id": "c.osc1-param1",
+      "binding": "osc1.param1",
+      "x": 338,
+      "y": 189,
+      "w": 49,
+      "h": 66,
+      "fontSize": 10
+    },
+    {
+      "id": "c.osc1-param2",
+      "binding": "osc1.param2",
+      "x": 392,
+      "y": 189,
+      "w": 49,
+      "h": 66,
+      "fontSize": 10
+    },
+    {
+      "id": "c.osc1-param3",
+      "binding": "osc1.param3",
+      "x": 446,
+      "y": 189,
+      "w": 49,
+      "h": 66,
+      "fontSize": 10
+    },
+    {
+      "id": "c.osc1-keytrack",
+      "binding": "osc1.keytrack",
+      "x": 523,
+      "y": 145,
+      "w": 43,
+      "h": 24,
+      "kind": "toggle",
+      "label": "K-Trk"
+    },
+    {
+      "id": "c.osc1-retrigger",
+      "binding": "osc1.retrigger",
+      "x": 523,
+      "y": 175,
+      "w": 43,
+      "h": 24,
+      "kind": "toggle",
+      "label": "Retrig"
+    },
+    {
+      "id": "c.osc1-mute",
+      "binding": "osc1.mute",
+      "x": 523,
+      "y": 205,
+      "w": 43,
+      "h": 24,
+      "kind": "toggle",
+      "label": "Mute"
+    },
+    {
+      "id": "c.osc2-type",
+      "binding": "osc2.type",
+      "x": 601,
+      "y": 108,
+      "w": 130,
+      "h": 25,
+      "kind": "menu"
+    },
+    {
+      "id": "c.osc2-octave",
+      "binding": "osc2.octave",
+      "x": 743,
+      "y": 108,
+      "w": 106,
+      "h": 25,
+      "kind": "menu",
+      "label": "OSC 2 octave"
+    },
+    {
+      "id": "c.osc2-param0",
+      "binding": "osc2.param0",
+      "x": 598,
+      "y": 148,
+      "w": 65,
+      "h": 107,
+      "fontSize": 11
+    },
+    {
+      "id": "c.osc2-param1",
+      "binding": "osc2.param1",
+      "x": 673,
+      "y": 189,
+      "w": 49,
+      "h": 66,
+      "fontSize": 10
+    },
+    {
+      "id": "c.osc2-param2",
+      "binding": "osc2.param2",
+      "x": 727,
+      "y": 189,
+      "w": 49,
+      "h": 66,
+      "fontSize": 10
+    },
+    {
+      "id": "c.osc2-param3",
+      "binding": "osc2.param3",
+      "x": 781,
+      "y": 189,
+      "w": 49,
+      "h": 66,
+      "fontSize": 10
+    },
+    {
+      "id": "c.osc2-keytrack",
+      "binding": "osc2.keytrack",
+      "x": 858,
+      "y": 145,
+      "w": 43,
+      "h": 24,
+      "kind": "toggle",
+      "label": "K-Trk"
+    },
+    {
+      "id": "c.osc2-retrigger",
+      "binding": "osc2.retrigger",
+      "x": 858,
+      "y": 175,
+      "w": 43,
+      "h": 24,
+      "kind": "toggle",
+      "label": "Retrig"
+    },
+    {
+      "id": "c.osc2-mute",
+      "binding": "osc2.mute",
+      "x": 858,
+      "y": 205,
+      "w": 43,
+      "h": 24,
+      "kind": "toggle",
+      "label": "Mute"
+    },
+    {
+      "id": "c.osc3-type",
+      "binding": "osc3.type",
+      "x": 936,
+      "y": 108,
+      "w": 130,
+      "h": 25,
+      "kind": "menu"
+    },
+    {
+      "id": "c.osc3-octave",
+      "binding": "osc3.octave",
+      "x": 1078,
+      "y": 108,
+      "w": 106,
+      "h": 25,
+      "kind": "menu",
+      "label": "OSC 3 octave"
+    },
+    {
+      "id": "c.osc3-param0",
+      "binding": "osc3.param0",
+      "x": 933,
+      "y": 148,
+      "w": 65,
+      "h": 107,
+      "fontSize": 11
+    },
+    {
+      "id": "c.osc3-param1",
+      "binding": "osc3.param1",
+      "x": 1008,
+      "y": 189,
+      "w": 49,
+      "h": 66,
+      "fontSize": 10
+    },
+    {
+      "id": "c.osc3-param2",
+      "binding": "osc3.param2",
+      "x": 1062,
+      "y": 189,
+      "w": 49,
+      "h": 66,
+      "fontSize": 10
+    },
+    {
+      "id": "c.osc3-param3",
+      "binding": "osc3.param3",
+      "x": 1116,
+      "y": 189,
+      "w": 49,
+      "h": 66,
+      "fontSize": 10
+    },
+    {
+      "id": "c.osc3-keytrack",
+      "binding": "osc3.keytrack",
+      "x": 1193,
+      "y": 145,
+      "w": 43,
+      "h": 24,
+      "kind": "toggle",
+      "label": "K-Trk"
+    },
+    {
+      "id": "c.osc3-retrigger",
+      "binding": "osc3.retrigger",
+      "x": 1193,
+      "y": 175,
+      "w": 43,
+      "h": 24,
+      "kind": "toggle",
+      "label": "Retrig"
+    },
+    {
+      "id": "c.osc3-mute",
+      "binding": "osc3.mute",
+      "x": 1193,
+      "y": 205,
+      "w": 43,
+      "h": 24,
+      "kind": "toggle",
+      "label": "Mute"
+    },
+    {
+      "id": "c.playground-type",
+      "binding": "osc1.type",
+      "x": 272,
+      "y": 506,
+      "w": 268,
+      "h": 27,
+      "kind": "menu",
+      "label": "Oscillator 1 algorithm"
+    },
+    {
+      "id": "c.playground-param0",
+      "binding": "osc1.param0",
+      "x": 568,
+      "y": 494,
+      "w": 279,
+      "h": 50,
+      "kind": "horizontal",
+      "fontSize": 11
+    },
+    {
+      "id": "c.playground-param1",
+      "binding": "osc1.param1",
+      "x": 859,
+      "y": 491,
+      "w": 68,
+      "h": 56,
+      "fontSize": 10,
+      "labelPosition": "right"
+    },
+    {
+      "id": "c.playground-param2",
+      "binding": "osc1.param2",
+      "x": 935,
+      "y": 491,
+      "w": 68,
+      "h": 56,
+      "fontSize": 10,
+      "labelPosition": "right"
+    },
+    {
+      "id": "c.playground-param3",
+      "binding": "osc1.param3",
+      "x": 1011,
+      "y": 491,
+      "w": 68,
+      "h": 56,
+      "fontSize": 10,
+      "labelPosition": "right"
+    },
+    {
+      "id": "c.playground-param4",
+      "binding": "osc1.param4",
+      "x": 1087,
+      "y": 491,
+      "w": 68,
+      "h": 56,
+      "fontSize": 10,
+      "labelPosition": "right"
+    },
+    {
+      "id": "c.playground-param5",
+      "binding": "osc1.param5",
+      "x": 1163,
+      "y": 491,
+      "w": 68,
+      "h": 56,
+      "fontSize": 10,
+      "labelPosition": "right"
+    },
+    {
+      "id": "c.filter1-type",
+      "binding": "filter1.type",
+      "x": 1353,
+      "y": 82,
+      "w": 214,
+      "h": 24,
+      "kind": "menu",
+      "label": "Filter 1 type"
+    },
+    {
+      "id": "c.filter1-cutoff",
+      "binding": "filter1.cutoff",
+      "x": 1456,
+      "y": 111,
+      "w": 54,
+      "h": 85,
+      "label": "Cutoff",
+      "fontSize": 11,
+      "accent": "accent"
+    },
+    {
+      "id": "c.filter1-resonance",
+      "binding": "filter1.resonance",
+      "x": 1515,
+      "y": 111,
+      "w": 54,
+      "h": 85,
+      "label": "Res",
+      "fontSize": 11,
+      "accent": "accent"
+    },
+    {
+      "id": "c.filter1-subtype",
+      "binding": "filter1.subtype",
+      "x": 1271,
+      "y": 181,
+      "w": 178,
+      "h": 23,
+      "kind": "menu",
+      "label": "Filter 1 subtype"
+    },
+    {
+      "id": "c.filter2-type",
+      "binding": "filter2.type",
+      "x": 1353,
+      "y": 227,
+      "w": 214,
+      "h": 24,
+      "kind": "menu",
+      "label": "Filter 2 type"
+    },
+    {
+      "id": "c.filter2-cutoff",
+      "binding": "filter2.cutoff",
+      "x": 1456,
+      "y": 256,
+      "w": 54,
+      "h": 85,
+      "label": "Cutoff",
+      "fontSize": 11,
+      "accent": "secondary"
+    },
+    {
+      "id": "c.filter2-resonance",
+      "binding": "filter2.resonance",
+      "x": 1515,
+      "y": 256,
+      "w": 54,
+      "h": 85,
+      "label": "Res",
+      "fontSize": 11,
+      "accent": "secondary"
+    },
+    {
+      "id": "c.filter2-subtype",
+      "binding": "filter2.subtype",
+      "x": 1271,
+      "y": 326,
+      "w": 178,
+      "h": 23,
+      "kind": "menu",
+      "label": "Filter 2 subtype"
+    },
+    {
+      "id": "c.mixer-1",
+      "binding": "osc1.level",
+      "x": 1272,
+      "y": 406,
+      "w": 36,
+      "h": 135,
+      "kind": "fader",
+      "label": "Osc 1",
+      "fontSize": 10
+    },
+    {
+      "id": "c.mixer-2",
+      "binding": "osc2.level",
+      "x": 1315,
+      "y": 406,
+      "w": 36,
+      "h": 135,
+      "kind": "fader",
+      "label": "Osc 2",
+      "fontSize": 10
+    },
+    {
+      "id": "c.mixer-3",
+      "binding": "osc3.level",
+      "x": 1358,
+      "y": 406,
+      "w": 36,
+      "h": 135,
+      "kind": "fader",
+      "label": "Osc 3",
+      "fontSize": 10
+    },
+    {
+      "id": "c.mixer-4",
+      "binding": "noise.level",
+      "x": 1401,
+      "y": 406,
+      "w": 36,
+      "h": 135,
+      "kind": "fader",
+      "label": "Noise",
+      "fontSize": 10
+    },
+    {
+      "id": "c.mixer-5",
+      "binding": "ring12.level",
+      "x": 1444,
+      "y": 406,
+      "w": 36,
+      "h": 135,
+      "kind": "fader",
+      "label": "Ring",
+      "fontSize": 10
+    },
+    {
+      "id": "c.mixer-scene-level",
+      "binding": "scene.volume",
+      "x": 1493,
+      "y": 410,
+      "w": 73,
+      "h": 65,
+      "label": "Scene level",
+      "fontSize": 11,
+      "labelPosition": "right"
+    },
+    {
+      "id": "c.mixer-scene-pan",
+      "binding": "scene.pan",
+      "x": 1493,
+      "y": 484,
+      "w": 73,
+      "h": 60,
+      "label": "Pan",
+      "fontSize": 11,
+      "labelPosition": "right"
+    },
+    {
+      "id": "c.global-polymode",
+      "binding": "scene.polymode",
+      "x": 24,
+      "y": 730,
+      "w": 104,
+      "h": 24,
+      "kind": "menu",
+      "label": "Voice mode"
+    },
+    {
+      "id": "c.global-polylimit",
+      "binding": "scene.polylimit",
+      "x": 139,
+      "y": 730,
+      "w": 89,
+      "h": 24,
+      "kind": "menu",
+      "label": "Voice limit"
+    },
+    {
+      "id": "c.global-top-0",
+      "binding": "scene.pitch",
+      "x": 24,
+      "y": 765,
+      "w": 62,
+      "h": 75,
+      "label": "Pitch",
+      "fontSize": 11
+    },
+    {
+      "id": "c.global-top-1",
+      "binding": "scene.octave",
+      "x": 93,
+      "y": 765,
+      "w": 62,
+      "h": 75,
+      "label": "Octave",
+      "fontSize": 11
+    },
+    {
+      "id": "c.global-top-2",
+      "binding": "scene.width",
+      "x": 162,
+      "y": 765,
+      "w": 62,
+      "h": 75,
+      "label": "Width",
+      "fontSize": 11
+    },
+    {
+      "id": "c.global-bottom-0",
+      "binding": "scene.portamento",
+      "x": 24,
+      "y": 846,
+      "w": 62,
+      "h": 76,
+      "label": "Glide",
+      "fontSize": 11
+    },
+    {
+      "id": "c.global-bottom-1",
+      "binding": "filter.balance",
+      "x": 93,
+      "y": 846,
+      "w": 62,
+      "h": 76,
+      "label": "Filter mix",
+      "fontSize": 11
+    },
+    {
+      "id": "c.global-bottom-2",
+      "binding": "master.volume",
+      "x": 162,
+      "y": 846,
+      "w": 62,
+      "h": 76,
+      "label": "Master",
+      "fontSize": 11
+    },
+    {
+      "id": "c.global-scene-mode",
+      "binding": "scene.mode",
+      "x": 24,
+      "y": 938,
+      "w": 204,
+      "h": 26,
+      "kind": "menu",
+      "label": "Scene mode"
+    },
+    {
+      "id": "c.env1-attack",
+      "binding": "env1.attack",
+      "x": 264,
+      "y": 623,
+      "w": 49,
+      "h": 59,
+      "label": "A",
+      "fontSize": 10
+    },
+    {
+      "id": "c.env1-decay",
+      "binding": "env1.decay",
+      "x": 318,
+      "y": 623,
+      "w": 49,
+      "h": 59,
+      "label": "D",
+      "fontSize": 10
+    },
+    {
+      "id": "c.env1-sustain",
+      "binding": "env1.sustain",
+      "x": 372,
+      "y": 623,
+      "w": 49,
+      "h": 59,
+      "label": "S",
+      "fontSize": 10
+    },
+    {
+      "id": "c.env1-release",
+      "binding": "env1.release",
+      "x": 426,
+      "y": 623,
+      "w": 49,
+      "h": 59,
+      "label": "R",
+      "fontSize": 10
+    },
+    {
+      "id": "c.env2-attack",
+      "binding": "env2.attack",
+      "x": 505,
+      "y": 623,
+      "w": 46,
+      "h": 59,
+      "label": "A",
+      "fontSize": 10
+    },
+    {
+      "id": "c.env2-decay",
+      "binding": "env2.decay",
+      "x": 556,
+      "y": 623,
+      "w": 46,
+      "h": 59,
+      "label": "D",
+      "fontSize": 10
+    },
+    {
+      "id": "c.env2-sustain",
+      "binding": "env2.sustain",
+      "x": 607,
+      "y": 623,
+      "w": 46,
+      "h": 59,
+      "label": "S",
+      "fontSize": 10
+    },
+    {
+      "id": "c.env2-release",
+      "binding": "env2.release",
+      "x": 658,
+      "y": 623,
+      "w": 46,
+      "h": 59,
+      "label": "R",
+      "fontSize": 10
+    },
+    {
+      "id": "c.lfo3-env-attack",
+      "binding": "lfo3.attack",
+      "x": 739,
+      "y": 596,
+      "w": 44,
+      "h": 83,
+      "kind": "fader",
+      "label": "A",
+      "fontSize": 10
+    },
+    {
+      "id": "c.lfo3-env-decay",
+      "binding": "lfo3.decay",
+      "x": 787,
+      "y": 596,
+      "w": 44,
+      "h": 83,
+      "kind": "fader",
+      "label": "D",
+      "fontSize": 10
+    },
+    {
+      "id": "c.lfo3-env-sustain",
+      "binding": "lfo3.sustain",
+      "x": 835,
+      "y": 596,
+      "w": 44,
+      "h": 83,
+      "kind": "fader",
+      "label": "S",
+      "fontSize": 10
+    },
+    {
+      "id": "c.lfo3-env-release",
+      "binding": "lfo3.release",
+      "x": 883,
+      "y": 596,
+      "w": 44,
+      "h": 83,
+      "kind": "fader",
+      "label": "R",
+      "fontSize": 10
+    },
+    {
+      "id": "c.lfo1-shape",
+      "binding": "lfo1.shape",
+      "x": 1025,
+      "y": 566,
+      "w": 116,
+      "h": 23,
+      "kind": "menu"
+    },
+    {
+      "id": "c.lfo1-rate",
+      "binding": "lfo1.rate",
+      "x": 960,
+      "y": 627,
+      "w": 55,
+      "h": 54,
+      "label": "Rate",
+      "fontSize": 10
+    },
+    {
+      "id": "c.lfo1-magnitude",
+      "binding": "lfo1.magnitude",
+      "x": 1023,
+      "y": 627,
+      "w": 55,
+      "h": 54,
+      "label": "Depth",
+      "fontSize": 10
+    },
+    {
+      "id": "c.lfo1-delay",
+      "binding": "lfo1.delay",
+      "x": 1086,
+      "y": 627,
+      "w": 55,
+      "h": 54,
+      "label": "Delay",
+      "fontSize": 10
+    },
+    {
+      "id": "c.lfo2-shape",
+      "binding": "lfo2.shape",
+      "x": 1236,
+      "y": 566,
+      "w": 116,
+      "h": 23,
+      "kind": "menu"
+    },
+    {
+      "id": "c.lfo2-rate",
+      "binding": "lfo2.rate",
+      "x": 1171,
+      "y": 627,
+      "w": 55,
+      "h": 54,
+      "label": "Rate",
+      "fontSize": 10
+    },
+    {
+      "id": "c.lfo2-magnitude",
+      "binding": "lfo2.magnitude",
+      "x": 1234,
+      "y": 627,
+      "w": 55,
+      "h": 54,
+      "label": "Depth",
+      "fontSize": 10
+    },
+    {
+      "id": "c.lfo2-delay",
+      "binding": "lfo2.delay",
+      "x": 1297,
+      "y": 627,
+      "w": 55,
+      "h": 54,
+      "label": "Delay",
+      "fontSize": 10
+    },
+    {
+      "id": "c.lfo3-shape",
+      "binding": "lfo3.shape",
+      "x": 1448,
+      "y": 566,
+      "w": 116,
+      "h": 23,
+      "kind": "menu"
+    },
+    {
+      "id": "c.lfo3-rate",
+      "binding": "lfo3.rate",
+      "x": 1383,
+      "y": 627,
+      "w": 55,
+      "h": 54,
+      "label": "Rate",
+      "fontSize": 10
+    },
+    {
+      "id": "c.lfo3-magnitude",
+      "binding": "lfo3.magnitude",
+      "x": 1446,
+      "y": 627,
+      "w": 55,
+      "h": 54,
+      "label": "Depth",
+      "fontSize": 10
+    },
+    {
+      "id": "c.lfo3-delay",
+      "binding": "lfo3.delay",
+      "x": 1509,
+      "y": 627,
+      "w": 55,
+      "h": 54,
+      "label": "Delay",
+      "fontSize": 10
+    },
+    {
+      "id": "c.fx1-type",
+      "binding": "fx1.type",
+      "x": 878,
+      "y": 727,
+      "w": 139,
+      "h": 25,
+      "kind": "menu",
+      "label": "FX slot 1"
+    },
+    {
+      "id": "c.fx2-type",
+      "binding": "fx2.type",
+      "x": 878,
+      "y": 763,
+      "w": 139,
+      "h": 25,
+      "kind": "menu",
+      "label": "FX slot 2"
+    },
+    {
+      "id": "c.fx3-type",
+      "binding": "fx3.type",
+      "x": 878,
+      "y": 799,
+      "w": 139,
+      "h": 25,
+      "kind": "menu",
+      "label": "FX slot 3"
+    },
+    {
+      "id": "c.fx4-type",
+      "binding": "fx4.type",
+      "x": 878,
+      "y": 835,
+      "w": 139,
+      "h": 25,
+      "kind": "menu",
+      "label": "FX slot 4"
+    },
+    {
+      "id": "c.fx5-type",
+      "binding": "fx5.type",
+      "x": 1026,
+      "y": 727,
+      "w": 139,
+      "h": 25,
+      "kind": "menu",
+      "label": "FX slot 5"
+    },
+    {
+      "id": "c.fx6-type",
+      "binding": "fx6.type",
+      "x": 1026,
+      "y": 763,
+      "w": 139,
+      "h": 25,
+      "kind": "menu",
+      "label": "FX slot 6"
+    },
+    {
+      "id": "c.fx7-type",
+      "binding": "fx7.type",
+      "x": 1026,
+      "y": 799,
+      "w": 139,
+      "h": 25,
+      "kind": "menu",
+      "label": "FX slot 7"
+    },
+    {
+      "id": "c.fx8-type",
+      "binding": "fx8.type",
+      "x": 1026,
+      "y": 835,
+      "w": 139,
+      "h": 25,
+      "kind": "menu",
+      "label": "FX slot 8"
+    },
+    {
+      "id": "c.fx-editor-type",
+      "binding": "fx1.type",
+      "x": 1182,
+      "y": 731,
+      "w": 378,
+      "h": 26,
+      "kind": "menu",
+      "label": "FX 1 algorithm"
+    },
+    {
+      "id": "c.fx1-param0",
+      "binding": "fx1.param0",
+      "x": 1182,
+      "y": 770,
+      "w": 84,
+      "h": 93,
+      "fontSize": 11
+    },
+    {
+      "id": "c.fx1-param1",
+      "binding": "fx1.param1",
+      "x": 1276,
+      "y": 770,
+      "w": 84,
+      "h": 93,
+      "fontSize": 11
+    },
+    {
+      "id": "c.fx1-param2",
+      "binding": "fx1.param2",
+      "x": 1370,
+      "y": 770,
+      "w": 84,
+      "h": 93,
+      "fontSize": 11
+    },
+    {
+      "id": "c.fx1-param3",
+      "binding": "fx1.param3",
+      "x": 1464,
+      "y": 770,
+      "w": 84,
+      "h": 93,
+      "fontSize": 11
+    },
+    {
+      "id": "c.macro1",
+      "binding": "macro1",
+      "x": 267,
+      "y": 922,
+      "w": 112,
+      "h": 55,
+      "labelPosition": "right",
+      "fontSize": 11
+    },
+    {
+      "id": "c.macro2",
+      "binding": "macro2",
+      "x": 389,
+      "y": 922,
+      "w": 112,
+      "h": 55,
+      "labelPosition": "right",
+      "fontSize": 11
+    },
+    {
+      "id": "c.macro3",
+      "binding": "macro3",
+      "x": 511,
+      "y": 922,
+      "w": 112,
+      "h": 55,
+      "labelPosition": "right",
+      "fontSize": 11
+    },
+    {
+      "id": "c.macro4",
+      "binding": "macro4",
+      "x": 633,
+      "y": 922,
+      "w": 112,
+      "h": 55,
+      "labelPosition": "right",
+      "fontSize": 11
+    },
+    {
+      "id": "c.macro5",
+      "binding": "macro5",
+      "x": 755,
+      "y": 922,
+      "w": 112,
+      "h": 55,
+      "labelPosition": "right",
+      "fontSize": 11
+    },
+    {
+      "id": "c.macro6",
+      "binding": "macro6",
+      "x": 877,
+      "y": 922,
+      "w": 112,
+      "h": 55,
+      "labelPosition": "right",
+      "fontSize": 11
+    },
+    {
+      "id": "c.macro7",
+      "binding": "macro7",
+      "x": 999,
+      "y": 922,
+      "w": 112,
+      "h": 55,
+      "labelPosition": "right",
+      "fontSize": 11
+    },
+    {
+      "id": "c.macro8",
+      "binding": "macro8",
+      "x": 1121,
+      "y": 922,
+      "w": 112,
+      "h": 55,
+      "labelPosition": "right",
+      "fontSize": 11
+    },
+    {
+      "id": "c.header-routing",
+      "binding": "routing",
+      "x": 1092,
+      "y": 25,
+      "w": 98,
+      "h": 26,
+      "kind": "menu",
+      "label": "Filter routing"
+    },
+    {
+      "id": "c.header-waveshaper",
+      "binding": "filter.waveshaper",
+      "x": 1197,
+      "y": 25,
+      "w": 94,
+      "h": 26,
+      "kind": "menu",
+      "label": "Waveshaper"
+    }
+  ],
+  "adaptations": [
+    "Native composition follows the concept's three top oscillators, luminous central waveform, right filter and mixer column, compact modulation row and eight-macro footer. It is a functional adaptation, not a pixel-identical bitmap.",
+    "The terrain draws real current oscillator preview data as perspective layers. It is not claimed to be a measured spectrum or a complete sweep of different wavetable frames.",
+    "The concept's third independent envelope is represented explicitly by LFO 3 ENVELOPE, using that native LFO's attack, decay, sustain and release controls; no third dedicated envelope generator is invented.",
+    "Actual oscillator algorithms, retrigger and mute controls replace concept-only synthesis labels and unsupported switches. Algorithm parameter labels and values are dynamically read from the engine.",
+    "Eight visible effect algorithm menus are functional; all sixteen effect slots and advanced editors remain available through Full editor.",
+    "X/Y morph, fabricated browser patch names and counts, arbitrary signal rewiring and unsupported sample playback are not implied. Native scene modes and filter routing use the actual engine options.",
+    "The header is the shared working preset, scene and skin navigation. All eight macro controls keep their real assignable names and current values.",
+    "Plot titles identify previews; the original full editor retains the measured output oscilloscope and detailed modulation assignment workflows."
+  ]
+}

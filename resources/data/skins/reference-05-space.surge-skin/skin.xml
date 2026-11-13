@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<surge-skin name="05 Space-Age 1977" category="Reference Workspaces" author="Surge XT fork contributors" version="2">
+  <globals>
+    <window-size x="904" y="569"/>
+    <reference-workspace layout="workspace.json"/>
+  </globals>
+  <component-classes/>
+  <controls/>
+</surge-skin>

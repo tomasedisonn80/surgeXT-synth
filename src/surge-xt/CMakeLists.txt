@@ -80,6 +80,17 @@ target_sources(${PROJECT_NAME} PRIVATE
   SurgeSynthProcessor.cpp
   SurgeSynthProcessor.h
 
+  gui/reference/Workspace.cpp
+  gui/reference/WorkspaceData.cpp
+  gui/reference/WorkspaceData.h
+  gui/reference/Workspace.h
+  gui/reference/ParameterBridge.cpp
+  gui/reference/ParameterBridge.h
+  gui/reference/Manifest.cpp
+  gui/reference/Manifest.h
+  gui/reference/Visuals.cpp
+  gui/reference/Visuals.h
+
   SurgeCLAPPresetDiscovery.cpp
 
   util/LuaTokeniserSurge.cpp

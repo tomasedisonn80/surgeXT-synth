@@ -1,0 +1,824 @@
+{
+  "schema": 1,
+  "id": "09-signal-flow-cartographer",
+  "name": "09 Signal-Flow Cartographer",
+  "reference": "09_Signal_Flow_Cartographer.png",
+  "width": 1586,
+  "height": 992,
+  "headerHeight": 64,
+  "style": "flow",
+  "font": "sans",
+  "radius": 7,
+  "glow": 0.14,
+  "palette": {
+    "background": "#05121D",
+    "panel": "#0B2335",
+    "border": "#41677D",
+    "text": "#E8F2F8",
+    "muted": "#B1C9D7",
+    "accent": "#83F5D2",
+    "secondary": "#74C6DF",
+    "display": "#041723",
+    "knob": "#16384B",
+    "red": "#DF8587",
+    "yellow": "#EFCB7A",
+    "blue": "#26546D"
+  },
+  "panels": [
+    {
+      "id": "panel.browser",
+      "kind": "browser",
+      "title": "PRESETS",
+      "x": 7,
+      "y": 70,
+      "w": 238,
+      "h": 675
+    },
+    {
+      "id": "panel.flow",
+      "kind": "routing",
+      "title": "SIGNAL-FLOW CARTOGRAPHER",
+      "variant": "flow",
+      "x": 254,
+      "y": 70,
+      "w": 1021,
+      "h": 524,
+      "plot": [
+        264,
+        110,
+        1001,
+        465
+      ],
+      "flowNodes": {
+        "osc1": [
+          299,
+          149,
+          174,
+          53
+        ],
+        "osc2": [
+          299,
+          241,
+          174,
+          53
+        ],
+        "osc3": [
+          299,
+          333,
+          174,
+          53
+        ],
+        "mixer": [
+          530,
+          219,
+          96,
+          101
+        ],
+        "filter1": [
+          665,
+          183,
+          158,
+          78
+        ],
+        "filter2": [
+          665,
+          295,
+          158,
+          78
+        ],
+        "amp": [
+          893,
+          241,
+          86,
+          64
+        ],
+        "fx": [
+          1003,
+          161,
+          162,
+          228
+        ],
+        "output": [
+          1199,
+          241,
+          60,
+          64
+        ],
+        "modsources": [
+          309,
+          459,
+          86,
+          76
+        ],
+        "modbus": [
+          641,
+          471,
+          227,
+          66
+        ]
+      }
+    },
+    {
+      "id": "panel.inspector",
+      "kind": "inspector",
+      "title": "FILTER 1 / INSPECTOR",
+      "index": 1,
+      "x": 1284,
+      "y": 70,
+      "w": 295,
+      "h": 524,
+      "plot": [
+        1297,
+        434,
+        268,
+        145
+      ]
+    },
+    {
+      "id": "panel.env1",
+      "kind": "envelope",
+      "title": "ENV 1 / AMP",
+      "index": 1,
+      "x": 254,
+      "y": 601,
+      "w": 429,
+      "h": 144,
+      "plot": [
+        267,
+        641,
+        194,
+        91
+      ]
+    },
+    {
+      "id": "panel.lfo1",
+      "kind": "lfo",
+      "title": "LFO 1",
+      "index": 1,
+      "x": 691,
+      "y": 601,
+      "w": 482,
+      "h": 144,
+      "plot": [
+        703,
+        641,
+        151,
+        91
+      ]
+    },
+    {
+      "id": "panel.analyzer",
+      "kind": "analyzer",
+      "title": "LIVE OUTPUT / ANALYZER",
+      "x": 1182,
+      "y": 601,
+      "w": 397,
+      "h": 144,
+      "plot": [
+        1197,
+        638,
+        316,
+        91
+      ]
+    },
+    {
+      "id": "panel.macros",
+      "kind": "macros",
+      "title": "MACROS",
+      "variant": "knobs",
+      "x": 7,
+      "y": 753,
+      "w": 388,
+      "h": 229
+    },
+    {
+      "id": "panel.matrix",
+      "kind": "matrix",
+      "title": "MOD MATRIX",
+      "x": 404,
+      "y": 753,
+      "w": 708,
+      "h": 229
+    },
+    {
+      "id": "panel.output",
+      "kind": "output",
+      "title": "MASTER OUTPUT",
+      "x": 1120,
+      "y": 753,
+      "w": 459,
+      "h": 229
+    }
+  ],
+  "controls": [
+    {
+      "id": "global.scene-mode",
+      "binding": "scene.mode",
+      "label": "Scene mode",
+      "x": 1092,
+      "y": 27,
+      "w": 112,
+      "h": 26,
+      "kind": "menu"
+    },
+    {
+      "id": "global.voice-limit",
+      "binding": "scene.polylimit",
+      "label": "Voices",
+      "x": 1211,
+      "y": 27,
+      "w": 76,
+      "h": 26,
+      "kind": "menu"
+    },
+    {
+      "id": "flow.routing",
+      "binding": "routing",
+      "label": "Native routing",
+      "x": 775,
+      "y": 77,
+      "w": 174,
+      "h": 26,
+      "kind": "menu"
+    },
+    {
+      "id": "flow.osc1.type",
+      "binding": "osc1.type",
+      "label": "Oscillator 1 algorithm",
+      "x": 310,
+      "y": 177,
+      "w": 120,
+      "h": 20,
+      "kind": "menu"
+    },
+    {
+      "id": "flow.osc1.mute",
+      "binding": "osc1.mute",
+      "label": "M",
+      "x": 440,
+      "y": 177,
+      "w": 23,
+      "h": 20,
+      "kind": "toggle"
+    },
+    {
+      "id": "flow.osc1.level",
+      "binding": "osc1.level",
+      "label": "1",
+      "x": 534,
+      "y": 247,
+      "w": 26,
+      "h": 66,
+      "kind": "fader",
+      "fontSize": 10
+    },
+    {
+      "id": "flow.osc2.type",
+      "binding": "osc2.type",
+      "label": "Oscillator 2 algorithm",
+      "x": 310,
+      "y": 269,
+      "w": 120,
+      "h": 20,
+      "kind": "menu"
+    },
+    {
+      "id": "flow.osc2.mute",
+      "binding": "osc2.mute",
+      "label": "M",
+      "x": 440,
+      "y": 269,
+      "w": 23,
+      "h": 20,
+      "kind": "toggle"
+    },
+    {
+      "id": "flow.osc2.level",
+      "binding": "osc2.level",
+      "label": "2",
+      "x": 564,
+      "y": 247,
+      "w": 26,
+      "h": 66,
+      "kind": "fader",
+      "fontSize": 10
+    },
+    {
+      "id": "flow.osc3.type",
+      "binding": "osc3.type",
+      "label": "Oscillator 3 algorithm",
+      "x": 310,
+      "y": 361,
+      "w": 120,
+      "h": 20,
+      "kind": "menu"
+    },
+    {
+      "id": "flow.osc3.mute",
+      "binding": "osc3.mute",
+      "label": "M",
+      "x": 440,
+      "y": 361,
+      "w": 23,
+      "h": 20,
+      "kind": "toggle"
+    },
+    {
+      "id": "flow.osc3.level",
+      "binding": "osc3.level",
+      "label": "3",
+      "x": 594,
+      "y": 247,
+      "w": 26,
+      "h": 66,
+      "kind": "fader",
+      "fontSize": 10
+    },
+    {
+      "id": "flow.filter1.type",
+      "binding": "filter1.type",
+      "label": "Filter 1 type",
+      "x": 677,
+      "y": 215,
+      "w": 133,
+      "h": 23,
+      "kind": "menu"
+    },
+    {
+      "id": "flow.filter2.type",
+      "binding": "filter2.type",
+      "label": "Filter 2 type",
+      "x": 677,
+      "y": 327,
+      "w": 133,
+      "h": 23,
+      "kind": "menu"
+    },
+    {
+      "id": "flow.fx1.type",
+      "binding": "fx1.type",
+      "label": "FX slot 1",
+      "x": 1060,
+      "y": 188,
+      "w": 96,
+      "h": 21,
+      "kind": "menu"
+    },
+    {
+      "id": "flow.fx2.type",
+      "binding": "fx2.type",
+      "label": "FX slot 2",
+      "x": 1060,
+      "y": 212,
+      "w": 96,
+      "h": 21,
+      "kind": "menu"
+    },
+    {
+      "id": "flow.fx3.type",
+      "binding": "fx3.type",
+      "label": "FX slot 3",
+      "x": 1060,
+      "y": 236,
+      "w": 96,
+      "h": 21,
+      "kind": "menu"
+    },
+    {
+      "id": "flow.fx4.type",
+      "binding": "fx4.type",
+      "label": "FX slot 4",
+      "x": 1060,
+      "y": 260,
+      "w": 96,
+      "h": 21,
+      "kind": "menu"
+    },
+    {
+      "id": "flow.fx5.type",
+      "binding": "fx5.type",
+      "label": "FX slot 5",
+      "x": 1060,
+      "y": 284,
+      "w": 96,
+      "h": 21,
+      "kind": "menu"
+    },
+    {
+      "id": "flow.fx6.type",
+      "binding": "fx6.type",
+      "label": "FX slot 6",
+      "x": 1060,
+      "y": 308,
+      "w": 96,
+      "h": 21,
+      "kind": "menu"
+    },
+    {
+      "id": "flow.fx7.type",
+      "binding": "fx7.type",
+      "label": "FX slot 7",
+      "x": 1060,
+      "y": 332,
+      "w": 96,
+      "h": 21,
+      "kind": "menu"
+    },
+    {
+      "id": "flow.fx8.type",
+      "binding": "fx8.type",
+      "label": "FX slot 8",
+      "x": 1060,
+      "y": 356,
+      "w": 96,
+      "h": 21,
+      "kind": "menu"
+    },
+    {
+      "id": "inspector.filter1.type",
+      "binding": "filter1.type",
+      "label": "Filter 1 algorithm",
+      "x": 1368,
+      "y": 109,
+      "w": 198,
+      "h": 25,
+      "kind": "menu"
+    },
+    {
+      "id": "inspector.filter1.subtype",
+      "binding": "filter1.subtype",
+      "label": "Filter 1 subtype",
+      "x": 1368,
+      "y": 141,
+      "w": 198,
+      "h": 25,
+      "kind": "menu"
+    },
+    {
+      "id": "inspector.filter1.cutoff",
+      "binding": "filter1.cutoff",
+      "label": "Cutoff",
+      "x": 1384,
+      "y": 186,
+      "w": 102,
+      "h": 121,
+      "kind": "knob",
+      "fontSize": 13
+    },
+    {
+      "id": "inspector.shared-drive",
+      "binding": "filter.drive",
+      "label": "WS drive",
+      "x": 1294,
+      "y": 211,
+      "w": 79,
+      "h": 96,
+      "kind": "knob",
+      "fontSize": 12,
+      "accent": "secondary"
+    },
+    {
+      "id": "inspector.filter1.resonance",
+      "binding": "filter1.resonance",
+      "label": "Resonance",
+      "x": 1492,
+      "y": 211,
+      "w": 79,
+      "h": 96,
+      "kind": "knob",
+      "fontSize": 12,
+      "accent": "secondary"
+    },
+    {
+      "id": "inspector.filter2.cutoff",
+      "binding": "filter2.cutoff",
+      "label": "F2 cutoff",
+      "x": 1295,
+      "y": 315,
+      "w": 83,
+      "h": 90,
+      "kind": "knob",
+      "fontSize": 12,
+      "accent": "secondary"
+    },
+    {
+      "id": "inspector.filter2.resonance",
+      "binding": "filter2.resonance",
+      "label": "F2 reso",
+      "x": 1389,
+      "y": 315,
+      "w": 83,
+      "h": 90,
+      "kind": "knob",
+      "fontSize": 12,
+      "accent": "secondary"
+    },
+    {
+      "id": "inspector.filter1.envmod",
+      "binding": "filter1.envmod",
+      "label": "F1 env amt",
+      "x": 1483,
+      "y": 315,
+      "w": 83,
+      "h": 90,
+      "kind": "knob",
+      "fontSize": 12
+    },
+    {
+      "id": "inspector.filter2.subtype",
+      "binding": "filter2.subtype",
+      "label": "Filter 2 subtype",
+      "x": 1380,
+      "y": 405,
+      "w": 184,
+      "h": 23,
+      "kind": "menu"
+    },
+    {
+      "id": "env1.mode",
+      "binding": "env1.mode",
+      "label": "Envelope mode",
+      "x": 509,
+      "y": 606,
+      "w": 161,
+      "h": 23,
+      "kind": "menu"
+    },
+    {
+      "id": "env1.attack",
+      "binding": "env1.attack",
+      "label": "A",
+      "x": 475,
+      "y": 650,
+      "w": 45,
+      "h": 79,
+      "kind": "knob",
+      "fontSize": 11,
+      "accent": "secondary"
+    },
+    {
+      "id": "env1.decay",
+      "binding": "env1.decay",
+      "label": "D",
+      "x": 524,
+      "y": 650,
+      "w": 45,
+      "h": 79,
+      "kind": "knob",
+      "fontSize": 11,
+      "accent": "secondary"
+    },
+    {
+      "id": "env1.sustain",
+      "binding": "env1.sustain",
+      "label": "S",
+      "x": 573,
+      "y": 650,
+      "w": 45,
+      "h": 79,
+      "kind": "knob",
+      "fontSize": 11,
+      "accent": "accent"
+    },
+    {
+      "id": "env1.release",
+      "binding": "env1.release",
+      "label": "R",
+      "x": 622,
+      "y": 650,
+      "w": 45,
+      "h": 79,
+      "kind": "knob",
+      "fontSize": 11,
+      "accent": "accent"
+    },
+    {
+      "id": "lfo1.shape",
+      "binding": "lfo1.shape",
+      "label": "LFO shape",
+      "x": 1014,
+      "y": 606,
+      "w": 146,
+      "h": 23,
+      "kind": "menu"
+    },
+    {
+      "id": "lfo1.rate",
+      "binding": "lfo1.rate",
+      "label": "Rate",
+      "x": 868,
+      "y": 648,
+      "w": 64,
+      "h": 82,
+      "kind": "knob",
+      "fontSize": 11,
+      "accent": "secondary"
+    },
+    {
+      "id": "lfo1.phase",
+      "binding": "lfo1.phase",
+      "label": "Phase",
+      "x": 940,
+      "y": 648,
+      "w": 64,
+      "h": 82,
+      "kind": "knob",
+      "fontSize": 11,
+      "accent": "secondary"
+    },
+    {
+      "id": "lfo1.deform",
+      "binding": "lfo1.deform",
+      "label": "Deform",
+      "x": 1012,
+      "y": 648,
+      "w": 64,
+      "h": 82,
+      "kind": "knob",
+      "fontSize": 11,
+      "accent": "secondary"
+    },
+    {
+      "id": "lfo1.magnitude",
+      "binding": "lfo1.magnitude",
+      "label": "Depth",
+      "x": 1084,
+      "y": 648,
+      "w": 64,
+      "h": 82,
+      "kind": "knob",
+      "fontSize": 11,
+      "accent": "secondary"
+    },
+    {
+      "id": "macro1",
+      "binding": "macro1",
+      "x": 20,
+      "y": 790,
+      "w": 78,
+      "h": 90,
+      "kind": "knob",
+      "fontSize": 12
+    },
+    {
+      "id": "macro2",
+      "binding": "macro2",
+      "x": 113,
+      "y": 790,
+      "w": 78,
+      "h": 90,
+      "kind": "knob",
+      "fontSize": 12
+    },
+    {
+      "id": "macro3",
+      "binding": "macro3",
+      "x": 206,
+      "y": 790,
+      "w": 78,
+      "h": 90,
+      "kind": "knob",
+      "fontSize": 12
+    },
+    {
+      "id": "macro4",
+      "binding": "macro4",
+      "x": 299,
+      "y": 790,
+      "w": 78,
+      "h": 90,
+      "kind": "knob",
+      "fontSize": 12
+    },
+    {
+      "id": "macro5",
+      "binding": "macro5",
+      "x": 20,
+      "y": 883,
+      "w": 78,
+      "h": 90,
+      "kind": "knob",
+      "fontSize": 12
+    },
+    {
+      "id": "macro6",
+      "binding": "macro6",
+      "x": 113,
+      "y": 883,
+      "w": 78,
+      "h": 90,
+      "kind": "knob",
+      "fontSize": 12
+    },
+    {
+      "id": "macro7",
+      "binding": "macro7",
+      "x": 206,
+      "y": 883,
+      "w": 78,
+      "h": 90,
+      "kind": "knob",
+      "fontSize": 12
+    },
+    {
+      "id": "macro8",
+      "binding": "macro8",
+      "x": 299,
+      "y": 883,
+      "w": 78,
+      "h": 90,
+      "kind": "knob",
+      "fontSize": 12
+    },
+    {
+      "id": "output.scene-mode",
+      "binding": "scene.mode",
+      "label": "Scene mode",
+      "x": 1134,
+      "y": 790,
+      "w": 99,
+      "h": 27,
+      "kind": "menu"
+    },
+    {
+      "id": "output.poly-mode",
+      "binding": "scene.polymode",
+      "label": "Voice mode",
+      "x": 1241,
+      "y": 790,
+      "w": 132,
+      "h": 27,
+      "kind": "menu"
+    },
+    {
+      "id": "output.glide",
+      "binding": "scene.portamento",
+      "label": "Glide",
+      "x": 1135,
+      "y": 834,
+      "w": 66,
+      "h": 102,
+      "kind": "knob",
+      "fontSize": 12,
+      "accent": "secondary"
+    },
+    {
+      "id": "output.width",
+      "binding": "scene.width",
+      "label": "Spread",
+      "x": 1209,
+      "y": 834,
+      "w": 66,
+      "h": 102,
+      "kind": "knob",
+      "fontSize": 12,
+      "accent": "secondary"
+    },
+    {
+      "id": "output.tune",
+      "binding": "scene.pitch",
+      "label": "Tune",
+      "x": 1283,
+      "y": 834,
+      "w": 66,
+      "h": 102,
+      "kind": "knob",
+      "fontSize": 12,
+      "accent": "secondary"
+    },
+    {
+      "id": "output.scene-volume",
+      "binding": "scene.volume",
+      "label": "Scene",
+      "x": 1357,
+      "y": 834,
+      "w": 66,
+      "h": 102,
+      "kind": "knob",
+      "fontSize": 12,
+      "accent": "secondary"
+    },
+    {
+      "id": "output.master",
+      "binding": "master.volume",
+      "label": "Master gain",
+      "x": 1427,
+      "y": 815,
+      "w": 89,
+      "h": 122,
+      "kind": "knob",
+      "fontSize": 13
+    }
+  ],
+  "adaptations": [
+    "The uploaded concept is the visual target, not a claim that the underlying synthesizer supports arbitrary modular cable rewiring. The routing selector exposes Surge's real eight routing configurations.",
+    "The routing canvas uses the reference's node geometry. Native menus inside oscillator, filter and effect nodes, mixer faders, and the right-hand parameter inspector control actual engine parameters.",
+    "The inspector promotes Filter 1 while its lower knob row also exposes Filter 2 cutoff/resonance; this replaces the concept's redundant velocity/keytrack row and keeps both filters immediately editable.",
+    "All eight macros are bound to the processor. Their actual names and current values replace reference-only labels and fabricated readouts.",
+    "Eight real FX algorithm selectors occupy the displayed chain. Remaining native slots and detailed effect parameters stay available through Full editor.",
+    "The plot is a qualified filter-response preview. Output meters reflect actual signal levels, and the full native oscilloscope is available through Open scope.",
+    "The header uses functioning preset navigation, Scene A/B, skin selection and Full editor access. Exact generated logos, miniature icons, and inert concept tabs are not reproduced as fake controls.",
+    "The modulation panel reports native patch routes; route creation and detailed editing use the existing modulation editor.",
+    "These are native vector controls and labels, not an image pasted over the synth. Pixel-identical photographic materials, illustration details and impossible generated labels are not claimed."
+  ]
+}

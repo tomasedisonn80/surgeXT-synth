@@ -1,0 +1,121 @@
+name: Native reference workspaces
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/reference-workspaces.yml'
+      - 'resources/data/skins/**/workspace.json'
+      - 'resources/data/skins/reference-*/**'
+      - 'scripts/reference-workspaces/**'
+      - 'src/surge-xt/gui/reference/**'
+      - 'src/surge-xt/SurgeSynthEditor.cpp'
+      - 'src/surge-xt/SurgeSynthEditor.h'
+      - 'src/surge-xt/CMakeLists.txt'
+      - 'src/surge-xt/xt-tests/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: reference-workspaces-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  native-screenshots:
+    name: Linux native UI and parameter tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      SURGE_DATA_HOME: ${{ github.workspace }}/resources/data
+      SURGE_REFERENCE_SCREENSHOTS: ${{ github.workspace }}/screenshot-artifact
+      CCACHE_DIR: ${{ github.workspace }}/.ccache-reference
+      CCACHE_MAXSIZE: 600M
+    steps:
+      - name: Check out the exact commit and dependencies
+        uses: actions/checkout@v6
+        with:
+          submodules: recursive
+          persist-credentials: false
+
+      - name: Prepare native build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends --yes \
+            build-essential cmake ninja-build pkg-config ccache \
+            libasound2-dev libfreetype-dev libfontconfig1-dev \
+            libx11-dev libxext-dev libxrandr-dev libxcursor-dev \
+            libxinerama-dev libxrender-dev libxcomposite-dev \
+            xvfb xauth
+
+      - name: Restore native compiler cache
+        uses: actions/cache/restore@v4
+        with:
+          path: .ccache-reference
+          key: reference-native-${{ runner.os }}-${{ github.sha }}
+          restore-keys: reference-native-${{ runner.os }}-
+
+      - name: Record build and capture provenance
+        run: |
+          mkdir -p screenshot-artifact
+          {
+            echo "Source commit: $GITHUB_SHA"
+            echo "Workflow run: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+            echo "Capture method: native JUCE component snapshots attached to SurgeSynthProcessor"
+            echo "Reference canvas: 1586 x 992 logical pixels"
+            echo "Audio device: none (processor tests render audio offline)"
+            cmake --version
+            c++ --version
+          } > screenshot-artifact/build-provenance.txt
+
+      - name: Validate reference workspace packages
+        run: |
+          python3 scripts/reference-workspaces/validate.py 2>&1 | tee screenshot-artifact/manifest-validation.log
+
+      - name: Configure native test build
+        run: |
+          cmake -S . -B build -GNinja \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_CXX_COMPILER_LAUNCHER=ccache \
+            -DCMAKE_C_COMPILER_LAUNCHER=ccache \
+            -DENABLE_LTO=OFF \
+            -DSURGE_BUILD_TESTRUNNER=ON \
+            -DSURGE_BUILD_FX=OFF \
+            -DSURGE_BUILD_CLAP=OFF \
+            -DSURGE_SKIP_VST3=ON \
+            -DSURGE_SKIP_ALSA=ON \
+            -DSURGE_SKIP_JACK=ON \
+            -DSURGE_COPY_AFTER_BUILD=OFF \
+            2>&1 | tee screenshot-artifact/configure.log
+
+      - name: Build the real synthesizer test executable
+        run: |
+          cmake --build build --target surge-xt-tests --parallel 2 \
+            2>&1 | tee screenshot-artifact/build.log
+
+      - name: Test live controls and capture all ten native workspaces
+        run: |
+          xvfb-run --auto-servernum --server-args='-screen 0 1920x1200x24' \
+            build/src/surge-xt/xt-tests/surge-xt-tests '[reference-workspaces]' \
+            2>&1 | tee screenshot-artifact/native-tests.log
+
+      - name: Upload native screenshots and diagnostic evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-reference-workspaces-${{ github.sha }}
+          path: screenshot-artifact/
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Preserve compiled dependencies for the next verification pass
+        if: always() && !cancelled()
+        uses: actions/cache/save@v4
+        with:
+          path: .ccache-reference
+          key: reference-native-${{ runner.os }}-${{ github.sha }}

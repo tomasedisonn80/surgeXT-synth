@@ -1,0 +1,1168 @@
+{
+  "schema": 1,
+  "id": "02-ivory-atelier",
+  "name": "02 Ivory Atelier",
+  "reference": "02_Ivory_Atelier.png",
+  "width": 1586,
+  "height": 992,
+  "style": "ivory",
+  "font": "serif",
+  "headerHeight": 92,
+  "radius": 14,
+  "glow": 0.035,
+  "palette": {
+    "background": "#E5D5C2",
+    "panel": "#EEE2D3",
+    "border": "#AE9572",
+    "text": "#24271C",
+    "muted": "#625845",
+    "accent": "#31543A",
+    "secondary": "#A2DD8D",
+    "display": "#102B1B",
+    "knob": "#F3E8D7",
+    "red": "#A24B35",
+    "yellow": "#B9A05E",
+    "blue": "#45696C"
+  },
+  "panels": [
+    {
+      "id": "ivory.oscillators",
+      "kind": "tabs",
+      "title": "OSCILLATORS",
+      "x": 4,
+      "y": 95,
+      "w": 498,
+      "h": 565
+    },
+    {
+      "id": "ivory.oscillator1",
+      "kind": "oscillator",
+      "title": "OSC 1",
+      "index": 1,
+      "variant": "terrain",
+      "x": 13,
+      "y": 143,
+      "w": 486,
+      "h": 172,
+      "plot": [
+        23,
+        190,
+        241,
+        119
+      ]
+    },
+    {
+      "id": "ivory.oscillator2",
+      "kind": "oscillator",
+      "title": "OSC 2",
+      "index": 2,
+      "variant": "horizontal",
+      "x": 13,
+      "y": 320,
+      "w": 486,
+      "h": 172,
+      "plot": [
+        23,
+        367,
+        241,
+        119
+      ]
+    },
+    {
+      "id": "ivory.oscillator3",
+      "kind": "oscillator",
+      "title": "OSC 3",
+      "index": 3,
+      "variant": "terrain",
+      "x": 13,
+      "y": 497,
+      "w": 486,
+      "h": 162,
+      "plot": [
+        23,
+        542,
+        241,
+        104
+      ]
+    },
+    {
+      "id": "ivory.filters",
+      "kind": "tabs",
+      "title": "FILTERS",
+      "x": 508,
+      "y": 95,
+      "w": 615,
+      "h": 326
+    },
+    {
+      "id": "ivory.filter1",
+      "kind": "filter",
+      "title": "FILTER 1",
+      "index": 1,
+      "x": 517,
+      "y": 129,
+      "w": 257,
+      "h": 282,
+      "plot": [
+        526,
+        176,
+        237,
+        138
+      ]
+    },
+    {
+      "id": "ivory.filter2",
+      "kind": "filter",
+      "title": "FILTER 2",
+      "index": 2,
+      "x": 852,
+      "y": 129,
+      "w": 262,
+      "h": 282,
+      "plot": [
+        861,
+        176,
+        240,
+        138
+      ]
+    },
+    {
+      "id": "ivory.routing",
+      "kind": "routing",
+      "title": "ROUTE",
+      "variant": "vertical",
+      "x": 778,
+      "y": 129,
+      "w": 70,
+      "h": 282,
+      "plot": [
+        790,
+        201,
+        45,
+        98
+      ]
+    },
+    {
+      "id": "ivory.mixer",
+      "kind": "mixer",
+      "title": "OSC MIXER",
+      "variant": "knobs",
+      "x": 508,
+      "y": 424,
+      "w": 615,
+      "h": 236
+    },
+    {
+      "id": "ivory.ring12",
+      "kind": "tabs",
+      "title": "RING 1 × 2",
+      "x": 909,
+      "y": 463,
+      "w": 204,
+      "h": 93
+    },
+    {
+      "id": "ivory.ring23",
+      "kind": "tabs",
+      "title": "RING 2 × 3",
+      "x": 909,
+      "y": 561,
+      "w": 204,
+      "h": 93
+    },
+    {
+      "id": "ivory.macros",
+      "kind": "macros",
+      "title": "MACROS",
+      "x": 1127,
+      "y": 95,
+      "w": 455,
+      "h": 205
+    },
+    {
+      "id": "ivory.envelopes",
+      "kind": "envelope",
+      "title": "ENVELOPES · AMP / FILTER",
+      "index": 1,
+      "variant": "large",
+      "x": 1127,
+      "y": 306,
+      "w": 455,
+      "h": 354,
+      "plot": [
+        1138,
+        357,
+        320,
+        139
+      ]
+    },
+    {
+      "id": "ivory.matrix",
+      "kind": "matrix",
+      "title": "MODULATION MATRIX",
+      "x": 4,
+      "y": 667,
+      "w": 541,
+      "h": 305
+    },
+    {
+      "id": "ivory.effects",
+      "kind": "effects",
+      "title": "FX CHAIN",
+      "variant": "large",
+      "x": 552,
+      "y": 667,
+      "w": 593,
+      "h": 305
+    },
+    {
+      "id": "ivory.fx1",
+      "kind": "tabs",
+      "title": "SELECTED EFFECT · SLOT 1",
+      "x": 561,
+      "y": 818,
+      "w": 575,
+      "h": 121
+    },
+    {
+      "id": "ivory.analyzer",
+      "kind": "analyzer",
+      "title": "ANALYZER / OUTPUT",
+      "x": 1154,
+      "y": 667,
+      "w": 428,
+      "h": 305,
+      "plot": [
+        1170,
+        741,
+        330,
+        183
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "id": "ivory.osc1.type",
+      "binding": "osc1.type",
+      "x": 124,
+      "y": 153,
+      "w": 157,
+      "h": 25,
+      "kind": "menu",
+      "label": "Oscillator 1 algorithm"
+    },
+    {
+      "id": "ivory.osc1.solo",
+      "binding": "osc1.solo",
+      "x": 438,
+      "y": 154,
+      "w": 24,
+      "h": 23,
+      "kind": "toggle",
+      "label": "S"
+    },
+    {
+      "id": "ivory.osc1.mute",
+      "binding": "osc1.mute",
+      "x": 467,
+      "y": 154,
+      "w": 24,
+      "h": 23,
+      "kind": "toggle",
+      "label": "M"
+    },
+    {
+      "id": "ivory.osc1.param0",
+      "binding": "osc1.param0",
+      "x": 276,
+      "y": 215,
+      "w": 46,
+      "h": 79,
+      "kind": "knob",
+      "fontSize": 10.5
+    },
+    {
+      "id": "ivory.osc1.param1",
+      "binding": "osc1.param1",
+      "x": 329,
+      "y": 215,
+      "w": 46,
+      "h": 79,
+      "kind": "knob",
+      "fontSize": 10.5
+    },
+    {
+      "id": "ivory.osc1.param2",
+      "binding": "osc1.param2",
+      "x": 382,
+      "y": 215,
+      "w": 46,
+      "h": 79,
+      "kind": "knob",
+      "fontSize": 10.5
+    },
+    {
+      "id": "ivory.osc1.octave",
+      "binding": "osc1.octave",
+      "x": 438,
+      "y": 183,
+      "w": 48,
+      "h": 21,
+      "kind": "menu",
+      "label": "Octave"
+    },
+    {
+      "id": "ivory.osc1.pitch",
+      "binding": "osc1.pitch",
+      "x": 436,
+      "y": 208,
+      "w": 54,
+      "h": 83,
+      "kind": "knob",
+      "label": "Tune"
+    },
+    {
+      "id": "ivory.osc1.keytrack",
+      "binding": "osc1.keytrack",
+      "x": 280,
+      "y": 294,
+      "w": 100,
+      "h": 20,
+      "kind": "toggle",
+      "label": "Keytrack"
+    },
+    {
+      "id": "ivory.osc1.retrigger",
+      "binding": "osc1.retrigger",
+      "x": 385,
+      "y": 294,
+      "w": 100,
+      "h": 20,
+      "kind": "toggle",
+      "label": "Retrigger"
+    },
+    {
+      "id": "ivory.osc2.type",
+      "binding": "osc2.type",
+      "x": 124,
+      "y": 330,
+      "w": 157,
+      "h": 25,
+      "kind": "menu",
+      "label": "Oscillator 2 algorithm"
+    },
+    {
+      "id": "ivory.osc2.solo",
+      "binding": "osc2.solo",
+      "x": 438,
+      "y": 331,
+      "w": 24,
+      "h": 23,
+      "kind": "toggle",
+      "label": "S"
+    },
+    {
+      "id": "ivory.osc2.mute",
+      "binding": "osc2.mute",
+      "x": 467,
+      "y": 331,
+      "w": 24,
+      "h": 23,
+      "kind": "toggle",
+      "label": "M"
+    },
+    {
+      "id": "ivory.osc2.param0",
+      "binding": "osc2.param0",
+      "x": 276,
+      "y": 392,
+      "w": 46,
+      "h": 79,
+      "kind": "knob",
+      "fontSize": 10.5
+    },
+    {
+      "id": "ivory.osc2.param1",
+      "binding": "osc2.param1",
+      "x": 329,
+      "y": 392,
+      "w": 46,
+      "h": 79,
+      "kind": "knob",
+      "fontSize": 10.5
+    },
+    {
+      "id": "ivory.osc2.param2",
+      "binding": "osc2.param2",
+      "x": 382,
+      "y": 392,
+      "w": 46,
+      "h": 79,
+      "kind": "knob",
+      "fontSize": 10.5
+    },
+    {
+      "id": "ivory.osc2.octave",
+      "binding": "osc2.octave",
+      "x": 438,
+      "y": 360,
+      "w": 48,
+      "h": 21,
+      "kind": "menu",
+      "label": "Octave"
+    },
+    {
+      "id": "ivory.osc2.pitch",
+      "binding": "osc2.pitch",
+      "x": 436,
+      "y": 385,
+      "w": 54,
+      "h": 83,
+      "kind": "knob",
+      "label": "Tune"
+    },
+    {
+      "id": "ivory.osc2.keytrack",
+      "binding": "osc2.keytrack",
+      "x": 280,
+      "y": 471,
+      "w": 100,
+      "h": 20,
+      "kind": "toggle",
+      "label": "Keytrack"
+    },
+    {
+      "id": "ivory.osc2.retrigger",
+      "binding": "osc2.retrigger",
+      "x": 385,
+      "y": 471,
+      "w": 100,
+      "h": 20,
+      "kind": "toggle",
+      "label": "Retrigger"
+    },
+    {
+      "id": "ivory.osc3.type",
+      "binding": "osc3.type",
+      "x": 124,
+      "y": 507,
+      "w": 157,
+      "h": 25,
+      "kind": "menu",
+      "label": "Oscillator 3 algorithm"
+    },
+    {
+      "id": "ivory.osc3.solo",
+      "binding": "osc3.solo",
+      "x": 438,
+      "y": 508,
+      "w": 24,
+      "h": 23,
+      "kind": "toggle",
+      "label": "S"
+    },
+    {
+      "id": "ivory.osc3.mute",
+      "binding": "osc3.mute",
+      "x": 467,
+      "y": 508,
+      "w": 24,
+      "h": 23,
+      "kind": "toggle",
+      "label": "M"
+    },
+    {
+      "id": "ivory.osc3.param0",
+      "binding": "osc3.param0",
+      "x": 276,
+      "y": 558,
+      "w": 46,
+      "h": 76,
+      "kind": "knob",
+      "fontSize": 10.5
+    },
+    {
+      "id": "ivory.osc3.param1",
+      "binding": "osc3.param1",
+      "x": 329,
+      "y": 558,
+      "w": 46,
+      "h": 76,
+      "kind": "knob",
+      "fontSize": 10.5
+    },
+    {
+      "id": "ivory.osc3.param2",
+      "binding": "osc3.param2",
+      "x": 382,
+      "y": 558,
+      "w": 46,
+      "h": 76,
+      "kind": "knob",
+      "fontSize": 10.5
+    },
+    {
+      "id": "ivory.osc3.octave",
+      "binding": "osc3.octave",
+      "x": 438,
+      "y": 533,
+      "w": 48,
+      "h": 21,
+      "kind": "menu",
+      "label": "Octave"
+    },
+    {
+      "id": "ivory.osc3.pitch",
+      "binding": "osc3.pitch",
+      "x": 436,
+      "y": 559,
+      "w": 54,
+      "h": 76,
+      "kind": "knob",
+      "label": "Tune"
+    },
+    {
+      "id": "ivory.osc3.keytrack",
+      "binding": "osc3.keytrack",
+      "x": 280,
+      "y": 636,
+      "w": 100,
+      "h": 20,
+      "kind": "toggle",
+      "label": "Keytrack"
+    },
+    {
+      "id": "ivory.osc3.retrigger",
+      "binding": "osc3.retrigger",
+      "x": 385,
+      "y": 636,
+      "w": 100,
+      "h": 20,
+      "kind": "toggle",
+      "label": "Retrigger"
+    },
+    {
+      "id": "ivory.filter1.type",
+      "binding": "filter1.type",
+      "x": 623,
+      "y": 139,
+      "w": 140,
+      "h": 25,
+      "kind": "menu",
+      "label": "Filter 1 type"
+    },
+    {
+      "id": "ivory.filter2.type",
+      "binding": "filter2.type",
+      "x": 972,
+      "y": 139,
+      "w": 129,
+      "h": 25,
+      "kind": "menu",
+      "label": "Filter 2 type"
+    },
+    {
+      "id": "ivory.filter1.cutoff",
+      "binding": "filter1.cutoff",
+      "x": 529,
+      "y": 325,
+      "w": 57,
+      "h": 79,
+      "kind": "knob",
+      "label": "FREQ"
+    },
+    {
+      "id": "ivory.filter1.resonance",
+      "binding": "filter1.resonance",
+      "x": 592,
+      "y": 325,
+      "w": 57,
+      "h": 79,
+      "kind": "knob",
+      "label": "RES"
+    },
+    {
+      "id": "ivory.filter1.drive",
+      "binding": "filter.drive",
+      "x": 653,
+      "y": 325,
+      "w": 57,
+      "h": 79,
+      "kind": "knob",
+      "label": "SHAPER"
+    },
+    {
+      "id": "ivory.filter1.keytrack",
+      "binding": "filter1.keytrack",
+      "x": 714,
+      "y": 325,
+      "w": 57,
+      "h": 79,
+      "kind": "knob",
+      "label": "KEY"
+    },
+    {
+      "id": "ivory.filter2.cutoff",
+      "binding": "filter2.cutoff",
+      "x": 865,
+      "y": 325,
+      "w": 57,
+      "h": 79,
+      "kind": "knob",
+      "label": "FREQ"
+    },
+    {
+      "id": "ivory.filter2.resonance",
+      "binding": "filter2.resonance",
+      "x": 927,
+      "y": 325,
+      "w": 57,
+      "h": 79,
+      "kind": "knob",
+      "label": "RES"
+    },
+    {
+      "id": "ivory.filter2.envmod",
+      "binding": "filter2.envmod",
+      "x": 988,
+      "y": 325,
+      "w": 57,
+      "h": 79,
+      "kind": "knob",
+      "label": "ENV"
+    },
+    {
+      "id": "ivory.filter2.keytrack",
+      "binding": "filter2.keytrack",
+      "x": 1049,
+      "y": 325,
+      "w": 57,
+      "h": 79,
+      "kind": "knob",
+      "label": "KEY"
+    },
+    {
+      "id": "ivory.routing.mode",
+      "binding": "routing",
+      "x": 783,
+      "y": 160,
+      "w": 60,
+      "h": 25,
+      "kind": "menu",
+      "label": "Routing"
+    },
+    {
+      "id": "ivory.routing.balance",
+      "binding": "filter.balance",
+      "x": 783,
+      "y": 314,
+      "w": 60,
+      "h": 84,
+      "kind": "knob",
+      "label": "BLEND"
+    },
+    {
+      "id": "ivory.mixer.osc1.level",
+      "binding": "osc1.level",
+      "x": 531,
+      "y": 478,
+      "w": 79,
+      "h": 116,
+      "kind": "knob",
+      "label": "OSC 1"
+    },
+    {
+      "id": "ivory.mixer.osc1.solo",
+      "binding": "osc1.solo",
+      "x": 539,
+      "y": 607,
+      "w": 26,
+      "h": 25,
+      "kind": "toggle",
+      "label": "S"
+    },
+    {
+      "id": "ivory.mixer.osc1.mute",
+      "binding": "osc1.mute",
+      "x": 574,
+      "y": 607,
+      "w": 26,
+      "h": 25,
+      "kind": "toggle",
+      "label": "M"
+    },
+    {
+      "id": "ivory.mixer.osc2.level",
+      "binding": "osc2.level",
+      "x": 622,
+      "y": 478,
+      "w": 79,
+      "h": 116,
+      "kind": "knob",
+      "label": "OSC 2"
+    },
+    {
+      "id": "ivory.mixer.osc2.solo",
+      "binding": "osc2.solo",
+      "x": 630,
+      "y": 607,
+      "w": 26,
+      "h": 25,
+      "kind": "toggle",
+      "label": "S"
+    },
+    {
+      "id": "ivory.mixer.osc2.mute",
+      "binding": "osc2.mute",
+      "x": 665,
+      "y": 607,
+      "w": 26,
+      "h": 25,
+      "kind": "toggle",
+      "label": "M"
+    },
+    {
+      "id": "ivory.mixer.osc3.level",
+      "binding": "osc3.level",
+      "x": 713,
+      "y": 478,
+      "w": 79,
+      "h": 116,
+      "kind": "knob",
+      "label": "OSC 3"
+    },
+    {
+      "id": "ivory.mixer.osc3.solo",
+      "binding": "osc3.solo",
+      "x": 721,
+      "y": 607,
+      "w": 26,
+      "h": 25,
+      "kind": "toggle",
+      "label": "S"
+    },
+    {
+      "id": "ivory.mixer.osc3.mute",
+      "binding": "osc3.mute",
+      "x": 756,
+      "y": 607,
+      "w": 26,
+      "h": 25,
+      "kind": "toggle",
+      "label": "M"
+    },
+    {
+      "id": "ivory.mixer.noise.level",
+      "binding": "noise.level",
+      "x": 804,
+      "y": 478,
+      "w": 79,
+      "h": 116,
+      "kind": "knob",
+      "label": "NOISE"
+    },
+    {
+      "id": "ivory.mixer.noise.solo",
+      "binding": "noise.solo",
+      "x": 812,
+      "y": 607,
+      "w": 26,
+      "h": 25,
+      "kind": "toggle",
+      "label": "S"
+    },
+    {
+      "id": "ivory.mixer.noise.mute",
+      "binding": "noise.mute",
+      "x": 847,
+      "y": 607,
+      "w": 26,
+      "h": 25,
+      "kind": "toggle",
+      "label": "M"
+    },
+    {
+      "id": "ivory.ring12.mute",
+      "binding": "ring12.mute",
+      "x": 923,
+      "y": 500,
+      "w": 76,
+      "h": 25,
+      "kind": "toggle",
+      "label": "Mute"
+    },
+    {
+      "id": "ivory.ring12.level",
+      "binding": "ring12.level",
+      "x": 1028,
+      "y": 487,
+      "w": 70,
+      "h": 64,
+      "kind": "knob",
+      "label": "AMOUNT"
+    },
+    {
+      "id": "ivory.ring23.mute",
+      "binding": "ring23.mute",
+      "x": 923,
+      "y": 598,
+      "w": 76,
+      "h": 25,
+      "kind": "toggle",
+      "label": "Mute"
+    },
+    {
+      "id": "ivory.ring23.level",
+      "binding": "ring23.level",
+      "x": 1028,
+      "y": 585,
+      "w": 70,
+      "h": 64,
+      "kind": "knob",
+      "label": "AMOUNT"
+    },
+    {
+      "id": "ivory.macro1",
+      "binding": "macro1",
+      "x": 1158,
+      "y": 126,
+      "w": 74,
+      "h": 76,
+      "kind": "knob"
+    },
+    {
+      "id": "ivory.macro2",
+      "binding": "macro2",
+      "x": 1247,
+      "y": 126,
+      "w": 74,
+      "h": 76,
+      "kind": "knob"
+    },
+    {
+      "id": "ivory.macro3",
+      "binding": "macro3",
+      "x": 1336,
+      "y": 126,
+      "w": 74,
+      "h": 76,
+      "kind": "knob"
+    },
+    {
+      "id": "ivory.macro4",
+      "binding": "macro4",
+      "x": 1425,
+      "y": 126,
+      "w": 74,
+      "h": 76,
+      "kind": "knob"
+    },
+    {
+      "id": "ivory.macro5",
+      "binding": "macro5",
+      "x": 1158,
+      "y": 208,
+      "w": 74,
+      "h": 76,
+      "kind": "knob"
+    },
+    {
+      "id": "ivory.macro6",
+      "binding": "macro6",
+      "x": 1247,
+      "y": 208,
+      "w": 74,
+      "h": 76,
+      "kind": "knob"
+    },
+    {
+      "id": "ivory.macro7",
+      "binding": "macro7",
+      "x": 1336,
+      "y": 208,
+      "w": 74,
+      "h": 76,
+      "kind": "knob"
+    },
+    {
+      "id": "ivory.macro8",
+      "binding": "macro8",
+      "x": 1425,
+      "y": 208,
+      "w": 74,
+      "h": 76,
+      "kind": "knob"
+    },
+    {
+      "id": "ivory.env1.attack",
+      "binding": "env1.attack",
+      "x": 1148,
+      "y": 505,
+      "w": 66,
+      "h": 77,
+      "kind": "knob",
+      "label": "A"
+    },
+    {
+      "id": "ivory.env2.attack",
+      "binding": "env2.attack",
+      "x": 1148,
+      "y": 586,
+      "w": 66,
+      "h": 66,
+      "kind": "knob",
+      "label": "A2"
+    },
+    {
+      "id": "ivory.env1.decay",
+      "binding": "env1.decay",
+      "x": 1231,
+      "y": 505,
+      "w": 66,
+      "h": 77,
+      "kind": "knob",
+      "label": "D"
+    },
+    {
+      "id": "ivory.env2.decay",
+      "binding": "env2.decay",
+      "x": 1231,
+      "y": 586,
+      "w": 66,
+      "h": 66,
+      "kind": "knob",
+      "label": "D2"
+    },
+    {
+      "id": "ivory.env1.sustain",
+      "binding": "env1.sustain",
+      "x": 1314,
+      "y": 505,
+      "w": 66,
+      "h": 77,
+      "kind": "knob",
+      "label": "S"
+    },
+    {
+      "id": "ivory.env2.sustain",
+      "binding": "env2.sustain",
+      "x": 1314,
+      "y": 586,
+      "w": 66,
+      "h": 66,
+      "kind": "knob",
+      "label": "S2"
+    },
+    {
+      "id": "ivory.env1.release",
+      "binding": "env1.release",
+      "x": 1397,
+      "y": 505,
+      "w": 66,
+      "h": 77,
+      "kind": "knob",
+      "label": "R"
+    },
+    {
+      "id": "ivory.env2.release",
+      "binding": "env2.release",
+      "x": 1397,
+      "y": 586,
+      "w": 66,
+      "h": 66,
+      "kind": "knob",
+      "label": "R2"
+    },
+    {
+      "id": "ivory.env1.mode",
+      "binding": "env1.mode",
+      "x": 1474,
+      "y": 357,
+      "w": 94,
+      "h": 29,
+      "kind": "menu",
+      "label": "Envelope model"
+    },
+    {
+      "id": "ivory.amp.velocity",
+      "binding": "amp.velocity",
+      "x": 1484,
+      "y": 397,
+      "w": 76,
+      "h": 83,
+      "kind": "knob",
+      "label": "VEL"
+    },
+    {
+      "id": "ivory.amp.level",
+      "binding": "amp.level",
+      "x": 1484,
+      "y": 493,
+      "w": 76,
+      "h": 81,
+      "kind": "knob",
+      "label": "AMP"
+    },
+    {
+      "id": "ivory.scene.width",
+      "binding": "scene.width",
+      "x": 1484,
+      "y": 581,
+      "w": 76,
+      "h": 72,
+      "kind": "knob",
+      "label": "WIDTH"
+    },
+    {
+      "id": "ivory.fx1.type",
+      "binding": "fx1.type",
+      "x": 562,
+      "y": 772,
+      "w": 66,
+      "h": 27,
+      "kind": "menu",
+      "label": "Effect slot 1"
+    },
+    {
+      "id": "ivory.fx2.type",
+      "binding": "fx2.type",
+      "x": 634,
+      "y": 772,
+      "w": 66,
+      "h": 27,
+      "kind": "menu",
+      "label": "Effect slot 2"
+    },
+    {
+      "id": "ivory.fx3.type",
+      "binding": "fx3.type",
+      "x": 706,
+      "y": 772,
+      "w": 66,
+      "h": 27,
+      "kind": "menu",
+      "label": "Effect slot 3"
+    },
+    {
+      "id": "ivory.fx4.type",
+      "binding": "fx4.type",
+      "x": 778,
+      "y": 772,
+      "w": 66,
+      "h": 27,
+      "kind": "menu",
+      "label": "Effect slot 4"
+    },
+    {
+      "id": "ivory.fx5.type",
+      "binding": "fx5.type",
+      "x": 850,
+      "y": 772,
+      "w": 66,
+      "h": 27,
+      "kind": "menu",
+      "label": "Effect slot 5"
+    },
+    {
+      "id": "ivory.fx6.type",
+      "binding": "fx6.type",
+      "x": 922,
+      "y": 772,
+      "w": 66,
+      "h": 27,
+      "kind": "menu",
+      "label": "Effect slot 6"
+    },
+    {
+      "id": "ivory.fx7.type",
+      "binding": "fx7.type",
+      "x": 994,
+      "y": 772,
+      "w": 66,
+      "h": 27,
+      "kind": "menu",
+      "label": "Effect slot 7"
+    },
+    {
+      "id": "ivory.fx8.type",
+      "binding": "fx8.type",
+      "x": 1066,
+      "y": 772,
+      "w": 66,
+      "h": 27,
+      "kind": "menu",
+      "label": "Effect slot 8"
+    },
+    {
+      "id": "ivory.fx1.param0",
+      "binding": "fx1.param0",
+      "x": 703,
+      "y": 841,
+      "w": 72,
+      "h": 89,
+      "kind": "knob",
+      "fontSize": 10.5
+    },
+    {
+      "id": "ivory.fx1.param1",
+      "binding": "fx1.param1",
+      "x": 783,
+      "y": 841,
+      "w": 72,
+      "h": 89,
+      "kind": "knob",
+      "fontSize": 10.5
+    },
+    {
+      "id": "ivory.fx1.param2",
+      "binding": "fx1.param2",
+      "x": 863,
+      "y": 841,
+      "w": 72,
+      "h": 89,
+      "kind": "knob",
+      "fontSize": 10.5
+    },
+    {
+      "id": "ivory.fx1.param3",
+      "binding": "fx1.param3",
+      "x": 943,
+      "y": 841,
+      "w": 72,
+      "h": 89,
+      "kind": "knob",
+      "fontSize": 10.5
+    },
+    {
+      "id": "ivory.fx1.param4",
+      "binding": "fx1.param4",
+      "x": 1023,
+      "y": 841,
+      "w": 72,
+      "h": 89,
+      "kind": "knob",
+      "fontSize": 10.5
+    },
+    {
+      "id": "ivory.master.volume",
+      "binding": "master.volume",
+      "x": 1177,
+      "y": 5,
+      "w": 84,
+      "h": 78,
+      "kind": "knob",
+      "label": "MASTER"
+    }
+  ],
+  "adaptations": [
+    "Native vector materials, serif typography, brass rotary rims, forest-green display wells and measured panel positions reproduce the concept's visual language; this is not a pixel-identical raster clone.",
+    "The common native header retains discoverable Skins and Full editor actions; its master control and preset controls differ from the concept's exact header arrangement.",
+    "All three oscillator previews and all eight macros use real engine state. Algorithm labels remain dynamic rather than displaying the concept's fictitious Hybrid oscillator or fixed wavetable names.",
+    "The concept's four envelope tabs are replaced with the actual amplifier and filter envelope controls. LFO editing and advanced modulator views remain available in the Full editor.",
+    "The reference's Sub block is replaced by the real ring-modulation 2 × 3 mixer stage, rather than presenting an unsupported independent sub oscillator.",
+    "The shared drive control is the real waveshaper drive, not a separate fictional drive stage for each filter. Filter plots are explicitly response previews.",
+    "Eight effect selectors are promoted here; all sixteen native effect slots and full parameter editing remain available through Full FX editor. Unused algorithm-specific controls are disabled rather than mapped to unrelated parameters.",
+    "The analyzer uses real output levels and the native scope action. It does not paint static reference spectrum activity as live audio.",
+    "Modulation assignment is handled by the native modulation editor; reference-only fabricated route values and botanical bitmap ornamentation are not copied into the live interface."
+  ]
+}

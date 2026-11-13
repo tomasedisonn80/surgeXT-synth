@@ -34,6 +34,10 @@
 
 class SurgeGUIEditor;
 class SurgeJUCELookAndFeel;
+namespace Surge::GUI::Reference
+{
+class Workspace;
+}
 
 //==============================================================================
 
@@ -60,6 +64,16 @@ class SurgeSynthEditor : public juce::AudioProcessorEditor,
     };
     void parentHierarchyChanged() override;
     void resetWindowFromSkin();
+
+    // Alternative native workspaces use the same processor and host parameters.
+    // The original editor remains available for every advanced Surge operation.
+    Surge::GUI::Reference::Workspace *getReferenceWorkspace() const
+    {
+        return referenceWorkspace.get();
+    }
+    void showReferenceWorkspace(bool show);
+    void showReferenceSkinMenu();
+    const juce::String &getReferenceWorkspaceError() const { return referenceWorkspaceError; }
 
     void paramsChangedCallback();
     void setEffectType(int i);
@@ -156,6 +170,15 @@ class SurgeSynthEditor : public juce::AudioProcessorEditor,
 
   private:
     std::unique_ptr<SurgeGUIEditor> sge;
+    std::unique_ptr<Surge::GUI::Reference::Workspace> referenceWorkspace;
+    std::unique_ptr<juce::TextButton> returnToReferenceWorkspace;
+    juce::String referenceSkinKey, referenceWorkspaceError;
+    juce::File referenceManifest;
+    juce::int64 referenceSkinModificationTime{0}, referenceLayoutModificationTime{0};
+    int referenceSkinPollCountdown{0};
+    juce::Point<int> referenceWorkspaceSize{1268, 793};
+    void updateReferenceWorkspaceFromSkin(bool force = false);
+    void handleReferenceWorkspaceAction(const juce::String &action);
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SurgeSynthEditor)
 };

@@ -1367,7 +1367,7 @@
     },
     {
       "id": "ivory.fx1.param0",
-      "binding": "fx1.param0",
+      "binding": "fx1.param1",
       "x": 723,
       "y": 844,
       "w": 66,
@@ -1379,7 +1379,7 @@
       "faceDiameter": 50,
       "selectionGroup": "ivory.fx-slot",
       "bindings": {
-        "fx1": "fx1.param0",
+        "fx1": "fx1.param1",
         "fx2": "fx2.param0",
         "fx3": "fx3.param0",
         "fx4": "fx4.param0",
@@ -1391,7 +1391,7 @@
     },
     {
       "id": "ivory.fx1.param1",
-      "binding": "fx1.param1",
+      "binding": "fx1.param2",
       "x": 803,
       "y": 844,
       "w": 66,
@@ -1403,7 +1403,7 @@
       "faceDiameter": 50,
       "selectionGroup": "ivory.fx-slot",
       "bindings": {
-        "fx1": "fx1.param1",
+        "fx1": "fx1.param2",
         "fx2": "fx2.param1",
         "fx3": "fx3.param1",
         "fx4": "fx4.param1",
@@ -1415,7 +1415,7 @@
     },
     {
       "id": "ivory.fx1.param2",
-      "binding": "fx1.param2",
+      "binding": "fx1.param6",
       "x": 881,
       "y": 844,
       "w": 66,
@@ -1427,7 +1427,7 @@
       "faceDiameter": 50,
       "selectionGroup": "ivory.fx-slot",
       "bindings": {
-        "fx1": "fx1.param2",
+        "fx1": "fx1.param6",
         "fx2": "fx2.param2",
         "fx3": "fx3.param2",
         "fx4": "fx4.param2",
@@ -1439,7 +1439,7 @@
     },
     {
       "id": "ivory.fx1.param3",
-      "binding": "fx1.param3",
+      "binding": "fx1.param7",
       "x": 961,
       "y": 844,
       "w": 66,
@@ -1451,7 +1451,7 @@
       "faceDiameter": 50,
       "selectionGroup": "ivory.fx-slot",
       "bindings": {
-        "fx1": "fx1.param3",
+        "fx1": "fx1.param7",
         "fx2": "fx2.param3",
         "fx3": "fx3.param3",
         "fx4": "fx4.param3",
@@ -1505,7 +1505,7 @@
     "The envelope strip provides the actual amp/filter envelopes, LFO 1/2 envelopes and LFO 1\u20134 waveform views. The two additional envelope positions are labelled LFO1 EG and LFO2 EG because Surge has two dedicated scene ADSRs. The four stage controls edit the selected native envelope; its model/shape and decay curve disable where inapplicable.",
     "The reference Sub block is represented by the real ring-modulation 2 \u00d7 3 stage, with its own power/mute control. The engine has no independent sub oscillator matching the illustration.",
     "Filter 1 SHAPER is the real shared waveshaper drive, and Filter 2 ENV is its actual envelope modulation. Live plot footers show those real values rather than inventing an independent drive stage per filter.",
-    "Eight native FX slot cards select a real slot and rebind a single algorithm menu plus its first four parameter controls. Their labels follow the actual algorithm; disabled unused parameters are not remapped to unrelated controls. All sixteen slots and complete editing remain available through the header FX action and Full editor.",
+    "Eight native FX slot cards select a real slot and rebind one algorithm menu and four parameter controls. The default Chorus detail prioritizes actual Rate, Depth, Mix and Width (native slots 1, 2, 6 and 7); Chorus Width retains its native dB unit rather than the concept's percentage. Other slots keep their first four parameter mappings. Labels and unused/disabled state follow the actual algorithm, and all sixteen slots and complete editing remain available through the header FX action and Full editor.",
     "The macro faces follow the reference caption-only treatment; current values remain available through native tooltips and accessibility. Redundant keytrack/retrigger, routing-balance and extra envelope-row controls remain available in the Full editor.",
     "Analyzer and modulation displays use real output samples and assignments. Scope mode navigation, top-level editor actions, routing semantics and generated reference-only features are governed by the shared native implementation rather than frozen image pixels."
   ]

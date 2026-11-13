@@ -1496,7 +1496,7 @@
     "LFO 1 through LFO 4 tabs select the actual source preview and rebind shape, rate, fade-in attack, phase, polarity and trigger mode. The full editor retains tempo-sync and all additional LFO parameters.",
     "Per-filter envelope depth is labelled ENV instead of pretending to be an independent filter drive. Native shared waveshaper drive is retained in the full editor. Filter routing remains a schematic of actual native modes.",
     "The eight FX cards select real native slots. The algorithm menu and four detail knobs rebind to the selected slot; labels and values always come from its actual current algorithm. The first slot exposes parameter indices 4, 1, 5 and 10, which are Drive, pre-EQ frequency, Feedback and Output for the showcased Distortion; other slots expose indices 0 through 3. All sixteen slots and every parameter remain in the full editor.",
-    "The FX inset is a decorative algorithm-category pictogram, not a fabricated transfer response. Output spectrum, meters, wavetable frames and envelope traces use current processor data.",
+    "The FX inset renders the selected slot's real Distortion waveshaper transfer when available, explicitly labelled Shaper only; the preview excludes the effect's EQ, feedback and output stages. Other algorithms retain labelled category pictograms. Output spectrum, meters, wavetable frames and envelope traces use current processor data.",
     "Macro values stay accessible and available in hover descriptions while the compact face-and-name treatment matches the reference density. The actual assigned macro names remain authoritative."
   ]
 }

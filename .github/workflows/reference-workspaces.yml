@@ -169,3 +169,78 @@ jobs:
         with:
           path: .ccache-reference
           key: reference-native-${{ runner.os }}-${{ github.sha }}
+
+  publish-native-gallery:
+    name: Commit verified native screenshot gallery
+    needs: native-screenshots
+    if: ${{ github.ref == 'refs/heads/main' && github.repository == 'tomasedisonn80/surgeXT-synth' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    # Only this publication job can write. The native build/test job remains read-only.
+    permissions:
+      contents: write
+    steps:
+      - name: Check out the successfully tested source
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: true
+
+      - name: Require the tested source to remain current on main
+        id: current
+        run: |
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          current="$(git ls-remote origin refs/heads/main | cut -f1)"
+          if [[ "$current" != "$GITHUB_SHA" ]]; then
+            echo "Main advanced; retain this run's captures as artifacts without publishing an obsolete gallery."
+            echo "current=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "current=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Download this successful run's native captures
+        if: steps.current.outputs.current == 'true'
+        uses: actions/download-artifact@v8
+        with:
+          name: native-reference-workspaces-${{ github.sha }}
+          path: ${{ runner.temp }}/native-reference-captures
+          digest-mismatch: error
+
+      - name: Validate source, images and evidence; generate gallery
+        if: steps.current.outputs.current == 'true'
+        run: |
+          python3 scripts/reference-workspaces/publish_native_gallery.py \
+            --artifacts "$RUNNER_TEMP/native-reference-captures" \
+            --output doc/reference-workspaces/native-gallery \
+            --source "$GITHUB_SHA" \
+            --run-id "$GITHUB_RUN_ID" \
+            --repository "$GITHUB_REPOSITORY"
+
+      - name: Commit only the current verified gallery
+        if: steps.current.outputs.current == 'true'
+        run: |
+          current="$(git ls-remote origin refs/heads/main | cut -f1)"
+          if [[ "$current" != "$GITHUB_SHA" ]]; then
+            echo "Main advanced during gallery generation; no repository write performed."
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- doc/reference-workspaces/native-gallery
+          if git diff --cached --quiet; then
+            echo "The verified gallery is already current."
+            exit 0
+          fi
+          git commit -m "Publish native reference gallery for ${GITHUB_SHA:0:12}"
+          # A competing push is never overwritten. Gallery-only changes are
+          # outside this workflow's paths, so publication cannot loop.
+          if ! git push origin HEAD:main; then
+            current="$(git ls-remote origin refs/heads/main | cut -f1)"
+            if [[ "$current" != "$GITHUB_SHA" ]]; then
+              echo "Main advanced before push; the obsolete gallery commit was not published."
+              exit 0
+            fi
+            exit 1
+          fi
+          commit="$(git rev-parse HEAD)"
+          echo "Gallery: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/blob/$commit/doc/reference-workspaces/native-gallery/README.md" >> "$GITHUB_STEP_SUMMARY"

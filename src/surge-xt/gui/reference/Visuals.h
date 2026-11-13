@@ -83,8 +83,8 @@ class Visuals
         harmonicRibbons
     };
     /** Render actual copied source frames. Perspective is a lit sample mesh;
-        ribbons projects the same source frames along a nearly frontal plane,
-        and harmonicRibbons uses crisp unlit traces around the sample zero line.
+        ribbons uses a slanted phase/frame plane in large views and a nearly
+        frontal miniature. Harmonic ribbons use crisp unlit traces around zero.
         Filled strips connect adjacent real frames. The perspective floor is
         an unlabelled sample-range plane, not frequency or measured output.
         Colour, glow and projection are cosmetic; ordinates come from samples.

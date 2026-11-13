@@ -392,6 +392,16 @@ void Visuals::wavetable(juce::Graphics &g, juce::Rectangle<float> bounds,
     const bool harmonic = view == WavetableView::harmonicRibbons;
     const bool ribbons = view != WavetableView::perspective;
     const bool miniature = bounds.getWidth() < 300 || bounds.getHeight() < 100;
+    const bool luminous = ribbons && !harmonic && !miniature;
+    if (!miniature && !harmonic)
+    {
+        // Keep the material's hue, with enough chroma to survive overlapping
+        // translucent wires. This changes no source sample or amplitude.
+        const float saturation = ribbons ? 1.15f : 1.3f;
+        primary = primary.withSaturation(std::min(1.f, primary.getSaturation() * saturation));
+        secondary =
+            secondary.withSaturation(std::min(1.f, secondary.getSaturation() * saturation));
+    }
     const auto sampleAt = [&](float frame, int phase) {
         const float selected = juce::jlimit(0.f, 1.f, frame) * (data.frames - 1);
         const int lo = static_cast<int>(selected), hi = std::min(data.frames - 1, lo + 1);
@@ -409,6 +419,13 @@ void Visuals::wavetable(juce::Graphics &g, juce::Rectangle<float> bounds,
             // A fixed linear projection of the source amplitudes. In particular,
             // silence is not normalized into a visible ornamental wave.
             const float depth = frame - .5f;
+            if (luminous)
+                // Phase and frame are the two axes of this fixed slanted plane;
+                // signed sample amplitude is its height. The outer x extent
+                // remains within 1..99% for every real source frame.
+                return {bounds.getX() + bounds.getWidth() * (.05f + .90f * u + .08f * depth),
+                        bounds.getCentreY() +
+                            bounds.getHeight() * (.22f * depth - .40f * amplitude)};
             const auto inset = harmonic ? 0.f : .012f;
             return {bounds.getX() + bounds.getWidth() * (inset + (1.f - 2.f * inset) * u),
                     bounds.getCentreY() +
@@ -421,7 +438,7 @@ void Visuals::wavetable(juce::Graphics &g, juce::Rectangle<float> bounds,
                 bounds.getY() +
                     bounds.getHeight() *
                         (miniature ? .40f + .37f * frame - amplitude * (.19f + .07f * frame)
-                                   : .30f + .38f * frame - amplitude * (.27f + .05f * frame))};
+                                   : .17f + .43f * frame - amplitude * (.13f + .27f * frame))};
     };
     const auto project = [&](float frame, int phase) {
         return projectSample(frame, phase, sampleAt(frame, phase));
@@ -467,12 +484,21 @@ void Visuals::wavetable(juce::Graphics &g, juce::Rectangle<float> bounds,
         auto paint = juce::ColourGradient(secondary.withMultipliedAlpha(alpha), bounds.getTopLeft(),
                                           primary.withMultipliedAlpha(alpha),
                                           bounds.getBottomRight(), false);
+        if (!miniature && !harmonic)
+        {
+            // RGB interpolation of cyan and violet otherwise passes through a
+            // pale grey-blue. Preserve their average saturation at the midpoint.
+            const auto middle = primary.interpolatedWith(secondary, .5f)
+                                    .withSaturation((primary.getSaturation() +
+                                                     secondary.getSaturation()) * .5f);
+            paint.addColour(.5, middle.withMultipliedAlpha(alpha));
+        }
         if (ribbons && !harmonic)
         {
             paint.addColour(.35, primary.withMultipliedAlpha(alpha));
-            paint.addColour(
-                .63,
-                secondary.interpolatedWith(juce::Colours::white, .16f).withMultipliedAlpha(alpha));
+            paint.addColour(.63, (luminous ? secondary
+                                          : secondary.interpolatedWith(juce::Colours::white, .16f))
+                                      .withMultipliedAlpha(alpha));
             paint.addColour(.9, secondary.withMultipliedAlpha(alpha));
         }
         return paint;
@@ -519,16 +545,17 @@ void Visuals::wavetable(juce::Graphics &g, juce::Rectangle<float> bounds,
                 strip.lineTo(vertex(frame + 1, phase));
             strip.closeSubPath();
             const auto depth = static_cast<float>(frame) / std::max(1, data.frames - 1);
-            g.setGradientFill(gradient(harmonic ? .025f : ribbons ? .055f : .13f + .08f * depth));
+            g.setGradientFill(gradient(harmonic ? .025f : ribbons ? .018f : .07f + .06f * depth));
             g.fillPath(strip);
         }
 
     // Connect actual adjacent frames into a phase-aligned mesh. These are
     // sample-domain connections, never frequency bins or output measurements.
-    if (!ribbons && data.frames > 1)
+    if ((!ribbons || luminous) && data.frames > 1)
     {
-        g.setGradientFill(gradient(miniature ? .11f : .34f));
-        for (int phase = 0; phase < WavetablePreview::pointsPerFrame; phase += miniature ? 24 : 8)
+        g.setGradientFill(gradient(miniature ? .11f : luminous ? .13f : .28f));
+        const int phaseStep = miniature ? 24 : luminous ? 12 : 4;
+        for (int phase = 0; phase < WavetablePreview::pointsPerFrame; phase += phaseStep)
         {
             juce::Path seam;
             for (int frame = 0; frame < data.frames; ++frame)
@@ -539,7 +566,7 @@ void Visuals::wavetable(juce::Graphics &g, juce::Rectangle<float> bounds,
                 else
                     seam.lineTo(p);
             }
-            g.strokePath(seam, juce::PathStrokeType(.65f));
+            g.strokePath(seam, juce::PathStrokeType(miniature ? .65f : luminous ? .5f : .55f));
         }
     }
     for (int frame = 0; frame < data.frames; ++frame)
@@ -551,7 +578,7 @@ void Visuals::wavetable(juce::Graphics &g, juce::Rectangle<float> bounds,
         path.startNewSubPath(vertex(frame, 0));
         for (int phase = 1; phase < WavetablePreview::pointsPerFrame; ++phase)
             path.lineTo(vertex(frame, phase));
-        if (ribbons && !harmonic && frame % 4 == 0)
+        if (ribbons && !harmonic && miniature && frame % 4 == 0)
         {
             auto fill = path;
             fill.lineTo(bounds.getRight(), bounds.getCentreY());
@@ -562,11 +589,12 @@ void Visuals::wavetable(juce::Graphics &g, juce::Rectangle<float> bounds,
         }
         if (!harmonic)
         {
-            g.setGradientFill(gradient(miniature ? .02f : ribbons ? .04f : .035f));
-            g.strokePath(path, juce::PathStrokeType(miniature ? 3.f : ribbons ? 6.f : 4.5f));
+            g.setGradientFill(gradient(miniature ? .02f : luminous ? .028f : .05f));
+            g.strokePath(path, juce::PathStrokeType(miniature ? 3.f : luminous ? 7.f : 6.f));
         }
-        g.setGradientFill(gradient(harmonic ? .84f : ribbons ? .37f + .45f * t
-                                                           : .45f + .48f * t));
+        g.setGradientFill(gradient(harmonic ? .84f : luminous ? .26f + .42f * t
+                                                   : ribbons ? .37f + .45f * t
+                                                             : .45f + .48f * t));
         g.strokePath(path, juce::PathStrokeType(miniature ? .7f : harmonic ? 1.f : .9f));
     }
     // Sample-mode morph is not a playback-head position. Do not imply that the

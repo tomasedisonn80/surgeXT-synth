@@ -179,7 +179,7 @@ void text(juce::Graphics &g, const Theme &t, const juce::String &s, Rect r, floa
 {
     auto font = t.type(size, bold);
     if (t.style == "ivory" && bold && size >= 16.f)
-        font = t.type(size, false).withExtraKerningFactor(.065f);
+        font = t.type(size, true).withExtraKerningFactor(.065f);
     else if (t.style == "space" && bold && size >= 14.f)
     {
         // Dark ink marks the brass section plates; cream ink marks the olive
@@ -1090,6 +1090,7 @@ class BoundSlider : public juce::Slider
         }
         if (kind == "knob")
         {
+            const bool emphasizeLabel = theme.style == "ivory" && binding.startsWith("macro");
             if (binding.startsWith("macro") &&
                 (theme.style == "precision" || theme.style == "spectral"))
                 r.removeFromTop(14.f); // Explicit number band in these manifest bounds.
@@ -1134,7 +1135,7 @@ class BoundSlider : public juce::Slider
             };
             if (theme.style == "space" && binding.startsWith("macro"))
             {
-                text(g, theme, label, r.withHeight(19), fs, ink, false,
+                text(g, theme, label, r.withHeight(19), fs, ink, emphasizeLabel,
                      juce::Justification::centred);
                 auto faceTheme = theme;
                 faceTheme.knob = theme.display;
@@ -1156,7 +1157,7 @@ class BoundSlider : public juce::Slider
             if (labelPosition == "top")
             {
                 const float line = lineHeight;
-                text(g, theme, label, r.removeFromTop(line), fs, ink, false,
+                text(g, theme, label, r.removeFromTop(line), fs, ink, emphasizeLabel,
                      juce::Justification::centred);
                 if (!hideValue && valueAtTop)
                     text(g, theme, value, r.removeFromTop(line), fs, valueInk,
@@ -1193,10 +1194,10 @@ class BoundSlider : public juce::Slider
                 const int align = labelPosition == "left" ? juce::Justification::centredRight
                                                           : juce::Justification::centredLeft;
                 if (hideValue)
-                    text(g, theme, label, labels, fs, ink, false, align);
+                    text(g, theme, label, labels, fs, ink, emphasizeLabel, align);
                 else
                 {
-                    text(g, theme, label, labels.removeFromTop(16), fs, ink, false, align);
+                    text(g, theme, label, labels.removeFromTop(16), fs, ink, emphasizeLabel, align);
                     text(g, theme, value, labels, fs, valueInk, false, align);
                 }
                 return;
@@ -1209,7 +1210,7 @@ class BoundSlider : public juce::Slider
             drawFace(face);
             text(g, theme, label,
                  r.removeFromBottom(lower).withHeight(hideValue || valueAtRight ? lower : lower / 2),
-                 fs, ink, false,
+                 fs, ink, emphasizeLabel,
                  juce::Justification::centred);
             if (!hideValue && !valueAtRight)
                 text(g, theme, value, getLocalBounds().toFloat().removeFromBottom(lower / 2), fs,
@@ -3462,12 +3463,16 @@ class MidiController : public juce::Slider
         if (direction == 0 || key.getModifiers().isCtrlDown() ||
             key.getModifiers().isAltDown() || key.getModifiers().isCommandDown())
             return juce::Slider::keyPressed(key);
+        // A completed spring release may already have reached the processor
+        // before the next UI timer refresh. Start each new key gesture from
+        // the applied input; repeats retain their queued target until consumed.
+        const int base = keyboardHeld ? juce::roundToInt(getValue()) : appliedValue();
         keyboardHeld = true;
         const int step = type == SurgeSynthProcessor::midiR::PITCHWHEEL
                              ? (key.getModifiers().isShiftDown() ? 16 : 256) : 1;
         const int next = juce::jlimit(static_cast<int>(getMinimum()),
                                      static_cast<int>(getMaximum()),
-                                     juce::roundToInt(getValue()) + direction * step);
+                                     base + direction * step);
         setValue(next, juce::dontSendNotification);
         requestValue(next);
         return true;
@@ -6679,7 +6684,12 @@ struct Workspace::Impl
             const auto algorithm = parameters.display("fx" + juce::String(slot) + ".type");
             const auto &curve = effectCurves[juce::jlimit(0, n_fx_slots - 1, slot - 1)];
             const auto ink = theme.style == "clear" ? (slot % 2 ? theme.accent : theme.red)
-                            : variant == "compact" ? theme.accent : theme.secondary;
+                            : variant == "compact" || theme.style == "precision"
+                                  ? theme.accent : theme.secondary;
+            if (theme.style == "precision" && variant != "compact")
+                text(g, theme, algorithm.toUpperCase(),
+                     {r.getX() + 47, r.getY() + 103, r.getWidth() - 61, 24},
+                     15.5f, theme.text, true);
             if (variant != "compact")
                 bezel(g, theme, pr, theme.display, 4);
             juce::Graphics::ScopedSaveState saved(g);

@@ -189,6 +189,17 @@ reference pictures. Read the evidence file for the source revision, test
 fixture, dimensions and actual results. A workflow may upload diagnostics even
 when tests fail; an artifact's existence alone is not a passing test result.
 
+
+### Committed native gallery
+
+After the complete native workflow passes on the current main source, its
+publication job validates all ten baseline/edited pairs and commits them under
+[the native screenshot gallery](reference-workspaces/native-gallery/README.md).
+The gallery includes a browser comparison page, unmodified native PNGs, source
+and workflow links, SHA-256 hashes, capture evidence and the passing logs.
+Reference concepts remain separately labelled. Obsolete runs retain their
+artifacts but cannot overwrite the gallery for a newer main source.
+
 ## Create a reproducible skin-only ZIP
 
 ```sh

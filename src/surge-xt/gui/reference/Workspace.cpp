@@ -8574,7 +8574,7 @@ void Workspace::paint(juce::Graphics &g)
                                                juce::Colour(0xff6b798b), 1586, 992, false));
         g.fillRect(0.f, 0.f, 1586.f, 992.f);
         juce::Path chassis;
-        chassis.addRoundedRectangle({17.f, 17.f, 1554.f, 944.f}, 8.f);
+        chassis.addRoundedRectangle(juce::Rectangle<float>(17.f, 17.f, 1554.f, 944.f), 8.f);
         juce::DropShadow(juce::Colours::black.withAlpha(.72f), 18, {0, 8})
             .drawForPath(g, chassis);
         g.setColour(juce::Colour(0xff03060e));

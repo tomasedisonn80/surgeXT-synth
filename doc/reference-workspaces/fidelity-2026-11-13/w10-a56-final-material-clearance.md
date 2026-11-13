@@ -60,3 +60,45 @@ caption/tick geometry calculations completed; no new tests were added for these
 paint-only corrections. The coordinator owns the new exact-source native build,
 all ten capture pairs and final optical acceptance. No commit or push was made.
 Source ownership is released.
+
+## Native follow-up — source `21c2a82`, final amplitude correction
+
+Inspected original 04 and actual baseline 04/05 from source
+`21c2a82813c4e57332bff19cf134a78ac9fe013d`, workflow `43502323088`, retained in
+`review/native-21c2a82-unaccepted`. The build and capture step passed
+(24,101,112 capture assertions). The workflow is **not accepted**: behavior
+reported 46/47 cases and 10,395,091/10,395,101 assertions passing, with all ten
+failures at the new legal-slider-step comparison. Those test expectations are
+assignment 54's separate correction; this review does not waive that gate.
+
+Width's raised lettering is visibly separate from the unchanged top graduation
+in the new raster. No further Space change is needed.
+
+The blue material is still wrong in a different spatial band: the 16-pixel
+coarse variation produces conspicuous dark patches in Scene and the filters.
+The previous five-row strip concealed this imbalance. The table below uses
+unobstructed rectangles and reports RGB RMS residual after removing each
+rectangle's best-fit RGB plane, so broad gradients do not dominate the result.
+
+| Blank area, x/y half-open | Reference residual RMS | Native `21c2a82` residual RMS |
+| --- | --- | --- |
+| Scene between columns, 1467:1485 / 175:252 | 0.782 / 0.732 / 0.715 | 1.862 / 3.168 / 3.910 |
+| Scene between rows, 1415:1534 / 236:251 | 0.630 / 0.651 / 0.657 | 1.854 / 3.134 / 3.927 |
+| Scene below selector, 1420:1534 / 160:175 | 0.846 / 1.011 / 1.154 | 1.710 / 2.743 / 3.323 |
+| Filter 2 header gap, 1274:1330 / 373:391 | 0.711 / 0.848 / 0.921 | 1.748 / 3.076 / 4.048 |
+| Filter 1 above knobs, 1000:1190 / 500:508 | 1.132 / 1.501 / 1.805 | 1.404 / 2.498 / 3.294 |
+
+Reduced only coarse amplitude from 1.5 to 0.25. The periodic interpolation,
+field centering, fine 1% hash, base gradient, clipping and all other paint paths
+remain unchanged. This deliberately relinquishes the old texture's excessive
+range rather than preserving conspicuous mottling. The updated integer-alpha
+flat-fill model exactly reproduces every RGB byte of the captured old strip
+at gain 1.5, and retains its median 40/81/111 at gain 0.25. An approximate
+inverse-composite calculation predicts blue residual RMS near 0.89/0.90 in the
+two larger Scene areas and 0.88 in the Filter 2 gap. These predictions are not
+new native capture evidence; full-panel medians can shift slightly as dark
+patches are attenuated.
+
+The narrow source diff and `git diff --check` pass. No tests, manifests or
+control geometry changed. Source ownership is released again; the fresh
+combined native gate and actual-image acceptance remain with the coordinator.

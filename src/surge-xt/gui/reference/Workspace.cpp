@@ -485,7 +485,7 @@ void bezel(juce::Graphics &g, const Theme &t, Rect r, juce::Colour fill, float r
                 {
                     // Correlated paper colour varies over 16-pixel cells, with
                     // only one percent independent tooth. Periodic corners
-                    // join the tile smoothly; bounded gain keeps its old range.
+                    // join smoothly; faint variation avoids dark mottled patches.
                     const auto column = static_cast<unsigned>(x / 16);
                     const auto row = static_cast<unsigned>(y / 16);
                     const auto u = smooth((x % 16) / 16.f);
@@ -495,7 +495,7 @@ void bezel(juce::Graphics &g, const Theme &t, Rect r, juce::Colour fill, float r
                     const auto lower = paper(column, row + 1u) * (1.f - u) +
                                        paper(column + 1u, row + 1u) * u;
                     const auto broad = upper * (1.f - v) + lower * v;
-                    const auto grain = .99f * std::clamp(1.5f * broad, -1.f, 1.f) +
+                    const auto grain = .99f * std::clamp(.25f * broad, -1.f, 1.f) +
                                        .01f * noise(static_cast<unsigned>(x),
                                                     static_cast<unsigned>(y));
                     pixels.setPixelColour(

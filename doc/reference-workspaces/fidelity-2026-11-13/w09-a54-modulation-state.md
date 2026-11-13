@@ -87,3 +87,27 @@ release and join the worker safely. No timing sleep is used.
 Assignment 59 independently reviewed this focused source and test and found no
 semantic or API compatibility blocker. Whitespace checks still pass. Native
 execution of both A54 regressions remains part of the final exact-source gate.
+
+## Native run follow-up — legal slider snapping
+
+Native [run 43502323088](https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43502323088)
+built source `21c2a82` and passed 46 of 47 behavior cases, all native captures,
+and the normal/ThreadSanitizer audio checks. The ten failures were confined to
+the new all-skin regression's restored cutoff slider assertion: the real slider
+reported `0.618`, while the processor correctly retained `0.6175675392`.
+All inspector amount, pixel-restore, scene, contention and state assertions
+passed.
+
+`BoundSlider` explicitly declares a normalized interval of `0.001`; its refresh
+calls JUCE `setValue`. The [pinned JUCE implementation](https://github.com/surge-synthesizer/JUCE/blob/a12f0de5a3d1e3a43cca626889ac2ee1c0cc0dbe/modules/juce_gui_basics/widgets/juce_Slider.cpp)
+constrains that call with
+`NormalisableRange::snapToLegalValue`, which maps this restored value to `0.618`.
+The regression incorrectly required an unsnapped slider value. Corrected only
+that assertion and its comment to compare against the slider's actual range
+using `snapToLegalValue`, with exact equality and no enlarged tolerance. The
+accessor is present in both the [pinned JUCE header](https://github.com/surge-synthesizer/JUCE/blob/a12f0de5a3d1e3a43cca626889ac2ee1c0cc0dbe/modules/juce_gui_basics/widgets/juce_Slider.h)
+and [`surge-7.0.12`](https://github.com/surge-synthesizer/JUCE/blob/surge-7.0.12/modules/juce_gui_basics/widgets/juce_Slider.h).
+
+No renderer, engine, slider implementation or other assertion changed. The
+suite still has 47 behavior cases. `git diff --check` passes; a fresh native
+gate is required for the corrected test.

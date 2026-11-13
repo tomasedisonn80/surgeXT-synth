@@ -3337,7 +3337,10 @@ TEST_CASE("Native modulation ranges follow base edits and state restore on the f
             workspace.refresh();
             const auto currentAmount = checkCurrentRow(0);
             CHECK(currentAmount != previousAmount);
-            CHECK(cutoff->getValue() == Catch::Approx(bridge.value("filter1.cutoff")));
+            // The slider snaps to its declared interval; restored processor
+            // values keep full precision. Require the exact legal slider value.
+            CHECK(cutoff->getValue() ==
+                  cutoff->getNormalisableRange().snapToLegalValue(bridge.value("filter1.cutoff")));
             CHECK(routeFor(0).normalizedDepth == Catch::Approx(baselineA.normalizedDepth));
             CHECK(routeFor(1).amount == baselineB.amount);
             CHECK(routeFor(1).normalizedDepth == Catch::Approx(baselineB.normalizedDepth));

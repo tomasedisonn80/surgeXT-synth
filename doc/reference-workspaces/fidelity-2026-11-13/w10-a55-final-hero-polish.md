@@ -134,3 +134,59 @@ Bauhaus luminance/chroma, Aurora outer-falloff appearance, metadata clearance
 and practical paint behavior. No local linked build or final screenshot result
 is claimed here. The earlier run remains valid evidence for its exact source,
 not for these new paint changes.
+
+## Actual native follow-up — source `21c2a828`, workflow not accepted
+
+Inspected the unmodified baseline and edited captures for Spectral, Bauhaus and
+Aurora from source `21c2a82813c4e57332bff19cf134a78ac9fe013d`,
+[run 43502323088](https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43502323088),
+against the original references and the preceding accepted `ea674878` gallery.
+The coordinator downloaded and hash-verified the captures into a separate review
+directory; they have **not** replaced the accepted gallery.
+
+This workflow compiled successfully and its capture case passed all twenty
+images / 24,101,112 assertions. Behavior passed 46 of 47 cases, including the
+new Spectral raster regression, with 10,395,091 of 10,395,101 assertions passing.
+The ten failed assertions all belong to assignment 54's restored-slider test:
+its actual legal displayed step `0.618` was compared with raw normalized
+`0.6175675392`. Normal and ThreadSanitizer audio-tap logs both pass. The overall
+workflow remains failed; the test-only correction requires a fresh full gate.
+
+### Observed results
+
+| Hero check | Previous native | New native | Reference |
+| --- | --- | --- | --- |
+| Spectral strong-color foreground pixels, x455:1147/y325:381, selected marker excluded | 0 | 10,293 | 15,848 |
+| Spectral strong-color maximum y, selected marker excluded | 321 | 376 | 380 |
+| Bauhaus luma q99 within x270:970/y135:324 | 167.23 | 199.27 | 231.88 |
+| Bauhaus median warm-pixel RGB channel span | 57 | 130 | 120 |
+| Bauhaus warm-pixel bounds | x270–969/y144–323 | x270–969/y144–323 | x270–969/y143–323 |
+
+The Spectral predicate remains maximum RGB channel >100 and at least one of
+B−R, B−G or G−R >25, excluding marker x790:814. Bauhaus warm pixels use R>95,
+G>40 and R>1.15B. These local measurements are not whole-skin similarity scores.
+
+**Spectral:** The real field visibly reaches the foreground instead of floating
+above an empty floor. Its metadata remains legible, the highlighted source row
+and marker remain visible, and the field stays inside the plot. The selected
+marker's shorter foot follows the same source-minimum floor; its position is
+not replaced with the concept marker's longer illustrative stem.
+
+**Bauhaus:** The warm core is clearly brighter and more saturated. Source rows
+remain open through their crossings, with unchanged field bounds and no restored
+filled sheets. Luma still falls below the reference's brightest cream cores;
+the new warm channel span is slightly above the reference median. These are
+remaining material differences, not a new blocking regression.
+
+**Aurora:** In the actual x650:1010/y305:489 crop, the four wide hard-edged halo
+bands have been replaced by a smooth continuous outer falloff. The cyan centre,
+magenta side, real source geometry, visible strands and fading endpoints remain.
+The changed light does not reproduce the reference's different waveform shape,
+which remains a deliberate actual-source adaptation.
+
+All three new baseline/edited hero crops have zero changed pixels, as expected
+for the filter-cutoff-only capture edit. **No concrete blocking new visual
+regression was found in these three heroes.** This follow-up changes only this
+report; it authorizes no gallery promotion and makes no successful-workflow or
+literal pixel-identity claim. No further hero source change is proposed before
+the corrected full native gate.

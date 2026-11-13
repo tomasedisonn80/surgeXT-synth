@@ -392,7 +392,9 @@ juce::var configureShowcaseFixture(SurgeSynthProcessor &processor,
         profile.firstResonance = .32f;
         profile.secondResonance = .68f;
         profile.secondLevelDb = -3.2f;
-        profile.ampEnvelope = {.002f, .18f, 1.f, .42f};
+        // The concept's 2 ms attack is below the native log2-time range.
+        // Use a real 4 ms attack above the -8 zero-time/snap sentinel.
+        profile.ampEnvelope = {.004f, .18f, 1.f, .42f};
         profile.filterEnvelope = {.005f, .48f, .72f, 1.2f};
         profile.lfoHz = .25f;
         profile.macroNames = {"Brightness", "Motion", "Space", "Vintage", "Color", "Width", "Attack", "Release"};
@@ -411,7 +413,9 @@ juce::var configureShowcaseFixture(SurgeSynthProcessor &processor,
         profile.secondResonance = .46f;
         profile.secondLevelDb = -3.1f;
         profile.ampEnvelope = {.005f, .198f, .78f, .382f};
-        profile.filterEnvelope = {.0032f, .42f, .42f, 1.2f};
+        // As in the hardware profile, 4 ms is an explicit native adaptation
+        // of the concept's unsupported 3.2 ms value, not a silently clamped edit.
+        profile.filterEnvelope = {.004f, .42f, .42f, 1.2f};
         profile.lfoShape = lt_tri;
         profile.lfoHz = 2.f;
         profile.effects[6] = fxt_off;

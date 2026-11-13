@@ -85,6 +85,18 @@ high-cut filters are set to 18 kHz, drive to +6 dB, and output to -6 dB; this
 preserves real upper partials instead of the initialized 440 Hz high-cuts.
 Conditioner threshold is -6 dB wherever that real algorithm is present.
 
+Two illustrated attack times need explicit native adaptations. Space-Age's
+amplitude-envelope attack and Tokyo's filter-envelope attack both use **4.0 ms**
+in their actual showcase patches, in place of the concepts' 2.0 ms and 3.2 ms.
+The engine's envelope-time range is log2(seconds) from -8 to 5. Its lower
+endpoint has special zero-time display semantics, and the amplitude/filter
+envelope skips the attack when the value is less than 0.01 above that endpoint.
+Four milliseconds lies above this instantaneous-attack region and remains near
+the shortest supported nonzero attack. The native range assertions are retained;
+there is no general clamp that could hide other invalid fixture values. The
+recorded parameter displays, envelope plots and rendered audio use these real
+4.0 ms settings.
+
 The eight macro knobs have real native controller values and modulation routes.
 Capture profiles use their reference-inspired labels, with each meaningful
 label connected to an appropriate native target: Drive to Distortion drive,

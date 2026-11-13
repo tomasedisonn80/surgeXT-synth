@@ -132,16 +132,22 @@ struct Theme
     }
     juce::Font type(float size, bool bold = false) const
     {
+        // The manifest sizes describe the reference's visible lettering. JUCE's
+        // height includes the embedded fonts' ascent/descent, so using the raw
+        // number made a 15 px section heading only 9–10 px high on screen.
+        // Keep the actual embedded faces, with a measured optical correction;
+        // fitted text still respects the component's available rectangle.
+        const auto opticalSize = size * (font == "serif" ? 1.05f : font == "mono" ? 1.12f : 1.18f);
         const auto weight = bold ? juce::Font::bold : juce::Font::plain;
         if (font == "mono")
-            return fonts->getFiraMonoAtSize(size, weight).withHeight(size);
+            return fonts->getFiraMonoAtSize(opticalSize, weight).withHeight(opticalSize);
         if (font != "serif")
-            return fonts->getLatoAtSize(size, weight).withHeight(size);
+            return fonts->getLatoAtSize(opticalSize, weight).withHeight(opticalSize);
         const auto family = juce::Font::getDefaultSerifFontName();
 #if JUCE_MAJOR_VERSION >= 8
-        return juce::Font(juce::FontOptions(family, size, weight));
+        return juce::Font(juce::FontOptions(family, opticalSize, weight));
 #else
-        return juce::Font(family, size, weight);
+        return juce::Font(family, opticalSize, weight);
 #endif
     }
 };
@@ -150,12 +156,12 @@ void text(juce::Graphics &g, const Theme &t, const juce::String &s, Rect r, floa
 {
     auto font = t.type(size, bold);
     if (t.style == "ivory" && bold && size >= 16.f)
-        font = t.type(size, false).withExtraKerningFactor(.035f);
+        font = t.type(size, false).withExtraKerningFactor(.065f);
     else if (t.style == "space" && bold && size >= 14.f)
         font = t.fonts
                    ->getLatoAtSize(size, static_cast<juce::Font::FontStyleFlags>(juce::Font::bold |
                                                                              juce::Font::italic))
-                   .withHeight(size)
+                   .withHeight(size * 1.18f)
                    .withHorizontalScale(.9f);
     else if (t.style == "tokyo" && bold)
         font = font.withHorizontalScale(.9f);

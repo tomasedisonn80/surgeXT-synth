@@ -1573,6 +1573,240 @@ TEST_CASE("Performance workspace keyboard and XY controls release owned interact
     processor.midiKeyboardState.noteOff(2, 71, 0.f);
 }
 
+TEST_CASE("Preset header shortcuts retain native browser actions and skin visibility",
+          "[reference-workspaces][reference-browser][reference-interactions]")
+{
+    juce::ScopedJuceInitialiser_GUI gui;
+    IsolatedUserData testData;
+    SurgeSynthProcessor processor;
+    testData.attach(processor);
+    processor.surge->storage.getPatch().isDirty = true;
+    const auto before = hostParameterValues(processor);
+    const auto patchId = processor.surge->patchid;
+    Workspace workspace(processor);
+    juce::String error;
+    const auto live = sourceRoot().getChildFile(
+        "resources/data/skins/reference-10-live.surge-skin/workspace.json");
+    REQUIRE(workspace.load(live, error));
+    workspace.setSize(referenceWidth, referenceHeight);
+    workspace.addToDesktop(0);
+    workspace.setVisible(true);
+    juce::StringArray actions;
+    workspace.onAction = [&](const juce::String &action) { actions.add(action); };
+    std::array<juce::Button *, 2> buttons{};
+    const std::array<juce::String, 2> ids{"workspace.header.preset-search",
+                                           "workspace.header.preset-list"};
+    for (size_t index = 0; index < ids.size(); ++index)
+    {
+        CAPTURE(ids[index].toStdString());
+        auto *button = dynamic_cast<juce::Button *>(findComponent(workspace, ids[index]));
+        REQUIRE(button != nullptr);
+        buttons[index] = button;
+        CHECK(button->isShowing());
+        CHECK(button->isEnabled());
+        CHECK(button->getWantsKeyboardFocus());
+        CHECK(button->getName().isNotEmpty());
+        CHECK(button->getTitle().isNotEmpty());
+        CHECK(button->getDescription().isNotEmpty());
+        CHECK(button->getTooltip().isNotEmpty());
+        auto *handler = button->getAccessibilityHandler();
+        REQUIRE(handler != nullptr);
+        CHECK(handler->getRole() == juce::AccessibilityRole::button);
+        CHECK(handler->getActions().contains(juce::AccessibilityActionType::press));
+        REQUIRE(button->getParentComponent() != nullptr);
+        CHECK(button->getParentComponent()->getLocalBounds().contains(button->getBounds()));
+        REQUIRE(static_cast<bool>(button->onClick));
+        button->onClick();
+        REQUIRE(actions.size() == static_cast<int>(index + 1));
+        CHECK(actions[actions.size() - 1] == "browser");
+        // The existing editor owns dirty-patch confirmation and preset loading.
+        // A header shortcut only opens that guarded browser path.
+        CHECK(processor.surge->storage.getPatch().isDirty);
+        CHECK(processor.surge->patchid == patchId);
+    }
+    CHECK_FALSE(buttons[0]->getBounds().intersects(buttons[1]->getBounds()));
+    CHECK(workspace.bridge().activeGestureCount() == 0);
+    checkHostParameterValues(processor, before);
+
+    // These controls belong to Live's second header row. Reusing the Workspace
+    // for another skin must hide them instead of leaving invisible hit targets.
+    REQUIRE(workspace.load(sourceRoot().getChildFile(
+        "resources/data/skins/reference-07-aurora.surge-skin/workspace.json"), error));
+    for (const auto &id : ids)
+    {
+        auto *button = findComponent(workspace, id);
+        REQUIRE(button != nullptr);
+        CHECK_FALSE(button->isVisible());
+    }
+
+    // Tokyo's native PRESETS tab occupies the header Browser button's former
+    // rectangle. The redundant header target must be hidden while the actual
+    // browser and its native tab/full-browser controls remain available.
+    REQUIRE(workspace.load(sourceRoot().getChildFile(
+        "resources/data/skins/reference-06-tokyo.surge-skin/workspace.json"), error));
+    auto *headerBrowser = dynamic_cast<juce::Button *>(
+        findComponent(workspace, "workspace.navigation.browser"));
+    REQUIRE(headerBrowser != nullptr);
+    CHECK_FALSE(headerBrowser->isVisible());
+    for (const auto *id : {"workspace.browser", "workspace.browser.tab.0",
+                           "workspace.browser.full"})
+    {
+        auto *component = findComponent(workspace, id);
+        REQUIRE(component != nullptr);
+        CHECK(component->isShowing());
+    }
+    REQUIRE(workspace.load(live, error));
+    for (const auto &id : ids)
+    {
+        auto *button = findComponent(workspace, id);
+        REQUIRE(button != nullptr);
+        CHECK(button->isShowing());
+    }
+    headerBrowser = dynamic_cast<juce::Button *>(
+        findComponent(workspace, "workspace.navigation.browser"));
+    REQUIRE(headerBrowser != nullptr);
+    CHECK(headerBrowser->isShowing());
+    REQUIRE(static_cast<bool>(headerBrowser->onClick));
+    CHECK(actions.size() == 2);
+    headerBrowser->onClick();
+    REQUIRE(actions.size() == 3);
+    CHECK(actions[2] == "browser");
+    CHECK(processor.surge->storage.getPatch().isDirty);
+    checkHostParameterValues(processor, before);
+}
+
+TEST_CASE("Live keyboard range display agrees with native scene routing",
+          "[reference-workspaces][reference-performance][reference-display-isolation]")
+{
+    juce::ScopedJuceInitialiser_GUI gui;
+    IsolatedUserData testData;
+    SurgeSynthProcessor processor;
+    testData.attach(processor);
+    Workspace workspace(processor);
+    juce::String error;
+    REQUIRE(workspace.load(sourceRoot().getChildFile(
+        "resources/data/skins/reference-10-live.surge-skin/workspace.json"), error));
+    workspace.setSize(referenceWidth, referenceHeight);
+    workspace.addToDesktop(0);
+    workspace.setVisible(true);
+    auto *keyboard = dynamic_cast<juce::MidiKeyboardComponent *>(
+        findComponent(workspace, "workspace.performance-keyboard"));
+    REQUIRE(keyboard != nullptr);
+    CHECK(keyboard->getRangeStart() == 0);
+    CHECK(keyboard->getRangeEnd() == 120);
+    CHECK(keyboard->getKeyWidth() == Catch::Approx(8.f));
+    CHECK(keyboard->getMidiChannel() == 1);
+    CHECK(static_cast<bool>(keyboard->getProperties()["reference.keyboard-footer-labels"]));
+    // Every displayed white key, including the extreme Cs, must still hit its
+    // own native MIDI identity after fitting the full ten-octave keyboard.
+    int whiteKeys = 0;
+    for (int note = keyboard->getRangeStart(); note <= keyboard->getRangeEnd(); ++note)
+    {
+        if (juce::MidiMessage::isMidiNoteBlack(note))
+            continue;
+        ++whiteKeys;
+        CAPTURE(note);
+        const auto key = keyboard->getRectangleForKey(note);
+        CHECK(keyboard->getLocalBounds().toFloat().contains(key));
+        CHECK(keyboard->getNoteAndVelocityAtPosition(
+                  {key.getCentreX(), key.getBottom() - 3.f}).note == note);
+    }
+    CHECK(whiteKeys == 71);
+    auto &bridge = workspace.bridge();
+    const auto hostInteger = [&](const juce::String &binding, int value) {
+        auto *parameter = bridge.parameter(binding);
+        auto *adapter = adapterFor(processor, bridge, binding);
+        REQUIRE(parameter != nullptr);
+        REQUIRE(adapter != nullptr);
+        REQUIRE(value >= parameter->val_min.i);
+        REQUIRE(value <= parameter->val_max.i);
+        adapter->setValueNotifyingHost(
+            Parameter::intScaledToFloat(value, parameter->val_max.i, parameter->val_min.i));
+        REQUIRE(parameter->val.i == value);
+    };
+    struct RoutingCase
+    {
+        int mode, active, split;
+    };
+    const std::array<RoutingCase, 13> cases{{
+        {sm_single, 0, 60}, {sm_single, 1, 60}, {sm_dual, 0, 60}, {sm_dual, 1, 60},
+        {sm_split, 0, 0}, {sm_split, 0, 1}, {sm_split, 0, 60}, {sm_split, 1, 127},
+        {sm_chsplit, 0, 0}, {sm_chsplit, 0, 7}, {sm_chsplit, 1, 8},
+        {sm_chsplit, 0, 64}, {sm_chsplit, 1, 127}}};
+    for (const auto &entry : cases)
+    {
+        CAPTURE(entry.mode, entry.active, entry.split);
+        hostInteger("scene.mode", entry.mode);
+        hostInteger("scene.active", entry.active);
+        hostInteger("scene.splitpoint", entry.split);
+        // Merely selecting the other editing scene must not turn its range
+        // into the sounding scene. Scene-active is a separate native parameter.
+        workspace.selectScene(1 - entry.active, false);
+        const auto before = hostParameterValues(processor);
+        const auto randomState = processor.surge->storage.rngGen.g;
+        const bool dirty = processor.surge->storage.getPatch().isDirty;
+        workspace.refresh();
+        REQUIRE(workspace.createComponentSnapshot(workspace.getLocalBounds()).isValid());
+        const auto &properties = keyboard->getProperties();
+        CHECK(static_cast<int>(properties["reference.keyboard-mode"]) == entry.mode);
+        CHECK(static_cast<int>(properties["reference.keyboard-active-scene"]) == entry.active);
+        CHECK(static_cast<int>(properties["reference.keyboard-split-point"]) == entry.split);
+        CHECK(static_cast<int>(properties["reference.keyboard-channel"]) ==
+              keyboard->getMidiChannel());
+        CHECK(static_cast<int>(properties["reference.keyboard-octave-label-count"]) == 11);
+        juce::StringArray expectedLabels;
+        for (int note = 0; note <= 120; note += 12)
+            expectedLabels.add(juce::MidiMessage::getMidiNoteName(
+                note, true, true, keyboard->getOctaveForMiddleC()));
+        CHECK(properties["reference.keyboard-octave-labels"].toString() ==
+              expectedLabels.joinIntoString(" "));
+        CHECK(keyboard->getDescription().isNotEmpty());
+        const auto *ranges = properties["reference.keyboard-ranges"].getArray();
+        REQUIRE(ranges != nullptr);
+        REQUIRE(!ranges->isEmpty());
+        for (const auto &range : *ranges)
+        {
+            const auto *fields = range.getArray();
+            REQUIRE(fields != nullptr);
+            REQUIRE(fields->size() == 5);
+            CHECK(static_cast<int>((*fields)[0]) >= 0);
+            CHECK(static_cast<int>((*fields)[0]) <= 1);
+            CHECK(static_cast<int>((*fields)[1]) >= 0);
+            CHECK(static_cast<int>((*fields)[2]) <= 127);
+            CHECK(static_cast<int>((*fields)[1]) <= static_cast<int>((*fields)[2]));
+            CHECK(static_cast<int>((*fields)[3]) >= 1);
+            CHECK(static_cast<int>((*fields)[4]) <= 16);
+            CHECK(static_cast<int>((*fields)[3]) <= static_cast<int>((*fields)[4]));
+        }
+        // Use the native routing function as the oracle, including notes above
+        // the visual keyboard and both sides of each key/channel boundary.
+        // Channel Split describes all channels; other modes describe this
+        // keyboard's current MIDI channel, which is one in the native surface.
+        const int firstChannel = entry.mode == sm_chsplit ? 1 : keyboard->getMidiChannel();
+        const int lastChannel = entry.mode == sm_chsplit ? 16 : firstChannel;
+        for (int channel = firstChannel; channel <= lastChannel; ++channel)
+            for (int note = 0; note < 128; ++note)
+            {
+                CAPTURE(channel, note);
+                int displayedMask = 0;
+                for (const auto &range : *ranges)
+                {
+                    const auto &fields = *range.getArray();
+                    if (note >= static_cast<int>(fields[1]) &&
+                        note <= static_cast<int>(fields[2]) &&
+                        channel >= static_cast<int>(fields[3]) &&
+                        channel <= static_cast<int>(fields[4]))
+                        displayedMask |= 1 << static_cast<int>(fields[0]);
+                }
+                CHECK(displayedMask == processor.surge->calculateChannelMask(channel - 1, note));
+            }
+        CHECK(processor.surge->storage.rngGen.g == randomState);
+        CHECK(processor.surge->storage.getPatch().isDirty == dirty);
+        CHECK(bridge.activeGestureCount() == 0);
+        checkHostParameterValues(processor, before);
+    }
+}
+
 TEST_CASE("Compact value controls preserve real drag and typed-unit editing",
           "[reference-workspaces][reference-values][reference-interactions]")
 {

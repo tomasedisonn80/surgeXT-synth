@@ -206,3 +206,33 @@ The coordinator corrected short ClearSignal FX plot insets so actual algorithm
 pictograms have room to render. No screenshot or reference trace is used as a
 working control or signal display. Wave 4 source and geometry checks passed;
 its altered audio fixtures require the next unchanged headroom/reset gates.
+
+Workflow `43381077445` subsequently passed at
+`d8af8f6236ecc5b3a6004448af2278160ee5b797`: 31 behavior cases / 9,953,538
+assertions and all ten native capture pairs / 24,095,778 assertions. Normal and
+ThreadSanitizer audio-display checks passed. All fixture stages remained finite,
+nonzero and below clipping; the highest baseline peak was 0.699899. Strict reset
+silence remained below the unchanged 1e-6 threshold. These captures include the
+wave-4 layout, typography, native header actions and actual source-family changes.
+
+### Wave 5: plots, performance keyboard and native power switches
+
+All six assignments completed. Source checks passed; the combined linked run is
+the next gate, including the new header and keyboard regressions.
+
+| Assignment | Completed result |
+| --- | --- |
+| 25 — Filter/LFO plots | Real 0 dB grid and internal captions, interpolated cutoff markers, stronger bounded traces and reference-specific accents |
+| 26 — Live keyboard | MIDI 0–120, native key-derived C−2…C8 footer and actual Single/Split/Dual/Channel Split range strips |
+| 27 — Space-Age materials | Separated brass and olive reflections, upright olive headings and fine annular dial machining |
+| 28 — FX power | 48 accessible native slot switches in six skins; actual disable bits, suspension and listener notifications |
+| 29 — Interaction regressions | Native header actions, focus/skin changes, 71 white-key identities and engine-checked scene routing |
+| 30 — Placed-control audit | Checked outer and nested bounds, all 48 power children and keyboard footer; found covered Tokyo header button |
+
+The coordinator hid Tokyo's redundant header Browser button beneath the native
+PRESETS tab; a regression requires the real browser to remain reachable and the
+header action to return when switching to Live. Slot power mirrors the stock
+hidden bitmask path; that native operation has no dedicated host-automation or
+undo gesture. It is distinct from selecting a card and from global FX bypass.
+No reference waveform, meter value, keyboard zone or enabled state is painted
+in place of real processor state.

@@ -180,11 +180,18 @@ void text(juce::Graphics &g, const Theme &t, const juce::String &s, Rect r, floa
     if (t.style == "ivory" && bold && size >= 16.f)
         font = t.type(size, false).withExtraKerningFactor(.065f);
     else if (t.style == "space" && bold && size >= 14.f)
+    {
+        // Dark ink marks the brass section plates; cream ink marks the olive
+        // instrument wells. Keep those inner headings upright regardless of
+        // their current native label or selected effect name.
+        const auto style = color.getPerceivedBrightness() < .4f
+                               ? juce::Font::bold | juce::Font::italic
+                               : juce::Font::bold;
         font = t.fonts
-                   ->getLatoAtSize(size, static_cast<juce::Font::FontStyleFlags>(juce::Font::bold |
-                                                                             juce::Font::italic))
+                   ->getLatoAtSize(size, static_cast<juce::Font::FontStyleFlags>(style))
                    .withHeight(size * 1.18f)
                    .withHorizontalScale(.9f);
+    }
     else if (t.style == "tokyo" && bold)
         font = font.withHorizontalScale(.9f);
     g.setFont(font);
@@ -231,6 +238,7 @@ void bezel(juce::Graphics &g, const Theme &t, Rect r, juce::Colour fill, float r
         radius = t.radius;
     const bool panel = r.getWidth() > 125 && r.getHeight() > 55;
     const bool metal = t.style == "space";
+    const bool olive = metal && fill == t.panel;
     const bool ivory = t.style == "ivory";
     const bool flat = t.style == "bauhaus" || t.style == "clear";
     if (panel && !flat)
@@ -269,15 +277,31 @@ void bezel(juce::Graphics &g, const Theme &t, Rect r, juce::Colour fill, float r
         top = juce::Colour(0xff48325f);
         bottom = juce::Colour(0xff1f1b34);
     }
+    else if (olive)
+    {
+        top = fill.interpolatedWith(juce::Colour(0xff253011), .38f);
+        bottom = fill.interpolatedWith(juce::Colour(0xff202715), .15f);
+    }
     else if (metal && fill != t.display)
     {
-        top = fill.interpolatedWith(juce::Colour(0xffffedc9), .22f);
-        bottom = fill.interpolatedWith(juce::Colour(0xff746346), .16f);
+        top = fill.interpolatedWith(juce::Colour(0xffedce9b), .11f);
+        bottom = fill.interpolatedWith(juce::Colour(0xff5b411f), .32f);
     }
     auto material = juce::ColourGradient(top, r.getTopLeft(), bottom, r.getBottomLeft(), false);
-    if (panel && (metal || ivory || t.style == "tokyo"))
+    if (panel && olive)
     {
-        material.addColour(.045, top.interpolatedWith(juce::Colours::white, metal ? .14f : .04f));
+        // A dark olive title lip opens into the warmer instrument body. Its
+        // height follows the physical panel, not the text or processor state.
+        const auto lip = std::min(.22f, 27.f / r.getHeight());
+        material.addColour(lip, top);
+        material.addColour(lip + .025f,
+                           fill.interpolatedWith(juce::Colour(0xff87763d), .10f));
+        material.addColour(.72, fill);
+        material.addColour(.98, bottom);
+    }
+    else if (panel && (metal || ivory || t.style == "tokyo"))
+    {
+        material.addColour(.045, top.interpolatedWith(juce::Colours::white, metal ? .09f : .04f));
         material.addColour(.14, top);
         material.addColour(.86, bottom);
         material.addColour(.98, bottom.interpolatedWith(juce::Colours::black, .06f));
@@ -291,18 +315,21 @@ void bezel(juce::Graphics &g, const Theme &t, Rect r, juce::Colour fill, float r
         juce::Path clip;
         clip.addRoundedRectangle(r.reduced(2), std::max(0.f, radius - 1));
         g.reduceClipRegion(clip);
-        g.setTiledImageFill(materialGrain(metal), 0, 0, metal ? .12f : ivory ? .028f : .012f);
+        g.setTiledImageFill(materialGrain(metal), 0, 0,
+                            metal ? (olive ? .07f : .20f) : ivory ? .028f : .012f);
         g.fillRect(r);
         if (metal)
         {
             // A broad reflected band breaks the old uniform horizontal stripes.
             // It follows the physical panel, not its contents or the audio clock.
-            juce::ColourGradient sheen(juce::Colours::white.withAlpha(.12f), r.getX(), r.getY(),
+            const auto strength = olive ? .18f : .55f;
+            juce::ColourGradient sheen(juce::Colours::white.withAlpha(.12f * strength),
+                                       r.getX(), r.getY(),
                                        juce::Colours::white.withAlpha(0.f), r.getRight(),
                                        r.getY() + r.getHeight() * .25f, false);
-            sheen.addColour(.30, juce::Colours::white.withAlpha(.035f));
-            sheen.addColour(.62, juce::Colours::white.withAlpha(.105f));
-            sheen.addColour(.77, juce::Colours::white.withAlpha(.015f));
+            sheen.addColour(.30, juce::Colours::white.withAlpha(.035f * strength));
+            sheen.addColour(.62, juce::Colours::white.withAlpha(.105f * strength));
+            sheen.addColour(.77, juce::Colours::white.withAlpha(.015f * strength));
             g.setGradientFill(sheen);
             g.fillRect(r);
         }
@@ -333,13 +360,15 @@ void bezel(juce::Graphics &g, const Theme &t, Rect r, juce::Colour fill, float r
             g.fillPath(reflection);
         }
     }
-    g.setColour(t.border.withAlpha(flat ? .45f : .80f));
+    g.setColour(metal ? juce::Colour(0xff3b2c17).withAlpha(.90f)
+                      : t.border.withAlpha(flat ? .45f : .80f));
     g.drawRoundedRectangle(r.reduced(0.5f), radius, 1);
     if (panel && (metal || ivory || t.style == "tokyo"))
     {
-        g.setColour(juce::Colours::white.withAlpha(metal ? .62f : ivory ? .72f : .15f));
+        g.setColour(metal ? t.border.withAlpha(.88f)
+                          : juce::Colours::white.withAlpha(ivory ? .72f : .15f));
         g.drawRoundedRectangle(r.reduced(2), std::max(0.f, radius - 1), .8f);
-        g.setColour(juce::Colours::black.withAlpha(metal ? .25f : .10f));
+        g.setColour(juce::Colours::black.withAlpha(metal ? .48f : .10f));
         g.drawRoundedRectangle(r.reduced(3.3f), std::max(0.f, radius - 2), .7f);
     }
     g.setColour(juce::Colours::white.withAlpha(t.light() ? .62f : .10f));
@@ -639,6 +668,17 @@ void knob(juce::Graphics &g, const Theme &t, Rect r, float value, juce::Colour a
         g.setGradientFill(rim);
         g.drawEllipse(face.reduced(1.2f), std::min(3.1f, faceRadius * .20f));
         const auto cap = face.reduced(std::max(2.5f, faceRadius * .18f));
+        // Fine radial cuts are confined to the annulus; they do not replace
+        // the dark cap, the graduated scale or the native value pointer.
+        for (int cut = 0; cut < 48; ++cut)
+        {
+            const auto angle = juce::MathConstants<float>::twoPi * cut / 48.f;
+            const auto inner = cap.getWidth() * .5f + .3f, outer = faceRadius - .8f;
+            g.setColour((cut % 2 == 0 ? juce::Colours::white : juce::Colours::black)
+                            .withAlpha(cut % 2 == 0 ? .24f : .20f));
+            g.drawLine(c.x + std::sin(angle) * inner, c.y - std::cos(angle) * inner,
+                       c.x + std::sin(angle) * outer, c.y - std::cos(angle) * outer, .5f);
+        }
         const bool darkCap = faceRadius > 20.f || t.knob.getPerceivedBrightness() < .35f;
         g.setGradientFill(juce::ColourGradient(darkCap ? juce::Colour(0xff363729)
                                                       : juce::Colour(0xffd1bc86),
@@ -1959,6 +1999,121 @@ class BoundToggle : public juce::TextButton
     juce::String binding;
 };
 
+/** A real native FX-slot switch, separate from the view-selection button.
+    The stock editor's slot-deactivation bitmask is not a host parameter. */
+class EffectPowerButton : public juce::TextButton
+{
+  public:
+    EffectPowerButton(Theme &themeIn, SurgeSynthProcessor &processorIn, int slotIn)
+        : theme(themeIn), processor(processorIn), slot(slotIn)
+    {
+        setWantsKeyboardFocus(true);
+        setToggleable(true);
+        setName("FX slot " + juce::String(slot + 1) + " power");
+        setTitle(getName());
+        getProperties().set("reference.fx-slot", slot + 1);
+        onClick = [this] {
+            if (!processor.surge || slot < 0 || slot >= n_fx_slots)
+                return;
+            auto &synth = *processor.surge;
+            auto &patch = synth.storage.getPatch();
+            if (patch.fx[slot].type.val.i == fxt_off)
+                return;
+            const int previous = patch.fx_disable.val.i;
+            const int next = previous ^ (1 << slot);
+            // Match the stock EffectChooser's suspend/notification path. This
+            // hidden bitmask has no native host automation or undo gesture.
+            synth.fx_suspend_bitmask = previous ^ next;
+            processor.paramChangeToListeners(nullptr, true, processor.SCT_FX_DEACT,
+                                             static_cast<float>(previous),
+                                             static_cast<float>(next), 0.f, "");
+            patch.fx_disable.val.i = next;
+            patch.isDirty = true;
+            synth.refresh_editor = true;
+            sync();
+        };
+        sync();
+    }
+    void sync()
+    {
+        const bool valid = processor.surge && slot >= 0 && slot < n_fx_slots;
+        const auto *patch = valid ? &processor.surge->storage.getPatch() : nullptr;
+        const bool assigned = patch && patch->fx[slot].type.val.i != fxt_off;
+        const bool disabled = patch && (patch->fx_disable.val.i & (1 << slot)) != 0;
+        setEnabled(assigned);
+        setToggleState(assigned && !disabled, juce::dontSendNotification);
+        getProperties().set("reference.fx-disabled", disabled);
+        const auto algorithm = patch ? juce::String(patch->fx[slot].type.get_display())
+                                     : juce::String("Unavailable");
+        const auto detail = "FX slot " + juce::String(slot + 1) + ": " + algorithm;
+        setDescription(detail + (assigned ? (disabled ? ". Slot disabled." : ". Slot enabled.")
+                                           : ". No effect is assigned.") +
+                       " Global FX bypass is independent of this switch.");
+        setTooltip((assigned ? (disabled ? "Enable " : "Disable ") : "Unavailable: ") +
+                   detail + ". Global FX bypass is independent.");
+        repaint();
+    }
+    void paintButton(juce::Graphics &g, bool over, bool down) override
+    {
+        const auto r = getLocalBounds().toFloat().reduced(1.5f);
+        const bool enabled = isEnabled() && getToggleState();
+        const auto *tab = dynamic_cast<const juce::Button *>(getParentComponent());
+        const bool selected = tab && tab->getToggleState();
+        auto ink = theme.text;
+        if (theme.style == "live" || theme.style == "aurora")
+            ink = theme.accent;
+        else if (theme.style == "precision")
+            ink = selected ? theme.accent : theme.text;
+        else if (theme.style == "ivory")
+            ink = selected ? theme.accent.contrasting(.95f) : theme.accent;
+        else if (selected)
+            ink = (theme.style == "bauhaus" ? theme.yellow : theme.accent).contrasting(.95f);
+        if (!enabled)
+            ink = ink.withAlpha(isEnabled() ? .45f : .25f);
+        if (theme.style == "space")
+        {
+            const auto lamp = enabled ? theme.accent : theme.panel.brighter(.25f);
+            g.setColour(juce::Colours::black.withAlpha(.8f));
+            g.fillRoundedRectangle(r, 1.7f);
+            g.setColour(theme.border.brighter(.2f));
+            g.drawRoundedRectangle(r, 1.7f, .8f);
+            if (enabled)
+            {
+                g.setColour(lamp.withAlpha(.2f));
+                g.fillRoundedRectangle(r.expanded(1), 2.5f);
+            }
+            const auto face = r.reduced(2.4f);
+            g.setGradientFill(juce::ColourGradient(lamp.brighter(.38f), face.getCentreX(),
+                                                   face.getY(), lamp.darker(.25f),
+                                                   face.getCentreX(), face.getBottom(), false));
+            g.fillRoundedRectangle(face, .8f);
+        }
+        else
+        {
+            const auto centre = r.getCentre();
+            const float radius = std::min(r.getWidth(), r.getHeight()) * .38f;
+            juce::Path arc;
+            arc.addCentredArc(centre.x, centre.y + .5f, radius, radius, 0.f,
+                              .65f, juce::MathConstants<float>::twoPi - .65f, true);
+            g.setColour(ink);
+            g.strokePath(arc, juce::PathStrokeType(1.5f, juce::PathStrokeType::curved,
+                                                  juce::PathStrokeType::rounded));
+            g.drawLine(centre.x, centre.y - radius - 1.f, centre.x,
+                       centre.y - .4f, 1.5f);
+        }
+        if (over || down || hasKeyboardFocus(false))
+        {
+            g.setColour(theme.accent.withAlpha(down ? .85f : .65f));
+            g.drawRoundedRectangle(r, 2.f, hasKeyboardFocus(false) ? 1.5f : .8f);
+        }
+    }
+
+  private:
+    Theme &theme;
+    SurgeSynthProcessor &processor;
+    int slot;
+};
+
 /** Native view tab: choosing a source never writes an audio parameter. */
 class ViewTabButton : public juce::TextButton
 {
@@ -1970,6 +2125,49 @@ class ViewTabButton : public juce::TextButton
         // Expose checked state to assistive technology while keeping selection
         // owned by the view model (clicking the active tab must not turn it off).
         setToggleable(true);
+    }
+    void addEffectPower(SurgeSynthProcessor &processor, int oneBasedSlot)
+    {
+        // Spectral's compact tabs deliberately retain the reference's uninterrupted
+        // single-line labels. The other FX racks show individual slot switches.
+        if (!effect || theme.style == "spectral" || oneBasedSlot < 1 ||
+            oneBasedSlot > n_fx_slots)
+            return;
+        power = std::make_unique<EffectPowerButton>(theme, processor, oneBasedSlot - 1);
+        power->setComponentID(getComponentID() + ".power");
+        addAndMakeVisible(*power);
+        resized();
+    }
+    void syncEffectPower()
+    {
+        if (power)
+            power->sync();
+    }
+    void resized() override
+    {
+        if (!power)
+            return;
+        const auto r = getLocalBounds();
+        const int size = 16;
+        int x = 8, y = 4;
+        if (theme.style == "space" || theme.style == "aurora")
+        {
+            x = 26;
+            y = (r.getHeight() - size) / 2;
+        }
+        else if (theme.style == "bauhaus")
+        {
+            x = r.getWidth() - size - 3;
+            y = 3;
+        }
+        else if (theme.style == "live")
+        {
+            x = (r.getWidth() - size) / 2;
+            y = 4;
+        }
+        else if (theme.style == "ivory")
+            y = 6;
+        power->setBounds(x, y, size, size);
     }
     void paintButton(juce::Graphics &g, bool over, bool down) override
     {
@@ -1989,22 +2187,24 @@ class ViewTabButton : public juce::TextButton
         if (selected && (theme.style == "precision" || theme.style == "tokyo" ||
                          theme.style == "flow"))
             ink = theme.accent;
-        if (effect && theme.style == "space" && r.getHeight() < 36)
+        if (effect && power && (theme.style == "space" || theme.style == "aurora"))
         {
             const auto caption = getButtonText();
-            auto cells = r;
-            auto numberCell = cells.removeFromLeft(31);
-            g.setColour(ink.withAlpha(.5f));
-            g.drawVerticalLine(static_cast<int>(numberCell.getRight()), r.getY() + 3,
-                               r.getBottom() - 3);
+            const auto numberCell = r.withWidth(25.f);
+            if (theme.style == "space")
+            {
+                g.setColour(ink.withAlpha(.5f));
+                g.drawVerticalLine(static_cast<int>(numberCell.getRight()), r.getY() + 3,
+                                   r.getBottom() - 3);
+            }
             g.setColour(ink);
-            g.setFont(theme.type(13, true));
+            g.setFont(theme.type(theme.style == "space" ? 13.f : fontSize, true));
             g.drawFittedText(caption.upToFirstOccurrenceOf(" ", false, false),
                              numberCell.toNearestInt(), juce::Justification::centred, 1, .7f);
-            g.setFont(theme.type(12.5f, selected));
+            g.setFont(theme.type(theme.style == "space" ? 12.5f : fontSize, selected));
+            const auto label = r.withTrimmedLeft(47.f).withTrimmedRight(4.f);
             g.drawFittedText(caption.fromFirstOccurrenceOf(" ", false, false).trim(),
-                             cells.reduced(7, 0).toNearestInt(), juce::Justification::centredLeft,
-                             1, .7f);
+                             label.toNearestInt(), juce::Justification::centredLeft, 1, .7f);
         }
         else if (effect && r.getHeight() >= 36)
         {
@@ -2012,10 +2212,19 @@ class ViewTabButton : public juce::TextButton
             const auto slot = caption.upToFirstOccurrenceOf(" ", false, false);
             const auto algorithm = caption.fromFirstOccurrenceOf(" ", false, false).trim();
             const bool large = r.getHeight() >= 76;
+            auto numberCell = r.withHeight(large ? 22.f : 18.f);
+            if (power)
+            {
+                if (theme.style == "live")
+                    numberCell = r.withY(23.f).withHeight(15.f);
+                else if (theme.style == "bauhaus")
+                    numberCell = numberCell.withTrimmedRight(20.f);
+                else
+                    numberCell = numberCell.withTrimmedLeft(24.f);
+            }
             g.setFont(theme.type(std::max(11.f, fontSize), true));
             g.setColour(ink);
-            g.drawText(slot, r.withHeight(large ? 22.f : 18.f).toNearestInt(),
-                       juce::Justification::centred);
+            g.drawText(slot, numberCell.toNearestInt(), juce::Justification::centred);
             if (large)
                 effectGlyph(g, r.reduced(12, 0).withHeight(36).withCentre(
                                    {r.getCentreX(), r.getCentreY()}), ink, algorithm);
@@ -2054,6 +2263,7 @@ class ViewTabButton : public juce::TextButton
     Theme &theme;
     float fontSize;
     bool effect;
+    std::unique_ptr<EffectPowerButton> power;
 };
 
 /** Three real native buttons: previous table, categorized catalog and next table.
@@ -3117,9 +3327,43 @@ class PresetBrowser : public juce::Component, private juce::ListBoxModel
 class PerformanceKeyboard : public juce::MidiKeyboardComponent
 {
   public:
-    explicit PerformanceKeyboard(juce::MidiKeyboardState &state)
-        : juce::MidiKeyboardComponent(state, juce::MidiKeyboardComponent::horizontalKeyboard)
+    explicit PerformanceKeyboard(juce::MidiKeyboardState &state, bool useFooterLabels = false)
+        : juce::MidiKeyboardComponent(state, juce::MidiKeyboardComponent::horizontalKeyboard),
+          footerLabels(useFooterLabels)
     {
+        getProperties().set("reference.keyboard-footer-labels", footerLabels);
+    }
+    juce::String getWhiteNoteText(int midiNoteNumber) override
+    {
+        return footerLabels ? juce::String{}
+                            : juce::MidiKeyboardComponent::getWhiteNoteText(midiNoteNumber);
+    }
+    juce::String noteName(int midiNoteNumber) const
+    {
+        // Preserve JUCE's existing octave convention; these names describe the
+        // same MIDI identities as the playable keys, including the terminal C.
+        return juce::MidiMessage::getMidiNoteName(midiNoteNumber, true, true,
+                                                 getOctaveForMiddleC());
+    }
+    Rect keyBoundsOnCanvas(int midiNoteNumber) const
+    {
+        return getRectangleForKey(midiNoteNumber).translated(static_cast<float>(getX()),
+                                                             static_cast<float>(getY()));
+    }
+    void drawFooter(juce::Graphics &g, const Theme &theme)
+    {
+        juce::StringArray labels;
+        for (int note = getRangeStart(); note <= getRangeEnd(); ++note)
+            if (note % 12 == 0)
+            {
+                const auto key = keyBoundsOnCanvas(note);
+                const auto name = noteName(note);
+                text(g, theme, name, {key.getCentreX() - 14, key.getBottom() + 3, 28, 15},
+                     10, theme.text.withAlpha(.85f), false, juce::Justification::centred);
+                labels.add(name);
+            }
+        getProperties().set("reference.keyboard-octave-labels", labels.joinIntoString(" "));
+        getProperties().set("reference.keyboard-octave-label-count", labels.size());
     }
     void releaseHeldNotes()
     {
@@ -3127,6 +3371,9 @@ class PerformanceKeyboard : public juce::MidiKeyboardComponent
         juce::MidiKeyboardComponent::focusLost(juce::Component::focusChangedDirectly);
     }
     ~PerformanceKeyboard() override { releaseHeldNotes(); }
+
+  private:
+    const bool footerLabels;
 };
 } // anonymous namespace
 
@@ -3486,6 +3733,7 @@ struct Workspace::Impl
                                           parameters.display("fx" + juce::String(slot) + ".type");
                             }
                             tab.button->setButtonText(caption);
+                            tab.button->syncEffectPower();
                             tab.button->setName("Select " + caption);
                             tab.button->setTitle(tab.button->getName());
                             tab.button->setTooltip("Select " + caption +
@@ -3526,6 +3774,8 @@ struct Workspace::Impl
                 const auto choiceId = string(choice, "id");
                 const auto group = state.id;
                 button->setComponentID("workspace.selection." + group + "." + choiceId);
+                if (string(choice, "source") == "fx")
+                    button->addEffectPower(processor, static_cast<int>(number(choice, "index", 1)));
                 button->onClick = [this, group, choiceId] { selectView(group, choiceId); };
                 button->onNavigate = [this, group, choiceId](int delta) {
                     moveView(group, choiceId, delta);
@@ -3800,14 +4050,17 @@ struct Workspace::Impl
                 }
                 if (kind == "keyboard")
                 {
-                    keyboard = std::make_unique<PerformanceKeyboard>(processor.midiKeyboardState);
+                    keyboard = std::make_unique<PerformanceKeyboard>(processor.midiKeyboardState,
+                                                                      theme.style == "live");
                     keyboard->setComponentID("workspace.performance-keyboard");
                     keyboard->setName("Performance MIDI keyboard");
                     keyboard->setTitle("Performance MIDI keyboard");
                     keyboard->setAvailableRange(theme.style == "live" ? 0 : 24,
-                                                theme.style == "live" ? 119 : 108);
+                                                theme.style == "live" ? 120 : 108);
                     keyboard->setLowestVisibleKey(theme.style == "live" ? 0 : 36);
-                    keyboard->setKeyWidth(theme.style == "live" ? 8.2f : 17.f);
+                    keyboard->setKeyWidth(theme.style == "live" ? 8.f : 17.f);
+                    if (theme.style == "live")
+                        keyboard->setScrollButtonsVisible(false);
                     keyboard->setColour(juce::MidiKeyboardComponent::whiteNoteColourId,
                                         juce::Colour(0xffeeeae2));
                     keyboard->setColour(juce::MidiKeyboardComponent::blackNoteColourId,
@@ -4260,7 +4513,9 @@ struct Workspace::Impl
             put(presetButton, 725, 22, 289, 25, H::caption, 19, true);
             put(next, 1019, 24, 32, 34, H::chevron);
             put(saveButton, 1061, 25, 33, 31, H::chip, 10);
-            put(browserButton, 16, 84, 83, 31, H::chip, 14, true);
+            // The native browser's PRESETS tab occupies this title row. Keep
+            // the covered header action out of both the paint and focus trees.
+            browserButton.setVisible(false);
             put(synthButton, 290, 84, 107, 31, H::chip, 17, true);
             put(modButton, 404, 84, 144, 31, H::navigation, 14);
             modButton.setButtonText("MOD MATRIX");
@@ -4785,14 +5040,31 @@ struct Workspace::Impl
     }
     void drawFilter(juce::Graphics &g, Rect r, int index, juce::Colour color, bool base = true)
     {
+        const juce::Graphics::ScopedSaveState state(g);
+        g.reduceClipRegion(r.toNearestInt());
         if (base && theme.style != "aurora")
             plotBase(g, r, false, false); // The filter draws its own logarithmic axes.
         const bool miniature = r.getHeight() < 65;
         const bool ivoryReadouts = theme.style == "ivory" && !miniature;
+        const bool spectral = theme.style == "spectral", tokyo = theme.style == "tokyo";
+        const bool clear = theme.style == "clear", live = theme.style == "live";
+        const bool dbReadouts = !miniature && (spectral || tokyo || clear);
         const auto frame = r;
         r = miniature ? r.reduced(4, 3) : r.reduced(7, 15);
         if (ivoryReadouts)
             r = frame.reduced(7, 9).withTrimmedBottom(20);
+        if (dbReadouts)
+            r = r.withTrimmedLeft(clear ? 30.f : 21.f);
+        if (live)
+            color = theme.accent;
+        else if (clear)
+            color = color.brighter(.22f);
+        const auto axisInk = theme.display.contrasting(dbReadouts ? .90f : .80f);
+        const auto gridInk = dbReadouts ? axisInk : theme.secondary;
+        const auto axisSize = clear      ? 12.f
+                              : tokyo    ? 11.f
+                              : spectral ? 10.f
+                                         : r.getWidth() > 400 ? 11.f : 9.f;
         const auto &curve = filterCurves[juce::jlimit(0, 1, index - 1)];
         if (!curve.available || curve.values.size() < 2)
         {
@@ -4809,24 +5081,43 @@ struct Workspace::Impl
                     r.getX() + std::log(frequency / filterPreviewMinimumHz) /
                                    std::log(filterPreviewMaximumHz / filterPreviewMinimumHz) *
                                    r.getWidth();
-                g.setColour(theme.secondary.withAlpha(.10f));
+                g.setColour(gridInk.withAlpha(clear ? .14f : .10f));
                 g.drawLine(x, r.getY(), x, r.getBottom(), .7f);
                 const auto label = frequency >= 1000 ? juce::String(frequency / 1000.f, 0) + "k"
                                                      : juce::String(static_cast<int>(frequency));
-                if (!ivoryReadouts)
-                    text(g, theme, label, {x - 13, frame.getBottom() - 13, 26, 12},
-                         r.getWidth() > 400 ? 11.f : 9.f, theme.display.contrasting(.80f), false,
+                // Compact cards retain the full logarithmic grid, with enough
+                // separation for the actual frequency captions to remain readable.
+                const bool caption = !dbReadouts || r.getWidth() >= 260 || frequency == 20 ||
+                                     frequency == 100 || frequency == 1000 || frequency == 20000;
+                if (!ivoryReadouts && caption)
+                    text(g, theme, label, dbReadouts
+                             ? Rect(std::clamp(x - 14, r.getX() - 4, frame.getRight() - 29),
+                                    frame.getBottom() - 14, 28, 13)
+                             : Rect(std::clamp(x - 13, frame.getX(), frame.getRight() - 26),
+                                    frame.getBottom() - 13, 26, 12),
+                         axisSize, axisInk, false,
                          juce::Justification::centred);
             }
-            for (float db = filterPreviewMinimumDb; db <= filterPreviewMaximumDb; db += 12)
+            // Multiples of 12 dB include the real unity-gain line. Starting at
+            // the -42 dB display limit would miss 0 dB entirely.
+            for (float db = std::ceil(filterPreviewMinimumDb / 12.f) * 12.f;
+                 db <= filterPreviewMaximumDb; db += 12)
             {
                 const auto y =
                     r.getBottom() - (db - filterPreviewMinimumDb) /
                                         (filterPreviewMaximumDb - filterPreviewMinimumDb) *
                                         r.getHeight();
-                g.setColour(theme.secondary.withAlpha(db == 0 ? .18f : .09f));
+                g.setColour(gridInk.withAlpha(db == 0 ? .25f : clear ? .14f : .09f));
                 g.drawLine(r.getX(), y, r.getRight(), y, db == 0 ? 1.f : .7f);
+                if (dbReadouts)
+                    text(g, theme, (db > 0 ? "+" : "") + juce::String(static_cast<int>(db)),
+                         {frame.getX() + 2, y - 6.5f, r.getX() - frame.getX() - 7, 13},
+                         axisSize, axisInk, false, juce::Justification::centredRight);
             }
+            if (dbReadouts)
+                text(g, theme, "dB", {frame.getX() + 2, frame.getBottom() - 14,
+                                      r.getX() - frame.getX() - 7, 13},
+                     axisSize, axisInk, false, juce::Justification::centredRight);
         }
         juce::Path p;
         for (size_t i = 0; i < curve.values.size(); ++i)
@@ -4844,11 +5135,17 @@ struct Workspace::Impl
         fill.lineTo(r.getBottomRight());
         fill.lineTo(r.getBottomLeft());
         fill.closeSubPath();
-        g.setGradientFill(juce::ColourGradient(color.withAlpha(.28f), r.getTopLeft(),
+        const auto fillAlpha = spectral ? .46f : clear ? .44f : tokyo ? .38f : live ? .34f : .28f;
+        g.setGradientFill(juce::ColourGradient(color.withAlpha(fillAlpha), r.getTopLeft(),
                                                color.withAlpha(.01f), r.getBottomLeft(), false));
         g.fillPath(fill);
+        if (spectral || tokyo)
+        {
+            g.setColour(color.withAlpha(spectral ? .12f : .08f));
+            g.strokePath(p, juce::PathStrokeType(spectral ? 5.f : 4.f));
+        }
         g.setColour(color);
-        g.strokePath(p, juce::PathStrokeType(1.7f));
+        g.strokePath(p, juce::PathStrokeType(clear ? 2.7f : spectral || tokyo ? 2.f : 1.7f));
         if (!miniature)
         {
             const auto binding = "filter" + juce::String(index) + ".cutoff";
@@ -4864,17 +5161,24 @@ struct Workspace::Impl
                     juce::jlimit(0.f, 1.f,
                                  std::log(hz / filterPreviewMinimumHz) /
                                      std::log(filterPreviewMaximumHz / filterPreviewMinimumHz));
-                const auto at = static_cast<size_t>(position * (curve.values.size() - 1));
+                const auto sample = position * (curve.values.size() - 1);
+                const auto at = static_cast<size_t>(sample);
+                const auto next = std::min(at + 1, curve.values.size() - 1);
+                const auto magnitude = [&](size_t i) {
+                    return std::clamp((curve.values[i] - filterPreviewMinimumDb) /
+                                          (filterPreviewMaximumDb - filterPreviewMinimumDb),
+                                      0.f, 1.f);
+                };
                 const auto y = r.getBottom() -
-                               r.getHeight() *
-                                   std::clamp((curve.values[at] - filterPreviewMinimumDb) /
-                                                  (filterPreviewMaximumDb - filterPreviewMinimumDb),
-                                              0.f, 1.f);
+                               r.getHeight() * (magnitude(at) + (sample - at) *
+                                                                    (magnitude(next) - magnitude(at)));
                 const auto x = r.getX() + position * r.getWidth();
-                g.setColour(theme.display);
-                g.fillEllipse(x - 3.7f, y - 3.7f, 7.4f, 7.4f);
-                g.setColour(color);
-                g.drawEllipse(x - 3.7f, y - 3.7f, 7.4f, 7.4f, 1.5f);
+                const auto radius = clear ? 5.8f : 3.7f;
+                const Rect marker(x - radius, y - radius, radius * 2, radius * 2);
+                g.setColour(clear ? color : theme.display);
+                g.fillEllipse(marker);
+                g.setColour(clear ? juce::Colours::white : color.brighter(.12f));
+                g.drawEllipse(marker, clear ? 2.f : 1.6f);
             }
         }
         if (base && ivoryReadouts)
@@ -4895,6 +5199,8 @@ struct Workspace::Impl
     }
     void drawLfo(juce::Graphics &g, Rect r, int index)
     {
+        const juce::Graphics::ScopedSaveState state(g);
+        g.reduceClipRegion(r.toNearestInt());
         if (theme.style != "aurora")
             plotBase(g, r, theme.style == "clear");
         r = r.reduced(6);
@@ -4916,8 +5222,44 @@ struct Workspace::Impl
             else
                 p.lineTo(r.getX() + x * r.getWidth(), r.getY() + y * r.getHeight());
         }
-        g.setColour(theme.style == "clear" ? theme.accent : theme.secondary);
-        g.strokePath(p, juce::PathStrokeType(1.8f));
+        const bool spectral = theme.style == "spectral", tokyo = theme.style == "tokyo";
+        const bool clear = theme.style == "clear", live = theme.style == "live";
+        const auto color = clear || live ? theme.accent : theme.secondary;
+        if (spectral || tokyo || clear || live)
+        {
+            auto fill = p;
+            const auto floor = spectral ? r.getCentreY() : r.getBottom();
+            fill.lineTo(r.getRight(), floor);
+            fill.lineTo(r.getX(), floor);
+            fill.closeSubPath();
+            if (spectral)
+            {
+                juce::ColourGradient gradient(theme.accent.withAlpha(.38f), r.getTopLeft(),
+                                               theme.accent.withAlpha(.28f), r.getBottomLeft(), false);
+                gradient.addColour(.5, theme.secondary.withAlpha(.12f));
+                g.setGradientFill(gradient);
+            }
+            else
+                g.setGradientFill(juce::ColourGradient(
+                    color.withAlpha(clear ? .23f : tokyo ? .20f : .13f), r.getTopLeft(),
+                    color.withAlpha(.01f), r.getBottomLeft(), false));
+            g.fillPath(fill);
+        }
+        if (spectral || tokyo)
+        {
+            g.setColour((spectral ? theme.accent : color).withAlpha(spectral ? .16f : .10f));
+            g.strokePath(p, juce::PathStrokeType(spectral ? 4.8f : 4.f));
+        }
+        if (spectral)
+        {
+            juce::ColourGradient gradient(theme.accent.brighter(.12f), r.getTopLeft(),
+                                           theme.accent, r.getBottomLeft(), false);
+            gradient.addColour(.5, theme.secondary);
+            g.setGradientFill(gradient);
+        }
+        else
+            g.setColour(color);
+        g.strokePath(p, juce::PathStrokeType(clear ? 2.1f : tokyo ? 2.f : 1.8f));
     }
     void drawSpectrum(juce::Graphics &g, Rect r, bool history)
     {
@@ -5538,6 +5880,126 @@ struct Workspace::Impl
                      theme.accent.interpolatedWith(juce::Colours::white, .55f), false,
                      juce::Justification::centred);
             }
+        }
+        else if (kind == "keyboard" && theme.style == "live" && keyboard)
+        {
+            // All geometry follows the placed, playable JUCE keyboard. The
+            // strips project real scene ranges onto its visible MIDI notes.
+            const auto keys = keyboard->getBounds().toFloat();
+            const auto well = keys.expanded(10, 0).withTop(keys.getY() - 76)
+                                  .withBottom(keys.getBottom() + 23);
+            bezel(g, theme, well, theme.display, 6);
+            const auto *modeParameter = parameters.parameter("scene.mode");
+            const auto *splitParameter = parameters.parameter("scene.splitpoint");
+            const auto *activeParameter = parameters.parameter("scene.active");
+            const bool available = modeParameter && splitParameter && activeParameter;
+            const int mode = available ? modeParameter->val.i : -1;
+            const int split = available ? juce::jlimit(0, 127, splitParameter->val.i) : -1;
+            const int active = available ? juce::jlimit(0, 1, activeParameter->val.i) : -1;
+            std::array<juce::Range<int>, 2> noteRanges{}, channelRanges{};
+            for (auto &channels : channelRanges)
+                channels = {keyboard->getMidiChannel(), keyboard->getMidiChannel() + 1};
+            switch (mode)
+            {
+            case sm_single:
+                noteRanges[active] = {0, 128};
+                break;
+            case sm_split:
+                // calculateChannelMask uses key < split for A; the split key is B.
+                noteRanges[0] = {0, split};
+                noteRanges[1] = {split, 128};
+                break;
+            case sm_dual:
+                noteRanges[0] = noteRanges[1] = {0, 128};
+                break;
+            case sm_chsplit:
+            {
+                // The engine's zero-based boundary is splitpoint / 8 + 1.
+                const int lastChannelA = split / 8 + 1;
+                channelRanges[0] = {1, lastChannelA + 1};
+                channelRanges[1] = {lastChannelA + 1, 17};
+                for (int scene = 0; scene < 2; ++scene)
+                    if (!channelRanges[scene].isEmpty())
+                        noteRanges[scene] = {0, 128};
+                break;
+            }
+            default:
+                break;
+            }
+
+            auto modeText = available ? parameters.display("scene.mode") : "Unavailable";
+            if (mode == sm_split)
+                modeText += utf8("  ·  split MIDI ") + juce::String(split);
+            modeText += utf8("  ·  MIDI ch ") + juce::String(keyboard->getMidiChannel());
+            text(g, theme, "Key ranges", {keys.getX(), well.getY() + 7, 100, 14},
+                 11.5f, theme.text, true);
+            text(g, theme, modeText,
+                 {keys.getX() + 104, well.getY() + 7, keys.getWidth() - 104, 14},
+                 10.5f, theme.muted, false, juce::Justification::centredRight);
+
+            const juce::Range<int> shown(keyboard->getRangeStart(), keyboard->getRangeEnd() + 1);
+            const int rangeCount = static_cast<int>(!noteRanges[0].isEmpty()) +
+                                   static_cast<int>(!noteRanges[1].isEmpty());
+            juce::Array<juce::var> rangeProperties;
+            juce::StringArray descriptions;
+            int row = 0;
+            for (int scene = 0; scene < 2; ++scene)
+            {
+                const auto notes = noteRanges[scene];
+                if (notes.isEmpty())
+                    continue;
+                const auto channels = channelRanges[scene];
+                juce::Array<juce::var> state;
+                for (const int value : {scene, notes.getStart(), notes.getEnd() - 1,
+                                       channels.getStart(), channels.getEnd() - 1})
+                    state.add(value);
+                rangeProperties.add(juce::var(state));
+                const auto visible = notes.getIntersectionWith(shown);
+                auto caption = juce::String(scene == 0 ? "Scene A" : "Scene B");
+                if (mode == sm_chsplit)
+                    caption += utf8("  ·  Ch ") + juce::String(channels.getStart()) +
+                               utf8("–") + juce::String(channels.getEnd() - 1);
+                caption += visible.isEmpty()
+                               ? utf8("  ·  outside shown keys")
+                               : utf8("  ·  ") + keyboard->noteName(visible.getStart()) +
+                                     utf8(" – ") + keyboard->noteName(visible.getEnd() - 1);
+                const auto ink = scene == 0 ? theme.accent : theme.secondary;
+                const float captionY = keys.getY() - (rangeCount == 1 ? 48.f : 54.f) + row * 27.f;
+                const float barY = keys.getY() - (rangeCount == 1 ? 24.f : 38.f) + row * 27.f;
+                text(g, theme, caption, {keys.getX(), captionY, keys.getWidth(), 12}, 10.5f,
+                     ink.interpolatedWith(theme.text, .35f));
+                descriptions.add(caption);
+                ++row;
+                if (visible.isEmpty())
+                    continue;
+                const auto first = keyboard->keyBoundsOnCanvas(visible.getStart());
+                const auto last = keyboard->keyBoundsOnCanvas(visible.getEnd() - 1);
+                const Rect bar(first.getX(), barY, last.getRight() - first.getX(), 8);
+                g.setColour(ink.withAlpha(.09f));
+                g.fillRoundedRectangle(bar.expanded(3, 3), 6);
+                g.setColour(ink.withAlpha(.16f));
+                g.fillRoundedRectangle(bar.expanded(1.5f, 1.5f), 5);
+                g.setGradientFill(juce::ColourGradient(ink.brighter(.3f), bar.getTopLeft(),
+                                                      ink.darker(.5f), bar.getBottomLeft(), false));
+                g.fillRoundedRectangle(bar, 4);
+                g.setColour(ink.interpolatedWith(juce::Colours::white, .55f));
+                g.drawRoundedRectangle(bar.reduced(.5f), 3.5f, .8f);
+                const float radius = std::min(2.5f, bar.getWidth() * .25f);
+                g.fillEllipse(bar.getRight() - radius * 2 - 1, bar.getCentreY() - radius,
+                              radius * 2, radius * 2);
+            }
+            auto &properties = keyboard->getProperties();
+            properties.set("reference.keyboard-mode", mode);
+            properties.set("reference.keyboard-active-scene", active);
+            properties.set("reference.keyboard-split-point", split);
+            properties.set("reference.keyboard-channel", keyboard->getMidiChannel());
+            // Rows are [scene, first MIDI note, last MIDI note, first channel,
+            // last channel], inclusive. Paint clips the full 0..127 note ranges;
+            // channels describe this keyboard unless Channel Split supplies groups.
+            properties.set("reference.keyboard-ranges", juce::var(rangeProperties));
+            keyboard->setDescription("Playable MIDI keyboard. " + modeText +
+                                     ". Visible keys: " + descriptions.joinIntoString("; "));
+            keyboard->drawFooter(g, theme);
         }
         else if (kind == "output")
         {

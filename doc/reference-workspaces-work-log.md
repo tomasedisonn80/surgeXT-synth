@@ -118,6 +118,31 @@ self-tests. No reference-versus-native fidelity metric has yet been measured.
 The full build at `4ffd53a` stopped on a GCC C++20 deprecation under `-Werror`;
 `550d469` fixes platform-native path conversion without suppressing the warning.
 
+## Wave 8 — reference geometry and native desktop triage (six agents, completed)
+
+| Agent | Substantive result |
+|---|---|
+| w08_visual_01_02 | Widened Obsidian OCT labels using measured font bounds; reviewed Ivory geometry |
+| w08_visual_03_04 | Reviewed Spectral/Bauhaus reference geometry and identified renderer-owned color/label differences |
+| w08_visual_05_06 | Corrected Space mixer gutter, top macro labels and six-plus-two FX layout; reviewed Tokyo |
+| w08_visual_07_08 | Measured Aurora/ClearSignal surfaces and identified gradient/modulation-column differences |
+| w08_visual_09_10 | Corrected Live knob placement and selected the genuine spectrogram mode; reviewed Flow |
+| w08_native_ci_triage | Isolated native GUI test initialization failure; separated behavior/capture steps and added a ready Xvfb/Openbox desktop |
+
+All control IDs and bindings were retained. The static geometry/overlap validator
+passed all ten manifests. These five visual assignments completed reference and
+source review, **not native screenshot approval**; the actual capture comparison
+is assigned to wave 9.
+
+The complete native synthesizer test executable built successfully in runs
+`43353929473` (`550d469`) and `43354634410` (`d6a06dd`). The latter also passed
+normal and ThreadSanitizer audio-tap stress checks. Both GUI runs then stopped on
+X11 `BadAtom` before producing images: bare Xvfb lacked window-manager atoms
+required by JUCE. The Openbox wrapper starts an owned window manager, checks
+readiness with a bounded timeout, preserves the native exit status and cleans up
+only its child. Its success, exit-code propagation and startup-failure mock tests
+passed. Its real native run is a separate, still-pending verification step.
+
 ## Verification status at this checkpoint
 
 * Package validation checks geometry, IDs, field bounds, package confinement,
@@ -127,4 +152,5 @@ The full build at `4ffd53a` stopped on a GCC C++20 deprecation under `-Werror`;
   GitHub Actions job because local development-header downloads are denied.
 * Each layout contains an explicit `adaptations` list. No 1:1 match is claimed
   without a completed native render comparison.
-* Waves 8–10 remain; work is recorded only when actually executed.
+* Waves 1–8 are complete (48 distinct agents); waves 9–10 remain. Work is
+  recorded as complete only when actually executed.

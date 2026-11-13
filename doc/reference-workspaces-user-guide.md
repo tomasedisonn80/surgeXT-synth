@@ -163,13 +163,13 @@ python3 scripts/reference-workspaces/package.py --self-test
 Geometry/schema checks do not execute the synth. For native coverage, configure
 with `SURGE_BUILD_TESTRUNNER=ON`, build `surge-xt-tests`, and run the
 `[reference-workspaces]` test group. On a Linux test machine with the build
-dependencies and Xvfb installed:
+dependencies, Xvfb, Openbox and `xprop` (`x11-utils`) installed:
 
 ```sh
 cmake --build build --target surge-xt-tests --parallel 2
 SURGE_DATA_HOME="$PWD/resources/data" \
 SURGE_REFERENCE_SCREENSHOTS="$PWD/build/reference-captures" \
-xvfb-run --auto-servernum --server-args='-screen 0 1920x1200x24' \
+bash scripts/reference-workspaces/run-native-ui.sh \
   build/src/surge-xt/xt-tests/surge-xt-tests '[reference-workspaces]'
 ```
 

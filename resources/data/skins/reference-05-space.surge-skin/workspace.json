@@ -707,7 +707,7 @@
     {
       "id": "space-mixer-osc1",
       "binding": "osc1.level",
-      "x": 270,
+      "x": 298,
       "y": 455,
       "w": 45,
       "h": 154,
@@ -717,7 +717,7 @@
     {
       "id": "space-mixer-osc2",
       "binding": "osc2.level",
-      "x": 325,
+      "x": 347,
       "y": 455,
       "w": 45,
       "h": 154,
@@ -727,7 +727,7 @@
     {
       "id": "space-mixer-osc3",
       "binding": "osc3.level",
-      "x": 380,
+      "x": 394,
       "y": 455,
       "w": 45,
       "h": 154,
@@ -1015,6 +1015,7 @@
       "h": 113,
       "kind": "knob",
       "label": "Macro 1",
+      "labelPosition": "top",
       "ink": "#211C12"
     },
     {
@@ -1036,6 +1037,7 @@
       "h": 113,
       "kind": "knob",
       "label": "Macro 2",
+      "labelPosition": "top",
       "ink": "#211C12"
     },
     {
@@ -1057,6 +1059,7 @@
       "h": 113,
       "kind": "knob",
       "label": "Macro 3",
+      "labelPosition": "top",
       "ink": "#211C12"
     },
     {
@@ -1078,6 +1081,7 @@
       "h": 113,
       "kind": "knob",
       "label": "Macro 4",
+      "labelPosition": "top",
       "ink": "#211C12"
     },
     {
@@ -1099,6 +1103,7 @@
       "h": 113,
       "kind": "knob",
       "label": "Macro 5",
+      "labelPosition": "top",
       "ink": "#211C12"
     },
     {
@@ -1120,6 +1125,7 @@
       "h": 113,
       "kind": "knob",
       "label": "Macro 6",
+      "labelPosition": "top",
       "ink": "#211C12"
     },
     {
@@ -1141,6 +1147,7 @@
       "h": 113,
       "kind": "knob",
       "label": "Macro 7",
+      "labelPosition": "top",
       "ink": "#211C12"
     },
     {
@@ -1162,79 +1169,82 @@
       "h": 113,
       "kind": "knob",
       "label": "Macro 8",
+      "labelPosition": "top",
       "ink": "#211C12"
     },
     {
       "id": "space-fx1-param0",
       "binding": "fx1.param0",
-      "x": 666,
+      "x": 674,
       "y": 727,
-      "w": 82,
+      "w": 52,
       "h": 95,
       "kind": "knob"
     },
     {
       "id": "space-fx1-param1",
       "binding": "fx1.param1",
-      "x": 755,
+      "x": 731,
       "y": 727,
-      "w": 82,
+      "w": 52,
       "h": 95,
       "kind": "knob"
     },
     {
       "id": "space-fx1-param2",
       "binding": "fx1.param2",
-      "x": 844,
+      "x": 787,
       "y": 727,
-      "w": 82,
+      "w": 52,
       "h": 95,
       "kind": "knob"
     },
     {
       "id": "space-fx1-param3",
       "binding": "fx1.param3",
-      "x": 933,
+      "x": 844,
       "y": 727,
-      "w": 82,
+      "w": 52,
       "h": 95,
       "kind": "knob"
     },
     {
       "id": "space-fx1-param4",
       "binding": "fx1.param4",
-      "x": 666,
-      "y": 835,
-      "w": 82,
+      "x": 899,
+      "y": 727,
+      "w": 52,
       "h": 95,
       "kind": "knob"
     },
     {
       "id": "space-fx1-param5",
       "binding": "fx1.param5",
-      "x": 755,
-      "y": 835,
-      "w": 82,
+      "x": 952,
+      "y": 727,
+      "w": 52,
       "h": 95,
       "kind": "knob"
     },
     {
       "id": "space-fx1-param6",
       "binding": "fx1.param6",
-      "x": 844,
-      "y": 835,
-      "w": 82,
-      "h": 95,
-      "kind": "knob"
+      "x": 841,
+      "y": 839,
+      "w": 56,
+      "h": 75,
+      "kind": "knob",
+      "labelPosition": "top"
     },
     {
       "id": "space-fx1-param7",
       "binding": "fx1.param7",
-      "x": 933,
-      "y": 835,
-      "w": 82,
-      "h": 95,
-      "kind": "knob"
+      "x": 922,
+      "y": 839,
+      "w": 56,
+      "h": 75,
+      "kind": "knob",
+      "labelPosition": "top"
     },
     {
       "id": "space-master-output",
@@ -1310,7 +1320,7 @@
     "All three oscillators have independent actual algorithm menus and parameter controls. Algorithm names and parameter labels follow the current Surge engine, not nonexistent generic Sample or Granular modes.",
     "Surge has two dedicated envelope generators. The concept's third ADSR bank is explicitly labeled LFO 3 ENVELOPE and edits LFO 3's actual envelope parameters; it is not a third independent EG.",
     "All eight actual macro controls are presented in two rows of four. The concept exposes only four and leaves the lower macro panel empty.",
-    "Eight front-panel effect type menus and the first slot's dynamic parameters are exposed. All sixteen native effect slots remain available through Full FX editor.",
+    "Eight front-panel effect type menus and the first slot's dynamic parameters are exposed. The first six parameter knobs follow the concept's upper row, with the remaining two at the lower right; their labels and values remain tied to the actual selected effect. All sixteen native effect slots remain available through Full FX editor.",
     "The original editor remains available for complete preset browsing, modulation editing, advanced oscillator settings and host functions. Browser and routing displays must not be mistaken for new engine capabilities.",
     "Displayed controls and meters show the loaded patch's real values, so they intentionally do not retain the fabricated readouts or apparent activity shown in the reference.",
     "Filter plots use the actual selected filter-algorithm response. Compact amber FREQ and RES fields follow the reference geometry. Both explicitly labeled WS DRIVE fields and the global drive control edit the same real shared waveshaper drive, not independent per-filter drive."

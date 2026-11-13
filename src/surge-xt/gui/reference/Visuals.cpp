@@ -399,7 +399,7 @@ void Visuals::wavetable(juce::Graphics &g, juce::Rectangle<float> bounds,
     {
         // Keep the material's hue, with enough chroma to survive overlapping
         // translucent wires. This changes no source sample or amplitude.
-        const float saturation = ribbons ? 1.15f : 1.3f;
+        const float saturation = aurora ? 1.f : ribbons ? 1.15f : 1.3f;
         primary = primary.withSaturation(std::min(1.f, primary.getSaturation() * saturation));
         secondary =
             secondary.withSaturation(std::min(1.f, secondary.getSaturation() * saturation));
@@ -426,7 +426,7 @@ void Visuals::wavetable(juce::Graphics &g, juce::Rectangle<float> bounds,
                 // source phase spread. Height remains the actual signed sample.
                 return {bounds.getX() + bounds.getWidth() * (.025f + .95f * u - .04f * depth),
                         bounds.getCentreY() +
-                            bounds.getHeight() * (.16f * depth - .43f * amplitude)};
+                            bounds.getHeight() * (.04f + .16f * depth - .52f * amplitude)};
             if (luminous)
                 // Phase and frame are the two axes of this fixed slanted plane;
                 // signed sample amplitude is its height. The outer x extent
@@ -488,17 +488,22 @@ void Visuals::wavetable(juce::Graphics &g, juce::Rectangle<float> bounds,
             // Frame colour separates crossing real rows without changing ordinates.
             const auto blend = juce::jlimit(0.f, 1.f, (frame - .30f) / .65f);
             const auto middle = primary.interpolatedWith(secondary, blend)
-                                    .withSaturation((primary.getSaturation() +
-                                                     secondary.getSaturation()) * .5f);
+                                    .interpolatedWith(juce::Colours::white, .12f);
             auto paint = juce::ColourGradient(
-                juce::Colour(0xff445bf5).withMultipliedAlpha(alpha), bounds.getTopLeft(),
-                juce::Colour(0xffc64ffb).withMultipliedAlpha(alpha), bounds.getTopRight(), false);
-            paint.addColour(.18, juce::Colour(0xff4a99ff).withMultipliedAlpha(alpha));
+                juce::Colour(0xff445bf5).interpolatedWith(juce::Colours::white, .10f)
+                    .withMultipliedAlpha(alpha), bounds.getTopLeft(),
+                juce::Colour(0xffc64ffb).interpolatedWith(juce::Colours::white, .08f)
+                    .withMultipliedAlpha(alpha), bounds.getTopRight(), false);
+            paint.addColour(.18, juce::Colour(0xff4a99ff)
+                                      .interpolatedWith(juce::Colours::white, .10f)
+                                      .withMultipliedAlpha(alpha));
             paint.addColour(.38, middle.brighter(.10f).withMultipliedAlpha(alpha));
             paint.addColour(.50, middle.withMultipliedAlpha(alpha));
-            paint.addColour(.70, secondary.interpolatedWith(juce::Colours::white, .10f)
+            paint.addColour(.70, secondary.interpolatedWith(juce::Colours::white, .18f)
                                       .withMultipliedAlpha(alpha));
-            paint.addColour(.86, juce::Colour(0xffac49f8).withMultipliedAlpha(alpha));
+            paint.addColour(.86, juce::Colour(0xffac49f8)
+                                      .interpolatedWith(juce::Colours::white, .12f)
+                                      .withMultipliedAlpha(alpha));
             return paint;
         }
         if (terrain && !miniature)
@@ -586,13 +591,13 @@ void Visuals::wavetable(juce::Graphics &g, juce::Rectangle<float> bounds,
         {
             const float depth = static_cast<float>(frame) / std::max(1, data.frames - 1);
             const auto path = trace(depth);
-            g.setGradientFill(gradient(.008f, depth));
+            g.setGradientFill(gradient(.012f, depth));
             g.strokePath(path, juce::PathStrokeType(bounds.getHeight() * .30f));
-            g.setGradientFill(gradient(.014f, depth));
+            g.setGradientFill(gradient(.021f, depth));
             g.strokePath(path, juce::PathStrokeType(bounds.getHeight() * .18f));
-            g.setGradientFill(gradient(.030f, depth));
+            g.setGradientFill(gradient(.045f, depth));
             g.strokePath(path, juce::PathStrokeType(bounds.getHeight() * .085f));
-            g.setGradientFill(gradient(.050f, depth));
+            g.setGradientFill(gradient(.070f, depth));
             g.strokePath(path, juce::PathStrokeType(6.f));
         }
     }
@@ -612,7 +617,7 @@ void Visuals::wavetable(juce::Graphics &g, juce::Rectangle<float> bounds,
             strip.closeSubPath();
             const auto depth = static_cast<float>(frame) / std::max(1, data.frames - 1);
             g.setGradientFill(gradient(harmonic ? .025f
-                                       : aurora ? .04f + .035f * depth
+                                       : aurora ? .065f + .050f * depth
                                        : ribbons ? .018f
                                        : terrain ? .10f + .08f * depth
                                                  : .07f + .06f * depth,
@@ -624,7 +629,7 @@ void Visuals::wavetable(juce::Graphics &g, juce::Rectangle<float> bounds,
     // sample-domain connections, never frequency bins or output measurements.
     if ((!ribbons || luminous) && data.frames > 1)
     {
-        g.setGradientFill(gradient(miniature ? .11f : aurora ? .20f : luminous ? .13f
+        g.setGradientFill(gradient(miniature ? .11f : aurora ? .24f : luminous ? .13f
                                                   : terrain ? .43f : .28f));
         const int phaseStep = miniature ? 24 : aurora ? 5 : luminous ? 12 : 4;
         for (int phase = 0; phase < WavetablePreview::pointsPerFrame; phase += phaseStep)
@@ -667,7 +672,7 @@ void Visuals::wavetable(juce::Graphics &g, juce::Rectangle<float> bounds,
                                    miniature ? 3.f : luminous ? 7.f : terrain ? 10.f : 6.f));
         }
         g.setGradientFill(gradient(harmonic ? .84f
-                                   : aurora ? .34f + .46f * t
+                                   : aurora ? .40f + .45f * t
                                    : luminous ? .26f + .42f * t
                                    : ribbons ? .37f + .45f * t
                                    : terrain ? .62f + .36f * t

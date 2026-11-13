@@ -200,6 +200,31 @@ void text(juce::Graphics &g, const Theme &t, const juce::String &s, Rect r, floa
     g.drawFittedText(s, r.toNearestInt(), align, 1, 0.7f);
 }
 
+// Two optically calibrated labels use the current embedded face's real glyph
+// outlines. This adds bounded ink weight without changing layout or native text.
+void weightedGlyphText(juce::Graphics &g, const juce::Font &font, const juce::String &label,
+                       Rect bounds, juce::Colour ink, int align, juce::Point<float> scale,
+                       float outlineWidth, juce::Point<float> offset)
+{
+    juce::GlyphArrangement glyphs;
+    glyphs.addFittedText(font, label, bounds.getX(), bounds.getY(), bounds.getWidth(),
+                        bounds.getHeight(), juce::Justification(align), 1, .7f);
+    juce::Path outlines;
+    glyphs.createPath(outlines);
+    if (outlines.isEmpty())
+        return;
+    const auto centre = outlines.getBounds().getCentre();
+    outlines.applyTransform(juce::AffineTransform(
+        scale.x, 0.f, centre.x * (1.f - scale.x) + offset.x,
+        0.f, scale.y, centre.y * (1.f - scale.y) + offset.y));
+    const juce::Graphics::ScopedSaveState saved(g);
+    g.reduceClipRegion(bounds.toNearestInt());
+    g.setColour(ink);
+    g.fillPath(outlines);
+    g.strokePath(outlines, juce::PathStrokeType(outlineWidth, juce::PathStrokeType::curved,
+                                               juce::PathStrokeType::rounded));
+}
+
 const juce::Image &materialGrain(bool brushed)
 {
     // Immutable cosmetic grain, generated once without the synth's RNG. It is
@@ -1210,10 +1235,11 @@ class BoundSlider : public juce::Slider
             };
             if (theme.style == "space" && binding.startsWith("macro"))
             {
-                g.setFont(theme.type(fs + 1.f, true).withHorizontalScale(.83f));
-                g.setColour(ink);
-                g.drawFittedText(label, r.withHeight(19).toNearestInt(),
-                                juce::Justification::centred, 1);
+                // Preserve the real caption and control bounds; match the
+                // reference's narrower, taller, heavier brass-plate lettering.
+                weightedGlyphText(g, theme.type(fs + 1.f, true).withHorizontalScale(.83f),
+                                  label, r.withHeight(19), ink, juce::Justification::centred,
+                                  {1.015f, 1.0775f}, .38f, {-1.5f, .5f});
                 auto faceTheme = theme;
                 faceTheme.knob = theme.display;
                 faceTheme.text = theme.display; // Dark graduations on the brass macro plate.
@@ -1425,10 +1451,15 @@ class BoundSlider : public juce::Slider
             g.drawRoundedRectangle(handle, 2, 1);
             if (spectralFader)
             {
-                g.setGradientFill(juce::ColourGradient(
-                    juce::Colour(0xff5953b4), handle.getTopLeft(),
-                    juce::Colour(0xffad63f5), handle.getBottomLeft(), false));
-                g.fillRoundedRectangle(handle.reduced(2.5f, 3.f), 1.f);
+                const auto inset = handle.reduced(2.5f, 3.f);
+                const auto upper = juce::Colour(0xff5953b4);
+                const auto lower = juce::Colour(0xffad63f5);
+                auto fill = juce::ColourGradient(upper, inset.getTopLeft(),
+                                                 lower, inset.getBottomLeft(), false);
+                fill.addColour(.18, upper);
+                fill.addColour(.82, lower);
+                g.setGradientFill(fill);
+                g.fillRoundedRectangle(inset, 1.f);
                 g.setColour(theme.accent.interpolatedWith(juce::Colours::white, .55f));
                 g.drawRoundedRectangle(handle.reduced(1.2f), 1.2f, 1.f);
             }
@@ -6262,8 +6293,16 @@ struct Workspace::Impl
             tabs.getX() > titleBounds.getX() + 80)
             titleBounds.setRight(tabs.getX() - 8);
         if (titleHeight > 0 && (tabs.isEmpty() || !tabs.intersects(titleBounds)))
-            text(g, theme, title, titleBounds.withHeight(std::min(25.f, titleHeight)),
-                 number(v, "fontSize", theme.style == "ivory" ? 18 : 15), titleColor, true);
+        {
+            const auto headingBounds = titleBounds.withHeight(std::min(25.f, titleHeight));
+            const auto headingSize = number(v, "fontSize", theme.style == "ivory" ? 18 : 15);
+            if (theme.style == "bauhaus" && panelId == "output-panel")
+                weightedGlyphText(g, theme.type(headingSize, true), title, headingBounds,
+                                  titleColor, juce::Justification::centredLeft,
+                                  {.9856f, 1.0375f}, .55f, {-1.f, .5f});
+            else
+                text(g, theme, title, headingBounds, headingSize, titleColor, true);
+        }
         auto content = r.reduced(10).withTrimmedTop(titleHeight);
         auto pr =
             arrayRect(v["plot"], content.withHeight(std::max(25.f, content.getHeight() * .56f)));
@@ -6316,7 +6355,8 @@ struct Workspace::Impl
                 plotBase(g, pr, false, theme.style != "bauhaus");
             if (visuals.wavetable[oscillator].available())
                 Visuals::wavetable(
-                    g, pr.reduced(8), visuals.wavetable[oscillator], primary, secondary,
+                    g, pr.reduced(theme.style == "aurora" ? 1.f : 8.f),
+                    visuals.wavetable[oscillator], primary, secondary,
                     theme.style == "bauhaus" ? Visuals::WavetableView::harmonicRibbons
                     : theme.style == "spectral" ? Visuals::WavetableView::spectralTerrain
                     : theme.style == "aurora" ? Visuals::WavetableView::auroraRibbons

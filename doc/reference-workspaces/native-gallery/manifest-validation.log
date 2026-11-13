@@ -1,0 +1,14 @@
+PASS 01 Obsidian Precision: 14 panels, 83 controls
+PASS 02 Ivory Atelier: 17 panels, 75 controls
+PASS 03 Spectral Observatory: 18 panels, 69 controls
+PASS 04 Bauhaus Modular: 25 panels, 79 controls
+PASS 05 Space-Age 1977: 21 panels, 90 controls
+PASS 06 Tokyo Industrial: 18 panels, 92 controls
+PASS 07 Liquid Aurora: 21 panels, 99 controls
+PASS 08 ClearSignal Accessible: 27 panels, 77 controls
+  WARNING plot/control bounds overlap: panel.envelope.plot / envelope.mode (79 x 24); inspect rendered labels
+  WARNING plot/control bounds overlap: panel.lfo.plot / lfo1.shape (60 x 21); inspect rendered labels
+PASS 09 Signal-Flow Cartographer: 11 panels, 51 controls
+  NOTE panel.flow: 19 live controls intentionally overlay routing plot
+PASS 10 Live Performance Deck: 22 panels, 64 controls
+PASS: 10 reference workspaces validated

@@ -1,0 +1,1 @@
+PASS: valid/Unicode/duplicate-binding fixtures; 42 schema rejections; 24 malformed JSON rejections; 9 confined-path checks; 28 accepted/140 rejected shared selection/widget schema cases; declared-control, individual-tab, gap/unused-cell, wavetable and MIDI-lane overlap checks

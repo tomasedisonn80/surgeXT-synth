@@ -35,6 +35,22 @@ TABLES = (
 )
 
 
+# Original finite-harmonic pulse family. Each tuple is phase, integer power,
+# amplitude, phase travel, depth rate and depth phase. An integer power of a
+# raised cosine has a finite Fourier series; no image samples enter this source.
+DUNES_PEAKS = (
+    (.075, 40, .80, .035, .70, .2),
+    (.225, 72, 1.03, .055, .94, 2.3),
+    (.395, 108, 1.20, .032, 1.13, .9),
+    (.565, 56, 1.00, .045, .81, 3.2),
+    (.740, 96, .88, .030, 1.27, 4.4),
+    (.900, 48, .65, .040, .59, 1.5),
+)
+DUNES_MEANS = tuple(math.comb(2 * peak[1], peak[1]) / 4 ** peak[1]
+                    for peak in DUNES_PEAKS)
+GLOBAL_SCALE_FAMILIES = {"dunes", "aurora"}
+
+
 def signal(family: str, x: float, morph: float) -> float:
     """Evaluate a continuous, exactly periodic, bounded harmonic family."""
     phase = TAU * x
@@ -48,11 +64,21 @@ def signal(family: str, x: float, morph: float) -> float:
             for harmonic in range(1, 17)
         )
     if family == "dunes":
+        result = 0.0
+        for index, ((centre, power, height, drift, rate, offset), mean) in enumerate(
+            zip(DUNES_PEAKS, DUNES_MEANS)
+        ):
+            amplitude = height * (
+                .28 + .72 * (.5 + .5 * math.cos(TAU * rate * morph + offset))
+            )
+            moving_centre = centre + drift * math.sin(
+                TAU * (.55 + .17 * index) * morph + offset
+            )
+            pulse = (.5 + .5 * math.cos(TAU * (x - moving_centre))) ** power
+            result += amplitude * (pulse - mean)
         return (
-            (0.60 + 0.12 * math.cos(travel)) * math.sin(3 * phase + 0.76 * travel)
-            + (0.22 + 0.06 * morph) * math.sin(4 * phase - 0.85 * travel)
-            + 0.15 * math.sin(phase + 1.2 * travel)
-            + 0.07 * math.sin(7 * phase + 0.35 * travel)
+            result + .055 * math.sin(phase + .6 * math.sin(math.pi * morph))
+            + .025 * math.sin(5 * phase - 1.1 * math.pi * morph)
         )
     if family == "bauhaus":
         return (
@@ -68,11 +94,16 @@ def signal(family: str, x: float, morph: float) -> float:
             + 0.08 * math.sin(9 * phase)
         )
     if family == "aurora":
-        return (
-            0.70 * math.sin(3 * phase + 0.80 * travel)
-            + (0.19 + 0.11 * morph) * math.sin(2 * phase - 0.5 * travel)
-            + 0.20 * math.sin(phase + travel)
-            + 0.06 * math.sin(6 * phase - 0.4 * travel)
+        # An audible periodic harmonic family with opposing phase travel.
+        # The periodic window leaves quiet ends and broad crossing central
+        # lobes; the native preview reads these same source samples.
+        envelope = 0.16 + 0.84 * math.sin(0.5 * phase) ** 2
+        phase -= 0.15 * math.pi
+        return envelope * (
+            0.62 * math.sin(2 * phase + 1.45 * travel)
+            + (0.23 + 0.12 * math.cos(travel)) * math.sin(3 * phase - 1.2 * travel + 0.25)
+            + 0.13 * math.sin(5 * phase + 0.55 * travel)
+            + 0.08 * math.sin(phase - 0.7 * travel)
         )
     if family == "glass":
         return (
@@ -106,12 +137,18 @@ def signal(family: str, x: float, morph: float) -> float:
 
 def generate(family: str, frames: int, samples: int) -> bytes:
     result = bytearray(struct.pack("<4sIHH", b"vawt", samples, frames, 0))
+    rows = []
     for frame in range(frames):
         morph = frame / (frames - 1)
         row = [signal(family, sample / samples, morph) for sample in range(samples)]
         dc = sum(row) / samples
-        row = [value - dc for value in row]
-        scale = PEAK / max(abs(value) for value in row)
+        rows.append([value - dc for value in row])
+    # Preserve real variation between the landscape/ribbon source frames. This
+    # scaling is part of the audible WT asset, never a display normalization.
+    global_peak = max(abs(value) for row in rows for value in row)
+    for row in rows:
+        peak = global_peak if family in GLOBAL_SCALE_FAMILIES else max(map(abs, row))
+        scale = PEAK / peak
         result.extend(struct.pack(f"<{samples}f", *(value * scale for value in row)))
     return bytes(result)
 
@@ -120,17 +157,23 @@ def validate(data: bytes, family: str, frames: int, samples: int) -> None:
     assert struct.unpack_from("<4sIHH", data) == (b"vawt", samples, frames, 0)
     assert len(data) == 12 + frames * samples * 4
     rows = []
+    table_peak = 0.0
     for frame in range(frames):
         row = struct.unpack_from(f"<{samples}f", data, 12 + frame * samples * 4)
         assert all(math.isfinite(value) for value in row)
         assert abs(sum(row) / samples) < 1e-7
-        assert abs(max(map(abs, row)) - PEAK) < 1e-6
+        frame_peak = max(map(abs, row))
+        assert frame_peak <= PEAK + 1e-6
+        table_peak = max(table_peak, frame_peak)
+        if family not in GLOBAL_SCALE_FAMILIES:
+            assert abs(frame_peak - PEAK) < 1e-6
         # A table omits the duplicate endpoint. Check the analytic endpoint,
         # not the last stored sample, for true periodic continuity.
         morph = frame / (frames - 1)
         assert abs(signal(family, 0.0, morph) - signal(family, 1.0, morph)) < 1e-12
         rows.append(data[12 + frame * samples * 4 : 12 + (frame + 1) * samples * 4])
     assert len(set(rows)) == frames
+    assert abs(table_peak - PEAK) < 1e-6
 
 
 def main() -> None:

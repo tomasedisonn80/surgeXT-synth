@@ -1210,8 +1210,10 @@ class BoundSlider : public juce::Slider
             };
             if (theme.style == "space" && binding.startsWith("macro"))
             {
-                text(g, theme, label, r.withHeight(19), fs, ink, emphasizeLabel,
-                     juce::Justification::centred);
+                g.setFont(theme.type(fs + 1.f, true).withHorizontalScale(.83f));
+                g.setColour(ink);
+                g.drawFittedText(label, r.withHeight(19).toNearestInt(),
+                                juce::Justification::centred, 1);
                 auto faceTheme = theme;
                 faceTheme.knob = theme.display;
                 faceTheme.text = theme.display; // Dark graduations on the brass macro plate.
@@ -1423,7 +1425,9 @@ class BoundSlider : public juce::Slider
             g.drawRoundedRectangle(handle, 2, 1);
             if (spectralFader)
             {
-                g.setColour(theme.display.withAlpha(.78f));
+                g.setGradientFill(juce::ColourGradient(
+                    juce::Colour(0xff5953b4), handle.getTopLeft(),
+                    juce::Colour(0xffad63f5), handle.getBottomLeft(), false));
                 g.fillRoundedRectangle(handle.reduced(2.5f, 3.f), 1.f);
                 g.setColour(theme.accent.interpolatedWith(juce::Colours::white, .55f));
                 g.drawRoundedRectangle(handle.reduced(1.2f), 1.2f, 1.f);
@@ -4768,6 +4772,38 @@ struct Workspace::Impl
         presetButton.setTitle("Preset: " + name);
         if (xy)
             xy->sync();
+        std::array<bool, 2> filtersNeeded{};
+        std::array<bool, 12> lfosNeeded{};
+        std::array<bool, n_fx_slots> effectsNeeded{};
+        if (auto *panels = manifest["panels"].getArray())
+            for (const auto &panel : *panels)
+            {
+                auto kind = string(panel, "kind");
+                int index = static_cast<int>(number(panel, "index", 1)) - 1;
+                const auto selected = selectedPanelChoice(panel);
+                if (selected.isObject())
+                {
+                    kind = string(selected, "source");
+                    index = static_cast<int>(number(selected, "index", 1)) - 1;
+                }
+                if ((kind == "filter" || kind == "inspector") && index >= 0 && index < 2)
+                    filtersNeeded[index] = true;
+                if (kind == "filter" && string(panel, "variant") == "combined")
+                    filtersNeeded[1] = true;
+                if (kind == "routing" && string(panel, "variant") == "flow")
+                    filtersNeeded = {true, true};
+                if ((kind == "lfo" || kind == "lfo-envelope") && index >= 0 && index < 12)
+                    lfosNeeded[index] = true;
+                if ((kind == "effects" || kind == "fx") && index >= 0 && index < n_fx_slots)
+                    effectsNeeded[index] = true;
+            }
+        // Keep the response coherent with the controls and cutoff marker on every
+        // message-thread refresh. filterResponse reuses its bounded per-key cache;
+        // unchanged settings never repeat the sweep/FFT. Other display sampling
+        // retains its slower cadence below.
+        for (int i = 0; i < 2; ++i)
+            if (filtersNeeded[i])
+                filterCurves[i] = filterResponse(processor, parameters.getScene(), i);
         if ((ticks++ % 8) == 0)
         {
             auto output = std::move(visuals.output);
@@ -4776,34 +4812,6 @@ struct Workspace::Impl
             visuals.output = std::move(output);
             visuals.left = leftPeak;
             visuals.right = rightPeak;
-            std::array<bool, 2> filtersNeeded{};
-            std::array<bool, 12> lfosNeeded{};
-            std::array<bool, n_fx_slots> effectsNeeded{};
-            if (auto *panels = manifest["panels"].getArray())
-                for (const auto &panel : *panels)
-                {
-                    auto kind = string(panel, "kind");
-                    int index = static_cast<int>(number(panel, "index", 1)) - 1;
-                    const auto selected = selectedPanelChoice(panel);
-                    if (selected.isObject())
-                    {
-                        kind = string(selected, "source");
-                        index = static_cast<int>(number(selected, "index", 1)) - 1;
-                    }
-                    if ((kind == "filter" || kind == "inspector") && index >= 0 && index < 2)
-                        filtersNeeded[index] = true;
-                    if (kind == "filter" && string(panel, "variant") == "combined")
-                        filtersNeeded[1] = true;
-                    if (kind == "routing" && string(panel, "variant") == "flow")
-                        filtersNeeded = {true, true};
-                    if ((kind == "lfo" || kind == "lfo-envelope") && index >= 0 && index < 12)
-                        lfosNeeded[index] = true;
-                    if ((kind == "effects" || kind == "fx") && index >= 0 && index < n_fx_slots)
-                        effectsNeeded[index] = true;
-                }
-            for (int i = 0; i < 2; ++i)
-                if (filtersNeeded[i])
-                    filterCurves[i] = filterResponse(processor, parameters.getScene(), i);
             for (int i = 0; i < 12; ++i)
                 if (lfosNeeded[i])
                     lfoCurves[i] = lfoCurve(processor, parameters.getScene(), i);
@@ -6224,6 +6232,8 @@ struct Workspace::Impl
         auto titleY = theme.style == "ivory" && (kind == "oscillator" || kind == "filter")
                           ? 11.f : theme.style == "precision" ? 6.f
                           : theme.style == "spectral" ? 5.f : 3.f;
+        if (theme.style == "bauhaus" && panelId == "output-panel")
+            titleY = 6.f;
         if (theme.style == "clear")
         {
             const auto id = string(v, "id");
@@ -6308,8 +6318,9 @@ struct Workspace::Impl
                 Visuals::wavetable(
                     g, pr.reduced(8), visuals.wavetable[oscillator], primary, secondary,
                     theme.style == "bauhaus" ? Visuals::WavetableView::harmonicRibbons
-                    : theme.style == "aurora" || theme.style == "live"
-                        ? Visuals::WavetableView::ribbons
+                    : theme.style == "spectral" ? Visuals::WavetableView::spectralTerrain
+                    : theme.style == "aurora" ? Visuals::WavetableView::auroraRibbons
+                    : theme.style == "live" ? Visuals::WavetableView::ribbons
                         : Visuals::WavetableView::perspective);
             else
                 Visuals::waveform(g, pr.reduced(8), visuals.oscillator[oscillator], primary,

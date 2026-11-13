@@ -521,14 +521,15 @@
       "w": 224,
       "h": 239,
       "color": "yellow",
-      "fontSize": 16,
+      "fontSize": 17.5,
       "plot": [
         1369,
         789,
         204,
         125
       ],
-      "titleHeight": 23
+      "titleHeight": 23,
+      "titleInset": 16
     },
     {
       "id": "filter1-keytrack-caption",

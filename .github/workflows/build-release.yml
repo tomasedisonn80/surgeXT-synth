@@ -6,6 +6,16 @@ on:
       - main
     tags:
       - 'release_xt_**'
+    # Generated captures and review notes do not change the native distribution.
+    # Source/resource edits still run every platform; tag and manual builds remain available.
+    paths-ignore:
+      - 'doc/reference-workspaces/native-gallery/**'
+      - 'doc/reference-workspaces/agent-reports/**'
+      - 'doc/reference-workspaces/ten-wave-ledger.md'
+      - 'doc/reference-workspaces/final-verification.*'
+      - 'doc/reference-workspaces-continuation.md'
+      - 'doc/reference-workspaces-user-guide.md'
+      - 'doc/reference-workspaces-engineering-log.md'
 
 concurrency:
   group: release-build-${{ github.workflow }}-${{ github.ref }}

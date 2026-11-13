@@ -328,6 +328,41 @@ int changedPixels(const juce::Image &a, const juce::Image &b)
     return changed;
 }
 
+juce::Rectangle<int> filterPlotBounds(const juce::var &manifest, int filterIndex)
+{
+    if (auto *panels = manifest["panels"].getArray())
+        for (const auto &panel : *panels)
+            if (panel["kind"].toString() == "filter" &&
+                static_cast<int>(panel["index"]) == filterIndex)
+            {
+                const auto *plot = panel["plot"].getArray();
+                REQUIRE(plot != nullptr);
+                REQUIRE(plot->size() == 4);
+                return juce::Rectangle<float>{static_cast<float>((*plot)[0]),
+                                               static_cast<float>((*plot)[1]),
+                                               static_cast<float>((*plot)[2]),
+                                               static_cast<float>((*plot)[3])}.toNearestInt();
+            }
+    return {};
+}
+
+float filterResponseDifferenceDb(const Surge::GUI::Reference::PreviewCurve &before,
+                                 const Surge::GUI::Reference::PreviewCurve &after)
+{
+    REQUIRE(before.available);
+    REQUIRE(after.available);
+    REQUIRE(before.values.size() == 256);
+    REQUIRE(after.values.size() == before.values.size());
+    float difference = 0.f;
+    for (size_t i = 0; i < before.values.size(); ++i)
+    {
+        REQUIRE(std::isfinite(before.values[i]));
+        REQUIRE(std::isfinite(after.values[i]));
+        difference = std::max(difference, std::abs(after.values[i] - before.values[i]));
+    }
+    return difference;
+}
+
 juce::var object() { return juce::var(new juce::DynamicObject()); }
 
 void property(juce::var &object, const char *key, const juce::var &value)
@@ -2355,6 +2390,119 @@ TEST_CASE("Live display refresh preserves audible state and independent audio sa
     withoutUI.releaseResources();
 }
 
+TEST_CASE("Filter response miniatures follow each control and host edit on the next refresh",
+          "[reference-workspaces][reference-previews][reference-filter-refresh]")
+{
+    using Surge::GUI::Reference::filterResponse;
+    juce::ScopedJuceInitialiser_GUI gui;
+    const auto manifests = workspaceManifests();
+    REQUIRE(manifests.size() == 10);
+    int checkedWorkspaces = 0;
+    for (const auto &path : manifests)
+    {
+        const auto manifest = readManifest(path);
+        const auto id = manifest["id"].toString();
+        if (id != "07-liquid-aurora" && id != "10-live-performance-deck")
+            continue;
+        CAPTURE(id.toStdString());
+        ++checkedWorkspaces;
+        IsolatedUserData testData;
+        SurgeSynthProcessor processor;
+        testData.attach(processor);
+        processor.setRateAndBufferSizeDetails(sampleRate, sampleBlock);
+        processor.prepareToPlay(sampleRate, sampleBlock);
+        auto &storage = processor.surge->storage;
+        auto &scene = storage.getPatch().scene[0];
+        for (int index = 0; index < 2; ++index)
+        {
+            auto &filter = scene.filterunit[index];
+            filter.type.val.i = sst::filters::fut_lp24;
+            filter.subtype.val.i = 0;
+            filter.cutoff.val.f = -24.f + index * 12.f;
+            filter.resonance.val.f = .25f;
+        }
+        scene.f2_cutoff_is_offset.val.b = false;
+        scene.f2_link_resonance.val.b = false;
+        Workspace workspace(processor);
+        juce::String error;
+        REQUIRE(workspace.load(path, error));
+        workspace.setSize(referenceWidth, referenceHeight);
+        workspace.addToDesktop(0);
+        workspace.setVisible(true);
+        workspace.selectScene(0);
+        auto &bridge = workspace.bridge();
+        auto *component = findBindingControl(workspace, manifest, "filter1.cutoff");
+        REQUIRE(component != nullptr);
+        auto *slider = findSlider(*component);
+        REQUIRE(slider != nullptr);
+        auto *adapter = adapterFor(processor, bridge, "filter1.cutoff");
+        REQUIRE(adapter != nullptr);
+        const auto firstPlot = filterPlotBounds(manifest, 1);
+        const auto secondPlot = filterPlotBounds(manifest, 2);
+        for (const auto plot : {firstPlot, secondPlot})
+        {
+            REQUIRE(!plot.isEmpty());
+            REQUIRE(workspace.getLocalBounds().contains(plot));
+            // These actual manifest regions have no cutoff marker or numeric
+            // captions. Only a changed response can change their plotted pixels.
+            REQUIRE(plot.getHeight() < 65);
+        }
+        workspace.refresh();
+        auto previous = workspace.createComponentSnapshot(workspace.getLocalBounds());
+        REQUIRE(previous.isValid());
+        auto previousCurve = filterResponse(processor, 0, 0);
+        const auto unchangedSecondCurve = filterResponse(processor, 0, 1);
+        REQUIRE(unchangedSecondCurve.available);
+        int editIndex = 0;
+        for (const auto requested : {.22f, .73f, .37f, .62f})
+        {
+            CAPTURE(requested, editIndex);
+            if ((editIndex++ % 2) == 0)
+                slider->setValue(requested, juce::sendNotificationSync);
+            else
+                adapter->setValueNotifyingHost(requested);
+            CHECK(bridge.value("filter1.cutoff") ==
+                  Catch::Approx(requested).margin(.001f));
+            const auto parametersAfterEdit = hostParameterValues(processor);
+            const auto rngAfterEdit = storage.rngGen.g;
+            auto noiseAfterEdit = storage.noiseRng;
+            const auto dirtyAfterEdit = storage.getPatch().isDirty.load();
+            // One public refresh must synchronize value, marker and response.
+            // No clock manipulation, catch-up refresh loop or audio RNG reset.
+            workspace.refresh();
+            CHECK(slider->getValue() == Catch::Approx(requested).margin(.001f));
+            auto current = workspace.createComponentSnapshot(workspace.getLocalBounds());
+            REQUIRE(current.isValid());
+            const auto currentCurve = filterResponse(processor, 0, 0);
+            CHECK(filterResponseDifferenceDb(previousCurve, currentCurve) > 1.f);
+            CHECK(changedPixels(previous.getClippedImage(firstPlot),
+                                current.getClippedImage(firstPlot)) > 0);
+            CHECK(filterResponse(processor, 0, 1).values == unchangedSecondCurve.values);
+            CHECK(changedPixels(previous.getClippedImage(secondPlot),
+                                current.getClippedImage(secondPlot)) == 0);
+            CHECK(storage.rngGen.g == rngAfterEdit);
+            auto noiseAfterRefresh = storage.noiseRng;
+            for (int sample = 0; sample < 16; ++sample)
+                CHECK(noiseAfterEdit.unifU32() == noiseAfterRefresh.unifU32());
+            CHECK(storage.getPatch().isDirty.load() == dirtyAfterEdit);
+            checkHostParameterValues(processor, parametersAfterEdit);
+
+            // Re-reading an unchanged key preserves the exact native samples
+            // and the rendered curve. Unrelated display refreshes cannot move it.
+            workspace.refresh();
+            const auto unchanged = workspace.createComponentSnapshot(workspace.getLocalBounds());
+            CHECK(filterResponse(processor, 0, 0).values == currentCurve.values);
+            CHECK(changedPixels(current.getClippedImage(firstPlot),
+                                unchanged.getClippedImage(firstPlot)) == 0);
+            previous = current;
+            previousCurve = currentCurve;
+        }
+        CHECK(bridge.activeGestureCount() == 0);
+        processor.releaseResources();
+    }
+    CHECK(checkedWorkspaces == 2);
+}
+
 TEST_CASE("Wavetable terrain snapshots own distinct real source frames without editing the synth",
           "[reference-workspaces][reference-display-isolation][reference-wavetable]")
 {
@@ -3376,6 +3524,10 @@ TEST_CASE("Ten reference workspaces render native controls and export evidence",
         if (exportImages)
             REQUIRE(writePng(initial, outputDirectory.getChildFile(id + ".png")));
 
+        const auto responseBefore = Surge::GUI::Reference::filterResponse(processor, 0, 0);
+        const auto responsePlot = filterPlotBounds(manifest, 1);
+        REQUIRE(!responsePlot.isEmpty());
+        REQUIRE(workspace.getLocalBounds().contains(responsePlot));
         REQUIRE(bridge.valid("filter1.cutoff"));
         const float before = bridge.value("filter1.cutoff");
         const float requested = before > 0.5f ? 0.283f : 0.761f;
@@ -3402,6 +3554,12 @@ TEST_CASE("Ten reference workspaces render native controls and export evidence",
         // This proves only that the native display responds. It is deliberately NOT
         // described as a reference-fidelity score or a human visual approval.
         CHECK(differences > 0);
+        const auto responseAfter = Surge::GUI::Reference::filterResponse(processor, 0, 0);
+        const auto responseDifferenceDb = filterResponseDifferenceDb(responseBefore, responseAfter);
+        const int responseChangedPixels = changedPixels(initial.getClippedImage(responsePlot),
+                                                         edited.getClippedImage(responsePlot));
+        CHECK(responseDifferenceDb > 1.f);
+        CHECK(responseChangedPixels > 0);
         if (exportImages)
             REQUIRE(writePng(edited, outputDirectory.getChildFile(id + "-edited.png")));
 
@@ -3493,6 +3651,11 @@ TEST_CASE("Ten reference workspaces render native controls and export evidence",
         property(capture, "normalizedBefore", before);
         property(capture, "normalizedAfter", after);
         property(capture, "changedPixelsAfterControlEdit", differences);
+        property(capture, "filterResponseChangedPixelsAfterControlEdit", responseChangedPixels);
+        property(capture, "filterResponseMaximumDbChangeAfterControlEdit", responseDifferenceDb);
+        property(capture, "filterResponsePlotBounds",
+                 juce::var(juce::Array<juce::var>{responsePlot.getX(), responsePlot.getY(),
+                                                 responsePlot.getWidth(), responsePlot.getHeight()}));
         property(capture, "hostUpdateNormalized", 0.579);
         property(capture, "offlineMainOutputPeak", audioPeak);
         property(capture, "baselineMainOutputPeak", baselineAudioPeak);

@@ -80,13 +80,18 @@ class Visuals
     {
         perspective,
         ribbons,
-        harmonicRibbons
+        harmonicRibbons,
+        spectralTerrain,
+        auroraRibbons
     };
     /** Render actual copied source frames. Perspective is a lit sample mesh;
         ribbons uses a slanted phase/frame plane in large views and a nearly
         frontal miniature. Harmonic ribbons use crisp unlit traces around zero.
         Filled strips connect adjacent real frames. The perspective floor is
         an unlabelled sample-range plane, not frequency or measured output.
+        Spectral terrain uses the same signed sample mesh with its own camera.
+        Aurora ribbons use wider frame projection and source-aligned luminous
+        material, with the same actual signed sample heights.
         Colour, glow and projection are cosmetic; ordinates come from samples.
         The highlighted row follows the actual unmodulated wavetable position.
     */

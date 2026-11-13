@@ -11,6 +11,12 @@ workspace renderer. The skin-only ZIP is a data package, not a plug-in,
 standalone application or installer. Use a compatible binary built from this
 fork, together with its factory data.
 
+Build archives whose names include `pluginsonly` omit factory data. Use a
+distribution that includes the data, or install matching factory data separately,
+including the ten skin folders. The Windows ARM64, ARM64EC and JUCE 7 variants
+produce `pluginsonly` archives and omit the full installer and portable package
+with resources.
+
 ## Select a workspace
 
 In the modified build, open **Settings → Skins → Reference Workspaces** and
@@ -191,6 +197,22 @@ reference pictures. Read the evidence file for the source revision, test
 fixture, dimensions and actual results. A workflow may upload diagnostics even
 when tests fail; an artifact's existence alone is not a passing test result.
 
+The capture fixtures load original, playable tables from
+`resources/data/wavetables/Reference Showcases`. The checked-in
+`generate_showcase_wavetables.py` script reproduces their periodic source
+samples without using reference-image pixels. Spectral Bloom uses an irregular
+finite-harmonic ridge family; Aurora Waves uses crossing periodic ribbons.
+Those two tables retain their actual frame-to-frame amplitude variation under
+one bounded scale per table. The renderer uses their signed source amplitudes;
+the same assets feed the audible oscillators. Evidence records the exact table
+paths and dimensions. Capture fixtures describe reproducible demonstration
+state; selecting a skin alone does not replace the current patch.
+
+The Live capture fixture also sends real MIDI channel 1 inputs before its held
+notes: signed pitch bend +6616 (14-bit value 14808), modulation CC1 104,
+expression CC11 56 and channel pressure 85. The processor applies those inputs
+before the four MIDI lanes are photographed. Capture evidence records these
+values and the existing audio/headroom/reset checks remain in force.
 
 ### Committed native gallery
 
@@ -236,10 +258,3 @@ unless `--force` is explicitly supplied.
 For reproducible bug reports, include the fork commit, OS/host, selected numbered
 skin, patch or minimal reproduction, expected/observed behavior and a real
 screenshot. Do not include credentials or unrelated session files.
-
-
-The Live capture fixture also sends real MIDI channel 1 inputs before its held
-notes: signed pitch bend +6616 (14-bit value 14808), modulation CC1 104,
-expression CC11 56 and channel pressure 85. The processor applies those inputs
-before the four MIDI lanes are photographed. Capture evidence records these
-values and the existing audio/headroom/reset checks remain in force.

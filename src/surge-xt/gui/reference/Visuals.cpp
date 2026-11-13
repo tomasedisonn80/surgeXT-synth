@@ -184,6 +184,8 @@ WavetablePreview sampleWavetable(SurgeStorage &storage, const OscillatorStorage 
     // Allocate before locking. The lock protects only a bounded, read-only copy;
     // no oscillator, graphic object or shared random generator is used here.
     std::vector<float> samples(WavetablePreview::maximumFrames * WavetablePreview::pointsPerFrame);
+    std::string tableName;
+    tableName.reserve(4096);
     {
         std::unique_lock<std::mutex> lock(storage.waveTableDataMutex, std::try_to_lock);
         if (!lock.owns_lock())
@@ -202,6 +204,8 @@ WavetablePreview sampleWavetable(SurgeStorage &storage, const OscillatorStorage 
                                   ? std::min(table.data_n_tables, static_cast<int>(table.n_tables))
                                   : static_cast<int>(table.n_tables);
         result.sourceFrameSize = table.size;
+        if (oscillator.wavetable_display_name.size() < 4096)
+            tableName.assign(oscillator.wavetable_display_name);
         result.frames = result.sourceFrames == 1 ? 1 : WavetablePreview::maximumFrames;
         result.position = juce::jlimit(0.f, 1.f, finiteSample(oscillator.p[0].val.f));
 
@@ -233,6 +237,7 @@ WavetablePreview sampleWavetable(SurgeStorage &storage, const OscillatorStorage 
         }
     }
     samples.resize(result.frames * WavetablePreview::pointsPerFrame);
+    result.name = juce::String::fromUTF8(tableName.c_str());
     result.samples = std::move(samples);
     return result;
 }

@@ -864,6 +864,7 @@ SurgePatch::SurgePatch(SurgeStorage *storage)
 
 void SurgePatch::init_default_values()
 {
+    storage->patchLoadGeneration.fetch_add(1, std::memory_order_acq_rel);
     // reset all parameters to their default value (could be zero, then zeroes never would have to
     // be saved in xml) will make it all more predictable
     int n = param_ptr.size();
@@ -1817,6 +1818,10 @@ void SurgePatch::load_xml(const void *data, int datasize, bool is_preset)
         doc.Parse(temp, nullptr, TIXML_ENCODING_LEGACY);
         free(temp);
     }
+
+    // Invalidate delayed UI selections before any XML state is applied, even
+    // for a same-name/same-ID patch with no embedded wavetable replacement.
+    storage->patchLoadGeneration.fetch_add(1, std::memory_order_acq_rel);
 
     // clear old modulation routings
     for (int sc = 0; sc < n_scenes; sc++)

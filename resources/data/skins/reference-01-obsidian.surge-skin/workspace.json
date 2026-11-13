@@ -41,7 +41,14 @@
         221,
         124
       ],
-      "fontSize": 17
+      "fontSize": 17,
+      "titleInset": 37,
+      "wavetableRect": [
+        247,
+        168,
+        121,
+        26
+      ]
     },
     {
       "id": "panel.osc2",
@@ -58,7 +65,14 @@
         221,
         121
       ],
-      "fontSize": 17
+      "fontSize": 17,
+      "titleInset": 37,
+      "wavetableRect": [
+        247,
+        346,
+        121,
+        26
+      ]
     },
     {
       "id": "panel.osc3",
@@ -75,7 +89,14 @@
         221,
         130
       ],
-      "fontSize": 17
+      "fontSize": 17,
+      "titleInset": 37,
+      "wavetableRect": [
+        247,
+        522,
+        121,
+        26
+      ]
     },
     {
       "id": "panel.filter1",
@@ -92,7 +113,8 @@
         271,
         114
       ],
-      "fontSize": 15.5
+      "fontSize": 15.5,
+      "titleInset": 35
     },
     {
       "id": "panel.filter2",
@@ -109,7 +131,8 @@
         270,
         114
       ],
-      "fontSize": 15.5
+      "fontSize": 15.5,
+      "titleInset": 35
     },
     {
       "id": "panel.routing",
@@ -170,8 +193,8 @@
     {
       "id": "panel.envelope",
       "kind": "envelope",
-      "title": "ENV 2 / FILTER",
-      "index": 2,
+      "title": "ENVELOPES",
+      "index": 1,
       "x": 1171,
       "y": 322,
       "w": 405,
@@ -182,12 +205,51 @@
         289,
         115
       ],
-      "fontSize": 15.5
+      "fontSize": 15.5,
+      "titleHeight": 31,
+      "selection": {
+        "id": "obsidian-envelope",
+        "kind": "source",
+        "tabsRect": [
+          1180,
+          326,
+          277,
+          24
+        ],
+        "default": "env1",
+        "fontSize": 10.5,
+        "choices": [
+          {
+            "id": "env1",
+            "label": "ENV 1",
+            "source": "envelope",
+            "index": 1
+          },
+          {
+            "id": "env2",
+            "label": "ENV 2",
+            "source": "envelope",
+            "index": 2
+          },
+          {
+            "id": "lfo1env",
+            "label": "LFO 1 ENV",
+            "source": "lfo-envelope",
+            "index": 1
+          },
+          {
+            "id": "lfo2env",
+            "label": "LFO 2 ENV",
+            "source": "lfo-envelope",
+            "index": 2
+          }
+        ]
+      }
     },
     {
       "id": "panel.lfo",
       "kind": "lfo",
-      "title": "LFO 1",
+      "title": "LFO",
       "index": 1,
       "x": 1171,
       "y": 492,
@@ -199,7 +261,46 @@
         151,
         110
       ],
-      "fontSize": 15.5
+      "fontSize": 15.5,
+      "titleHeight": 31,
+      "selection": {
+        "id": "obsidian-lfo",
+        "kind": "source",
+        "tabsRect": [
+          1180,
+          498,
+          277,
+          22
+        ],
+        "default": "lfo1",
+        "fontSize": 11,
+        "choices": [
+          {
+            "id": "lfo1",
+            "label": "LFO 1",
+            "source": "lfo",
+            "index": 1
+          },
+          {
+            "id": "lfo2",
+            "label": "LFO 2",
+            "source": "lfo",
+            "index": 2
+          },
+          {
+            "id": "lfo3",
+            "label": "LFO 3",
+            "source": "lfo",
+            "index": 3
+          },
+          {
+            "id": "lfo4",
+            "label": "LFO 4",
+            "source": "lfo",
+            "index": 4
+          }
+        ]
+      }
     },
     {
       "id": "panel.matrix",
@@ -219,7 +320,75 @@
       "y": 670,
       "w": 646,
       "h": 269,
-      "fontSize": 15.5
+      "fontSize": 15.5,
+      "selection": {
+        "id": "obsidian-fx",
+        "kind": "fx",
+        "tabsRect": [
+          551,
+          708,
+          628,
+          46
+        ],
+        "default": "fx1",
+        "fontSize": 10.5,
+        "choices": [
+          {
+            "id": "fx1",
+            "label": "FX 1",
+            "source": "fx",
+            "index": 1
+          },
+          {
+            "id": "fx2",
+            "label": "FX 2",
+            "source": "fx",
+            "index": 2
+          },
+          {
+            "id": "fx3",
+            "label": "FX 3",
+            "source": "fx",
+            "index": 3
+          },
+          {
+            "id": "fx4",
+            "label": "FX 4",
+            "source": "fx",
+            "index": 4
+          },
+          {
+            "id": "fx5",
+            "label": "FX 5",
+            "source": "fx",
+            "index": 5
+          },
+          {
+            "id": "fx6",
+            "label": "FX 6",
+            "source": "fx",
+            "index": 6
+          },
+          {
+            "id": "fx7",
+            "label": "FX 7",
+            "source": "fx",
+            "index": 7
+          },
+          {
+            "id": "fx8",
+            "label": "FX 8",
+            "source": "fx",
+            "index": 8
+          }
+        ]
+      },
+      "plot": [
+        557,
+        811,
+        151,
+        102
+      ]
     },
     {
       "id": "panel.analyzer",
@@ -236,16 +405,6 @@
         176
       ],
       "fontSize": 15.5
-    },
-    {
-      "id": "panel.utility",
-      "kind": "scene",
-      "title": "SCENE / PERFORMANCE",
-      "x": 9,
-      "y": 942,
-      "w": 1568,
-      "h": 49,
-      "fontSize": 15.5
     }
   ],
   "controls": [
@@ -254,62 +413,45 @@
       "binding": "osc1.type",
       "x": 118,
       "y": 126,
-      "w": 164,
+      "w": 132,
       "h": 25,
       "kind": "menu",
       "label": "Oscillator 1 algorithm"
     },
     {
-      "id": "osc1.keytrack",
-      "binding": "osc1.keytrack",
-      "x": 292,
-      "y": 128,
-      "w": 64,
-      "h": 21,
-      "kind": "toggle",
-      "label": "KEY"
-    },
-    {
-      "id": "osc1.solo",
-      "binding": "osc1.solo",
-      "x": 432,
-      "y": 128,
-      "w": 29,
-      "h": 21,
-      "kind": "toggle",
-      "label": "S"
-    },
-    {
       "id": "osc1.mute",
       "binding": "osc1.mute",
-      "x": 469,
-      "y": 128,
-      "w": 29,
-      "h": 21,
+      "x": 17,
+      "y": 126,
+      "w": 24,
+      "h": 24,
       "kind": "toggle",
-      "label": "M"
+      "label": "Mute oscillator 1",
+      "glyph": "power"
     },
     {
       "id": "osc1.octave",
       "binding": "osc1.octave",
-      "x": 347,
+      "x": 376,
       "y": 161,
-      "w": 64,
+      "w": 57,
       "h": 34,
       "kind": "value",
       "label": "OCT",
-      "fontSize": 10
+      "fontSize": 10,
+      "labelWidth": 22
     },
     {
       "id": "osc1.pitch",
       "binding": "osc1.pitch",
-      "x": 418,
+      "x": 437,
       "y": 161,
-      "w": 80,
+      "w": 67,
       "h": 34,
       "kind": "value",
       "label": "TUNE",
-      "fontSize": 10
+      "fontSize": 10,
+      "labelWidth": 24
     },
     {
       "id": "osc1.shape0",
@@ -319,7 +461,8 @@
       "w": 48,
       "h": 73,
       "kind": "knob",
-      "fontSize": 11
+      "fontSize": 10,
+      "faceDiameter": 36
     },
     {
       "id": "osc1.shape1",
@@ -329,7 +472,8 @@
       "w": 48,
       "h": 73,
       "kind": "knob",
-      "fontSize": 11
+      "fontSize": 10,
+      "faceDiameter": 36
     },
     {
       "id": "osc1.shape2",
@@ -339,7 +483,8 @@
       "w": 48,
       "h": 73,
       "kind": "knob",
-      "fontSize": 11
+      "fontSize": 10,
+      "faceDiameter": 36
     },
     {
       "id": "osc1.shape3",
@@ -349,7 +494,8 @@
       "w": 48,
       "h": 73,
       "kind": "knob",
-      "fontSize": 11
+      "fontSize": 10,
+      "faceDiameter": 36
     },
     {
       "id": "osc1.shape4",
@@ -359,69 +505,53 @@
       "w": 48,
       "h": 73,
       "kind": "knob",
-      "fontSize": 11
+      "fontSize": 10,
+      "faceDiameter": 36
     },
     {
       "id": "osc2.algorithm",
       "binding": "osc2.type",
       "x": 118,
       "y": 306,
-      "w": 164,
+      "w": 132,
       "h": 25,
       "kind": "menu",
       "label": "Oscillator 2 algorithm"
     },
     {
-      "id": "osc2.keytrack",
-      "binding": "osc2.keytrack",
-      "x": 292,
-      "y": 308,
-      "w": 64,
-      "h": 21,
-      "kind": "toggle",
-      "label": "KEY"
-    },
-    {
-      "id": "osc2.solo",
-      "binding": "osc2.solo",
-      "x": 432,
-      "y": 308,
-      "w": 29,
-      "h": 21,
-      "kind": "toggle",
-      "label": "S"
-    },
-    {
       "id": "osc2.mute",
       "binding": "osc2.mute",
-      "x": 469,
-      "y": 308,
-      "w": 29,
-      "h": 21,
+      "x": 17,
+      "y": 305,
+      "w": 24,
+      "h": 24,
       "kind": "toggle",
-      "label": "M"
+      "label": "Mute oscillator 2",
+      "glyph": "power"
     },
     {
       "id": "osc2.octave",
       "binding": "osc2.octave",
-      "x": 347,
+      "x": 376,
       "y": 341,
-      "w": 64,
+      "w": 57,
       "h": 34,
       "kind": "value",
       "label": "OCT",
-      "fontSize": 10
+      "fontSize": 10,
+      "labelWidth": 22
     },
     {
       "id": "osc2.pitch",
       "binding": "osc2.pitch",
-      "x": 418,
+      "x": 437,
       "y": 341,
-      "w": 80,
+      "w": 67,
       "h": 34,
       "kind": "value",
       "label": "TUNE",
-      "fontSize": 10
+      "fontSize": 10,
+      "labelWidth": 24
     },
     {
       "id": "osc2.shape0",
@@ -431,7 +561,8 @@
       "w": 48,
       "h": 73,
       "kind": "knob",
-      "fontSize": 11
+      "fontSize": 10,
+      "faceDiameter": 36
     },
     {
       "id": "osc2.shape1",
@@ -441,7 +572,8 @@
       "w": 48,
       "h": 73,
       "kind": "knob",
-      "fontSize": 11
+      "fontSize": 10,
+      "faceDiameter": 36
     },
     {
       "id": "osc2.shape2",
@@ -451,7 +583,8 @@
       "w": 48,
       "h": 73,
       "kind": "knob",
-      "fontSize": 11
+      "fontSize": 10,
+      "faceDiameter": 36
     },
     {
       "id": "osc2.shape3",
@@ -461,7 +594,8 @@
       "w": 48,
       "h": 73,
       "kind": "knob",
-      "fontSize": 11
+      "fontSize": 10,
+      "faceDiameter": 36
     },
     {
       "id": "osc2.shape4",
@@ -471,119 +605,108 @@
       "w": 48,
       "h": 73,
       "kind": "knob",
-      "fontSize": 11
+      "fontSize": 10,
+      "faceDiameter": 36
     },
     {
       "id": "osc3.algorithm",
       "binding": "osc3.type",
       "x": 118,
       "y": 482,
-      "w": 164,
+      "w": 132,
       "h": 25,
       "kind": "menu",
       "label": "Oscillator 3 algorithm"
     },
     {
-      "id": "osc3.keytrack",
-      "binding": "osc3.keytrack",
-      "x": 292,
-      "y": 484,
-      "w": 64,
-      "h": 21,
-      "kind": "toggle",
-      "label": "KEY"
-    },
-    {
-      "id": "osc3.solo",
-      "binding": "osc3.solo",
-      "x": 432,
-      "y": 484,
-      "w": 29,
-      "h": 21,
-      "kind": "toggle",
-      "label": "S"
-    },
-    {
       "id": "osc3.mute",
       "binding": "osc3.mute",
-      "x": 469,
-      "y": 484,
-      "w": 29,
-      "h": 21,
+      "x": 17,
+      "y": 480,
+      "w": 24,
+      "h": 24,
       "kind": "toggle",
-      "label": "M"
+      "label": "Mute oscillator 3",
+      "glyph": "power"
     },
     {
       "id": "osc3.octave",
       "binding": "osc3.octave",
-      "x": 347,
+      "x": 376,
       "y": 517,
-      "w": 64,
+      "w": 57,
       "h": 34,
       "kind": "value",
       "label": "OCT",
-      "fontSize": 10
+      "fontSize": 10,
+      "labelWidth": 22
     },
     {
       "id": "osc3.pitch",
       "binding": "osc3.pitch",
-      "x": 418,
+      "x": 437,
       "y": 517,
-      "w": 80,
+      "w": 67,
       "h": 34,
       "kind": "value",
       "label": "TUNE",
-      "fontSize": 10
+      "fontSize": 10,
+      "labelWidth": 24
     },
     {
       "id": "osc3.shape0",
       "binding": "osc3.param0",
-      "x": 247,
-      "y": 563,
-      "w": 48,
-      "h": 73,
+      "x": 245,
+      "y": 569,
+      "w": 41,
+      "h": 69,
       "kind": "knob",
-      "fontSize": 11
+      "fontSize": 9.5,
+      "faceDiameter": 32
     },
     {
       "id": "osc3.shape1",
       "binding": "osc3.param1",
-      "x": 302,
-      "y": 563,
-      "w": 48,
-      "h": 73,
+      "x": 289,
+      "y": 569,
+      "w": 41,
+      "h": 69,
       "kind": "knob",
-      "fontSize": 11
+      "fontSize": 9.5,
+      "faceDiameter": 32
     },
     {
       "id": "osc3.shape2",
       "binding": "osc3.param2",
-      "x": 357,
-      "y": 563,
-      "w": 48,
-      "h": 73,
+      "x": 333,
+      "y": 569,
+      "w": 41,
+      "h": 69,
       "kind": "knob",
-      "fontSize": 11
+      "fontSize": 9.5,
+      "faceDiameter": 32
     },
     {
       "id": "osc3.shape3",
       "binding": "osc3.param3",
-      "x": 412,
-      "y": 563,
-      "w": 48,
-      "h": 73,
+      "x": 377,
+      "y": 569,
+      "w": 41,
+      "h": 69,
       "kind": "knob",
-      "fontSize": 11
+      "fontSize": 9.5,
+      "faceDiameter": 32
     },
     {
       "id": "osc3.shape4",
       "binding": "osc3.param4",
-      "x": 462,
-      "y": 563,
-      "w": 48,
-      "h": 73,
+      "x": 421,
+      "y": 569,
+      "w": 41,
+      "h": 69,
       "kind": "knob",
-      "fontSize": 11
+      "fontSize": 9.5,
+      "faceDiameter": 32
     },
     {
       "id": "filter1.algorithm",
@@ -604,7 +727,8 @@
       "h": 82,
       "kind": "knob",
       "label": "CUTOFF",
-      "fontSize": 12
+      "fontSize": 12,
+      "faceDiameter": 48
     },
     {
       "id": "filter1.resonance",
@@ -615,7 +739,8 @@
       "h": 82,
       "kind": "knob",
       "label": "RES",
-      "fontSize": 12
+      "fontSize": 12,
+      "faceDiameter": 38
     },
     {
       "id": "filter1.envmod",
@@ -626,7 +751,8 @@
       "h": 82,
       "kind": "knob",
       "label": "ENV",
-      "fontSize": 12
+      "fontSize": 12,
+      "faceDiameter": 38
     },
     {
       "id": "filter1.keytrack",
@@ -637,7 +763,8 @@
       "h": 82,
       "kind": "knob",
       "label": "KEY",
-      "fontSize": 12
+      "fontSize": 12,
+      "faceDiameter": 38
     },
     {
       "id": "filter2.algorithm",
@@ -659,7 +786,8 @@
       "kind": "knob",
       "label": "CUTOFF",
       "accent": "accent",
-      "fontSize": 12
+      "fontSize": 12,
+      "faceDiameter": 48
     },
     {
       "id": "filter2.resonance",
@@ -671,7 +799,8 @@
       "kind": "knob",
       "label": "RES",
       "accent": "accent",
-      "fontSize": 12
+      "fontSize": 12,
+      "faceDiameter": 38
     },
     {
       "id": "filter2.envmod",
@@ -683,7 +812,8 @@
       "kind": "knob",
       "label": "ENV",
       "accent": "accent",
-      "fontSize": 12
+      "fontSize": 12,
+      "faceDiameter": 38
     },
     {
       "id": "filter2.keytrack",
@@ -695,7 +825,8 @@
       "kind": "knob",
       "label": "KEY",
       "accent": "accent",
-      "fontSize": 12
+      "fontSize": 12,
+      "faceDiameter": 38
     },
     {
       "id": "routing.mode",
@@ -710,24 +841,15 @@
     {
       "id": "routing.feedback",
       "binding": "filter.feedback",
-      "x": 720,
-      "y": 406,
-      "w": 61,
-      "h": 45,
+      "x": 731,
+      "y": 399,
+      "w": 92,
+      "h": 48,
       "kind": "knob",
       "label": "FB",
-      "fontSize": 9
-    },
-    {
-      "id": "routing.drive",
-      "binding": "filter.drive",
-      "x": 785,
-      "y": 406,
-      "w": 61,
-      "h": 45,
-      "kind": "knob",
-      "label": "WS DRIVE",
-      "fontSize": 9
+      "fontSize": 10,
+      "labelPosition": "right",
+      "faceDiameter": 31
     },
     {
       "id": "mixer.osc1.level",
@@ -862,7 +984,8 @@
       "h": 69,
       "kind": "knob",
       "label": "A",
-      "fontSize": 10
+      "fontSize": 10,
+      "faceDiameter": 31
     },
     {
       "id": "amp.decay",
@@ -873,7 +996,8 @@
       "h": 69,
       "kind": "knob",
       "label": "D",
-      "fontSize": 10
+      "fontSize": 10,
+      "faceDiameter": 31
     },
     {
       "id": "amp.sustain",
@@ -884,7 +1008,8 @@
       "h": 69,
       "kind": "knob",
       "label": "S",
-      "fontSize": 10
+      "fontSize": 10,
+      "faceDiameter": 31
     },
     {
       "id": "amp.release",
@@ -895,357 +1020,309 @@
       "h": 69,
       "kind": "knob",
       "label": "R",
-      "fontSize": 10
+      "fontSize": 10,
+      "faceDiameter": 31
     },
     {
       "id": "amp.pan",
       "binding": "scene.pan",
-      "x": 1056,
-      "y": 501,
-      "w": 47,
-      "h": 62,
+      "x": 1051,
+      "y": 496,
+      "w": 46,
+      "h": 64,
       "kind": "knob",
       "label": "PAN",
-      "fontSize": 10
+      "fontSize": 10,
+      "labelPosition": "top",
+      "faceDiameter": 29
     },
     {
       "id": "amp.velocity",
       "binding": "amp.velocity",
-      "x": 1110,
-      "y": 501,
-      "w": 47,
-      "h": 62,
+      "x": 1104,
+      "y": 496,
+      "w": 46,
+      "h": 64,
       "kind": "knob",
       "label": "VEL",
-      "fontSize": 10
+      "fontSize": 10,
+      "labelPosition": "top",
+      "faceDiameter": 29
     },
     {
       "id": "amp.gain",
       "binding": "amp.level",
-      "x": 1070,
-      "y": 568,
-      "w": 77,
-      "h": 82,
+      "x": 1064,
+      "y": 567,
+      "w": 83,
+      "h": 85,
       "kind": "knob",
       "label": "GAIN",
-      "fontSize": 11
+      "fontSize": 11,
+      "faceDiameter": 51
     },
     {
       "id": "macros.1",
       "binding": "macro1",
-      "x": 1186,
+      "x": 1189,
       "y": 158,
       "w": 78,
-      "h": 74,
+      "h": 62,
       "kind": "knob",
-      "fontSize": 12
+      "fontSize": 11,
+      "faceDiameter": 40,
+      "valuePosition": "hidden"
     },
     {
       "id": "macros.2",
       "binding": "macro2",
-      "x": 1284,
+      "x": 1285,
       "y": 158,
       "w": 78,
-      "h": 74,
+      "h": 62,
       "kind": "knob",
-      "fontSize": 12
+      "fontSize": 11,
+      "faceDiameter": 40,
+      "valuePosition": "hidden"
     },
     {
       "id": "macros.3",
       "binding": "macro3",
-      "x": 1382,
+      "x": 1381,
       "y": 158,
       "w": 78,
-      "h": 74,
+      "h": 62,
       "kind": "knob",
-      "fontSize": 12
+      "fontSize": 11,
+      "faceDiameter": 40,
+      "valuePosition": "hidden"
     },
     {
       "id": "macros.4",
       "binding": "macro4",
-      "x": 1480,
+      "x": 1477,
       "y": 158,
       "w": 78,
-      "h": 74,
+      "h": 62,
       "kind": "knob",
-      "fontSize": 12
+      "fontSize": 11,
+      "faceDiameter": 40,
+      "valuePosition": "hidden"
     },
     {
       "id": "macros.5",
       "binding": "macro5",
-      "x": 1186,
+      "x": 1189,
       "y": 240,
       "w": 78,
-      "h": 74,
+      "h": 62,
       "kind": "knob",
-      "fontSize": 12
+      "fontSize": 11,
+      "faceDiameter": 40,
+      "valuePosition": "hidden"
     },
     {
       "id": "macros.6",
       "binding": "macro6",
-      "x": 1284,
+      "x": 1285,
       "y": 240,
       "w": 78,
-      "h": 74,
+      "h": 62,
       "kind": "knob",
-      "fontSize": 12
+      "fontSize": 11,
+      "faceDiameter": 40,
+      "valuePosition": "hidden"
     },
     {
       "id": "macros.7",
       "binding": "macro7",
-      "x": 1382,
+      "x": 1381,
       "y": 240,
       "w": 78,
-      "h": 74,
+      "h": 62,
       "kind": "knob",
-      "fontSize": 12
+      "fontSize": 11,
+      "faceDiameter": 40,
+      "valuePosition": "hidden"
     },
     {
       "id": "macros.8",
       "binding": "macro8",
-      "x": 1480,
+      "x": 1477,
       "y": 240,
       "w": 78,
-      "h": 74,
+      "h": 62,
       "kind": "knob",
-      "fontSize": 12
+      "fontSize": 11,
+      "faceDiameter": 40,
+      "valuePosition": "hidden"
     },
     {
       "id": "envelope.attack",
-      "binding": "env2.attack",
+      "binding": "env1.attack",
       "x": 1482,
       "y": 363,
       "w": 88,
       "h": 23,
       "kind": "value",
       "label": "A",
-      "fontSize": 10.5
+      "fontSize": 10.5,
+      "labelWidth": 22,
+      "selectionGroup": "obsidian-envelope",
+      "bindings": {
+        "env1": "env1.attack",
+        "env2": "env2.attack",
+        "lfo1env": "lfo1.attack",
+        "lfo2env": "lfo2.attack"
+      }
     },
     {
       "id": "envelope.decay",
-      "binding": "env2.decay",
+      "binding": "env1.decay",
       "x": 1482,
       "y": 388,
       "w": 88,
       "h": 23,
       "kind": "value",
       "label": "D",
-      "fontSize": 10.5
+      "fontSize": 10.5,
+      "labelWidth": 22,
+      "selectionGroup": "obsidian-envelope",
+      "bindings": {
+        "env1": "env1.decay",
+        "env2": "env2.decay",
+        "lfo1env": "lfo1.decay",
+        "lfo2env": "lfo2.decay"
+      }
     },
     {
       "id": "envelope.sustain",
-      "binding": "env2.sustain",
+      "binding": "env1.sustain",
       "x": 1482,
       "y": 413,
       "w": 88,
       "h": 23,
       "kind": "value",
       "label": "S",
-      "fontSize": 10.5
+      "fontSize": 10.5,
+      "labelWidth": 22,
+      "selectionGroup": "obsidian-envelope",
+      "bindings": {
+        "env1": "env1.sustain",
+        "env2": "env2.sustain",
+        "lfo1env": "lfo1.sustain",
+        "lfo2env": "lfo2.sustain"
+      }
     },
     {
       "id": "envelope.release",
-      "binding": "env2.release",
+      "binding": "env1.release",
       "x": 1482,
       "y": 438,
       "w": 88,
       "h": 23,
       "kind": "value",
       "label": "R",
-      "fontSize": 10.5
+      "fontSize": 10.5,
+      "labelWidth": 22,
+      "selectionGroup": "obsidian-envelope",
+      "bindings": {
+        "env1": "env1.release",
+        "env2": "env2.release",
+        "lfo1env": "lfo1.release",
+        "lfo2env": "lfo2.release"
+      }
     },
     {
       "id": "lfo.shape",
       "binding": "lfo1.shape",
       "x": 1355,
-      "y": 535,
-      "w": 148,
-      "h": 25,
+      "y": 543,
+      "w": 101,
+      "h": 26,
       "kind": "menu",
-      "label": "LFO 1 shape"
+      "label": "LFO 1 shape",
+      "selectionGroup": "obsidian-lfo",
+      "bindings": {
+        "lfo1": "lfo1.shape",
+        "lfo2": "lfo2.shape",
+        "lfo3": "lfo3.shape",
+        "lfo4": "lfo4.shape"
+      }
     },
     {
       "id": "lfo.rate",
       "binding": "lfo1.rate",
       "x": 1350,
-      "y": 577,
-      "w": 54,
-      "h": 73,
+      "y": 588,
+      "w": 46,
+      "h": 64,
       "kind": "knob",
       "label": "RATE",
-      "fontSize": 10
+      "fontSize": 10,
+      "faceDiameter": 33,
+      "selectionGroup": "obsidian-lfo",
+      "bindings": {
+        "lfo1": "lfo1.rate",
+        "lfo2": "lfo2.rate",
+        "lfo3": "lfo3.rate",
+        "lfo4": "lfo4.rate"
+      }
     },
     {
       "id": "lfo.phase",
       "binding": "lfo1.phase",
-      "x": 1410,
-      "y": 577,
-      "w": 54,
-      "h": 73,
+      "x": 1452,
+      "y": 588,
+      "w": 46,
+      "h": 64,
       "kind": "knob",
       "label": "PHASE",
-      "fontSize": 10
+      "fontSize": 10,
+      "faceDiameter": 33,
+      "selectionGroup": "obsidian-lfo",
+      "bindings": {
+        "lfo1": "lfo1.phase",
+        "lfo2": "lfo2.phase",
+        "lfo3": "lfo3.phase",
+        "lfo4": "lfo4.phase"
+      }
     },
     {
-      "id": "lfo.magnitude",
-      "binding": "lfo1.magnitude",
-      "x": 1470,
-      "y": 577,
-      "w": 54,
-      "h": 73,
+      "id": "lfo.attack",
+      "binding": "lfo1.attack",
+      "x": 1401,
+      "y": 588,
+      "w": 46,
+      "h": 64,
       "kind": "knob",
-      "label": "AMOUNT",
-      "fontSize": 10
+      "label": "FADE",
+      "fontSize": 10,
+      "faceDiameter": 33,
+      "selectionGroup": "obsidian-lfo",
+      "bindings": {
+        "lfo1": "lfo1.attack",
+        "lfo2": "lfo2.attack",
+        "lfo3": "lfo3.attack",
+        "lfo4": "lfo4.attack"
+      }
     },
     {
       "id": "lfo.unipolar",
       "binding": "lfo1.unipolar",
-      "x": 1532,
-      "y": 603,
-      "w": 36,
-      "h": 23,
+      "x": 1518,
+      "y": 610,
+      "w": 50,
+      "h": 19,
       "kind": "toggle",
-      "label": "UNI"
-    },
-    {
-      "id": "fx1.algorithm",
-      "binding": "fx1.type",
-      "x": 553,
-      "y": 724,
-      "w": 73,
-      "h": 25,
-      "kind": "menu",
-      "label": "FX 1"
-    },
-    {
-      "id": "fx2.algorithm",
-      "binding": "fx2.type",
-      "x": 631,
-      "y": 724,
-      "w": 73,
-      "h": 25,
-      "kind": "menu",
-      "label": "FX 2"
-    },
-    {
-      "id": "fx3.algorithm",
-      "binding": "fx3.type",
-      "x": 709,
-      "y": 724,
-      "w": 73,
-      "h": 25,
-      "kind": "menu",
-      "label": "FX 3"
-    },
-    {
-      "id": "fx4.algorithm",
-      "binding": "fx4.type",
-      "x": 787,
-      "y": 724,
-      "w": 73,
-      "h": 25,
-      "kind": "menu",
-      "label": "FX 4"
-    },
-    {
-      "id": "fx5.algorithm",
-      "binding": "fx5.type",
-      "x": 865,
-      "y": 724,
-      "w": 73,
-      "h": 25,
-      "kind": "menu",
-      "label": "FX 5"
-    },
-    {
-      "id": "fx6.algorithm",
-      "binding": "fx6.type",
-      "x": 943,
-      "y": 724,
-      "w": 73,
-      "h": 25,
-      "kind": "menu",
-      "label": "FX 6"
-    },
-    {
-      "id": "fx7.algorithm",
-      "binding": "fx7.type",
-      "x": 1021,
-      "y": 724,
-      "w": 73,
-      "h": 25,
-      "kind": "menu",
-      "label": "FX 7"
-    },
-    {
-      "id": "fx8.algorithm",
-      "binding": "fx8.type",
-      "x": 1099,
-      "y": 724,
-      "w": 73,
-      "h": 25,
-      "kind": "menu",
-      "label": "FX 8"
-    },
-    {
-      "id": "fx1.parameter0",
-      "binding": "fx1.param0",
-      "x": 556,
-      "y": 802,
-      "w": 88,
-      "h": 93,
-      "kind": "knob",
-      "fontSize": 11
-    },
-    {
-      "id": "fx1.parameter1",
-      "binding": "fx1.param1",
-      "x": 657,
-      "y": 802,
-      "w": 88,
-      "h": 93,
-      "kind": "knob",
-      "fontSize": 11
-    },
-    {
-      "id": "fx1.parameter2",
-      "binding": "fx1.param2",
-      "x": 758,
-      "y": 802,
-      "w": 88,
-      "h": 93,
-      "kind": "knob",
-      "fontSize": 11
-    },
-    {
-      "id": "fx1.parameter3",
-      "binding": "fx1.param3",
-      "x": 859,
-      "y": 802,
-      "w": 88,
-      "h": 93,
-      "kind": "knob",
-      "fontSize": 11
-    },
-    {
-      "id": "fx1.parameter4",
-      "binding": "fx1.param4",
-      "x": 960,
-      "y": 802,
-      "w": 88,
-      "h": 93,
-      "kind": "knob",
-      "fontSize": 11
-    },
-    {
-      "id": "fx1.parameter5",
-      "binding": "fx1.param5",
-      "x": 1061,
-      "y": 802,
-      "w": 88,
-      "h": 93,
-      "kind": "knob",
-      "fontSize": 11
+      "label": "UNI",
+      "selectionGroup": "obsidian-lfo",
+      "bindings": {
+        "lfo1": "lfo1.unipolar",
+        "lfo2": "lfo2.unipolar",
+        "lfo3": "lfo3.unipolar",
+        "lfo4": "lfo4.unipolar"
+      }
     },
     {
       "id": "master.level",
@@ -1260,81 +1337,153 @@
       "labelPosition": "left"
     },
     {
-      "id": "scene.mode",
-      "binding": "scene.mode",
-      "x": 257,
-      "y": 955,
-      "w": 175,
-      "h": 23,
+      "id": "osc3.shape5",
+      "binding": "osc3.param5",
+      "x": 465,
+      "y": 569,
+      "w": 41,
+      "h": 69,
+      "kind": "knob",
+      "faceDiameter": 32,
+      "fontSize": 9.5
+    },
+    {
+      "id": "lfo.trigger",
+      "binding": "lfo1.trigmode",
+      "x": 1518,
+      "y": 633,
+      "w": 50,
+      "h": 20,
       "kind": "menu",
-      "label": "Scene mode"
+      "label": "Trigger mode",
+      "selectionGroup": "obsidian-lfo",
+      "bindings": {
+        "lfo1": "lfo1.trigmode",
+        "lfo2": "lfo2.trigmode",
+        "lfo3": "lfo3.trigmode",
+        "lfo4": "lfo4.trigmode"
+      }
     },
     {
-      "id": "scene.polymode",
-      "binding": "scene.polymode",
-      "x": 441,
-      "y": 955,
-      "w": 130,
-      "h": 23,
+      "id": "fx.selected.algorithm",
+      "binding": "fx1.type",
+      "x": 724,
+      "y": 824,
+      "w": 104,
+      "h": 27,
       "kind": "menu",
-      "label": "Voice mode"
+      "label": "Selected effect algorithm",
+      "selectionGroup": "obsidian-fx",
+      "bindings": {
+        "fx1": "fx1.type",
+        "fx2": "fx2.type",
+        "fx3": "fx3.type",
+        "fx4": "fx4.type",
+        "fx5": "fx5.type",
+        "fx6": "fx6.type",
+        "fx7": "fx7.type",
+        "fx8": "fx8.type"
+      }
     },
     {
-      "id": "scene.polyphony",
-      "binding": "scene.polylimit",
-      "x": 581,
-      "y": 943,
-      "w": 97,
-      "h": 47,
-      "kind": "horizontal",
-      "label": "VOICES",
-      "fontSize": 9
+      "id": "fx.selected.parameter0",
+      "binding": "fx1.param4",
+      "x": 846,
+      "y": 803,
+      "w": 74,
+      "h": 95,
+      "kind": "knob",
+      "faceDiameter": 52,
+      "fontSize": 11,
+      "selectionGroup": "obsidian-fx",
+      "bindings": {
+        "fx1": "fx1.param4",
+        "fx2": "fx2.param0",
+        "fx3": "fx3.param0",
+        "fx4": "fx4.param0",
+        "fx5": "fx5.param0",
+        "fx6": "fx6.param0",
+        "fx7": "fx7.param0",
+        "fx8": "fx8.param0"
+      }
     },
     {
-      "id": "scene.width",
-      "binding": "scene.width",
-      "x": 700,
-      "y": 943,
-      "w": 172,
-      "h": 47,
-      "kind": "horizontal",
-      "label": "WIDTH",
-      "fontSize": 9
+      "id": "fx.selected.parameter1",
+      "binding": "fx1.param1",
+      "x": 929,
+      "y": 803,
+      "w": 74,
+      "h": 95,
+      "kind": "knob",
+      "faceDiameter": 52,
+      "fontSize": 11,
+      "selectionGroup": "obsidian-fx",
+      "bindings": {
+        "fx1": "fx1.param1",
+        "fx2": "fx2.param1",
+        "fx3": "fx3.param1",
+        "fx4": "fx4.param1",
+        "fx5": "fx5.param1",
+        "fx6": "fx6.param1",
+        "fx7": "fx7.param1",
+        "fx8": "fx8.param1"
+      }
     },
     {
-      "id": "scene.glide",
-      "binding": "scene.portamento",
-      "x": 887,
-      "y": 943,
-      "w": 172,
-      "h": 47,
-      "kind": "horizontal",
-      "label": "GLIDE",
-      "fontSize": 9
+      "id": "fx.selected.parameter2",
+      "binding": "fx1.param5",
+      "x": 1013,
+      "y": 803,
+      "w": 74,
+      "h": 95,
+      "kind": "knob",
+      "faceDiameter": 52,
+      "fontSize": 11,
+      "selectionGroup": "obsidian-fx",
+      "bindings": {
+        "fx1": "fx1.param5",
+        "fx2": "fx2.param2",
+        "fx3": "fx3.param2",
+        "fx4": "fx4.param2",
+        "fx5": "fx5.param2",
+        "fx6": "fx6.param2",
+        "fx7": "fx7.param2",
+        "fx8": "fx8.param2"
+      }
     },
     {
-      "id": "scene.level",
-      "binding": "scene.volume",
-      "x": 1074,
-      "y": 943,
-      "w": 172,
-      "h": 47,
-      "kind": "horizontal",
-      "label": "SCENE LEVEL",
-      "fontSize": 9
+      "id": "fx.selected.parameter3",
+      "binding": "fx1.param10",
+      "x": 1095,
+      "y": 803,
+      "w": 74,
+      "h": 95,
+      "kind": "knob",
+      "faceDiameter": 52,
+      "fontSize": 11,
+      "selectionGroup": "obsidian-fx",
+      "bindings": {
+        "fx1": "fx1.param10",
+        "fx2": "fx2.param3",
+        "fx3": "fx3.param3",
+        "fx4": "fx4.param3",
+        "fx5": "fx5.param3",
+        "fx6": "fx6.param3",
+        "fx7": "fx7.param3",
+        "fx8": "fx8.param3"
+      }
     }
   ],
   "adaptations": [
-    "The measured three-oscillator, dual-filter, mixer, amplifier, macro and modulation/FX/analyzer panel geometry follows the supplied concept. This is a native vector implementation, not the reference bitmap.",
-    "The shared header replaces decorative OS chrome and concept navigation with working preset navigation, scene selection, skin selection, full-editor access and a real master-volume control.",
-    "Oscillator algorithms and parameter names are always supplied by Surge. The concept's generic Sample mode is not fabricated; unused algorithm parameters are disabled.",
-    "The right envelope is the actual filter envelope, while the amplifier panel exposes the actual amplitude envelope. Surge has two envelope generators rather than four concept EG tabs.",
-    "Per-filter envelope depth replaces the concept's independent drive knobs. The actual shared waveshaper drive remains available in the routing strip.",
-    "The routing diagram is a schematic of supported native modes, not a general-purpose modular patcher. All controls use native parameter IDs.",
-    "The first eight FX algorithms and six current slot-1 parameters are shown; the full editor retains all sixteen FX slots and every effect parameter.",
-    "The output spectrum and meters use actual main-output samples from the independent processor tap; the native scope action opens the detailed analyzer. Oscillator and envelope graphics reflect current state rather than baked image traces.",
-    "A compact bottom utility strip adds real scene and voice controls in the concept's otherwise unused lower margin. Full original editor, advanced modulation and preset workflows remain available.",
-    "The compact oscillator tuning readouts and stacked right-envelope A/D/S/R fields are live, draggable and unit-aware numeric controls. Macro knob centres have been aligned to the concept's two measured rows.",
-    "The oscillator knob centres, filter controls and dark-panel tones were measured against the native b93cc34 capture and reference pixels; native material and header rendering still require separate comparison."
+    "Panel boundaries and control centres follow the supplied 1586 by 992 Obsidian reference. All controls and plots are native and remain live; no reference bitmap is used as the instrument UI.",
+    "The header keeps working preset navigation, scene selection, skin selection, full-editor access and real master volume. Duplicate scene and voice controls have been removed from the otherwise empty lower reference margin; the original editor retains them.",
+    "Oscillator power glyphs operate the actual mute parameters. Solo and mute remain available in the mixer. Algorithms, parameter names and values come from Surge; the generic concept Sample label is never fabricated.",
+    "The three compact table strips browse the actual installed wavetable catalog for a wavetable-capable oscillator. OCT and TUNE use the native octave and pitch parameters; independent semitone and fine parameters are not invented.",
+    "The envelope strip selects ENV 1, ENV 2, LFO 1 envelope and LFO 2 envelope, rebinding the same A/D/S/R fields to their real sources. Surge has two dedicated envelope generators; the two extra sources are accurately named LFO envelopes.",
+    "LFO 1 through LFO 4 tabs select the actual source preview and rebind shape, rate, fade-in attack, phase, polarity and trigger mode. The full editor retains tempo-sync and all additional LFO parameters.",
+    "Per-filter envelope depth is labelled ENV instead of pretending to be an independent filter drive. Native shared waveshaper drive is retained in the full editor. Filter routing remains a schematic of actual native modes.",
+    "The eight FX cards select real native slots. The algorithm menu and four detail knobs rebind to the selected slot; labels and values always come from its actual current algorithm. The first slot exposes parameter indices 4, 1, 5 and 10, which are Drive, pre-EQ frequency, Feedback and Output for the showcased Distortion; other slots expose indices 0 through 3. All sixteen slots and every parameter remain in the full editor.",
+    "The FX inset is a decorative algorithm-category pictogram, not a fabricated transfer response. Output spectrum, meters, wavetable frames and envelope traces use current processor data.",
+    "Macro values stay accessible and available in hover descriptions while the compact face-and-name treatment matches the reference density. The actual assigned macro names remain authoritative."
   ]
 }

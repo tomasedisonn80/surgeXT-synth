@@ -1526,13 +1526,110 @@ TEST_CASE("Native modulation row edits preserve stable targets, undo, and scene 
     processor.releaseResources();
 }
 
-TEST_CASE("Host reset clears active distortion decimation history",
+TEST_CASE("Native source and FX tabs preserve sound and rebind stable controls",
+          "[reference-workspaces][reference-selection][reference-interactions]")
+{
+    juce::ScopedJuceInitialiser_GUI gui;
+    IsolatedUserData testData;
+    SurgeSynthProcessor processor;
+    testData.attach(processor);
+    processor.setRateAndBufferSizeDetails(sampleRate, sampleBlock);
+    processor.prepareToPlay(sampleRate, sampleBlock);
+    configureShowcaseFixture(processor);
+    int groupsTested = 0, mappingsTested = 0, slidersEdited = 0;
+    for (const auto &file : workspaceManifests())
+    {
+        const auto manifest = readManifest(file);
+        Workspace workspace(processor);
+        juce::String error;
+        REQUIRE(workspace.load(file, error));
+        workspace.setSize(referenceWidth, referenceHeight);
+        workspace.addToDesktop(0);
+        workspace.setVisible(true);
+        auto &bridge = workspace.bridge();
+        const auto baseline = hostParameterValues(processor);
+        const auto *panels = manifest["panels"].getArray();
+        const auto *controls = manifest["controls"].getArray();
+        REQUIRE(panels != nullptr);
+        REQUIRE(controls != nullptr);
+        for (const auto &panel : *panels)
+        {
+            const auto selection = panel["selection"];
+            if (!selection.isObject())
+                continue;
+            ++groupsTested;
+            const auto group = selection["id"].toString();
+            const auto *choices = selection["choices"].getArray();
+            REQUIRE(choices != nullptr);
+            for (const auto &choice : *choices)
+            {
+                const auto choiceId = choice["id"].toString();
+                CAPTURE(file.getFileName().toStdString(), group.toStdString(),
+                        choiceId.toStdString());
+                const auto beforeSelection = hostParameterValues(processor);
+                REQUIRE(workspace.selectView(group, choiceId));
+                CHECK(workspace.selectedView(group) == choiceId);
+                CHECK(hostParameterValues(processor) == beforeSelection);
+                bool editedThisChoice = false;
+                for (const auto &control : *controls)
+                {
+                    if (control["selectionGroup"].toString() != group)
+                        continue;
+                    auto *component = findComponent(workspace, control["id"].toString());
+                    REQUIRE(component != nullptr);
+                    const auto mapped = control["bindings"][juce::Identifier(choiceId)];
+                    const auto binding = mapped.isString() ? mapped.toString() : juce::String();
+                    CHECK(component->getProperties()["reference.binding"].toString() == binding);
+                    CHECK(component->isEnabled() == (binding.isNotEmpty() && bridge.enabled(binding)));
+                    ++mappingsTested;
+                    auto *slider = dynamic_cast<juce::Slider *>(component);
+                    if (editedThisChoice || slider == nullptr || !component->isEnabled())
+                        continue;
+                    const auto *parameter = bridge.parameter(binding);
+                    if (parameter == nullptr || parameter->valtype != vt_float)
+                        continue;
+                    const auto oldValue = bridge.value(binding);
+                    const auto nextValue = oldValue < .5f ? .631f : .273f;
+                    slider->setValue(nextValue, juce::sendNotificationSync);
+                    CHECK(bridge.value(binding) == Catch::Approx(nextValue).margin(.001f));
+                    CHECK(bridge.activeGestureCount() == 0);
+                    edit(bridge, binding, oldValue);
+                    checkHostParameterValues(processor, baseline);
+                    const auto defaultChoice = selection["default"].toString();
+                    if (defaultChoice != choiceId && slider->onDragStart)
+                    {
+                        slider->onDragStart();
+                        REQUIRE(bridge.activeGestureCount() == 1);
+                        REQUIRE(workspace.selectView(group, defaultChoice));
+                        CHECK(bridge.activeGestureCount() == 0);
+                        CHECK(findComponent(workspace, control["id"].toString()) == component);
+                        REQUIRE(workspace.selectView(group, choiceId));
+                    }
+                    editedThisChoice = true;
+                    ++slidersEdited;
+                }
+            }
+            REQUIRE(workspace.selectView(group, selection["default"].toString()));
+        }
+        CHECK_FALSE(workspace.selectView("missing-group", "missing-choice"));
+        checkHostParameterValues(processor, baseline);
+        workspace.setVisible(false);
+    }
+    CHECK(groupsTested > 0);
+    CHECK(mappingsTested > 0);
+    CHECK(slidersEdited > 0);
+    processor.releaseResources();
+}
+
+TEST_CASE("Host reset clears active effect filter and delay histories",
           "[reference-workspaces][reference-audio][reference-reset]")
 {
     juce::ScopedJuceInitialiser_GUI gui;
-    for (const bool distortionEnabled : {false, true})
+    // -1 keeps the complete eight-slot chain used by native captures. The
+    // individual cases locate regressions in both stateful filter paths.
+    for (const int activeEffect : std::array<int, 4>{fxt_off, fxt_distortion, fxt_chorus4, -1})
     {
-        CAPTURE(distortionEnabled);
+        CAPTURE(activeEffect);
         IsolatedUserData testData;
         SurgeSynthProcessor processor;
         testData.attach(processor);
@@ -1540,19 +1637,18 @@ TEST_CASE("Host reset clears active distortion decimation history",
         processor.prepareToPlay(sampleRate, sampleBlock);
         configureShowcaseFixture(processor);
         ParameterBridge bridge(processor);
-        // Isolate the suspected effect from the other seven showcase slots.
-        // Edits still use native deferred effect initialization, before audio.
-        for (int slot = 1; slot <= n_fx_slots; ++slot)
+        // Edits use native deferred effect initialization, before audio.
+        for (int slot = 1; activeEffect >= 0 && slot <= n_fx_slots; ++slot)
         {
             const auto binding = "fx" + juce::String(slot) + ".type";
-            const auto type = distortionEnabled && slot == 1 ? fxt_distortion : fxt_off;
+            const auto type = slot == 1 ? activeEffect : fxt_off;
             auto *parameter = bridge.parameter(binding);
             REQUIRE(parameter != nullptr);
             edit(bridge, binding, bridge.choiceValue(binding, type - parameter->val_min.i));
             processor.surge->processAudioThreadOpsWhenAudioEngineUnavailable();
         }
         float playingPeak = 0.f;
-        for (int block = 0; block < 64; ++block)
+        for (int block = 0; block < showcaseAudioBlocks; ++block)
         {
             juce::MidiBuffer notes;
             if (block == 0)

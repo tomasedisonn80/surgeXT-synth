@@ -5,8 +5,12 @@
 #include "PreviewCurves.h"
 #include "Visuals.h"
 #include "WorkspaceData.h"
+#include "WavetableSelection.h"
 #include "ModulationInteraction.h"
+#include "MatrixLayout.h"
+#include "ReferenceOrnaments.h"
 #include "SurgeSynthProcessor.h"
+#include "RuntimeFont.h"
 #include <juce_audio_utils/juce_audio_utils.h>
 #include <juce_dsp/juce_dsp.h>
 #include <algorithm>
@@ -57,6 +61,10 @@ struct Theme
     juce::Colour secondary{0xff72d8ec}, display{0xff090f14}, knob{0xff20282e};
     juce::Colour red{0xffca3e2b}, yellow{0xfff8ce39}, blue{0xff315d7b};
     juce::String style, font;
+    // These are the same licensed, embedded typefaces used by the full editor.
+    // Sharing them avoids loading fonts for every copied knob/entry theme and
+    // keeps sans/mono metrics stable when the host's default font changes.
+    juce::SharedResourcePointer<Surge::GUI::FontManager> fonts;
     float radius{7}, glow{0.15f};
     bool light() const { return background.getPerceivedBrightness() > 0.6f; }
     static juce::Colour hexColor(const juce::String &value)
@@ -123,24 +131,66 @@ struct Theme
     }
     juce::Font type(float size, bool bold = false) const
     {
-        auto family = font == "serif"  ? juce::Font::getDefaultSerifFontName()
-                      : font == "mono" ? juce::Font::getDefaultMonospacedFontName()
-                                       : juce::Font::getDefaultSansSerifFontName();
+        const auto weight = bold ? juce::Font::bold : juce::Font::plain;
+        if (font == "mono")
+            return fonts->getFiraMonoAtSize(size, weight).withHeight(size);
+        if (font != "serif")
+            return fonts->getLatoAtSize(size, weight).withHeight(size);
+        const auto family = juce::Font::getDefaultSerifFontName();
 #if JUCE_MAJOR_VERSION >= 8
-        return juce::Font(
-            juce::FontOptions(family, size, bold ? juce::Font::bold : juce::Font::plain));
+        return juce::Font(juce::FontOptions(family, size, weight));
 #else
-        return juce::Font(family, size, bold ? juce::Font::bold : juce::Font::plain);
+        return juce::Font(family, size, weight);
 #endif
     }
 };
 void text(juce::Graphics &g, const Theme &t, const juce::String &s, Rect r, float size,
           juce::Colour color, bool bold = false, int align = juce::Justification::centredLeft)
 {
-    g.setFont(t.type(size, bold));
+    auto font = t.type(size, bold);
+    if (t.style == "ivory" && bold && size >= 16.f)
+        font = t.type(size, false).withExtraKerningFactor(.035f);
+    else if (t.style == "space" && bold && size >= 14.f)
+        font = t.fonts
+                   ->getLatoAtSize(size, static_cast<juce::Font::FontStyleFlags>(juce::Font::bold |
+                                                                             juce::Font::italic))
+                   .withHeight(size)
+                   .withHorizontalScale(.9f);
+    else if (t.style == "tokyo" && bold)
+        font = font.withHorizontalScale(.9f);
+    g.setFont(font);
     g.setColour(color);
     g.drawFittedText(s, r.toNearestInt(), align, 1, 0.7f);
 }
+
+const juce::Image &materialGrain(bool brushed)
+{
+    // Immutable cosmetic grain, generated once without the synth's RNG. It is
+    // not sampled from reference art and contains no signal or parameter state.
+    static const auto textures = [] {
+        std::array<juce::Image, 2> result;
+        for (size_t style = 0; style < result.size(); ++style)
+        {
+            result[style] = juce::Image(juce::Image::ARGB, 256, 64, true);
+            juce::Image::BitmapData pixels(result[style], juce::Image::BitmapData::writeOnly);
+            for (int y = 0; y < pixels.height; ++y)
+                for (int x = 0; x < pixels.width; ++x)
+                {
+                    const auto cellX = style == 1 ? x / 7 : x;
+                    auto hash = static_cast<unsigned>(cellX + 307 * y + 17);
+                    hash ^= hash >> 13;
+                    hash *= 1274126177u;
+                    hash ^= hash >> 16;
+                    const auto shade = hash & 1u ? juce::Colours::white : juce::Colours::black;
+                    const auto alpha = .08f + static_cast<float>((hash >> 1) & 31u) / 96.f;
+                    pixels.setPixelColour(x, y, shade.withAlpha(alpha));
+                }
+        }
+        return result;
+    }();
+    return textures[brushed ? 1 : 0];
+}
+
 void bezel(juce::Graphics &g, const Theme &t, Rect r, juce::Colour fill, float radius = -1)
 {
     if (radius < 0)
@@ -200,19 +250,53 @@ void bezel(juce::Graphics &g, const Theme &t, Rect r, juce::Colour fill, float r
     }
     g.setGradientFill(material);
     g.fillRoundedRectangle(r, radius);
-    if (metal && panel)
+    if (panel && fill != t.display &&
+        (metal || ivory || t.style == "tokyo" || t.style == "precision"))
     {
         juce::Graphics::ScopedSaveState save(g);
         juce::Path clip;
         clip.addRoundedRectangle(r.reduced(2), std::max(0.f, radius - 1));
         g.reduceClipRegion(clip);
-        // Deterministic cosmetic brushing. It never represents signal or state.
-        for (int y = static_cast<int>(r.getY()) + 2; y < static_cast<int>(r.getBottom()) - 2; ++y)
+        g.setTiledImageFill(materialGrain(metal), 0, 0, metal ? .17f : ivory ? .055f : .065f);
+        g.fillRect(r);
+        if (metal)
         {
-            const auto grain = static_cast<unsigned>(y * 2654435761u);
-            g.setColour((grain & 1 ? juce::Colours::white : juce::Colours::black)
-                            .withAlpha(.016f + (grain % 7) * .003f));
-            g.drawHorizontalLine(y, r.getX() + 2, r.getRight() - 2);
+            // A broad reflected band breaks the old uniform horizontal stripes.
+            // It follows the physical panel, not its contents or the audio clock.
+            juce::ColourGradient sheen(juce::Colours::white.withAlpha(.12f), r.getX(), r.getY(),
+                                       juce::Colours::white.withAlpha(0.f), r.getRight(),
+                                       r.getY() + r.getHeight() * .25f, false);
+            sheen.addColour(.30, juce::Colours::white.withAlpha(.035f));
+            sheen.addColour(.62, juce::Colours::white.withAlpha(.105f));
+            sheen.addColour(.77, juce::Colours::white.withAlpha(.015f));
+            g.setGradientFill(sheen);
+            g.fillRect(r);
+        }
+    }
+    if (panel && (t.style == "aurora" || t.style == "spectral"))
+    {
+        juce::Graphics::ScopedSaveState save(g);
+        juce::Path clip;
+        clip.addRoundedRectangle(r.reduced(1), std::max(0.f, radius - 1));
+        g.reduceClipRegion(clip);
+        g.setGradientFill(juce::ColourGradient(
+            t.accent.withAlpha(t.style == "aurora" ? .10f : .035f),
+            r.getX() + r.getWidth() * .14f, r.getY(), t.accent.withAlpha(0.f),
+            r.getX() + r.getWidth() * .77f, r.getBottom(), true));
+        g.fillRect(r);
+        if (t.style == "aurora")
+        {
+            juce::Path reflection;
+            reflection.startNewSubPath(r.getX() + r.getWidth() * .12f, r.getY());
+            reflection.lineTo(r.getX() + r.getWidth() * .38f, r.getY());
+            reflection.lineTo(r.getX() + r.getWidth() * .14f, r.getBottom());
+            reflection.lineTo(r.getX() - r.getWidth() * .12f, r.getBottom());
+            reflection.closeSubPath();
+            g.setGradientFill(juce::ColourGradient(juce::Colours::white.withAlpha(.035f),
+                                                   r.getTopLeft(),
+                                                   juce::Colours::white.withAlpha(0.f),
+                                                   r.getBottomRight(), false));
+            g.fillPath(reflection);
         }
     }
     g.setColour(t.border.withAlpha(flat ? .45f : .80f));
@@ -241,8 +325,10 @@ void themedButton(juce::Graphics &g, const Theme &theme, juce::TextButton &butto
                         : theme.style == "clear" ? 5.f
                                                  : std::min(5.f, theme.radius);
     bezel(g, theme, r, fill, radius);
-    auto ink =
-        selected ? fill.contrasting(.95f) : button.findColour(juce::TextButton::textColourOffId);
+    auto ink = selected ? (theme.style == "aurora" || theme.style == "spectral"
+                               ? juce::Colours::white
+                               : fill.contrasting(.95f))
+                        : button.findColour(juce::TextButton::textColourOffId);
     if (!button.isEnabled())
         ink = ink.withAlpha(.45f);
     const auto size =
@@ -313,6 +399,8 @@ class HeaderButton : public juce::TextButton
             {
                 ink = theme.style == "precision" && presentation == navigation
                           ? theme.accent
+                      : theme.style == "aurora" || theme.style == "spectral"
+                          ? juce::Colours::white
                           : fill.contrasting(.95f);
                 g.setColour(theme.accent.withAlpha(.60f));
                 g.drawRoundedRectangle(r.reduced(.4f), 4.f, .8f);
@@ -359,7 +447,7 @@ class HeaderButton : public juce::TextButton
 };
 
 void knob(juce::Graphics &g, const Theme &t, Rect r, float value, juce::Colour accent, bool focus,
-          bool enabled)
+          bool enabled, bool coloredRim = false)
 {
     if (r.getWidth() <= 0 || r.getHeight() <= 0)
         return;
@@ -393,12 +481,12 @@ void knob(juce::Graphics &g, const Theme &t, Rect r, float value, juce::Colour a
                        c.x + std::sin(angle) * outer, c.y - std::cos(angle) * outer, .8f);
         }
     }
-    else if (!ivory && !bauhaus)
+    else if ((!ivory && !bauhaus) || (bauhaus && coloredRim))
     {
-        g.setColour(t.border.withAlpha(clear ? .65f : .32f));
-        g.strokePath(track, juce::PathStrokeType(clear ? 3.f : 1.5f));
+        g.setColour(bauhaus ? juce::Colour(0xff181b17) : t.border.withAlpha(clear ? .65f : .32f));
+        g.strokePath(track, juce::PathStrokeType(bauhaus ? 3.6f : clear ? 3.f : 1.5f));
         g.setColour(accent);
-        g.strokePath(arc, juce::PathStrokeType(clear ? 4.2f : 2.2f));
+        g.strokePath(arc, juce::PathStrokeType(bauhaus ? 4.8f : clear ? 4.2f : 2.2f));
         if (glass)
         {
             g.setColour(accent.interpolatedWith(juce::Colours::white, .6f));
@@ -414,8 +502,8 @@ void knob(juce::Graphics &g, const Theme &t, Rect r, float value, juce::Colour a
         g.setColour(juce::Colours::black.withAlpha(.60f));
         g.fillEllipse(face.expanded(.8f).translated(.5f, 1.5f));
     }
-    auto hi = t.knob.interpolatedWith(juce::Colours::white, glass ? .18f : .10f);
-    auto lo = t.knob.interpolatedWith(juce::Colours::black, .45f);
+    auto hi = t.knob.interpolatedWith(juce::Colours::white, glass ? .17f : .075f);
+    auto lo = t.knob.interpolatedWith(juce::Colours::black, .60f);
     if (ivory || (space && t.knob.getPerceivedBrightness() > .35f))
     {
         hi = ivory ? juce::Colour(0xfffff8e7) : juce::Colour(0xffffe4aa);
@@ -432,6 +520,19 @@ void knob(juce::Graphics &g, const Theme &t, Rect r, float value, juce::Colour a
     faceGradient.addColour(.48, hi.interpolatedWith(lo, .34f));
     g.setGradientFill(faceGradient);
     g.fillEllipse(face);
+    if (!clear && !bauhaus)
+    {
+        // Broad upper reflection and a narrow dark lower lip make the smaller
+        // dials read as solid caps while leaving the value-dependent arc clear.
+        const auto highlight = ivory || space ? .20f : glass ? .14f : .10f;
+        g.setGradientFill(juce::ColourGradient(
+            juce::Colours::white.withAlpha(highlight), face.getX() + face.getWidth() * .30f,
+            face.getY() + face.getHeight() * .18f, juce::Colours::white.withAlpha(0.f),
+            face.getRight(), face.getBottom(), true));
+        g.fillEllipse(face.reduced(.8f));
+        g.setColour(juce::Colours::black.withAlpha(ivory || space ? .15f : .30f));
+        g.drawEllipse(face.reduced(1.1f), .8f);
+    }
     g.setColour(bauhaus          ? juce::Colour(0xff151613)
                 : ivory || space ? juce::Colour(0xff958058)
                                  : t.border.withAlpha(clear ? .18f : .48f));
@@ -446,7 +547,9 @@ void knob(juce::Graphics &g, const Theme &t, Rect r, float value, juce::Colour a
     const float inner = rad * (clear ? .54f : .48f), outer = rad * .84f;
     g.setColour(ivory                ? juce::Colour(0xff264c33)
                 : bauhaus || clear   ? juce::Colour(0xff10181c)
-                : space              ? juce::Colour(0xff352f20)
+                : space              ? (t.knob.getPerceivedBrightness() < .35f
+                                            ? t.secondary
+                                            : juce::Colour(0xff352f20))
                 : t.style == "tokyo" ? accent
                                      : t.text);
     g.drawLine(c.x + std::sin(a) * inner, c.y - std::cos(a) * inner, c.x + std::sin(a) * outer,
@@ -613,19 +716,42 @@ class BoundSlider : public juce::Slider
     }
     void dismissEntry()
     {
+        ++entryGeneration;
         if (entryBox)
             entryBox->dismiss();
         entryBox = nullptr;
+    }
+    bool rebind(const juce::String &nextBinding)
+    {
+        if (nextBinding.isNotEmpty() && !bridge.valid(nextBinding))
+            return false;
+        if (binding != nextBinding)
+        {
+            // Finish the OLD host gesture before replacing its identity. A
+            // dismissed callout may still own a queued callback; its generation
+            // and exact binding are checked again before accepting typed input.
+            cancelGesture();
+            dismissEntry();
+            bridge.end(binding);
+            binding = nextBinding;
+        }
+        sync();
+        repaint();
+        return true;
     }
     void sync()
     {
         polling = true;
         setEnabled(bridge.valid(binding) && bridge.enabled(binding));
+        getProperties().set("reference.binding", binding);
         if (entryBox && (!isEnabled() || entryLabel != bridge.label(binding)))
             dismissEntry();
         if (!dragging)
             setValue(bridge.value(binding), juce::dontSendNotification);
         auto name = string(spec, "label", bridge.label(binding));
+        const auto sourceCaption = getProperties()["reference.source-caption"].toString();
+        if (sourceCaption.isNotEmpty())
+            name += " (" + sourceCaption + ")";
         setName(name);
         setTitle(name);
         setDescription(name + ": " + bridge.display(binding));
@@ -694,6 +820,15 @@ class BoundSlider : public juce::Slider
         auto accent =
             spec.hasProperty("accent") ? theme.color(string(spec, "accent")) : theme.accent;
         auto label = string(spec, "label", bridge.label(binding));
+        // Host parameter names include a redundant M1:/M2: identity prefix.
+        // Keep that full name in accessibility/tooltips; the face caption uses
+        // the actual assigned macro name and a separate index where designed.
+        if (!spec.hasProperty("label") && binding.startsWith("macro"))
+        {
+            const auto prefix = "M" + binding.substring(5) + ":";
+            if (label.startsWithIgnoreCase(prefix))
+                label = label.substring(prefix.length()).trimStart();
+        }
         auto value = isEnabled() ? compactPaintValue(bridge.display(binding)) : utf8("—");
         auto ink = spec.hasProperty("ink") ? theme.color(string(spec, "ink")) : theme.text;
         auto valueInk = spec.hasProperty("ink") ? ink.withAlpha(.85f) : theme.muted;
@@ -701,7 +836,10 @@ class BoundSlider : public juce::Slider
         if (kind == "value")
         {
             const float labelWidth =
-                label.length() <= 3 ? std::min(24.f, r.getWidth() * .25f) : r.getWidth() * .44f;
+                juce::jlimit(0.f, r.getWidth(),
+                             number(spec, "labelWidth",
+                                    label.length() <= 3 ? std::min(24.f, r.getWidth() * .25f)
+                                                        : r.getWidth() * .44f));
             text(g, theme, label, r.removeFromLeft(labelWidth), fs, ink);
             auto box = r.reduced(2, 1);
             bezel(g, theme, box, theme.style == "clear" ? theme.panel : theme.display, 3);
@@ -720,19 +858,48 @@ class BoundSlider : public juce::Slider
         if (kind == "knob")
         {
             const auto labelPosition = string(spec, "labelPosition");
-            if (labelPosition == "top")
-            {
-                const float line = std::min(19.f, r.getHeight() * .23f);
-                text(g, theme, label, r.removeFromTop(line), fs, ink, false,
-                     juce::Justification::centred);
-                text(g, theme, value, r.removeFromBottom(line), fs,
-                     theme.style == "clear" ? ink : valueInk, theme.style == "clear",
-                     juce::Justification::centred);
+            const auto valuePosition = string(spec, "valuePosition", "bottom");
+            const bool hideValue = valuePosition == "hidden";
+            const bool valueAtRight = valuePosition == "right";
+            const auto lineHeight = std::min(19.f, r.getHeight() * .23f);
+            const bool coloredRim = theme.style == "bauhaus" &&
+                                    (binding.startsWith("macro") ||
+                                     binding == "master.volume" || binding == "scene.volume");
+            auto drawFace = [&](Rect face) {
+                const auto requested = number(spec, "faceDiameter", 0.f);
+                const auto available = std::min(face.getWidth(), face.getHeight());
+                const auto side = requested > 0 ? std::min(requested, available) : available;
+                face = face.withSizeKeepingCentre(side, side);
                 auto faceTheme = theme;
                 if (theme.style == "space" && binding.startsWith("macro"))
                     faceTheme.knob = theme.display;
-                knob(g, faceTheme, r, static_cast<float>(getValue()), accent,
-                     hasKeyboardFocus(true), isEnabled());
+                knob(g, faceTheme, face, static_cast<float>(getValue()), accent,
+                     hasKeyboardFocus(true), isEnabled(), coloredRim);
+                if (binding.startsWith("macro") &&
+                    (theme.style == "precision" || theme.style == "bauhaus" ||
+                     theme.style == "spectral"))
+                    text(g, theme, (theme.style == "spectral" ? "M" : "") + binding.substring(5),
+                         {face.getX() - 8, face.getY() - 1, 14, 14}, 10, ink, true,
+                         juce::Justification::centred);
+            };
+            auto valueOnRight = [&](Rect &face) {
+                auto valueBounds = face.removeFromRight(std::min(72.f, face.getWidth() * .40f));
+                text(g, theme, value, valueBounds.reduced(2, 0), fs,
+                     theme.style == "clear" ? ink : valueInk, theme.style == "clear",
+                     juce::Justification::centredLeft);
+            };
+            if (labelPosition == "top")
+            {
+                const float line = lineHeight;
+                text(g, theme, label, r.removeFromTop(line), fs, ink, false,
+                     juce::Justification::centred);
+                if (!hideValue && !valueAtRight)
+                    text(g, theme, value, r.removeFromBottom(line), fs,
+                         theme.style == "clear" ? ink : valueInk, theme.style == "clear",
+                         juce::Justification::centred);
+                else if (valueAtRight)
+                    valueOnRight(r);
+                drawFace(r);
                 return;
             }
             if (labelPosition == "left" || labelPosition == "right")
@@ -740,8 +907,7 @@ class BoundSlider : public juce::Slider
                 const float side = std::min(r.getHeight(), r.getWidth() * .48f);
                 auto face =
                     labelPosition == "left" ? r.removeFromRight(side) : r.removeFromLeft(side);
-                knob(g, theme, face, static_cast<float>(getValue()), accent, hasKeyboardFocus(true),
-                     isEnabled());
+                drawFace(face);
                 auto labels = r.reduced(4, std::max(0.f, (r.getHeight() - 32) * .5f));
                 if (theme.style == "bauhaus" && labelPosition == "left")
                 {
@@ -749,29 +915,36 @@ class BoundSlider : public juce::Slider
                     // rotary on one baseline rather than stacking two captions.
                     auto nameBounds = labels.removeFromLeft(labels.getWidth() * .53f);
                     text(g, theme, label, nameBounds, fs, ink);
-                    text(g, theme, value, labels, fs, valueInk, false,
-                         juce::Justification::centredRight);
+                    if (!hideValue)
+                        text(g, theme, value, labels, fs, valueInk, false,
+                             juce::Justification::centredRight);
                     return;
                 }
                 const int align = labelPosition == "left" ? juce::Justification::centredRight
                                                           : juce::Justification::centredLeft;
-                text(g, theme, label, labels.removeFromTop(16), fs, ink, false, align);
-                text(g, theme, value, labels, fs, valueInk, false, align);
+                if (hideValue)
+                    text(g, theme, label, labels, fs, ink, false, align);
+                else
+                {
+                    text(g, theme, label, labels.removeFromTop(16), fs, ink, false, align);
+                    text(g, theme, value, labels, fs, valueInk, false, align);
+                }
                 return;
             }
-            const auto lower = std::min(32.f, r.getHeight() * 0.42f);
+            const auto lower = hideValue || valueAtRight ? lineHeight
+                                                         : std::min(32.f, r.getHeight() * .42f);
             auto face = r.withTrimmedBottom(lower);
-            const float side = std::min(face.getWidth(), face.getHeight());
-            face = Rect(face.getCentreX() - side / 2, face.getCentreY() - side / 2, side, side);
-            auto faceTheme = theme;
-            if (theme.style == "space" && binding.startsWith("macro"))
-                faceTheme.knob = theme.display;
-            knob(g, faceTheme, face, static_cast<float>(getValue()), accent, hasKeyboardFocus(true),
-                 isEnabled());
-            text(g, theme, label, r.removeFromBottom(lower).withHeight(lower / 2), fs, ink, false,
+            if (valueAtRight)
+                valueOnRight(face);
+            drawFace(face);
+            text(g, theme, label,
+                 r.removeFromBottom(lower).withHeight(hideValue || valueAtRight ? lower : lower / 2),
+                 fs, ink, false,
                  juce::Justification::centred);
-            text(g, theme, value, getLocalBounds().toFloat().removeFromBottom(lower / 2), fs,
-                 valueInk, false, juce::Justification::centred);
+            if (!hideValue && !valueAtRight)
+                text(g, theme, value, getLocalBounds().toFloat().removeFromBottom(lower / 2), fs,
+                     theme.style == "clear" ? ink : valueInk, theme.style == "clear",
+                     juce::Justification::centred);
         }
         else
         {
@@ -913,11 +1086,14 @@ class BoundSlider : public juce::Slider
         dismissEntry();
         const auto scene = bridge.getScene();
         entryLabel = bridge.label(binding);
+        const auto generation = entryGeneration;
         juce::Component::SafePointer<BoundSlider> safe(this);
         auto entry = std::make_unique<ValueEntry>(
             theme, bridge.label(binding), bridge.display(binding),
-            [safe, scene, nameAtOpen = entryLabel](const juce::String &value, juce::String &error) {
+            [safe, scene, generation, bindingAtOpen = binding,
+             nameAtOpen = entryLabel](const juce::String &value, juce::String &error) {
                 if (!safe || safe->bridge.getScene() != scene || !safe->isEnabled() ||
+                    safe->entryGeneration != generation || safe->binding != bindingAtOpen ||
                     safe->bridge.label(safe->binding) != nameAtOpen)
                 {
                     error = "The edited parameter is no longer available.";
@@ -941,6 +1117,7 @@ class BoundSlider : public juce::Slider
     bool dragging{false}, polling{false};
     juce::Component::SafePointer<juce::CallOutBox> entryBox;
     juce::String entryLabel;
+    std::uint64_t entryGeneration{0};
 };
 
 class BoundMenu : public juce::ComboBox
@@ -952,7 +1129,8 @@ class BoundMenu : public juce::ComboBox
         setComponentID(string(d, "id"));
         setWantsKeyboardFocus(true);
         onChange = [this] {
-            if (polling || getSelectedItemIndex() < 0)
+            if (polling || !isEnabled() || getSelectedItemIndex() < 0 ||
+                getSelectedItemIndex() == bridge.choiceIndex(binding))
                 return;
             bridge.begin(binding);
             bridge.set(binding, bridge.choiceValue(binding, getSelectedItemIndex()));
@@ -960,12 +1138,82 @@ class BoundMenu : public juce::ComboBox
         };
         sync();
     }
+    ~BoundMenu() override { cancelPopup(); }
+    void cancelPopup()
+    {
+        ++popupGeneration;
+        hidePopup();
+        if (popupOpen)
+            juce::PopupMenu::dismissAllActiveMenus();
+        popupOpen = false;
+    }
+    bool rebind(const juce::String &nextBinding)
+    {
+        if (nextBinding.isNotEmpty() && !bridge.valid(nextBinding))
+            return false;
+        if (binding != nextBinding)
+        {
+            cancelPopup();
+            bridge.end(binding);
+            binding = nextBinding;
+            items.clear();
+        }
+        sync();
+        repaint();
+        return true;
+    }
+    void showPopup() override
+    {
+        if (!isEnabled())
+        {
+            hidePopup();
+            return;
+        }
+        if (popupOpen)
+            return;
+        ++popupGeneration;
+        const auto choicesAtOpen = bridge.choices(binding);
+        if (choicesAtOpen.isEmpty())
+            return;
+        const auto generation = popupGeneration;
+        const auto scene = bridge.getScene();
+        const auto bindingAtOpen = binding;
+        juce::PopupMenu menu;
+        for (int i = 0; i < choicesAtOpen.size(); ++i)
+            menu.addItem(i + 1, choicesAtOpen[i], true, i == bridge.choiceIndex(binding));
+        popupOpen = true;
+        juce::Component::SafePointer<BoundMenu> safe(this);
+        menu.showMenuAsync(
+            juce::PopupMenu::Options()
+                .withTargetComponent(this)
+                .withMinimumWidth(getWidth())
+                .withInitiallySelectedItem(getSelectedId()),
+            [safe, generation, scene, bindingAtOpen, choicesAtOpen](int result) {
+                if (!safe || safe->popupGeneration != generation)
+                    return;
+                safe->popupOpen = false;
+                safe->hidePopup();
+                // A popup is asynchronous. A selection/source/scene transition
+                // must never reinterpret an old item index in a new parameter.
+                if (result <= 0 || result > choicesAtOpen.size() || !safe->isEnabled() ||
+                    safe->binding != bindingAtOpen || safe->bridge.getScene() != scene ||
+                    safe->bridge.choices(bindingAtOpen) != choicesAtOpen)
+                    return;
+                safe->bridge.begin(bindingAtOpen);
+                safe->bridge.set(bindingAtOpen,
+                                 safe->bridge.choiceValue(bindingAtOpen, result - 1));
+                safe->bridge.end(bindingAtOpen);
+                safe->sync();
+                safe->repaint();
+            });
+    }
     void sync()
     {
         polling = true;
         auto c = bridge.choices(binding);
         if (c != items)
         {
+            cancelPopup();
             clear(juce::dontSendNotification);
             items = c;
             for (int i = 0; i < c.size(); ++i)
@@ -973,7 +1221,14 @@ class BoundMenu : public juce::ComboBox
         }
         setSelectedItemIndex(bridge.choiceIndex(binding), juce::dontSendNotification);
         setEnabled(bridge.valid(binding) && bridge.enabled(binding) && !c.isEmpty());
-        setName(string(spec, "label", bridge.label(binding)));
+        if (!isEnabled() && popupOpen)
+            cancelPopup();
+        getProperties().set("reference.binding", binding);
+        auto name = string(spec, "label", bridge.label(binding));
+        const auto sourceCaption = getProperties()["reference.source-caption"].toString();
+        if (sourceCaption.isNotEmpty())
+            name += " (" + sourceCaption + ")";
+        setName(name);
         setTitle(getName());
         setTooltip(getName() + ": " + bridge.display(binding));
         setColour(juce::ComboBox::backgroundColourId, theme.display);
@@ -1027,6 +1282,8 @@ class BoundMenu : public juce::ComboBox
     juce::String binding;
     juce::StringArray items;
     bool polling{false};
+    bool popupOpen{false};
+    std::uint64_t popupGeneration{0};
 };
 
 class BoundToggle : public juce::TextButton
@@ -1039,19 +1296,37 @@ class BoundToggle : public juce::TextButton
         setClickingTogglesState(true);
         setWantsKeyboardFocus(true);
         onClick = [this] {
+            if (!isEnabled())
+                return;
             bridge.begin(binding);
             bridge.set(binding, getToggleState() ? 1.f : 0.f);
             bridge.end(binding);
         };
         sync();
     }
+    bool rebind(const juce::String &nextBinding)
+    {
+        if (nextBinding.isNotEmpty() && !bridge.valid(nextBinding))
+            return false;
+        if (binding != nextBinding)
+        {
+            bridge.end(binding);
+            binding = nextBinding;
+        }
+        sync();
+        repaint();
+        return true;
+    }
     void sync()
     {
         setButtonText(string(spec, "label", bridge.label(binding)));
-        setName(getButtonText());
+        const auto sourceCaption = getProperties()["reference.source-caption"].toString();
+        setName(getButtonText() +
+                (sourceCaption.isEmpty() ? juce::String() : " (" + sourceCaption + ")"));
         setTitle(getName());
         setToggleState(bridge.value(binding) >= .5f, juce::dontSendNotification);
         setEnabled(bridge.valid(binding) && bridge.enabled(binding));
+        getProperties().set("reference.binding", binding);
         setColour(juce::TextButton::buttonColourId, theme.panel);
         setColour(juce::TextButton::buttonOnColourId, theme.accent);
         setColour(juce::TextButton::textColourOffId, theme.text);
@@ -1059,6 +1334,61 @@ class BoundToggle : public juce::TextButton
     }
     void paintButton(juce::Graphics &g, bool over, bool down) override
     {
+        if (string(spec, "glyph") == "power")
+        {
+            // A mute switch's light means the oscillator is audible. The
+            // underlying button state, automation and accessible name stay mute.
+            const bool on = binding.endsWith(".mute") ? !getToggleState() : getToggleState();
+            auto r = getLocalBounds().toFloat().reduced(1);
+            const auto side = std::min(r.getWidth(), r.getHeight());
+            r = r.withSizeKeepingCentre(side, side);
+            const bool bare = theme.style == "precision" || theme.style == "spectral" ||
+                              theme.style == "flow";
+            auto active = theme.style == "tokyo" ? theme.red : theme.accent;
+            if (!isEnabled())
+                active = theme.muted.withAlpha(.45f);
+            auto fill = on ? active : theme.panel;
+            if (over)
+                fill = fill.interpolatedWith(juce::Colours::white, .12f);
+            if (down)
+                fill = fill.interpolatedWith(juce::Colours::black, .16f);
+            if (!bare)
+            {
+                bezel(g, theme, r, fill, theme.style == "ivory" ? side * .5f : 3.f);
+                if (on && theme.style == "space")
+                {
+                    g.setColour(juce::Colours::white.withAlpha(.25f));
+                    g.fillRoundedRectangle(r.reduced(3), 1.5f);
+                }
+            }
+            else if (over || down)
+            {
+                g.setColour(active.withAlpha(down ? .18f : .08f));
+                g.fillRoundedRectangle(r, 3);
+            }
+            const auto centre = r.getCentre();
+            const auto rad = side * .27f;
+            auto ink = bare ? (on ? active : theme.muted)
+                       : on ? (theme.style == "space" ? theme.display : juce::Colours::white)
+                            : theme.muted;
+            if (!isEnabled())
+                ink = ink.withMultipliedAlpha(.5f);
+            g.setColour(ink);
+            juce::Path ring;
+            ring.addCentredArc(centre.x, centre.y + .5f, rad, rad, 0, .65f,
+                               juce::MathConstants<float>::twoPi - .65f, true);
+            g.strokePath(ring, juce::PathStrokeType(std::max(1.2f, side * .075f),
+                                                    juce::PathStrokeType::curved,
+                                                    juce::PathStrokeType::rounded));
+            g.drawLine(centre.x, centre.y - rad - 1, centre.x, centre.y + rad * .10f,
+                       std::max(1.2f, side * .075f));
+            if (hasKeyboardFocus(true))
+            {
+                g.setColour(theme.accent);
+                g.drawRoundedRectangle(getLocalBounds().toFloat().reduced(.6f), 3, 1.5f);
+            }
+            return;
+        }
         themedButton(g, theme, *this, over, down);
     }
 
@@ -1067,6 +1397,374 @@ class BoundToggle : public juce::TextButton
     Theme &theme;
     juce::var spec;
     juce::String binding;
+};
+
+/** Native view tab: choosing a source never writes an audio parameter. */
+class ViewTabButton : public juce::TextButton
+{
+  public:
+    ViewTabButton(Theme &theme, float fontSize, bool effect)
+        : theme(theme), fontSize(fontSize), effect(effect)
+    {
+        setWantsKeyboardFocus(true);
+        // Expose checked state to assistive technology while keeping selection
+        // owned by the view model (clicking the active tab must not turn it off).
+        setToggleable(true);
+    }
+    void paintButton(juce::Graphics &g, bool over, bool down) override
+    {
+        auto r = getLocalBounds().toFloat().reduced(.6f);
+        const bool selected = getToggleState();
+        auto fill = selected ? theme.accent : theme.panel;
+        if (effect && selected && theme.style == "bauhaus")
+            fill = theme.yellow;
+        if (theme.style == "precision" || theme.style == "tokyo" || theme.style == "flow")
+            fill = selected ? theme.accent.interpolatedWith(theme.display, .80f) : theme.display;
+        if (over)
+            fill = fill.interpolatedWith(juce::Colours::white, .07f);
+        if (down)
+            fill = fill.interpolatedWith(juce::Colours::black, .13f);
+        bezel(g, theme, r, fill, theme.style == "bauhaus" || theme.style == "tokyo" ? 2.f : 4.f);
+        auto ink = selected ? fill.contrasting(.95f) : theme.text;
+        if (selected && (theme.style == "precision" || theme.style == "tokyo" ||
+                         theme.style == "flow"))
+            ink = theme.accent;
+        if (effect && r.getHeight() >= 36)
+        {
+            const auto caption = getButtonText();
+            const auto slot = caption.upToFirstOccurrenceOf(" ", false, false);
+            const auto algorithm = caption.fromFirstOccurrenceOf(" ", false, false).trim();
+            const bool large = r.getHeight() >= 76;
+            g.setFont(theme.type(std::max(11.f, fontSize), true));
+            g.setColour(ink);
+            g.drawText(slot, r.withHeight(large ? 22.f : 18.f).toNearestInt(),
+                       juce::Justification::centred);
+            if (large)
+                effectGlyph(g, r.reduced(12, 0).withHeight(36).withCentre(
+                                   {r.getCentreX(), r.getCentreY()}), ink, algorithm);
+            g.setFont(theme.type(fontSize, theme.style == "bauhaus"));
+            g.drawFittedText(algorithm, r.withY(r.getBottom() - (large ? 29.f : 23.f))
+                                                   .withHeight(20).reduced(3, 0).toNearestInt(),
+                             juce::Justification::centred, 1, .65f);
+        }
+        else
+        {
+            g.setFont(theme.type(fontSize, selected || theme.style == "bauhaus"));
+            g.setColour(ink);
+            g.drawFittedText(getButtonText(), r.reduced(4, 1).toNearestInt(),
+                             juce::Justification::centred, 1, .70f);
+        }
+        if (selected || hasKeyboardFocus(true))
+        {
+            g.setColour(theme.accent);
+            g.drawRoundedRectangle(r.reduced(.4f), 3.f,
+                                   hasKeyboardFocus(true) ? 2.f : 1.f);
+        }
+    }
+    bool keyPressed(const juce::KeyPress &key) override
+    {
+        if (onNavigate && (key.getKeyCode() == juce::KeyPress::leftKey ||
+                           key.getKeyCode() == juce::KeyPress::rightKey))
+        {
+            onNavigate(key.getKeyCode() == juce::KeyPress::leftKey ? -1 : 1);
+            return true;
+        }
+        return juce::TextButton::keyPressed(key);
+    }
+    std::function<void(int)> onNavigate;
+
+  private:
+    Theme &theme;
+    float fontSize;
+    bool effect;
+};
+
+/** Three real native buttons: previous table, categorized catalog and next table.
+    Paint consumes a cached name only; no catalog/file work or locks occur there. */
+class WavetableSelector : public juce::Component
+{
+    class SelectorButton : public juce::TextButton
+    {
+      public:
+        SelectorButton(Theme &theme, int direction) : theme(theme), direction(direction)
+        {
+            setWantsKeyboardFocus(true);
+        }
+        void paintButton(juce::Graphics &g, bool over, bool down) override
+        {
+            const auto r = getLocalBounds().toFloat().reduced(1);
+            if (isEnabled() && (over || down))
+            {
+                g.setColour(theme.accent.withAlpha(down ? .17f : .09f));
+                g.fillRoundedRectangle(r, 2);
+            }
+            const auto ink = (theme.style == "ivory" || theme.style == "space")
+                                 ? theme.display.contrasting(.9f)
+                                 : theme.text;
+            g.setColour(isEnabled() ? ink : ink.withAlpha(.45f));
+            if (direction != 0)
+            {
+                const auto centre = r.getCentre();
+                juce::Path arrow;
+                arrow.startNewSubPath(centre.x + direction * 3, centre.y);
+                arrow.lineTo(centre.x - direction * 2, centre.y - 3.5f);
+                arrow.lineTo(centre.x - direction * 2, centre.y + 3.5f);
+                arrow.closeSubPath();
+                g.fillPath(arrow);
+            }
+            else
+            {
+                const auto size = theme.style == "clear" ? 13.f : 11.f;
+                g.setFont(theme.type(std::min(size, r.getHeight() * .65f)));
+                g.drawFittedText(getButtonText(), r.reduced(4, 0).toNearestInt(),
+                                 juce::Justification::centred, 1, .70f);
+            }
+            if (hasKeyboardFocus(false))
+            {
+                g.setColour(theme.accent);
+                g.drawRoundedRectangle(r.reduced(.5f), 2, 1.5f);
+            }
+        }
+        bool keyPressed(const juce::KeyPress &key) override
+        {
+            if (isEnabled() && onNavigate &&
+                (key.getKeyCode() == juce::KeyPress::leftKey ||
+                 key.getKeyCode() == juce::KeyPress::rightKey))
+            {
+                onNavigate(key.getKeyCode() == juce::KeyPress::leftKey ? -1 : 1);
+                return true;
+            }
+            return juce::TextButton::keyPressed(key);
+        }
+        std::function<void(int)> onNavigate;
+
+      private:
+        Theme &theme;
+        int direction;
+    };
+
+  public:
+    WavetableSelector(SurgeSynthProcessor &processor, Theme &theme, const juce::String &panelId,
+                       std::function<bool(const WavetableSelectionRequest &)> select,
+                       std::function<bool()> scriptsAvailable)
+        : processor(processor), theme(theme), select(std::move(select)),
+          scriptsAvailable(std::move(scriptsAvailable)), previous(theme, -1),
+          browse(theme, 0), next(theme, 1)
+    {
+        setInterceptsMouseClicks(false, true);
+        setComponentID("workspace.wavetable." + panelId);
+        for (auto *button : {&previous, &browse, &next})
+        {
+            addAndMakeVisible(*button);
+            button->onNavigate = [this](int direction) { jog(direction); };
+        }
+        previous.setComponentID(getComponentID() + ".previous");
+        browse.setComponentID(getComponentID() + ".browse");
+        next.setComponentID(getComponentID() + ".next");
+        previous.setName("Previous wavetable");
+        browse.setName("Choose wavetable");
+        next.setName("Next wavetable");
+        previous.onClick = [this] { jog(-1); };
+        browse.onClick = [this] { showCatalog(); };
+        next.onClick = [this] { jog(1); };
+    }
+    ~WavetableSelector() override { cancelPopup(); }
+
+    void sync(int nextScene, int nextOscillator)
+    {
+        if (scene != nextScene || oscillator != nextOscillator)
+        {
+            cancelPopup();
+            scene = nextScene;
+            oscillator = nextOscillator;
+            state.reset();
+        }
+        auto fresh = snapshotWavetableSelection(processor, scene, oscillator);
+        if (!fresh)
+        {
+            if (!state)
+            {
+                for (auto *button : {&previous, &browse, &next})
+                    button->setEnabled(false);
+                browse.setButtonText(oscillator < 0 ? "Unavailable" : "Updating");
+            }
+            // A busy loader keeps the last complete snapshot and keyboard
+            // focus. Any attempted action independently revalidates its target.
+            return;
+        }
+        if (state && state->target != fresh->target)
+            cancelPopup();
+        state = std::move(fresh);
+        const auto source = "Scene " + juce::String(scene == 0 ? "A" : "B") + " oscillator " +
+                            juce::String(oscillator + 1);
+        const auto name = juce::String(state->target.tableName);
+        setName("Wavetable for " + source);
+        setTitle(getName());
+        getProperties().set("reference.wavetable-name", name);
+        getProperties().set("reference.wavetable-scene", scene);
+        getProperties().set("reference.wavetable-oscillator", oscillator);
+        getProperties().set("reference.wavetable-busy", state->loadQueued);
+        browse.setButtonText(state->applicable ? name : "No wavetable");
+        previous.setName("Previous wavetable for " + source);
+        next.setName("Next wavetable for " + source);
+        browse.setName("Choose wavetable for " + source + ": " + name);
+        // Preserve focus while an accepted request is briefly queued. Further
+        // actions wait for the real load, rather than stacking duplicate undo
+        // entries or making a focused button disappear during every selection.
+        const bool available = state->applicable && !processor.surge->storage.wt_list.empty();
+        browse.setEnabled(available);
+        previous.setEnabled(available && adjacentAvailable(false));
+        next.setEnabled(available && adjacentAvailable(true));
+        juce::String status;
+        if (!state->applicable)
+            status = "The current oscillator algorithm does not use a wavetable.";
+        else if (state->loadQueued)
+            status = "Loading wavetable. The displayed name is the current table.";
+        else if (processor.surge->storage.wt_list.empty())
+            status = "No installed wavetables are available.";
+        else
+            status = "Choose an installed wavetable; Left/Right chooses the previous/next table.";
+        for (auto *button : {&previous, &browse, &next})
+        {
+            button->setTitle(button->getName());
+            button->setTooltip(button->getName() + "\n" + status);
+        }
+        repaint();
+    }
+    void cancelPopup()
+    {
+        ++generation;
+        if (popupOpen)
+            juce::PopupMenu::dismissAllActiveMenus();
+        popupOpen = false;
+    }
+    void visibilityChanged() override
+    {
+        if (!isShowing())
+            cancelPopup();
+    }
+    void resized() override
+    {
+        auto r = getLocalBounds();
+        const int arrowWidth = std::min(r.getWidth() / 3, std::min(28, r.getHeight()));
+        previous.setBounds(r.removeFromLeft(arrowWidth));
+        next.setBounds(r.removeFromRight(arrowWidth));
+        browse.setBounds(r);
+    }
+    void paint(juce::Graphics &g) override
+    {
+        bezel(g, theme, getLocalBounds().toFloat().reduced(.6f), theme.display,
+              theme.style == "bauhaus" || theme.style == "tokyo" ? 2.f : 3.f);
+        g.setColour(theme.border.withAlpha(.5f));
+        g.drawVerticalLine(previous.getRight(), 4.f, static_cast<float>(getHeight() - 4));
+        g.drawVerticalLine(next.getX(), 4.f, static_cast<float>(getHeight() - 4));
+    }
+
+  private:
+    bool canChoose(const Patch &entry) const
+    {
+        return !entry.path.empty() &&
+               (entry.path.extension() != ".wtscript" || scriptsAvailable());
+    }
+    bool adjacentAvailable(bool forward) const
+    {
+        const auto &storage = processor.surge->storage;
+        if (!state || storage.wtOrdering.size() != storage.wt_list.size())
+            return false;
+        const int id = storage.getAdjacentWaveTable(state->target.tableId, forward);
+        return id >= 0 && id < static_cast<int>(storage.wt_list.size()) &&
+               canChoose(storage.wt_list[id]);
+    }
+    void submit(const WavetableSelectionRequest &request)
+    {
+        if (request.target.scene != scene || request.target.oscillator != oscillator ||
+            resolveWavetableSelection(processor, request) < 0)
+            return;
+        if (select(request))
+        {
+            cancelPopup();
+            sync(scene, oscillator);
+            if (browse.isShowing() && browse.isEnabled())
+                browse.grabKeyboardFocus();
+        }
+    }
+    void jog(int direction)
+    {
+        sync(scene, oscillator);
+        if (!state || !state->applicable || state->loadQueued ||
+            !adjacentAvailable(direction > 0))
+            return;
+        const auto &storage = processor.surge->storage;
+        const int id = storage.getAdjacentWaveTable(state->target.tableId, direction > 0);
+        submit({state->target, storage.wt_list[id].path});
+    }
+    void showCatalog()
+    {
+        sync(scene, oscillator);
+        if (popupOpen || !browse.isEnabled() || !state || state->loadQueued)
+            return;
+        const auto &storage = processor.surge->storage;
+        juce::PopupMenu menu;
+        std::vector<fs::path> paths;
+        std::vector<bool> added(storage.wt_list.size(), false);
+        const auto append = [&](juce::PopupMenu &to, int id) {
+            if (id < 0 || id >= static_cast<int>(storage.wt_list.size()) || added[id])
+                return;
+            const auto &entry = storage.wt_list[id];
+            added[id] = true;
+            paths.push_back(entry.path);
+            to.addItem(static_cast<int>(paths.size()), juce::String(entry.name), canChoose(entry),
+                       id == state->target.tableId);
+        };
+        const auto appendCategory = [&](int category) {
+            if (category < 0 || category >= static_cast<int>(storage.wt_category.size()))
+                return;
+            juce::PopupMenu items;
+            for (const auto id : storage.wtOrdering)
+                if (id >= 0 && id < static_cast<int>(storage.wt_list.size()) &&
+                    storage.wt_list[id].category == category)
+                    append(items, id);
+            // Preserve valid entries even while an external catalog provider
+            // has no explicit ordering yet; never synthesize file names.
+            for (int id = 0; id < static_cast<int>(storage.wt_list.size()); ++id)
+                if (storage.wt_list[id].category == category)
+                    append(items, id);
+            if (items.getNumItems() > 0)
+                menu.addSubMenu(juce::String(storage.wt_category[category].name), items);
+        };
+        for (const auto category : storage.wtCategoryOrdering)
+            appendCategory(category);
+        for (int category = 0; category < static_cast<int>(storage.wt_category.size()); ++category)
+            appendCategory(category);
+        for (int id = 0; id < static_cast<int>(storage.wt_list.size()); ++id)
+            append(menu, id);
+        if (paths.empty())
+            return;
+
+        popupOpen = true;
+        const auto openedGeneration = ++generation;
+        const auto target = state->target;
+        juce::Component::SafePointer<WavetableSelector> safe(this);
+        menu.showMenuAsync(
+            juce::PopupMenu::Options().withTargetComponent(&browse).withMinimumWidth(getWidth()),
+            [safe, openedGeneration, target, paths = std::move(paths)](int result) {
+                if (!safe || safe->generation != openedGeneration)
+                    return;
+                safe->popupOpen = false;
+                if (result > 0 && result <= static_cast<int>(paths.size()))
+                    safe->submit({target, paths[static_cast<size_t>(result - 1)]});
+            });
+    }
+
+    SurgeSynthProcessor &processor;
+    Theme &theme;
+    std::function<bool(const WavetableSelectionRequest &)> select;
+    std::function<bool()> scriptsAvailable;
+    SelectorButton previous, browse, next;
+    int scene{-1}, oscillator{-1};
+    std::optional<WavetableSelectionSnapshot> state;
+    std::uint64_t generation{0};
+    bool popupOpen{false};
 };
 
 class MacroXY : public juce::Component
@@ -1469,6 +2167,39 @@ struct Workspace::Impl
     std::vector<std::unique_ptr<juce::Component>> controls;
     std::vector<std::pair<juce::Component *, Rect>> placements;
     std::vector<std::unique_ptr<juce::TextButton>> actions;
+    struct SelectionState
+    {
+        juce::String id, selected;
+        juce::var definition;
+        juce::var choice() const
+        {
+            if (auto *choices = definition["choices"].getArray())
+                for (const auto &candidate : *choices)
+                    if (string(candidate, "id") == selected)
+                        return candidate;
+            return {};
+        }
+    };
+    struct SelectionBinding
+    {
+        juce::Component *control{};
+        juce::String group;
+        juce::var bindings;
+    };
+    struct SelectionTab
+    {
+        juce::String group, choice;
+        std::unique_ptr<ViewTabButton> button;
+    };
+    std::vector<SelectionState> selections;
+    std::vector<SelectionBinding> selectionBindings;
+    std::vector<SelectionTab> selectionTabs;
+    struct WavetableControl
+    {
+        juce::var panel;
+        std::unique_ptr<WavetableSelector> selector;
+    };
+    std::vector<WavetableControl> wavetableControls;
     std::unique_ptr<MacroXY> xy;
     std::unique_ptr<PresetBrowser> browser;
     std::unique_ptr<PerformanceKeyboard> keyboard;
@@ -1570,8 +2301,213 @@ struct Workspace::Impl
         b.setColour(juce::TextButton::textColourOffId, theme.text);
         b.setColour(juce::TextButton::textColourOnId, theme.background);
     }
+    SelectionState *selection(const juce::String &id)
+    {
+        for (auto &candidate : selections)
+            if (candidate.id == id)
+                return &candidate;
+        return nullptr;
+    }
+    const SelectionState *selection(const juce::String &id) const
+    {
+        for (const auto &candidate : selections)
+            if (candidate.id == id)
+                return &candidate;
+        return nullptr;
+    }
+    juce::var selectedPanelChoice(const juce::var &panel) const
+    {
+        if (auto *selected = selection(string(panel["selection"], "id")))
+            return selected->choice();
+        return {};
+    }
+    juce::String selectionCaption(const SelectionState &state) const
+    {
+        const auto selected = state.choice();
+        if (string(selected, "source") == "fx")
+        {
+            const auto index = static_cast<int>(number(selected, "index", 1));
+            return "FX " + juce::String(index) + ": " +
+                   parameters.display("fx" + juce::String(index) + ".type");
+        }
+        return string(selected, "label");
+    }
+    void applySelectionBindings(SelectionState &state)
+    {
+        const auto caption = selectionCaption(state);
+        for (auto &mapping : selectionBindings)
+            if (mapping.group == state.id)
+            {
+                const auto value = mapping.bindings[juce::Identifier(state.selected)];
+                const auto binding = value.isString() ? value.toString() : juce::String();
+                mapping.control->getProperties().set("reference.source-caption", caption);
+                if (auto *slider = dynamic_cast<BoundSlider *>(mapping.control))
+                    slider->rebind(binding);
+                else if (auto *menu = dynamic_cast<BoundMenu *>(mapping.control))
+                    menu->rebind(binding);
+                else if (auto *toggle = dynamic_cast<BoundToggle *>(mapping.control))
+                    toggle->rebind(binding);
+            }
+    }
+    bool selectView(const juce::String &id, const juce::String &choice)
+    {
+        auto *state = selection(id);
+        if (state == nullptr)
+            return false;
+        bool present = false;
+        if (auto *choices = state->definition["choices"].getArray())
+            for (const auto &candidate : *choices)
+                present = present || string(candidate, "id") == choice;
+        if (!present)
+            return false;
+        const auto focusVisibleSource = [&] {
+            // A tabs-only container is navigation among simultaneously visible
+            // modules (for example Ivory's three oscillator cards). Give it a
+            // real keyboard-focus action without painting another hidden plot
+            // or writing an oscillator algorithm parameter.
+            bool navigationOnly = false;
+            if (auto *panels = manifest["panels"].getArray())
+                for (const auto &panel : *panels)
+                    navigationOnly = navigationOnly ||
+                                     (string(panel, "kind") == "tabs" &&
+                                      string(panel["selection"], "id") == id);
+            const auto selected = state->choice();
+            if (!navigationOnly || string(selected, "source") != "oscillator")
+                return;
+            const auto prefix = "osc" + juce::String(static_cast<int>(number(selected, "index", 1))) + ".";
+            for (auto &control : controls)
+                if (dynamic_cast<BoundSlider *>(control.get()) != nullptr &&
+                    control->getProperties()["reference.binding"].toString().startsWith(prefix) &&
+                    control->isEnabled() && control->isShowing())
+                {
+                    control->grabKeyboardFocus();
+                    break;
+                }
+        };
+        if (state->selected == choice)
+        {
+            focusVisibleSource();
+            return true;
+        }
+        cancelInteractions();
+        state->selected = choice;
+        applySelectionBindings(*state);
+        ticks = 0;
+        // Rebind stable components. In particular, never clear the button which
+        // is currently executing this callback by calling build() here.
+        owner.refresh();
+        focusVisibleSource();
+        return true;
+    }
+    void moveView(const juce::String &id, const juce::String &from, int delta)
+    {
+        auto *state = selection(id);
+        if (state == nullptr)
+            return;
+        if (auto *choices = state->definition["choices"].getArray())
+            for (int i = 0; i < choices->size(); ++i)
+                if (string(choices->getReference(i), "id") == from)
+                {
+                    const int next = (i + delta + choices->size()) % choices->size();
+                    const auto target = string(choices->getReference(next), "id");
+                    selectView(id, target);
+                    for (auto &tab : selectionTabs)
+                        if (tab.group == id && tab.choice == target && tab.button->isShowing())
+                            tab.button->grabKeyboardFocus();
+                    return;
+                }
+    }
+    void syncViewTabs()
+    {
+        for (auto &tab : selectionTabs)
+            if (auto *state = selection(tab.group))
+            {
+                if (auto *choices = state->definition["choices"].getArray())
+                    for (const auto &choice : *choices)
+                        if (string(choice, "id") == tab.choice)
+                        {
+                            auto caption = string(choice, "label");
+                            if (string(choice, "source") == "fx")
+                            {
+                                const auto slot = static_cast<int>(number(choice, "index", 1));
+                                caption = juce::String(slot) + "  " +
+                                          parameters.display("fx" + juce::String(slot) + ".type");
+                            }
+                            tab.button->setButtonText(caption);
+                            tab.button->setName("Select " + caption);
+                            tab.button->setTitle(tab.button->getName());
+                            tab.button->setTooltip("Select " + caption +
+                                                   ". Left and right arrows select adjacent views.");
+                            tab.button->setToggleState(state->selected == tab.choice,
+                                                       juce::dontSendNotification);
+                            break;
+                        }
+            }
+        // Algorithm changes can change the accessible FX source caption while
+        // preserving the same stable control and selected slot.
+        for (auto &mapping : selectionBindings)
+            if (auto *state = selection(mapping.group))
+                mapping.control->getProperties().set("reference.source-caption",
+                                                     selectionCaption(*state));
+    }
+    void buildViewTabs()
+    {
+        for (const auto &state : selections)
+        {
+            const auto *choices = state.definition["choices"].getArray();
+            if (choices == nullptr || choices->isEmpty())
+                continue;
+            const auto rectangle = arrayRect(state.definition["tabsRect"], {});
+            const int columns = juce::jlimit(
+                1, choices->size(),
+                static_cast<int>(number(state.definition, "columns", choices->size())));
+            const int rows = (choices->size() + columns - 1) / columns;
+            const float gap = 4.f;
+            const float width = (rectangle.getWidth() - gap * (columns - 1)) / columns;
+            const float height = (rectangle.getHeight() - gap * (rows - 1)) / rows;
+            for (int i = 0; i < choices->size(); ++i)
+            {
+                const auto &choice = choices->getReference(i);
+                auto button = std::make_unique<ViewTabButton>(
+                    theme, number(state.definition, "fontSize", theme.style == "clear" ? 13.f : 11.f),
+                    string(state.definition, "kind") == "fx");
+                const auto choiceId = string(choice, "id");
+                const auto group = state.id;
+                button->setComponentID("workspace.selection." + group + "." + choiceId);
+                button->onClick = [this, group, choiceId] { selectView(group, choiceId); };
+                button->onNavigate = [this, group, choiceId](int delta) {
+                    moveView(group, choiceId, delta);
+                };
+                canvas.addAndMakeVisible(*button);
+                placements.push_back(
+                    {button.get(),
+                     {rectangle.getX() + (i % columns) * (width + gap),
+                      rectangle.getY() + (i / columns) * (height + gap), width, height}});
+                selectionTabs.push_back({group, choiceId, std::move(button)});
+            }
+        }
+        syncViewTabs();
+    }
+    void syncWavetableControls()
+    {
+        for (auto &control : wavetableControls)
+        {
+            auto oscillator = static_cast<int>(number(control.panel, "index", 1)) - 1;
+            const auto selected = selectedPanelChoice(control.panel);
+            if (selected.isObject())
+            {
+                const auto source = string(selected, "source");
+                oscillator = source == "oscillator" || source == "waveform"
+                                 ? static_cast<int>(number(selected, "index", 1)) - 1
+                                 : -1;
+            }
+            control.selector->sync(parameters.getScene(), oscillator);
+        }
+    }
     void cancelInteractions()
     {
+        for (auto &control : wavetableControls)
+            control.selector->cancelPopup();
         for (auto &row : routeControls)
             row->cancelGesture();
         routeEditor.end();
@@ -1581,6 +2517,8 @@ struct Workspace::Impl
                 slider->cancelGesture();
                 slider->dismissEntry();
             }
+            else if (auto *menu = dynamic_cast<BoundMenu *>(control.get()))
+                menu->cancelPopup();
         if (xy)
             xy->cancelGesture();
         if (keyboard)
@@ -1601,9 +2539,21 @@ struct Workspace::Impl
         controls.clear();
         placements.clear();
         actions.clear();
+        selectionBindings.clear();
+        selectionTabs.clear();
+        selections.clear();
+        wavetableControls.clear();
         xy.reset();
         browser.reset();
         keyboard.reset();
+        if (auto *panels = manifest["panels"].getArray())
+            for (const auto &panel : *panels)
+                if (panel["selection"].isObject())
+                {
+                    const auto definition = panel["selection"];
+                    selections.push_back(
+                        {string(definition, "id"), string(definition, "default"), definition});
+                }
         if (auto *a = manifest["controls"].getArray())
             for (auto &v : *a)
             {
@@ -1617,14 +2567,38 @@ struct Workspace::Impl
                     c = std::make_unique<BoundSlider>(parameters, theme, v);
                 canvas.addAndMakeVisible(*c);
                 placements.push_back({c.get(), bounds(v)});
+                if (v.hasProperty("selectionGroup"))
+                    selectionBindings.push_back(
+                        {c.get(), string(v, "selectionGroup"), v["bindings"]});
                 controls.push_back(std::move(c));
             }
+        for (auto &state : selections)
+            applySelectionBindings(state);
         if (auto *a = manifest["panels"].getArray())
             for (auto &v : *a)
             {
                 const auto kind = string(v, "kind");
                 auto r = bounds(v);
-                if (kind == "matrix")
+                const auto tabs = arrayRect(v["selection"]["tabsRect"], {});
+                const auto actionFits = [&](Rect actionBounds) {
+                    return number(v, "titleHeight", 28) >= 24 &&
+                           (tabs.isEmpty() || !tabs.intersects(actionBounds));
+                };
+                if (kind == "oscillator" && v.hasProperty("wavetableRect"))
+                {
+                    auto selector = std::make_unique<WavetableSelector>(
+                        processor, theme, string(v, "id"),
+                        [this](const WavetableSelectionRequest &request) {
+                            return owner.onSelectWavetable
+                                       ? owner.onSelectWavetable(request)
+                                       : applyWavetableSelection(processor, request);
+                        },
+                        [this] { return static_cast<bool>(owner.onSelectWavetable); });
+                    canvas.addAndMakeVisible(*selector);
+                    placements.push_back({selector.get(), arrayRect(v["wavetableRect"], {})});
+                    wavetableControls.push_back({v, std::move(selector)});
+                }
+                if (kind == "matrix" && actionFits(r.withHeight(28).removeFromRight(112)))
                     button("Edit routes  +", "modulation",
                            r.removeFromTop(28).removeFromRight(112).reduced(3));
                 if (kind == "browser")
@@ -1637,10 +2611,11 @@ struct Workspace::Impl
                     canvas.addAndMakeVisible(*browser);
                     placements.push_back({browser.get(), r.reduced(10).withTrimmedTop(24)});
                 }
-                if (kind == "effects")
+                if (kind == "effects" && actionFits(r.withHeight(28).removeFromRight(110)))
                     button("Full FX editor", "effects",
                            r.removeFromTop(28).removeFromRight(110).reduced(3));
-                if (kind == "analyzer")
+                if (kind == "analyzer" &&
+                    actionFits(r.withHeight(28).removeFromRight(r.getWidth() < 320 ? 54.f : 92.f)))
                     button(r.getWidth() < 320 ? "Scope" : "Open scope", "analyzer",
                            r.removeFromTop(28)
                                .removeFromRight(r.getWidth() < 320 ? 54.f : 92.f)
@@ -1675,6 +2650,8 @@ struct Workspace::Impl
                         {keyboard.get(), arrayRect(v["plot"], r.reduced(12).withTrimmedTop(50))});
                 }
             }
+        buildViewTabs();
+        syncWavetableControls();
         for (auto *b : {&skinButton, &classicButton, &sceneA, &sceneB, &presetButton, &previous,
                         &next, &browserButton, &saveButton, &modButton, &fxButton, &synthButton})
             styleButton(*b);
@@ -1722,35 +2699,16 @@ struct Workspace::Impl
             {
                 if (string(panel, "kind") != "matrix")
                     continue;
-                auto content = bounds(panel).reduced(10).withTrimmedTop(24);
-                const bool accessible = theme.style == "clear";
-                const bool twoColumns =
-                    theme.style == "tokyo" && string(panel, "variant") == "horizontal";
-                const int columns = twoColumns ? 2 : 1;
-                const int maximumRows = accessible || theme.style == "space" || twoColumns ? 8 : 6;
-                const float gap = twoColumns ? 14.f : 0.f;
-                const float width = (content.getWidth() - gap) / columns;
-                const float height = juce::jlimit(
-                    accessible ? 24.f : 16.f, accessible ? 29.f : 30.f,
-                    (content.getHeight() - 22.f) / static_cast<float>(maximumRows / columns));
-                const int rowsPerColumn =
-                    std::min(maximumRows / columns,
-                             static_cast<int>(std::max(0.f, content.getHeight() - 22.f) / height));
-                for (int column = 0; column < columns; ++column)
-                    for (int row = 0; row < rowsPerColumn; ++row)
-                    {
-                        const auto index = static_cast<size_t>(column * rowsPerColumn + row);
-                        if (index >= routes.size())
-                            break;
-                        Rect rectangle(content.getX() + column * (width + gap),
-                                       content.getY() + 22 + row * height, width, height);
-                        auto amount = rectangle.withTrimmedLeft(20);
-                        const auto fieldWidth = amount.getWidth();
-                        amount.removeFromLeft(fieldWidth * (accessible ? .70f : .29f));
-                        if (!accessible)
-                            amount.setWidth(fieldWidth * .25f);
-                        result.push_back({rectangle, amount, index});
-                    }
+                const auto layout = MatrixLayout::make(bounds(panel), theme.style,
+                                                       string(panel, "variant"),
+                                                       number(panel, "titleHeight", 24));
+                const auto count = std::min(static_cast<int>(routes.size()),
+                                            layout.columns * layout.rowsPerColumn);
+                for (int index = 0; index < count; ++index)
+                {
+                    const auto cells = layout.row(index);
+                    result.push_back({cells.row, cells.slider, static_cast<size_t>(index)});
+                }
             }
         return result;
     }
@@ -1811,6 +2769,8 @@ struct Workspace::Impl
     void update()
     {
         setAudioSubscription(owner.isShowing());
+        syncViewTabs();
+        syncWavetableControls();
         for (auto &c : controls)
         {
             if (auto *s = dynamic_cast<BoundSlider *>(c.get()))
@@ -1841,15 +2801,21 @@ struct Workspace::Impl
             if (auto *panels = manifest["panels"].getArray())
                 for (const auto &panel : *panels)
                 {
-                    const auto kind = string(panel, "kind");
-                    const int index = static_cast<int>(number(panel, "index", 1)) - 1;
+                    auto kind = string(panel, "kind");
+                    int index = static_cast<int>(number(panel, "index", 1)) - 1;
+                    const auto selected = selectedPanelChoice(panel);
+                    if (selected.isObject())
+                    {
+                        kind = string(selected, "source");
+                        index = static_cast<int>(number(selected, "index", 1)) - 1;
+                    }
                     if ((kind == "filter" || kind == "inspector") && index >= 0 && index < 2)
                         filtersNeeded[index] = true;
                     if (kind == "filter" && string(panel, "variant") == "combined")
                         filtersNeeded[1] = true;
                     if (kind == "routing" && string(panel, "variant") == "flow")
                         filtersNeeded = {true, true};
-                    if (kind == "lfo" && index >= 0 && index < 12)
+                    if ((kind == "lfo" || kind == "lfo-envelope") && index >= 0 && index < 12)
                         lfosNeeded[index] = true;
                 }
             for (int i = 0; i < 2; ++i)
@@ -2379,13 +3345,8 @@ struct Workspace::Impl
             line(305, 37, 36);
             text(g, theme, "S P E C T R A L", {319, 36, 106, 14}, 10, theme.accent, true);
             text(g, theme, "O B S E R V A T O R Y", {319, 52, 113, 14}, 9, theme.accent, true);
-            // The observatory badge is cosmetic vector artwork, not an audio display.
-            g.setColour(theme.accent.withAlpha(.12f));
-            g.fillEllipse(425, 20, 103, 60);
-            g.setColour(theme.accent.withAlpha(.5f));
-            g.drawEllipse(440, 28, 62, 49, 1);
-            g.drawLine(471, 28, 471, 78, 1);
-            g.drawLine(440, 60, 502, 60, 1);
+            // Static engraved emblem; the waveform below remains live engine data.
+            observatoryEmblem(g, {417, 20, 162, 70}, theme.accent, theme.secondary);
             text(g, theme, "PRESET", {662, 28, 128, 13}, 9, theme.muted, false,
                  juce::Justification::centred);
             text(g, theme, "Scene", {1204, 32, 72, 14}, 11, theme.muted);
@@ -2559,8 +3520,11 @@ struct Workspace::Impl
         if (base)
             plotBase(g, r);
         const bool miniature = r.getHeight() < 65;
+        const bool ivoryReadouts = theme.style == "ivory" && !miniature;
         const auto frame = r;
         r = miniature ? r.reduced(4, 3) : r.reduced(7, 15);
+        if (ivoryReadouts)
+            r = frame.reduced(7, 9).withTrimmedBottom(20);
         const auto &curve = filterCurves[juce::jlimit(0, 1, index - 1)];
         if (!curve.available || curve.values.size() < 2)
         {
@@ -2581,9 +3545,10 @@ struct Workspace::Impl
                 g.drawLine(x, r.getY(), x, r.getBottom(), .7f);
                 const auto label = frequency >= 1000 ? juce::String(frequency / 1000.f, 0) + "k"
                                                      : juce::String(static_cast<int>(frequency));
-                text(g, theme, label, {x - 13, frame.getBottom() - 13, 26, 12},
-                     r.getWidth() > 400 ? 11.f : 9.f, theme.display.contrasting(.80f), false,
-                     juce::Justification::centred);
+                if (!ivoryReadouts)
+                    text(g, theme, label, {x - 13, frame.getBottom() - 13, 26, 12},
+                         r.getWidth() > 400 ? 11.f : 9.f, theme.display.contrasting(.80f), false,
+                         juce::Justification::centred);
             }
             for (float db = filterPreviewMinimumDb; db <= filterPreviewMaximumDb; db += 12)
             {
@@ -2643,6 +3608,21 @@ struct Workspace::Impl
                 g.setColour(color);
                 g.drawEllipse(x - 3.7f, y - 3.7f, 7.4f, 7.4f, 1.5f);
             }
+        }
+        if (base && ivoryReadouts)
+        {
+            const auto prefix = "filter" + juce::String(index) + ".";
+            const std::array<juce::String, 3> captions{
+                "FREQ  " + compactPaintValue(parameters.display(prefix + "cutoff")),
+                "RES  " + parameters.display(prefix + "resonance").replace(".00 ", " "),
+                (index == 1 ? "SHAPER  " : "ENV  ") +
+                    parameters.display(index == 1 ? "filter.drive" : prefix + "envmod")
+                        .replace(".00 ", " ")};
+            auto footer = frame.reduced(7, 0).removeFromBottom(24).withHeight(17);
+            const auto width = footer.getWidth() / 3.f;
+            for (const auto &caption : captions)
+                text(g, theme, caption, footer.removeFromLeft(width), 10,
+                     theme.display.contrasting(.95f), false, juce::Justification::centred);
         }
     }
     void drawLfo(juce::Graphics &g, Rect r, int index)
@@ -2792,7 +3772,23 @@ struct Workspace::Impl
         auto kind = string(v, "kind"), variant = string(v, "variant");
         auto fill = v.hasProperty("color") ? theme.color(string(v, "color")) : theme.panel;
         bezel(g, theme, r, fill);
-        const int index = std::max(1, static_cast<int>(number(v, "index", 1)));
+        int index = std::max(1, static_cast<int>(number(v, "index", 1)));
+        bool lfoEnvelope = static_cast<bool>(v["envelope"]);
+        const auto selected = selectedPanelChoice(v);
+        if (selected.isObject() && kind != "tabs")
+        {
+            auto source = string(selected, "source");
+            index = std::max(1, static_cast<int>(number(selected, "index", 1)));
+            lfoEnvelope = source == "lfo-envelope";
+            if (source == "fx")
+                kind = "effects";
+            else if (source == "lfo-envelope")
+                kind = "lfo";
+            else if (source == "oscillator" && kind == "waveform")
+                kind = "waveform";
+            else
+                kind = source;
+        }
         auto title = string(v, "title", kind.toUpperCase());
         auto titleColor = theme.text;
         if (v.hasProperty("ink"))
@@ -2800,7 +3796,11 @@ struct Workspace::Impl
         if (theme.style == "bauhaus" &&
             (string(v, "color") == "red" || string(v, "color") == "blue"))
             titleColor = juce::Colours::white;
-        auto titleBounds = r.reduced(12, 3).withHeight(25);
+        const auto titleInset = number(v, "titleInset", 12);
+        const auto titleY = theme.style == "ivory" && (kind == "oscillator" || kind == "filter")
+                                ? 9.f : 3.f;
+        auto titleBounds = Rect(r.getX() + titleInset, r.getY() + titleY,
+                                std::max(0.f, r.getWidth() - titleInset - 12.f), 25);
         if (kind == "matrix")
             titleBounds.setWidth(std::max(25.f, titleBounds.getWidth() - 112.f));
         else if (kind == "effects")
@@ -2808,9 +3808,15 @@ struct Workspace::Impl
         else if (kind == "analyzer")
             titleBounds.setWidth(
                 std::max(25.f, titleBounds.getWidth() - (r.getWidth() < 320 ? 54.f : 92.f)));
-        text(g, theme, title, titleBounds, number(v, "fontSize", theme.style == "ivory" ? 18 : 15),
-             titleColor, true);
-        auto content = r.reduced(10).withTrimmedTop(24);
+        const auto tabs = arrayRect(v["selection"]["tabsRect"], {});
+        const auto titleHeight = number(v, "titleHeight", 24);
+        if (!tabs.isEmpty() && tabs.intersects(titleBounds) &&
+            tabs.getX() > titleBounds.getX() + 80)
+            titleBounds.setRight(tabs.getX() - 8);
+        if (titleHeight > 0 && (tabs.isEmpty() || !tabs.intersects(titleBounds)))
+            text(g, theme, title, titleBounds.withHeight(std::min(25.f, titleHeight)),
+                 number(v, "fontSize", theme.style == "ivory" ? 18 : 15), titleColor, true);
+        auto content = r.reduced(10).withTrimmedTop(titleHeight);
         auto pr =
             arrayRect(v["plot"], content.withHeight(std::max(25.f, content.getHeight() * .56f)));
         const auto curveInk =
@@ -2849,22 +3855,37 @@ struct Workspace::Impl
         }
         else if (kind == "waveform")
         {
+            const auto oscillator = juce::jlimit(0, 2, index - 1);
             pr = arrayRect(v["plot"], content.withTrimmedBottom(variant == "terrain" ? 20 : 3));
             if (theme.style != "aurora" && theme.style != "live")
                 plotBase(g, pr);
-            if (visuals.wavetable[0].available())
+            if (visuals.wavetable[oscillator].available())
                 Visuals::wavetable(
-                    g, pr.reduced(8), visuals.wavetable[0], theme.secondary, theme.accent,
+                    g, pr.reduced(8), visuals.wavetable[oscillator], theme.secondary, theme.accent,
                     theme.style == "aurora" || theme.style == "live" || theme.style == "bauhaus"
                         ? Visuals::WavetableView::ribbons
                         : Visuals::WavetableView::perspective);
             else
-                Visuals::waveform(g, pr.reduced(8), visuals.oscillator[0], theme.secondary,
+                Visuals::waveform(g, pr.reduced(8), visuals.oscillator[oscillator], theme.secondary,
                                   theme.accent,
                                   variant == "terrain" || theme.style == "bauhaus" ||
                                       theme.style == "live" || theme.style == "aurora");
-            if (visuals.oscillator[0].empty())
-                unavailableOscillator(g, pr.withTrimmedBottom(22), 0);
+            if (visuals.oscillator[oscillator].empty())
+                unavailableOscillator(g, pr.withTrimmedBottom(22), oscillator);
+            if (theme.style == "spectral" && visuals.wavetable[oscillator].available())
+            {
+                const auto &table = visuals.wavetable[oscillator];
+                const auto name = table.name.isNotEmpty() ? table.name : "Current wavetable";
+                text(g, theme, "WT: " + name, {pr.getX() + 12, pr.getY() + 7, 340, 18},
+                     13, theme.text);
+                text(g, theme, juce::String(table.sourceFrames) + " frames / " +
+                                   juce::String(table.sourceFrameSize) + " samples per frame",
+                     {pr.getX() + 12, pr.getY() + 27, 340, 17}, 11, theme.muted);
+                text(g, theme, "WT POS " + parameters.display("osc" +
+                                     juce::String(oscillator + 1) + ".param0"),
+                     {pr.getRight() - 160, pr.getY() + 7, 148, 18}, 11, theme.secondary,
+                     false, juce::Justification::centredRight);
+            }
         }
         else if (kind == "inspector" && theme.style == "clear")
         {
@@ -2912,7 +3933,7 @@ struct Workspace::Impl
             drawEnvelope(g, pr, index, curveInk);
         else if (kind == "lfo")
         {
-            if (static_cast<bool>(v["envelope"]))
+            if (lfoEnvelope)
                 drawEnvelope(g, pr, index, curveInk, true);
             else
                 drawLfo(g, pr, index);
@@ -2939,9 +3960,9 @@ struct Workspace::Impl
         else if (kind == "output")
         {
             if (theme.style == "space")
-                drawMeters(g,
+                drawMeters(g, arrayRect(v["plot"],
                            content.removeFromRight(std::min(108.f, content.getWidth() * .46f))
-                               .reduced(2, 13),
+                               .reduced(2, 13)),
                            true);
             else
                 drawMeters(
@@ -2950,88 +3971,282 @@ struct Workspace::Impl
         }
         else if (kind == "matrix")
         {
-            if (theme.style == "space")
+            const auto layout = MatrixLayout::make(r, theme.style, variant, titleHeight);
+            const bool clear = theme.style == "clear", ivory = theme.style == "ivory";
+            const bool space = theme.style == "space", tokyo = theme.style == "tokyo";
+            const bool spectral = theme.style == "spectral", aurora = theme.style == "aurora";
+            const bool bauhaus = theme.style == "bauhaus", flow = theme.style == "flow";
+            const bool live = theme.style == "live";
+            const auto ink = space ? juce::Colour(0xffeee0b5) : theme.text;
+            const auto quiet = space ? juce::Colour(0xffcbb883) : theme.muted;
+            const auto active = space ? juce::Colour(0xffff9e24) : theme.accent;
+            juce::Graphics::ScopedSaveState matrixClip(g);
+            g.reduceClipRegion(r.toNearestInt());
+
+            if (space)
             {
-                g.setColour(theme.display);
-                g.fillRoundedRectangle(content.expanded(3), 3);
+                bezel(g, theme, layout.body().expanded(3, 5), juce::Colour(0xff19180b), 4);
+                g.setColour(juce::Colour(0xffa59360).withAlpha(.55f));
+                g.drawRoundedRectangle(layout.body().expanded(1, 3), 3, .8f);
             }
-            const bool accessible = theme.style == "clear";
-            const bool twoColumns = theme.style == "tokyo" && variant == "horizontal";
-            const int columns = twoColumns ? 2 : 1;
-            const int maximumRows = accessible || theme.style == "space" || twoColumns ? 8 : 6;
-            const float rowText = accessible ? 13.f : 11.f;
-            const float gap = twoColumns ? 14.f : 0.f;
-            const float width = (content.getWidth() - gap) / columns;
-            const float h = juce::jlimit(accessible ? 24.f : 16.f, accessible ? 29.f : 30.f,
-                                         (content.getHeight() - 22.f) /
-                                             static_cast<float>(maximumRows / columns));
-            const auto rowsPerColumn =
-                std::min(maximumRows / columns,
-                         static_cast<int>(std::max(0.f, content.getHeight() - 22.f) / h));
-            auto fields = [&](Rect row) {
-                std::array<Rect, 4> result;
-                result[0] = row.removeFromLeft(20);
-                const auto fieldWidth = row.getWidth();
-                result[1] = row.removeFromLeft(fieldWidth * (accessible ? .26f : .29f));
-                if (accessible)
-                {
-                    result[3] = row.removeFromLeft(fieldWidth * .44f);
-                    result[2] = row;
-                }
-                else
-                {
-                    result[2] = row.removeFromLeft(fieldWidth * .25f);
-                    result[3] = row;
-                }
-                return result;
-            };
-            for (int column = 0; column < columns; ++column)
+            else if (ivory)
             {
-                auto table = Rect(content.getX() + column * (width + gap), content.getY(), width,
-                                  content.getHeight());
-                const auto heading = fields(table.removeFromTop(22));
-                text(g, theme, "#", heading[0], 10, theme.muted, true);
-                text(g, theme, "SOURCE", heading[1], accessible ? 11.f : 10.f, theme.muted, true);
-                text(g, theme, "AMOUNT", heading[2], accessible ? 11.f : 10.f, theme.muted, true);
-                text(g, theme, "DESTINATION", heading[3].reduced(5, 0), accessible ? 11.f : 10.f,
-                     theme.muted, true);
-                for (int rowIndex = 0; rowIndex < rowsPerColumn; ++rowIndex)
+                auto frame = r.reduced(7, 0).withTrimmedTop(30).withTrimmedBottom(8);
+                g.setColour(juce::Colour(0xfffff8eb).withAlpha(.44f));
+                g.fillRoundedRectangle(frame, 14);
+                g.setColour(juce::Colour(0xffbca98e).withAlpha(.7f));
+                g.drawRoundedRectangle(frame, 14, 1);
+                g.setColour(juce::Colours::white.withAlpha(.65f));
+                g.drawRoundedRectangle(frame.reduced(1.5f), 12.5f, .7f);
+            }
+
+            const auto titleCase = clear || spectral || aurora || live;
+            auto headingText = [&](const char *label, Rect field, bool centred = false) {
+                if (field.isEmpty())
+                    return;
+                const auto caption = juce::String(label);
+                text(g, theme, titleCase ? caption : caption.toUpperCase(), field,
+                     layout.headerFont, clear || bauhaus ? ink : quiet, clear || bauhaus,
+                     centred ? juce::Justification::centred : juce::Justification::centredLeft);
+            };
+            auto readOnlyCell = [&](Rect field, const juce::String &label, juce::Colour color,
+                                    float fontSize) {
+                if (field.isEmpty())
+                    return;
+                const auto height = std::min(field.getHeight() - 2.f,
+                                             ivory ? 25.f : aurora ? 19.f : tokyo ? 22.f : 24.f);
+                auto face = field.withSizeKeepingCentre(field.getWidth(), height);
+                if (!clear && !live)
                 {
-                    const int index = column * rowsPerColumn + rowIndex;
-                    auto row = table.removeFromTop(h);
-                    const auto cell = fields(row);
-                    g.setColour(theme.border.withAlpha(.35f));
-                    g.drawHorizontalLine(static_cast<int>(row.getBottom()), row.getX(),
-                                         row.getRight());
-                    text(g, theme, juce::String(index + 1), cell[0], accessible ? 12.f : 10.f,
-                         theme.muted);
-                    if (index < static_cast<int>(routes.size()))
+                    auto fill = theme.display;
+                    auto edge = theme.border.withAlpha(.8f);
+                    if (ivory)
                     {
-                        const auto &route = routes[index];
-                        text(g, theme, route.source, cell[1], rowText,
-                             route.muted ? theme.muted : theme.text);
-                        auto amount = cell[2];
-                        auto bar =
-                            accessible ? amount.withTrimmedLeft(amount.getWidth() * .48f) : amount;
-                        bar = bar.reduced(3, std::max(3.f, (bar.getHeight() - 7.f) * .5f));
-                        g.setColour(theme.border);
-                        g.fillRoundedRectangle(bar, 2);
-                        bar.setWidth(bar.getWidth() *
-                                     std::min(1.f, std::abs(route.normalizedDepth)));
-                        g.setColour(route.muted ? theme.muted : theme.accent);
-                        g.fillRoundedRectangle(bar, 2);
-                        if (accessible)
-                            amount.setWidth(amount.getWidth() * .48f);
-                        text(g, theme, route.amount, amount, accessible ? 12.f : 10.f, theme.text,
-                             false, juce::Justification::centred);
-                        text(g, theme, route.destination, cell[3].reduced(5, 0), rowText,
-                             theme.text);
+                        fill = juce::Colour(0xffefe1cd);
+                        edge = juce::Colour(0xffc0ad91);
                     }
-                    else
+                    else if (bauhaus)
+                    {
+                        fill = juce::Colour(0xfffff6df);
+                        edge = juce::Colour(0xff9e967a);
+                    }
+                    else if (space)
+                    {
+                        fill = juce::Colour(0xff1e1b0d);
+                        edge = juce::Colour(0xff76663c);
+                    }
+                    else if (aurora)
+                    {
+                        fill = juce::Colour(0xff28223e);
+                        edge = juce::Colour(0xff5b4d77).withAlpha(.7f);
+                    }
+                    else if (spectral)
+                        edge = juce::Colour(0xff414d70).withAlpha(.85f);
+                    else if (flow)
+                        edge = juce::Colour(0xff294b61).withAlpha(.85f);
+                    const float radius = tokyo || space ? 2.f : 4.f;
+                    g.setGradientFill(juce::ColourGradient(fill.brighter(.06f), face.getTopLeft(),
+                                                          fill.darker(.06f),
+                                                          face.getBottomLeft(), false));
+                    g.fillRoundedRectangle(face, radius);
+                    g.setColour(edge);
+                    g.drawRoundedRectangle(face.reduced(.4f), radius, .8f);
+                    g.setColour((ivory || bauhaus ? juce::Colours::white : edge.brighter(.3f))
+                                    .withAlpha(.3f));
+                    g.drawHorizontalLine(static_cast<int>(face.getY() + 1), face.getX() + 4,
+                                         face.getRight() - 4);
+                }
+                // No chevron: these are real route labels, not inactive fake selectors.
+                text(g, theme, label, face.reduced(clear || live ? 0.f : 7.f, 0), fontSize,
+                     color, clear || bauhaus);
+            };
+            for (int column = 0; column < layout.columns; ++column)
+            {
+                const auto heading = layout.header(column);
+                if (spectral || flow || live)
+                {
+                    g.setGradientFill(juce::ColourGradient(theme.panel.brighter(.12f),
+                                                          heading.row.getTopLeft(), theme.display,
+                                                          heading.row.getBottomLeft(), false));
+                    g.fillRoundedRectangle(heading.row, spectral ? 5.f : 2.f);
+                }
+                g.setColour((space ? juce::Colour(0xff76663c) : theme.border).withAlpha(.45f));
+                g.drawHorizontalLine(static_cast<int>(heading.row.getBottom()),
+                                     heading.row.getX(), heading.row.getRight());
+                headingText("#", heading.number);
+                headingText("Source", heading.source.withTrimmedLeft(clear || live ? 0.f : 7.f));
+                headingText("Destination",
+                            heading.destination.withTrimmedLeft(clear || live ? 0.f : 7.f));
+                headingText(spectral ? "Depth" : "Amount", heading.amount, true);
+                headingText("Curve", heading.curve, true);
+                const auto rangeHeading =
+                    aurora ? heading.polarity.withSizeKeepingCentre(48, heading.row.getHeight())
+                           : heading.polarity;
+                headingText(space ? "Bip" : aurora ? "Bipolar" : "Range", rangeHeading, true);
+                if (!heading.arrow.isEmpty())
+                    text(g, theme, utf8("→"), heading.arrow, layout.headerFont + 2, quiet, false,
+                         juce::Justification::centred);
+
+                for (int rowIndex = 0; rowIndex < layout.rowsPerColumn; ++rowIndex)
+                {
+                    const int index = column * layout.rowsPerColumn + rowIndex;
+                    const auto cell = layout.row(index);
+                    if (clear && rowIndex % 2 == 0)
+                    {
+                        g.setColour(theme.border.withAlpha(.075f));
+                        g.fillRect(cell.row);
+                    }
+                    if (!ivory && !aurora && !bauhaus)
+                    {
+                        g.setColour((space ? juce::Colour(0xff76663c) : theme.border)
+                                        .withAlpha(flow ? .55f : .3f));
+                        g.drawHorizontalLine(static_cast<int>(cell.row.getBottom()),
+                                             cell.row.getX(), cell.row.getRight());
+                    }
+                    text(g, theme, juce::String(index + 1), cell.number, layout.rowFont - .5f,
+                         quiet, clear || bauhaus);
+                    if (index >= static_cast<int>(routes.size()))
+                    {
                         text(g, theme,
                              utf8(index == 0 ? "No routes in this patch — use Edit routes" : "—"),
-                             row.withTrimmedLeft(20), rowText, theme.muted);
+                             cell.row.withTrimmedLeft(cell.source.getX() - cell.row.getX()),
+                             layout.rowFont, quiet);
+                        continue;
+                    }
+                    const auto &route = routes[index];
+                    const auto color = route.muted ? quiet : ink;
+                    const auto accent = route.muted ? quiet : active;
+                    if (clear && route.key == inspectedRoute)
+                    {
+                        g.setColour(theme.accent.withAlpha(.15f));
+                        g.fillRoundedRectangle(cell.row, 2);
+                    }
+                    readOnlyCell(cell.source, route.source, color, layout.rowFont);
+                    auto destination = route.destination;
+                    const juce::String scenePrefix = parameters.getScene() == 0 ? "A " : "B ";
+                    if (destination.startsWith(scenePrefix))
+                        destination = destination.substring(scenePrefix.length());
+                    readOnlyCell(cell.destination, destination, color, layout.rowFont);
+                    if (!cell.arrow.isEmpty())
+                        text(g, theme, utf8("→"), cell.arrow, layout.rowFont + 1, color, false,
+                             juce::Justification::centred);
+
+                    const auto depth = juce::jlimit(-1.f, 1.f, route.normalizedDepth);
+                    const auto depthLabel = (depth >= 0 ? "+" : "") + juce::String(depth, 2);
+                    text(g, theme, depthLabel, cell.value.reduced(1, 0),
+                         clear ? 13.f : tokyo ? 12.f : layout.rowFont - .2f, color,
+                         clear || bauhaus || ivory,
+                         layout.valuePosition == MatrixLayout::ValuePosition::above && ivory
+                             ? juce::Justification::centredRight
+                             : juce::Justification::centred);
+
+                    // The transparent native slider has its own look-and-feel thumb inset.
+                    // Paint its exact endpoint positions, not a second approximation that
+                    // would make clicks and a visible handle disagree. The same layout
+                    // above supplied both row bounds and the slider's separate hit region.
+                    auto track = cell.slider.reduced(7, 0).withSizeKeepingCentre(
+                        std::max(1.f, cell.slider.getWidth() - 14), layout.trackHeight);
+                    if (index < static_cast<int>(routeControls.size()) &&
+                        routeControls[index]->route().key == route.key)
+                    {
+                        auto &control = *routeControls[index];
+                        auto &slider = control.depthSlider();
+                        const auto origin = control.getX() + slider.getX();
+                        const auto left = slider.getPositionOfValue(-1);
+                        const auto right = slider.getPositionOfValue(1);
+                        track = Rect(origin + left,
+                                     control.getY() + slider.getY() + slider.getHeight() * .5f -
+                                         layout.trackHeight * .5f,
+                                     std::max(1.f, right - left), layout.trackHeight);
+                    }
+                    const auto midpoint = track.getCentreX();
+                    const auto handleX = track.getX() + (depth + 1.f) * .5f * track.getWidth();
+                    const auto radius = std::min(3.f, track.getHeight() * .5f);
+                    auto trackColor = theme.border.withAlpha(.65f);
+                    if (ivory || bauhaus)
+                        trackColor = juce::Colour(0xffe4d7bb);
+                    else if (space)
+                        trackColor = juce::Colour(0xff3b3018);
+                    else if (aurora)
+                        trackColor = juce::Colour(0xff51416d);
+                    else if (clear)
+                        trackColor = juce::Colour(0xffdce2e5);
+                    g.setColour(trackColor);
+                    g.fillRoundedRectangle(track, radius);
+                    if (ivory || bauhaus || spectral || space)
+                    {
+                        g.setColour((ivory || bauhaus ? juce::Colour(0xff8c846c) : quiet)
+                                        .withAlpha(.55f));
+                        g.drawRoundedRectangle(track, radius, .7f);
+                    }
+                    // Native normalized depth is signed. The centre tick is zero and
+                    // coloured travel extends from zero to its actual slider position.
+                    auto travel = track.withX(std::min(midpoint, handleX))
+                                      .withWidth(std::max(.8f, std::abs(handleX - midpoint)));
+                    auto fill = clear && depth < 0 ? theme.red : accent;
+                    if (bauhaus)
+                        fill = juce::Colour(0xffffcf21);
+                    if (spectral || aurora || flow)
+                    {
+                        g.setColour(fill.withAlpha(.12f));
+                        g.fillRoundedRectangle(travel.expanded(2), radius + 1);
+                    }
+                    g.setGradientFill(juce::ColourGradient(fill.darker(.18f), travel.getTopLeft(),
+                                                          fill.brighter(.15f),
+                                                          travel.getBottomLeft(), false));
+                    g.fillRoundedRectangle(travel, radius);
+                    g.setColour(quiet.withAlpha(.6f));
+                    g.drawLine(midpoint, track.getY() - 1, midpoint, track.getBottom() + 1, .7f);
+                    if (bauhaus || aurora || flow)
+                    {
+                        const auto diameter = bauhaus ? 13.f : flow ? 10.f : 8.f;
+                        Rect handle(handleX - diameter * .5f,
+                                    track.getCentreY() - diameter * .5f, diameter, diameter);
+                        g.setColour(juce::Colours::black.withAlpha(.28f));
+                        g.fillEllipse(handle.expanded(1).translated(0, 1));
+                        g.setColour(bauhaus ? juce::Colour(0xfffffdf4)
+                                           : aurora ? juce::Colour(0xffead8ff) : accent);
+                        g.fillEllipse(handle);
+                        g.setColour(bauhaus ? juce::Colour(0xff3d443d) : accent.brighter(.3f));
+                        g.drawEllipse(handle, bauhaus ? 1.2f : .8f);
+                    }
+                    else
+                    {
+                        g.setColour(fill.brighter(.3f));
+                        g.fillRoundedRectangle(handleX - 1.2f, track.getY() - .5f, 2.4f,
+                                               track.getHeight() + 1.f, 1);
+                    }
+
+                    if (!cell.curve.isEmpty())
+                    {
+                        readOnlyCell(cell.curve, {}, color, layout.rowFont);
+                        auto curve = cell.curve.reduced(tokyo ? 3.f : 5.f, 5.f);
+                        const auto y = curve.getCentreY();
+                        // Surge applies this route's linear signed depth. Do not display
+                        // invented S-curves or non-functional curve-selection controls.
+                        g.setColour((flow || spectral || aurora ? accent : color)
+                                        .withAlpha(route.muted ? .5f : .9f));
+                        g.drawLine(curve.getX(), y + depth * curve.getHeight() * .4f,
+                                   curve.getRight(), y - depth * curve.getHeight() * .4f,
+                                   bauhaus ? 1.8f : 1.3f);
+                    }
+                    if (!cell.polarity.isEmpty())
+                    {
+                        const auto range = space || aurora
+                                               ? utf8(route.bipolar ? "±" : "+")
+                                               : juce::String(route.bipolar ? "Bipolar" : "Unipolar");
+                        // This is native source metadata, not a painted checkbox or toggle.
+                        text(g, theme, range, cell.polarity, space || aurora ? 16.f : 11.5f,
+                             route.bipolar ? accent : quiet, false,
+                             juce::Justification::centred);
+                    }
                 }
+            }
+            if (layout.columns == 2)
+            {
+                const auto x = r.getCentreX();
+                g.setColour(theme.border.withAlpha(.8f));
+                g.drawLine(x, r.getY() + layout.tableTop, x, layout.body().getBottom() + 5, 1);
             }
         }
         else if (kind == "browser")
@@ -3041,8 +4256,16 @@ struct Workspace::Impl
         }
         else if (kind == "routing")
             drawRouting(g, arrayRect(v["plot"], content), variant, v["flowNodes"]);
-        else if (kind == "effects")
+        else if (kind == "effects" && selected.isObject() && v["plot"].isArray())
         {
+            const auto algorithm = parameters.display("fx" + juce::String(index) + ".type");
+            bezel(g, theme, pr, theme.display, 4);
+            effectGlyph(g, pr.reduced(13, 17), theme.secondary, algorithm);
+        }
+        else if (kind == "effects" && !selected.isObject())
+        {
+            // Selected FX panels use native slot tabs and rebound detail
+            // controls. Only legacy manifests need this painted slot strip.
             auto slots = content.removeFromTop(variant == "large"
                                                    ? std::min(104.f, content.getHeight() * .46f)
                                                    : std::min(53.f, content.getHeight() * .27f));
@@ -3065,6 +4288,16 @@ struct Workspace::Impl
         {
             text(g, theme, utf8("Playable MIDI keyboard  •  native scene modes available above"),
                  content.withHeight(23), 12, theme.muted);
+        }
+        if (theme.style == "ivory")
+        {
+            const auto panelId = string(v, "id");
+            if (panelId == "ivory.macros")
+                botanicalEngraving(g, {1472, 96, 108, 39}, theme.border.darker(.3f));
+            else if (panelId == "ivory.envelopes")
+                botanicalEngraving(g, {1465, 599, 115, 60}, theme.border.darker(.3f));
+            else if (panelId == "ivory.fx1")
+                botanicalEngraving(g, {1036, 829, 91, 108}, theme.border.darker(.3f));
         }
         if (theme.style == "space" || theme.style == "tokyo")
         {
@@ -3252,13 +4485,91 @@ bool Workspace::load(const juce::File &file, juce::String &error)
     juce::var candidate;
     if (!loadManifest(file, candidate, error))
         return false;
+    std::vector<juce::var> selectionDefinitions;
+    juce::StringArray groupIds;
+    if (auto *panels = candidate["panels"].getArray())
+        for (const auto &panel : *panels)
+            if (panel.hasProperty("selection"))
+            {
+                const auto definition = panel["selection"];
+                const auto id = string(definition, "id");
+                const auto kind = string(definition, "kind");
+                const auto *choices = definition["choices"].getArray();
+                const auto tabs = arrayRect(definition["tabsRect"], {});
+                if (!definition.isObject() || id.isEmpty() || groupIds.contains(id) ||
+                    (kind != "source" && kind != "fx") || choices == nullptr ||
+                    choices->isEmpty() || choices->size() > 16 || tabs.isEmpty() ||
+                    !bounds(panel).contains(tabs))
+                {
+                    error = "Invalid or duplicate panel selection: " + id;
+                    return false;
+                }
+                juce::StringArray choiceIds;
+                for (const auto &choice : *choices)
+                {
+                    const auto choiceId = string(choice, "id");
+                    const auto source = string(choice, "source");
+                    const auto index = number(choice, "index");
+                    const int maximum = source == "fx"          ? 16
+                                        : source == "envelope"   ? 2
+                                        : source == "lfo" || source == "lfo-envelope" ? 12
+                                        : source == "oscillator" || source == "waveform" ? 3
+                                                                                           : 0;
+                    if (!choice.isObject() || choiceId.isEmpty() || choiceIds.contains(choiceId) ||
+                        string(choice, "label").isEmpty() || index < 1 || index > maximum ||
+                        std::floor(index) != index || (kind == "fx" && source != "fx") ||
+                        (kind == "source" && source == "fx"))
+                    {
+                        error = "Invalid source choice in panel selection: " + id;
+                        return false;
+                    }
+                    choiceIds.add(choiceId);
+                }
+                if (!choiceIds.contains(string(definition, "default")))
+                {
+                    error = "Panel selection default does not name a choice: " + id;
+                    return false;
+                }
+                groupIds.add(id);
+                selectionDefinitions.push_back(definition);
+            }
     if (auto *a = candidate["controls"].getArray())
         for (auto &c : *a)
+        {
             if (!impl->parameters.valid(string(c, "binding")))
             {
                 error = "Unknown synth binding: " + string(c, "binding");
                 return false;
             }
+            if (c.hasProperty("selectionGroup") || c.hasProperty("bindings"))
+            {
+                const auto group = string(c, "selectionGroup");
+                const auto groupIndex = groupIds.indexOf(group);
+                auto *mapping = c["bindings"].getDynamicObject();
+                if (groupIndex < 0 || mapping == nullptr)
+                {
+                    error = "Control references an unknown panel selection: " + group;
+                    return false;
+                }
+                const auto *choices = selectionDefinitions[groupIndex]["choices"].getArray();
+                for (const auto &choice : *choices)
+                {
+                    const auto id = juce::Identifier(string(choice, "id"));
+                    const auto binding = mapping->getProperty(id);
+                    // A JSON null disables a genuinely unavailable operation;
+                    // every other choice must resolve before any UI is exposed.
+                    if (!mapping->hasProperty(id) ||
+                        (!binding.isVoid() &&
+                         (!binding.isString() || binding.toString().isEmpty() ||
+                          !impl->parameters.valid(binding.toString()))))
+                    {
+                        error = "Unknown or missing selection binding for " + string(c, "id") +
+                                ": " + id.toString();
+                        return false;
+                    }
+                }
+            }
+        }
     impl->manifest = candidate;
     impl->theme.read(candidate);
     impl->build();
@@ -3273,6 +4584,16 @@ void Workspace::refresh()
 }
 ParameterBridge &Workspace::bridge() { return impl->parameters; }
 juce::String Workspace::currentId() const { return string(impl->manifest, "id"); }
+bool Workspace::selectView(const juce::String &groupId, const juce::String &choiceId)
+{
+    return impl->selectView(groupId, choiceId);
+}
+juce::String Workspace::selectedView(const juce::String &groupId) const
+{
+    if (const auto *selected = impl->selection(groupId))
+        return selected->selected;
+    return {};
+}
 void Workspace::selectScene(int scene, bool notify)
 {
     scene = juce::jlimit(0, 1, scene);

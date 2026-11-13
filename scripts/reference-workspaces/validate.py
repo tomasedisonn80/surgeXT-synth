@@ -27,6 +27,8 @@ PANELS = set("oscillator filter mixer envelope lfo macros matrix effects analyze
 VARIANTS = set("compact horizontal vertical large combined terrain flow faders knobs scope spectrum spectrogram".split())
 CONTROLS = {"knob", "fader", "horizontal", "menu", "toggle", "value"}
 FLOW_NODES = set("osc1 osc2 osc3 mixer filter1 filter2 amp fx output modsources modbus".split())
+SELECTION_SOURCES = {"envelope": 2, "lfo": 12, "lfo-envelope": 12,
+                     "oscillator": 3, "waveform": 3, "fx": 16}
 IDENTIFIER = re.compile(r"[a-zA-Z0-9_.-]{1,80}\Z")
 COLOUR = re.compile(r"#[0-9a-fA-F]{6}(?:[0-9a-fA-F]{2})?\Z")
 
@@ -107,6 +109,74 @@ def array_rectangle(values: object, where: str, panel: dict | None = None) -> No
                 f"{where} must be inside its panel")
 
 
+def selection_grid(selection: dict) -> tuple[int, int, float, float]:
+    """Match Workspace::buildViewTabs after schema validation, including 4px gaps."""
+    count = len(selection["choices"])
+    columns = min(count, int(selection.get("columns", count)))
+    rows = (count + columns - 1) // columns
+    width, height = selection["tabsRect"][2:]
+    return columns, rows, (width - 4 * (columns - 1)) / columns, (height - 4 * (rows - 1)) / rows
+
+
+def validate_selection(selection: object, panel: dict, where: str,
+                       selections: dict[str, dict]) -> None:
+    require(isinstance(selection, dict), f"{where} must be an object")
+    text_field(selection, "id", 80, where)
+    require(bool(IDENTIFIER.fullmatch(selection["id"])), f"{where}.id is invalid")
+    require(selection["id"] not in selections, f"{where}.id duplicates another selection group")
+    require(isinstance(selection.get("kind"), str) and selection["kind"] in ("source", "fx"),
+            f"{where}.kind must be source or fx")
+    array_rectangle(selection.get("tabsRect"), f"{where}.tabsRect", panel)
+    choices = selection.get("choices")
+    require(isinstance(choices, list) and 1 <= len(choices) <= 16,
+            f"{where}.choices must contain 1..16 objects")
+    choice_ids: set[str] = set()
+    for index, choice in enumerate(choices):
+        choice_where = f"{where}.choices[{index}]"
+        require(isinstance(choice, dict), f"{choice_where} must be an object")
+        text_field(choice, "id", 80, choice_where)
+        require(bool(IDENTIFIER.fullmatch(choice["id"])), f"{choice_where}.id is invalid")
+        require(choice["id"] not in choice_ids, f"{choice_where}.id duplicates another choice")
+        choice_ids.add(choice["id"])
+        text_field(choice, "label", 160, choice_where)
+        text_field(choice, "source", 40, choice_where)
+        maximum = SELECTION_SOURCES.get(choice["source"], 0)
+        value = choice.get("index")
+        require(maximum > 0 and numeric(value) and 1 <= value <= maximum and int(value) == value,
+                f"{choice_where}.source/index is not a supported synth source")
+        require((selection["kind"] == "fx") == (choice["source"] == "fx"),
+                f"{choice_where}.source does not match the selection kind")
+    text_field(selection, "default", 80, where)
+    require(selection["default"] in choice_ids, f"{where}.default must name a choice")
+    if "columns" in selection:
+        value = selection["columns"]
+        require(numeric(value) and 1 <= value <= 8 and int(value) == value,
+                f"{where}.columns must be an integer in 1..8")
+    _, _, width, height = selection_grid(selection)
+    require(width >= 1 and height >= 1,
+            f"{where}.tabsRect is too small for its tab buttons and gaps")
+    if "fontSize" in selection:
+        number_field(selection, "fontSize", 8, 24, where)
+    selections[selection["id"]] = selection
+
+
+def validate_selection_bindings(control: dict, where: str, selections: dict[str, dict]) -> None:
+    text_field(control, "selectionGroup", 80, where)
+    group = control["selectionGroup"]
+    require(bool(IDENTIFIER.fullmatch(group)), f"{where}.selectionGroup is invalid")
+    require(group in selections, f"{where}.selectionGroup names an unknown selection")
+    selection = selections[group]
+    bindings = control.get("bindings")
+    require(isinstance(bindings, dict) and
+            set(bindings) == {choice["id"] for choice in selection["choices"]},
+            f"{where}.bindings must contain exactly the selection choice ids")
+    for choice, binding in bindings.items():
+        require(binding is None or isinstance(binding, str) and bool(IDENTIFIER.fullmatch(binding)),
+                f"{where}.bindings.{choice} must be a parameter identifier or null")
+    require(bindings[selection["default"]] == control["binding"],
+            f"{where}.bindings default must equal its base binding and not be null")
+
+
 def validate_manifest(data: object) -> None:
     """Raise InvalidManifest on the first invalid field; do not mutate data."""
     bounded_tree(data)
@@ -131,6 +201,7 @@ def validate_manifest(data: object) -> None:
             "every palette entry must be a hex colour")
 
     ids: set[str] = set()
+    selections: dict[str, dict] = {}
     for collection, maximum in (("panels", 80), ("controls", 256)):
         items = data.get(collection)
         require(isinstance(items, list) and 1 <= len(items) <= maximum,
@@ -157,6 +228,12 @@ def validate_manifest(data: object) -> None:
                 for key in ("plot", "plot2"):
                     if key in item:
                         array_rectangle(item[key], f"{where}.{key}", item)
+                if "wavetableRect" in item:
+                    require(item["kind"] == "oscillator" and item.get("index", 1) <= 3,
+                            f"{where}.wavetableRect requires oscillator index 1..3")
+                    array_rectangle(item["wavetableRect"], f"{where}.wavetableRect", item)
+                    require(item["wavetableRect"][2] >= 60 and item["wavetableRect"][3] >= 18,
+                            f"{where}.wavetableRect must be at least 60 x 18")
                 if "flowNodes" in item:
                     nodes = item["flowNodes"]
                     require(isinstance(nodes, dict) and 1 <= len(nodes) <= 11 and
@@ -166,7 +243,14 @@ def validate_manifest(data: object) -> None:
                         require(key in FLOW_NODES, f"{where}.flowNodes.{key} is not a supported flow node")
                         array_rectangle(values, f"{where}.flowNodes.{key}", item)
                 if "titleHeight" in item:
-                    number_field(item, "titleHeight", 0, 120, where)
+                    number_field(item, "titleHeight", 0, min(120, item["h"]), where)
+                if "titleInset" in item:
+                    number_field(item, "titleInset", 0, item["w"] - 12, where)
+                if "envelope" in item:
+                    require(isinstance(item["envelope"], bool) and item["kind"] == "lfo",
+                            f"{where}.envelope must be a boolean on an lfo panel")
+                if "selection" in item:
+                    validate_selection(item["selection"], item, f"{where}.selection", selections)
             else:
                 text_field(item, "binding", 80, where)
                 require(bool(IDENTIFIER.fullmatch(item["binding"])), f"{where}.binding is invalid")
@@ -182,6 +266,22 @@ def validate_manifest(data: object) -> None:
                             item["labelPosition"] in ("left", "right", "top") and
                             item.get("kind", "knob") == "knob",
                             f"{where}.labelPosition must be left/right/top on a knob")
+                kind = item.get("kind", "knob")
+                if "faceDiameter" in item:
+                    require(kind == "knob", f"{where}.faceDiameter is only supported on a knob")
+                    number_field(item, "faceDiameter", 8, min(160, item["w"], item["h"]), where)
+                if "valuePosition" in item:
+                    require(kind == "knob" and isinstance(item["valuePosition"], str) and
+                            item["valuePosition"] in ("bottom", "right", "hidden"),
+                            f"{where}.valuePosition must be bottom/right/hidden on a knob")
+                if "labelWidth" in item:
+                    require(kind == "value", f"{where}.labelWidth is only supported on a value control")
+                    number_field(item, "labelWidth", 0, item["w"] - 12, where)
+                if "glyph" in item:
+                    require(kind == "toggle" and item["glyph"] == "power",
+                            f"{where}.glyph must be power on a toggle")
+                if "selectionGroup" in item or "bindings" in item:
+                    validate_selection_bindings(item, where, selections)
                 minimum = {"fader": (24, 46), "horizontal": (24, 40)}.get(item.get("kind"))
                 if minimum:
                     require(item["w"] >= minimum[0] and item["h"] >= minimum[1],
@@ -303,6 +403,26 @@ def overlaps(controls: list[dict]) -> list[str]:
     return result
 
 
+def interactive_bounds(data: dict) -> list[dict]:
+    """Declared controls, wavetable selectors and individual generated tab cells."""
+    result = list(data["controls"])
+    for panel in data["panels"]:
+        if "wavetableRect" in panel:
+            result.append({"id": f"workspace.wavetable.{panel['id']}",
+                           **dict(zip(("x", "y", "w", "h"), panel["wavetableRect"]))})
+        selection = panel.get("selection")
+        if selection is None:
+            continue
+        columns, _, width, height = selection_grid(selection)
+        x, y = selection["tabsRect"][:2]
+        for index, choice in enumerate(selection["choices"]):
+            result.append({"id": f"workspace.selection.{selection['id']}.{choice['id']}",
+                           "x": x + (index % columns) * (width + 4),
+                           "y": y + (index // columns) * (height + 4),
+                           "w": width, "h": height})
+    return result
+
+
 def visual_overlaps(data: dict) -> tuple[list[str], list[str]]:
     """Diagnostic only: a route graph intentionally contains live node controls.
 
@@ -373,7 +493,7 @@ def validate_packages(root: Path, allow_partial: bool, strict_overlap: bool) -> 
             require(data["style"] not in styles, "duplicate concept style")
             workspace_ids.add(data["id"])
             styles.add(data["style"])
-            warnings = overlaps(data["controls"])
+            warnings = overlaps(interactive_bounds(data))
             require(not strict_overlap or not warnings, "; ".join(warnings))
             visual_warnings, intentional = visual_overlaps(data)
             warnings.extend(visual_warnings)
@@ -386,6 +506,73 @@ def validate_packages(root: Path, allow_partial: bool, strict_overlap: bool) -> 
     if not allow_partial and len(results) != 10:
         errors.append(f"Expected all 10 reference workspaces; validated {len(results)}")
     return {"ok": not errors, "count": len(results), "workspaces": results, "errors": errors}
+
+
+def shared_schema_self_test() -> tuple[int, int]:
+    """The native Catch test reads this same data, rather than duplicating cases."""
+    path = Path(__file__).resolve().parent / "fixtures" / "selection-schema.json"
+    fixtures = json.loads(path.read_text(encoding="utf-8"))
+    accepted = rejected = 0
+    for fixture in fixtures["cases"]:
+        case = copy.deepcopy(fixtures["base"])
+        for change in fixture["changes"]:
+            parent = case
+            for key in change["path"][:-1]:
+                parent = parent[key]
+            key = change["path"][-1]
+            if change.get("remove", False):
+                del parent[key]
+            else:
+                parent[key] = copy.deepcopy(change["value"])
+        try:
+            validate_manifest(case)
+        except InvalidManifest as error:
+            assert not fixture["valid"], f"valid shared fixture {fixture['name']!r} failed: {error}"
+            rejected += 1
+        else:
+            assert fixture["valid"], f"invalid shared fixture {fixture['name']!r} was accepted"
+            accepted += 1
+
+    base = fixtures["base"]
+    bounds = interactive_bounds(base)
+    assert len(bounds) == len(base["controls"]) + 2
+    assert bounds[-2] == {"id": "workspace.selection.source.env1", "x": 10, "y": 85,
+                          "w": 188, "h": 30}
+    assert bounds[-1]["x"] == 202
+    assert not overlaps(bounds)
+    collision = copy.deepcopy(base)
+    collision["controls"].append({"id": "collision", "binding": "osc1.pitch", "x": 20,
+                                  "y": 90, "w": 16, "h": 16})
+    validate_manifest(collision)
+    assert any("workspace.selection.source.env1" in warning
+               for warning in overlaps(interactive_bounds(collision)))
+
+    # Three buttons in two columns leave the bottom-right cell free. The parent
+    # tabsRect would incorrectly reject this otherwise valid live control.
+    grid = copy.deepcopy(base)
+    selection = grid["panels"][0]["selection"]
+    selection["tabsRect"] = [10, 85, 200, 100]
+    selection["choices"].append({"id": "env2", "label": "ENV 2", "source": "envelope", "index": 2})
+    grid["controls"] = [{"id": "free", "binding": "osc1.pitch", "x": 125, "y": 150,
+                         "w": 20, "h": 20}]
+    validate_manifest(grid)
+    assert not overlaps(interactive_bounds(grid))
+    grid["controls"][0].update(x=108, y=90, w=4, h=20)  # The 4px gap is also free.
+    validate_manifest(grid)
+    assert not overlaps(interactive_bounds(grid))
+
+    wavetable = copy.deepcopy(base)
+    wavetable["panels"][0].update(kind="oscillator", wavetableRect=[10, 210, 180, 24])
+    del wavetable["panels"][0]["envelope"]
+    validate_manifest(wavetable)
+    assert not overlaps(interactive_bounds(wavetable))
+    wavetable["controls"][1].update(x=10, y=210)
+    assert any("workspace.wavetable.sources" in warning
+               for warning in overlaps(interactive_bounds(wavetable)))
+    wavetable["panels"][0]["wavetableRect"] = [10, 85, 180, 24]
+    assert any("workspace.wavetable.sources" in warning and "workspace.selection.source.env1" in warning
+               for warning in overlaps(interactive_bounds(wavetable)))
+    return accepted, rejected
 
 
 def self_test() -> None:
@@ -512,15 +699,19 @@ def self_test() -> None:
     unexpected = copy.deepcopy(route)
     unexpected["panels"][0]["kind"] = "waveform"
     assert len(visual_overlaps(unexpected)[0]) == 1
+    accepted, rejected = shared_schema_self_test()
     print(f"PASS: valid/Unicode/duplicate-binding fixtures; {len(bad_cases)} schema rejections; "
-          f"{len(malformed)} malformed JSON rejections; {paths_checked} confined-path checks; overlap checks")
+          f"{len(malformed)} malformed JSON rejections; {paths_checked} confined-path checks; "
+          f"{accepted} accepted/{rejected} rejected shared selection/widget schema cases; "
+          "declared-control, individual-tab, gap/unused-cell and wavetable overlap checks")
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[2])
     parser.add_argument("--allow-partial", action="store_true", help="allow fewer than 10 packages during development")
-    parser.add_argument("--strict-overlap", action="store_true", help="treat control bounding-box overlaps as errors")
+    parser.add_argument("--strict-overlap", action="store_true",
+                        help="treat control, wavetable-selector and generated-tab overlaps as errors")
     parser.add_argument("--json", action="store_true", help="print machine-readable report")
     parser.add_argument("--self-test", action="store_true", help="run built-in schema rejection tests")
     args = parser.parse_args()

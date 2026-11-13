@@ -1651,6 +1651,11 @@ class alignas(16) SurgeStorage
 
     std::unique_ptr<Surge::Storage::UserDefaultsProvider> userDefaultsProvider;
 
+    // Identity guard for delayed UI actions. Unlike a name/catalog ID or the
+    // per-oscillator wavetable token, this changes even when the same XML-only
+    // patch is reloaded without replacing a wavetable buffer. It does not
+    // serialize patch access; loaders retain their existing engine protocol.
+    std::atomic<uint64_t> patchLoadGeneration{0};
     std::unique_ptr<SurgePatch> _patch;
     std::unique_ptr<Surge::Formula::GlobalData> formulaGlobalData;
 

@@ -11,6 +11,7 @@ class SurgeSynthProcessor;
 namespace Surge::GUI::Reference
 {
 class ParameterBridge;
+struct WavetableSelectionRequest;
 
 /** A live native alternative editor. Layouts contain no audio or executable code. */
 class Workspace : public juce::Component, private juce::Timer
@@ -22,6 +23,10 @@ class Workspace : public juce::Component, private juce::Timer
     void refresh();
     ParameterBridge &bridge();
     juce::String currentId() const;
+    /** Select an existing panel view without editing processor parameters.
+        Invalid group/choice IDs return false and preserve the current view. */
+    bool selectView(const juce::String &groupId, const juce::String &choiceId);
+    juce::String selectedView(const juce::String &groupId) const;
     /** notify=false synchronises the native/host scene without requesting another scene change. */
     void selectScene(int scene, bool notify = true);
     void paint(juce::Graphics &) override;
@@ -32,6 +37,9 @@ class Workspace : public juce::Component, private juce::Timer
     std::function<void()> onFullEditor;
     std::function<void()> onChooseSkin;
     std::function<void(const juce::String &)> onAction;
+    /** The native editor supplies script generation and accessible announcements.
+        Without it, ordinary catalog tables still use the processor's queue. */
+    std::function<bool(const WavetableSelectionRequest &)> onSelectWavetable;
 
   private:
     struct Impl;

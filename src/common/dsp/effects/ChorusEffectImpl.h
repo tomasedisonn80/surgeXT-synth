@@ -47,6 +47,10 @@ template <int v> ChorusEffect<v>::~ChorusEffect() {}
 template <int v> void ChorusEffect<v>::init()
 {
     memset(buffer, 0, (max_delay_length + FIRipol_N) * sizeof(float));
+    // suspend() also enters here on a host panic. Clearing the delay alone
+    // leaves the wet-path biquad histories audible in the first new block.
+    hp.suspend();
+    lp.suspend();
     wpos = 0;
     envf = 0;
     const float gainscale = 1 / sqrt((float)v);

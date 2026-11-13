@@ -33,6 +33,7 @@
 #include "gui/widgets/MainFrame.h"
 #include "gui/reference/ParameterBridge.h"
 #include "gui/reference/Workspace.h"
+#include "gui/reference/WavetableSelection.h"
 
 #include <algorithm>
 #include <filesystem>
@@ -701,6 +702,10 @@ void SurgeSynthEditor::updateReferenceWorkspaceFromSkin(bool force)
         if (safe)
             safe->handleReferenceWorkspaceAction(action);
     };
+    next->onSelectWavetable =
+        [safe](const Surge::GUI::Reference::WavetableSelectionRequest &request) {
+            return safe && safe->handleReferenceWavetable(request);
+        };
     referenceWorkspace = std::move(next);
     addChildComponent(*referenceWorkspace);
 
@@ -764,6 +769,24 @@ void SurgeSynthEditor::showReferenceSkinMenu()
 {
     if (sge)
         sge->showSettingsMenu({20, 30}, nullptr);
+}
+
+bool SurgeSynthEditor::handleReferenceWavetable(
+    const Surge::GUI::Reference::WavetableSelectionRequest &request)
+{
+    if (!sge || !processor.surge || !referenceWorkspace || !referenceWorkspace->isVisible() ||
+        referenceWorkspace->bridge().getScene() != request.target.scene)
+        return false;
+    return Surge::GUI::Reference::applyWavetableSelection(
+        processor, request,
+        [this](int scene, int oscillator, int id, const fs::path &path) {
+            auto &storage = processor.surge->storage;
+            sge->loadWavetableScript(id, path, &storage,
+                                     &storage.getPatch().scene[scene].osc[oscillator]);
+        },
+        [this](const std::string &announcement) {
+            sge->enqueueAccessibleAnnouncement(announcement);
+        });
 }
 
 void SurgeSynthEditor::handleReferenceWorkspaceAction(const juce::String &action)

@@ -1,0 +1,3256 @@
+{
+  "description": "Shared native/Python schema cases for live selections, widget layout, and wavetable selectors. Paths address the base manifest; remove deletes a field. Engine binding resolution and hit-target overlap are separate checks.",
+  "base": {
+    "schema": 1,
+    "id": "selection-schema",
+    "name": "Selection schema fixture",
+    "reference": "01.png",
+    "style": "precision",
+    "font": "sans",
+    "width": 1586,
+    "height": 992,
+    "palette": {
+      "background": "#112233",
+      "panel": "#112233",
+      "border": "#112233",
+      "text": "#112233",
+      "muted": "#112233",
+      "accent": "#112233",
+      "secondary": "#112233",
+      "display": "#112233",
+      "knob": "#112233",
+      "red": "#112233",
+      "yellow": "#112233",
+      "blue": "#112233"
+    },
+    "adaptations": [],
+    "panels": [
+      {
+        "id": "sources",
+        "kind": "lfo",
+        "title": "Source",
+        "x": 0,
+        "y": 80,
+        "w": 400,
+        "h": 200,
+        "index": 1,
+        "envelope": true,
+        "titleHeight": 24,
+        "titleInset": 12,
+        "selection": {
+          "id": "source",
+          "kind": "source",
+          "tabsRect": [
+            10,
+            85,
+            380,
+            30
+          ],
+          "default": "env1",
+          "choices": [
+            {
+              "id": "env1",
+              "label": "ENV 1",
+              "source": "envelope",
+              "index": 1
+            },
+            {
+              "id": "lfo1",
+              "label": "LFO 1",
+              "source": "lfo",
+              "index": 1
+            }
+          ],
+          "columns": 2,
+          "fontSize": 11
+        }
+      }
+    ],
+    "controls": [
+      {
+        "id": "parameter",
+        "binding": "env1.attack",
+        "x": 300,
+        "y": 120,
+        "w": 64,
+        "h": 80,
+        "selectionGroup": "source",
+        "bindings": {
+          "env1": "env1.attack",
+          "lfo1": "lfo1.rate"
+        },
+        "faceDiameter": 32,
+        "valuePosition": "right"
+      },
+      {
+        "id": "readout",
+        "kind": "value",
+        "binding": "osc1.pitch",
+        "x": 10,
+        "y": 150,
+        "w": 160,
+        "h": 30,
+        "labelWidth": 80
+      },
+      {
+        "id": "power",
+        "kind": "toggle",
+        "binding": "osc1.mute",
+        "x": 190,
+        "y": 150,
+        "w": 40,
+        "h": 30,
+        "glyph": "power"
+      }
+    ]
+  },
+  "cases": [
+    {
+      "name": "all new fields and source mapping",
+      "valid": true,
+      "changes": []
+    },
+    {
+      "name": "omitted optional fields and default horizontal columns",
+      "valid": true,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "envelope"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "titleHeight"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "titleInset"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "columns"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "fontSize"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "faceDiameter"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "valuePosition"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "controls",
+            1,
+            "labelWidth"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "controls",
+            2,
+            "glyph"
+          ],
+          "remove": true
+        }
+      ]
+    },
+    {
+      "name": "unavailable nondefault binding",
+      "valid": true,
+      "changes": [
+        {
+          "path": [
+            "controls",
+            0,
+            "bindings",
+            "lfo1"
+          ],
+          "value": null
+        }
+      ]
+    },
+    {
+      "name": "integer-valued floating numbers",
+      "valid": true,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "columns"
+          ],
+          "value": 2.0
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "choices",
+            0,
+            "index"
+          ],
+          "value": 1.0
+        }
+      ]
+    },
+    {
+      "name": "minimum widget bounds and hidden value",
+      "valid": true,
+      "changes": [
+        {
+          "path": [
+            "controls",
+            0,
+            "faceDiameter"
+          ],
+          "value": 8
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "valuePosition"
+          ],
+          "value": "hidden"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "titleHeight"
+          ],
+          "value": 0
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "titleInset"
+          ],
+          "value": 0
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "fontSize"
+          ],
+          "value": 8
+        },
+        {
+          "path": [
+            "controls",
+            1,
+            "labelWidth"
+          ],
+          "value": 0
+        }
+      ]
+    },
+    {
+      "name": "maximum widget bounds and bottom value",
+      "valid": true,
+      "changes": [
+        {
+          "path": [
+            "controls",
+            0,
+            "faceDiameter"
+          ],
+          "value": 64
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "valuePosition"
+          ],
+          "value": "bottom"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "titleHeight"
+          ],
+          "value": 120
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "titleInset"
+          ],
+          "value": 388
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "fontSize"
+          ],
+          "value": 24
+        },
+        {
+          "path": [
+            "controls",
+            1,
+            "labelWidth"
+          ],
+          "value": 148
+        }
+      ]
+    },
+    {
+      "name": "explicit columns clamped to choice count",
+      "valid": true,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "columns"
+          ],
+          "value": 8
+        }
+      ]
+    },
+    {
+      "name": "valid envelope maximum source index",
+      "valid": true,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "choices",
+            1,
+            "source"
+          ],
+          "value": "envelope"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "choices",
+            1,
+            "index"
+          ],
+          "value": 2
+        }
+      ]
+    },
+    {
+      "name": "valid lfo maximum source index",
+      "valid": true,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "choices",
+            1,
+            "source"
+          ],
+          "value": "lfo"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "choices",
+            1,
+            "index"
+          ],
+          "value": 12
+        }
+      ]
+    },
+    {
+      "name": "valid lfo-envelope maximum source index",
+      "valid": true,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "choices",
+            1,
+            "source"
+          ],
+          "value": "lfo-envelope"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "choices",
+            1,
+            "index"
+          ],
+          "value": 12
+        }
+      ]
+    },
+    {
+      "name": "valid oscillator maximum source index",
+      "valid": true,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "choices",
+            1,
+            "source"
+          ],
+          "value": "oscillator"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "choices",
+            1,
+            "index"
+          ],
+          "value": 3
+        }
+      ]
+    },
+    {
+      "name": "valid waveform maximum source index",
+      "valid": true,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "choices",
+            1,
+            "source"
+          ],
+          "value": "waveform"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "choices",
+            1,
+            "index"
+          ],
+          "value": 3
+        }
+      ]
+    },
+    {
+      "name": "sixteen FX choices with implicit sixteen columns",
+      "valid": true,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "kind"
+          ],
+          "value": "effects"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "envelope"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "kind"
+          ],
+          "value": "fx"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "default"
+          ],
+          "value": "fx1"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "choices"
+          ],
+          "value": [
+            {
+              "id": "fx1",
+              "label": "FX 1",
+              "source": "fx",
+              "index": 1
+            },
+            {
+              "id": "fx2",
+              "label": "FX 2",
+              "source": "fx",
+              "index": 2
+            },
+            {
+              "id": "fx3",
+              "label": "FX 3",
+              "source": "fx",
+              "index": 3
+            },
+            {
+              "id": "fx4",
+              "label": "FX 4",
+              "source": "fx",
+              "index": 4
+            },
+            {
+              "id": "fx5",
+              "label": "FX 5",
+              "source": "fx",
+              "index": 5
+            },
+            {
+              "id": "fx6",
+              "label": "FX 6",
+              "source": "fx",
+              "index": 6
+            },
+            {
+              "id": "fx7",
+              "label": "FX 7",
+              "source": "fx",
+              "index": 7
+            },
+            {
+              "id": "fx8",
+              "label": "FX 8",
+              "source": "fx",
+              "index": 8
+            },
+            {
+              "id": "fx9",
+              "label": "FX 9",
+              "source": "fx",
+              "index": 9
+            },
+            {
+              "id": "fx10",
+              "label": "FX 10",
+              "source": "fx",
+              "index": 10
+            },
+            {
+              "id": "fx11",
+              "label": "FX 11",
+              "source": "fx",
+              "index": 11
+            },
+            {
+              "id": "fx12",
+              "label": "FX 12",
+              "source": "fx",
+              "index": 12
+            },
+            {
+              "id": "fx13",
+              "label": "FX 13",
+              "source": "fx",
+              "index": 13
+            },
+            {
+              "id": "fx14",
+              "label": "FX 14",
+              "source": "fx",
+              "index": 14
+            },
+            {
+              "id": "fx15",
+              "label": "FX 15",
+              "source": "fx",
+              "index": 15
+            },
+            {
+              "id": "fx16",
+              "label": "FX 16",
+              "source": "fx",
+              "index": 16
+            }
+          ]
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "binding"
+          ],
+          "value": "fx1.type"
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "bindings"
+          ],
+          "value": {
+            "fx1": "fx1.type",
+            "fx2": null,
+            "fx3": null,
+            "fx4": null,
+            "fx5": null,
+            "fx6": null,
+            "fx7": null,
+            "fx8": null,
+            "fx9": null,
+            "fx10": null,
+            "fx11": null,
+            "fx12": null,
+            "fx13": null,
+            "fx14": null,
+            "fx15": null,
+            "fx16": null
+          }
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "columns"
+          ],
+          "remove": true
+        }
+      ]
+    },
+    {
+      "name": "sixteen FX choices in eight explicit columns",
+      "valid": true,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "kind"
+          ],
+          "value": "effects"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "envelope"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "kind"
+          ],
+          "value": "fx"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "default"
+          ],
+          "value": "fx1"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "choices"
+          ],
+          "value": [
+            {
+              "id": "fx1",
+              "label": "FX 1",
+              "source": "fx",
+              "index": 1
+            },
+            {
+              "id": "fx2",
+              "label": "FX 2",
+              "source": "fx",
+              "index": 2
+            },
+            {
+              "id": "fx3",
+              "label": "FX 3",
+              "source": "fx",
+              "index": 3
+            },
+            {
+              "id": "fx4",
+              "label": "FX 4",
+              "source": "fx",
+              "index": 4
+            },
+            {
+              "id": "fx5",
+              "label": "FX 5",
+              "source": "fx",
+              "index": 5
+            },
+            {
+              "id": "fx6",
+              "label": "FX 6",
+              "source": "fx",
+              "index": 6
+            },
+            {
+              "id": "fx7",
+              "label": "FX 7",
+              "source": "fx",
+              "index": 7
+            },
+            {
+              "id": "fx8",
+              "label": "FX 8",
+              "source": "fx",
+              "index": 8
+            },
+            {
+              "id": "fx9",
+              "label": "FX 9",
+              "source": "fx",
+              "index": 9
+            },
+            {
+              "id": "fx10",
+              "label": "FX 10",
+              "source": "fx",
+              "index": 10
+            },
+            {
+              "id": "fx11",
+              "label": "FX 11",
+              "source": "fx",
+              "index": 11
+            },
+            {
+              "id": "fx12",
+              "label": "FX 12",
+              "source": "fx",
+              "index": 12
+            },
+            {
+              "id": "fx13",
+              "label": "FX 13",
+              "source": "fx",
+              "index": 13
+            },
+            {
+              "id": "fx14",
+              "label": "FX 14",
+              "source": "fx",
+              "index": 14
+            },
+            {
+              "id": "fx15",
+              "label": "FX 15",
+              "source": "fx",
+              "index": 15
+            },
+            {
+              "id": "fx16",
+              "label": "FX 16",
+              "source": "fx",
+              "index": 16
+            }
+          ]
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "binding"
+          ],
+          "value": "fx1.type"
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "bindings"
+          ],
+          "value": {
+            "fx1": "fx1.type",
+            "fx2": null,
+            "fx3": null,
+            "fx4": null,
+            "fx5": null,
+            "fx6": null,
+            "fx7": null,
+            "fx8": null,
+            "fx9": null,
+            "fx10": null,
+            "fx11": null,
+            "fx12": null,
+            "fx13": null,
+            "fx14": null,
+            "fx15": null,
+            "fx16": null
+          }
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "columns"
+          ],
+          "value": 8
+        }
+      ]
+    },
+    {
+      "name": "choice identifiers are local to unique selection groups",
+      "valid": true,
+      "changes": [
+        {
+          "path": [
+            "panels"
+          ],
+          "value": [
+            {
+              "id": "sources",
+              "kind": "lfo",
+              "title": "Source",
+              "x": 0,
+              "y": 80,
+              "w": 400,
+              "h": 200,
+              "index": 1,
+              "envelope": true,
+              "titleHeight": 24,
+              "titleInset": 12,
+              "selection": {
+                "id": "source",
+                "kind": "source",
+                "tabsRect": [
+                  10,
+                  85,
+                  380,
+                  30
+                ],
+                "default": "env1",
+                "choices": [
+                  {
+                    "id": "env1",
+                    "label": "ENV 1",
+                    "source": "envelope",
+                    "index": 1
+                  },
+                  {
+                    "id": "lfo1",
+                    "label": "LFO 1",
+                    "source": "lfo",
+                    "index": 1
+                  }
+                ],
+                "columns": 2,
+                "fontSize": 11
+              }
+            },
+            {
+              "id": "other",
+              "kind": "lfo",
+              "title": "Source",
+              "x": 500,
+              "y": 80,
+              "w": 400,
+              "h": 200,
+              "index": 1,
+              "envelope": true,
+              "titleHeight": 24,
+              "titleInset": 12,
+              "selection": {
+                "id": "other",
+                "kind": "source",
+                "tabsRect": [
+                  510,
+                  85,
+                  380,
+                  30
+                ],
+                "default": "env1",
+                "choices": [
+                  {
+                    "id": "env1",
+                    "label": "ENV 1",
+                    "source": "envelope",
+                    "index": 1
+                  },
+                  {
+                    "id": "lfo1",
+                    "label": "LFO 1",
+                    "source": "lfo",
+                    "index": 1
+                  }
+                ],
+                "columns": 2,
+                "fontSize": 11
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "one pixel tab cells remain positive",
+      "valid": true,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "tabsRect"
+          ],
+          "value": [
+            10,
+            85,
+            6,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "name": "selection must be object",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "selection"
+          ],
+          "value": []
+        }
+      ]
+    },
+    {
+      "name": "group id type",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "id"
+          ],
+          "value": 1
+        }
+      ]
+    },
+    {
+      "name": "group id format",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "id"
+          ],
+          "value": "bad group"
+        }
+      ]
+    },
+    {
+      "name": "group kind",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "kind"
+          ],
+          "value": "env"
+        }
+      ]
+    },
+    {
+      "name": "choice list type",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "choices"
+          ],
+          "value": {}
+        }
+      ]
+    },
+    {
+      "name": "empty choices",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "choices"
+          ],
+          "value": []
+        }
+      ]
+    },
+    {
+      "name": "choice object",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "choices",
+            0
+          ],
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "choice id type",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "choices",
+            0,
+            "id"
+          ],
+          "value": 1
+        }
+      ]
+    },
+    {
+      "name": "choice id format",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "choices",
+            0,
+            "id"
+          ],
+          "value": "bad choice"
+        }
+      ]
+    },
+    {
+      "name": "duplicate choice id",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "choices",
+            1,
+            "id"
+          ],
+          "value": "env1"
+        }
+      ]
+    },
+    {
+      "name": "empty choice label",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "choices",
+            0,
+            "label"
+          ],
+          "value": " "
+        }
+      ]
+    },
+    {
+      "name": "long choice label",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "choices",
+            0,
+            "label"
+          ],
+          "value": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+        }
+      ]
+    },
+    {
+      "name": "choice source type",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "choices",
+            0,
+            "source"
+          ],
+          "value": false
+        }
+      ]
+    },
+    {
+      "name": "unknown source",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "choices",
+            0,
+            "source"
+          ],
+          "value": "audio"
+        }
+      ]
+    },
+    {
+      "name": "choice index type",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "choices",
+            0,
+            "index"
+          ],
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "fractional index",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "choices",
+            0,
+            "index"
+          ],
+          "value": 1.5
+        }
+      ]
+    },
+    {
+      "name": "zero index",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "choices",
+            0,
+            "index"
+          ],
+          "value": 0
+        }
+      ]
+    },
+    {
+      "name": "envelope index above limit",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "choices",
+            0,
+            "index"
+          ],
+          "value": 3
+        }
+      ]
+    },
+    {
+      "name": "lfo index above limit",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "choices",
+            1,
+            "index"
+          ],
+          "value": 13
+        }
+      ]
+    },
+    {
+      "name": "default type",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "default"
+          ],
+          "value": null
+        }
+      ]
+    },
+    {
+      "name": "default missing choice",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "default"
+          ],
+          "value": "absent"
+        }
+      ]
+    },
+    {
+      "name": "tabs rectangle shape",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "tabsRect"
+          ],
+          "value": [
+            10,
+            85,
+            380
+          ]
+        }
+      ]
+    },
+    {
+      "name": "tabs rectangle types",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "tabsRect"
+          ],
+          "value": [
+            10,
+            85,
+            "380",
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "name": "tabs rectangle outside panel",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "tabsRect"
+          ],
+          "value": [
+            399,
+            85,
+            50,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "name": "tabs cell width consumed by gap",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "tabsRect"
+          ],
+          "value": [
+            10,
+            85,
+            4,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "name": "columns zero",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "columns"
+          ],
+          "value": 0
+        }
+      ]
+    },
+    {
+      "name": "columns above limit",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "columns"
+          ],
+          "value": 9
+        }
+      ]
+    },
+    {
+      "name": "columns fractional",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "columns"
+          ],
+          "value": 1.5
+        }
+      ]
+    },
+    {
+      "name": "columns boolean",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "columns"
+          ],
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "selection font below limit",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "fontSize"
+          ],
+          "value": 7
+        }
+      ]
+    },
+    {
+      "name": "selection font above limit",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "fontSize"
+          ],
+          "value": 25
+        }
+      ]
+    },
+    {
+      "name": "selection font type",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "fontSize"
+          ],
+          "value": "12"
+        }
+      ]
+    },
+    {
+      "name": "unknown selection group",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "controls",
+            0,
+            "selectionGroup"
+          ],
+          "value": "absent"
+        }
+      ]
+    },
+    {
+      "name": "selection group type",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "controls",
+            0,
+            "selectionGroup"
+          ],
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "binding map type",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "controls",
+            0,
+            "bindings"
+          ],
+          "value": []
+        }
+      ]
+    },
+    {
+      "name": "binding map missing choice",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "controls",
+            0,
+            "bindings"
+          ],
+          "value": {
+            "env1": "env1.attack"
+          }
+        }
+      ]
+    },
+    {
+      "name": "binding map excess choice",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "controls",
+            0,
+            "bindings"
+          ],
+          "value": {
+            "env1": "env1.attack",
+            "lfo1": "lfo1.rate",
+            "extra": null
+          }
+        }
+      ]
+    },
+    {
+      "name": "binding map wrong same-size choice",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "controls",
+            0,
+            "bindings"
+          ],
+          "value": {
+            "env1": "env1.attack",
+            "other": "lfo1.rate"
+          }
+        }
+      ]
+    },
+    {
+      "name": "alternative binding type",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "controls",
+            0,
+            "bindings",
+            "lfo1"
+          ],
+          "value": false
+        }
+      ]
+    },
+    {
+      "name": "alternative binding identifier",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "controls",
+            0,
+            "bindings",
+            "lfo1"
+          ],
+          "value": "lfo1/rate"
+        }
+      ]
+    },
+    {
+      "name": "default binding must match base",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "controls",
+            0,
+            "bindings",
+            "env1"
+          ],
+          "value": "env2.attack"
+        }
+      ]
+    },
+    {
+      "name": "default binding cannot be null",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "controls",
+            0,
+            "bindings",
+            "env1"
+          ],
+          "value": null
+        }
+      ]
+    },
+    {
+      "name": "envelope must be boolean",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "envelope"
+          ],
+          "value": 1
+        }
+      ]
+    },
+    {
+      "name": "title height cannot be negative",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "titleHeight"
+          ],
+          "value": -1
+        }
+      ]
+    },
+    {
+      "name": "title height absolute maximum",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "titleHeight"
+          ],
+          "value": 121
+        }
+      ]
+    },
+    {
+      "name": "title height type",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "titleHeight"
+          ],
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "title inset negative",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "titleInset"
+          ],
+          "value": -1
+        }
+      ]
+    },
+    {
+      "name": "title inset beyond panel width",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "titleInset"
+          ],
+          "value": 389
+        }
+      ]
+    },
+    {
+      "name": "title inset type",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "titleInset"
+          ],
+          "value": "12"
+        }
+      ]
+    },
+    {
+      "name": "knob face below minimum",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "controls",
+            0,
+            "faceDiameter"
+          ],
+          "value": 7
+        }
+      ]
+    },
+    {
+      "name": "knob face exceeds width",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "controls",
+            0,
+            "faceDiameter"
+          ],
+          "value": 65
+        }
+      ]
+    },
+    {
+      "name": "knob face type",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "controls",
+            0,
+            "faceDiameter"
+          ],
+          "value": false
+        }
+      ]
+    },
+    {
+      "name": "value position enum",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "controls",
+            0,
+            "valuePosition"
+          ],
+          "value": "left"
+        }
+      ]
+    },
+    {
+      "name": "value position type",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "controls",
+            0,
+            "valuePosition"
+          ],
+          "value": false
+        }
+      ]
+    },
+    {
+      "name": "value label width negative",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "controls",
+            1,
+            "labelWidth"
+          ],
+          "value": -1
+        }
+      ]
+    },
+    {
+      "name": "value label width exceeds extent",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "controls",
+            1,
+            "labelWidth"
+          ],
+          "value": 149
+        }
+      ]
+    },
+    {
+      "name": "value label width type",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "controls",
+            1,
+            "labelWidth"
+          ],
+          "value": false
+        }
+      ]
+    },
+    {
+      "name": "power glyph enum",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "controls",
+            2,
+            "glyph"
+          ],
+          "value": "play"
+        }
+      ]
+    },
+    {
+      "name": "power glyph type",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "controls",
+            2,
+            "glyph"
+          ],
+          "value": 1
+        }
+      ]
+    },
+    {
+      "name": "missing paired selectionGroup",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "controls",
+            0,
+            "selectionGroup"
+          ],
+          "remove": true
+        }
+      ]
+    },
+    {
+      "name": "missing paired bindings",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "controls",
+            0,
+            "bindings"
+          ],
+          "remove": true
+        }
+      ]
+    },
+    {
+      "name": "lfo-envelope index above limit",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "choices",
+            1,
+            "source"
+          ],
+          "value": "lfo-envelope"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "choices",
+            1,
+            "index"
+          ],
+          "value": 13
+        }
+      ]
+    },
+    {
+      "name": "oscillator index above limit",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "choices",
+            1,
+            "source"
+          ],
+          "value": "oscillator"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "choices",
+            1,
+            "index"
+          ],
+          "value": 4
+        }
+      ]
+    },
+    {
+      "name": "waveform index above limit",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "choices",
+            1,
+            "source"
+          ],
+          "value": "waveform"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "choices",
+            1,
+            "index"
+          ],
+          "value": 4
+        }
+      ]
+    },
+    {
+      "name": "fx index above limit",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "kind"
+          ],
+          "value": "effects"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "envelope"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "kind"
+          ],
+          "value": "fx"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "default"
+          ],
+          "value": "fx1"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "choices"
+          ],
+          "value": [
+            {
+              "id": "fx1",
+              "label": "FX 1",
+              "source": "fx",
+              "index": 1
+            },
+            {
+              "id": "fx2",
+              "label": "FX 2",
+              "source": "fx",
+              "index": 2
+            },
+            {
+              "id": "fx3",
+              "label": "FX 3",
+              "source": "fx",
+              "index": 3
+            },
+            {
+              "id": "fx4",
+              "label": "FX 4",
+              "source": "fx",
+              "index": 4
+            },
+            {
+              "id": "fx5",
+              "label": "FX 5",
+              "source": "fx",
+              "index": 5
+            },
+            {
+              "id": "fx6",
+              "label": "FX 6",
+              "source": "fx",
+              "index": 6
+            },
+            {
+              "id": "fx7",
+              "label": "FX 7",
+              "source": "fx",
+              "index": 7
+            },
+            {
+              "id": "fx8",
+              "label": "FX 8",
+              "source": "fx",
+              "index": 8
+            },
+            {
+              "id": "fx9",
+              "label": "FX 9",
+              "source": "fx",
+              "index": 9
+            },
+            {
+              "id": "fx10",
+              "label": "FX 10",
+              "source": "fx",
+              "index": 10
+            },
+            {
+              "id": "fx11",
+              "label": "FX 11",
+              "source": "fx",
+              "index": 11
+            },
+            {
+              "id": "fx12",
+              "label": "FX 12",
+              "source": "fx",
+              "index": 12
+            },
+            {
+              "id": "fx13",
+              "label": "FX 13",
+              "source": "fx",
+              "index": 13
+            },
+            {
+              "id": "fx14",
+              "label": "FX 14",
+              "source": "fx",
+              "index": 14
+            },
+            {
+              "id": "fx15",
+              "label": "FX 15",
+              "source": "fx",
+              "index": 15
+            },
+            {
+              "id": "fx16",
+              "label": "FX 16",
+              "source": "fx",
+              "index": 16
+            }
+          ]
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "binding"
+          ],
+          "value": "fx1.type"
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "bindings"
+          ],
+          "value": {
+            "fx1": "fx1.type",
+            "fx2": null,
+            "fx3": null,
+            "fx4": null,
+            "fx5": null,
+            "fx6": null,
+            "fx7": null,
+            "fx8": null,
+            "fx9": null,
+            "fx10": null,
+            "fx11": null,
+            "fx12": null,
+            "fx13": null,
+            "fx14": null,
+            "fx15": null,
+            "fx16": null
+          }
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "choices",
+            15,
+            "index"
+          ],
+          "value": 17
+        }
+      ]
+    },
+    {
+      "name": "too many choices",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "kind"
+          ],
+          "value": "effects"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "envelope"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "kind"
+          ],
+          "value": "fx"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "default"
+          ],
+          "value": "fx1"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "choices"
+          ],
+          "value": [
+            {
+              "id": "fx1",
+              "label": "FX 1",
+              "source": "fx",
+              "index": 1
+            },
+            {
+              "id": "fx2",
+              "label": "FX 2",
+              "source": "fx",
+              "index": 2
+            },
+            {
+              "id": "fx3",
+              "label": "FX 3",
+              "source": "fx",
+              "index": 3
+            },
+            {
+              "id": "fx4",
+              "label": "FX 4",
+              "source": "fx",
+              "index": 4
+            },
+            {
+              "id": "fx5",
+              "label": "FX 5",
+              "source": "fx",
+              "index": 5
+            },
+            {
+              "id": "fx6",
+              "label": "FX 6",
+              "source": "fx",
+              "index": 6
+            },
+            {
+              "id": "fx7",
+              "label": "FX 7",
+              "source": "fx",
+              "index": 7
+            },
+            {
+              "id": "fx8",
+              "label": "FX 8",
+              "source": "fx",
+              "index": 8
+            },
+            {
+              "id": "fx9",
+              "label": "FX 9",
+              "source": "fx",
+              "index": 9
+            },
+            {
+              "id": "fx10",
+              "label": "FX 10",
+              "source": "fx",
+              "index": 10
+            },
+            {
+              "id": "fx11",
+              "label": "FX 11",
+              "source": "fx",
+              "index": 11
+            },
+            {
+              "id": "fx12",
+              "label": "FX 12",
+              "source": "fx",
+              "index": 12
+            },
+            {
+              "id": "fx13",
+              "label": "FX 13",
+              "source": "fx",
+              "index": 13
+            },
+            {
+              "id": "fx14",
+              "label": "FX 14",
+              "source": "fx",
+              "index": 14
+            },
+            {
+              "id": "fx15",
+              "label": "FX 15",
+              "source": "fx",
+              "index": 15
+            },
+            {
+              "id": "fx16",
+              "label": "FX 16",
+              "source": "fx",
+              "index": 16
+            }
+          ]
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "binding"
+          ],
+          "value": "fx1.type"
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "bindings"
+          ],
+          "value": {
+            "fx1": "fx1.type",
+            "fx2": null,
+            "fx3": null,
+            "fx4": null,
+            "fx5": null,
+            "fx6": null,
+            "fx7": null,
+            "fx8": null,
+            "fx9": null,
+            "fx10": null,
+            "fx11": null,
+            "fx12": null,
+            "fx13": null,
+            "fx14": null,
+            "fx15": null,
+            "fx16": null
+          }
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "choices"
+          ],
+          "value": [
+            {
+              "id": "fx1",
+              "label": "FX 1",
+              "source": "fx",
+              "index": 1
+            },
+            {
+              "id": "fx2",
+              "label": "FX 2",
+              "source": "fx",
+              "index": 2
+            },
+            {
+              "id": "fx3",
+              "label": "FX 3",
+              "source": "fx",
+              "index": 3
+            },
+            {
+              "id": "fx4",
+              "label": "FX 4",
+              "source": "fx",
+              "index": 4
+            },
+            {
+              "id": "fx5",
+              "label": "FX 5",
+              "source": "fx",
+              "index": 5
+            },
+            {
+              "id": "fx6",
+              "label": "FX 6",
+              "source": "fx",
+              "index": 6
+            },
+            {
+              "id": "fx7",
+              "label": "FX 7",
+              "source": "fx",
+              "index": 7
+            },
+            {
+              "id": "fx8",
+              "label": "FX 8",
+              "source": "fx",
+              "index": 8
+            },
+            {
+              "id": "fx9",
+              "label": "FX 9",
+              "source": "fx",
+              "index": 9
+            },
+            {
+              "id": "fx10",
+              "label": "FX 10",
+              "source": "fx",
+              "index": 10
+            },
+            {
+              "id": "fx11",
+              "label": "FX 11",
+              "source": "fx",
+              "index": 11
+            },
+            {
+              "id": "fx12",
+              "label": "FX 12",
+              "source": "fx",
+              "index": 12
+            },
+            {
+              "id": "fx13",
+              "label": "FX 13",
+              "source": "fx",
+              "index": 13
+            },
+            {
+              "id": "fx14",
+              "label": "FX 14",
+              "source": "fx",
+              "index": 14
+            },
+            {
+              "id": "fx15",
+              "label": "FX 15",
+              "source": "fx",
+              "index": 15
+            },
+            {
+              "id": "fx16",
+              "label": "FX 16",
+              "source": "fx",
+              "index": 16
+            },
+            {
+              "id": "another",
+              "label": "Another",
+              "source": "fx",
+              "index": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "FX source in source group",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "choices",
+            1,
+            "source"
+          ],
+          "value": "fx"
+        }
+      ]
+    },
+    {
+      "name": "source in FX group",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "kind"
+          ],
+          "value": "fx"
+        }
+      ]
+    },
+    {
+      "name": "vertical tab height consumed by gap",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "columns"
+          ],
+          "value": 1
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "selection",
+            "tabsRect"
+          ],
+          "value": [
+            10,
+            85,
+            380,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "name": "duplicate group id",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels"
+          ],
+          "value": [
+            {
+              "id": "sources",
+              "kind": "lfo",
+              "title": "Source",
+              "x": 0,
+              "y": 80,
+              "w": 400,
+              "h": 200,
+              "index": 1,
+              "envelope": true,
+              "titleHeight": 24,
+              "titleInset": 12,
+              "selection": {
+                "id": "source",
+                "kind": "source",
+                "tabsRect": [
+                  10,
+                  85,
+                  380,
+                  30
+                ],
+                "default": "env1",
+                "choices": [
+                  {
+                    "id": "env1",
+                    "label": "ENV 1",
+                    "source": "envelope",
+                    "index": 1
+                  },
+                  {
+                    "id": "lfo1",
+                    "label": "LFO 1",
+                    "source": "lfo",
+                    "index": 1
+                  }
+                ],
+                "columns": 2,
+                "fontSize": 11
+              }
+            },
+            {
+              "id": "other",
+              "kind": "lfo",
+              "title": "Source",
+              "x": 500,
+              "y": 80,
+              "w": 400,
+              "h": 200,
+              "index": 1,
+              "envelope": true,
+              "titleHeight": 24,
+              "titleInset": 12,
+              "selection": {
+                "id": "source",
+                "kind": "source",
+                "tabsRect": [
+                  510,
+                  85,
+                  380,
+                  30
+                ],
+                "default": "env1",
+                "choices": [
+                  {
+                    "id": "env1",
+                    "label": "ENV 1",
+                    "source": "envelope",
+                    "index": 1
+                  },
+                  {
+                    "id": "lfo1",
+                    "label": "LFO 1",
+                    "source": "lfo",
+                    "index": 1
+                  }
+                ],
+                "columns": 2,
+                "fontSize": 11
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "envelope restricted to lfo panels",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "kind"
+          ],
+          "value": "envelope"
+        }
+      ]
+    },
+    {
+      "name": "title height cannot exceed panel height",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "h"
+          ],
+          "value": 40
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "titleHeight"
+          ],
+          "value": 41
+        }
+      ]
+    },
+    {
+      "name": "face diameter restricted to knobs",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "controls",
+            0,
+            "kind"
+          ],
+          "value": "fader"
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "valuePosition"
+          ],
+          "remove": true
+        }
+      ]
+    },
+    {
+      "name": "value position restricted to knobs",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "controls",
+            0,
+            "kind"
+          ],
+          "value": "fader"
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "faceDiameter"
+          ],
+          "remove": true
+        }
+      ]
+    },
+    {
+      "name": "label width restricted to value controls",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "controls",
+            1,
+            "kind"
+          ],
+          "value": "menu"
+        }
+      ]
+    },
+    {
+      "name": "power glyph restricted to toggles",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "controls",
+            2,
+            "kind"
+          ],
+          "value": "menu"
+        }
+      ]
+    },
+    {
+      "name": "knob face cannot exceed height",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "controls",
+            0,
+            "h"
+          ],
+          "value": 20
+        }
+      ]
+    },
+    {
+      "name": "knob face absolute maximum",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "controls",
+            0,
+            "w"
+          ],
+          "value": 200
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "h"
+          ],
+          "value": 200
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "faceDiameter"
+          ],
+          "value": 161
+        }
+      ]
+    },
+    {
+      "name": "wavetable selector with explicit oscillator index",
+      "valid": true,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "kind"
+          ],
+          "value": "oscillator"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "envelope"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "wavetableRect"
+          ],
+          "value": [
+            10,
+            210,
+            180,
+            24
+          ]
+        }
+      ]
+    },
+    {
+      "name": "wavetable selector defaults to oscillator one",
+      "valid": true,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "kind"
+          ],
+          "value": "oscillator"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "envelope"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "wavetableRect"
+          ],
+          "value": [
+            10,
+            210,
+            180,
+            24
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "index"
+          ],
+          "remove": true
+        }
+      ]
+    },
+    {
+      "name": "wavetable selector minimum bounds and final oscillator",
+      "valid": true,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "kind"
+          ],
+          "value": "oscillator"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "envelope"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "wavetableRect"
+          ],
+          "value": [
+            10,
+            210,
+            180,
+            24
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "index"
+          ],
+          "value": 3
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "wavetableRect"
+          ],
+          "value": [
+            10,
+            210,
+            60,
+            18
+          ]
+        }
+      ]
+    },
+    {
+      "name": "wavetable selector on wrong panel",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "kind"
+          ],
+          "value": "oscillator"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "envelope"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "wavetableRect"
+          ],
+          "value": [
+            10,
+            210,
+            180,
+            24
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "kind"
+          ],
+          "value": "waveform"
+        }
+      ]
+    },
+    {
+      "name": "wavetable oscillator index above limit",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "kind"
+          ],
+          "value": "oscillator"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "envelope"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "wavetableRect"
+          ],
+          "value": [
+            10,
+            210,
+            180,
+            24
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "index"
+          ],
+          "value": 4
+        }
+      ]
+    },
+    {
+      "name": "wavetable rectangle shape",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "kind"
+          ],
+          "value": "oscillator"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "envelope"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "wavetableRect"
+          ],
+          "value": [
+            10,
+            210,
+            180,
+            24
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "wavetableRect"
+          ],
+          "value": [
+            10,
+            210,
+            60
+          ]
+        }
+      ]
+    },
+    {
+      "name": "wavetable rectangle type",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "kind"
+          ],
+          "value": "oscillator"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "envelope"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "wavetableRect"
+          ],
+          "value": [
+            10,
+            210,
+            180,
+            24
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "wavetableRect"
+          ],
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "wavetable rectangle outside panel",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "kind"
+          ],
+          "value": "oscillator"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "envelope"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "wavetableRect"
+          ],
+          "value": [
+            10,
+            210,
+            180,
+            24
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "wavetableRect"
+          ],
+          "value": [
+            10,
+            270,
+            60,
+            18
+          ]
+        }
+      ]
+    },
+    {
+      "name": "wavetable width below minimum",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "kind"
+          ],
+          "value": "oscillator"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "envelope"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "wavetableRect"
+          ],
+          "value": [
+            10,
+            210,
+            180,
+            24
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "wavetableRect"
+          ],
+          "value": [
+            10,
+            210,
+            59,
+            18
+          ]
+        }
+      ]
+    },
+    {
+      "name": "wavetable height below minimum",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "kind"
+          ],
+          "value": "oscillator"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "envelope"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "wavetableRect"
+          ],
+          "value": [
+            10,
+            210,
+            180,
+            24
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "wavetableRect"
+          ],
+          "value": [
+            10,
+            210,
+            60,
+            17
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -5,7 +5,9 @@
  */
 #include "Manifest.h"
 
+#include <algorithm>
 #include <cmath>
+#include <map>
 #include <set>
 
 namespace Surge::GUI::Reference
@@ -161,6 +163,120 @@ bool insidePanel(const juce::var &v, const juce::DynamicObject &panel, const juc
             x + w <= px + static_cast<double>(panel.getProperty("w")) + 0.001 &&
             y + h <= py + static_cast<double>(panel.getProperty("h")) + 0.001) ||
            fail(error, where + " must be inside its panel");
+}
+
+struct SelectionDefinition
+{
+    juce::String defaultChoice;
+    std::set<juce::String> choices;
+};
+
+bool selectionDefinition(const juce::var &value, const juce::DynamicObject &panel,
+                         const juce::String &where,
+                         std::map<juce::String, SelectionDefinition> &selections,
+                         juce::String &error)
+{
+    auto *selection = value.getDynamicObject();
+    if (selection == nullptr)
+        return fail(error, where + " must be an object");
+    if (!stringField(*selection, "id", 80, where, error) ||
+        !identifier(selection->getProperty("id").toString()))
+        return fail(error, where + ".id must be a short alphanumeric identifier");
+    const auto id = selection->getProperty("id").toString();
+    if (selections.count(id) != 0)
+        return fail(error, where + ".id duplicates another selection group");
+    const auto &kind = selection->getProperty("kind");
+    if (!kind.isString() || !oneOf(kind.toString(), "source|fx"))
+        return fail(error, where + ".kind must be source or fx");
+    if (!plotRectangle(selection->getProperty("tabsRect"), where + ".tabsRect", error) ||
+        !insidePanel(selection->getProperty("tabsRect"), panel, where + ".tabsRect", error))
+        return false;
+    const auto *choices = selection->getProperty("choices").getArray();
+    if (choices == nullptr || choices->isEmpty() || choices->size() > 16)
+        return fail(error, where + ".choices must contain 1..16 objects");
+    SelectionDefinition definition;
+    for (int i = 0; i < choices->size(); ++i)
+    {
+        const auto choiceWhere = where + ".choices[" + juce::String(i) + "]";
+        auto *choice = choices->getReference(i).getDynamicObject();
+        if (choice == nullptr)
+            return fail(error, choiceWhere + " must be an object");
+        if (!stringField(*choice, "id", 80, choiceWhere, error) ||
+            !identifier(choice->getProperty("id").toString()))
+            return fail(error, choiceWhere + ".id must be a short alphanumeric identifier");
+        if (!definition.choices.insert(choice->getProperty("id").toString()).second)
+            return fail(error, choiceWhere + ".id duplicates another choice");
+        if (!stringField(*choice, "label", 160, choiceWhere, error) ||
+            !stringField(*choice, "source", 40, choiceWhere, error))
+            return false;
+        const auto source = choice->getProperty("source").toString();
+        const int maximum = source == "fx"             ? 16
+                            : source == "envelope"     ? 2
+                            : source == "lfo" || source == "lfo-envelope" ? 12
+                            : source == "oscillator" || source == "waveform" ? 3
+                                                                                : 0;
+        const auto &index = choice->getProperty("index");
+        if (maximum == 0 || !number(index) || static_cast<double>(index) < 1 ||
+            static_cast<double>(index) > maximum ||
+            std::floor(static_cast<double>(index)) != static_cast<double>(index))
+            return fail(error, choiceWhere + ".source/index is not a supported synth source");
+        if ((kind.toString() == "fx") != (source == "fx"))
+            return fail(error, choiceWhere + ".source does not match the selection kind");
+    }
+    if (!stringField(*selection, "default", 80, where, error))
+        return false;
+    definition.defaultChoice = selection->getProperty("default").toString();
+    if (definition.choices.count(definition.defaultChoice) == 0)
+        return fail(error, where + ".default must name a choice");
+    int columns = choices->size();
+    if (selection->hasProperty("columns"))
+    {
+        const auto &value = selection->getProperty("columns");
+        if (!boundedNumber(*selection, "columns", 1, 8, where, error) ||
+            std::floor(static_cast<double>(value)) != static_cast<double>(value))
+            return fail(error, where + ".columns must be an integer in 1..8");
+        columns = std::min(choices->size(), static_cast<int>(value));
+    }
+    const int rows = (choices->size() + columns - 1) / columns;
+    const auto *rectangle = selection->getProperty("tabsRect").getArray();
+    // Match buildViewTabs: a fixed 4-pixel gap separates individual native buttons.
+    if ((static_cast<double>(rectangle->getReference(2)) - 4.0 * (columns - 1)) / columns < 1 ||
+        (static_cast<double>(rectangle->getReference(3)) - 4.0 * (rows - 1)) / rows < 1)
+        return fail(error, where + ".tabsRect is too small for its tab buttons and gaps");
+    if (selection->hasProperty("fontSize") &&
+        !boundedNumber(*selection, "fontSize", 8, 24, where, error))
+        return false;
+    selections.emplace(id, std::move(definition));
+    return true;
+}
+
+bool selectionBindings(const juce::DynamicObject &control, const juce::String &where,
+                       const std::map<juce::String, SelectionDefinition> &selections,
+                       juce::String &error)
+{
+    if (!stringField(control, "selectionGroup", 80, where, error) ||
+        !identifier(control.getProperty("selectionGroup").toString()))
+        return fail(error, where + ".selectionGroup must be a selection identifier");
+    const auto group = selections.find(control.getProperty("selectionGroup").toString());
+    if (group == selections.end())
+        return fail(error, where + ".selectionGroup names an unknown selection");
+    auto *bindings = control.getProperty("bindings").getDynamicObject();
+    if (bindings == nullptr ||
+        static_cast<size_t>(bindings->getProperties().size()) != group->second.choices.size())
+        return fail(error, where + ".bindings must contain exactly the selection choice ids");
+    for (const auto &choice : group->second.choices)
+    {
+        const juce::Identifier key(choice);
+        const auto &binding = bindings->getProperty(key);
+        if (!bindings->hasProperty(key) ||
+            (!binding.isVoid() && (!binding.isString() || !identifier(binding.toString()))))
+            return fail(error, where + ".bindings." + choice +
+                                   " must be a parameter identifier or null");
+    }
+    const auto &initial = bindings->getProperty(juce::Identifier(group->second.defaultChoice));
+    if (!initial.isString() || initial.toString() != control.getProperty("binding").toString())
+        return fail(error, where + ".bindings default must equal its base binding and not be null");
+    return true;
 }
 
 // JUCE's general-purpose parser accepts some non-JSON escapes/trailing commas,
@@ -455,6 +571,7 @@ bool validateManifest(const juce::var &data, juce::String &error)
             return fail(error, "Every palette entry must be a hex colour");
 
     std::set<juce::String> ids;
+    std::map<juce::String, SelectionDefinition> selections;
     for (const auto *collection : {"panels", "controls"})
     {
         const auto &value = object->getProperty(collection);
@@ -504,6 +621,19 @@ bool validateManifest(const juce::var &data, juce::String &error)
                         (!plotRectangle(item->getProperty(key), where + "." + key, error) ||
                          !insidePanel(item->getProperty(key), *item, where + "." + key, error)))
                         return false;
+                if (item->hasProperty("wavetableRect"))
+                {
+                    const auto &rect = item->getProperty("wavetableRect");
+                    if (item->getProperty("kind").toString() != "oscillator" ||
+                        (item->hasProperty("index") &&
+                         static_cast<double>(item->getProperty("index")) > 3))
+                        return fail(error, where + ".wavetableRect requires oscillator index 1..3");
+                    if (!plotRectangle(rect, where + ".wavetableRect", error) ||
+                        !insidePanel(rect, *item, where + ".wavetableRect", error))
+                        return false;
+                    if (static_cast<double>(rect[2]) < 60 || static_cast<double>(rect[3]) < 18)
+                        return fail(error, where + ".wavetableRect must be at least 60 x 18");
+                }
                 if (item->hasProperty("flowNodes"))
                 {
                     auto *nodes = item->getProperty("flowNodes").getDynamicObject();
@@ -525,8 +655,22 @@ bool validateManifest(const juce::var &data, juce::String &error)
                             return false;
                     }
                 }
+                if (item->hasProperty("envelope") &&
+                    (!item->getProperty("envelope").isBool() ||
+                     item->getProperty("kind").toString() != "lfo"))
+                    return fail(error, where + ".envelope must be a boolean on an lfo panel");
                 if (item->hasProperty("titleHeight") &&
-                    !boundedNumber(*item, "titleHeight", 0, 120, where, error))
+                    !boundedNumber(*item, "titleHeight", 0,
+                                   std::min(120.0, static_cast<double>(item->getProperty("h"))),
+                                   where, error))
+                    return false;
+                if (item->hasProperty("titleInset") &&
+                    !boundedNumber(*item, "titleInset", 0,
+                                   static_cast<double>(item->getProperty("w")) - 12, where, error))
+                    return false;
+                if (item->hasProperty("selection") &&
+                    !selectionDefinition(item->getProperty("selection"), *item,
+                                         where + ".selection", selections, error))
                     return false;
             }
             else
@@ -550,7 +694,40 @@ bool validateManifest(const juce::var &data, juce::String &error)
                      !oneOf(item->getProperty("labelPosition").toString(), "left|right|top") ||
                      (item->hasProperty("kind") && item->getProperty("kind").toString() != "knob")))
                     return fail(error, where + ".labelPosition must be left/right/top on a knob");
-                const auto kind = item->getProperty("kind").toString();
+                const auto kind = item->hasProperty("kind")
+                                      ? item->getProperty("kind").toString()
+                                      : juce::String("knob");
+                if (item->hasProperty("faceDiameter"))
+                {
+                    if (kind != "knob")
+                        return fail(error, where + ".faceDiameter is only supported on a knob");
+                    if (!boundedNumber(*item, "faceDiameter", 8,
+                                       std::min({160.0,
+                                                 static_cast<double>(item->getProperty("w")),
+                                                 static_cast<double>(item->getProperty("h"))}),
+                                       where, error))
+                        return false;
+                }
+                if (item->hasProperty("valuePosition") &&
+                    (kind != "knob" || !item->getProperty("valuePosition").isString() ||
+                     !oneOf(item->getProperty("valuePosition").toString(), "bottom|right|hidden")))
+                    return fail(error, where + ".valuePosition must be bottom/right/hidden on a knob");
+                if (item->hasProperty("labelWidth"))
+                {
+                    if (kind != "value")
+                        return fail(error, where + ".labelWidth is only supported on a value control");
+                    if (!boundedNumber(*item, "labelWidth", 0,
+                                       static_cast<double>(item->getProperty("w")) - 12,
+                                       where, error))
+                        return false;
+                }
+                if (item->hasProperty("glyph") &&
+                    (kind != "toggle" || !item->getProperty("glyph").isString() ||
+                     item->getProperty("glyph").toString() != "power"))
+                    return fail(error, where + ".glyph must be power on a toggle");
+                if ((item->hasProperty("selectionGroup") || item->hasProperty("bindings")) &&
+                    !selectionBindings(*item, where, selections, error))
+                    return false;
                 if ((kind == "fader" && (static_cast<double>(item->getProperty("w")) < 24 ||
                                          static_cast<double>(item->getProperty("h")) < 46)) ||
                     (kind == "horizontal" && (static_cast<double>(item->getProperty("w")) < 24 ||

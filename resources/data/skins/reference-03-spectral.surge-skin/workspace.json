@@ -37,9 +37,17 @@
       "h": 135,
       "plot": [
         35,
-        150,
+        149,
         178,
-        82
+        85
+      ],
+      "titleInset": 35,
+      "fontSize": 14,
+      "wavetableRect": [
+        248,
+        115,
+        185,
+        24
       ]
     },
     {
@@ -54,9 +62,17 @@
       "h": 132,
       "plot": [
         35,
-        290,
+        291,
         178,
-        82
+        81
+      ],
+      "titleInset": 35,
+      "fontSize": 14,
+      "wavetableRect": [
+        248,
+        257,
+        185,
+        24
       ]
     },
     {
@@ -71,9 +87,17 @@
       "h": 134,
       "plot": [
         35,
-        432,
+        431,
         178,
-        82
+        85
+      ],
+      "titleInset": 35,
+      "fontSize": 14,
+      "wavetableRect": [
+        248,
+        397,
+        185,
+        24
       ]
     },
     {
@@ -105,11 +129,45 @@
       "w": 694,
       "h": 347,
       "plot": [
-        465,
+        455,
         146,
-        672,
-        230
-      ]
+        692,
+        236
+      ],
+      "fontSize": 13,
+      "index": 1,
+      "selection": {
+        "id": "spectral-observatory",
+        "kind": "source",
+        "tabsRect": [
+          693,
+          115,
+          315,
+          25
+        ],
+        "default": "osc1",
+        "choices": [
+          {
+            "id": "osc1",
+            "label": "OSC 1",
+            "source": "oscillator",
+            "index": 1
+          },
+          {
+            "id": "osc2",
+            "label": "OSC 2",
+            "source": "oscillator",
+            "index": 2
+          },
+          {
+            "id": "osc3",
+            "label": "OSC 3",
+            "source": "oscillator",
+            "index": 3
+          }
+        ],
+        "fontSize": 11.5
+      }
     },
     {
       "id": "p.filter-heading",
@@ -195,7 +253,82 @@
         330,
         293,
         111
-      ]
+      ],
+      "titleHeight": 0,
+      "selection": {
+        "id": "spectral-envelope",
+        "kind": "source",
+        "tabsRect": [
+          1169,
+          261,
+          385,
+          25
+        ],
+        "default": "env1",
+        "choices": [
+          {
+            "id": "env1",
+            "label": "ENV 1",
+            "source": "envelope",
+            "index": 1
+          },
+          {
+            "id": "env2",
+            "label": "ENV 2",
+            "source": "envelope",
+            "index": 2
+          },
+          {
+            "id": "lfo1env",
+            "label": "LF1 ENV",
+            "source": "lfo-envelope",
+            "index": 1
+          },
+          {
+            "id": "lfo2env",
+            "label": "LF2 ENV",
+            "source": "lfo-envelope",
+            "index": 2
+          },
+          {
+            "id": "lfo1",
+            "label": "LFO 1",
+            "source": "lfo",
+            "index": 1
+          },
+          {
+            "id": "lfo2",
+            "label": "LFO 2",
+            "source": "lfo",
+            "index": 2
+          },
+          {
+            "id": "lfo3",
+            "label": "LFO 3",
+            "source": "lfo",
+            "index": 3
+          },
+          {
+            "id": "lfo4",
+            "label": "LFO 4",
+            "source": "lfo",
+            "index": 4
+          }
+        ],
+        "fontSize": 10.5
+      }
+    },
+    {
+      "id": "p.envelope-heading",
+      "kind": "tabs",
+      "title": "ENVELOPE / LFO",
+      "x": 1169,
+      "y": 294,
+      "w": 177,
+      "h": 29,
+      "titleHeight": 24,
+      "fontSize": 13,
+      "titleInset": 10
     },
     {
       "id": "p.lfo",
@@ -207,11 +340,50 @@
       "w": 405,
       "h": 247,
       "plot": [
-        1170,
+        1171,
         503,
-        230,
+        237,
         119
-      ]
+      ],
+      "titleHeight": 0,
+      "selection": {
+        "id": "spectral-lfo",
+        "kind": "source",
+        "tabsRect": [
+          1169,
+          470,
+          208,
+          24
+        ],
+        "default": "lfo1",
+        "choices": [
+          {
+            "id": "lfo1",
+            "label": "LFO 1",
+            "source": "lfo",
+            "index": 1
+          },
+          {
+            "id": "lfo2",
+            "label": "LFO 2",
+            "source": "lfo",
+            "index": 2
+          },
+          {
+            "id": "lfo3",
+            "label": "LFO 3",
+            "source": "lfo",
+            "index": 3
+          },
+          {
+            "id": "lfo4",
+            "label": "LFO 4",
+            "source": "lfo",
+            "index": 4
+          }
+        ],
+        "fontSize": 10.5
+      }
     },
     {
       "id": "p.modulation",
@@ -230,7 +402,75 @@
       "x": 692,
       "y": 724,
       "w": 507,
-      "h": 225
+      "h": 225,
+      "selection": {
+        "id": "spectral-fx",
+        "kind": "fx",
+        "tabsRect": [
+          709,
+          761,
+          483,
+          31
+        ],
+        "default": "fx5",
+        "choices": [
+          {
+            "id": "fx1",
+            "label": "FX 1",
+            "source": "fx",
+            "index": 1
+          },
+          {
+            "id": "fx2",
+            "label": "FX 2",
+            "source": "fx",
+            "index": 2
+          },
+          {
+            "id": "fx3",
+            "label": "FX 3",
+            "source": "fx",
+            "index": 3
+          },
+          {
+            "id": "fx4",
+            "label": "FX 4",
+            "source": "fx",
+            "index": 4
+          },
+          {
+            "id": "fx5",
+            "label": "FX 5",
+            "source": "fx",
+            "index": 5
+          },
+          {
+            "id": "fx6",
+            "label": "FX 6",
+            "source": "fx",
+            "index": 6
+          },
+          {
+            "id": "fx7",
+            "label": "FX 7",
+            "source": "fx",
+            "index": 7
+          },
+          {
+            "id": "fx8",
+            "label": "FX 8",
+            "source": "fx",
+            "index": 8
+          }
+        ],
+        "fontSize": 10.5
+      },
+      "plot": [
+        709,
+        847,
+        145,
+        89
+      ]
     },
     {
       "id": "p.analyzer",
@@ -250,16 +490,6 @@
   ],
   "controls": [
     {
-      "id": "c.scene-volume",
-      "binding": "scene.volume",
-      "label": "Scene level",
-      "x": 1270,
-      "y": 640,
-      "w": 56,
-      "h": 63,
-      "fontSize": 9.5
-    },
-    {
       "id": "c.master-volume",
       "binding": "master.volume",
       "label": "Master",
@@ -274,30 +504,22 @@
       "id": "c.osc1-type",
       "binding": "osc1.type",
       "kind": "menu",
-      "x": 118,
-      "y": 114,
-      "w": 246,
-      "h": 24
+      "x": 120,
+      "y": 115,
+      "w": 117,
+      "h": 24,
+      "label": "Oscillator 1 algorithm"
     },
     {
       "id": "c.osc1-mute",
       "binding": "osc1.mute",
-      "label": "M",
+      "label": "Mute oscillator 1",
       "kind": "toggle",
-      "x": 377,
-      "y": 114,
-      "w": 26,
-      "h": 24
-    },
-    {
-      "id": "c.osc1-solo",
-      "binding": "osc1.solo",
-      "label": "S",
-      "kind": "toggle",
-      "x": 408,
-      "y": 114,
-      "w": 26,
-      "h": 24
+      "x": 34,
+      "y": 116,
+      "w": 22,
+      "h": 22,
+      "glyph": "power"
     },
     {
       "id": "c.osc1-pitch",
@@ -307,7 +529,8 @@
       "y": 153,
       "w": 46,
       "h": 78,
-      "fontSize": 11
+      "fontSize": 11,
+      "faceDiameter": 30
     },
     {
       "id": "c.osc1-param0",
@@ -316,7 +539,8 @@
       "y": 153,
       "w": 46,
       "h": 78,
-      "fontSize": 11
+      "fontSize": 11,
+      "faceDiameter": 30
     },
     {
       "id": "c.osc1-param1",
@@ -325,7 +549,8 @@
       "y": 153,
       "w": 46,
       "h": 78,
-      "fontSize": 11
+      "fontSize": 11,
+      "faceDiameter": 40
     },
     {
       "id": "c.osc1-param2",
@@ -334,36 +559,29 @@
       "y": 153,
       "w": 46,
       "h": 78,
-      "fontSize": 11
+      "fontSize": 11,
+      "faceDiameter": 32
     },
     {
       "id": "c.osc2-type",
       "binding": "osc2.type",
       "kind": "menu",
-      "x": 118,
-      "y": 256,
-      "w": 246,
-      "h": 24
+      "x": 120,
+      "y": 257,
+      "w": 117,
+      "h": 24,
+      "label": "Oscillator 2 algorithm"
     },
     {
       "id": "c.osc2-mute",
       "binding": "osc2.mute",
-      "label": "M",
+      "label": "Mute oscillator 2",
       "kind": "toggle",
-      "x": 377,
-      "y": 256,
-      "w": 26,
-      "h": 24
-    },
-    {
-      "id": "c.osc2-solo",
-      "binding": "osc2.solo",
-      "label": "S",
-      "kind": "toggle",
-      "x": 408,
-      "y": 256,
-      "w": 26,
-      "h": 24
+      "x": 34,
+      "y": 258,
+      "w": 22,
+      "h": 22,
+      "glyph": "power"
     },
     {
       "id": "c.osc2-pitch",
@@ -374,7 +592,8 @@
       "w": 46,
       "h": 78,
       "fontSize": 11,
-      "accent": "secondary"
+      "accent": "secondary",
+      "faceDiameter": 30
     },
     {
       "id": "c.osc2-param0",
@@ -384,7 +603,8 @@
       "w": 46,
       "h": 78,
       "fontSize": 11,
-      "accent": "secondary"
+      "accent": "secondary",
+      "faceDiameter": 30
     },
     {
       "id": "c.osc2-param1",
@@ -394,7 +614,8 @@
       "w": 46,
       "h": 78,
       "fontSize": 11,
-      "accent": "secondary"
+      "accent": "secondary",
+      "faceDiameter": 40
     },
     {
       "id": "c.osc2-param2",
@@ -404,36 +625,29 @@
       "w": 46,
       "h": 78,
       "fontSize": 11,
-      "accent": "secondary"
+      "accent": "secondary",
+      "faceDiameter": 32
     },
     {
       "id": "c.osc3-type",
       "binding": "osc3.type",
       "kind": "menu",
-      "x": 118,
-      "y": 396,
-      "w": 246,
-      "h": 24
+      "x": 120,
+      "y": 397,
+      "w": 117,
+      "h": 24,
+      "label": "Oscillator 3 algorithm"
     },
     {
       "id": "c.osc3-mute",
       "binding": "osc3.mute",
-      "label": "M",
+      "label": "Mute oscillator 3",
       "kind": "toggle",
-      "x": 377,
-      "y": 396,
-      "w": 26,
-      "h": 24
-    },
-    {
-      "id": "c.osc3-solo",
-      "binding": "osc3.solo",
-      "label": "S",
-      "kind": "toggle",
-      "x": 408,
-      "y": 396,
-      "w": 26,
-      "h": 24
+      "x": 34,
+      "y": 398,
+      "w": 22,
+      "h": 22,
+      "glyph": "power"
     },
     {
       "id": "c.osc3-pitch",
@@ -443,7 +657,8 @@
       "y": 435,
       "w": 46,
       "h": 78,
-      "fontSize": 11
+      "fontSize": 11,
+      "faceDiameter": 30
     },
     {
       "id": "c.osc3-param0",
@@ -452,7 +667,8 @@
       "y": 435,
       "w": 46,
       "h": 78,
-      "fontSize": 11
+      "fontSize": 11,
+      "faceDiameter": 30
     },
     {
       "id": "c.osc3-param1",
@@ -461,7 +677,8 @@
       "y": 435,
       "w": 46,
       "h": 78,
-      "fontSize": 11
+      "fontSize": 11,
+      "faceDiameter": 40
     },
     {
       "id": "c.osc3-param2",
@@ -470,7 +687,8 @@
       "y": 435,
       "w": 46,
       "h": 78,
-      "fontSize": 11
+      "fontSize": 11,
+      "faceDiameter": 32
     },
     {
       "id": "c.scene-polymode",
@@ -540,30 +758,22 @@
       "binding": "noise.level",
       "label": "Noise",
       "x": 314,
-      "y": 620,
+      "y": 622,
       "w": 48,
-      "h": 82,
-      "fontSize": 11
+      "h": 80,
+      "fontSize": 11,
+      "faceDiameter": 32
     },
     {
       "id": "c.ring12-level",
       "binding": "ring12.level",
-      "label": "Ring 1×2",
+      "label": "Ring 1\u00d72",
       "x": 374,
-      "y": 620,
+      "y": 622,
       "w": 48,
-      "h": 82,
-      "fontSize": 11
-    },
-    {
-      "id": "c.ring23-level",
-      "binding": "ring23.level",
-      "label": "Ring 2×3",
-      "x": 1180,
-      "y": 640,
-      "w": 80,
-      "h": 63,
-      "fontSize": 10.5
+      "h": 80,
+      "fontSize": 11,
+      "faceDiameter": 32
     },
     {
       "id": "c.observatory-param0",
@@ -572,7 +782,14 @@
       "y": 383,
       "w": 56,
       "h": 65,
-      "fontSize": 10.5
+      "fontSize": 10.5,
+      "selectionGroup": "spectral-observatory",
+      "bindings": {
+        "osc1": "osc1.param0",
+        "osc2": "osc2.param0",
+        "osc3": "osc3.param0"
+      },
+      "faceDiameter": 38
     },
     {
       "id": "c.observatory-param1",
@@ -581,7 +798,14 @@
       "y": 383,
       "w": 56,
       "h": 65,
-      "fontSize": 10.5
+      "fontSize": 10.5,
+      "selectionGroup": "spectral-observatory",
+      "bindings": {
+        "osc1": "osc1.param1",
+        "osc2": "osc2.param1",
+        "osc3": "osc3.param1"
+      },
+      "faceDiameter": 38
     },
     {
       "id": "c.observatory-param2",
@@ -590,7 +814,14 @@
       "y": 383,
       "w": 56,
       "h": 65,
-      "fontSize": 10.5
+      "fontSize": 10.5,
+      "selectionGroup": "spectral-observatory",
+      "bindings": {
+        "osc1": "osc1.param2",
+        "osc2": "osc2.param2",
+        "osc3": "osc3.param2"
+      },
+      "faceDiameter": 38
     },
     {
       "id": "c.observatory-param3",
@@ -599,7 +830,14 @@
       "y": 383,
       "w": 56,
       "h": 65,
-      "fontSize": 10.5
+      "fontSize": 10.5,
+      "selectionGroup": "spectral-observatory",
+      "bindings": {
+        "osc1": "osc1.param3",
+        "osc2": "osc2.param3",
+        "osc3": "osc3.param3"
+      },
+      "faceDiameter": 38
     },
     {
       "id": "c.observatory-param4",
@@ -608,7 +846,14 @@
       "y": 383,
       "w": 56,
       "h": 65,
-      "fontSize": 10.5
+      "fontSize": 10.5,
+      "selectionGroup": "spectral-observatory",
+      "bindings": {
+        "osc1": "osc1.param4",
+        "osc2": "osc2.param4",
+        "osc3": "osc3.param4"
+      },
+      "faceDiameter": 38
     },
     {
       "id": "c.observatory-param5",
@@ -617,7 +862,14 @@
       "y": 383,
       "w": 56,
       "h": 65,
-      "fontSize": 10.5
+      "fontSize": 10.5,
+      "selectionGroup": "spectral-observatory",
+      "bindings": {
+        "osc1": "osc1.param5",
+        "osc2": "osc2.param5",
+        "osc3": "osc3.param5"
+      },
+      "faceDiameter": 30
     },
     {
       "id": "c.observatory-param6",
@@ -626,7 +878,14 @@
       "y": 383,
       "w": 56,
       "h": 65,
-      "fontSize": 10.5
+      "fontSize": 10.5,
+      "selectionGroup": "spectral-observatory",
+      "bindings": {
+        "osc1": "osc1.param6",
+        "osc2": "osc2.param6",
+        "osc3": "osc3.param6"
+      },
+      "faceDiameter": 30
     },
     {
       "id": "c.filter1-type",
@@ -642,20 +901,22 @@
       "binding": "filter1.cutoff",
       "label": "Cutoff",
       "x": 713,
-      "y": 525,
+      "y": 524,
       "w": 55,
-      "h": 66,
-      "fontSize": 10.5
+      "h": 76,
+      "fontSize": 11,
+      "faceDiameter": 42
     },
     {
       "id": "c.filter1-resonance",
       "binding": "filter1.resonance",
       "label": "Reso",
       "x": 713,
-      "y": 592,
+      "y": 601,
       "w": 55,
-      "h": 61,
-      "fontSize": 10.5
+      "h": 51,
+      "fontSize": 11,
+      "faceDiameter": 30
     },
     {
       "id": "c.filter1-keytrack",
@@ -665,18 +926,20 @@
       "y": 690,
       "w": 212,
       "h": 18,
-      "fontSize": 9.5,
-      "kind": "value"
+      "fontSize": 10,
+      "kind": "value",
+      "labelWidth": 51
     },
     {
       "id": "c.filter1-envmod",
       "binding": "filter1.envmod",
       "label": "Env amt",
       "x": 713,
-      "y": 655,
+      "y": 653,
       "w": 55,
-      "h": 48,
-      "fontSize": 10.5
+      "h": 55,
+      "fontSize": 10.5,
+      "faceDiameter": 32
     },
     {
       "id": "c.filter2-type",
@@ -692,22 +955,24 @@
       "binding": "filter2.cutoff",
       "label": "Cutoff",
       "x": 1010,
-      "y": 525,
+      "y": 524,
       "w": 55,
-      "h": 66,
-      "fontSize": 10.5,
-      "accent": "secondary"
+      "h": 76,
+      "fontSize": 11,
+      "accent": "secondary",
+      "faceDiameter": 42
     },
     {
       "id": "c.filter2-resonance",
       "binding": "filter2.resonance",
       "label": "Reso",
       "x": 1010,
-      "y": 592,
+      "y": 601,
       "w": 55,
-      "h": 61,
-      "fontSize": 10.5,
-      "accent": "secondary"
+      "h": 51,
+      "fontSize": 11,
+      "accent": "secondary",
+      "faceDiameter": 30
     },
     {
       "id": "c.filter2-keytrack",
@@ -717,20 +982,22 @@
       "y": 690,
       "w": 208,
       "h": 18,
-      "fontSize": 9.5,
+      "fontSize": 10,
       "accent": "secondary",
-      "kind": "value"
+      "kind": "value",
+      "labelWidth": 51
     },
     {
       "id": "c.filter2-envmod",
       "binding": "filter2.envmod",
       "label": "Env amt",
       "x": 1010,
-      "y": 655,
+      "y": 653,
       "w": 55,
-      "h": 48,
+      "h": 55,
       "fontSize": 10.5,
-      "accent": "secondary"
+      "accent": "secondary",
+      "faceDiameter": 32
     },
     {
       "id": "c.routing",
@@ -746,85 +1013,91 @@
       "id": "c.macro1",
       "binding": "macro1",
       "x": 1167,
-      "y": 152,
+      "y": 145,
       "w": 58,
-      "h": 88,
-      "fontSize": 11
+      "h": 90,
+      "fontSize": 11.5,
+      "faceDiameter": 44,
+      "valuePosition": "hidden"
     },
     {
       "id": "c.macro2",
       "binding": "macro2",
       "x": 1233,
-      "y": 152,
+      "y": 145,
       "w": 58,
-      "h": 88,
-      "fontSize": 11,
-      "accent": "secondary"
+      "h": 90,
+      "fontSize": 11.5,
+      "accent": "secondary",
+      "faceDiameter": 44,
+      "valuePosition": "hidden"
     },
     {
       "id": "c.macro3",
       "binding": "macro3",
       "x": 1299,
-      "y": 152,
+      "y": 145,
       "w": 58,
-      "h": 88,
-      "fontSize": 11
+      "h": 90,
+      "fontSize": 11.5,
+      "faceDiameter": 44,
+      "valuePosition": "hidden",
+      "accent": "secondary"
     },
     {
       "id": "c.macro4",
       "binding": "macro4",
       "x": 1364,
-      "y": 152,
+      "y": 145,
       "w": 58,
-      "h": 88,
-      "fontSize": 11,
-      "accent": "secondary"
+      "h": 90,
+      "fontSize": 11.5,
+      "accent": "secondary",
+      "faceDiameter": 44,
+      "valuePosition": "hidden"
     },
     {
       "id": "c.macro5",
       "binding": "macro5",
       "x": 1430,
-      "y": 152,
+      "y": 145,
       "w": 58,
-      "h": 88,
-      "fontSize": 11
+      "h": 90,
+      "fontSize": 11.5,
+      "faceDiameter": 44,
+      "valuePosition": "hidden"
     },
     {
       "id": "c.macro6",
       "binding": "macro6",
       "x": 1495,
-      "y": 152,
+      "y": 145,
       "w": 58,
-      "h": 88,
-      "fontSize": 11
-    },
-    {
-      "id": "c.macro7",
-      "binding": "macro7",
-      "x": 1336,
-      "y": 640,
-      "w": 80,
-      "h": 63,
-      "fontSize": 10.5
-    },
-    {
-      "id": "c.macro8",
-      "binding": "macro8",
-      "x": 1450,
-      "y": 640,
-      "w": 80,
-      "h": 63,
-      "fontSize": 10.5
+      "h": 90,
+      "fontSize": 11.5,
+      "faceDiameter": 44,
+      "valuePosition": "hidden"
     },
     {
       "id": "c.env1-mode",
       "binding": "env1.mode",
       "kind": "menu",
       "label": "Envelope mode",
-      "x": 1354,
+      "x": 1348,
       "y": 297,
-      "w": 194,
-      "h": 24
+      "w": 162,
+      "h": 24,
+      "selectionGroup": "spectral-envelope",
+      "bindings": {
+        "env1": "env1.mode",
+        "env2": "env2.mode",
+        "lfo1env": null,
+        "lfo2env": null,
+        "lfo1": null,
+        "lfo2": null,
+        "lfo3": null,
+        "lfo4": null
+      }
     },
     {
       "id": "c.env1-attack",
@@ -834,8 +1107,20 @@
       "y": 330,
       "w": 79,
       "h": 26,
-      "fontSize": 10,
-      "kind": "value"
+      "fontSize": 11.5,
+      "kind": "value",
+      "selectionGroup": "spectral-envelope",
+      "bindings": {
+        "env1": "env1.attack",
+        "env2": "env2.attack",
+        "lfo1env": "lfo1.attack",
+        "lfo2env": "lfo2.attack",
+        "lfo1": "lfo1.attack",
+        "lfo2": "lfo2.attack",
+        "lfo3": "lfo3.attack",
+        "lfo4": "lfo4.attack"
+      },
+      "labelWidth": 19
     },
     {
       "id": "c.env1-decay",
@@ -845,8 +1130,20 @@
       "y": 359,
       "w": 79,
       "h": 26,
-      "fontSize": 10,
-      "kind": "value"
+      "fontSize": 11.5,
+      "kind": "value",
+      "selectionGroup": "spectral-envelope",
+      "bindings": {
+        "env1": "env1.decay",
+        "env2": "env2.decay",
+        "lfo1env": "lfo1.decay",
+        "lfo2env": "lfo2.decay",
+        "lfo1": "lfo1.decay",
+        "lfo2": "lfo2.decay",
+        "lfo3": "lfo3.decay",
+        "lfo4": "lfo4.decay"
+      },
+      "labelWidth": 19
     },
     {
       "id": "c.env1-sustain",
@@ -856,8 +1153,20 @@
       "y": 388,
       "w": 79,
       "h": 26,
-      "fontSize": 10,
-      "kind": "value"
+      "fontSize": 11.5,
+      "kind": "value",
+      "selectionGroup": "spectral-envelope",
+      "bindings": {
+        "env1": "env1.sustain",
+        "env2": "env2.sustain",
+        "lfo1env": "lfo1.sustain",
+        "lfo2env": "lfo2.sustain",
+        "lfo1": "lfo1.sustain",
+        "lfo2": "lfo2.sustain",
+        "lfo3": "lfo3.sustain",
+        "lfo4": "lfo4.sustain"
+      },
+      "labelWidth": 19
     },
     {
       "id": "c.env1-release",
@@ -867,157 +1176,290 @@
       "y": 417,
       "w": 79,
       "h": 26,
-      "fontSize": 10,
-      "kind": "value"
+      "fontSize": 11.5,
+      "kind": "value",
+      "selectionGroup": "spectral-envelope",
+      "bindings": {
+        "env1": "env1.release",
+        "env2": "env2.release",
+        "lfo1env": "lfo1.release",
+        "lfo2env": "lfo2.release",
+        "lfo1": "lfo1.release",
+        "lfo2": "lfo2.release",
+        "lfo3": "lfo3.release",
+        "lfo4": "lfo4.release"
+      },
+      "labelWidth": 19
     },
     {
       "id": "c.lfo1-shape",
       "binding": "lfo1.shape",
       "kind": "menu",
-      "x": 1300,
-      "y": 471,
-      "w": 248,
-      "h": 24
+      "x": 1385,
+      "y": 470,
+      "w": 165,
+      "h": 24,
+      "selectionGroup": "spectral-lfo",
+      "bindings": {
+        "lfo1": "lfo1.shape",
+        "lfo2": "lfo2.shape",
+        "lfo3": "lfo3.shape",
+        "lfo4": "lfo4.shape"
+      }
     },
     {
       "id": "c.lfo1-rate",
       "binding": "lfo1.rate",
       "label": "Rate",
-      "x": 1408,
-      "y": 503,
-      "w": 142,
-      "h": 23,
+      "x": 1419,
+      "y": 499,
+      "w": 131,
+      "h": 26,
       "fontSize": 11,
-      "kind": "value"
+      "kind": "value",
+      "labelWidth": 45,
+      "selectionGroup": "spectral-lfo",
+      "bindings": {
+        "lfo1": "lfo1.rate",
+        "lfo2": "lfo2.rate",
+        "lfo3": "lfo3.rate",
+        "lfo4": "lfo4.rate"
+      }
     },
     {
       "id": "c.lfo1-phase",
       "binding": "lfo1.phase",
       "label": "Phase",
-      "x": 1408,
-      "y": 529,
-      "w": 142,
-      "h": 23,
+      "x": 1419,
+      "y": 558,
+      "w": 131,
+      "h": 25,
       "fontSize": 11,
-      "kind": "value"
-    },
-    {
-      "id": "c.lfo1-magnitude",
-      "binding": "lfo1.magnitude",
-      "label": "Depth",
-      "x": 1408,
-      "y": 555,
-      "w": 142,
-      "h": 23,
-      "fontSize": 11,
-      "kind": "value"
-    },
-    {
-      "id": "c.lfo1-delay",
-      "binding": "lfo1.delay",
-      "label": "Delay",
-      "x": 1408,
-      "y": 581,
-      "w": 142,
-      "h": 23,
-      "fontSize": 11,
-      "kind": "value"
+      "kind": "value",
+      "labelWidth": 45,
+      "selectionGroup": "spectral-lfo",
+      "bindings": {
+        "lfo1": "lfo1.phase",
+        "lfo2": "lfo2.phase",
+        "lfo3": "lfo3.phase",
+        "lfo4": "lfo4.phase"
+      }
     },
     {
       "id": "c.lfo1-attack",
       "binding": "lfo1.attack",
-      "label": "Fade in",
-      "x": 1408,
-      "y": 607,
-      "w": 142,
-      "h": 23,
+      "label": "Fade",
+      "x": 1419,
+      "y": 590,
+      "w": 131,
+      "h": 25,
       "fontSize": 11,
-      "kind": "value"
+      "kind": "value",
+      "labelWidth": 45,
+      "selectionGroup": "spectral-lfo",
+      "bindings": {
+        "lfo1": "lfo1.attack",
+        "lfo2": "lfo2.attack",
+        "lfo3": "lfo3.attack",
+        "lfo4": "lfo4.attack"
+      }
     },
     {
       "id": "c.fx1-type",
-      "binding": "fx1.type",
+      "binding": "fx5.type",
       "kind": "menu",
-      "label": "FX slot 1 type",
-      "x": 706,
-      "y": 811,
-      "w": 478,
-      "h": 24
+      "label": "Selected effect algorithm",
+      "x": 731,
+      "y": 810,
+      "w": 257,
+      "h": 24,
+      "selectionGroup": "spectral-fx",
+      "bindings": {
+        "fx1": "fx1.type",
+        "fx2": "fx2.type",
+        "fx3": "fx3.type",
+        "fx4": "fx4.type",
+        "fx5": "fx5.type",
+        "fx6": "fx6.type",
+        "fx7": "fx7.type",
+        "fx8": "fx8.type"
+      }
     },
     {
       "id": "c.fx1-param0",
-      "binding": "fx1.param0",
-      "x": 704,
-      "y": 844,
-      "w": 62,
-      "h": 82,
-      "fontSize": 10
+      "binding": "fx5.param0",
+      "x": 858,
+      "y": 850,
+      "w": 44,
+      "h": 83,
+      "fontSize": 10,
+      "faceDiameter": 34,
+      "selectionGroup": "spectral-fx",
+      "bindings": {
+        "fx1": "fx1.param0",
+        "fx2": "fx2.param0",
+        "fx3": "fx3.param0",
+        "fx4": "fx4.param0",
+        "fx5": "fx5.param0",
+        "fx6": "fx6.param0",
+        "fx7": "fx7.param0",
+        "fx8": "fx8.param0"
+      }
     },
     {
       "id": "c.fx1-param1",
-      "binding": "fx1.param1",
-      "x": 773,
-      "y": 844,
-      "w": 62,
-      "h": 82,
-      "fontSize": 10
+      "binding": "fx5.param1",
+      "x": 906,
+      "y": 850,
+      "w": 44,
+      "h": 83,
+      "fontSize": 10,
+      "faceDiameter": 34,
+      "selectionGroup": "spectral-fx",
+      "bindings": {
+        "fx1": "fx1.param1",
+        "fx2": "fx2.param1",
+        "fx3": "fx3.param1",
+        "fx4": "fx4.param1",
+        "fx5": "fx5.param1",
+        "fx6": "fx6.param1",
+        "fx7": "fx7.param1",
+        "fx8": "fx8.param1"
+      }
     },
     {
       "id": "c.fx1-param2",
-      "binding": "fx1.param2",
-      "x": 842,
-      "y": 844,
-      "w": 62,
-      "h": 82,
-      "fontSize": 10
+      "binding": "fx5.param2",
+      "x": 955,
+      "y": 850,
+      "w": 44,
+      "h": 83,
+      "fontSize": 10,
+      "faceDiameter": 34,
+      "selectionGroup": "spectral-fx",
+      "bindings": {
+        "fx1": "fx1.param2",
+        "fx2": "fx2.param2",
+        "fx3": "fx3.param2",
+        "fx4": "fx4.param2",
+        "fx5": "fx5.param2",
+        "fx6": "fx6.param2",
+        "fx7": "fx7.param2",
+        "fx8": "fx8.param2"
+      }
     },
     {
       "id": "c.fx1-param3",
-      "binding": "fx1.param3",
-      "x": 911,
-      "y": 844,
-      "w": 62,
-      "h": 82,
-      "fontSize": 10
+      "binding": "fx5.param3",
+      "x": 1002,
+      "y": 850,
+      "w": 44,
+      "h": 83,
+      "fontSize": 10,
+      "faceDiameter": 34,
+      "selectionGroup": "spectral-fx",
+      "bindings": {
+        "fx1": "fx1.param3",
+        "fx2": "fx2.param3",
+        "fx3": "fx3.param3",
+        "fx4": "fx4.param3",
+        "fx5": "fx5.param3",
+        "fx6": "fx6.param3",
+        "fx7": "fx7.param3",
+        "fx8": "fx8.param3"
+      }
     },
     {
       "id": "c.fx1-param4",
-      "binding": "fx1.param4",
-      "x": 980,
-      "y": 844,
-      "w": 62,
-      "h": 82,
-      "fontSize": 10
+      "binding": "fx5.param4",
+      "x": 1051,
+      "y": 850,
+      "w": 44,
+      "h": 83,
+      "fontSize": 10,
+      "faceDiameter": 34,
+      "selectionGroup": "spectral-fx",
+      "bindings": {
+        "fx1": "fx1.param4",
+        "fx2": "fx2.param4",
+        "fx3": "fx3.param4",
+        "fx4": "fx4.param4",
+        "fx5": "fx5.param4",
+        "fx6": "fx6.param4",
+        "fx7": "fx7.param4",
+        "fx8": "fx8.param4"
+      }
     },
     {
       "id": "c.fx1-param5",
-      "binding": "fx1.param5",
-      "x": 1049,
-      "y": 844,
-      "w": 62,
-      "h": 82,
-      "fontSize": 10
+      "binding": "fx5.param5",
+      "x": 1100,
+      "y": 850,
+      "w": 44,
+      "h": 83,
+      "fontSize": 10,
+      "faceDiameter": 34,
+      "selectionGroup": "spectral-fx",
+      "bindings": {
+        "fx1": "fx1.param5",
+        "fx2": "fx2.param5",
+        "fx3": "fx3.param5",
+        "fx4": "fx4.param5",
+        "fx5": "fx5.param5",
+        "fx6": "fx6.param5",
+        "fx7": "fx7.param5",
+        "fx8": "fx8.param5"
+      }
     },
     {
       "id": "c.fx1-param6",
-      "binding": "fx1.param6",
-      "x": 1118,
-      "y": 844,
-      "w": 62,
-      "h": 82,
-      "fontSize": 10
+      "binding": "fx5.param6",
+      "x": 1148,
+      "y": 850,
+      "w": 44,
+      "h": 83,
+      "fontSize": 10,
+      "faceDiameter": 34,
+      "selectionGroup": "spectral-fx",
+      "bindings": {
+        "fx1": "fx1.param6",
+        "fx2": "fx2.param6",
+        "fx3": "fx3.param6",
+        "fx4": "fx4.param6",
+        "fx5": "fx5.param6",
+        "fx6": "fx6.param6",
+        "fx7": "fx7.param6",
+        "fx8": "fx8.param6"
+      }
+    },
+    {
+      "id": "c.lfo1-trigmode",
+      "binding": "lfo1.trigmode",
+      "kind": "menu",
+      "label": "LFO trigger mode",
+      "x": 1419,
+      "y": 528,
+      "w": 131,
+      "h": 25,
+      "selectionGroup": "spectral-lfo",
+      "bindings": {
+        "lfo1": "lfo1.trigmode",
+        "lfo2": "lfo2.trigmode",
+        "lfo3": "lfo3.trigmode",
+        "lfo4": "lfo4.trigmode"
+      }
     }
   ],
   "adaptations": [
-    "Faithful native layout adaptation, not a pixel-identical copy of generated concept art; all displayed values come from the real processor.",
-    "The observatory draws a perspective stack of the current actual oscillator preview. It is not represented as a live spectrum or a sweep of different wavetable frames.",
-    "Six primary macros occupy the reference's top-right strip. The remaining two real native macros and the ring 2 × 3 level remain accessible in the utility row beneath the LFO plot.",
-    "Only actual Surge oscillator algorithms and dynamically named parameters are offered. The concept-only generic Sample and Granular modes are not fabricated.",
-    "Filter plots are explicitly labeled response previews. Real cutoff, resonance, keytracking and envelope-amount controls remain independently bound to each filter.",
-    "The visible envelope is native ENV 1, enlarged to the reference plot with compact live ADSR controls along its right edge. ENV 2, the other LFOs, modulation routing and all sixteen effect slots remain available through Full editor.",
-    "The output section shows an actual main-output spectrum and meters from the independent processor tap. Open scope leads to the native detailed analyzer; an inactive stream is not replaced with fabricated spectrum activity.",
-    "The native header supplies preset navigation, scene selection, skin selection and Full editor access; decorative observatory artwork and concept-only navigation tabs are not reproduced.",
-    "The LFO and envelope use compact editable numeric fields in the reference's right-side value columns; the field values and units are the actual engine values, not text baked into artwork.",
-    "The filter plots use the reference single-column rotary arrangement, with keytracking retained as a compact field beneath each plot. Oscillator faders and observatory controls use measured reference centres."
+    "Native reconstruction of the supplied reference composition. All parameter values, effect names, modulation rows and audio plots come from the real processor; current-source captures must establish visual fidelity.",
+    "The observatory copies real source wavetable frames, with actual source frame count/size and current position retained by the renderer. Non-wavetable algorithms use their native waveform preview. This is a source-table view, not an output spectrum.",
+    "OSC 1/2/3 tabs select the actual source displayed by the observatory and rebind its seven dynamic parameter controls. Selection changes view state without changing the sound.",
+    "The eight envelope-source tabs expose the two native envelopes, two real LFO envelopes and four LFO waveform views. ADSR fields follow the selected source; native envelope mode is disabled where that mode does not exist.",
+    "The lower LFO editor independently selects LFO 1\u20134 and rebinds its real shape, rate, trigger, phase and fade controls. Source names and units remain native.",
+    "Six primary macros occupy the measured top-right strip. Their assigned names remain live and their numeric values remain available through tooltip, typed entry and accessibility. Macros 7\u20138 and additional scene/ring controls remain available in the full editor, preserving the empty lower-right area of the reference.",
+    "The eight effect cards select actual slots and rebind the algorithm menu and seven detail parameters. The selected-slot pictogram is an algorithm-family icon, not an asserted live transfer function or impulse response.",
+    "Actual oscillator power/mute controls and catalog-backed wavetable previous/next/menu controls occupy the reference title rows. Sample/Granular algorithms or independent fine-pitch parameters are not fabricated.",
+    "The output spectrum and channel meters use the independent real main-output tap. Inactive streams remain inactive. Filter curves are response previews of the actual filter/subtype and controls retain cutoff, resonance, keytracking and envelope amount semantics.",
+    "Native scene/polyphony menus remain in the lower-left utility strip where the concept uses oscillator-family navigation. Full editor, preset, scene, skin and analyzer actions remain available through the native header and panel navigation."
   ]
 }

@@ -25,6 +25,7 @@ struct WavetablePreview
     static constexpr int pointsPerFrame = 256;
     static constexpr int maximumFrames = 48;
     std::vector<float> samples;
+    juce::String name;
     int frames{0}, sourceFrames{0}, sourceFrameSize{0};
     float position{0.f};
     bool sampleMode{false};

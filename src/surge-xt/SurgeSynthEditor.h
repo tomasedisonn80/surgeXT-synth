@@ -37,6 +37,7 @@ class SurgeJUCELookAndFeel;
 namespace Surge::GUI::Reference
 {
 class Workspace;
+struct WavetableSelectionRequest;
 }
 
 //==============================================================================
@@ -181,6 +182,7 @@ class SurgeSynthEditor : public juce::AudioProcessorEditor,
     juce::Point<int> referenceWorkspaceSize{1268, 793};
     void updateReferenceWorkspaceFromSkin(bool force = false);
     void handleReferenceWorkspaceAction(const juce::String &action);
+    bool handleReferenceWavetable(const Surge::GUI::Reference::WavetableSelectionRequest &request);
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SurgeSynthEditor)
 };

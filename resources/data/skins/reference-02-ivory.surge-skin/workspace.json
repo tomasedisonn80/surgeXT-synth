@@ -33,7 +33,40 @@
       "y": 95,
       "w": 498,
       "h": 565,
-      "fontSize": 18
+      "fontSize": 17,
+      "titleInset": 25,
+      "selection": {
+        "id": "ivory.osc-focus",
+        "kind": "source",
+        "tabsRect": [
+          202,
+          105,
+          116,
+          24
+        ],
+        "default": "osc1",
+        "choices": [
+          {
+            "id": "osc1",
+            "label": "1",
+            "source": "oscillator",
+            "index": 1
+          },
+          {
+            "id": "osc2",
+            "label": "2",
+            "source": "oscillator",
+            "index": 2
+          },
+          {
+            "id": "osc3",
+            "label": "3",
+            "source": "oscillator",
+            "index": 3
+          }
+        ],
+        "fontSize": 11
+      }
     },
     {
       "id": "ivory.oscillator1",
@@ -51,7 +84,14 @@
         241,
         119
       ],
-      "fontSize": 14
+      "fontSize": 14,
+      "titleInset": 48,
+      "wavetableRect": [
+        28,
+        277,
+        231,
+        24
+      ]
     },
     {
       "id": "ivory.oscillator2",
@@ -69,7 +109,14 @@
         241,
         119
       ],
-      "fontSize": 14
+      "fontSize": 14,
+      "titleInset": 48,
+      "wavetableRect": [
+        28,
+        457,
+        231,
+        24
+      ]
     },
     {
       "id": "ivory.oscillator3",
@@ -87,7 +134,14 @@
         241,
         104
       ],
-      "fontSize": 14
+      "fontSize": 14,
+      "titleInset": 48,
+      "wavetableRect": [
+        28,
+        618,
+        231,
+        24
+      ]
     },
     {
       "id": "ivory.filters",
@@ -97,7 +151,8 @@
       "y": 95,
       "w": 615,
       "h": 326,
-      "fontSize": 18
+      "fontSize": 17,
+      "titleInset": 19
     },
     {
       "id": "ivory.filter1",
@@ -159,7 +214,8 @@
       "y": 424,
       "w": 615,
       "h": 236,
-      "fontSize": 18
+      "fontSize": 17,
+      "titleInset": 20
     },
     {
       "id": "ivory.ring12",
@@ -169,7 +225,8 @@
       "y": 463,
       "w": 204,
       "h": 93,
-      "fontSize": 14
+      "fontSize": 12.5,
+      "titleInset": 40
     },
     {
       "id": "ivory.ring23",
@@ -179,7 +236,8 @@
       "y": 561,
       "w": 204,
       "h": 93,
-      "fontSize": 14
+      "fontSize": 12.5,
+      "titleInset": 40
     },
     {
       "id": "ivory.macros",
@@ -189,12 +247,13 @@
       "y": 95,
       "w": 455,
       "h": 205,
-      "fontSize": 18
+      "fontSize": 17,
+      "titleInset": 17
     },
     {
       "id": "ivory.envelopes",
       "kind": "envelope",
-      "title": "ENVELOPES · AMP / FILTER",
+      "title": "MODULATOR",
       "index": 1,
       "variant": "large",
       "x": 1127,
@@ -207,7 +266,70 @@
         320,
         139
       ],
-      "fontSize": 16
+      "fontSize": 16,
+      "titleHeight": 0,
+      "selection": {
+        "id": "ivory.mod-source",
+        "kind": "source",
+        "tabsRect": [
+          1137,
+          312,
+          435,
+          31
+        ],
+        "default": "amp",
+        "choices": [
+          {
+            "id": "amp",
+            "label": "ENV 1",
+            "source": "envelope",
+            "index": 1
+          },
+          {
+            "id": "filter",
+            "label": "ENV 2",
+            "source": "envelope",
+            "index": 2
+          },
+          {
+            "id": "lfo1-env",
+            "label": "LFO1 EG",
+            "source": "lfo-envelope",
+            "index": 1
+          },
+          {
+            "id": "lfo2-env",
+            "label": "LFO2 EG",
+            "source": "lfo-envelope",
+            "index": 2
+          },
+          {
+            "id": "lfo1",
+            "label": "LFO 1",
+            "source": "lfo",
+            "index": 1
+          },
+          {
+            "id": "lfo2",
+            "label": "LFO 2",
+            "source": "lfo",
+            "index": 2
+          },
+          {
+            "id": "lfo3",
+            "label": "LFO 3",
+            "source": "lfo",
+            "index": 3
+          },
+          {
+            "id": "lfo4",
+            "label": "LFO 4",
+            "source": "lfo",
+            "index": 4
+          }
+        ],
+        "fontSize": 10.5
+      }
     },
     {
       "id": "ivory.matrix",
@@ -217,7 +339,9 @@
       "y": 667,
       "w": 541,
       "h": 305,
-      "fontSize": 18
+      "fontSize": 17,
+      "titleInset": 24,
+      "titleHeight": 23
     },
     {
       "id": "ivory.effects",
@@ -228,17 +352,82 @@
       "y": 667,
       "w": 593,
       "h": 305,
-      "fontSize": 18
+      "fontSize": 17,
+      "titleInset": 0,
+      "selection": {
+        "id": "ivory.fx-slot",
+        "kind": "fx",
+        "tabsRect": [
+          557,
+          704,
+          581,
+          106
+        ],
+        "default": "fx1",
+        "choices": [
+          {
+            "id": "fx1",
+            "label": "FX 1",
+            "source": "fx",
+            "index": 1
+          },
+          {
+            "id": "fx2",
+            "label": "FX 2",
+            "source": "fx",
+            "index": 2
+          },
+          {
+            "id": "fx3",
+            "label": "FX 3",
+            "source": "fx",
+            "index": 3
+          },
+          {
+            "id": "fx4",
+            "label": "FX 4",
+            "source": "fx",
+            "index": 4
+          },
+          {
+            "id": "fx5",
+            "label": "FX 5",
+            "source": "fx",
+            "index": 5
+          },
+          {
+            "id": "fx6",
+            "label": "FX 6",
+            "source": "fx",
+            "index": 6
+          },
+          {
+            "id": "fx7",
+            "label": "FX 7",
+            "source": "fx",
+            "index": 7
+          },
+          {
+            "id": "fx8",
+            "label": "FX 8",
+            "source": "fx",
+            "index": 8
+          }
+        ],
+        "fontSize": 11.5
+      },
+      "titleHeight": 23
     },
     {
       "id": "ivory.fx1",
       "kind": "tabs",
-      "title": "SELECTED EFFECT · SLOT 1",
+      "title": "SELECTED EFFECT",
       "x": 561,
       "y": 818,
       "w": 575,
-      "h": 121,
-      "fontSize": 14
+      "h": 140,
+      "fontSize": 13,
+      "titleInset": 20
     },
     {
       "id": "ivory.analyzer",
@@ -249,12 +438,14 @@
       "w": 428,
       "h": 305,
       "plot": [
-        1170,
-        741,
-        330,
-        183
+        1194,
+        743,
+        302,
+        180
       ],
-      "fontSize": 18
+      "fontSize": 17,
+      "titleInset": 17,
+      "titleHeight": 23
     }
   ],
   "controls": [
@@ -281,91 +472,76 @@
     {
       "id": "ivory.osc1.mute",
       "binding": "osc1.mute",
-      "x": 467,
-      "y": 154,
-      "w": 24,
-      "h": 23,
+      "x": 24,
+      "y": 151,
+      "w": 27,
+      "h": 27,
       "kind": "toggle",
-      "label": "M"
+      "label": "Mute oscillator 1",
+      "glyph": "power"
     },
     {
       "id": "ivory.osc1.param0",
       "binding": "osc1.param0",
       "x": 271,
-      "y": 196,
+      "y": 195,
       "w": 52,
       "h": 88,
       "kind": "knob",
       "fontSize": 11.5,
       "labelPosition": "top",
-      "accent": "yellow"
+      "accent": "yellow",
+      "faceDiameter": 44
     },
     {
       "id": "ivory.osc1.param1",
       "binding": "osc1.param1",
       "x": 324,
-      "y": 196,
+      "y": 195,
       "w": 52,
       "h": 88,
       "kind": "knob",
       "fontSize": 11.5,
       "labelPosition": "top",
-      "accent": "yellow"
+      "accent": "yellow",
+      "faceDiameter": 44
     },
     {
-      "id": "ivory.osc1.param2",
-      "binding": "osc1.param2",
+      "id": "ivory.osc1.param6",
+      "binding": "osc1.param6",
       "x": 377,
-      "y": 196,
+      "y": 195,
       "w": 52,
       "h": 88,
       "kind": "knob",
       "fontSize": 11.5,
       "labelPosition": "top",
-      "accent": "yellow"
+      "accent": "yellow",
+      "faceDiameter": 44
     },
     {
       "id": "ivory.osc1.octave",
       "binding": "osc1.octave",
-      "x": 438,
-      "y": 216,
-      "w": 48,
-      "h": 23,
-      "kind": "menu",
-      "label": "Octave"
+      "x": 432,
+      "y": 215,
+      "w": 60,
+      "h": 24,
+      "kind": "value",
+      "label": "Oct",
+      "labelWidth": 18,
+      "fontSize": 10.5
     },
     {
       "id": "ivory.osc1.pitch",
       "binding": "osc1.pitch",
-      "x": 434,
-      "y": 253,
+      "x": 432,
+      "y": 252,
       "w": 60,
-      "h": 31,
+      "h": 27,
       "kind": "value",
       "label": "Tune",
-      "fontSize": 9.5
-    },
-    {
-      "id": "ivory.osc1.keytrack",
-      "binding": "osc1.keytrack",
-      "x": 278,
-      "y": 294,
-      "w": 101,
-      "h": 20,
-      "kind": "toggle",
-      "label": "Keytrack",
-      "fontSize": 10
-    },
-    {
-      "id": "ivory.osc1.retrigger",
-      "binding": "osc1.retrigger",
-      "x": 383,
-      "y": 294,
-      "w": 107,
-      "h": 20,
-      "kind": "toggle",
-      "label": "Retrigger",
-      "fontSize": 10
+      "fontSize": 10.5,
+      "labelWidth": 23
     },
     {
       "id": "ivory.osc2.type",
@@ -390,91 +566,76 @@
     {
       "id": "ivory.osc2.mute",
       "binding": "osc2.mute",
-      "x": 467,
-      "y": 331,
-      "w": 24,
-      "h": 23,
+      "x": 24,
+      "y": 328,
+      "w": 27,
+      "h": 27,
       "kind": "toggle",
-      "label": "M"
+      "label": "Mute oscillator 2",
+      "glyph": "power"
     },
     {
       "id": "ivory.osc2.param0",
       "binding": "osc2.param0",
       "x": 271,
-      "y": 374,
+      "y": 373,
       "w": 52,
       "h": 88,
       "kind": "knob",
       "fontSize": 11.5,
       "labelPosition": "top",
-      "accent": "yellow"
+      "accent": "yellow",
+      "faceDiameter": 44
     },
     {
       "id": "ivory.osc2.param1",
       "binding": "osc2.param1",
       "x": 324,
-      "y": 374,
+      "y": 373,
       "w": 52,
       "h": 88,
       "kind": "knob",
       "fontSize": 11.5,
       "labelPosition": "top",
-      "accent": "yellow"
+      "accent": "yellow",
+      "faceDiameter": 44
     },
     {
-      "id": "ivory.osc2.param2",
-      "binding": "osc2.param2",
+      "id": "ivory.osc2.param6",
+      "binding": "osc2.param6",
       "x": 377,
-      "y": 374,
+      "y": 373,
       "w": 52,
       "h": 88,
       "kind": "knob",
       "fontSize": 11.5,
       "labelPosition": "top",
-      "accent": "yellow"
+      "accent": "yellow",
+      "faceDiameter": 44
     },
     {
       "id": "ivory.osc2.octave",
       "binding": "osc2.octave",
-      "x": 438,
-      "y": 394,
-      "w": 48,
-      "h": 23,
-      "kind": "menu",
-      "label": "Octave"
+      "x": 432,
+      "y": 393,
+      "w": 60,
+      "h": 24,
+      "kind": "value",
+      "label": "Oct",
+      "labelWidth": 18,
+      "fontSize": 10.5
     },
     {
       "id": "ivory.osc2.pitch",
       "binding": "osc2.pitch",
-      "x": 434,
-      "y": 431,
+      "x": 432,
+      "y": 430,
       "w": 60,
-      "h": 31,
+      "h": 27,
       "kind": "value",
       "label": "Tune",
-      "fontSize": 9.5
-    },
-    {
-      "id": "ivory.osc2.keytrack",
-      "binding": "osc2.keytrack",
-      "x": 278,
-      "y": 471,
-      "w": 101,
-      "h": 20,
-      "kind": "toggle",
-      "label": "Keytrack",
-      "fontSize": 10
-    },
-    {
-      "id": "ivory.osc2.retrigger",
-      "binding": "osc2.retrigger",
-      "x": 383,
-      "y": 471,
-      "w": 107,
-      "h": 20,
-      "kind": "toggle",
-      "label": "Retrigger",
-      "fontSize": 10
+      "fontSize": 10.5,
+      "labelWidth": 23
     },
     {
       "id": "ivory.osc3.type",
@@ -499,12 +660,13 @@
     {
       "id": "ivory.osc3.mute",
       "binding": "osc3.mute",
-      "x": 467,
-      "y": 508,
-      "w": 24,
-      "h": 23,
+      "x": 24,
+      "y": 505,
+      "w": 27,
+      "h": 27,
       "kind": "toggle",
-      "label": "M"
+      "label": "Mute oscillator 3",
+      "glyph": "power"
     },
     {
       "id": "ivory.osc3.param0",
@@ -516,7 +678,8 @@
       "kind": "knob",
       "fontSize": 11.5,
       "labelPosition": "top",
-      "accent": "yellow"
+      "accent": "yellow",
+      "faceDiameter": 44
     },
     {
       "id": "ivory.osc3.param1",
@@ -528,11 +691,12 @@
       "kind": "knob",
       "fontSize": 11.5,
       "labelPosition": "top",
-      "accent": "yellow"
+      "accent": "yellow",
+      "faceDiameter": 44
     },
     {
-      "id": "ivory.osc3.param2",
-      "binding": "osc3.param2",
+      "id": "ivory.osc3.param6",
+      "binding": "osc3.param6",
       "x": 377,
       "y": 544,
       "w": 52,
@@ -540,50 +704,32 @@
       "kind": "knob",
       "fontSize": 11.5,
       "labelPosition": "top",
-      "accent": "yellow"
+      "accent": "yellow",
+      "faceDiameter": 44
     },
     {
       "id": "ivory.osc3.octave",
       "binding": "osc3.octave",
-      "x": 438,
+      "x": 432,
       "y": 564,
-      "w": 48,
-      "h": 23,
-      "kind": "menu",
-      "label": "Octave"
+      "w": 60,
+      "h": 24,
+      "kind": "value",
+      "label": "Oct",
+      "labelWidth": 18,
+      "fontSize": 10.5
     },
     {
       "id": "ivory.osc3.pitch",
       "binding": "osc3.pitch",
-      "x": 434,
+      "x": 432,
       "y": 601,
       "w": 60,
-      "h": 31,
+      "h": 27,
       "kind": "value",
       "label": "Tune",
-      "fontSize": 9.5
-    },
-    {
-      "id": "ivory.osc3.keytrack",
-      "binding": "osc3.keytrack",
-      "x": 278,
-      "y": 636,
-      "w": 101,
-      "h": 20,
-      "kind": "toggle",
-      "label": "Keytrack",
-      "fontSize": 10
-    },
-    {
-      "id": "ivory.osc3.retrigger",
-      "binding": "osc3.retrigger",
-      "x": 383,
-      "y": 636,
-      "w": 107,
-      "h": 20,
-      "kind": "toggle",
-      "label": "Retrigger",
-      "fontSize": 10
+      "fontSize": 10.5,
+      "labelWidth": 23
     },
     {
       "id": "ivory.filter1.type",
@@ -608,98 +754,114 @@
     {
       "id": "ivory.filter1.cutoff",
       "binding": "filter1.cutoff",
-      "x": 529,
-      "y": 325,
-      "w": 61,
-      "h": 83,
+      "x": 524.0,
+      "y": 323,
+      "w": 62,
+      "h": 75,
       "kind": "knob",
       "label": "FREQ",
       "accent": "yellow",
-      "fontSize": 12
+      "fontSize": 12,
+      "faceDiameter": 48,
+      "valuePosition": "hidden"
     },
     {
       "id": "ivory.filter1.resonance",
       "binding": "filter1.resonance",
-      "x": 592,
-      "y": 325,
-      "w": 57,
-      "h": 79,
+      "x": 594.0,
+      "y": 323,
+      "w": 54,
+      "h": 75,
       "kind": "knob",
       "label": "RES",
       "accent": "yellow",
-      "fontSize": 12
+      "fontSize": 12,
+      "faceDiameter": 44,
+      "valuePosition": "hidden"
     },
     {
       "id": "ivory.filter1.drive",
       "binding": "filter.drive",
-      "x": 653,
-      "y": 325,
-      "w": 57,
-      "h": 79,
+      "x": 654.0,
+      "y": 323,
+      "w": 54,
+      "h": 75,
       "kind": "knob",
       "label": "SHAPER",
       "accent": "yellow",
-      "fontSize": 12
+      "fontSize": 12,
+      "faceDiameter": 44,
+      "valuePosition": "hidden"
     },
     {
       "id": "ivory.filter1.keytrack",
       "binding": "filter1.keytrack",
-      "x": 714,
-      "y": 325,
-      "w": 57,
-      "h": 79,
+      "x": 719.0,
+      "y": 323,
+      "w": 46,
+      "h": 75,
       "kind": "knob",
       "label": "KEY",
       "accent": "yellow",
-      "fontSize": 12
+      "fontSize": 12,
+      "faceDiameter": 34,
+      "valuePosition": "hidden"
     },
     {
       "id": "ivory.filter2.cutoff",
       "binding": "filter2.cutoff",
-      "x": 870,
-      "y": 325,
-      "w": 61,
-      "h": 83,
+      "x": 867.0,
+      "y": 323,
+      "w": 62,
+      "h": 75,
       "kind": "knob",
       "label": "FREQ",
       "accent": "yellow",
-      "fontSize": 12
+      "fontSize": 12,
+      "faceDiameter": 48,
+      "valuePosition": "hidden"
     },
     {
       "id": "ivory.filter2.resonance",
       "binding": "filter2.resonance",
-      "x": 932,
-      "y": 325,
-      "w": 57,
-      "h": 79,
+      "x": 933.0,
+      "y": 323,
+      "w": 54,
+      "h": 75,
       "kind": "knob",
       "label": "RES",
       "accent": "yellow",
-      "fontSize": 12
+      "fontSize": 12,
+      "faceDiameter": 44,
+      "valuePosition": "hidden"
     },
     {
       "id": "ivory.filter2.envmod",
       "binding": "filter2.envmod",
-      "x": 993,
-      "y": 325,
-      "w": 57,
-      "h": 79,
+      "x": 995.0,
+      "y": 323,
+      "w": 54,
+      "h": 75,
       "kind": "knob",
       "label": "ENV",
       "accent": "yellow",
-      "fontSize": 12
+      "fontSize": 12,
+      "faceDiameter": 44,
+      "valuePosition": "hidden"
     },
     {
       "id": "ivory.filter2.keytrack",
       "binding": "filter2.keytrack",
-      "x": 1054,
-      "y": 325,
-      "w": 57,
-      "h": 79,
+      "x": 1061.0,
+      "y": 323,
+      "w": 46,
+      "h": 75,
       "kind": "knob",
       "label": "KEY",
       "accent": "yellow",
-      "fontSize": 12
+      "fontSize": 12,
+      "faceDiameter": 34,
+      "valuePosition": "hidden"
     },
     {
       "id": "ivory.routing.mode",
@@ -712,28 +874,18 @@
       "label": "Routing"
     },
     {
-      "id": "ivory.routing.balance",
-      "binding": "filter.balance",
-      "x": 783,
-      "y": 314,
-      "w": 60,
-      "h": 84,
-      "kind": "knob",
-      "label": "BLEND",
-      "accent": "yellow"
-    },
-    {
       "id": "ivory.mixer.osc1.level",
       "binding": "osc1.level",
       "x": 530,
-      "y": 477,
+      "y": 476,
       "w": 72,
-      "h": 114,
+      "h": 110,
       "kind": "knob",
       "label": "OSC 1",
       "labelPosition": "top",
       "accent": "yellow",
-      "fontSize": 13
+      "fontSize": 13,
+      "faceDiameter": 68
     },
     {
       "id": "ivory.mixer.osc1.solo",
@@ -759,14 +911,15 @@
       "id": "ivory.mixer.osc2.level",
       "binding": "osc2.level",
       "x": 624,
-      "y": 477,
+      "y": 476,
       "w": 72,
-      "h": 114,
+      "h": 110,
       "kind": "knob",
       "label": "OSC 2",
       "labelPosition": "top",
       "accent": "yellow",
-      "fontSize": 13
+      "fontSize": 13,
+      "faceDiameter": 68
     },
     {
       "id": "ivory.mixer.osc2.solo",
@@ -792,14 +945,15 @@
       "id": "ivory.mixer.osc3.level",
       "binding": "osc3.level",
       "x": 719,
-      "y": 477,
+      "y": 476,
       "w": 72,
-      "h": 114,
+      "h": 110,
       "kind": "knob",
       "label": "OSC 3",
       "labelPosition": "top",
       "accent": "yellow",
-      "fontSize": 13
+      "fontSize": 13,
+      "faceDiameter": 68
     },
     {
       "id": "ivory.mixer.osc3.solo",
@@ -825,14 +979,15 @@
       "id": "ivory.mixer.noise.level",
       "binding": "noise.level",
       "x": 817,
-      "y": 477,
+      "y": 476,
       "w": 72,
-      "h": 114,
+      "h": 110,
       "kind": "knob",
       "label": "NOISE",
       "labelPosition": "top",
       "accent": "yellow",
-      "fontSize": 13
+      "fontSize": 13,
+      "faceDiameter": 68
     },
     {
       "id": "ivory.mixer.noise.solo",
@@ -857,252 +1012,282 @@
     {
       "id": "ivory.ring12.mute",
       "binding": "ring12.mute",
-      "x": 923,
-      "y": 500,
-      "w": 76,
-      "h": 25,
+      "x": 916,
+      "y": 470,
+      "w": 26,
+      "h": 26,
       "kind": "toggle",
-      "label": "Mute"
+      "label": "Mute ring modulation 1 × 2",
+      "glyph": "power"
     },
     {
       "id": "ivory.ring12.level",
       "binding": "ring12.level",
-      "x": 1028,
-      "y": 487,
+      "x": 1033,
+      "y": 475,
       "w": 70,
-      "h": 64,
+      "h": 78,
       "kind": "knob",
       "label": "AMOUNT",
       "labelPosition": "top",
-      "accent": "yellow"
+      "accent": "yellow",
+      "faceDiameter": 44
     },
     {
       "id": "ivory.ring23.mute",
       "binding": "ring23.mute",
-      "x": 923,
-      "y": 598,
-      "w": 76,
-      "h": 25,
+      "x": 916,
+      "y": 568,
+      "w": 26,
+      "h": 26,
       "kind": "toggle",
-      "label": "Mute"
+      "label": "Mute ring modulation 2 × 3",
+      "glyph": "power"
     },
     {
       "id": "ivory.ring23.level",
       "binding": "ring23.level",
-      "x": 1028,
-      "y": 585,
+      "x": 1033,
+      "y": 573,
       "w": 70,
-      "h": 64,
+      "h": 78,
       "kind": "knob",
       "label": "AMOUNT",
       "labelPosition": "top",
-      "accent": "yellow"
+      "accent": "yellow",
+      "faceDiameter": 44
     },
     {
       "id": "ivory.macro1",
       "binding": "macro1",
-      "x": 1158,
-      "y": 133,
+      "x": 1156,
+      "y": 134,
       "w": 74,
-      "h": 81,
+      "h": 70,
       "kind": "knob",
       "label": "Macro 1",
       "fontSize": 12.5,
-      "accent": "yellow"
+      "accent": "yellow",
+      "faceDiameter": 50,
+      "valuePosition": "hidden"
     },
     {
       "id": "ivory.macro2",
       "binding": "macro2",
-      "x": 1247,
-      "y": 133,
+      "x": 1245,
+      "y": 134,
       "w": 74,
-      "h": 81,
+      "h": 70,
       "kind": "knob",
       "label": "Macro 2",
       "fontSize": 12.5,
-      "accent": "yellow"
+      "accent": "yellow",
+      "faceDiameter": 50,
+      "valuePosition": "hidden"
     },
     {
       "id": "ivory.macro3",
       "binding": "macro3",
-      "x": 1336,
-      "y": 133,
+      "x": 1334,
+      "y": 134,
       "w": 74,
-      "h": 81,
+      "h": 70,
       "kind": "knob",
       "label": "Macro 3",
       "fontSize": 12.5,
-      "accent": "yellow"
+      "accent": "yellow",
+      "faceDiameter": 50,
+      "valuePosition": "hidden"
     },
     {
       "id": "ivory.macro4",
       "binding": "macro4",
-      "x": 1425,
-      "y": 133,
+      "x": 1423,
+      "y": 134,
       "w": 74,
-      "h": 81,
+      "h": 70,
       "kind": "knob",
       "label": "Macro 4",
       "fontSize": 12.5,
-      "accent": "yellow"
+      "accent": "yellow",
+      "faceDiameter": 50,
+      "valuePosition": "hidden"
     },
     {
       "id": "ivory.macro5",
       "binding": "macro5",
-      "x": 1158,
-      "y": 215,
+      "x": 1156,
+      "y": 214,
       "w": 74,
-      "h": 84,
+      "h": 70,
       "kind": "knob",
       "label": "Macro 5",
       "fontSize": 12.5,
-      "accent": "yellow"
+      "accent": "yellow",
+      "faceDiameter": 50,
+      "valuePosition": "hidden"
     },
     {
       "id": "ivory.macro6",
       "binding": "macro6",
-      "x": 1247,
-      "y": 215,
+      "x": 1245,
+      "y": 214,
       "w": 74,
-      "h": 84,
+      "h": 70,
       "kind": "knob",
       "label": "Macro 6",
       "fontSize": 12.5,
-      "accent": "yellow"
+      "accent": "yellow",
+      "faceDiameter": 50,
+      "valuePosition": "hidden"
     },
     {
       "id": "ivory.macro7",
       "binding": "macro7",
-      "x": 1336,
-      "y": 215,
+      "x": 1334,
+      "y": 214,
       "w": 74,
-      "h": 84,
+      "h": 70,
       "kind": "knob",
       "label": "Macro 7",
       "fontSize": 12.5,
-      "accent": "yellow"
+      "accent": "yellow",
+      "faceDiameter": 50,
+      "valuePosition": "hidden"
     },
     {
       "id": "ivory.macro8",
       "binding": "macro8",
-      "x": 1425,
-      "y": 215,
+      "x": 1423,
+      "y": 214,
       "w": 74,
-      "h": 84,
+      "h": 70,
       "kind": "knob",
       "label": "Macro 8",
       "fontSize": 12.5,
-      "accent": "yellow"
+      "accent": "yellow",
+      "faceDiameter": 50,
+      "valuePosition": "hidden"
     },
     {
       "id": "ivory.env1.attack",
       "binding": "env1.attack",
-      "x": 1148,
+      "x": 1147,
       "y": 503,
       "w": 66,
       "h": 89,
       "kind": "knob",
       "label": "A",
       "labelPosition": "top",
-      "accent": "yellow"
-    },
-    {
-      "id": "ivory.env2.attack",
-      "binding": "env2.attack",
-      "x": 1148,
-      "y": 596,
-      "w": 66,
-      "h": 56,
-      "kind": "knob",
-      "label": "A2",
-      "labelPosition": "top",
-      "fontSize": 10.5,
-      "accent": "yellow"
+      "accent": "yellow",
+      "faceDiameter": 50,
+      "fontSize": 12,
+      "selectionGroup": "ivory.mod-source",
+      "bindings": {
+        "amp": "env1.attack",
+        "filter": "env2.attack",
+        "lfo1-env": "lfo1.attack",
+        "lfo2-env": "lfo2.attack",
+        "lfo1": "lfo1.attack",
+        "lfo2": "lfo2.attack",
+        "lfo3": "lfo3.attack",
+        "lfo4": "lfo4.attack"
+      }
     },
     {
       "id": "ivory.env1.decay",
       "binding": "env1.decay",
-      "x": 1231,
+      "x": 1225,
       "y": 503,
       "w": 66,
       "h": 89,
       "kind": "knob",
       "label": "D",
       "labelPosition": "top",
-      "accent": "yellow"
-    },
-    {
-      "id": "ivory.env2.decay",
-      "binding": "env2.decay",
-      "x": 1231,
-      "y": 596,
-      "w": 66,
-      "h": 56,
-      "kind": "knob",
-      "label": "D2",
-      "labelPosition": "top",
-      "fontSize": 10.5,
-      "accent": "yellow"
+      "accent": "yellow",
+      "faceDiameter": 50,
+      "fontSize": 12,
+      "selectionGroup": "ivory.mod-source",
+      "bindings": {
+        "amp": "env1.decay",
+        "filter": "env2.decay",
+        "lfo1-env": "lfo1.decay",
+        "lfo2-env": "lfo2.decay",
+        "lfo1": "lfo1.decay",
+        "lfo2": "lfo2.decay",
+        "lfo3": "lfo3.decay",
+        "lfo4": "lfo4.decay"
+      }
     },
     {
       "id": "ivory.env1.sustain",
       "binding": "env1.sustain",
-      "x": 1314,
+      "x": 1308,
       "y": 503,
       "w": 66,
       "h": 89,
       "kind": "knob",
       "label": "S",
       "labelPosition": "top",
-      "accent": "yellow"
-    },
-    {
-      "id": "ivory.env2.sustain",
-      "binding": "env2.sustain",
-      "x": 1314,
-      "y": 596,
-      "w": 66,
-      "h": 56,
-      "kind": "knob",
-      "label": "S2",
-      "labelPosition": "top",
-      "fontSize": 10.5,
-      "accent": "yellow"
+      "accent": "yellow",
+      "faceDiameter": 50,
+      "fontSize": 12,
+      "selectionGroup": "ivory.mod-source",
+      "bindings": {
+        "amp": "env1.sustain",
+        "filter": "env2.sustain",
+        "lfo1-env": "lfo1.sustain",
+        "lfo2-env": "lfo2.sustain",
+        "lfo1": "lfo1.sustain",
+        "lfo2": "lfo2.sustain",
+        "lfo3": "lfo3.sustain",
+        "lfo4": "lfo4.sustain"
+      }
     },
     {
       "id": "ivory.env1.release",
       "binding": "env1.release",
-      "x": 1397,
+      "x": 1392,
       "y": 503,
       "w": 66,
       "h": 89,
       "kind": "knob",
       "label": "R",
       "labelPosition": "top",
-      "accent": "yellow"
-    },
-    {
-      "id": "ivory.env2.release",
-      "binding": "env2.release",
-      "x": 1397,
-      "y": 596,
-      "w": 66,
-      "h": 56,
-      "kind": "knob",
-      "label": "R2",
-      "labelPosition": "top",
-      "fontSize": 10.5,
-      "accent": "yellow"
+      "accent": "yellow",
+      "faceDiameter": 50,
+      "fontSize": 12,
+      "selectionGroup": "ivory.mod-source",
+      "bindings": {
+        "amp": "env1.release",
+        "filter": "env2.release",
+        "lfo1-env": "lfo1.release",
+        "lfo2-env": "lfo2.release",
+        "lfo1": "lfo1.release",
+        "lfo2": "lfo2.release",
+        "lfo3": "lfo3.release",
+        "lfo4": "lfo4.release"
+      }
     },
     {
       "id": "ivory.env1.mode",
       "binding": "env1.mode",
       "x": 1474,
-      "y": 357,
+      "y": 359,
       "w": 94,
       "h": 29,
       "kind": "menu",
-      "label": "Envelope model"
+      "selectionGroup": "ivory.mod-source",
+      "bindings": {
+        "amp": "env1.mode",
+        "filter": "env2.mode",
+        "lfo1-env": null,
+        "lfo2-env": null,
+        "lfo1": "lfo1.shape",
+        "lfo2": "lfo2.shape",
+        "lfo3": "lfo3.shape",
+        "lfo4": "lfo4.shape"
+      }
     },
     {
       "id": "ivory.amp.velocity",
@@ -1114,169 +1299,125 @@
       "kind": "knob",
       "label": "VEL",
       "labelPosition": "top",
-      "accent": "yellow"
-    },
-    {
-      "id": "ivory.amp.level",
-      "binding": "amp.level",
-      "x": 1484,
-      "y": 493,
-      "w": 76,
-      "h": 81,
-      "kind": "knob",
-      "label": "AMP",
-      "accent": "yellow"
-    },
-    {
-      "id": "ivory.scene.width",
-      "binding": "scene.width",
-      "x": 1484,
-      "y": 581,
-      "w": 76,
-      "h": 72,
-      "kind": "knob",
-      "label": "WIDTH",
-      "accent": "yellow"
+      "accent": "yellow",
+      "faceDiameter": 50
     },
     {
       "id": "ivory.fx1.type",
       "binding": "fx1.type",
-      "x": 562,
-      "y": 772,
-      "w": 66,
+      "x": 597,
+      "y": 881,
+      "w": 104,
       "h": 27,
       "kind": "menu",
-      "label": "Effect slot 1"
-    },
-    {
-      "id": "ivory.fx2.type",
-      "binding": "fx2.type",
-      "x": 634,
-      "y": 772,
-      "w": 66,
-      "h": 27,
-      "kind": "menu",
-      "label": "Effect slot 2"
-    },
-    {
-      "id": "ivory.fx3.type",
-      "binding": "fx3.type",
-      "x": 706,
-      "y": 772,
-      "w": 66,
-      "h": 27,
-      "kind": "menu",
-      "label": "Effect slot 3"
-    },
-    {
-      "id": "ivory.fx4.type",
-      "binding": "fx4.type",
-      "x": 778,
-      "y": 772,
-      "w": 66,
-      "h": 27,
-      "kind": "menu",
-      "label": "Effect slot 4"
-    },
-    {
-      "id": "ivory.fx5.type",
-      "binding": "fx5.type",
-      "x": 850,
-      "y": 772,
-      "w": 66,
-      "h": 27,
-      "kind": "menu",
-      "label": "Effect slot 5"
-    },
-    {
-      "id": "ivory.fx6.type",
-      "binding": "fx6.type",
-      "x": 922,
-      "y": 772,
-      "w": 66,
-      "h": 27,
-      "kind": "menu",
-      "label": "Effect slot 6"
-    },
-    {
-      "id": "ivory.fx7.type",
-      "binding": "fx7.type",
-      "x": 994,
-      "y": 772,
-      "w": 66,
-      "h": 27,
-      "kind": "menu",
-      "label": "Effect slot 7"
-    },
-    {
-      "id": "ivory.fx8.type",
-      "binding": "fx8.type",
-      "x": 1066,
-      "y": 772,
-      "w": 66,
-      "h": 27,
-      "kind": "menu",
-      "label": "Effect slot 8"
+      "label": "Selected effect algorithm",
+      "selectionGroup": "ivory.fx-slot",
+      "bindings": {
+        "fx1": "fx1.type",
+        "fx2": "fx2.type",
+        "fx3": "fx3.type",
+        "fx4": "fx4.type",
+        "fx5": "fx5.type",
+        "fx6": "fx6.type",
+        "fx7": "fx7.type",
+        "fx8": "fx8.type"
+      }
     },
     {
       "id": "ivory.fx1.param0",
       "binding": "fx1.param0",
-      "x": 703,
-      "y": 841,
-      "w": 72,
-      "h": 96,
+      "x": 723,
+      "y": 844,
+      "w": 66,
+      "h": 94,
       "kind": "knob",
-      "fontSize": 10.5,
+      "fontSize": 11.5,
       "labelPosition": "top",
-      "accent": "yellow"
+      "accent": "yellow",
+      "faceDiameter": 50,
+      "selectionGroup": "ivory.fx-slot",
+      "bindings": {
+        "fx1": "fx1.param0",
+        "fx2": "fx2.param0",
+        "fx3": "fx3.param0",
+        "fx4": "fx4.param0",
+        "fx5": "fx5.param0",
+        "fx6": "fx6.param0",
+        "fx7": "fx7.param0",
+        "fx8": "fx8.param0"
+      }
     },
     {
       "id": "ivory.fx1.param1",
       "binding": "fx1.param1",
-      "x": 783,
-      "y": 841,
-      "w": 72,
-      "h": 96,
+      "x": 803,
+      "y": 844,
+      "w": 66,
+      "h": 94,
       "kind": "knob",
-      "fontSize": 10.5,
+      "fontSize": 11.5,
       "labelPosition": "top",
-      "accent": "yellow"
+      "accent": "yellow",
+      "faceDiameter": 50,
+      "selectionGroup": "ivory.fx-slot",
+      "bindings": {
+        "fx1": "fx1.param1",
+        "fx2": "fx2.param1",
+        "fx3": "fx3.param1",
+        "fx4": "fx4.param1",
+        "fx5": "fx5.param1",
+        "fx6": "fx6.param1",
+        "fx7": "fx7.param1",
+        "fx8": "fx8.param1"
+      }
     },
     {
       "id": "ivory.fx1.param2",
       "binding": "fx1.param2",
-      "x": 863,
-      "y": 841,
-      "w": 72,
-      "h": 96,
+      "x": 881,
+      "y": 844,
+      "w": 66,
+      "h": 94,
       "kind": "knob",
-      "fontSize": 10.5,
+      "fontSize": 11.5,
       "labelPosition": "top",
-      "accent": "yellow"
+      "accent": "yellow",
+      "faceDiameter": 50,
+      "selectionGroup": "ivory.fx-slot",
+      "bindings": {
+        "fx1": "fx1.param2",
+        "fx2": "fx2.param2",
+        "fx3": "fx3.param2",
+        "fx4": "fx4.param2",
+        "fx5": "fx5.param2",
+        "fx6": "fx6.param2",
+        "fx7": "fx7.param2",
+        "fx8": "fx8.param2"
+      }
     },
     {
       "id": "ivory.fx1.param3",
       "binding": "fx1.param3",
-      "x": 943,
-      "y": 841,
-      "w": 72,
-      "h": 96,
+      "x": 961,
+      "y": 844,
+      "w": 66,
+      "h": 94,
       "kind": "knob",
-      "fontSize": 10.5,
+      "fontSize": 11.5,
       "labelPosition": "top",
-      "accent": "yellow"
-    },
-    {
-      "id": "ivory.fx1.param4",
-      "binding": "fx1.param4",
-      "x": 1023,
-      "y": 841,
-      "w": 72,
-      "h": 96,
-      "kind": "knob",
-      "fontSize": 10.5,
-      "labelPosition": "top",
-      "accent": "yellow"
+      "accent": "yellow",
+      "faceDiameter": 50,
+      "selectionGroup": "ivory.fx-slot",
+      "bindings": {
+        "fx1": "fx1.param3",
+        "fx2": "fx2.param3",
+        "fx3": "fx3.param3",
+        "fx4": "fx4.param3",
+        "fx5": "fx5.param3",
+        "fx6": "fx6.param3",
+        "fx7": "fx7.param3",
+        "fx8": "fx8.param3"
+      }
     },
     {
       "id": "ivory.master.volume",
@@ -1290,19 +1431,40 @@
       "accent": "yellow",
       "labelPosition": "left",
       "fontSize": 13
+    },
+    {
+      "id": "ivory.envelope.curve",
+      "binding": "env1.decayshape",
+      "x": 1474,
+      "y": 527,
+      "w": 94,
+      "h": 28,
+      "kind": "value",
+      "label": "Curve",
+      "labelWidth": 40,
+      "fontSize": 11,
+      "selectionGroup": "ivory.mod-source",
+      "bindings": {
+        "amp": "env1.decayshape",
+        "filter": "env2.decayshape",
+        "lfo1-env": null,
+        "lfo2-env": null,
+        "lfo1": null,
+        "lfo2": null,
+        "lfo3": null,
+        "lfo4": null
+      }
     }
   ],
   "adaptations": [
-    "Native vector materials, serif typography, brass rotary rims, forest-green display wells and measured panel positions reproduce the concept's visual language; this is not a pixel-identical raster clone.",
-    "The common native header retains discoverable Skins and Full editor actions; its master control and preset controls differ from the concept's exact header arrangement.",
-    "All three oscillator previews and all eight macros use real engine state. Algorithm labels remain dynamic rather than displaying the concept's fictitious Hybrid oscillator or fixed wavetable names.",
-    "The concept's four envelope tabs are replaced with the actual amplifier and filter envelope controls. LFO editing and advanced modulator views remain available in the Full editor.",
-    "The reference's Sub block is replaced by the real ring-modulation 2 × 3 mixer stage, rather than presenting an unsupported independent sub oscillator.",
-    "The shared drive control is the real waveshaper drive, not a separate fictional drive stage for each filter. Filter plots are explicitly response previews.",
-    "Eight effect selectors are promoted here; all sixteen native effect slots and full parameter editing remain available through Full FX editor. Unused algorithm-specific controls are disabled rather than mapped to unrelated parameters.",
-    "The analyzer draws a spectrum and output levels from actual main-output samples; the native scope action remains available for detailed analysis. It does not paint static reference spectrum activity as live audio.",
-    "Modulation assignment is handled by the native modulation editor; reference-only fabricated route values and botanical bitmap ornamentation are not copied into the live interface.",
-    "Mixer, envelope and selected-effect controls use the concept's label-above/knob/value order. Macro rows and the amplifier velocity knob use measured centres; the additional real filter-envelope row remains an explicit functional adaptation.",
-    "The cream surface palette and brass control rims are calibrated from the supplied reference. Oscillator labels now sit above the controls; compact tuning fields preserve the engine tuning binding rather than inventing independent semitone/cents parameters."
+    "Native cream materials, brass rotary rims, serif headings, vector botanical engravings and measured geometry reproduce the reference composition. Current-source native captures remain the visual verification gate; no pixel-identical claim follows from schema validation.",
+    "All oscillator waveforms, wavetable names, numeric readouts, macro state, effect names and modulation rows come from the actual processor. Reference-only fixed values and waveforms are not baked into the UI. The third oscillator knob edits native parameter 7 (Unison Voices for Wavetable/Classic, and the actual differently named parameter for other algorithms); its dynamic label remains authoritative.",
+    "The OSCILLATORS 1/2/3 strip focuses the corresponding visible native oscillator controls. Wavetable strips browse actual installed tables; algorithms without a wavetable report that state and disable catalog operations.",
+    "The envelope strip provides the actual amp/filter envelopes, LFO 1/2 envelopes and LFO 1–4 waveform views. The two additional envelope positions are labelled LFO1 EG and LFO2 EG because Surge has two dedicated scene ADSRs. The four stage controls edit the selected native envelope; its model/shape and decay curve disable where inapplicable.",
+    "The reference Sub block is represented by the real ring-modulation 2 × 3 stage, with its own power/mute control. The engine has no independent sub oscillator matching the illustration.",
+    "Filter 1 SHAPER is the real shared waveshaper drive, and Filter 2 ENV is its actual envelope modulation. Live plot footers show those real values rather than inventing an independent drive stage per filter.",
+    "Eight native FX slot cards select a real slot and rebind a single algorithm menu plus its first four parameter controls. Their labels follow the actual algorithm; disabled unused parameters are not remapped to unrelated controls. All sixteen slots and complete editing remain available through the header FX action and Full editor.",
+    "The macro faces follow the reference caption-only treatment; current values remain available through native tooltips and accessibility. Redundant keytrack/retrigger, routing-balance and extra envelope-row controls remain available in the Full editor.",
+    "Analyzer and modulation displays use real output samples and assignments. Scope mode navigation, top-level editor actions, routing semantics and generated reference-only features are governed by the shared native implementation rather than frozen image pixels."
   ]
 }

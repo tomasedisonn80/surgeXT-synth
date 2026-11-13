@@ -1,7 +1,7 @@
 Openbox-Message: Unable to find a valid menu file "/var/lib/openbox/debian-menu.xml"
 Native X11 desktop ready: _NET_SUPPORTING_WM_CHECK(WINDOW): window id # 0x20011f
 Filters: [reference-render]
-Randomness seeded to: 174830469
+Randomness seeded to: 1349726191
 ===============================================================================
 All tests passed (24100990 assertions in 1 test case)
 

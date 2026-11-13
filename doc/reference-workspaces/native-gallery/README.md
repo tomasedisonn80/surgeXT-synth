@@ -3,9 +3,9 @@
 Twenty unmodified native PNGs: a baseline and a real edited state for each of the ten skins.
 Each image is 1586 × 992 pixels.
 
-**Source:** [4dbb414370c94932670e1b58cf6f5caecbe4c6f4](https://github.com/tomasedisonn80/surgeXT-synth/commit/4dbb414370c94932670e1b58cf6f5caecbe4c6f4)  
-**Native verification:** [workflow run 43398309849](https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43398309849)  
-**Capture time:** 2026-11-13T09:08:35.602Z
+**Source:** [453df569c977350c3a4da2caf2f0ab7cbd1a0e71](https://github.com/tomasedisonn80/surgeXT-synth/commit/453df569c977350c3a4da2caf2f0ab7cbd1a0e71)  
+**Native verification:** [workflow run 43400507719](https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43400507719)  
+**Capture time:** 2026-11-13T09:25:07.050Z
 
 Behavior: 42 cases / 10,316,058 assertions. Capture: 24,100,990 assertions. Normal and ThreadSanitizer audio-display checks passed.
 

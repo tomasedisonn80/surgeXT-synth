@@ -2337,8 +2337,11 @@ struct Workspace::Impl
             g.setFont(font);
             g.setColour(ink);
             const auto prefix = upper ? juce::String("SURGE ") : juce::String("Surge ");
+            juce::GlyphArrangement prefixGlyphs;
+            prefixGlyphs.addLineOfText(font, prefix, 0.f, 0.f);
             const float prefixWidth =
-                std::min(r.getWidth() * .79f, font.getStringWidthFloat(prefix));
+                std::min(r.getWidth() * .79f,
+                         prefixGlyphs.getBoundingBox(0, prefixGlyphs.getNumGlyphs(), true).getWidth());
             g.drawFittedText(prefix, r.withWidth(prefixWidth).toNearestInt(),
                              juce::Justification::centredLeft, 1, .9f);
             g.setColour(style == "precision" || style == "tokyo" || style == "flow" ? theme.accent

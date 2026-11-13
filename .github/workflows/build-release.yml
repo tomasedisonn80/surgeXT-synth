@@ -7,6 +7,11 @@ on:
     tags:
       - 'release_xt_**'
 
+concurrency:
+  group: release-build-${{ github.workflow }}-${{ github.ref }}
+  # Superseded main builds are expendable; never interrupt a tagged release.
+  cancel-in-progress: ${{ github.ref_type != 'tag' }}
+
 defaults:
   run:
     shell: bash
@@ -48,6 +53,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     needs: [ surge_version ]
     strategy:
+      # A missing platform credential must not cancel independent compilations.
+      fail-fast: false
       matrix:
         include:
           - os: windows-2022
@@ -98,8 +105,27 @@ jobs:
           git fetch origin -t
           git checkout surge-7.0.12
 
-      - uses: apple-actions/import-codesign-certs@v3
+      - name: "Resolve macOS signing mode"
+        id: mac_signing
         if: runner.os == 'macOS'
+        env:
+          SIGNING_CONFIGURED: ${{ secrets.MAC_CERTS_P12 != '' && secrets.CERT_PWD != '' && secrets.MAC_SIGNING_CERT_NAME != '' && secrets.MAC_INSTALLING_CERT_NAME != '' && secrets.MAC_SIGNING_ID != '' && secrets.MAC_SIGNING_1UPW != '' && secrets.MAC_SIGNING_TEAM != '' }}
+          UPSTREAM_BUILD: ${{ github.repository_owner == 'surge-synthesizer' }}
+        run: |
+          if [[ "$SIGNING_CONFIGURED" == "true" ]]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+            echo "macOS artifacts will use the configured signing and notarization flow." >> "$GITHUB_STEP_SUMMARY"
+          elif [[ "$UPSTREAM_BUILD" == "true" ]]; then
+            echo "::error::Upstream macOS distribution requires the complete signing and notarization configuration."
+            exit 1
+          else
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::Building an unsigned, unnotarized fork distribution; no Apple signing identity is being claimed."
+            echo "macOS fork artifacts are UNSIGNED and UNNOTARIZED development builds." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - uses: apple-actions/import-codesign-certs@v3
+        if: runner.os == 'macOS' && steps.mac_signing.outputs.enabled == 'true'
         with:
           p12-file-base64: ${{ secrets.MAC_CERTS_P12 }}
           p12-password: ${{ secrets.CERT_PWD }}
@@ -115,19 +141,28 @@ jobs:
 
 
       - name: "Build release version"
+        env:
+          # Empty values select the installer's existing unsigned branch. Never
+          # mix partial credentials into an unsigned fork build, and keep secret
+          # contents out of shell source interpolation.
+          MAC_SIGNING_CERT: ${{ steps.mac_signing.outputs.enabled == 'true' && secrets.MAC_SIGNING_CERT_NAME || '' }}
+          MAC_INSTALLING_CERT: ${{ steps.mac_signing.outputs.enabled == 'true' && secrets.MAC_INSTALLING_CERT_NAME || '' }}
+          MAC_SIGNING_ID: ${{ steps.mac_signing.outputs.enabled == 'true' && secrets.MAC_SIGNING_ID || '' }}
+          MAC_SIGNING_1UPW: ${{ steps.mac_signing.outputs.enabled == 'true' && secrets.MAC_SIGNING_1UPW || '' }}
+          MAC_SIGNING_TEAM: ${{ steps.mac_signing.outputs.enabled == 'true' && secrets.MAC_SIGNING_TEAM || '' }}
+          SURGE_VERSION: ${{ needs.surge_version.outputs.surge_version }}
         run: |
-
-          export MAC_SIGNING_CERT="${{ secrets.MAC_SIGNING_CERT_NAME }}"
-          export MAC_INSTALLING_CERT="${{ secrets.MAC_INSTALLING_CERT_NAME }}"
-
-          export MAC_SIGNING_ID="${{ secrets.MAC_SIGNING_ID }}"
-          export MAC_SIGNING_1UPW="${{ secrets.MAC_SIGNING_1UPW }}"
-          export MAC_SIGNING_TEAM="${{ secrets.MAC_SIGNING_TEAM }}"
-
-          export SURGE_VERSION="${{ needs.surge_version.outputs.surge_version }}"
-
-          cmake -S . -B ./build -DAZURE_PIPELINE=1 -DSURGE_VERSION="${{ needs.surge_version.outputs.surge_version }}" -DCMAKE_BUILD_TYPE=Release ${{ matrix.cmakeArgs }}
+          cmake -S . -B ./build -DAZURE_PIPELINE=1 -DSURGE_VERSION="$SURGE_VERSION" -DCMAKE_BUILD_TYPE=Release ${{ matrix.cmakeArgs }}
           cmake --build ./build --config Release --target surge-xt-distribution --parallel 3
+
+      - name: "Label unsigned macOS development artifacts"
+        if: runner.os == 'macOS' && steps.mac_signing.outputs.enabled != 'true'
+        run: |
+          printf '%s\n' \
+            'UNSIGNED AND UNNOTARIZED DEVELOPMENT BUILD' \
+            'This fork build has no Developer ID signature or Apple notarization.' \
+            'It is not an official signed Surge XT release.' \
+            > build/surge-xt-dist/UNSIGNED-BUILD.txt
 
       - name: "Show installer directory"
         run: |
@@ -138,7 +173,7 @@ jobs:
         if: ${{ matrix.uploadResult }}
         with:
           path: build/surge-xt-dist
-          name: build-${{ matrix.name }}
+          name: build-${{ matrix.name }}${{ runner.os == 'macOS' && steps.mac_signing.outputs.enabled != 'true' && '-unsigned' || '' }}
 
   build_plugin_docker:
     name: "Ubuntu 20 Docker"

@@ -38,7 +38,7 @@ jobs:
       SURGE_DATA_HOME: ${{ github.workspace }}/resources/data
       SURGE_REFERENCE_SCREENSHOTS: ${{ github.workspace }}/screenshot-artifact
       CCACHE_DIR: ${{ github.workspace }}/.ccache-reference
-      CCACHE_MAXSIZE: 600M
+      CCACHE_MAXSIZE: 2G
     steps:
       - name: Check out the exact commit and dependencies
         uses: actions/checkout@v6
@@ -78,7 +78,8 @@ jobs:
 
       - name: Validate reference workspace packages
         run: |
-          python3 scripts/reference-workspaces/validate.py 2>&1 | tee screenshot-artifact/manifest-validation.log
+          python3 scripts/reference-workspaces/validate.py --strict-overlap 2>&1 | tee screenshot-artifact/manifest-validation.log
+          python3 scripts/reference-workspaces/validate.py --self-test 2>&1 | tee screenshot-artifact/schema-self-test.log
 
       - name: Configure native test build
         run: |

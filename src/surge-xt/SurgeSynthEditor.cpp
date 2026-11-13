@@ -641,17 +641,24 @@ void SurgeSynthEditor::updateReferenceWorkspaceFromSkin(bool force)
     }
 
     const auto file = xmlFile.getSiblingFile(layout);
+    const auto nativePath = [](const juce::File &source) {
+#if JUCE_WINDOWS
+        return std::filesystem::path(source.getFullPathName().toWideCharPointer());
+#else
+        // POSIX native paths are UTF-8 byte strings; avoid the deprecated C++20 u8path helper.
+        return std::filesystem::path(source.getFullPathName().toStdString());
+#endif
+    };
     std::error_code ec;
     const auto canonicalPackage = std::filesystem::canonical(
-        std::filesystem::u8path(xmlFile.getParentDirectory().getFullPathName().toStdString()), ec);
+        nativePath(xmlFile.getParentDirectory()), ec);
     if (ec)
     {
         referenceWorkspaceError = "The reference skin package could not be resolved.";
         useStockEditor();
         return;
     }
-    const auto canonicalFile = std::filesystem::canonical(
-        std::filesystem::u8path(file.getFullPathName().toStdString()), ec);
+    const auto canonicalFile = std::filesystem::canonical(nativePath(file), ec);
     if (ec || canonicalFile.parent_path() != canonicalPackage)
     {
         referenceWorkspaceError = "The reference layout is missing or outside its skin package.";

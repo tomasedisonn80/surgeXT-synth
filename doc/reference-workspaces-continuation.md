@@ -1,5 +1,53 @@
 # Ten-skin fidelity continuation
 
+## Current numbered continuation — 13 November 2026
+
+The [ten-wave ledger](reference-workspaces/ten-wave-ledger.md) is the current
+record for assignments 1–60 of the continuation from `786db23`. Earlier wave
+tables below and the separate engineering log retain historical context; their
+counts are not added to this numbered continuation.
+
+At the assignment-48 snapshot, assignments 1–46 and 48 are complete, 47 and 49
+are active, and 50–60 have not started. Assignment 47 is correcting a measured
+paint/hit-layout mismatch in generic linear controls with a pointer regression.
+Assignment 49 is addressing release followed by a new MIDI key before the next
+audio block. Neither unfinished fix is counted as a passing native result.
+
+The latest verified native source is
+`eccf282722f719b10a918424663244af0b5688fa`,
+[run 43391258392](https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43391258392):
+39 behavior cases / 10,298,881 assertions, twenty baseline/edited PNGs /
+24,095,766 capture assertions, and passing normal/ThreadSanitizer audio-display
+checks. The earlier
+`3ec3998877eab793f8bf2aa4acb367c69de17979`
+[run 43389991532](https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43389991532)
+passed the same 39 behavior cases / 10,298,881 assertions and all twenty images /
+24,095,754 capture assertions. New ClearSignal, Flow and Live refinements and
+active control fixes follow these sources and need fresh native verification.
+
+The published main checkpoint remains
+`22b9c299e6aa74093c9e96677cb32df5f2f74e74` at this snapshot.
+Its [platform run 43382049249](https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43382049249)
+passed all seven build jobs. Release/nightly publication jobs were skipped;
+no installer or nightly publication is claimed.
+
+The native gallery pipeline is implemented and verified against the genuine
+`22b9c29` artifact. It will publish the successful current-main run's unmodified
+twenty-image set and provenance using a normal push. Verification branch runs
+skip publication. Final source promotion, its gallery publication and the
+remaining assignments are still pending. Source checks and runtime success do
+not establish pixel-identical fidelity.
+
+[Curated reports 31–46](reference-workspaces/agent-reports/README.md) retain the
+actual comparison sources, measurements and native adaptations. They describe
+the evidence available when each assignment ended; the ledger tracks later
+integration results.
+
+## Historical checkpoint record
+
+The sections below preserve the earlier recovery and implementation sequence.
+Read the current ledger above for present completion and publication status.
+
 ## Target and recovered state
 
 The current request is to continue until all ten native UI/UX redesigns match
@@ -18,11 +66,12 @@ It replaces deprecated JUCE font measurement with native glyph layout. Source
 checks passed with deprecation warnings treated as errors. Native runtime and
 capture results are recorded separately as they become available.
 
-## Work organization
+## Historical work organization
 
 There are three available worker slots alongside the coordinating agent. Each
 wave has six substantive assignments in two batches; no simultaneous sixty-
-agent claim is made. The table below records completed work only.
+agent claim is made. The following table is historical; the current numbered
+continuation is recorded in the linked ledger.
 
 | Wave | Assignments and status | Evidence |
 | --- | --- | --- |
@@ -250,14 +299,14 @@ the exact uncommitted source edits from the contributing agents; the old
 checkout was left intact. Source validation below is distinct from the next
 linked native run.
 
-| Assignment | Source result and verification status |
+| Assignment | Completed result and subsequent verification |
 | --- | --- |
-| 31 — Native MIDI lanes | Actual Pitch/Mod/Expression/Touch input, atomic applied state and bounded spring-release ordering; linked tests pending |
-| 32 — MIDI schema | Matching native/Python validation, measured four-lane layout, generated-ID protection and 168 shared cases; Python and strict ten-manifest checks pass |
-| 33 — FX power tests | 48 independent native switches, exact slot-mask/listener behavior and Off/reassignment regression; linked run pending |
-| 34 — Wave projection | Measured actual-source projection/material refinement in progress |
-| 35 — MIDI interaction tests | Four cases covering real engine targets, incoming MIDI, queue saturation, accessibility and spring lifecycle; linked run pending |
-| 36 | Not started |
+| 31 — Native MIDI lanes | Actual Pitch/Mod/Expression/Touch input, atomic applied state and bounded spring-release ordering; included in the passing `3ec3998` native run |
+| 32 — MIDI schema | Matching native/Python validation, measured four-lane layout, generated-ID protection and 168 shared cases; native and Python gates pass |
+| 33 — FX power tests | 48 independent native switches, exact slot-mask/listener behavior and Off/reassignment regression; included in the passing native run |
+| 34 — Wave projection | Completed actual-source perspective/ribbon projection and material refinement; native captures produced at `3ec3998` |
+| 35 — MIDI interaction tests | Four native cases covering engine targets, incoming MIDI, saturation, accessibility and spring lifecycle; pass after explicit-point and real keyboard-state fixes |
+| 36 — Native gallery pipeline | Completed validated same-run artifact publication, twenty unmodified PNGs, source/run provenance, stale-source guards and normal-push checks; final current-main publication remains pending |
 
 The coordinator corrected the JUCE disabled-toggle update order so an empty FX
 slot cannot remain checked. Verification branches matching `work/reference-*`

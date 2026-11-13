@@ -441,3 +441,82 @@ TEST_CASE("Live MIDI keyboard pointer and typed entry deliver real values and re
     h.block();
     CHECK(h.applied(MidiRecord::AFTERTOUCH) == 0);
 }
+
+TEST_CASE("Live rapid spring gestures respect queued releases and later host input",
+          "[reference-workspaces][reference-midi][reference-interactions][reference-lifecycle]")
+{
+    MidiHarness h;
+    h.load();
+    const std::array<const char *, 2> names{"pitch", "aftertouch"};
+    const std::array<MidiRecord::Type, 2> types{MidiRecord::PITCHWHEEL, MidiRecord::AFTERTOUCH};
+    const std::array<int, 2> coarseSteps{256, 1}, fineSteps{16, 1}, externalValues{512, 37};
+    for (size_t i = 0; i < names.size(); ++i)
+    {
+        CAPTURE(names[i]);
+        auto &lane = h.lane(names[i]);
+        const juce::KeyPress fineUp(juce::KeyPress::upKey, juce::ModifierKeys::shiftModifier, 0);
+        REQUIRE(lane.keyPressed(juce::KeyPress(juce::KeyPress::upKey)));
+        h.block();
+        REQUIRE(h.applied(types[i]) == coarseSteps[i]);
+
+        // No audio block or UI refresh separates release from the next press.
+        REQUIRE(lane.keyStateChanged(false));
+        CHECK(h.applied(types[i]) == coarseSteps[i]);
+        REQUIRE(lane.keyPressed(fineUp));
+        REQUIRE(lane.keyPressed(fineUp)); // Repeats accumulate the owned target.
+        h.block();
+        CHECK(h.applied(types[i]) == 2 * fineSteps[i]);
+        REQUIRE(lane.keyStateChanged(false));
+        h.block();
+        REQUIRE(h.applied(types[i]) == 0);
+
+        // Audio consumes the GUI release and then host MIDI in the same block.
+        // The new host value must seed the next gesture, even without a timer
+        // observing the intermediate zero or refreshing the old slider value.
+        REQUIRE(lane.keyPressed(juce::KeyPress(juce::KeyPress::upKey)));
+        h.block();
+        REQUIRE(h.applied(types[i]) == coarseSteps[i]);
+        REQUIRE(lane.keyStateChanged(false));
+        juce::MidiBuffer hostInput;
+        hostInput.addEvent(i == 0 ? juce::MidiMessage::pitchWheel(1, externalValues[i] + 8192)
+                                 : juce::MidiMessage::channelPressureChange(1, externalValues[i]), 0);
+        h.block(hostInput);
+        REQUIRE(h.applied(types[i]) == externalValues[i]);
+        REQUIRE(lane.keyPressed(fineUp));
+        h.block();
+        CHECK(h.applied(types[i]) == externalValues[i] + fineSteps[i]);
+        REQUIRE(lane.keyStateChanged(false));
+        h.block();
+        REQUIRE(h.applied(types[i]) == 0);
+
+        // A newly accepted absolute spring value also stays the gesture base
+        // until audio consumes it; an older pending release cannot replace it.
+        auto *accessibleValue = lane.getAccessibilityHandler()->getValueInterface();
+        REQUIRE(accessibleValue != nullptr);
+        accessibleValue->setValue(externalValues[i]);
+        REQUIRE(lane.keyPressed(fineUp));
+        h.block();
+        CHECK(h.applied(types[i]) == externalValues[i] + fineSteps[i]);
+        REQUIRE(lane.keyStateChanged(false));
+        h.block();
+        REQUIRE(h.applied(types[i]) == 0);
+
+        // A saturated-queue release followed by one newly available queue slot
+        // must use the same pending-zero base, and the newer gesture must win.
+        REQUIRE(lane.keyPressed(juce::KeyPress(juce::KeyPress::upKey)));
+        h.block();
+        REQUIRE(h.applied(types[i]) == coarseSteps[i]);
+        h.fillQueue();
+        REQUIRE(lane.keyStateChanged(false));
+        CHECK(h.applied(types[i]) == coarseSteps[i]);
+        MidiRecord discarded;
+        REQUIRE(h.processor.midiFromGUI.pop(discarded));
+        REQUIRE(lane.keyPressed(fineUp));
+        CHECK(static_cast<bool>(lane.getProperties()["reference.midi-last-input-accepted"]));
+        h.block();
+        CHECK(h.applied(types[i]) == fineSteps[i]);
+        REQUIRE(lane.keyStateChanged(false));
+        h.block();
+        CHECK(h.applied(types[i]) == 0);
+    }
+}

@@ -868,8 +868,11 @@ void SurgeSynthProcessor::processBlockPlayhead()
     }
 }
 
-bool SurgeSynthProcessor::queueMidiController(midiR::Type type, int value)
+bool SurgeSynthProcessor::queueMidiController(midiR::Type type, int value,
+                                              std::uint64_t *acceptedSequence)
 {
+    if (acceptedSequence)
+        *acceptedSequence = 0;
     if (type != midiR::PITCHWHEEL && type != midiR::MODWHEEL && type != midiR::SUSPEDAL &&
         type != midiR::EXPRESSION && type != midiR::AFTERTOUCH)
         return false;
@@ -878,16 +881,28 @@ bool SurgeSynthProcessor::queueMidiController(midiR::Type type, int value)
     auto record = midiR(type, value);
     record.guiSequence = guiControllerSequence.fetch_add(1, std::memory_order_relaxed) + 1;
     if (midiFromGUI.push(record))
+    {
+        if (acceptedSequence)
+            *acceptedSequence = record.guiSequence;
         return true;
+    }
     if (value == 0 && (pitch || type == midiR::AFTERTOUCH))
     {
         // A release must survive queue saturation and editor destruction. Its
         // ordering stamp prevents it from overriding a later accepted gesture.
         guiSpringResetSequence[pitch ? 0 : 1].store(record.guiSequence,
                                                    std::memory_order_release);
+        if (acceptedSequence)
+            *acceptedSequence = record.guiSequence;
         return true;
     }
     return false;
+}
+
+std::uint64_t SurgeSynthProcessor::appliedGuiSpringSequence(midiR::Type type) const
+{
+    const int spring = type == midiR::PITCHWHEEL ? 0 : type == midiR::AFTERTOUCH ? 1 : -1;
+    return spring >= 0 ? guiSpringAcknowledgedSequence[spring].load(std::memory_order_acquire) : 0;
 }
 
 void SurgeSynthProcessor::processBlockMidiFromGUI()
@@ -933,6 +948,8 @@ void SurgeSynthProcessor::processBlockMidiFromGUI()
         {
             surge->channelAftertouch(rec.ch, rec.cval);
         }
+        if (spring >= 0 && rec.guiSequence != 0)
+            guiSpringAcknowledgedSequence[spring].store(rec.guiSequence, std::memory_order_release);
     }
     for (int spring = 0; spring < 2; ++spring)
     {
@@ -944,6 +961,7 @@ void SurgeSynthProcessor::processBlockMidiFromGUI()
             surge->pitchBend(0, 0);
         else
             surge->channelAftertouch(0, 0);
+        guiSpringAcknowledgedSequence[spring].store(reset, std::memory_order_release);
     }
 }
 

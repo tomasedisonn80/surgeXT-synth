@@ -635,13 +635,13 @@
       "binding": "filter1.cutoff",
       "label": "Cutoff",
       "labelPosition": "top",
-      "x": 1384,
-      "y": 178,
+      "x": 1383,
+      "y": 180,
       "w": 96,
       "h": 121,
       "kind": "knob",
       "fontSize": 13,
-      "faceDiameter": 84
+      "faceDiameter": 81
     },
     {
       "id": "inspector.shared-drive",

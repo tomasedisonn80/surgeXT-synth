@@ -322,7 +322,11 @@ class SurgeSynthProcessor : public juce::AudioProcessor,
     LockFreeStack<midiR, 4096> midiFromGUI;
     // Message-thread controller input. Spring releases remain deliverable even
     // if the shared GUI MIDI queue is full; all application stays on audio.
-    bool queueMidiController(midiR::Type type, int value);
+    bool queueMidiController(midiR::Type type, int value,
+                             std::uint64_t *acceptedSequence = nullptr);
+    // Acknowledged only after audio applies a GUI Pitch/Touch packet. A newer
+    // applied packet also acknowledges an older superseded spring release.
+    std::uint64_t appliedGuiSpringSequence(midiR::Type type) const;
     bool isAddingFromMidi{false};
     void handleNoteOn(juce::MidiKeyboardState *source, int midiChannel, int midiNoteNumber,
                       float velocity) override;
@@ -524,6 +528,7 @@ class SurgeSynthProcessor : public juce::AudioProcessor,
     std::atomic<std::uint64_t> guiControllerSequence{0};
     std::array<std::atomic<std::uint64_t>, 2> guiSpringResetSequence{};
     std::array<std::uint64_t, 2> guiSpringAppliedSequence{}; // audio-thread only
+    std::array<std::atomic<std::uint64_t>, 2> guiSpringAcknowledgedSequence{};
     std::vector<SurgeParamToJuceParamAdapter *> paramAdapters;
 
     std::vector<int> presetOrderToPatchList;

@@ -599,6 +599,7 @@ void knob(juce::Graphics &g, const Theme &t, Rect r, float value, juce::Colour a
         accent = t.muted.withAlpha(0.4f);
     const bool ivory = t.style == "ivory", space = t.style == "space";
     const bool bauhaus = t.style == "bauhaus", clear = t.style == "clear";
+    const bool flow = t.style == "flow";
     const bool glass = t.style == "spectral" || t.style == "aurora" || t.style == "live";
     if (t.glow > 0 && enabled && !ivory && !space && !bauhaus)
     {
@@ -613,24 +614,29 @@ void knob(juce::Graphics &g, const Theme &t, Rect r, float value, juce::Colour a
         {
             const auto angle = start + (end - start) * tick / 20.f;
             const auto inner = rad + 1.f, outer = rad + (tick % 5 == 0 ? 4.f : 2.5f);
-            g.setColour(t.text.withAlpha(.78f));
+            const bool darkDial = t.knob.getPerceivedBrightness() < .35f;
+            g.setColour(t.text.withAlpha(darkDial ? .95f : .78f));
             g.drawLine(c.x + std::sin(angle) * inner, c.y - std::cos(angle) * inner,
-                       c.x + std::sin(angle) * outer, c.y - std::cos(angle) * outer, .8f);
+                       c.x + std::sin(angle) * outer, c.y - std::cos(angle) * outer,
+                       darkDial ? 1.2f : .8f);
         }
     }
     else if ((!ivory && !bauhaus) || ((ivory || bauhaus) && coloredRim))
     {
-        g.setColour(bauhaus ? juce::Colour(0xff181b17) : t.border.withAlpha(clear ? .65f : .32f));
+        g.setColour(bauhaus ? juce::Colour(0xff181b17)
+                           : clear ? juce::Colour(0xff879197) : t.border.withAlpha(.32f));
         g.strokePath(track, juce::PathStrokeType(bauhaus ? 3.6f : clear ? 3.f : 1.5f));
         g.setColour(ivory ? t.accent : accent);
-        g.strokePath(arc, juce::PathStrokeType(bauhaus ? 4.8f : clear ? 4.2f : 2.2f));
+        g.strokePath(arc, juce::PathStrokeType(bauhaus ? 4.8f : clear ? 4.2f
+                                                               : flow ? 4.f : 2.2f));
         if (glass)
         {
             g.setColour(accent.interpolatedWith(juce::Colours::white, .6f));
             g.strokePath(arc, juce::PathStrokeType(.8f));
         }
     }
-    const auto faceRadius = std::max(1.f, rad - (clear ? 3.4f : glass ? 4.2f : 2.f));
+    const auto faceRadius = std::max(1.f, rad - (clear ? 3.4f : flow ? 6.f
+                                                              : glass ? 4.2f : 2.f));
     auto face = Rect(c.x - faceRadius, c.y - faceRadius, faceRadius * 2, faceRadius * 2);
     if (!clear)
     {
@@ -649,7 +655,7 @@ void knob(juce::Graphics &g, const Theme &t, Rect r, float value, juce::Colour a
     else if (bauhaus || clear)
     {
         hi = bauhaus ? juce::Colour(0xfffff4d9) : juce::Colour(0xfff9fbfc);
-        lo = bauhaus ? juce::Colour(0xffebd6ae) : juce::Colour(0xffe7ebed);
+        lo = bauhaus ? juce::Colour(0xffebd6ae) : juce::Colour(0xffd0d6da);
     }
     auto faceGradient = juce::ColourGradient(hi, face.getX() + face.getWidth() * .27f,
                                              face.getY() + face.getHeight() * .12f, lo,
@@ -726,7 +732,8 @@ void knob(juce::Graphics &g, const Theme &t, Rect r, float value, juce::Colour a
     {
         // Broad upper reflection and a narrow dark lower lip make the smaller
         // dials read as solid caps while leaving the value-dependent arc clear.
-        const auto highlight = ivory || space ? .20f : glass ? .14f : .10f;
+        const auto highlight = space && t.knob.getPerceivedBrightness() < .35f ? .06f
+                                : ivory || space ? .20f : glass ? .14f : .10f;
         g.setGradientFill(juce::ColourGradient(
             juce::Colours::white.withAlpha(highlight), face.getX() + face.getWidth() * .30f,
             face.getY() + face.getHeight() * .18f, juce::Colours::white.withAlpha(0.f),
@@ -738,7 +745,7 @@ void knob(juce::Graphics &g, const Theme &t, Rect r, float value, juce::Colour a
     g.setColour(bauhaus          ? juce::Colour(0xff151613)
                 : space          ? juce::Colour(0xff292719)
                 : ivory          ? juce::Colour(0xff958058)
-                                 : t.border.withAlpha(clear ? .18f : .48f));
+                                 : t.border.withAlpha(clear ? .55f : .48f));
     g.drawEllipse(face, bauhaus ? 3.1f : ivory || space ? 1.8f : .9f);
     if (!clear && !bauhaus)
     {
@@ -876,12 +883,37 @@ class ValueEntry : public juce::Component
 class CompactSliderLookAndFeel : public juce::LookAndFeel_V4
 {
   public:
+    // Generic linear controls reserve their painted caption/value bands.
+    // Use one geometry for JUCE pointer mapping and the visible rail, so a
+    // click on a displayed handle cannot jump to a different native value.
+    static Rect standardTrackBounds(const juce::Slider &slider, bool vertical)
+    {
+        auto r = slider.getLocalBounds().toFloat();
+        const auto labelHeight = std::min(17.f, r.getHeight() * .25f);
+        const auto valueHeight = std::min(18.f, r.getHeight() * .25f);
+        r.removeFromTop(labelHeight);
+        r.removeFromBottom(valueHeight);
+        auto track = r.reduced(vertical ? r.getWidth() * .4f
+                                       : std::min(7.f, r.getWidth() * .2f),
+                               std::min(5.f, r.getHeight() * .2f));
+        if (!vertical)
+            track = track.withSizeKeepingCentre(track.getWidth(),
+                                                std::min(5.f, track.getHeight()));
+        return track.toNearestInt().toFloat();
+    }
     juce::Slider::SliderLayout getSliderLayout(juce::Slider &slider) override
     {
         juce::Slider::SliderLayout layout;
         if (static_cast<bool>(slider.getProperties()["reference.performance-fader"]))
         {
             layout.sliderBounds = slider.getLocalBounds().withTrimmedBottom(22);
+            return layout;
+        }
+        if (static_cast<bool>(slider.getProperties()["reference.standard-linear"]))
+        {
+            layout.sliderBounds = standardTrackBounds(
+                slider, static_cast<bool>(slider.getProperties()["reference.standard-fader"]))
+                                      .toNearestInt();
             return layout;
         }
         const auto labelWidth = static_cast<int>(slider.getProperties()["reference.compact-label-width"]);
@@ -910,6 +942,14 @@ class BoundSlider : public juce::Slider
             string(spec, "id").startsWith("c.performance-"))
         {
             getProperties().set("reference.performance-fader", true);
+            setLookAndFeel(&compactLookAndFeel);
+        }
+        if ((kind == "fader" &&
+             !static_cast<bool>(getProperties()["reference.performance-fader"])) ||
+            (kind == "horizontal" && !static_cast<bool>(spec["compact"])))
+        {
+            getProperties().set("reference.standard-linear", true);
+            getProperties().set("reference.standard-fader", kind == "fader");
             setLookAndFeel(&compactLookAndFeel);
         }
         setSliderStyle(kind == "fader"        ? juce::Slider::LinearVertical
@@ -1124,8 +1164,8 @@ class BoundSlider : public juce::Slider
         }
         if (kind == "knob")
         {
-            const bool emphasizeLabel = (theme.style == "ivory" || theme.style == "space") &&
-                                        binding.startsWith("macro");
+            const bool emphasizeLabel = theme.style == "clear" ||
+                ((theme.style == "ivory" || theme.style == "space") && binding.startsWith("macro"));
             if (binding.startsWith("macro") &&
                 (theme.style == "precision" || theme.style == "spectral"))
                 r.removeFromTop(14.f); // Explicit number band in these manifest bounds.
@@ -1312,13 +1352,12 @@ class BoundSlider : public juce::Slider
                  juce::Justification::centred);
             text(g, theme, value, r.removeFromBottom(valueHeight), fs, valueInk, false,
                  juce::Justification::centred);
-            auto track =
-                r.reduced(kind == "fader" ? r.getWidth() * .4f : std::min(7.f, r.getWidth() * .2f),
-                          std::min(5.f, r.getHeight() * .2f));
+            auto track = CompactSliderLookAndFeel::standardTrackBounds(*this, kind == "fader");
             if (track.isEmpty())
                 return;
             const bool spectralFader = kind == "fader" && theme.style == "spectral";
-            if (kind == "fader" && (theme.style == "precision" || spectralFader))
+            if (kind == "fader" && (theme.style == "precision" || spectralFader ||
+                                    theme.style == "aurora" || theme.style == "live"))
                 track = track.withSizeKeepingCentre(3.f, track.getHeight());
             if (kind == "horizontal")
                 track =
@@ -1331,9 +1370,9 @@ class BoundSlider : public juce::Slider
             }
             auto active = track;
             if (kind == "fader")
-                active = track.withTop(track.getBottom() - track.getHeight() * getValue());
+                active = track.withTop(getPositionOfValue(getValue()));
             else
-                active.setWidth(track.getWidth() * getValue());
+                active.setRight(getPositionOfValue(getValue()));
             const bool hardware = theme.style == "space" || theme.style == "tokyo";
             if (kind == "fader" && hardware)
             {
@@ -1356,13 +1395,14 @@ class BoundSlider : public juce::Slider
             Rect handle;
             if (kind == "fader")
             {
-                const auto width = std::min(24.f, static_cast<float>(getWidth()) - 2.f);
+                const auto width = std::min(theme.style == "live" ? 20.f : 24.f,
+                                            static_cast<float>(getWidth()) - 2.f);
                 const auto height = std::min(spectralFader ? 14.f : 8.f, r.getHeight());
                 handle = {track.getCentreX() - width * .5f, active.getY() - height * .5f, width,
                           height};
             }
             else
-                handle = {track.getX() + track.getWidth() * static_cast<float>(getValue()) - 5,
+                handle = {getPositionOfValue(getValue()) - 5,
                           track.getCentreY() - 6, 10, 12};
             g.setColour(juce::Colours::black.withAlpha(.45f));
             g.fillRoundedRectangle(handle.expanded(.8f).translated(0, 1.5f), 2);
@@ -3481,7 +3521,12 @@ class MidiController : public juce::Slider
         if (ownsSpring)
         {
             ownsSpring = false;
-            processor.queueMidiController(type, 0);
+            std::uint64_t sequence{};
+            if (processor.queueMidiController(type, 0, &sequence))
+            {
+                pendingSpringSequence = sequence;
+                pendingSpringValue = 0;
+            }
         }
         sync();
     }
@@ -3528,10 +3573,14 @@ class MidiController : public juce::Slider
         if (direction == 0 || key.getModifiers().isCtrlDown() ||
             key.getModifiers().isAltDown() || key.getModifiers().isCommandDown())
             return juce::Slider::keyPressed(key);
-        // A completed spring release may already have reached the processor
-        // before the next UI timer refresh. Start each new key gesture from
-        // the applied input; repeats retain their queued target until consumed.
-        const int base = keyboardHeld ? juce::roundToInt(getValue()) : appliedValue();
+        // Keep the latest owned spring input until audio has applied it (or
+        // a newer packet). This includes an unconsumed release followed by a
+        // rapid new key press; after acknowledgement, real external input wins.
+        if (pendingSpringSequence != 0 &&
+            processor.appliedGuiSpringSequence(type) >= pendingSpringSequence)
+            pendingSpringSequence = 0;
+        const int base = keyboardHeld ? juce::roundToInt(getValue())
+                         : pendingSpringSequence != 0 ? pendingSpringValue : appliedValue();
         keyboardHeld = true;
         const int step = type == SurgeSynthProcessor::midiR::PITCHWHEEL
                              ? (key.getModifiers().isShiftDown() ? 16 : 256) : 1;
@@ -3663,9 +3712,14 @@ class MidiController : public juce::Slider
     bool requestValue(int value)
     {
         value = juce::jlimit(static_cast<int>(getMinimum()), static_cast<int>(getMaximum()), value);
-        const bool accepted = processor.queueMidiController(type, value);
+        std::uint64_t sequence{};
+        const bool accepted = processor.queueMidiController(type, value, &sequence);
         if (accepted && spring)
+        {
             ownsSpring = value != 0;
+            pendingSpringSequence = sequence;
+            pendingSpringValue = value;
+        }
         getProperties().set("reference.midi-last-input-accepted", accepted);
         if (accepted)
             getProperties().set("reference.midi-last-request", value);
@@ -3733,6 +3787,8 @@ class MidiController : public juce::Slider
     juce::String caption;
     SurgeSynthProcessor::midiR::Type type{SurgeSynthProcessor::midiR::MODWHEEL};
     bool spring{false}, dragging{false}, keyboardHeld{false}, ownsSpring{false}, polling{false};
+    std::uint64_t pendingSpringSequence{0};
+    int pendingSpringValue{0};
     LaneLookAndFeel laneLookAndFeel;
     juce::Component::SafePointer<juce::CallOutBox> entryBox;
     std::uint64_t entryGeneration{0};
@@ -5475,29 +5531,39 @@ struct Workspace::Impl
                        juce::Point<float>(rx, sy), juce::Point<float>(r.getRight(), r.getBottom())})
             g.fillEllipse(q.x - 2.5f, q.y - 2.5f, 5, 5);
     }
-    void drawFilter(juce::Graphics &g, Rect r, int index, juce::Colour color, bool base = true)
+    void drawFilter(juce::Graphics &g, Rect r, int index, juce::Colour color, bool base = true,
+                    Rect panelClip = {})
     {
         const juce::Graphics::ScopedSaveState state(g);
-        g.reduceClipRegion(r.toNearestInt());
-        if (base && theme.style != "aurora")
-            plotBase(g, r, false, false); // The filter draws its own logarithmic axes.
         const bool miniature = r.getHeight() < 65;
         const bool ivoryReadouts = theme.style == "ivory" && !miniature;
         const bool spectral = theme.style == "spectral", tokyo = theme.style == "tokyo";
         const bool clear = theme.style == "clear", live = theme.style == "live";
-        const bool dbReadouts = !miniature && (spectral || tokyo || clear);
+        const bool externalAxes = clear && !miniature;
+        const bool outerDbLabels = theme.style == "flow" && !miniature;
+        const bool dbReadouts = !miniature && (spectral || tokyo || clear || outerDbLabels);
+        g.reduceClipRegion(((externalAxes || outerDbLabels) && !panelClip.isEmpty()
+                                ? panelClip : r).toNearestInt());
+        if (base && theme.style != "aurora")
+            plotBase(g, r, false, false); // The filter draws its own logarithmic axes.
+        const float floorDb = externalAxes ? -24.f : filterPreviewMinimumDb;
+        const float ceilingDb = filterPreviewMaximumDb;
         const auto frame = r;
         r = miniature ? r.reduced(4, 3) : r.reduced(7, 15);
         if (ivoryReadouts)
             r = frame.reduced(7, 9).withTrimmedBottom(20);
-        if (dbReadouts)
-            r = r.withTrimmedLeft(clear ? 30.f : 21.f);
+        if (externalAxes)
+            r = frame.withTrimmedTop(34.f);
+        else if (dbReadouts && !outerDbLabels)
+            r = r.withTrimmedLeft(21.f);
         if (live)
             color = theme.accent;
         else if (clear)
             color = color.brighter(.22f);
-        const auto axisInk = theme.display.contrasting(dbReadouts ? .90f : .80f);
-        const auto gridInk = dbReadouts ? axisInk : theme.secondary;
+        const auto axisInk = externalAxes ? theme.text
+                                           : theme.display.contrasting(dbReadouts ? .90f : .80f);
+        const auto gridInk = externalAxes ? theme.display.contrasting(.90f)
+                                         : dbReadouts ? axisInk : theme.secondary;
         const auto axisSize = clear      ? 12.f
                               : tokyo    ? 11.f
                               : spectral ? 10.f
@@ -5511,6 +5577,23 @@ struct Workspace::Impl
         }
         if (base && !miniature)
         {
+            if (externalAxes)
+            {
+                text(g, theme, "FILTER 1 & 2 RESPONSE",
+                     {frame.getX() + 11, frame.getY() + 5, frame.getWidth() - 260, 23},
+                     13.f, theme.display.contrasting(.95f), true);
+                for (int filter = 1; filter <= 2; ++filter)
+                {
+                    const auto x = frame.getRight() - 235.f + (filter - 1) * 115.f;
+                    const auto legendInk = (filter == 1 ? theme.accent : theme.secondary).brighter(.22f);
+                    g.setColour(legendInk);
+                    g.fillEllipse(x, frame.getY() + 12, 7, 7);
+                    text(g, theme, "F" + juce::String(filter) + " " +
+                             parameters.display("filter" + juce::String(filter) + ".type"),
+                         {x + 12, frame.getY() + 5, 99, 23}, 11.f,
+                         theme.display.contrasting(.95f));
+                }
+            }
             const float frequencies[]{20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000};
             for (float frequency : frequencies)
             {
@@ -5524,10 +5607,13 @@ struct Workspace::Impl
                                                      : juce::String(static_cast<int>(frequency));
                 // Compact cards retain the full logarithmic grid, with enough
                 // separation for the actual frequency captions to remain readable.
-                const bool caption = !dbReadouts || r.getWidth() >= 260 || frequency == 20 ||
+                const bool caption = !dbReadouts || outerDbLabels || r.getWidth() >= 260 || frequency == 20 ||
                                      frequency == 100 || frequency == 1000 || frequency == 20000;
                 if (!ivoryReadouts && caption)
-                    text(g, theme, label, dbReadouts
+                    text(g, theme, label, externalAxes
+                             ? Rect(std::clamp(x - 16, frame.getX() - 14, frame.getRight() - 32),
+                                    frame.getBottom() + 5, 32, 18)
+                             : dbReadouts && !outerDbLabels
                              ? Rect(std::clamp(x - 14, r.getX() - 4, frame.getRight() - 29),
                                     frame.getBottom() - 14, 28, 13)
                              : Rect(std::clamp(x - 13, frame.getX(), frame.getRight() - 26),
@@ -5535,33 +5621,42 @@ struct Workspace::Impl
                          axisSize, axisInk, false,
                          juce::Justification::centred);
             }
-            // Multiples of 12 dB include the real unity-gain line. Starting at
-            // the -42 dB display limit would miss 0 dB entirely.
-            for (float db = std::ceil(filterPreviewMinimumDb / 12.f) * 12.f;
-                 db <= filterPreviewMaximumDb; db += 12)
+            // The visible range is a display choice; every ordinate below
+            // still comes from the native filter magnitude, including unity.
+            const float dbStep = externalAxes ? 6.f : 12.f;
+            for (float db = std::ceil(floorDb / dbStep) * dbStep;
+                 db <= ceilingDb; db += dbStep)
             {
                 const auto y =
-                    r.getBottom() - (db - filterPreviewMinimumDb) /
-                                        (filterPreviewMaximumDb - filterPreviewMinimumDb) *
+                    r.getBottom() - (db - floorDb) /
+                                        (ceilingDb - floorDb) *
                                         r.getHeight();
                 g.setColour(gridInk.withAlpha(db == 0 ? .25f : clear ? .14f : .09f));
                 g.drawLine(r.getX(), y, r.getRight(), y, db == 0 ? 1.f : .7f);
                 if (dbReadouts)
                     text(g, theme, (db > 0 ? "+" : "") + juce::String(static_cast<int>(db)),
-                         {frame.getX() + 2, y - 6.5f, r.getX() - frame.getX() - 7, 13},
+                         externalAxes ? Rect(frame.getX() - 42, y - 8, 35, 16)
+                         : outerDbLabels ? Rect(frame.getX() - 34, y - 6.5f, 27, 13)
+                                      : Rect(frame.getX() + 2, y - 6.5f,
+                                             r.getX() - frame.getX() - 7, 13),
                          axisSize, axisInk, false, juce::Justification::centredRight);
             }
             if (dbReadouts)
-                text(g, theme, "dB", {frame.getX() + 2, frame.getBottom() - 14,
-                                      r.getX() - frame.getX() - 7, 13},
+                text(g, theme, "dB", externalAxes
+                         ? Rect(frame.getX() - 42, frame.getY() + 5, 35, 18)
+                         : outerDbLabels ? Rect(frame.getX() - 34, frame.getY() - 2, 27, 13)
+                         : Rect(frame.getX() + 2, frame.getBottom() - 14,
+                                r.getX() - frame.getX() - 7, 13),
                      axisSize, axisInk, false, juce::Justification::centredRight);
         }
+        if (externalAxes || outerDbLabels)
+            g.reduceClipRegion(frame.toNearestInt());
         juce::Path p;
         for (size_t i = 0; i < curve.values.size(); ++i)
         {
             const float x = static_cast<float>(i) / static_cast<float>(curve.values.size() - 1);
-            const float y = 1.f - std::clamp((curve.values[i] - filterPreviewMinimumDb) /
-                                                 (filterPreviewMaximumDb - filterPreviewMinimumDb),
+            const float y = 1.f - std::clamp((curve.values[i] - floorDb) /
+                                                 (ceilingDb - floorDb),
                                              0.f, 1.f);
             if (!i)
                 p.startNewSubPath(r.getX(), r.getY() + y * r.getHeight());
@@ -5602,8 +5697,8 @@ struct Workspace::Impl
                 const auto at = static_cast<size_t>(sample);
                 const auto next = std::min(at + 1, curve.values.size() - 1);
                 const auto magnitude = [&](size_t i) {
-                    return std::clamp((curve.values[i] - filterPreviewMinimumDb) /
-                                          (filterPreviewMaximumDb - filterPreviewMinimumDb),
+                    return std::clamp((curve.values[i] - floorDb) /
+                                          (ceilingDb - floorDb),
                                       0.f, 1.f);
                 };
                 const auto y = r.getBottom() -
@@ -6276,9 +6371,9 @@ struct Workspace::Impl
             drawFilter(g, pr, index,
                        theme.style == "bauhaus" ? theme.secondary
                        : index == 2             ? theme.secondary
-                                                : curveInk);
+                                                : curveInk, true, r);
             if (variant == "combined")
-                drawFilter(g, pr, 2, theme.secondary, false);
+                drawFilter(g, pr, 2, theme.secondary, false, r);
         }
         else if (kind == "envelope" || kind == "amp")
             drawEnvelope(g, pr, index, curveInk);

@@ -862,7 +862,8 @@
       "w": 70,
       "h": 126,
       "accent": "secondary",
-      "labelPosition": "top"
+      "labelPosition": "top",
+      "faceDiameter": 56
     },
     {
       "id": "c.macro1",

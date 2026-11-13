@@ -1913,6 +1913,114 @@ TEST_CASE("Compact value controls preserve real drag and typed-unit editing",
     CHECK_FALSE(adapter->inEditGesture.load());
 }
 
+
+TEST_CASE("Painted linear handles match native pointer positions and endpoints",
+          "[reference-workspaces][reference-interactions][reference-linear]")
+{
+    juce::ScopedJuceInitialiser_GUI gui;
+    IsolatedUserData testData;
+    SurgeSynthProcessor processor;
+    testData.attach(processor);
+    Workspace workspace(processor);
+    workspace.setSize(referenceWidth, referenceHeight);
+    workspace.addToDesktop(0);
+    workspace.setVisible(true);
+
+    struct LinearCase
+    {
+        const char *package, *id, *binding;
+        int width, height;
+        bool vertical;
+        float zeroPosition, onePosition;
+    };
+    // Independently measured painted travel in each native component's local
+    // coordinates. The old stock JUCE layout used different thumb insets and
+    // would change the processor value when the visible handle was clicked.
+    const std::array<LinearCase, 3> cases{{
+        {"reference-03-spectral", "c.osc1-level", "osc1.level", 58, 91, true, 68.f, 22.f},
+        {"reference-10-live", "c.mixer-osc1", "osc1.level", 42, 130, true, 107.f, 22.f},
+        {"reference-04-bauhaus", "output-scene-level", "scene.volume", 195, 54, false, 7.f, 188.f}
+    }};
+    for (const auto &example : cases)
+    {
+        INFO("Linear component: " << example.package << " / " << example.id);
+        const auto manifest = sourceRoot().getChildFile(
+            "resources/data/skins/" + juce::String(example.package) + ".surge-skin/workspace.json");
+        juce::String error;
+        REQUIRE(workspace.load(manifest, error));
+        REQUIRE(error.isEmpty());
+        workspace.refresh();
+        auto &bridge = workspace.bridge();
+        auto *slider = dynamic_cast<juce::Slider *>(findComponent(workspace, example.id));
+        REQUIRE(slider != nullptr);
+        REQUIRE(slider->isEnabled());
+        REQUIRE(slider->getWidth() == example.width);
+        REQUIRE(slider->getHeight() == example.height);
+        REQUIRE(slider->getWantsKeyboardFocus());
+        CHECK(slider->getName().isNotEmpty());
+        auto *adapter = adapterFor(processor, bridge, example.binding);
+        REQUIRE(adapter != nullptr);
+        GestureProbe probe(*adapter);
+
+        const auto paintedPoint = [&](float value) {
+            const auto position = example.zeroPosition +
+                                  value * (example.onePosition - example.zeroPosition);
+            return example.vertical
+                       ? juce::Point<float>{example.width * .5f, position}
+                       : juce::Point<float>{position, example.height * .5f};
+        };
+        for (const auto target : {0.f, .25f, .5f, .75f, 1.f})
+        {
+            edit(bridge, example.binding, target);
+            workspace.refresh();
+            const auto before = bridge.value(example.binding);
+            REQUIRE(before == Catch::Approx(target).margin(.0011f));
+            const auto point = paintedPoint(static_cast<float>(slider->getValue()));
+            const auto position = example.vertical ? point.y : point.x;
+            CHECK(slider->getPositionOfValue(slider->getValue()) ==
+                  Catch::Approx(position).margin(.01f));
+            const auto audibleRandom = processor.surge->storage.rngGen.g;
+            REQUIRE(slider->createComponentSnapshot(slider->getLocalBounds()).isValid());
+            CHECK(processor.surge->storage.rngGen.g == audibleRandom);
+            CHECK(bridge.value(example.binding) == Catch::Approx(before).margin(.00001f));
+
+            const auto starts = probe.starts;
+            const auto click = mouseEvent(*slider, point);
+            slider->mouseDown(click);
+            slider->mouseUp(click);
+            workspace.refresh();
+            // This exercises JUCE's real hit mapping, the bound slider callback,
+            // the host adapter and the actual synth parameter, not a test setter.
+            CHECK(bridge.value(example.binding) == Catch::Approx(before).margin(.0011f));
+            CHECK(adapter->getValue() == Catch::Approx(before).margin(.0011f));
+            CHECK(probe.starts > starts);
+            CHECK(probe.balance == 0);
+            CHECK(bridge.activeGestureCount() == 0);
+            CHECK_FALSE(adapter->inEditGesture.load());
+        }
+
+        for (const auto endpoint : {0.f, 1.f})
+        {
+            edit(bridge, example.binding, .5f);
+            workspace.refresh();
+            const auto down = mouseEvent(*slider, paintedPoint(.5f));
+            const auto end = down.withNewPosition(paintedPoint(endpoint));
+            slider->mouseDown(down);
+            slider->mouseDrag(end);
+            slider->mouseUp(end);
+            workspace.refresh();
+            CHECK(bridge.value(example.binding) == Catch::Approx(endpoint).margin(.0011f));
+            CHECK(adapter->getValue() == Catch::Approx(endpoint).margin(.0011f));
+            CHECK(slider->getValue() == Catch::Approx(endpoint).margin(.0011f));
+            CHECK(bridge.activeGestureCount() == 0);
+            CHECK_FALSE(adapter->inEditGesture.load());
+        }
+        CHECK(probe.starts == probe.ends);
+        CHECK(probe.minimumBalance == 0);
+        CHECK(probe.balance == 0);
+    }
+}
+
 TEST_CASE("Typed native values reject missing numbers and retain native units and names",
           "[reference-workspaces][reference-interactions][reference-typed-values]")
 {
@@ -3190,13 +3298,25 @@ TEST_CASE("Ten reference workspaces render native controls and export evidence",
         // Feed a reproducible chord and enough real output to fill all 64 FFT
         // history rows. Refresh each four blocks so the bounded tap does not
         // overflow. No image or invented samples fill any output display.
+        const bool liveControllerFixture = id == "10-live-performance-deck";
         float audioPeak = 0.f;
         for (int block = 0; block < showcaseAudioBlocks; ++block)
         {
             juce::MidiBuffer notes;
             if (block == 0)
+            {
+                if (liveControllerFixture)
+                {
+                    // A real incoming MIDI demonstration, not painted lane positions.
+                    // These controller inputs are recorded in the capture evidence.
+                    notes.addEvent(juce::MidiMessage::pitchWheel(1, 14808), 0);
+                    notes.addEvent(juce::MidiMessage::controllerEvent(1, 1, 104), 0);
+                    notes.addEvent(juce::MidiMessage::controllerEvent(1, 11, 56), 0);
+                    notes.addEvent(juce::MidiMessage::channelPressureChange(1, 85), 0);
+                }
                 for (const auto pitch : {48, 60, 67})
                     notes.addEvent(juce::MidiMessage::noteOn(1, pitch, 0.65f), 0);
+            }
             audioPeak = std::max(audioPeak, processBlock(processor, notes));
             if ((block + 1) % 4 == 0)
                 workspace.refresh();
@@ -3205,6 +3325,13 @@ TEST_CASE("Ten reference workspaces render native controls and export evidence",
         CHECK(audioPeak < 1.0f);
         const auto baselineAudioPeak = audioPeak;
         workspace.refresh();
+        if (liveControllerFixture)
+        {
+            CHECK(processor.surge->pitchbendMIDIVal.load() == 6616);
+            CHECK(processor.surge->modwheelCC.load() == 104);
+            CHECK(processor.surge->expressionCC.load() == 56);
+            CHECK(processor.surge->channelAftertouchMIDIVal.load() == 85);
+        }
 
         auto &bridge = workspace.bridge();
         int resolvedControls = 0;
@@ -3339,6 +3466,17 @@ TEST_CASE("Ten reference workspaces render native controls and export evidence",
         property(capture, "height", referenceHeight);
         property(capture, "patch", fixture["name"].toString() + "; no reference image loaded");
         property(capture, "patchFixture", fixture);
+        if (liveControllerFixture)
+        {
+            auto controllers = object();
+            property(controllers, "source", "Real incoming MIDI before baseline notes, channel 1");
+            property(controllers, "signedPitchBend", 6616);
+            property(controllers, "pitchWheel14Bit", 14808);
+            property(controllers, "modulationCC1", 104);
+            property(controllers, "expressionCC11", 56);
+            property(controllers, "channelPressure", 85);
+            property(capture, "incomingMidiControllers", controllers);
+        }
         property(capture, "audioFixture",
                  "Held MIDI channel 1 notes 48, 60 and 67, velocity 0.65; " +
                      juce::String(showcaseAudioBlocks) + " " + juce::String(sampleBlock) +

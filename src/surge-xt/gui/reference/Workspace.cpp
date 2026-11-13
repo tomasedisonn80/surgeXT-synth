@@ -231,6 +231,16 @@ const juce::Image &materialGrain(bool brushed)
     // not sampled from reference art and contains no signal or parameter state.
     static const auto textures = [] {
         std::array<juce::Image, 2> result;
+        const auto noise = [](unsigned x, unsigned y) {
+            auto hash = x + 0x9e3779b9u;
+            hash ^= (y + 1u) * 0x85ebca6bu;
+            hash ^= hash >> 16;
+            hash *= 0x7feb352du;
+            hash ^= hash >> 15;
+            hash *= 0x846ca68bu;
+            hash ^= hash >> 16;
+            return static_cast<float>(hash & 65535u) / 32767.5f - 1.f;
+        };
         for (size_t style = 0; style < result.size(); ++style)
         {
             result[style] = juce::Image(juce::Image::ARGB, 512, 256, true);
@@ -238,19 +248,19 @@ const juce::Image &materialGrain(bool brushed)
             for (int y = 0; y < pixels.height; ++y)
                 for (int x = 0; x < pixels.width; ++x)
                 {
-                    // Avalanche both coordinates; the old linear seed made a
-                    // diagonal lattice visible on the otherwise smooth panels.
-                    // Longer horizontal fibres are cosmetic brushed metal.
-                    auto hash = static_cast<unsigned>((style == 1 ? x / 24 : x) + 0x9e3779b9u);
-                    hash ^= static_cast<unsigned>(y + 1) * 0x85ebca6bu;
-                    hash ^= hash >> 16;
-                    hash *= 0x7feb352du;
-                    hash ^= hash >> 15;
-                    hash *= 0x846ca68bu;
-                    hash ^= hash >> 16;
-                    const auto shade = hash & 1u ? juce::Colours::white : juce::Colours::black;
-                    const auto alpha = .08f + static_cast<float>((hash >> 1) & 31u) / 160.f;
-                    pixels.setPixelColour(x, y, shade.withAlpha(alpha));
+                    // Smoothly joined, periodic fibres avoid the old rectangular
+                    // ends of 24-pixel noise blocks. The independent fine grain
+                    // supplies paper tooth and machining scratches without RNG.
+                    const auto fine = noise(static_cast<unsigned>(x), static_cast<unsigned>(y));
+                    const auto cell = static_cast<unsigned>(x / 32);
+                    const auto position = (x % 32) / 32.f;
+                    const auto blend = position * position * (3.f - 2.f * position);
+                    const auto fibre = noise(cell, static_cast<unsigned>(y)) * (1.f - blend) +
+                                       noise((cell + 1u) % 16u, static_cast<unsigned>(y)) * blend;
+                    const auto grain = style == 1 ? .77f * fibre + .23f * fine : fine;
+                    const auto shade = grain > 0 ? juce::Colour(0xfffffaef)
+                                                  : juce::Colours::black;
+                    pixels.setPixelColour(x, y, shade.withAlpha(.035f + std::abs(grain) * .40f));
                 }
         }
         return result;
@@ -267,6 +277,8 @@ void bezel(juce::Graphics &g, const Theme &t, Rect r, juce::Colour fill, float r
     const bool olive = metal && fill == t.panel;
     const bool ivory = t.style == "ivory";
     const bool flat = t.style == "bauhaus" || t.style == "clear";
+    const bool auroraPanel = panel && t.style == "aurora" && fill == t.panel;
+    const bool hardwarePanel = panel && (t.style == "tokyo" || t.style == "live");
     if (panel && !flat)
     {
         g.setColour(juce::Colours::black.withAlpha(t.light() ? .08f : .22f));
@@ -300,21 +312,34 @@ void bezel(juce::Graphics &g, const Theme &t, Rect r, juce::Colour fill, float r
     }
     else if (fill == t.panel && t.style == "aurora")
     {
-        top = juce::Colour(0xff2b1e43);
-        bottom = juce::Colour(0xff17142b);
+        top = juce::Colour(0xff281f3d);
+        bottom = juce::Colour(0xff1d182f);
     }
     else if (olive)
     {
         top = fill.interpolatedWith(juce::Colour(0xff253011), .38f);
-        bottom = fill.interpolatedWith(juce::Colour(0xff202715), .15f);
+        bottom = fill.interpolatedWith(juce::Colour(0xff726021), .18f);
     }
     else if (metal && fill != t.display)
     {
-        top = fill.interpolatedWith(juce::Colour(0xffedce9b), .11f);
-        bottom = fill.interpolatedWith(juce::Colour(0xff5b411f), .32f);
+        top = fill.interpolatedWith(juce::Colour(0xffedce9b), .18f);
+        bottom = fill.interpolatedWith(juce::Colour(0xff7d633d), .10f);
     }
+    if (hardwarePanel && t.style == "live" && fill == t.panel)
+        top = fill.interpolatedWith(juce::Colour(0xff4d4b4c), .18f);
     auto material = juce::ColourGradient(top, r.getTopLeft(), bottom, r.getBottomLeft(), false);
-    if (panel && olive)
+    if (auroraPanel)
+    {
+        // The reference has a broad translucent title lip, while the body stays
+        // dark. Absolute lip height prevents tall browsers becoming purple slabs.
+        const auto lip = std::min(29.f / r.getHeight(), .42f);
+        material.addColour(0.f, juce::Colour(0xff483664));
+        material.addColour(lip * .88f, juce::Colour(0xff422e5f));
+        material.addColour(lip, juce::Colour(0xff3c2b56));
+        material.addColour(std::min(.57f, lip + 7.f / r.getHeight()), top);
+        material.addColour(.70f, juce::Colour(0xff211b36));
+    }
+    else if (panel && olive)
     {
         // A dark olive title lip opens into the warmer instrument body. Its
         // height follows the physical panel, not the text or processor state.
@@ -322,10 +347,10 @@ void bezel(juce::Graphics &g, const Theme &t, Rect r, juce::Colour fill, float r
         material.addColour(lip, top);
         material.addColour(lip + .025f,
                            fill.interpolatedWith(juce::Colour(0xff87763d), .10f));
-        material.addColour(.72, fill);
+        material.addColour(.72, fill.interpolatedWith(juce::Colour(0xff73642c), .14f));
         material.addColour(.98, bottom);
     }
-    else if (panel && (metal || ivory || t.style == "tokyo"))
+    else if (panel && (metal || ivory || t.style == "tokyo" || t.style == "live"))
     {
         material.addColour(.045, top.interpolatedWith(juce::Colours::white, metal ? .09f : .04f));
         material.addColour(.14, top);
@@ -335,20 +360,20 @@ void bezel(juce::Graphics &g, const Theme &t, Rect r, juce::Colour fill, float r
     g.setGradientFill(material);
     g.fillRoundedRectangle(r, radius);
     if (panel && fill != t.display &&
-        (metal || ivory || t.style == "tokyo" || t.style == "precision"))
+        (metal || ivory || t.style == "tokyo" || t.style == "precision" || t.style == "live"))
     {
         juce::Graphics::ScopedSaveState save(g);
         juce::Path clip;
         clip.addRoundedRectangle(r.reduced(2), std::max(0.f, radius - 1));
         g.reduceClipRegion(clip);
         g.setTiledImageFill(materialGrain(metal), 0, 0,
-                            metal ? (olive ? .07f : .20f) : ivory ? .028f : .012f);
+                            metal ? (olive ? .09f : .27f) : ivory ? .065f : .018f);
         g.fillRect(r);
         if (metal)
         {
             // A broad reflected band breaks the old uniform horizontal stripes.
             // It follows the physical panel, not its contents or the audio clock.
-            const auto strength = olive ? .18f : .55f;
+            const auto strength = olive ? .18f : .70f;
             juce::ColourGradient sheen(juce::Colours::white.withAlpha(.12f * strength),
                                        r.getX(), r.getY(),
                                        juce::Colours::white.withAlpha(0.f), r.getRight(),
@@ -367,7 +392,7 @@ void bezel(juce::Graphics &g, const Theme &t, Rect r, juce::Colour fill, float r
         clip.addRoundedRectangle(r.reduced(1), std::max(0.f, radius - 1));
         g.reduceClipRegion(clip);
         g.setGradientFill(juce::ColourGradient(
-            t.accent.withAlpha(t.style == "aurora" ? .04f : .035f),
+            t.accent.withAlpha(t.style == "aurora" ? .045f : .035f),
             r.getX() + r.getWidth() * .14f, r.getY(), t.accent.withAlpha(0.f),
             r.getX() + r.getWidth() * .77f, r.getBottom(), true));
         g.fillRect(r);
@@ -379,16 +404,45 @@ void bezel(juce::Graphics &g, const Theme &t, Rect r, juce::Colour fill, float r
             reflection.lineTo(r.getX() + r.getWidth() * .14f, r.getBottom());
             reflection.lineTo(r.getX() - r.getWidth() * .12f, r.getBottom());
             reflection.closeSubPath();
-            g.setGradientFill(juce::ColourGradient(juce::Colours::white.withAlpha(.02f),
+            g.setGradientFill(juce::ColourGradient(juce::Colours::white.withAlpha(.028f),
                                                    r.getTopLeft(),
                                                    juce::Colours::white.withAlpha(0.f),
                                                    r.getBottomRight(), false));
             g.fillPath(reflection);
         }
     }
+    if (hardwarePanel || auroraPanel)
+    {
+        const juce::Graphics::ScopedSaveState save(g);
+        juce::Path clip;
+        clip.addRoundedRectangle(r.reduced(1), std::max(0.f, radius - 1));
+        g.reduceClipRegion(clip);
+        // Lighting belongs to the enclosure, not a selected or enabled state.
+        g.setGradientFill(juce::ColourGradient(
+            juce::Colours::white.withAlpha(auroraPanel ? .09f : .055f), r.getX(), r.getY() + 1,
+            juce::Colours::white.withAlpha(0.f), r.getX(), r.getY() + 7, false));
+        g.fillRect(r.withHeight(7));
+        g.setGradientFill(juce::ColourGradient(
+            juce::Colours::black.withAlpha(0.f), r.getX(), r.getBottom() - 7,
+            juce::Colours::black.withAlpha(.28f), r.getX(), r.getBottom(), false));
+        g.fillRect(r.withTop(r.getBottom() - 7));
+        if (auroraPanel)
+        {
+            g.setColour(t.accent.withAlpha(.12f));
+            g.drawLine(r.getX() + radius, r.getY() + 29,
+                       r.getRight() - radius, r.getY() + 29, .65f);
+        }
+    }
     g.setColour(metal ? juce::Colour(0xff3b2c17).withAlpha(.90f)
                       : t.border.withAlpha(flat ? .45f : .80f));
     g.drawRoundedRectangle(r.reduced(0.5f), radius, 1);
+    if (panel && (t.style == "aurora" || t.style == "spectral" || t.style == "live"))
+    {
+        g.setGradientFill(juce::ColourGradient(
+            juce::Colours::white.withAlpha(t.style == "aurora" ? .20f : .12f), r.getTopLeft(),
+            t.border.withAlpha(.025f), r.getBottomRight(), false));
+        g.drawRoundedRectangle(r.reduced(1.5f), std::max(0.f, radius - 1), .7f);
+    }
     if (panel && (metal || ivory || t.style == "tokyo"))
     {
         g.setColour(metal ? t.border.withAlpha(.88f)
@@ -405,7 +459,11 @@ void themedButton(juce::Graphics &g, const Theme &theme, juce::TextButton &butto
 {
     auto r = button.getLocalBounds().toFloat().reduced(.7f);
     const bool selected = button.getToggleState();
+    const bool aurora = theme.style == "aurora", live = theme.style == "live";
+    const bool precision = theme.style == "precision";
     auto fill = selected ? theme.accent : button.findColour(juce::TextButton::buttonColourId);
+    if (selected && (aurora || precision))
+        fill = theme.accent.interpolatedWith(theme.panel, aurora ? .48f : .88f);
     if (highlighted)
         fill = fill.brighter(.10f);
     if (down)
@@ -414,7 +472,29 @@ void themedButton(juce::Graphics &g, const Theme &theme, juce::TextButton &butto
                         : theme.style == "clear" ? 5.f
                                                  : std::min(5.f, theme.radius);
     bezel(g, theme, r, fill, radius);
-    auto ink = selected ? (theme.style == "aurora" || theme.style == "spectral"
+    if (aurora || live || precision)
+    {
+        // Keep the small native chips dimensional without enlarging their hit area.
+        auto sheen = juce::ColourGradient(
+            juce::Colours::white.withAlpha(selected ? .18f : .07f), r.getTopLeft(),
+            juce::Colours::black.withAlpha(.12f), r.getBottomLeft(), false);
+        sheen.addColour(.42, juce::Colours::white.withAlpha(0.f));
+        g.setGradientFill(sheen);
+        g.fillRoundedRectangle(r.reduced(.8f), std::max(0.f, radius - .8f));
+        const auto edge = selected ? theme.accent : theme.border;
+        g.setGradientFill(juce::ColourGradient(
+            edge.interpolatedWith(juce::Colours::white, .50f).withAlpha(selected ? .70f : .22f),
+            r.getTopLeft(), (live ? theme.secondary : edge).withAlpha(selected ? .25f : .07f),
+            r.getBottomRight(), false));
+        g.drawRoundedRectangle(r.reduced(1.3f), std::max(0.f, radius - 1.f), .7f);
+        if (selected && precision)
+        {
+            g.setColour(theme.accent.withAlpha(.85f));
+            g.drawRoundedRectangle(r.reduced(.4f), radius, .8f);
+        }
+    }
+    auto ink = selected ? (precision ? theme.accent
+                          : theme.style == "aurora" || theme.style == "spectral"
                                ? juce::Colours::white
                                : fill.contrasting(.95f))
                         : button.findColour(juce::TextButton::textColourOffId);
@@ -488,6 +568,8 @@ class HeaderButton : public juce::TextButton
                             : findColour(juce::TextButton::buttonColourId);
             if (theme.style == "precision" && presentation == navigation && selected)
                 fill = theme.accent.interpolatedWith(theme.panel, .88f);
+            if (theme.style == "aurora" && selected)
+                fill = theme.accent.interpolatedWith(theme.panel, .48f);
             if (over)
                 fill = fill.interpolatedWith(juce::Colours::white, .07f);
             if (down)
@@ -495,6 +577,24 @@ class HeaderButton : public juce::TextButton
             bezel(g, theme, r, fill,
                   presentation == search || presentation == list ? 7.f
                   : theme.style == "tokyo" || theme.style == "bauhaus" ? 3.f : 5.f);
+            if (theme.style == "aurora" || theme.style == "live" ||
+                theme.style == "precision")
+            {
+                const auto radius = presentation == search || presentation == list ? 7.f : 5.f;
+                auto sheen = juce::ColourGradient(
+                    juce::Colours::white.withAlpha(selected ? .18f : .07f), r.getTopLeft(),
+                    juce::Colours::black.withAlpha(.12f), r.getBottomLeft(), false);
+                sheen.addColour(.42, juce::Colours::white.withAlpha(0.f));
+                g.setGradientFill(sheen);
+                g.fillRoundedRectangle(r.reduced(.8f), radius - .8f);
+                const auto edge = selected ? theme.accent : theme.border;
+                g.setGradientFill(juce::ColourGradient(
+                    edge.interpolatedWith(juce::Colours::white, .50f)
+                        .withAlpha(selected ? .70f : .22f), r.getTopLeft(),
+                    (theme.style == "live" ? theme.secondary : edge)
+                        .withAlpha(selected ? .25f : .07f), r.getBottomRight(), false));
+                g.drawRoundedRectangle(r.reduced(1.3f), radius - 1.f, .7f);
+            }
             if (selected)
             {
                 ink = theme.style == "precision" && presentation == navigation
@@ -502,7 +602,7 @@ class HeaderButton : public juce::TextButton
                       : theme.style == "aurora" || theme.style == "spectral"
                           ? juce::Colours::white
                           : fill.contrasting(.95f);
-                g.setColour(theme.accent.withAlpha(.60f));
+                g.setColour(theme.accent.withAlpha(theme.style == "precision" ? .85f : .60f));
                 g.drawRoundedRectangle(r.reduced(.4f), 4.f, .8f);
             }
         }
@@ -613,6 +713,7 @@ void knob(juce::Graphics &g, const Theme &t, Rect r, float value, juce::Colour a
 {
     if (r.getWidth() <= 0 || r.getHeight() <= 0)
         return;
+    const juce::Graphics::ScopedSaveState saved(g);
     const auto c = r.getCentre();
     const float rad = std::min(r.getWidth(), r.getHeight()) * 0.46f;
     const float start = -2.35f, end = 2.35f;
@@ -625,13 +726,36 @@ void knob(juce::Graphics &g, const Theme &t, Rect r, float value, juce::Colour a
     const bool ivory = t.style == "ivory", space = t.style == "space";
     const bool bauhaus = t.style == "bauhaus", clear = t.style == "clear";
     const bool flow = t.style == "flow";
-    const bool glass = t.style == "spectral" || t.style == "aurora" || t.style == "live";
+    const bool live = t.style == "live";
+    const bool glass = t.style == "spectral" || t.style == "aurora" || live;
+    if (glass)
+    {
+        // The outer ring is a fixed metal/glass bezel, distinct from the live
+        // value arc. Keep it inside the existing control face and hit bounds.
+        const auto outerRadius = std::min(rad + 1.35f,
+                                          std::min(r.getWidth(), r.getHeight()) * .5f - .6f);
+        const auto rim = Rect(c.x - outerRadius, c.y - outerRadius,
+                              outerRadius * 2.f, outerRadius * 2.f);
+        auto metal = juce::ColourGradient(
+            (live ? juce::Colour(0xffe4c594) : juce::Colour(0xffd6c3ef)).withAlpha(.72f),
+            rim.getTopLeft(), juce::Colour(0xff080a0c).withAlpha(.90f),
+            rim.getBottomRight(), false);
+        metal.addColour(.23, juce::Colours::white.withAlpha(.52f));
+        metal.addColour(.48, t.border.withAlpha(.20f));
+        metal.addColour(.71, (live ? juce::Colour(0xff82613a) : t.border).withAlpha(.70f));
+        g.setGradientFill(metal);
+        g.drawEllipse(rim, live ? 1.35f : 1.f);
+        g.setColour(juce::Colours::black.withAlpha(.65f));
+        g.drawEllipse(rim.reduced(1.55f), .8f);
+    }
     if (t.glow > 0 && enabled && !ivory && !space && !bauhaus)
     {
-        g.setColour(accent.withAlpha(std::min(.10f, t.glow * .4f)));
-        g.strokePath(arc, juce::PathStrokeType(glass ? 11.f : 7.f));
-        g.setColour(accent.withAlpha(std::min(.26f, t.glow)));
-        g.strokePath(arc, juce::PathStrokeType(glass ? 6.f : 4.5f));
+        g.setColour(accent.withAlpha(std::min(glass ? .13f : .10f,
+                                             t.glow * (glass ? .65f : .4f))));
+        g.strokePath(arc, juce::PathStrokeType(glass ? 8.5f : 7.f));
+        g.setColour(accent.withAlpha(std::min(glass ? .32f : .26f,
+                                             t.glow * (glass ? 1.5f : 1.f))));
+        g.strokePath(arc, juce::PathStrokeType(glass ? 4.7f : 4.5f));
     }
     if (space)
     {
@@ -650,14 +774,18 @@ void knob(juce::Graphics &g, const Theme &t, Rect r, float value, juce::Colour a
     {
         g.setColour(bauhaus ? juce::Colour(0xff181b17)
                            : clear ? juce::Colour(0xff879197) : t.border.withAlpha(.32f));
-        g.strokePath(track, juce::PathStrokeType(bauhaus ? 3.6f : clear ? 3.f : 1.5f));
+        g.strokePath(track, juce::PathStrokeType(bauhaus ? 3.6f : clear ? 3.f
+                                                                        : glass ? 2.f : 1.5f));
         g.setColour(ivory ? t.accent : accent);
         g.strokePath(arc, juce::PathStrokeType(bauhaus ? 4.8f : clear ? 4.2f
-                                                               : flow ? 4.f : 2.2f));
+                                                               : flow ? 4.f
+                                                               : glass ? 2.7f : 2.2f));
         if (glass)
         {
-            g.setColour(accent.interpolatedWith(juce::Colours::white, .6f));
-            g.strokePath(arc, juce::PathStrokeType(.8f));
+            g.setColour(accent.interpolatedWith(juce::Colours::white, .72f)
+                            .withMultipliedAlpha(enabled ? 1.f : .35f));
+            g.strokePath(arc, juce::PathStrokeType(1.f, juce::PathStrokeType::curved,
+                                                    juce::PathStrokeType::rounded));
         }
     }
     const auto faceRadius = std::max(1.f, rad - (clear ? 3.4f : flow ? 6.f
@@ -670,8 +798,8 @@ void knob(juce::Graphics &g, const Theme &t, Rect r, float value, juce::Colour a
         g.setColour(juce::Colours::black.withAlpha(.60f));
         g.fillEllipse(face.expanded(.8f).translated(.5f, 1.5f));
     }
-    auto hi = t.knob.interpolatedWith(juce::Colours::white, glass ? .085f : .075f);
-    auto lo = t.knob.interpolatedWith(juce::Colours::black, .60f);
+    auto hi = t.knob.interpolatedWith(juce::Colours::white, glass ? .065f : .075f);
+    auto lo = t.knob.interpolatedWith(juce::Colours::black, glass ? .72f : .60f);
     if (ivory || (space && t.knob.getPerceivedBrightness() > .35f))
     {
         hi = ivory ? juce::Colour(0xfffff8e7) : juce::Colour(0xffffe4aa);
@@ -758,7 +886,7 @@ void knob(juce::Graphics &g, const Theme &t, Rect r, float value, juce::Colour a
         // Broad upper reflection and a narrow dark lower lip make the smaller
         // dials read as solid caps while leaving the value-dependent arc clear.
         const auto highlight = space && t.knob.getPerceivedBrightness() < .35f ? .06f
-                                : ivory || space ? .20f : glass ? .14f : .10f;
+                                : ivory || space ? .20f : .10f;
         g.setGradientFill(juce::ColourGradient(
             juce::Colours::white.withAlpha(highlight), face.getX() + face.getWidth() * .30f,
             face.getY() + face.getHeight() * .18f, juce::Colours::white.withAlpha(0.f),
@@ -772,6 +900,22 @@ void knob(juce::Graphics &g, const Theme &t, Rect r, float value, juce::Colour a
                 : ivory          ? juce::Colour(0xff958058)
                                  : t.border.withAlpha(clear ? .55f : .48f));
     g.drawEllipse(face, bauhaus ? 3.1f : ivory || space ? 1.8f : .9f);
+    if (glass)
+    {
+        // Opposing thin reflections make a convex cap without whitening its
+        // whole face. Neither reflection encodes a value or selected state.
+        juce::Path upperRim, lowerRim;
+        upperRim.addCentredArc(c.x, c.y, faceRadius - .4f, faceRadius - .4f, 0,
+                               -1.75f, .42f, true);
+        lowerRim.addCentredArc(c.x, c.y, faceRadius - .5f, faceRadius - .5f, 0,
+                               1.35f, 3.72f, true);
+        g.setColour(juce::Colours::white.withAlpha(live ? .53f : .42f));
+        g.strokePath(upperRim, juce::PathStrokeType(.75f));
+        g.setColour((live ? juce::Colour(0xffc8b288) : t.border).withAlpha(.26f));
+        g.strokePath(lowerRim, juce::PathStrokeType(.7f));
+        g.setColour(juce::Colours::black.withAlpha(.50f));
+        g.drawEllipse(face.reduced(1.5f), .65f);
+    }
     if (!clear && !bauhaus)
     {
         juce::Path shine;
@@ -1434,6 +1578,13 @@ class BoundSlider : public juce::Slider
                           track.getCentreY() - 6, 10, 12};
             g.setColour(juce::Colours::black.withAlpha(.45f));
             g.fillRoundedRectangle(handle.expanded(.8f).translated(0, 1.5f), 2);
+            const bool glassHandle = kind == "fader" &&
+                (theme.style == "aurora" || theme.style == "spectral" || theme.style == "live");
+            if (glassHandle && isEnabled())
+            {
+                g.setColour(accent.withAlpha(.10f));
+                g.fillRoundedRectangle(handle.expanded(1.5f), 3.f);
+            }
             const auto cap = theme.style == "space"   ? juce::Colour(0xffdbc8a1)
                              : theme.style == "tokyo" ? theme.accent
                              : theme.style == "aurora" || theme.style == "spectral" ? theme.accent
@@ -1446,9 +1597,27 @@ class BoundSlider : public juce::Slider
             capGradient.addColour(.48, cap);
             capGradient.addColour(.52, cap.darker(.15f));
             g.setGradientFill(capGradient);
-            g.fillRoundedRectangle(handle, 2);
+            const auto capRadius = theme.style == "aurora" && kind == "fader" ? 3.5f : 2.f;
+            g.fillRoundedRectangle(handle, capRadius);
             g.setColour(theme.border);
-            g.drawRoundedRectangle(handle, 2, 1);
+            g.drawRoundedRectangle(handle, capRadius, 1);
+            if (kind == "fader" && (hardware || glassHandle || theme.style == "precision"))
+            {
+                // A narrow polished leading edge and dark underside retain the
+                // small hardware cap's physical thickness at normal UI scale.
+                g.setColour(cap.interpolatedWith(juce::Colours::white, .84f));
+                g.drawLine(handle.getX() + 2.f, handle.getY() + 1.15f,
+                           handle.getRight() - 2.f, handle.getY() + 1.15f, .8f);
+                g.setColour(juce::Colours::black.withAlpha(hardware ? .46f : .30f));
+                g.drawLine(handle.getX() + 2.f, handle.getBottom() - 1.2f,
+                           handle.getRight() - 2.f, handle.getBottom() - 1.2f, .75f);
+                if (theme.style == "space" || theme.style == "live")
+                {
+                    g.setColour(cap.darker(.42f));
+                    g.drawLine(handle.getX() + 2.5f, handle.getCentreY() + 1.3f,
+                               handle.getRight() - 2.5f, handle.getCentreY() + 1.3f, .55f);
+                }
+            }
             if (spectralFader)
             {
                 const auto inset = handle.reduced(2.5f, 3.f);
@@ -2321,16 +2490,42 @@ class ViewTabButton : public juce::TextButton
         auto r = getLocalBounds().toFloat().reduced(.6f);
         const bool selected = getToggleState();
         auto fill = selected ? theme.accent : theme.panel;
+        const bool aurora = theme.style == "aurora", live = theme.style == "live";
+        const bool precision = theme.style == "precision";
         if (effect && selected && theme.style == "bauhaus")
             fill = theme.yellow;
         if (theme.style == "precision" || theme.style == "tokyo" || theme.style == "flow")
             fill = selected ? theme.accent.interpolatedWith(theme.display, .80f) : theme.display;
+        if (selected && aurora)
+            fill = theme.accent.interpolatedWith(theme.panel, .48f);
+        if (selected && live && effect)
+            fill = theme.accent.interpolatedWith(theme.display, .84f);
         if (over)
             fill = fill.interpolatedWith(juce::Colours::white, .07f);
         if (down)
             fill = fill.interpolatedWith(juce::Colours::black, .13f);
         bezel(g, theme, r, fill, theme.style == "bauhaus" || theme.style == "tokyo" ? 2.f : 4.f);
+        if (aurora || live || precision)
+        {
+            auto sheen = juce::ColourGradient(
+                juce::Colours::white.withAlpha(selected ? .18f : .07f), r.getTopLeft(),
+                juce::Colours::black.withAlpha(.12f), r.getBottomLeft(), false);
+            sheen.addColour(.42, juce::Colours::white.withAlpha(0.f));
+            g.setGradientFill(sheen);
+            g.fillRoundedRectangle(r.reduced(.8f), 3.2f);
+            const auto edge = selected ? theme.accent : theme.border;
+            g.setGradientFill(juce::ColourGradient(
+                edge.interpolatedWith(juce::Colours::white, .50f)
+                    .withAlpha(selected ? .70f : .22f), r.getTopLeft(),
+                (live ? theme.secondary : edge).withAlpha(selected ? .25f : .07f),
+                r.getBottomRight(), false));
+            g.drawRoundedRectangle(r.reduced(1.3f), 3.f, .7f);
+        }
         auto ink = selected ? fill.contrasting(.95f) : theme.text;
+        if (selected && aurora)
+            ink = juce::Colours::white;
+        if (selected && live && effect)
+            ink = theme.accent;
         if (selected && (theme.style == "precision" || theme.style == "tokyo" ||
                          theme.style == "flow"))
             ink = theme.accent;
@@ -5169,6 +5364,14 @@ struct Workspace::Impl
             {
                 auto ink =
                     segment > 20 ? theme.secondary.interpolatedWith(theme.accent, .75f) : low;
+                if (horizontal && theme.style == "aurora")
+                {
+                    // Hue follows position; illumination still follows the
+                    // measured channel peak, including a fully silent meter.
+                    const float t = segment / 23.f;
+                    ink = t < .5f ? theme.secondary.interpolatedWith(theme.text, t * 2.f)
+                                   : theme.text.interpolatedWith(theme.red, (t - .5f) * 2.f);
+                }
                 g.setColour(ink.withAlpha(segment / 24.f < amount ? 1.f : .09f));
                 if (horizontal)
                     g.fillRect(Rect(bar.getX() + segment * bar.getWidth() / 24.f, bar.getY(),
@@ -5310,6 +5513,9 @@ struct Workspace::Impl
                     g.drawEllipse(px, py, 4, 4, 1.4f);
                 }
             }
+            else if (style == "spectral" || style == "aurora")
+                luminousRibbonLogo(g, {x, y, w, height}, theme.accent, theme.secondary,
+                                   style == "aurora");
             else
             {
                 juce::Path wave;
@@ -5326,15 +5532,6 @@ struct Workspace::Impl
                     else
                         wave.lineTo(px, py);
                 }
-                if (style == "spectral" || style == "aurora")
-                {
-                    for (int layer = -3; layer <= 3; ++layer)
-                    {
-                        g.setColour(theme.accent.withAlpha(.12f));
-                        g.strokePath(wave, juce::PathStrokeType(4.f),
-                                     juce::AffineTransform::translation(0, layer * 1.6f));
-                    }
-                }
                 if (style == "ivory")
                 {
                     g.setColour(juce::Colours::black.withAlpha(.3f));
@@ -5348,7 +5545,19 @@ struct Workspace::Impl
         auto brand = [&](Rect r, float size, bool upper = true) {
             auto font = theme.type(size, style != "ivory");
             if (style == "space")
-                font.setStyleFlags(juce::Font::bold | juce::Font::italic);
+                font = theme.fonts
+                           ->getLatoAtSize(size, static_cast<juce::Font::FontStyleFlags>(
+                                                     juce::Font::bold | juce::Font::italic))
+                           .withHeight(size * 1.18f);
+            if (style == "bauhaus" || style == "space")
+            {
+                // Real embedded glyph outlines add the reference's heavy ink
+                // without offset text copies, a new face, or changed hit areas.
+                weightedGlyphText(g, font, "SURGE XT", r.reduced(1.5f, 0.f), ink,
+                                  juce::Justification::centredLeft, {1.f, 1.f},
+                                  style == "space" ? 2.2f : 1.7f, {0.f, 0.f});
+                return;
+            }
             g.setFont(font);
             g.setColour(ink);
             const auto prefix = upper ? juce::String("SURGE ") : juce::String("Surge ");
@@ -5431,7 +5640,15 @@ struct Workspace::Impl
             text(g, theme, parameters.getScene() == 0 ? "SCENE A" : "SCENE B", {511, 30, 83, 28},
                  16, theme.secondary, true, juce::Justification::centred);
             text(g, theme, "CURRENT PATCH", {695, 7, 213, 17}, 12, ink, true);
-            text(g, theme, "SURGE XT  /  HYBRID ENGINE", {1280, 52, 192, 16}, 11, ink);
+            // A read-only build display fits below the existing navigation.
+            // Keep the action row at y=19..48 and the adjacent vents untouched.
+            const Rect versionBounds(1278, 51, 191, 20);
+            bezel(g, theme, versionBounds, theme.display, 3);
+            const auto version = "SURGE XT " + juce::String(Surge::Build::MajorVersionStr) + "." +
+                                 juce::String(Surge::Build::SubVersionStr) + " / " +
+                                 juce::String(Surge::Build::GitHash).substring(0, 7);
+            text(g, theme, version, versionBounds.reduced(5, 1), 10.5f, theme.secondary, false,
+                 juce::Justification::centred);
             for (int i = 0; i < 5; ++i)
             {
                 g.setColour(theme.display);
@@ -5457,7 +5674,7 @@ struct Workspace::Impl
         }
         else if (style == "aurora")
         {
-            logo(19, 13, 61, 34);
+            logo(16, 9, 70, 49);
             brand({94, 1, 191, 38}, 34);
             text(g, theme, "Hybrid Synthesizer - Liquid Aurora", {95, 38, 226, 18}, 13,
                  theme.muted);
@@ -5519,12 +5736,39 @@ struct Workspace::Impl
     }
     void plotBase(juce::Graphics &g, Rect r, bool pale = false, bool grid = true)
     {
-        g.setColour(pale ? theme.panel.brighter(.03f) : theme.display);
+        const juce::Graphics::ScopedSaveState state(g);
+        const bool flat = pale || theme.style == "bauhaus" || theme.style == "space";
+        if (flat)
+            g.setColour(pale ? theme.panel.brighter(.03f) : theme.display);
+        else
+        {
+            // Display lighting is cosmetic; it never contributes signal geometry.
+            juce::ColourGradient well(theme.display.darker(.28f), r.getTopLeft(),
+                                      theme.display.darker(.12f), r.getBottomLeft(), false);
+            well.addColour(.48, theme.display.brighter(theme.style == "ivory" ? .16f : .06f));
+            g.setGradientFill(well);
+        }
         g.fillRoundedRectangle(r, 3);
+        if (!flat)
+        {
+            g.setGradientFill(juce::ColourGradient(
+                theme.secondary.withAlpha(theme.style == "ivory" ? .055f : .025f),
+                r.getCentreX(), r.getCentreY(), theme.secondary.withAlpha(0.f),
+                r.getRight(), r.getBottom(), true));
+            g.fillRoundedRectangle(r.reduced(1), 2);
+            g.setColour(juce::Colours::black.withAlpha(.26f));
+            g.drawLine(r.getX() + 3, r.getY() + 1, r.getRight() - 3, r.getY() + 1, 1.f);
+            g.setColour(theme.border.brighter(.2f).withAlpha(.25f));
+            g.drawLine(r.getX() + 3, r.getBottom() - 1, r.getRight() - 3,
+                       r.getBottom() - 1, .7f);
+        }
         g.setColour(theme.border.withAlpha(.4f));
         g.drawRoundedRectangle(r, 3, 1);
         if (grid)
-            Visuals::grid(g, r.reduced(2), theme.secondary.withAlpha(theme.light() ? .12f : .065f));
+            Visuals::grid(
+                g, r.reduced(2), pale && theme.style == "clear"
+                                     ? theme.accent.withAlpha(.055f)
+                                     : theme.secondary.withAlpha(theme.light() ? .12f : .065f));
     }
     void unavailableOscillator(juce::Graphics &g, Rect r, int index)
     {
@@ -5539,6 +5783,11 @@ struct Workspace::Impl
     void drawEnvelope(juce::Graphics &g, Rect r, int index, juce::Colour color,
                       bool lfoEnvelope = false)
     {
+        const juce::Graphics::ScopedSaveState state(g);
+        g.reduceClipRegion(r.toNearestInt());
+        const bool clear = theme.style == "clear", aurora = theme.style == "aurora";
+        const bool luminous = theme.style != "bauhaus" && theme.style != "space" &&
+                              (!theme.light() || theme.style == "ivory");
         if (theme.style != "aurora")
             plotBase(g, r, theme.style == "clear");
         r = r.reduced(8);
@@ -5560,15 +5809,36 @@ struct Workspace::Impl
         auto fill = p;
         fill.lineTo(r.getX(), r.getBottom());
         fill.closeSubPath();
-        g.setGradientFill(juce::ColourGradient(color.withAlpha(.4f), r.getTopLeft(),
-                                               color.withAlpha(.02f), r.getBottomLeft(), false));
+        g.setGradientFill(juce::ColourGradient(
+            color.withAlpha(clear ? .55f : aurora ? .24f : .4f), r.getTopLeft(),
+            color.withAlpha(.02f), r.getBottomLeft(), false));
         g.fillPath(fill);
+        if (luminous)
+        {
+            g.setColour(color.withAlpha(aurora ? .13f : .09f));
+            g.strokePath(p, juce::PathStrokeType(4.5f, juce::PathStrokeType::curved,
+                                                juce::PathStrokeType::rounded));
+        }
         g.setColour(color);
-        g.strokePath(p, juce::PathStrokeType(1.7f));
+        g.strokePath(p, juce::PathStrokeType(clear ? 2.3f : 1.7f));
+        if (luminous)
+        {
+            g.setColour(color.interpolatedWith(juce::Colours::white, .3f).withAlpha(.75f));
+            g.strokePath(p, juce::PathStrokeType(.65f, juce::PathStrokeType::curved,
+                                                juce::PathStrokeType::rounded));
+        }
         for (auto q : {juce::Point<float>(r.getX(), r.getBottom()),
                        juce::Point<float>(ax, r.getY()), juce::Point<float>(dx, sy),
                        juce::Point<float>(rx, sy), juce::Point<float>(r.getRight(), r.getBottom())})
+        {
+            g.setColour(clear ? juce::Colours::white : color);
             g.fillEllipse(q.x - 2.5f, q.y - 2.5f, 5, 5);
+            if (clear)
+            {
+                g.setColour(color);
+                g.drawEllipse(q.x - 2.5f, q.y - 2.5f, 5, 5, 1.1f);
+            }
+        }
     }
     void drawFilter(juce::Graphics &g, Rect r, int index, juce::Colour color, bool base = true,
                     Rect panelClip = {})
@@ -5583,7 +5853,7 @@ struct Workspace::Impl
         const bool dbReadouts = !miniature && (spectral || tokyo || clear || outerDbLabels);
         g.reduceClipRegion(((externalAxes || outerDbLabels) && !panelClip.isEmpty()
                                 ? panelClip : r).toNearestInt());
-        if (base && theme.style != "aurora")
+        if (base)
             plotBase(g, r, false, false); // The filter draws its own logarithmic axes.
         const float floorDb = externalAxes ? -24.f : filterPreviewMinimumDb;
         const float ceilingDb = filterPreviewMaximumDb;
@@ -5598,7 +5868,7 @@ struct Workspace::Impl
         if (live)
             color = theme.accent;
         else if (clear)
-            color = color.brighter(.22f);
+            color = index == 1 ? color.withMultipliedBrightness(1.55f) : color;
         const auto axisInk = externalAxes ? theme.text
                                            : theme.display.contrasting(dbReadouts ? .90f : .80f);
         const auto gridInk = externalAxes ? theme.display.contrasting(.90f)
@@ -5624,7 +5894,8 @@ struct Workspace::Impl
                 for (int filter = 1; filter <= 2; ++filter)
                 {
                     const auto x = frame.getRight() - 235.f + (filter - 1) * 115.f;
-                    const auto legendInk = (filter == 1 ? theme.accent : theme.secondary).brighter(.22f);
+                    const auto legendInk = filter == 1 ? theme.accent.withMultipliedBrightness(1.55f)
+                                                       : theme.secondary;
                     g.setColour(legendInk);
                     g.fillEllipse(x, frame.getY() + 12, 7, 7);
                     text(g, theme, "F" + juce::String(filter) + " " +
@@ -5706,17 +5977,32 @@ struct Workspace::Impl
         fill.lineTo(r.getBottomRight());
         fill.lineTo(r.getBottomLeft());
         fill.closeSubPath();
-        const auto fillAlpha = spectral ? .46f : clear ? .44f : tokyo ? .38f : live ? .34f : .28f;
-        g.setGradientFill(juce::ColourGradient(color.withAlpha(fillAlpha), r.getTopLeft(),
-                                               color.withAlpha(.01f), r.getBottomLeft(), false));
+        const auto fillAlpha = spectral ? .46f : clear ? .68f : tokyo ? .38f : live ? .34f : .28f;
+        juce::ColourGradient fillGradient(
+            color.withAlpha(fillAlpha), r.getTopLeft(),
+            color.withAlpha(clear ? .09f : .01f), r.getBottomLeft(), false);
+        if (clear)
+            fillGradient.addColour(.48, color.withAlpha(.46f));
+        g.setGradientFill(fillGradient);
         g.fillPath(fill);
-        if (spectral || tokyo)
+        const bool luminous = theme.style != "bauhaus" && theme.style != "space" &&
+                              (!theme.light() || theme.style == "ivory" || clear);
+        if (luminous)
         {
-            g.setColour(color.withAlpha(spectral ? .12f : .08f));
-            g.strokePath(p, juce::PathStrokeType(spectral ? 5.f : 4.f));
+            g.setColour(color.withAlpha(clear ? .10f : spectral ? .12f : .08f));
+            g.strokePath(p, juce::PathStrokeType(clear ? 6.f : spectral ? 5.f : 4.f,
+                                                juce::PathStrokeType::curved,
+                                                juce::PathStrokeType::rounded));
         }
         g.setColour(color);
         g.strokePath(p, juce::PathStrokeType(clear ? 2.7f : spectral || tokyo ? 2.f : 1.7f));
+        if (luminous)
+        {
+            g.setColour(color.interpolatedWith(juce::Colours::white, clear ? .16f : .28f)
+                            .withAlpha(.72f));
+            g.strokePath(p, juce::PathStrokeType(.65f, juce::PathStrokeType::curved,
+                                                juce::PathStrokeType::rounded));
+        }
         if (!miniature)
         {
             const auto binding = "filter" + juce::String(index) + ".cutoff";
@@ -5746,10 +6032,22 @@ struct Workspace::Impl
                 const auto x = r.getX() + position * r.getWidth();
                 const auto radius = clear ? 5.8f : 3.7f;
                 const Rect marker(x - radius, y - radius, radius * 2, radius * 2);
+                if (clear)
+                {
+                    g.setColour(color.withAlpha(.16f));
+                    g.fillEllipse(marker.expanded(3.f));
+                    g.setColour(juce::Colours::black.withAlpha(.38f));
+                    g.fillEllipse(marker.translated(0, 1.f).expanded(.8f));
+                }
                 g.setColour(clear ? color : theme.display);
                 g.fillEllipse(marker);
                 g.setColour(clear ? juce::Colours::white : color.brighter(.12f));
                 g.drawEllipse(marker, clear ? 2.f : 1.6f);
+                if (clear)
+                {
+                    g.setColour(juce::Colours::white.withAlpha(.45f));
+                    g.fillEllipse(x - 2.f, y - 3.f, 3.f, 2.f);
+                }
             }
         }
         if (base && ivoryReadouts)
@@ -5795,8 +6093,9 @@ struct Workspace::Impl
         }
         const bool spectral = theme.style == "spectral", tokyo = theme.style == "tokyo";
         const bool clear = theme.style == "clear", live = theme.style == "live";
-        const auto color = clear || live ? theme.accent : theme.secondary;
-        if (spectral || tokyo || clear || live)
+        const bool aurora = theme.style == "aurora", ivory = theme.style == "ivory";
+        const auto color = clear || live || aurora ? theme.accent : theme.secondary;
+        if (spectral || tokyo || clear || live || aurora || ivory)
         {
             auto fill = p;
             const auto floor = spectral ? r.getCentreY() : r.getBottom();
@@ -5812,14 +6111,17 @@ struct Workspace::Impl
             }
             else
                 g.setGradientFill(juce::ColourGradient(
-                    color.withAlpha(clear ? .23f : tokyo ? .20f : .13f), r.getTopLeft(),
+                    color.withAlpha(clear ? .34f : aurora ? .24f : ivory || tokyo ? .20f : .13f),
+                    r.getTopLeft(),
                     color.withAlpha(.01f), r.getBottomLeft(), false));
             g.fillPath(fill);
         }
-        if (spectral || tokyo)
+        if (spectral || tokyo || aurora || ivory || live)
         {
             g.setColour((spectral ? theme.accent : color).withAlpha(spectral ? .16f : .10f));
-            g.strokePath(p, juce::PathStrokeType(spectral ? 4.8f : 4.f));
+            g.strokePath(p, juce::PathStrokeType(spectral ? 4.8f : 4.f,
+                                                juce::PathStrokeType::curved,
+                                                juce::PathStrokeType::rounded));
         }
         if (spectral)
         {
@@ -5828,9 +6130,20 @@ struct Workspace::Impl
             gradient.addColour(.5, theme.secondary);
             g.setGradientFill(gradient);
         }
+        else if (aurora)
+        {
+            g.setGradientFill(juce::ColourGradient(color.brighter(.16f), r.getTopLeft(),
+                                                   color, r.getBottomLeft(), false));
+        }
         else
             g.setColour(color);
-        g.strokePath(p, juce::PathStrokeType(clear ? 2.1f : tokyo ? 2.f : 1.8f));
+        g.strokePath(p, juce::PathStrokeType(clear ? 2.1f : tokyo || aurora ? 2.f : 1.8f));
+        if (aurora || ivory || live)
+        {
+            g.setColour(color.interpolatedWith(juce::Colours::white, .28f).withAlpha(.7f));
+            g.strokePath(p, juce::PathStrokeType(.65f, juce::PathStrokeType::curved,
+                                                juce::PathStrokeType::rounded));
+        }
     }
     void drawSpectrum(juce::Graphics &g, Rect r, bool history)
     {
@@ -6200,10 +6513,45 @@ struct Workspace::Impl
             bezel(g, theme, r, fill);
         if (theme.style == "aurora" && kind == "macros")
         {
-            g.setGradientFill(juce::ColourGradient(juce::Colour(0xff1d1a35), r.getTopLeft(),
-                                                   juce::Colour(0xff19172e),
-                                                   r.getBottomLeft(), false));
+            auto glass = juce::ColourGradient(juce::Colour(0xff34204e), r.getTopLeft(),
+                                               juce::Colour(0xff19172e),
+                                               r.getBottomLeft(), false);
+            glass.addColour(.26, juce::Colour(0xff271e40));
+            glass.addColour(.70, juce::Colour(0xff1e1a34));
+            g.setGradientFill(glass);
             g.fillRoundedRectangle(r.reduced(1), std::max(0.f, theme.radius - 1.f));
+            g.setColour(juce::Colour(0xffd8b5ff).withAlpha(.20f));
+            g.drawLine(r.getX() + theme.radius, r.getY() + 1.5f,
+                       r.getRight() - theme.radius, r.getY() + 1.5f, .7f);
+        }
+        if (theme.style == "aurora" && panelId == "p.playground")
+        {
+            // Cosmetic glass shelves behind the existing native source menu,
+            // morph slider and parameter knobs. Their contents remain children
+            // with unchanged bounds, hit regions and real processor bindings.
+            for (const auto tray : {Rect(271, 499, 278, 44), Rect(568, 499, 668, 44)})
+            {
+                const juce::Graphics::ScopedSaveState trayState(g);
+                juce::Path clip;
+                clip.addRoundedRectangle(tray, 9.f);
+                g.reduceClipRegion(clip);
+                auto glass = juce::ColourGradient(juce::Colour(0xff37304e), tray.getTopLeft(),
+                                                   juce::Colour(0xff18162d),
+                                                   tray.getBottomLeft(), false);
+                glass.addColour(.16, juce::Colour(0xff2c2846));
+                glass.addColour(.58, juce::Colour(0xff232143));
+                g.setGradientFill(glass);
+                g.fillRect(tray);
+                g.setGradientFill(juce::ColourGradient(
+                    theme.secondary.withAlpha(.055f), tray.getTopLeft(),
+                    theme.accent.withAlpha(.02f), tray.getBottomRight(), false));
+                g.fillRect(tray);
+                g.setColour(juce::Colour(0xffaa8ec9).withAlpha(.32f));
+                g.drawRoundedRectangle(tray.reduced(.5f), 8.5f, .8f);
+                g.setColour(juce::Colours::white.withAlpha(.10f));
+                g.drawLine(tray.getX() + 9, tray.getY() + 1,
+                           tray.getRight() - 9, tray.getY() + 1, .7f);
+            }
         }
         if (theme.style == "bauhaus" && panelId == "output-panel")
         {

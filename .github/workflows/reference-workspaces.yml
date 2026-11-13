@@ -7,6 +7,7 @@ on:
       - '.github/workflows/reference-workspaces.yml'
       - 'resources/data/skins/**/workspace.json'
       - 'resources/data/skins/reference-*/**'
+      - 'resources/data/wavetables/Reference Showcases/**'
       - 'scripts/reference-workspaces/**'
       - 'doc/reference-workspaces/references/**'
       - 'src/surge-xt/gui/reference/**'

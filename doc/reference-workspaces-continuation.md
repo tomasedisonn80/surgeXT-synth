@@ -1,5 +1,14 @@
 # Ten-skin fidelity continuation
 
+## Active visual refinement — 13 November 2026
+
+The renewed fidelity request starts from `a0d016fd59ef9aee1c96a720c6a2c5a0b9a56f35`.
+Follow the [current pass record](reference-workspaces/fidelity-2026-11-13/README.md)
+for its actual assignments, material and control changes, new native verification
+and screenshots. The delivery records below describe the previous pass and do
+not certify newly changed source. Preserve all real processor bindings and keep
+reference concepts distinct from native captures.
+
 ## Current delivery record — 13 November 2026
 
 All **60 numbered assignments across ten waves** have delivered their scoped

@@ -489,11 +489,16 @@ void Visuals::wavetable(juce::Graphics &g, juce::Rectangle<float> bounds,
             const auto blend = juce::jlimit(0.f, 1.f, (frame - .30f) / .65f);
             const auto middle = primary.interpolatedWith(secondary, blend)
                                     .interpolatedWith(juce::Colours::white, .12f);
-            auto paint = juce::ColourGradient(
-                juce::Colour(0xff445bf5).interpolatedWith(juce::Colours::white, .10f)
-                    .withMultipliedAlpha(alpha), bounds.getTopLeft(),
-                juce::Colour(0xffc64ffb).interpolatedWith(juce::Colours::white, .08f)
-                    .withMultipliedAlpha(alpha), bounds.getTopRight(), false);
+            const auto left = juce::Colour(0xff445bf5)
+                                  .interpolatedWith(juce::Colours::white, .10f);
+            const auto right = juce::Colour(0xffc64ffb)
+                                   .interpolatedWith(juce::Colours::white, .08f);
+            // Fade every material pass together, including surfaces and the
+            // selected row, so overlapping source endpoints do not form slabs.
+            auto paint = juce::ColourGradient(left.withAlpha(0.f), bounds.getTopLeft(),
+                                              right.withAlpha(0.f), bounds.getTopRight(), false);
+            paint.addColour(.035, left.withMultipliedAlpha(alpha * .22f));
+            paint.addColour(.085, left.withMultipliedAlpha(alpha * .82f));
             paint.addColour(.18, juce::Colour(0xff4a99ff)
                                       .interpolatedWith(juce::Colours::white, .10f)
                                       .withMultipliedAlpha(alpha));
@@ -504,6 +509,8 @@ void Visuals::wavetable(juce::Graphics &g, juce::Rectangle<float> bounds,
             paint.addColour(.86, juce::Colour(0xffac49f8)
                                       .interpolatedWith(juce::Colours::white, .12f)
                                       .withMultipliedAlpha(alpha));
+            paint.addColour(.935, right.withMultipliedAlpha(alpha * .82f));
+            paint.addColour(.98, right.withMultipliedAlpha(alpha * .18f));
             return paint;
         }
         if (terrain && !miniature)
@@ -533,6 +540,23 @@ void Visuals::wavetable(juce::Graphics &g, juce::Rectangle<float> bounds,
             paint.addColour(.78f, secondary.withMultipliedAlpha(alpha));
             return paint;
         }
+        if (luminous)
+        {
+            // Large performance ribbons hold their mint and amber materials
+            // separately. A small frame-dependent shift separates crossing
+            // wires without moving a source vertex or borrowing terrain hues.
+            const float shift = .12f * (frame - .5f);
+            auto paint = juce::ColourGradient(secondary.withMultipliedAlpha(alpha),
+                                              bounds.getTopLeft(),
+                                              secondary.withMultipliedAlpha(alpha),
+                                              bounds.getTopRight(), false);
+            paint.addColour(.18f + shift, secondary.withMultipliedAlpha(alpha));
+            paint.addColour(.31f + shift, primary.withMultipliedAlpha(alpha));
+            paint.addColour(.46f + shift, primary.withMultipliedAlpha(alpha));
+            paint.addColour(.59f + shift, secondary.withMultipliedAlpha(alpha));
+            paint.addColour(.84f, secondary.withMultipliedAlpha(alpha));
+            return paint;
+        }
         auto paint = juce::ColourGradient(secondary.withMultipliedAlpha(alpha), bounds.getTopLeft(),
                                           primary.withMultipliedAlpha(alpha),
                                           bounds.getBottomRight(), false);
@@ -560,7 +584,7 @@ void Visuals::wavetable(juce::Graphics &g, juce::Rectangle<float> bounds,
     {
         // This is the lower sample-range plane in the same phase/frame
         // projection. It deliberately has no invented numerical scale.
-        g.setGradientFill(gradient(terrain ? .075f : .035f));
+        g.setGradientFill(gradient(terrain ? .045f : .035f));
         juce::Path floor;
         floor.startNewSubPath(projectSample(0.f, 0, -1.f));
         floor.lineTo(projectSample(0.f, WavetablePreview::pointsPerFrame - 1, -1.f));
@@ -568,7 +592,7 @@ void Visuals::wavetable(juce::Graphics &g, juce::Rectangle<float> bounds,
         floor.lineTo(projectSample(1.f, 0, -1.f));
         floor.closeSubPath();
         g.fillPath(floor);
-        g.setGradientFill(gradient(terrain ? .38f : .18f));
+        g.setGradientFill(gradient(terrain ? .25f : .18f));
         for (int phase = 0; phase < WavetablePreview::pointsPerFrame; phase += terrain ? 8 : 16)
             g.drawLine({projectSample(0.f, phase, -1.f), projectSample(1.f, phase, -1.f)}, .6f);
         for (int row = 0; row <= 10; ++row)
@@ -587,18 +611,22 @@ void Visuals::wavetable(juce::Graphics &g, juce::Rectangle<float> bounds,
     {
         // Haze follows the actual copied source rows. These bounded strokes
         // add only material: no image, extra signal, animation or normalization.
+        const auto hazeStroke = [](float width) {
+            return juce::PathStrokeType(width, juce::PathStrokeType::curved,
+                                        juce::PathStrokeType::rounded);
+        };
         for (int frame = 0; frame < data.frames; ++frame)
         {
             const float depth = static_cast<float>(frame) / std::max(1, data.frames - 1);
             const auto path = trace(depth);
-            g.setGradientFill(gradient(.012f, depth));
-            g.strokePath(path, juce::PathStrokeType(bounds.getHeight() * .30f));
-            g.setGradientFill(gradient(.021f, depth));
-            g.strokePath(path, juce::PathStrokeType(bounds.getHeight() * .18f));
+            g.setGradientFill(gradient(.008f, depth));
+            g.strokePath(path, hazeStroke(bounds.getHeight() * .30f));
+            g.setGradientFill(gradient(.014f, depth));
+            g.strokePath(path, hazeStroke(bounds.getHeight() * .18f));
+            g.setGradientFill(gradient(.030f, depth));
+            g.strokePath(path, hazeStroke(bounds.getHeight() * .085f));
             g.setGradientFill(gradient(.045f, depth));
-            g.strokePath(path, juce::PathStrokeType(bounds.getHeight() * .085f));
-            g.setGradientFill(gradient(.070f, depth));
-            g.strokePath(path, juce::PathStrokeType(6.f));
+            g.strokePath(path, hazeStroke(6.f));
         }
     }
 
@@ -616,10 +644,10 @@ void Visuals::wavetable(juce::Graphics &g, juce::Rectangle<float> bounds,
                 strip.lineTo(vertex(frame + 1, phase));
             strip.closeSubPath();
             const auto depth = static_cast<float>(frame) / std::max(1, data.frames - 1);
-            g.setGradientFill(gradient(harmonic ? .025f
-                                       : aurora ? .065f + .050f * depth
-                                       : ribbons ? .018f
-                                       : terrain ? .10f + .08f * depth
+            g.setGradientFill(gradient(harmonic ? .010f
+                                       : aurora ? .025f + .025f * depth
+                                       : ribbons ? .008f
+                                       : terrain ? .055f + .045f * depth
                                                  : .07f + .06f * depth,
                                        depth));
             g.fillPath(strip);
@@ -629,9 +657,9 @@ void Visuals::wavetable(juce::Graphics &g, juce::Rectangle<float> bounds,
     // sample-domain connections, never frequency bins or output measurements.
     if ((!ribbons || luminous) && data.frames > 1)
     {
-        g.setGradientFill(gradient(miniature ? .11f : aurora ? .24f : luminous ? .13f
-                                                  : terrain ? .43f : .28f));
-        const int phaseStep = miniature ? 24 : aurora ? 5 : luminous ? 12 : 4;
+        g.setGradientFill(gradient(miniature ? .11f : aurora ? .18f : luminous ? .10f
+                                                  : terrain ? .32f : .28f));
+        const int phaseStep = miniature ? 24 : aurora ? 5 : luminous ? 8 : 4;
         for (int phase = 0; phase < WavetablePreview::pointsPerFrame; phase += phaseStep)
         {
             juce::Path seam;
@@ -666,19 +694,21 @@ void Visuals::wavetable(juce::Graphics &g, juce::Rectangle<float> bounds,
         }
         if (!harmonic && !aurora)
         {
-            g.setGradientFill(gradient(miniature ? .02f : luminous ? .028f
-                                                      : terrain ? .075f : .05f));
+            g.setGradientFill(gradient(miniature ? .02f : luminous ? .016f
+                                                      : terrain ? .040f : .05f));
             g.strokePath(path, juce::PathStrokeType(
-                                   miniature ? 3.f : luminous ? 7.f : terrain ? 10.f : 6.f));
+                                   miniature ? 3.f : luminous ? 5.f : terrain ? 7.f : 6.f));
         }
         g.setGradientFill(gradient(harmonic ? .84f
                                    : aurora ? .40f + .45f * t
-                                   : luminous ? .26f + .42f * t
+                                   : luminous ? .36f + .42f * t
                                    : ribbons ? .37f + .45f * t
                                    : terrain ? .62f + .36f * t
                                              : .45f + .48f * t,
                                    t));
-        g.strokePath(path, juce::PathStrokeType(miniature ? .7f : harmonic ? 1.f : .9f));
+        g.strokePath(path, juce::PathStrokeType(miniature ? .7f : harmonic ? .8f
+                                                             : luminous ? .72f
+                                                             : terrain ? .75f : .9f));
     }
     // Sample-mode morph is not a playback-head position. Do not imply that the
     // source table's static morph setting tracks sample playback.

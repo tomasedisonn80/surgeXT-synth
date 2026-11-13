@@ -8,6 +8,87 @@
 
 namespace Surge::GUI::Reference
 {
+/** Static brand artwork: folded violet ribbons or an ascending aurora fan.
+    These hand-built curves have no signal, parameter, time or random input. */
+inline void luminousRibbonLogo(juce::Graphics &g, juce::Rectangle<float> area,
+                               juce::Colour violet, juce::Colour cyan, bool ascending)
+{
+    if (area.isEmpty())
+        return;
+    juce::Graphics::ScopedSaveState saved(g);
+    g.reduceClipRegion(area.toNearestInt());
+    g.addTransform(juce::AffineTransform::scale(area.getWidth() / 100.f,
+                                               area.getHeight() / 60.f)
+                       .translated(area.getX(), area.getY()));
+    const auto pink = juce::Colour(0xffef91ec);
+    juce::Path strands[5];
+    if (ascending)
+    {
+        // Independent bends make the strands cross instead of repeating one
+        // translated waveform. Both tips taper into the same small fan.
+        static constexpr float curves[5][12] = {
+            {26, 4, 34, 10, 54, 19, 76, 27, 86, 13, 97, 3},
+            {23, 17, 38, 29, 56, 20, 76, 13, 87, 16, 97, 3},
+            {24, 29, 37, 10, 57, 29, 76, 43, 86, 20, 97, 3},
+            {23, 20, 34, 35, 57, 37, 76, 55, 86, 23, 97, 3},
+            {24, 22, 33, 24, 56, 43, 75, 63, 84, 23, 97, 3}};
+        for (int strand = 0; strand < 5; ++strand)
+        {
+            const auto &c = curves[strand];
+            strands[strand].startNewSubPath(3, 56);
+            strands[strand].cubicTo(c[0], c[1], c[2], c[3], c[4], c[5]);
+            strands[strand].cubicTo(c[6], c[7], c[8], c[9], c[10], c[11]);
+        }
+        auto veil = strands[0];
+        veil.cubicTo(84, 23, 75, 63, 56, 43);
+        veil.cubicTo(33, 24, 24, 22, 3, 56);
+        veil.closeSubPath();
+        g.setGradientFill(juce::ColourGradient(pink.withAlpha(.16f), 5, 44,
+                                              cyan.withAlpha(.08f), 94, 13, false));
+        g.fillPath(veil);
+    }
+    else
+    {
+        static constexpr float curves[5][18] = {
+            {20, 49, 31, -3, 46, 9, 59, 18, 54, 57, 72, 43, 83, 35, 86, 24, 97, 34},
+            {20, 49, 27, 16, 40, 23, 53, 22, 55, 53, 72, 43, 84, 32, 88, 28, 97, 34},
+            {18, 44, 28, 24, 40, 23, 47, 33, 48, 72, 67, 56, 80, 48, 83, 29, 97, 34},
+            {21, 47, 28, 30, 40, 30, 53, 29, 61, 44, 73, 43, 84, 42, 88, 29, 97, 34},
+            {21, 43, 29, 34, 41, 35, 54, 36, 61, 40, 74, 40, 85, 39, 89, 29, 97, 34}};
+        for (int strand = 0; strand < 5; ++strand)
+        {
+            const auto &c = curves[strand];
+            strands[strand].startNewSubPath(3, 37);
+            for (int bend = 0; bend < 3; ++bend)
+                strands[strand].cubicTo(c[bend * 6], c[bend * 6 + 1], c[bend * 6 + 2],
+                                        c[bend * 6 + 3], c[bend * 6 + 4], c[bend * 6 + 5]);
+        }
+        auto fold = strands[0];
+        fold.cubicTo(83, 29, 80, 48, 67, 56);
+        fold.cubicTo(48, 72, 47, 33, 40, 23);
+        fold.cubicTo(28, 24, 18, 44, 3, 37);
+        fold.closeSubPath();
+        g.setGradientFill(juce::ColourGradient(violet.brighter(.2f).withAlpha(.72f), 45, 9,
+                                              violet.darker(.2f).withAlpha(.42f), 64, 56, false));
+        g.fillPath(fold);
+    }
+    for (int strand = 0; strand < 5; ++strand)
+    {
+        const auto &path = strands[strand];
+        g.setColour((ascending ? pink : violet).withAlpha(.10f));
+        g.strokePath(path, juce::PathStrokeType(5.f, juce::PathStrokeType::curved,
+                                               juce::PathStrokeType::rounded));
+        auto colour = ascending ? pink : violet.interpolatedWith(pink, .35f);
+        const auto tip = ascending ? cyan.interpolatedWith(juce::Colours::white, .35f)
+                                   : violet.interpolatedWith(juce::Colours::white, .55f);
+        g.setGradientFill(juce::ColourGradient(colour.withAlpha(strand == 0 ? .98f : .72f),
+                                              4, 39, tip.withAlpha(.88f), 96, 17, false));
+        g.strokePath(path, juce::PathStrokeType(strand == 0 || strand == 2 ? 1.6f : .95f,
+                                               juce::PathStrokeType::curved,
+                                               juce::PathStrokeType::rounded));
+    }
+}
+
 /** Algorithm-family pictogram. This is a labelled category icon, not a signal plot. */
 inline void effectGlyph(juce::Graphics &g, juce::Rectangle<float> area,
                         juce::Colour ink, const juce::String &algorithm)

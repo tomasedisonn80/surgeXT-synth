@@ -102,3 +102,43 @@ patches are attenuated.
 The narrow source diff and `git diff --check` pass. No tests, manifests or
 control geometry changed. Source ownership is released again; the fresh
 combined native gate and actual-image acceptance remain with the coordinator.
+
+## Final accepted-source review — `6028da1`
+
+Inspected the final actual 04/05 PNGs and enlarged Scene, filter and Width crops
+from source `6028da1b15b3263e459bbd7742d2fd0572adcc89`, workflow `43504150637`,
+gallery `e2f26e4dc711e1127e66b9aae92b1e94afd15345`. The retained logs pass all
+47 behavior cases / 10,395,101 assertions and the complete native capture case /
+24,101,112 assertions. This is the passing successor to the unaccepted
+`21c2a82` evidence above.
+
+The dark blue mottling is resolved in the actual final raster. Repeating the
+same unobstructed-region and plane-removal calculation gives:
+
+| Blank area | Reference RGB residual RMS | Final native RGB residual RMS |
+| --- | --- | --- |
+| Scene between columns | 0.782 / 0.732 / 0.715 | 0.421 / 0.663 / 0.887 |
+| Scene between rows | 0.630 / 0.651 / 0.657 | 0.440 / 0.684 / 0.760 |
+| Scene below selector | 0.846 / 1.011 / 1.154 | 0.489 / 0.663 / 0.825 |
+| Filter 2 header gap | 0.711 / 0.848 / 0.921 | 0.482 / 0.795 / 0.867 |
+| Filter 1 above knobs | 1.132 / 1.501 / 1.805 | 0.473 / 0.565 / 0.698 |
+
+The accepted x1010:1205/y579:584 strip retains **median RGB 40/81/111** in the
+actual PNG. Its final range is 1/2/3 and horizontal neighbor difference is
+0.058/0.072/0.079, versus reference 7/9/13 and 0.254/0.262/0.254. The final
+material is therefore smoother and less varied than the concept; the accepted
+correction removes the conspicuous dark patches without claiming identical
+texture. Broader palette residuals remain: the Scene inter-row median is
+50/98/128 versus reference 55/98/129, and the Filter 2 header gap is 44/84/115
+versus 40/81/111. Neither is a new blocker for these two scoped corrections.
+
+Space Width ink now occupies y95–101. Row y102 visibly separates it from the
+unchanged top tick: at x1183–1184 that row is RGB 160/131/97 and 161/132/97,
+whereas the D's lower stroke at y101 is 62/51/35 and 60/50/34. The tick begins
+below that background row. The complete Width child rectangle is byte-identical
+between final baseline and edited PNGs. The glyph/graduation collision is
+resolved; no further geometry adjustment is needed.
+
+**Verdict:** accept the final blue-material and Width-clearance corrections.
+Only this report was updated during the final review. `git diff --check` passes;
+no source, manifest or test edits were made. Report ownership is released.

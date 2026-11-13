@@ -7,6 +7,11 @@ This fork adds ten alternative, interactive Surge XT layouts selected through
 native build; installing their JSON/skin files into ordinary upstream Surge XT
 does not install the renderer. The original full editor remains available.
 
+Browse the [native screenshot gallery](doc/reference-workspaces/native-gallery/README.md)
+for all ten skins, with separate reference and edited-state comparisons. The
+[current fidelity record](doc/reference-workspaces/fidelity-2026-11-13/README.md)
+links the ten-wave assignment ledger and exact build/capture evidence.
+
 See the [installation and controls guide](doc/reference-workspaces-user-guide.md),
 [engineering work log](doc/reference-workspaces-work-log.md), and
 [native build/capture workflow](https://github.com/tomasedisonn80/surgeXT-synth/actions/workflows/reference-workspaces.yml).

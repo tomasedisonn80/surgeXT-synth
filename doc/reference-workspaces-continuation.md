@@ -1,13 +1,37 @@
 # Ten-skin fidelity continuation
 
-## Active visual refinement — 13 November 2026
+## Renewed fidelity delivery — 13 November 2026
 
-The renewed fidelity request starts from `a0d016fd59ef9aee1c96a720c6a2c5a0b9a56f35`.
-Follow the [current pass record](reference-workspaces/fidelity-2026-11-13/README.md)
-for its actual assignments, material and control changes, new native verification
-and screenshots. The delivery records below describe the previous pass and do
-not certify newly changed source. Preserve all real processor bindings and keep
-reference concepts distinct from native captures.
+The renewed pass starts from `a0d016fd59ef9aee1c96a720c6a2c5a0b9a56f35`.
+The [current pass record](reference-workspaces/fidelity-2026-11-13/README.md)
+and [current ten-wave ledger](reference-workspaces/fidelity-2026-11-13/ten-wave-ledger.md)
+record its numbered assignments and reports independently of the previous pass.
+
+The final tested implementation is
+`6028da1b15b3263e459bbd7742d2fd0572adcc89`.
+[Native workflow 43504150637](https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43504150637)
+passed **47 behavior cases / 10,395,101 assertions**, all twenty baseline/edited
+native captures / **24,101,112 assertions**, and both the normal and
+ThreadSanitizer audio-tap checks. All forty active capture stages were finite,
+nonzero and below clipping; all ten reset peaks stayed below `1e-6`.
+
+The [native gallery](reference-workspaces/native-gallery/README.md) was published
+to `main` in the ordinary child commit
+`e2f26e4dc711e1127e66b9aae92b1e94afd15345`. Its twenty unmodified 1586 × 992 PNGs
+and source, fixture, log and hash records belong to that successful source/run.
+Documentation-only delivery commits may follow without changing the tested
+implementation or its captures.
+
+This pass refines all ten materials, control surfaces and layout details, real
+wavetable sources and views, browser identity, scaled interaction, modulation
+readout refresh and busy-snapshot scene isolation. The guide documents native
+capability adaptations. **Literal pixel identity is not claimed:** real source
+geometry, typography and some optical details still differ from the concepts.
+See the [user guide](reference-workspaces-user-guide.md) for the modified-build
+and matching factory-data requirements.
+
+The delivery records below describe earlier passes and retain their historical
+source and test boundaries. They do not supersede the renewed record above.
 
 ## Previous delivery record — 13 November 2026
 

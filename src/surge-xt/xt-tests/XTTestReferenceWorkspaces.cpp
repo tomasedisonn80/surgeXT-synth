@@ -11,9 +11,17 @@
 #include "gui/reference/Manifest.h"
 #include "gui/reference/ParameterBridge.h"
 #include "gui/reference/Workspace.h"
+#include "gui/reference/WorkspaceData.h"
+#include "gui/reference/Visuals.h"
+#include "gui/reference/ModulationInteraction.h"
+#include "UndoManager.h"
+#include "sst/filters/FilterConfiguration.h"
 
 #include <algorithm>
+#include <array>
 #include <cmath>
+#include <cstdlib>
+#include <future>
 #include <limits>
 #include <set>
 #include <vector>
@@ -27,6 +35,7 @@ constexpr int referenceWidth = 1586;
 constexpr int referenceHeight = 992;
 constexpr int sampleBlock = 512;
 constexpr double sampleRate = 48000.0;
+constexpr int showcaseAudioBlocks = 256;
 
 juce::File sourceRoot() { return juce::File(juce::String(SURGE_REFERENCE_SOURCE_DIR)); }
 
@@ -299,6 +308,176 @@ juce::var object() { return juce::var(new juce::DynamicObject()); }
 void property(juce::var &object, const char *key, const juce::var &value)
 {
     object.getDynamicObject()->setProperty(juce::Identifier(key), value);
+}
+
+/** An explicitly documented real patch, not a painted imitation of the concept
+    values. It makes the capture exercise active oscillators, filters, FX and
+    modulation rows. Only this test-owned processor is changed; choosing a skin
+    in the application never installs the fixture or changes a user's patch. */
+juce::var configureShowcaseFixture(SurgeSynthProcessor &processor)
+{
+    auto &synth = *processor.surge;
+    REQUIRE_FALSE(synth.audio_processing_active.load());
+    const auto templatePath = "resources/data/patches_factory/Templates/Init Wavetable.fxp";
+    const auto wavetablePath = "resources/data/wavetables/Generated/Formants.wt";
+    const auto initialPatch = sourceRoot().getChildFile(templatePath);
+    const auto wavetable = sourceRoot().getChildFile(wavetablePath);
+    REQUIRE(initialPatch.existsAsFile());
+    REQUIRE(wavetable.existsAsFile());
+    REQUIRE(synth.loadPatchByPath(initialPatch.getFullPathName().toRawUTF8(), -1,
+                                  "Reference Showcase"));
+    synth.processAudioThreadOpsWhenAudioEngineUnavailable();
+    ParameterBridge bridge(processor);
+    bridge.setScene(0);
+    juce::Array<juce::var> settings;
+    const auto record = [&](const juce::String &binding) {
+        auto setting = object();
+        property(setting, "binding", binding);
+        property(setting, "normalized", bridge.value(binding));
+        property(setting, "display", bridge.display(binding));
+        settings.add(setting);
+    };
+    const auto select = [&](const juce::String &binding, int nativeValue) {
+        CAPTURE(binding.toStdString(), nativeValue);
+        auto *parameter = bridge.parameter(binding);
+        REQUIRE(parameter != nullptr);
+        REQUIRE(bridge.enabled(binding));
+        const auto index =
+            parameter->valtype == vt_bool ? nativeValue : nativeValue - parameter->val_min.i;
+        REQUIRE(index >= 0);
+        REQUIRE(index < bridge.choices(binding).size());
+        edit(bridge, binding, bridge.choiceValue(binding, index));
+        // FX and oscillator algorithms commit through the normal deferred path.
+        // No audio thread exists for this isolated fixture yet.
+        synth.processAudioThreadOpsWhenAudioEngineUnavailable();
+        REQUIRE(bridge.choiceIndex(binding) == index);
+        record(binding);
+    };
+    const auto setNative = [&](const juce::String &binding, float nativeValue) {
+        CAPTURE(binding.toStdString(), nativeValue);
+        auto *parameter = bridge.parameter(binding);
+        REQUIRE(parameter != nullptr);
+        REQUIRE(parameter->valtype == vt_float);
+        REQUIRE(bridge.enabled(binding));
+        REQUIRE(nativeValue >= parameter->val_min.f);
+        REQUIRE(nativeValue <= parameter->val_max.f);
+        // Use the native parameter's normalization without mutating its storage
+        // directly or assuming every display unit has a linear 0..1 mapping.
+        auto converted = *parameter;
+        converted.val.f = nativeValue;
+        edit(bridge, binding, converted.get_value_f01());
+        REQUIRE(parameter->val.f == Catch::Approx(nativeValue).margin(.0001f));
+        record(binding);
+    };
+
+    select("osc1.type", ot_wavetable);
+    select("osc2.type", ot_FM2);
+    select("osc3.type", ot_classic);
+    auto &patch = synth.storage.getPatch();
+    auto &scene = patch.scene[0];
+    synth.storage.load_wt(wavetable.getFullPathName().toStdString(), &scene.osc[0].wt,
+                          &scene.osc[0]);
+    REQUIRE(scene.osc[0].wt.n_tables > 1);
+    REQUIRE(scene.osc[0].wavetable_display_name == "Formants");
+    setNative("osc1.param0", .37f);
+    setNative("osc1.param1", .12f);
+    setNative("osc2.param0", .38f);
+    for (int index = 1; index <= 3; ++index)
+    {
+        select("osc" + juce::String(index) + ".mute", 0);
+        select("osc" + juce::String(index) + ".retrigger", 1);
+    }
+    setNative("osc1.level", .68f);
+    setNative("osc2.level", .35f);
+    setNative("osc3.level", .22f);
+    select("osc3.octave", -1);
+    setNative("scene.drift", 0.f);
+    select("routing", fc_dual1);
+    select("filter1.type", sst::filters::fut_lp24);
+    select("filter2.type", sst::filters::fut_bp12);
+    setNative("filter1.cutoff", 20.28f);
+    setNative("filter1.resonance", .27f);
+    setNative("filter2.cutoff", 37.23f);
+    setNative("filter2.resonance", .61f);
+    setNative("master.volume", -12.f);
+    setNative("scene.width", .82f);
+    for (int index = 1; index <= 2; ++index)
+    {
+        const auto prefix = "env" + juce::String(index) + ".";
+        setNative(prefix + "attack", std::log2(.005f));
+        setNative(prefix + "decay", std::log2(.2f));
+        setNative(prefix + "sustain", index == 1 ? .8f : .7f);
+        setNative(prefix + "release", std::log2(.32f));
+    }
+    select("lfo1.shape", lt_sine);
+    setNative("lfo1.rate", -.5f);
+    select("lfo1.trigmode", lm_keytrigger);
+    const std::array<int, 8> effects{fxt_distortion, fxt_chorus4, fxt_phaser,      fxt_eq,
+                                     fxt_delay,      fxt_reverb2, fxt_conditioner, fxt_eq};
+    for (size_t index = 0; index < effects.size(); ++index)
+        select("fx" + juce::String(static_cast<int>(index) + 1) + ".type", effects[index]);
+
+    const std::array<const char *, 8> macroNames{"Tone",   "Shape", "Color",   "Width",
+                                                 "Motion", "FM",    "Release", "Drive"};
+    const std::array<const char *, 8> targets{"filter1.cutoff", "osc1.param0", "filter2.cutoff",
+                                              "scene.width",    "lfo1.rate",   "osc2.param0",
+                                              "env1.release",   "fx1.param0"};
+    const std::array<float, 8> macroValues{.72f, .48f, .81f, .67f, .35f, .56f, .27f, .43f};
+    const std::array<float, 8> depths{.08f, .12f, .10f, .08f, .07f, .12f, .10f, .06f};
+    juce::Array<juce::var> routes;
+    for (int index = 0; index < 8; ++index)
+    {
+        const auto binding = "macro" + juce::String(index + 1);
+        juce::String(macroNames[index])
+            .copyToUTF8(patch.CustomControllerLabel[index], CUSTOM_CONTROLLER_LABEL_SIZE);
+        edit(bridge, binding, macroValues[index]);
+        REQUIRE(bridge.value(binding) == Catch::Approx(macroValues[index]).margin(.0001f));
+        auto *target = bridge.parameter(targets[index]);
+        REQUIRE(target != nullptr);
+        REQUIRE(synth.setModDepth01(target->id, static_cast<modsources>(ms_ctrl1 + index), 0, 0,
+                                    depths[index]));
+        auto route = object();
+        property(route, "macro", index + 1);
+        property(route, "label", macroNames[index]);
+        property(route, "target", targets[index]);
+        property(route, "normalizedDepth", depths[index]);
+        routes.add(route);
+        record(binding);
+    }
+    const auto resolved = Surge::GUI::Reference::modulationRows(processor, 0);
+    REQUIRE(resolved.size() == 8);
+    juce::Array<juce::var> resolvedRows;
+    for (const auto &row : resolved)
+    {
+        REQUIRE(row.source.isNotEmpty());
+        REQUIRE(row.destination.isNotEmpty());
+        REQUIRE(row.amount.isNotEmpty());
+        REQUIRE(std::isfinite(row.normalizedDepth));
+        REQUIRE(std::abs(row.normalizedDepth) > 0.f);
+        REQUIRE_FALSE(row.muted);
+        auto entry = object();
+        property(entry, "source", row.source);
+        property(entry, "destination", row.destination);
+        property(entry, "amount", row.amount);
+        property(entry, "normalizedDepth", row.normalizedDepth);
+        resolvedRows.add(entry);
+    }
+    REQUIRE(bridge.activeGestureCount() == 0);
+    synth.storage.rngGen.g.seed(0x5a117u);
+    synth.storage.noiseRng.reseed(0x6b228u);
+    std::srand(0x71a3);
+
+    auto fixture = object();
+    property(fixture, "name", "Reference Showcase");
+    property(fixture, "basePatch", templatePath);
+    property(fixture, "wavetable", wavetablePath);
+    property(fixture, "settings", juce::var(settings));
+    property(fixture, "modulationRoutes", juce::var(routes));
+    property(fixture, "resolvedRouteRows", juce::var(resolvedRows));
+    property(fixture, "scope",
+             "Actual engine patch derived from a checked-in template using native parameter "
+             "and wavetable APIs. Not an assertion that every illustrated value is reproduced.");
+    return fixture;
 }
 } // namespace
 
@@ -630,7 +809,17 @@ TEST_CASE("The native editor switches and reloads reference skins without changi
     for (int lifecycle = 0; lifecycle < 2; ++lifecycle)
     {
         CAPTURE(lifecycle);
-        std::unique_ptr<juce::AudioProcessorEditor> owner(processor.createEditorIfNeeded());
+        // A real JUCE plug-in wrapper must notify the processor before deleting
+        // its editor. Reproduce that host contract, including early test exits.
+        const auto deleteAsHost = [&processor](juce::AudioProcessorEditor *editor) {
+            if (editor != nullptr)
+            {
+                processor.editorBeingDeleted(editor);
+                delete editor;
+            }
+        };
+        std::unique_ptr<juce::AudioProcessorEditor, decltype(deleteAsHost)> owner(
+            processor.createEditorIfNeeded(), deleteAsHost);
         auto *editor = dynamic_cast<SurgeSynthEditor *>(owner.get());
         REQUIRE(editor != nullptr);
         REQUIRE(processor.getActiveEditor() == editor);
@@ -885,27 +1074,30 @@ TEST_CASE("Compact value controls preserve real drag and typed-unit editing",
     ScopedModalCleanup modalCleanup;
     auto &bridge = workspace.bridge();
 
+    // Obsidian's compact right-hand ADSR fields edit the filter envelope;
+    // its amplifier envelope uses rotary controls, not compact values.
+    const juce::String valueBinding = "env2.attack";
     juce::String valueId;
     for (const auto &control : *manifest["controls"].getArray())
-        if (control["kind"].toString() == "value" && control["binding"].toString() == "env1.attack")
+        if (control["kind"].toString() == "value" && control["binding"].toString() == valueBinding)
             valueId = control["id"].toString();
     REQUIRE(valueId.isNotEmpty());
     auto *slider = dynamic_cast<juce::Slider *>(findComponent(workspace, valueId));
     REQUIRE(slider != nullptr);
     REQUIRE(slider->isEnabled());
     REQUIRE(slider->getWantsKeyboardFocus());
-    auto *adapter = adapterFor(processor, bridge, "env1.attack");
+    auto *adapter = adapterFor(processor, bridge, valueBinding);
     REQUIRE(adapter != nullptr);
     GestureProbe probe(*adapter);
-    edit(bridge, "env1.attack", .4f);
+    edit(bridge, valueBinding, .4f);
     workspace.refresh();
-    const auto before = bridge.value("env1.attack");
+    const auto before = bridge.value(valueBinding);
     const auto start = slider->getLocalBounds().toFloat().getCentre();
     const auto down = mouseEvent(*slider, start);
     slider->mouseDown(down);
     slider->mouseDrag(down.withNewPosition(start.translated(0, -25.f)));
     slider->mouseUp(down.withNewPosition(start.translated(0, -25.f)));
-    CHECK(std::abs(bridge.value("env1.attack") - before) > .01f);
+    CHECK(std::abs(bridge.value(valueBinding) - before) > .01f);
     CHECK(bridge.activeGestureCount() == 0);
     CHECK(probe.starts == probe.ends);
     CHECK(probe.minimumBalance == 0);
@@ -920,15 +1112,15 @@ TEST_CASE("Compact value controls preserve real drag and typed-unit editing",
     REQUIRE(input != nullptr);
     REQUIRE(apply != nullptr);
     REQUIRE(static_cast<bool>(apply->onClick));
-    const auto beforeInvalid = bridge.value("env1.attack");
+    const auto beforeInvalid = bridge.value(valueBinding);
     input->setText("this is not a duration", false);
     apply->onClick();
-    CHECK(bridge.value("env1.attack") == Catch::Approx(beforeInvalid));
+    CHECK(bridge.value(valueBinding) == Catch::Approx(beforeInvalid));
     CHECK(input->getDescription().isNotEmpty());
     input->setText("250 ms", false);
     apply->onClick();
-    REQUIRE(bridge.parameter("env1.attack") != nullptr);
-    CHECK(bridge.parameter("env1.attack")->val.f == Catch::Approx(-2.f).margin(.0001f));
+    REQUIRE(bridge.parameter(valueBinding) != nullptr);
+    CHECK(bridge.parameter(valueBinding)->val.f == Catch::Approx(-2.f).margin(.0001f));
     CHECK(probe.starts == probe.ends);
     CHECK(probe.balance == 0);
     CHECK(bridge.activeGestureCount() == 0);
@@ -944,12 +1136,18 @@ TEST_CASE("Live display refresh preserves audible state and independent audio sa
     testData.attach(withUI, "with-ui");
     testData.attach(withoutUI, "without-ui");
     const auto patch =
-        sourceRoot().getChildFile("resources/data/patches_factory/Templates/Init Sine.fxp");
+        sourceRoot().getChildFile("resources/data/patches_factory/Templates/Init Wavetable.fxp");
+    const auto table = sourceRoot().getChildFile("resources/data/wavetables/Generated/Formants.wt");
     REQUIRE(patch.existsAsFile());
+    REQUIRE(table.existsAsFile());
     for (auto *processor : {&withUI, &withoutUI})
     {
         REQUIRE(processor->surge->loadPatchByPath(patch.getFullPathName().toRawUTF8(), -1,
                                                   "Reference isolation fixture"));
+        auto &oscillator = processor->surge->storage.getPatch().scene[0].osc[0];
+        processor->surge->storage.load_wt(table.getFullPathName().toStdString(), &oscillator.wt,
+                                          &oscillator);
+        REQUIRE(oscillator.wt.n_tables > 1);
         processor->setRateAndBufferSizeDetails(sampleRate, sampleBlock);
         processor->prepareToPlay(sampleRate, sampleBlock);
         processor->surge->storage.rngGen.g.seed(0x5a117u);
@@ -1013,6 +1211,256 @@ TEST_CASE("Live display refresh preserves audible state and independent audio sa
     withoutUI.releaseResources();
 }
 
+TEST_CASE("Wavetable terrain snapshots own distinct real source frames without editing the synth",
+          "[reference-workspaces][reference-display-isolation][reference-wavetable]")
+{
+    using Surge::GUI::Reference::Visuals;
+    using Surge::GUI::Reference::WavetablePreview;
+    juce::ScopedJuceInitialiser_GUI gui;
+    IsolatedUserData testData;
+    SurgeSynthProcessor processor;
+    testData.attach(processor);
+    const auto patch =
+        sourceRoot().getChildFile("resources/data/patches_factory/Templates/Init Wavetable.fxp");
+    const auto file = sourceRoot().getChildFile("resources/data/wavetables/Generated/Formants.wt");
+    REQUIRE(patch.existsAsFile());
+    REQUIRE(file.existsAsFile());
+    REQUIRE(processor.surge->loadPatchByPath(patch.getFullPathName().toRawUTF8(), -1,
+                                             "Terrain isolation fixture"));
+    auto &storage = processor.surge->storage;
+    auto &oscillator = storage.getPatch().scene[0].osc[0];
+    storage.load_wt(file.getFullPathName().toStdString(), &oscillator.wt, &oscillator);
+    processor.setRateAndBufferSizeDetails(sampleRate, sampleBlock);
+    processor.prepareToPlay(sampleRate, sampleBlock);
+    REQUIRE(oscillator.wt.n_tables > 1);
+    ParameterBridge bridge(processor);
+    edit(bridge, "osc1.param0", .23f);
+    const auto state = hostParameterValues(processor);
+    const auto rng = storage.rngGen.g;
+    const auto first = Visuals::sample(processor, 0);
+    const auto &terrain = first.wavetable[0];
+    REQUIRE(terrain.available());
+    REQUIRE(terrain.sourceFrames > 1);
+    CHECK(terrain.frames <= WavetablePreview::maximumFrames);
+    CHECK(terrain.sourceFrameSize == oscillator.wt.size);
+    CHECK(terrain.position == Catch::Approx(.23f).margin(.0001f));
+    CHECK_FALSE(terrain.sampleMode);
+    REQUIRE(std::all_of(terrain.samples.begin(), terrain.samples.end(),
+                        [](float value) { return std::isfinite(value); }));
+    // Endpoints coincide with native table samples without resampling ambiguity.
+    CHECK(terrain.samples.front() == oscillator.wt.TableF32WeakPointers[0][0][0]);
+    CHECK(terrain.samples.back() ==
+          oscillator.wt.TableF32WeakPointers[0][terrain.sourceFrames - 1][oscillator.wt.size - 1]);
+    bool distinctFrames = false;
+    for (int frame = 1; frame < terrain.frames; ++frame)
+        for (int phase = 0; phase < WavetablePreview::pointsPerFrame; ++phase)
+            distinctFrames |=
+                std::abs(terrain.samples[frame * WavetablePreview::pointsPerFrame + phase] -
+                         terrain.samples[phase]) > .001f;
+    CHECK(distinctFrames); // A duplicated current waveform cannot satisfy this.
+    CHECK(storage.rngGen.g == rng);
+    checkHostParameterValues(processor, state);
+    const auto repeated = Visuals::sample(processor, 0);
+    CHECK(repeated.wavetable[0].samples == terrain.samples);
+
+    edit(bridge, "osc1.param0", .79f);
+    const auto moved = Visuals::sample(processor, 0);
+    CHECK(moved.wavetable[0].position == Catch::Approx(.79f).margin(.0001f));
+    CHECK(moved.wavetable[0].samples == terrain.samples);
+    CHECK(terrain.position == Catch::Approx(.23f).margin(.0001f));
+
+    // A loader holding the table mutex must produce an unavailable snapshot,
+    // not block on the loader or read partially replaced source data. The bounded
+    // worker timeout prevents a regression from hanging the test suite forever.
+    std::promise<void> locked, release;
+    auto releaseSignal = release.get_future();
+    auto holder = std::async(std::launch::async, [&] {
+        std::lock_guard<std::mutex> lock(storage.waveTableDataMutex);
+        locked.set_value();
+        releaseSignal.wait_for(std::chrono::seconds(2));
+    });
+    locked.get_future().wait();
+    const auto busy = Visuals::sample(processor, 0);
+    release.set_value();
+    holder.get();
+    CHECK_FALSE(busy.wavetable[0].available());
+    CHECK(Visuals::sample(processor, 0).wavetable[0].available());
+
+    // Replacing the native table cannot alter already-owned preview data.
+    const auto saved = terrain.samples;
+    const auto replacement =
+        sourceRoot().getChildFile("resources/data/wavetables/Generated/Sine One Harmonic.wt");
+    REQUIRE(replacement.existsAsFile());
+    storage.load_wt(replacement.getFullPathName().toStdString(), &oscillator.wt, &oscillator);
+    const auto replaced = Visuals::sample(processor, 0);
+    REQUIRE(replaced.wavetable[0].available());
+    CHECK(terrain.samples == saved);
+    CHECK(replaced.wavetable[0].samples != saved);
+    CHECK(storage.rngGen.g == rng);
+    processor.releaseResources();
+}
+
+TEST_CASE("Native modulation row edits preserve stable targets, undo, and scene isolation",
+          "[reference-workspaces][reference-modulation][reference-interactions]")
+{
+    using Surge::GUI::Reference::ModulationEditorModel;
+    using Surge::GUI::Reference::modulationRows;
+    using Surge::GUI::Reference::RouteRow;
+    juce::ScopedJuceInitialiser_GUI gui;
+    IsolatedUserData testData;
+    SurgeSynthProcessor processor;
+    testData.attach(processor);
+    processor.setRateAndBufferSizeDetails(sampleRate, sampleBlock);
+    processor.prepareToPlay(sampleRate, sampleBlock);
+    configureShowcaseFixture(processor);
+    auto &synth = *processor.surge;
+    ParameterBridge bridge(processor);
+    auto *targetA = bridge.parameter("filter1.cutoff");
+    auto *globalTarget = bridge.parameter("fx1.param0");
+    REQUIRE(targetA != nullptr);
+    REQUIRE(globalTarget != nullptr);
+    bridge.setScene(1);
+    auto *targetB = bridge.parameter("filter1.cutoff");
+    REQUIRE(targetB != nullptr);
+    REQUIRE(targetB->id != targetA->id);
+    REQUIRE(synth.setModDepth01(targetB->id, ms_ctrl1, 1, 0, -.31f));
+    const auto parametersBefore = hostParameterValues(processor);
+    const auto rowFor = [&](int scene, int parameterId, modsources source) -> RouteRow {
+        const auto rows = modulationRows(processor, scene);
+        auto found = std::find_if(rows.begin(), rows.end(), [&](const RouteRow &row) {
+            return row.key.parameterId == parameterId && row.key.sourceId == source;
+        });
+        REQUIRE(found != rows.end());
+        return *found;
+    };
+    const auto a = rowFor(0, targetA->id, ms_ctrl1);
+    const auto b = rowFor(1, targetB->id, ms_ctrl1);
+    CHECK(a.key.sourceScene == 0);
+    CHECK(b.key.sourceScene == 1);
+    CHECK(a.key != b.key);
+
+    // Exercise the real undo manager with its actual editor owner, observing
+    // JUCE's host deletion contract even if an assertion aborts this test.
+    const auto deleteAsHost = [&processor](juce::AudioProcessorEditor *editor) {
+        if (editor)
+        {
+            processor.editorBeingDeleted(editor);
+            delete editor;
+        }
+    };
+    std::unique_ptr<juce::AudioProcessorEditor, decltype(deleteAsHost)> editor(
+        processor.createEditorIfNeeded(), deleteAsHost);
+    REQUIRE(editor != nullptr);
+    REQUIRE(processor.undoManager != nullptr);
+
+    struct Listener : SurgeSynthesizer::ModulationAPIListener
+    {
+        SurgeSynthesizer &synth;
+        int begins{0}, ends{0}, sets{0}, mutes{0}, clears{0};
+        explicit Listener(SurgeSynthesizer &s) : synth(s) { synth.addModulationAPIListener(this); }
+        ~Listener() override { synth.removeModulationAPIListener(this); }
+        void modSet(long, modsources, int, int, float, bool) override { ++sets; }
+        void modMuted(long, modsources, int, int, bool) override { ++mutes; }
+        void modCleared(long, modsources, int, int) override { ++clears; }
+        void modBeginEdit(long, modsources, int, int, float) override { ++begins; }
+        void modEndEdit(long, modsources, int, int, float) override { ++ends; }
+    } listener(synth);
+
+    ModulationEditorModel model(processor);
+    REQUIRE(model.begin(a));
+    REQUIRE(model.setDepth(.61f));
+    REQUIRE(model.setDepth(.42f));
+    CHECK_FALSE(model.setDepth(std::numeric_limits<float>::quiet_NaN()));
+    model.end();
+    CHECK_FALSE(model.isEditing());
+    CHECK(synth.getModDepth01(targetA->id, ms_ctrl1, 0, 0) == Catch::Approx(.42f));
+    CHECK(synth.getModDepth01(targetB->id, ms_ctrl1, 1, 0) == Catch::Approx(-.31f));
+    CHECK(listener.begins == 1);
+    CHECK(listener.ends == 1);
+    REQUIRE(processor.undoManager->undo());
+    CHECK(synth.getModDepth01(targetA->id, ms_ctrl1, 0, 0) == Catch::Approx(a.normalizedDepth));
+    REQUIRE(processor.undoManager->redo());
+    CHECK(synth.getModDepth01(targetA->id, ms_ctrl1, 0, 0) == Catch::Approx(.42f));
+
+    REQUIRE(model.setMuted(rowFor(0, targetA->id, ms_ctrl1), true));
+    REQUIRE(synth.isModulationMuted(targetA->id, ms_ctrl1, 0, 0));
+    REQUIRE(model.begin(rowFor(0, targetA->id, ms_ctrl1)));
+    REQUIRE(model.setDepth(0.f));
+    CHECK(synth.getModRouting(targetA->id, ms_ctrl1, 0, 0) == nullptr);
+    // Zero is native route removal, but the same drag can cross it and restore
+    // that exact route without losing its mute state or editing Scene B.
+    REQUIRE(model.setDepth(-.35f));
+    model.end();
+    CHECK(synth.getModDepth01(targetA->id, ms_ctrl1, 0, 0) == Catch::Approx(-.35f));
+    CHECK(synth.isModulationMuted(targetA->id, ms_ctrl1, 0, 0));
+    const auto negative = rowFor(0, targetA->id, ms_ctrl1);
+    REQUIRE(model.remove(negative));
+    CHECK_FALSE(model.begin(negative));
+    REQUIRE(processor.undoManager->undo());
+    CHECK(synth.getModDepth01(targetA->id, ms_ctrl1, 0, 0) == Catch::Approx(-.35f));
+    CHECK(synth.isModulationMuted(targetA->id, ms_ctrl1, 0, 0));
+
+    auto stale = rowFor(0, targetA->id, ms_ctrl1);
+    ++stale.key.targetType;
+    CHECK_FALSE(model.begin(stale));
+    CHECK_FALSE(model.setMuted(stale, false));
+    CHECK_FALSE(model.remove(stale));
+
+    // A global macro route keeps its stored source scene when inspected from B.
+    // Using the selected display scene instead would silently edit another key.
+    const auto globalFromB = rowFor(1, globalTarget->id, ms_ctrl8);
+    CHECK(globalFromB.key.sourceScene == 0);
+    REQUIRE(model.begin(globalFromB));
+    REQUIRE(model.setDepth(.19f));
+    model.end();
+    CHECK(synth.getModDepth01(globalTarget->id, ms_ctrl8, 0, 0) == Catch::Approx(.19f));
+
+    {
+        ModulationEditorModel unfinished(processor);
+        REQUIRE(unfinished.begin(b));
+        REQUIRE(unfinished.setDepth(-.22f));
+        // Closing/rebuilding the editor ends a pending gesture through RAII.
+    }
+
+    // Exercise the actual row embedded in ClearSignal, not merely the adapter.
+    // Selecting a row and using its accessible depth slider must edit the same
+    // Scene B route while leaving the Scene A route and base parameter untouched.
+    {
+        const auto manifests = workspaceManifests();
+        REQUIRE(manifests.size() == 10);
+        Workspace workspace(processor);
+        juce::String error;
+        REQUIRE(workspace.load(manifests[7], error));
+        workspace.setSize(referenceWidth, referenceHeight);
+        workspace.addToDesktop(0);
+        workspace.setVisible(true);
+        workspace.selectScene(1);
+        workspace.refresh();
+        const auto key = b.key;
+        const auto suffix = juce::String(key.parameterId) + "." + juce::String(key.sourceId) + "." +
+                            juce::String(key.sourceScene) + "." + juce::String(key.sourceIndex);
+        auto *row = dynamic_cast<Surge::GUI::Reference::ModulationRowInteraction *>(
+            findComponent(workspace, "workspace.modulation.row." + suffix));
+        REQUIRE(row != nullptr);
+        row->mouseDown(mouseEvent(*row, {5.f, 5.f}));
+        auto &slider = row->depthSlider();
+        REQUIRE(slider.getAccessibilityHandler() != nullptr);
+        REQUIRE(slider.keyPressed(juce::KeyPress(juce::KeyPress::rightKey)));
+        CHECK(synth.getModDepth01(targetB->id, ms_ctrl1, 1, 0) == Catch::Approx(-.21f));
+        REQUIRE(slider.keyPressed(
+            juce::KeyPress(juce::KeyPress::leftKey, juce::ModifierKeys::shiftModifier, 0)));
+        CHECK(synth.getModDepth01(targetB->id, ms_ctrl1, 1, 0) == Catch::Approx(-.211f));
+        CHECK(synth.getModDepth01(targetA->id, ms_ctrl1, 0, 0) == Catch::Approx(-.35f));
+        workspace.setVisible(false);
+    }
+    CHECK(listener.begins == listener.ends);
+    CHECK(listener.sets > 0);
+    CHECK(listener.mutes > 0);
+    CHECK(listener.clears > 0);
+    checkHostParameterValues(processor, parametersBefore);
+    processor.releaseResources();
+}
+
 TEST_CASE("Ten reference workspaces render native controls and export evidence",
           "[reference-workspaces][reference-render]")
 {
@@ -1043,6 +1491,7 @@ TEST_CASE("Ten reference workspaces render native controls and export evidence",
         REQUIRE(processor.surge != nullptr);
         processor.setRateAndBufferSizeDetails(sampleRate, sampleBlock);
         processor.prepareToPlay(sampleRate, sampleBlock);
+        const auto fixture = configureShowcaseFixture(processor);
         Workspace workspace(processor);
         juce::String error;
         const bool loaded = workspace.load(path, error);
@@ -1055,13 +1504,20 @@ TEST_CASE("Ten reference workspaces render native controls and export evidence",
         workspace.setVisible(true);
         workspace.selectScene(0);
         // The output views consume the real processor tap only while visible.
-        // Feed a reproducible held note; no external image or invented samples
-        // are used to fill an oscilloscope, spectrum or output meter.
-        juce::MidiBuffer note;
-        note.addEvent(juce::MidiMessage::noteOn(1, 60, 0.8f), 0);
-        float audioPeak = processBlock(processor, note);
-        for (int block = 0; block < 4; ++block)
-            audioPeak = std::max(audioPeak, processBlock(processor));
+        // Feed a reproducible chord and enough real output to fill all 64 FFT
+        // history rows. Refresh each four blocks so the bounded tap does not
+        // overflow. No image or invented samples fill any output display.
+        float audioPeak = 0.f;
+        for (int block = 0; block < showcaseAudioBlocks; ++block)
+        {
+            juce::MidiBuffer notes;
+            if (block == 0)
+                for (const auto pitch : {48, 60, 67})
+                    notes.addEvent(juce::MidiMessage::noteOn(1, pitch, 0.65f), 0);
+            audioPeak = std::max(audioPeak, processBlock(processor, notes));
+            if ((block + 1) % 4 == 0)
+                workspace.refresh();
+        }
         CHECK(audioPeak > 0.0001f);
         workspace.refresh();
 
@@ -1086,7 +1542,9 @@ TEST_CASE("Ten reference workspaces render native controls and export evidence",
                 // sliders, not inert text standing in for an editable control.
                 auto *slider = findSlider(*component);
                 REQUIRE(slider != nullptr);
-                CHECK(slider->getWantsKeyboardFocus());
+                // JUCE excludes disabled controls from keyboard traversal.
+                // Inactive algorithm slots must not become focus traps.
+                CHECK(slider->getWantsKeyboardFocus() == bridge.enabled(binding));
                 CHECK(slider->getName().isNotEmpty());
                 CHECK(slider->getMinimum() == Catch::Approx(0.0));
                 CHECK(slider->getMaximum() == Catch::Approx(1.0));
@@ -1098,7 +1556,7 @@ TEST_CASE("Ten reference workspaces render native controls and export evidence",
         REQUIRE(resolvedControls > 0);
 
         // Snapshot the real component before modifying any parameter. It shows
-        // the startup patch with the documented live-note fixture, not reference art.
+        // the documented live-engine showcase fixture, not reference art.
         auto initial = workspace.createComponentSnapshot(workspace.getLocalBounds());
         REQUIRE(initial.isValid());
         REQUIRE(initial.getWidth() == referenceWidth);
@@ -1155,13 +1613,21 @@ TEST_CASE("Ten reference workspaces render native controls and export evidence",
         edit(bridge, "filter1.cutoff", before);
         workspace.refresh();
         // Feed real MIDI through the existing engine. Finite silence is not enough:
-        // the restored startup patch must produce a nonzero main-output signal.
+        // the restored showcase patch must produce a nonzero main-output signal.
         // This remains an offline DSP check, not a device/DAW listening test.
         for (int block = 0; block < 4; ++block)
             audioPeak = std::max(audioPeak, processBlock(processor));
         CHECK(audioPeak > 0.0001f);
         processor.reset();
-        CHECK(processBlock(processor) < 0.000001f);
+        // reset() is a host panic, not note-off: stopSound() frees all voices
+        // and suspends every FX to clear its tail. Exercise that contract with
+        // the active showcase FX rather than loosening a silence threshold.
+        CHECK(processor.surge->voices[0].empty());
+        CHECK(processor.surge->voices[1].empty());
+        float postResetPeak = 0.f;
+        for (int block = 0; block < 4; ++block)
+            postResetPeak = std::max(postResetPeak, processBlock(processor));
+        CHECK(postResetPeak < 0.000001f);
         processor.releaseResources();
 
         auto capture = object();
@@ -1173,10 +1639,12 @@ TEST_CASE("Ten reference workspaces render native controls and export evidence",
         property(capture, "editedImage", id + "-edited.png");
         property(capture, "width", referenceWidth);
         property(capture, "height", referenceHeight);
-        property(capture, "patch", "Processor startup patch; no reference image loaded");
+        property(capture, "patch", "Reference Showcase; no reference image loaded");
+        property(capture, "patchFixture", fixture);
         property(capture, "audioFixture",
-                 "Held MIDI channel 1 note 60, velocity 0.8; five 512-sample blocks at 48 kHz "
-                 "before baseline capture; output visuals read the real processor audio tap");
+                 "Held MIDI channel 1 notes 48, 60 and 67, velocity 0.65; 256 512-sample "
+                 "blocks at 48 kHz before baseline capture, refreshing each four blocks; "
+                 "output visuals read the real processor audio tap");
         property(capture, "scene", "A");
         property(capture, "resolvedManifestControls", resolvedControls);
         property(capture, "editedBinding", "filter1.cutoff");
@@ -1185,6 +1653,7 @@ TEST_CASE("Ten reference workspaces render native controls and export evidence",
         property(capture, "changedPixelsAfterControlEdit", differences);
         property(capture, "hostUpdateNormalized", 0.579);
         property(capture, "offlineMainOutputPeak", audioPeak);
+        property(capture, "postResetMainOutputPeak", postResetPeak);
         property(capture, "scalesRendered", juce::var(juce::Array<juce::var>{1.0, 1.25, 1.5}));
         property(capture, "fidelityAssessment", "Requires human comparison; no pixel-exact claim");
         captures.add(capture);

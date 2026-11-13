@@ -1,6 +1,7 @@
 /* Surge XT reference workspaces. GPL-3.0-or-later; see LICENSE. */
 #include "WorkspaceData.h"
 #include "SurgeSynthProcessor.h"
+#include "UndoManager.h"
 
 #include <algorithm>
 #include <cmath>
@@ -25,6 +26,34 @@ bool sourceIsBipolar(const SurgeSynthesizer &synth, modsources source, int scene
         return !lfo.unipolar.val.i && lfo.shape.val.i != lt_envelope;
     }
     return synth.isBipolarModulation(source);
+}
+
+// Call only while holding modRoutingMutex. The engine's public getter assumes
+// valid, nonnegative IDs; reject untrusted/stale row identities before using it.
+Parameter *routeParameter(SurgeSynthesizer &synth, const RouteKey &key)
+{
+    auto &parameters = synth.storage.getPatch().param_ptr;
+    if (!validIndex(key.parameterId, parameters.size()) || key.sourceId <= ms_original ||
+        key.sourceId >= n_modsources || key.sourceScene < 0 || key.sourceScene >= n_scenes ||
+        key.sourceIndex < 0 || key.sourceIndex >= max_lfo_indices)
+        return nullptr;
+    auto *parameter = parameters[static_cast<size_t>(key.parameterId)];
+    if (!parameter || static_cast<int>(parameter->ctrltype) != key.targetType ||
+        !synth.isValidModulation(key.parameterId, static_cast<modsources>(key.sourceId)))
+        return nullptr;
+    const auto source = static_cast<modsources>(key.sourceId);
+    if (key.sourceIndex >= synth.getMaxModulationIndex(key.sourceScene, source))
+        return nullptr;
+    return parameter;
+}
+
+void pushRouteUndo(SurgeSynthProcessor &processor, const RouteKey &key, Parameter *parameter,
+                   float depth, bool muted)
+{
+    if (processor.undoManager)
+        processor.undoManager->pushModulationChange(key.parameterId, parameter,
+                                                    static_cast<modsources>(key.sourceId),
+                                                    key.sourceScene, key.sourceIndex, depth, muted);
 }
 } // namespace
 
@@ -98,6 +127,10 @@ std::vector<RouteRow> modulationRows(SurgeSynthProcessor &processor, int scene)
             row.normalizedDepth =
                 std::isfinite(normalized) ? std::clamp(normalized, -1.f, 1.f) : 0.f;
             row.muted = route.muted;
+            row.key = {static_cast<int>(destination), route.source_id,
+                       global ? route.source_scene : scene, route.source_index,
+                       static_cast<int>(parameter->ctrltype)};
+            row.bipolar = sourceIsBipolar(synth, source, sourceScene);
             result.push_back(std::move(row));
         }
     };
@@ -107,6 +140,169 @@ std::vector<RouteRow> modulationRows(SurgeSynthProcessor &processor, int scene)
     append(patch.scene[scene].modulation_scene, patch.scene_start[scene], false);
     append(patch.modulation_global, 0, true);
     return result;
+}
+
+ModulationEditorModel::~ModulationEditorModel() { end(); }
+
+bool ModulationEditorModel::begin(const RouteRow &row)
+{
+    if (isEditing(row.key))
+        return true;
+    end();
+    if (!processor.surge)
+        return false;
+    auto &synth = *processor.surge;
+    {
+        std::unique_lock<std::recursive_mutex> lock(synth.storage.modRoutingMutex,
+                                                    std::try_to_lock);
+        if (!lock.owns_lock() || !routeParameter(synth, row.key))
+            return false;
+        const auto source = static_cast<modsources>(row.key.sourceId);
+        const auto *route = synth.getModRouting(row.key.parameterId, source, row.key.sourceScene,
+                                                row.key.sourceIndex);
+        if (!route)
+            return false;
+        const float depth = synth.getModDepth01(row.key.parameterId, source, row.key.sourceScene,
+                                                row.key.sourceIndex);
+        if (!std::isfinite(depth))
+            return false;
+        activeKey = row.key;
+        lastDepth = std::clamp(depth, -1.f, 1.f);
+        originalMuted = route->muted;
+        editing = true;
+        capturedUndo = changed = removedByZero = false;
+    }
+    for (auto *listener : synth.modListeners)
+        listener->modBeginEdit(activeKey.parameterId, static_cast<modsources>(activeKey.sourceId),
+                               activeKey.sourceScene, activeKey.sourceIndex, lastDepth);
+    return true;
+}
+
+bool ModulationEditorModel::setDepth(float depth)
+{
+    if (!editing || !processor.surge || !std::isfinite(depth))
+        return false;
+    auto &synth = *processor.surge;
+    std::unique_lock<std::recursive_mutex> lock(synth.storage.modRoutingMutex, std::try_to_lock);
+    if (!lock.owns_lock())
+        return false;
+    auto *parameter = routeParameter(synth, activeKey);
+    if (!parameter)
+        return false;
+    const auto source = static_cast<modsources>(activeKey.sourceId);
+    const auto *route = synth.getModRouting(activeKey.parameterId, source, activeKey.sourceScene,
+                                            activeKey.sourceIndex);
+    // A route may disappear through our own zero crossing. Other deletions must
+    // not be silently undone by a stale pointer or a continued mouse drag.
+    if (!route && !removedByZero)
+        return false;
+    depth = std::clamp(depth, -1.f, 1.f);
+    if (depth == lastDepth)
+        return true;
+    if (!capturedUndo)
+    {
+        pushRouteUndo(processor, activeKey, parameter, lastDepth, originalMuted);
+        capturedUndo = true;
+    }
+    const bool recreatingMuted = !route && removedByZero && originalMuted && depth != 0.f;
+    if (!synth.setModDepth01(activeKey.parameterId, source, activeKey.sourceScene,
+                             activeKey.sourceIndex, depth))
+        return false;
+    if (recreatingMuted)
+        synth.muteModulation(activeKey.parameterId, source, activeKey.sourceScene,
+                             activeKey.sourceIndex, true);
+    lastDepth = depth;
+    removedByZero = depth == 0.f;
+    changed = true;
+    return true;
+}
+
+void ModulationEditorModel::notifyChanged()
+{
+    if (processor.surge)
+        processor.surge->refresh_editor = true;
+    // Route depth is native nonparameter state. Do not invent a host parameter
+    // gesture on the destination's base value or change its automation value.
+    processor.updateHostDisplay(
+        juce::AudioProcessorListener::ChangeDetails().withNonParameterStateChanged(true));
+}
+
+void ModulationEditorModel::end()
+{
+    if (!editing)
+        return;
+    const auto key = activeKey;
+    const auto depth = lastDepth;
+    const auto didChange = changed;
+    editing = capturedUndo = changed = removedByZero = false;
+    if (processor.surge)
+        for (auto *listener : processor.surge->modListeners)
+            listener->modEndEdit(key.parameterId, static_cast<modsources>(key.sourceId),
+                                 key.sourceScene, key.sourceIndex, depth);
+    if (didChange)
+        notifyChanged();
+}
+
+bool ModulationEditorModel::setMuted(const RouteRow &row, bool muted)
+{
+    end();
+    if (!processor.surge)
+        return false;
+    auto &synth = *processor.surge;
+    {
+        std::unique_lock<std::recursive_mutex> lock(synth.storage.modRoutingMutex,
+                                                    std::try_to_lock);
+        if (!lock.owns_lock())
+            return false;
+        auto *parameter = routeParameter(synth, row.key);
+        if (!parameter)
+            return false;
+        const auto source = static_cast<modsources>(row.key.sourceId);
+        const auto *route = synth.getModRouting(row.key.parameterId, source, row.key.sourceScene,
+                                                row.key.sourceIndex);
+        if (!route)
+            return false;
+        if (route->muted == muted)
+            return true;
+        pushRouteUndo(processor, row.key, parameter,
+                      synth.getModDepth01(row.key.parameterId, source, row.key.sourceScene,
+                                          row.key.sourceIndex),
+                      route->muted);
+        synth.muteModulation(row.key.parameterId, source, row.key.sourceScene, row.key.sourceIndex,
+                             muted);
+    }
+    notifyChanged();
+    return true;
+}
+
+bool ModulationEditorModel::remove(const RouteRow &row)
+{
+    end();
+    if (!processor.surge)
+        return false;
+    auto &synth = *processor.surge;
+    {
+        std::unique_lock<std::recursive_mutex> lock(synth.storage.modRoutingMutex,
+                                                    std::try_to_lock);
+        if (!lock.owns_lock())
+            return false;
+        auto *parameter = routeParameter(synth, row.key);
+        if (!parameter)
+            return false;
+        const auto source = static_cast<modsources>(row.key.sourceId);
+        const auto *route = synth.getModRouting(row.key.parameterId, source, row.key.sourceScene,
+                                                row.key.sourceIndex);
+        if (!route)
+            return false;
+        pushRouteUndo(processor, row.key, parameter,
+                      synth.getModDepth01(row.key.parameterId, source, row.key.sourceScene,
+                                          row.key.sourceIndex),
+                      route->muted);
+        synth.clearModulation(row.key.parameterId, source, row.key.sourceScene, row.key.sourceIndex,
+                              false);
+    }
+    notifyChanged();
+    return true;
 }
 
 std::vector<BrowserRow> browserRows(SurgeSynthProcessor &processor, const juce::String &query,

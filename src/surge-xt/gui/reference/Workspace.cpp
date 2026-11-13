@@ -5,6 +5,7 @@
 #include "PreviewCurves.h"
 #include "Visuals.h"
 #include "WorkspaceData.h"
+#include "ModulationInteraction.h"
 #include "SurgeSynthProcessor.h"
 #include <juce_audio_utils/juce_audio_utils.h>
 #include <juce_dsp/juce_dsp.h>
@@ -23,6 +24,20 @@ float number(const juce::var &v, const char *key, float fallback = 0)
 juce::String string(const juce::var &v, const char *key, juce::String fallback = {})
 {
     return v.hasProperty(key) ? v[key].toString() : fallback;
+}
+juce::String utf8(const char *literal) { return juce::String::fromUTF8(literal); }
+juce::String compactPaintValue(juce::String value)
+{
+    // Abbreviate the painted caption only. Accessible values, tooltips and typed
+    // entry keep Surge's complete native display string and parameter parser.
+    return value.replace(" semitones", " st")
+        .replace(" semitone", " st")
+        .replace(" cents", " ct")
+        .replace(" milliseconds", " ms")
+        .replace(" seconds", " s")
+        .replace(" (Center)", " C")
+        .replace(" (Left)", " L")
+        .replace(" (Right)", " R");
 }
 Rect bounds(const juce::var &v)
 {
@@ -130,14 +145,86 @@ void bezel(juce::Graphics &g, const Theme &t, Rect r, juce::Colour fill, float r
 {
     if (radius < 0)
         radius = t.radius;
-    g.setColour(juce::Colours::black.withAlpha(t.light() ? 0.12f : 0.35f));
-    g.fillRoundedRectangle(r.translated(0, 2), radius);
-    g.setGradientFill(juce::ColourGradient(fill.brighter(0.07f), r.getTopLeft(), fill.darker(0.12f),
-                                           r.getBottomRight(), false));
+    const bool panel = r.getWidth() > 125 && r.getHeight() > 55;
+    const bool metal = t.style == "space";
+    const bool ivory = t.style == "ivory";
+    const bool flat = t.style == "bauhaus" || t.style == "clear";
+    if (panel && !flat)
+    {
+        g.setColour(juce::Colours::black.withAlpha(t.light() ? .08f : .22f));
+        g.fillRoundedRectangle(r.expanded(1).translated(0, 3), radius + 1);
+    }
+    g.setColour(juce::Colours::black.withAlpha(t.light() ? .14f : .40f));
+    g.fillRoundedRectangle(r.translated(0, 1.6f), radius);
+    // Interpolate in colour space: Colour::brighter(.07) lifts near-black metal
+    // by almost twenty code values, washing out the reference's dark surfaces.
+    auto top = fill.interpolatedWith(juce::Colours::white, .018f);
+    auto bottom = fill.interpolatedWith(juce::Colours::black, .18f);
+    if (t.style == "precision" || t.style == "live")
+    {
+        top = fill.interpolatedWith(juce::Colours::white, .012f);
+        bottom = fill.interpolatedWith(juce::Colours::black, .28f);
+    }
+    if (ivory && fill != t.display)
+    {
+        top = fill.interpolatedWith(juce::Colour(0xfffffcf5), .34f);
+        bottom = fill.interpolatedWith(juce::Colour(0xffd7bfa8), .13f);
+    }
+    else if (t.style == "bauhaus")
+    {
+        top = fill.interpolatedWith(juce::Colours::white, .045f);
+        bottom = fill.interpolatedWith(juce::Colours::black, .018f);
+    }
+    else if (fill == t.panel && t.style == "clear")
+    {
+        top = juce::Colour(0xfffafafa);
+        bottom = juce::Colour(0xfff5f6f7);
+    }
+    else if (fill == t.panel && t.style == "aurora")
+    {
+        top = juce::Colour(0xff48325f);
+        bottom = juce::Colour(0xff1f1b34);
+    }
+    else if (metal && fill != t.display)
+    {
+        top = fill.interpolatedWith(juce::Colour(0xffffedc9), .22f);
+        bottom = fill.interpolatedWith(juce::Colour(0xff746346), .16f);
+    }
+    auto material = juce::ColourGradient(top, r.getTopLeft(), bottom, r.getBottomLeft(), false);
+    if (panel && (metal || ivory || t.style == "tokyo"))
+    {
+        material.addColour(.045, top.interpolatedWith(juce::Colours::white, metal ? .14f : .04f));
+        material.addColour(.14, top);
+        material.addColour(.86, bottom);
+        material.addColour(.98, bottom.interpolatedWith(juce::Colours::black, .06f));
+    }
+    g.setGradientFill(material);
     g.fillRoundedRectangle(r, radius);
-    g.setColour(t.border.withAlpha(0.8f));
+    if (metal && panel)
+    {
+        juce::Graphics::ScopedSaveState save(g);
+        juce::Path clip;
+        clip.addRoundedRectangle(r.reduced(2), std::max(0.f, radius - 1));
+        g.reduceClipRegion(clip);
+        // Deterministic cosmetic brushing. It never represents signal or state.
+        for (int y = static_cast<int>(r.getY()) + 2; y < static_cast<int>(r.getBottom()) - 2; ++y)
+        {
+            const auto grain = static_cast<unsigned>(y * 2654435761u);
+            g.setColour((grain & 1 ? juce::Colours::white : juce::Colours::black)
+                            .withAlpha(.016f + (grain % 7) * .003f));
+            g.drawHorizontalLine(y, r.getX() + 2, r.getRight() - 2);
+        }
+    }
+    g.setColour(t.border.withAlpha(flat ? .45f : .80f));
     g.drawRoundedRectangle(r.reduced(0.5f), radius, 1);
-    g.setColour(juce::Colours::white.withAlpha(t.light() ? 0.55f : 0.09f));
+    if (panel && (metal || ivory || t.style == "tokyo"))
+    {
+        g.setColour(juce::Colours::white.withAlpha(metal ? .62f : ivory ? .72f : .15f));
+        g.drawRoundedRectangle(r.reduced(2), std::max(0.f, radius - 1), .8f);
+        g.setColour(juce::Colours::black.withAlpha(metal ? .25f : .10f));
+        g.drawRoundedRectangle(r.reduced(3.3f), std::max(0.f, radius - 2), .7f);
+    }
+    g.setColour(juce::Colours::white.withAlpha(t.light() ? .62f : .10f));
     g.drawLine(r.getX() + radius, r.getY() + 1, r.getRight() - radius, r.getY() + 1, 1);
 }
 void themedButton(juce::Graphics &g, const Theme &theme, juce::TextButton &button, bool highlighted,
@@ -183,13 +270,101 @@ class ThemeButton : public juce::TextButton
   private:
     Theme &theme;
 };
+/** Header controls retain native button semantics while each skin supplies its
+    own measured geometry. The large preset caption is an actual browser button. */
+class HeaderButton : public juce::TextButton
+{
+  public:
+    enum Presentation
+    {
+        chip,
+        navigation,
+        caption,
+        chevron,
+        tool
+    };
+    HeaderButton(Theme &t, const juce::String &label = {}) : juce::TextButton(label), theme(t) {}
+    void present(Presentation p, float size = 12.f, bool bold = false,
+                 int align = juce::Justification::centred)
+    {
+        presentation = p;
+        fontSize = size;
+        heavy = bold;
+        justification = align;
+    }
+    void paintButton(juce::Graphics &g, bool over, bool down) override
+    {
+        auto r = getLocalBounds().toFloat().reduced(.7f);
+        auto ink = findColour(juce::TextButton::textColourOffId);
+        const bool selected = getToggleState();
+        if (presentation == chip || presentation == tool ||
+            (presentation == navigation && (selected || over || down)))
+        {
+            auto fill = selected ? theme.accent : findColour(juce::TextButton::buttonColourId);
+            if (theme.style == "precision" && presentation == navigation && selected)
+                fill = theme.accent.interpolatedWith(theme.panel, .88f);
+            if (over)
+                fill = fill.interpolatedWith(juce::Colours::white, .07f);
+            if (down)
+                fill = fill.interpolatedWith(juce::Colours::black, .13f);
+            bezel(g, theme, r, fill,
+                  theme.style == "tokyo" || theme.style == "bauhaus" ? 3.f : 5.f);
+            if (selected)
+            {
+                ink = theme.style == "precision" && presentation == navigation
+                          ? theme.accent
+                          : fill.contrasting(.95f);
+                g.setColour(theme.accent.withAlpha(.60f));
+                g.drawRoundedRectangle(r.reduced(.4f), 4.f, .8f);
+            }
+        }
+        else if (over || down)
+        {
+            g.setColour(theme.accent.withAlpha(down ? .17f : .08f));
+            g.fillRoundedRectangle(r, 3.f);
+        }
+        if (presentation == chevron)
+        {
+            const auto c = r.getCentre();
+            const auto direction = getComponentID().contains("previous") ? -1.f : 1.f;
+            juce::Path p;
+            p.startNewSubPath(c.x - direction * 3.f, c.y - 6.f);
+            p.lineTo(c.x + direction * 3.f, c.y);
+            p.lineTo(c.x - direction * 3.f, c.y + 6.f);
+            g.setColour(ink);
+            g.strokePath(p, juce::PathStrokeType(1.8f, juce::PathStrokeType::curved,
+                                                 juce::PathStrokeType::rounded));
+        }
+        else
+        {
+            g.setFont(theme.type(fontSize, heavy || selected));
+            g.setColour(ink);
+            g.drawFittedText(getButtonText(),
+                             r.reduced(presentation == caption ? 2.f : 4.f, 0).toNearestInt(),
+                             justification, 1, .75f);
+        }
+        if (hasKeyboardFocus(true))
+        {
+            g.setColour(theme.accent);
+            g.drawRoundedRectangle(r.reduced(.8f), 3.f, 1.8f);
+        }
+    }
+
+  private:
+    Theme &theme;
+    Presentation presentation{chip};
+    float fontSize{12.f};
+    bool heavy{false};
+    int justification{juce::Justification::centred};
+};
+
 void knob(juce::Graphics &g, const Theme &t, Rect r, float value, juce::Colour accent, bool focus,
           bool enabled)
 {
     if (r.getWidth() <= 0 || r.getHeight() <= 0)
         return;
     const auto c = r.getCentre();
-    const float rad = std::min(r.getWidth(), r.getHeight()) * 0.43f;
+    const float rad = std::min(r.getWidth(), r.getHeight()) * 0.46f;
     const float start = -2.35f, end = 2.35f;
     const float a = start + (end - start) * juce::jlimit(0.f, 1.f, value);
     juce::Path arc, track;
@@ -197,28 +372,88 @@ void knob(juce::Graphics &g, const Theme &t, Rect r, float value, juce::Colour a
     arc.addCentredArc(c.x, c.y, rad, rad, 0, start, a, true);
     if (!enabled)
         accent = t.muted.withAlpha(0.4f);
-    if (t.glow > 0 && enabled)
+    const bool ivory = t.style == "ivory", space = t.style == "space";
+    const bool bauhaus = t.style == "bauhaus", clear = t.style == "clear";
+    const bool glass = t.style == "spectral" || t.style == "aurora" || t.style == "live";
+    if (t.glow > 0 && enabled && !ivory && !space && !bauhaus)
     {
-        g.setColour(accent.withAlpha(std::min(0.18f, t.glow)));
-        g.strokePath(arc, juce::PathStrokeType(8));
+        g.setColour(accent.withAlpha(std::min(.10f, t.glow * .4f)));
+        g.strokePath(arc, juce::PathStrokeType(glass ? 11.f : 7.f));
+        g.setColour(accent.withAlpha(std::min(.26f, t.glow)));
+        g.strokePath(arc, juce::PathStrokeType(glass ? 6.f : 4.5f));
     }
-    g.setColour(t.border.withAlpha(0.65f));
-    g.strokePath(track, juce::PathStrokeType(2.6f));
-    g.setColour(accent);
-    g.strokePath(arc, juce::PathStrokeType(t.style == "clear" ? 4.f : 2.6f));
-    const auto faceRadius = std::max(1.f, rad - std::min(4.f, rad * .3f));
+    if (space)
+    {
+        for (int tick = 0; tick <= 20; ++tick)
+        {
+            const auto angle = start + (end - start) * tick / 20.f;
+            const auto inner = rad + 1.f, outer = rad + (tick % 5 == 0 ? 4.f : 2.5f);
+            g.setColour(t.text.withAlpha(.78f));
+            g.drawLine(c.x + std::sin(angle) * inner, c.y - std::cos(angle) * inner,
+                       c.x + std::sin(angle) * outer, c.y - std::cos(angle) * outer, .8f);
+        }
+    }
+    else if (!ivory && !bauhaus)
+    {
+        g.setColour(t.border.withAlpha(clear ? .65f : .32f));
+        g.strokePath(track, juce::PathStrokeType(clear ? 3.f : 1.5f));
+        g.setColour(accent);
+        g.strokePath(arc, juce::PathStrokeType(clear ? 4.2f : 2.2f));
+        if (glass)
+        {
+            g.setColour(accent.interpolatedWith(juce::Colours::white, .6f));
+            g.strokePath(arc, juce::PathStrokeType(.8f));
+        }
+    }
+    const auto faceRadius = std::max(1.f, rad - (clear ? 3.4f : glass ? 4.2f : 2.f));
     auto face = Rect(c.x - faceRadius, c.y - faceRadius, faceRadius * 2, faceRadius * 2);
-    g.setColour(juce::Colours::black.withAlpha(0.38f));
-    g.fillEllipse(face.translated(1, 2));
-    g.setGradientFill(juce::ColourGradient(t.knob.brighter(0.22f), face.getTopLeft(),
-                                           t.knob.darker(0.22f), face.getBottomRight(), false));
+    if (!clear)
+    {
+        g.setColour(juce::Colours::black.withAlpha(.16f));
+        g.fillEllipse(face.expanded(2).translated(0, 3));
+        g.setColour(juce::Colours::black.withAlpha(.60f));
+        g.fillEllipse(face.expanded(.8f).translated(.5f, 1.5f));
+    }
+    auto hi = t.knob.interpolatedWith(juce::Colours::white, glass ? .18f : .10f);
+    auto lo = t.knob.interpolatedWith(juce::Colours::black, .45f);
+    if (ivory || (space && t.knob.getPerceivedBrightness() > .35f))
+    {
+        hi = ivory ? juce::Colour(0xfffff8e7) : juce::Colour(0xffffe4aa);
+        lo = ivory ? juce::Colour(0xffd7c4a4) : juce::Colour(0xff977f51);
+    }
+    else if (bauhaus || clear)
+    {
+        hi = bauhaus ? juce::Colour(0xfffff4d9) : juce::Colour(0xfff9fbfc);
+        lo = bauhaus ? juce::Colour(0xffebd6ae) : juce::Colour(0xffe7ebed);
+    }
+    auto faceGradient = juce::ColourGradient(hi, face.getX() + face.getWidth() * .27f,
+                                             face.getY() + face.getHeight() * .12f, lo,
+                                             face.getRight(), face.getBottom(), false);
+    faceGradient.addColour(.48, hi.interpolatedWith(lo, .34f));
+    g.setGradientFill(faceGradient);
     g.fillEllipse(face);
-    g.setColour(t.light() ? t.border : juce::Colours::white.withAlpha(0.22f));
-    g.drawEllipse(face, 1);
-    const float inner = rad * 0.43f, outer = rad * 0.76f;
-    g.setColour(t.light() ? accent.darker(0.4f) : t.text);
+    g.setColour(bauhaus          ? juce::Colour(0xff151613)
+                : ivory || space ? juce::Colour(0xff958058)
+                                 : t.border.withAlpha(clear ? .18f : .48f));
+    g.drawEllipse(face, bauhaus ? 3.1f : ivory || space ? 1.8f : .9f);
+    if (!clear && !bauhaus)
+    {
+        juce::Path shine;
+        shine.addCentredArc(c.x, c.y, faceRadius - 1.5f, faceRadius - 1.5f, 0, -1.45f, .65f, true);
+        g.setColour(juce::Colours::white.withAlpha(ivory || space ? .70f : .35f));
+        g.strokePath(shine, juce::PathStrokeType(.8f));
+    }
+    const float inner = rad * (clear ? .54f : .48f), outer = rad * .84f;
+    g.setColour(ivory                ? juce::Colour(0xff264c33)
+                : bauhaus || clear   ? juce::Colour(0xff10181c)
+                : space              ? juce::Colour(0xff352f20)
+                : t.style == "tokyo" ? accent
+                                     : t.text);
     g.drawLine(c.x + std::sin(a) * inner, c.y - std::cos(a) * inner, c.x + std::sin(a) * outer,
-               c.y - std::cos(a) * outer, 1.8f);
+               c.y - std::cos(a) * outer,
+               clear   ? 3.f
+               : space ? 1.4f
+                       : 1.8f);
     if (focus)
     {
         g.setColour(t.accent);
@@ -459,7 +694,7 @@ class BoundSlider : public juce::Slider
         auto accent =
             spec.hasProperty("accent") ? theme.color(string(spec, "accent")) : theme.accent;
         auto label = string(spec, "label", bridge.label(binding));
-        auto value = isEnabled() ? bridge.display(binding) : juce::String("—");
+        auto value = isEnabled() ? compactPaintValue(bridge.display(binding)) : utf8("—");
         auto ink = spec.hasProperty("ink") ? theme.color(string(spec, "ink")) : theme.text;
         auto valueInk = spec.hasProperty("ink") ? ink.withAlpha(.85f) : theme.muted;
         float fs = number(spec, "fontSize", theme.style == "clear" ? 15 : 11.5f);
@@ -470,7 +705,9 @@ class BoundSlider : public juce::Slider
             text(g, theme, label, r.removeFromLeft(labelWidth), fs, ink);
             auto box = r.reduced(2, 1);
             bezel(g, theme, box, theme.style == "clear" ? theme.panel : theme.display, 3);
-            auto fieldInk = theme.style == "clear" ? theme.text : theme.display.contrasting(.85f);
+            auto fieldInk = spec.hasProperty("ink")  ? ink
+                            : theme.style == "clear" ? theme.text
+                                                     : theme.display.contrasting(.85f);
             text(g, theme, value, box.reduced(4, 0), fs, fieldInk, theme.style == "clear",
                  juce::Justification::centredRight);
             if (hasKeyboardFocus(true))
@@ -506,6 +743,16 @@ class BoundSlider : public juce::Slider
                 knob(g, theme, face, static_cast<float>(getValue()), accent, hasKeyboardFocus(true),
                      isEnabled());
                 auto labels = r.reduced(4, std::max(0.f, (r.getHeight() - 32) * .5f));
+                if (theme.style == "bauhaus" && labelPosition == "left")
+                {
+                    // Bauhaus scene rows put the label, current value and real
+                    // rotary on one baseline rather than stacking two captions.
+                    auto nameBounds = labels.removeFromLeft(labels.getWidth() * .53f);
+                    text(g, theme, label, nameBounds, fs, ink);
+                    text(g, theme, value, labels, fs, valueInk, false,
+                         juce::Justification::centredRight);
+                    return;
+                }
                 const int align = labelPosition == "left" ? juce::Justification::centredRight
                                                           : juce::Justification::centredLeft;
                 text(g, theme, label, labels.removeFromTop(16), fs, ink, false, align);
@@ -542,14 +789,30 @@ class BoundSlider : public juce::Slider
             if (kind == "horizontal")
                 track =
                     track.withSizeKeepingCentre(track.getWidth(), std::min(5.f, track.getHeight()));
-            bezel(g, theme, track.expanded(3), theme.display, 3);
-            g.setColour(accent);
+            bezel(g, theme, track.expanded(2), theme.display, 3);
             auto active = track;
             if (kind == "fader")
                 active = track.withTop(track.getBottom() - track.getHeight() * getValue());
             else
                 active.setWidth(track.getWidth() * getValue());
-            g.fillRoundedRectangle(active, 2);
+            const bool hardware = theme.style == "space" || theme.style == "tokyo";
+            if (kind == "fader" && hardware)
+            {
+                for (int tick = 0; tick <= 10; ++tick)
+                {
+                    const float y = track.getY() + track.getHeight() * tick / 10.f;
+                    g.setColour(theme.text.withAlpha(.32f));
+                    g.drawLine(track.getX() - 7, y, track.getX() - 3, y, .7f);
+                    g.drawLine(track.getRight() + 3, y, track.getRight() + 7, y, .7f);
+                }
+            }
+            if (!hardware || kind == "horizontal")
+            {
+                g.setGradientFill(juce::ColourGradient(
+                    accent.interpolatedWith(juce::Colours::white, .3f), active.getTopLeft(), accent,
+                    active.getBottomLeft(), false));
+                g.fillRoundedRectangle(active, 2);
+            }
             Rect handle;
             if (kind == "fader")
             {
@@ -561,10 +824,29 @@ class BoundSlider : public juce::Slider
             else
                 handle = {track.getX() + track.getWidth() * static_cast<float>(getValue()) - 5,
                           track.getCentreY() - 6, 10, 12};
-            g.setColour(theme.light() ? theme.knob : theme.text);
+            g.setColour(juce::Colours::black.withAlpha(.45f));
+            g.fillRoundedRectangle(handle.expanded(.8f).translated(0, 1.5f), 2);
+            const auto cap = theme.style == "space"   ? juce::Colour(0xffdbc8a1)
+                             : theme.style == "tokyo" ? theme.accent
+                             : theme.style == "aurora" || theme.style == "spectral" ? theme.accent
+                             : theme.style == "live" ? juce::Colour(0xffd9ba94)
+                             : theme.light()         ? theme.knob
+                                                     : juce::Colour(0xffc0b4a0);
+            auto capGradient = juce::ColourGradient(cap.interpolatedWith(juce::Colours::white, .6f),
+                                                    handle.getTopLeft(), cap.darker(.35f),
+                                                    handle.getBottomLeft(), false);
+            capGradient.addColour(.48, cap);
+            capGradient.addColour(.52, cap.darker(.15f));
+            g.setGradientFill(capGradient);
             g.fillRoundedRectangle(handle, 2);
             g.setColour(theme.border);
             g.drawRoundedRectangle(handle, 2, 1);
+            if (kind == "fader")
+            {
+                g.setColour(cap.interpolatedWith(juce::Colours::white, .7f));
+                g.drawLine(handle.getX() + 2, handle.getCentreY(), handle.getRight() - 2,
+                           handle.getCentreY(), 1);
+            }
             if (hasKeyboardFocus(true))
             {
                 g.setColour(theme.accent);
@@ -718,7 +1000,7 @@ class BoundMenu : public juce::ComboBox
         p.startNewSubPath(c.x - 3, c.y - 1.5f);
         p.lineTo(c.x, c.y + 1.5f);
         p.lineTo(c.x + 3, c.y - 1.5f);
-        g.setColour(isEnabled() ? theme.text : theme.muted);
+        g.setColour(isEnabled() ? findColour(juce::ComboBox::textColourId) : theme.muted);
         g.strokePath(p, juce::PathStrokeType(1.3f));
         if (hasKeyboardFocus(true))
         {
@@ -831,24 +1113,42 @@ class MacroXY : public juce::Component
     {
         auto r = getLocalBounds().toFloat().reduced(3);
         bezel(g, theme, r, theme.display, 18);
-        Visuals::grid(g, r.reduced(5), theme.accent.withAlpha(.13f));
+        {
+            juce::Graphics::ScopedSaveState save(g);
+            juce::Path clip;
+            clip.addRoundedRectangle(r.reduced(2), 16);
+            g.reduceClipRegion(clip);
+            g.setGradientFill(juce::ColourGradient(theme.accent.withAlpha(.26f), r.getTopLeft(),
+                                                   theme.secondary.withAlpha(.20f),
+                                                   r.getBottomRight(), false));
+            g.fillRect(r);
+            // The glass is decorative; cursor and crosshairs always use live
+            // macro values. No illustrated signal is presented as engine data.
+            g.setGradientFill(juce::ColourGradient(juce::Colours::white.withAlpha(.10f),
+                                                   r.getTopLeft(), juce::Colours::transparentWhite,
+                                                   r.getBottomLeft(), false));
+            g.fillRect(r.withHeight(r.getHeight() * .48f));
+            Visuals::grid(g, r.reduced(5), theme.accent.withAlpha(.28f));
+        }
         const float x = r.getX() + bridge.value("macro1") * r.getWidth();
         const float y = r.getBottom() - bridge.value("macro2") * r.getHeight();
-        g.setGradientFill(juce::ColourGradient(theme.accent.withAlpha(.18f), {x, y},
-                                               theme.secondary.withAlpha(.025f), r.getTopLeft(),
+        g.setGradientFill(juce::ColourGradient(theme.secondary.withAlpha(.30f), {x, y},
+                                               theme.accent.withAlpha(.015f), r.getTopLeft(),
                                                true));
         g.fillRoundedRectangle(r, 18);
-        g.setColour(theme.accent.withAlpha(.45f));
+        g.setColour(theme.accent.withAlpha(.80f));
         g.drawLine(x, r.getY(), x, r.getBottom());
         g.drawLine(r.getX(), y, r.getRight(), y);
-        g.setColour(theme.secondary.withAlpha(.15f));
+        g.setColour(theme.secondary.withAlpha(.12f));
+        g.fillEllipse(x - 23, y - 23, 46, 46);
+        g.setColour(theme.secondary.withAlpha(.24f));
         g.fillEllipse(x - 16, y - 16, 32, 32);
         g.setColour(theme.secondary);
         g.fillEllipse(x - 6, y - 6, 12, 12);
         g.setColour(juce::Colours::white);
         g.drawEllipse(x - 6, y - 6, 12, 12, 2);
-        text(g, theme, "X: Macro 1  •  Y: Macro 2", r.removeFromBottom(22), 12, theme.text, false,
-             juce::Justification::centred);
+        text(g, theme, utf8("X: Macro 1  •  Y: Macro 2"), r.removeFromBottom(20), 10, theme.text,
+             false, juce::Justification::centred);
         if (hasKeyboardFocus(true))
         {
             g.setColour(theme.accent);
@@ -942,10 +1242,13 @@ class PresetBrowser : public juce::Component, private juce::ListBoxModel
         search.setDescription(
             "Search preset names and categories. Return loads the selected preset.");
         search.setTextToShowWhenEmpty("Search presets...", theme.muted);
-        search.setColour(juce::TextEditor::backgroundColourId, theme.panel);
+        search.setColour(juce::TextEditor::backgroundColourId,
+                         theme.light() && theme.style != "space" ? theme.panel : theme.display);
         search.setColour(juce::TextEditor::textColourId, theme.text);
         search.setColour(juce::TextEditor::outlineColourId, theme.border);
         search.setColour(juce::TextEditor::focusedOutlineColourId, theme.accent);
+        search.setIndents(8, 5);
+        search.setFont(theme.type(theme.style == "tokyo" ? 14.f : 13.f));
         search.setText(query, false);
         search.onTextChange = [this] { refreshRows(); };
         search.onReturnKey = [this] {
@@ -967,7 +1270,7 @@ class PresetBrowser : public juce::Component, private juce::ListBoxModel
         list.setColour(juce::ListBox::backgroundColourId, juce::Colours::transparentBlack);
         list.setColour(juce::ListBox::outlineColourId, theme.border);
         list.setMultipleSelectionEnabled(false);
-        list.setRowHeight(26);
+        list.setRowHeight(theme.style == "tokyo" ? 27 : 26);
         list.setOutlineThickness(0);
         addAndMakeVisible(list);
         status.setName("Preset search status");
@@ -1005,8 +1308,8 @@ class PresetBrowser : public juce::Component, private juce::ListBoxModel
             rows.begin(), rows.end(), [](const BrowserRow &row) { return !row.category; }));
         status.setText(rows.empty() ? "No matching installed presets"
                        : rows.size() >= 100
-                           ? "First 100 rows shown — refine search"
-                           : juce::String(count) + " presets shown • Enter to load",
+                           ? utf8("First 100 rows shown — refine search")
+                           : juce::String(count) + utf8(" presets shown • Enter to load"),
                        juce::dontSendNotification);
         list.repaint();
     }
@@ -1062,8 +1365,8 @@ class PresetBrowser : public juce::Component, private juce::ListBoxModel
     }
     juce::String getTooltipForRow(int row) override
     {
-        return validRow(row) ? rows[row].name +
-                                   (rows[row].category ? " — Enter to filter" : " — Enter to load")
+        return validRow(row) ? rows[row].name + utf8(rows[row].category ? " — Enter to filter"
+                                                                        : " — Enter to load")
                              : juce::String();
     }
     void paintListBoxItem(int row, juce::Graphics &g, int width, int height, bool selected) override
@@ -1080,9 +1383,36 @@ class PresetBrowser : public juce::Component, private juce::ListBoxModel
             g.drawRoundedRectangle(r.reduced(1), 3, 1);
         }
         const auto &entry = rows[row];
-        text(g, theme, entry.category ? "+" : "•", r.removeFromLeft(17), 12, theme.accent);
-        text(g, theme, entry.name, r.reduced(2, 0), 12, entry.category ? theme.accent : theme.text,
-             entry.category);
+        auto icon = r.removeFromLeft(entry.category ? 33.f : 25.f);
+        if (entry.category)
+        {
+            juce::Path chevron;
+            chevron.addTriangle(3, height * .5f - 3, 3, height * .5f + 3, 7, height * .5f);
+            g.setColour(theme.text.withAlpha(.7f));
+            g.fillPath(chevron);
+            const float y = height * .5f - 5;
+            juce::Path folder;
+            folder.startNewSubPath(12, y + 1);
+            folder.lineTo(12, y - 2);
+            folder.lineTo(18, y - 2);
+            folder.lineTo(20, y + 1);
+            folder.lineTo(27, y + 1);
+            folder.lineTo(27, y + 10);
+            folder.lineTo(12, y + 10);
+            folder.closeSubPath();
+            g.setColour(theme.style == "bauhaus" ? theme.text : theme.text.withAlpha(.76f));
+            if (theme.light() && theme.style != "space")
+                g.strokePath(folder, juce::PathStrokeType(1.2f));
+            else
+                g.fillPath(folder);
+        }
+        else
+        {
+            g.setColour(theme.accent.withAlpha(selected ? 1.f : .35f));
+            g.fillRoundedRectangle(icon.getRight() - 8, height * .5f - 2, 3, 4, 1);
+        }
+        text(g, theme, entry.name, r.reduced(2, 0), theme.style == "tokyo" ? 14.f : 13.f,
+             theme.text, entry.category);
     }
     void listBoxItemDoubleClicked(int row, const juce::MouseEvent &) override { activate(row); }
     void returnKeyPressed(int row) override { activate(row); }
@@ -1132,6 +1462,9 @@ struct Workspace::Impl
     std::array<PreviewCurve, 12> lfoCurves;
     bool audioSubscribed{false};
     std::vector<RouteRow> routes;
+    ModulationEditorModel routeEditor;
+    std::vector<std::unique_ptr<ModulationRowInteraction>> routeControls;
+    RouteKey inspectedRoute;
     juce::Component canvas;
     std::vector<std::unique_ptr<juce::Component>> controls;
     std::vector<std::pair<juce::Component *, Rect>> placements;
@@ -1141,21 +1474,23 @@ struct Workspace::Impl
     std::unique_ptr<PerformanceKeyboard> keyboard;
     juce::String browserQuery;
     int browserSelectedPatch{-1};
-    ThemeButton skinButton{theme, "Skins"}, classicButton{theme, "Full editor"}, sceneA{theme, "A"},
-        sceneB{theme, "B"};
-    ThemeButton presetButton{theme}, previous{theme, "<"}, next{theme, ">"};
-    ThemeButton browserButton{theme, "Browser"}, saveButton{theme, "Save"}, modButton{theme, "Mod"},
-        fxButton{theme, "FX"};
+    HeaderButton skinButton{theme, "Skins"}, classicButton{theme, "Full editor"},
+        sceneA{theme, "A"}, sceneB{theme, "B"};
+    HeaderButton presetButton{theme}, previous{theme, "<"}, next{theme, ">"};
+    HeaderButton browserButton{theme, "Browser"}, saveButton{theme, "Save"},
+        modButton{theme, "Mod"}, fxButton{theme, "FX"}, synthButton{theme, "Synth"};
+    Rect headerPresetBounds, headerCategoryBounds;
     int ticks{0};
     float scale{1};
     juce::Point<float> offset;
 
-    Impl(Workspace &o, SurgeSynthProcessor &p) : owner(o), processor(p), parameters(p)
+    Impl(Workspace &o, SurgeSynthProcessor &p)
+        : owner(o), processor(p), parameters(p), routeEditor(p)
     {
         owner.addAndMakeVisible(canvas);
         canvas.setInterceptsMouseClicks(false, true);
         for (auto *b : {&skinButton, &classicButton, &sceneA, &sceneB, &presetButton, &previous,
-                        &next, &browserButton, &saveButton, &modButton, &fxButton})
+                        &next, &browserButton, &saveButton, &modButton, &fxButton, &synthButton})
         {
             canvas.addAndMakeVisible(b);
             b->setWantsKeyboardFocus(true);
@@ -1173,6 +1508,14 @@ struct Workspace::Impl
         saveButton.setComponentID("workspace.navigation.save");
         modButton.setComponentID("workspace.navigation.modulation");
         fxButton.setComponentID("workspace.navigation.effects");
+        synthButton.setComponentID("workspace.navigation.synth");
+        synthButton.setName("Current synthesizer workspace");
+        synthButton.setTitle(synthButton.getName());
+        synthButton.setTooltip("Focus the current synthesizer workspace");
+        synthButton.setToggleState(true, juce::dontSendNotification);
+        synthButton.onClick = [this] { owner.grabKeyboardFocus(); };
+        skinButton.setTooltip("Choose a native workspace or skin (Ctrl/Command+K)");
+        classicButton.setTooltip("Open the full Surge XT editor; Escape also opens it");
         browserButton.setTooltip("Open the native preset browser");
         saveButton.setTooltip("Save the current patch with the native editor");
         modButton.setTooltip("Open the full modulation editor");
@@ -1229,6 +1572,9 @@ struct Workspace::Impl
     }
     void cancelInteractions()
     {
+        for (auto &row : routeControls)
+            row->cancelGesture();
+        routeEditor.end();
         for (auto &control : controls)
             if (auto *slider = dynamic_cast<BoundSlider *>(control.get()))
             {
@@ -1244,6 +1590,9 @@ struct Workspace::Impl
     void build()
     {
         cancelInteractions();
+        routeControls.clear();
+        routes.clear();
+        inspectedRoute = {};
         if (browser)
         {
             browserQuery = browser->query();
@@ -1327,7 +1676,7 @@ struct Workspace::Impl
                 }
             }
         for (auto *b : {&skinButton, &classicButton, &sceneA, &sceneB, &presetButton, &previous,
-                        &next, &browserButton, &saveButton, &modButton, &fxButton})
+                        &next, &browserButton, &saveButton, &modButton, &fxButton, &synthButton})
             styleButton(*b);
         for (auto &b : actions)
             styleButton(*b);
@@ -1359,6 +1708,105 @@ struct Workspace::Impl
             outputWrite = outputCount = 0;
         }
         audioSubscribed = active;
+    }
+    struct RoutePlacement
+    {
+        Rect bounds, amount;
+        size_t index;
+    };
+    std::vector<RoutePlacement> routePlacements() const
+    {
+        std::vector<RoutePlacement> result;
+        if (auto *panels = manifest["panels"].getArray())
+            for (const auto &panel : *panels)
+            {
+                if (string(panel, "kind") != "matrix")
+                    continue;
+                auto content = bounds(panel).reduced(10).withTrimmedTop(24);
+                const bool accessible = theme.style == "clear";
+                const bool twoColumns =
+                    theme.style == "tokyo" && string(panel, "variant") == "horizontal";
+                const int columns = twoColumns ? 2 : 1;
+                const int maximumRows = accessible || theme.style == "space" || twoColumns ? 8 : 6;
+                const float gap = twoColumns ? 14.f : 0.f;
+                const float width = (content.getWidth() - gap) / columns;
+                const float height = juce::jlimit(
+                    accessible ? 24.f : 16.f, accessible ? 29.f : 30.f,
+                    (content.getHeight() - 22.f) / static_cast<float>(maximumRows / columns));
+                const int rowsPerColumn =
+                    std::min(maximumRows / columns,
+                             static_cast<int>(std::max(0.f, content.getHeight() - 22.f) / height));
+                for (int column = 0; column < columns; ++column)
+                    for (int row = 0; row < rowsPerColumn; ++row)
+                    {
+                        const auto index = static_cast<size_t>(column * rowsPerColumn + row);
+                        if (index >= routes.size())
+                            break;
+                        Rect rectangle(content.getX() + column * (width + gap),
+                                       content.getY() + 22 + row * height, width, height);
+                        auto amount = rectangle.withTrimmedLeft(20);
+                        const auto fieldWidth = amount.getWidth();
+                        amount.removeFromLeft(fieldWidth * (accessible ? .70f : .29f));
+                        if (!accessible)
+                            amount.setWidth(fieldWidth * .25f);
+                        result.push_back({rectangle, amount, index});
+                    }
+            }
+        return result;
+    }
+    void syncRouteControls()
+    {
+        if (routeEditor.isEditing())
+            return; // A dragged route must survive the engine's deletion at zero depth.
+        const auto geometry = routePlacements();
+        bool rebuild = geometry.size() != routeControls.size();
+        if (!rebuild)
+            for (size_t i = 0; i < geometry.size(); ++i)
+                if (routeControls[i]->route().key != routes[geometry[i].index].key)
+                    rebuild = true;
+        if (rebuild)
+        {
+            routeControls.clear();
+            for (size_t i = 0; i < geometry.size(); ++i)
+            {
+                auto row = std::make_unique<ModulationRowInteraction>(
+                    routeEditor, routes[geometry[i].index], theme.accent);
+                row->setComponentID("workspace.modulation.row." +
+                                    juce::String(static_cast<int>(i)));
+                row->depthSlider().setComponentID("workspace.modulation.depth." +
+                                                  juce::String(static_cast<int>(i)));
+                row->onSelected = [this](const RouteRow &selected) {
+                    inspectedRoute = selected.key;
+                    for (auto &control : routeControls)
+                        control->setSelected(control->route().key == inspectedRoute);
+                    owner.repaint();
+                };
+                row->onChanged = [this] {
+                    // Delete/mute may remove this row. Defer rebuilding until its
+                    // native callback and mouse event have unwound.
+                    juce::Component::SafePointer<Workspace> safe(&owner);
+                    juce::MessageManager::callAsync([safe] {
+                        if (safe)
+                        {
+                            safe->impl->ticks = 0;
+                            safe->refresh();
+                        }
+                    });
+                };
+                canvas.addAndMakeVisible(*row);
+                routeControls.push_back(std::move(row));
+            }
+        }
+        for (size_t i = 0; i < geometry.size(); ++i)
+        {
+            auto &control = *routeControls[i];
+            const auto rectangle = geometry[i].bounds.toNearestInt();
+            control.setBounds(rectangle);
+            control.setAmountBounds(
+                geometry[i].amount.toNearestInt().translated(-rectangle.getX(), -rectangle.getY()));
+            control.setRow(routes[geometry[i].index]);
+            control.setSelected(control.route().key == inspectedRoute);
+        }
     }
     void update()
     {
@@ -1410,7 +1858,20 @@ struct Workspace::Impl
             for (int i = 0; i < 12; ++i)
                 if (lfosNeeded[i])
                     lfoCurves[i] = lfoCurve(processor, parameters.getScene(), i);
-            routes = modulationRows(processor, parameters.getScene());
+            auto updatedRoutes = modulationRows(processor, parameters.getScene());
+            if (!routeEditor.isEditing())
+                routes = std::move(updatedRoutes);
+            else
+                for (auto &row : routes)
+                    if (routeEditor.isEditing(row.key))
+                    {
+                        row.normalizedDepth = routeEditor.currentDepth();
+                        const auto match = std::find_if(
+                            updatedRoutes.begin(), updatedRoutes.end(),
+                            [&row](const auto &updated) { return updated.key == row.key; });
+                        row.amount = match == updatedRoutes.end() ? "0" : match->amount;
+                    }
+            syncRouteControls();
             if (browser)
                 browser->refreshRows();
         }
@@ -1490,97 +1951,553 @@ struct Workspace::Impl
             }
         }
     }
+    void layoutHeader()
+    {
+        using H = HeaderButton;
+        const auto &style = theme.style;
+        auto put = [](H &b, int x, int y, int w, int h, H::Presentation mode = H::chip,
+                      float font = 12.f, bool bold = false) {
+            b.setBounds(x, y, w, h);
+            b.present(mode, font, bold);
+            b.setVisible(true);
+        };
+        for (auto *b : {&skinButton, &classicButton, &sceneA, &sceneB, &presetButton, &previous,
+                        &next, &browserButton, &saveButton, &modButton, &fxButton, &synthButton})
+        {
+            b->setVisible(true);
+            b->present(H::chip);
+        }
+        synthButton.setVisible(false);
+        sceneA.setButtonText("A");
+        sceneB.setButtonText("B");
+        browserButton.setButtonText("Browser");
+        saveButton.setButtonText("Save");
+        modButton.setButtonText("Mod");
+        fxButton.setButtonText("FX");
+        skinButton.setButtonText("Skins");
+        classicButton.setButtonText("Editor");
+        synthButton.setButtonText("Synth");
+        headerCategoryBounds = {};
+        if (style == "precision")
+        {
+            headerPresetBounds = {645, 48, 530, 45};
+            headerCategoryBounds = {680, 77, 305, 15};
+            put(synthButton, 292, 58, 61, 26, H::navigation, 12, true);
+            put(browserButton, 365, 56, 72, 30, H::navigation);
+            put(modButton, 449, 56, 38, 30, H::navigation);
+            put(fxButton, 501, 56, 32, 30, H::navigation);
+            put(skinButton, 544, 56, 70, 30, H::navigation);
+            put(previous, 648, 52, 30, 36, H::chevron);
+            put(presetButton, 682, 49, 304, 29, H::caption, 21, true);
+            put(next, 991, 52, 31, 36, H::chevron);
+            put(classicButton, 1034, 59, 65, 25, H::navigation, 11);
+            put(saveButton, 1116, 59, 48, 25, H::chip, 11);
+            put(sceneA, 1211, 50, 49, 28, H::chip, 19, true);
+            put(sceneB, 1261, 50, 49, 28, H::chip, 17);
+        }
+        else if (style == "ivory")
+        {
+            headerPresetBounds = {548, 14, 434, 46};
+            headerCategoryBounds = {568, 64, 393, 16};
+            put(sceneA, 409, 25, 50, 35, H::chip, 15, true);
+            put(sceneB, 461, 25, 50, 35, H::chip, 15);
+            put(previous, 554, 19, 38, 36, H::chevron);
+            put(presetButton, 596, 15, 341, 44, H::caption, 23);
+            put(next, 940, 19, 36, 36, H::chevron);
+            put(browserButton, 1011, 25, 110, 35, H::chip, 13, true);
+            put(saveButton, 1135, 25, 89, 35, H::chip, 13, true);
+            put(skinButton, 1233, 25, 39, 35, H::chip, 10);
+            put(classicButton, 1279, 25, 31, 35, H::navigation, 9);
+            put(modButton, 1017, 65, 49, 18, H::navigation, 10);
+            put(fxButton, 1075, 65, 37, 18, H::navigation, 10);
+        }
+        else if (style == "spectral")
+        {
+            headerPresetBounds = {585, 44, 288, 34};
+            put(previous, 587, 46, 31, 30, H::chevron);
+            put(presetButton, 620, 45, 220, 32, H::caption, 19, true);
+            put(next, 841, 46, 30, 30, H::chevron);
+            put(browserButton, 891, 45, 96, 33, H::chip, 13);
+            put(saveButton, 994, 45, 61, 33, H::chip, 12);
+            put(classicButton, 1060, 45, 38, 33, H::chip, 10);
+            put(modButton, 1116, 46, 32, 32, H::navigation, 10);
+            put(fxButton, 1153, 46, 31, 32, H::navigation, 10);
+            put(sceneA, 1204, 49, 36, 26, H::chip, 13, true);
+            put(sceneB, 1242, 49, 37, 26, H::chip, 13);
+            put(skinButton, 1297, 46, 45, 32, H::chip, 10);
+        }
+        else if (style == "bauhaus")
+        {
+            headerPresetBounds = {632, 27, 355, 47};
+            headerCategoryBounds = {685, 57, 265, 15};
+            put(sceneA, 502, 31, 37, 32, H::chip, 18, true);
+            put(sceneB, 542, 31, 37, 32, H::chip, 18);
+            put(previous, 636, 33, 37, 35, H::chevron);
+            put(presetButton, 681, 28, 272, 30, H::caption, 20, true);
+            put(next, 955, 33, 30, 35, H::chevron);
+            put(browserButton, 996, 29, 39, 35, H::navigation, 9);
+            put(saveButton, 1041, 29, 39, 35, H::navigation, 10);
+            put(skinButton, 1084, 29, 28, 35, H::navigation, 8.5f);
+            put(modButton, 1319, 6, 50, 23, H::navigation, 10);
+            put(fxButton, 1373, 6, 37, 23, H::navigation, 10);
+            put(classicButton, 1414, 6, 82, 23, H::navigation, 11);
+        }
+        else if (style == "space")
+        {
+            headerPresetBounds = {682, 25, 335, 40};
+            put(sceneA, 309, 99, 42, 44, H::chip, 23, true);
+            put(sceneB, 357, 99, 42, 44, H::chip, 23, true);
+            put(previous, 649, 28, 30, 34, H::chevron);
+            put(presetButton, 689, 27, 321, 35, H::caption, 20, true);
+            put(next, 1019, 28, 29, 34, H::chevron);
+            put(saveButton, 1054, 27, 56, 31, H::chip, 13, true);
+            put(classicButton, 1116, 27, 63, 31, H::chip, 12, true);
+            put(skinButton, 1185, 27, 56, 31, H::chip, 12, true);
+            put(browserButton, 1279, 19, 99, 29, H::navigation, 12, true);
+            put(modButton, 1384, 19, 43, 29, H::navigation, 11);
+            put(fxButton, 1433, 19, 36, 29, H::navigation, 11);
+        }
+        else if (style == "tokyo")
+        {
+            headerPresetBounds = {691, 21, 365, 43};
+            headerCategoryBounds = {727, 45, 290, 16};
+            put(sceneA, 501, 26, 55, 32, H::chip, 22, true);
+            put(sceneB, 604, 26, 55, 32, H::chip, 22, true);
+            put(previous, 692, 23, 30, 36, H::chevron);
+            put(presetButton, 725, 22, 289, 25, H::caption, 19, true);
+            put(next, 1019, 24, 32, 34, H::chevron);
+            put(saveButton, 1061, 25, 33, 31, H::chip, 10);
+            put(browserButton, 16, 84, 83, 31, H::chip, 14, true);
+            put(synthButton, 290, 84, 107, 31, H::chip, 17, true);
+            put(modButton, 404, 84, 144, 31, H::navigation, 14);
+            modButton.setButtonText("MOD MATRIX");
+            put(fxButton, 555, 84, 77, 31, H::navigation, 14);
+            put(classicButton, 640, 84, 114, 31, H::navigation, 13);
+            put(skinButton, 762, 84, 109, 31, H::navigation, 13);
+        }
+        else if (style == "aurora")
+        {
+            headerPresetBounds = {722, 3, 292, 57};
+            headerCategoryBounds = {750, 7, 238, 16};
+            sceneA.setButtonText("A  Scene A");
+            sceneB.setButtonText("B  Scene B");
+            put(sceneA, 418, 16, 96, 35, H::chip, 15, true);
+            put(sceneB, 521, 16, 96, 35, H::chip, 15, true);
+            put(previous, 682, 17, 32, 32, H::chevron);
+            put(presetButton, 727, 25, 253, 31, H::caption, 24, true);
+            put(next, 983, 17, 32, 32, H::chevron);
+            put(modButton, 333, 18, 32, 31, H::chip, 10);
+            put(fxButton, 370, 18, 32, 31, H::chip, 10);
+            put(saveButton, 631, 17, 34, 33, H::chip, 10);
+            put(browserButton, 1126, 16, 71, 35, H::chip, 13);
+            put(skinButton, 1203, 16, 43, 35, H::chip, 11);
+            put(classicButton, 1260, 16, 36, 35, H::chip, 10);
+        }
+        else if (style == "clear")
+        {
+            headerPresetBounds = {771, 3, 294, 56};
+            headerCategoryBounds = {786, 43, 239, 15};
+            put(browserButton, 315, 12, 98, 39, H::chip, 16, true);
+            put(synthButton, 416, 12, 72, 39, H::navigation, 16, true);
+            synthButton.setButtonText("Patch");
+            put(classicButton, 491, 12, 59, 39, H::navigation, 16, true);
+            classicButton.setButtonText("Edit");
+            put(fxButton, 554, 12, 75, 39, H::navigation, 15, true);
+            fxButton.setButtonText("Effects");
+            put(previous, 734, 12, 36, 39, H::chevron);
+            put(presetButton, 785, 17, 236, 28, H::caption, 23, true);
+            put(next, 1025, 12, 37, 39, H::chevron);
+            put(saveButton, 1078, 12, 43, 39, H::navigation, 12);
+            put(modButton, 1128, 12, 58, 39, H::navigation, 12);
+            put(skinButton, 1477, 12, 50, 39, H::navigation, 12);
+            put(sceneA, 428, 78, 217, 38, H::chip, 22, true);
+            put(sceneB, 655, 78, 265, 38, H::chip, 22, true);
+            sceneA.setButtonText("A  Scene A");
+            sceneB.setButtonText("B  Scene B");
+        }
+        else if (style == "flow")
+        {
+            headerPresetBounds = {605, 4, 508, 53};
+            headerCategoryBounds = {651, 39, 380, 15};
+            put(sceneA, 355, 4, 109, 25, H::chip, 15, true);
+            put(sceneB, 470, 4, 108, 25, H::chip, 15, true);
+            sceneA.setButtonText("SCENE A");
+            sceneB.setButtonText("SCENE B");
+            put(previous, 607, 10, 32, 40, H::chevron);
+            put(presetButton, 642, 18, 391, 24, H::caption, 18, true);
+            put(next, 1036, 10, 34, 40, H::chevron);
+            put(browserButton, 1169, 12, 47, 37, H::chip, 10);
+            put(saveButton, 1223, 12, 47, 37, H::chip, 11);
+            put(modButton, 1290, 12, 44, 37, H::chip, 11);
+            put(fxButton, 1339, 12, 44, 37, H::chip, 11);
+            put(classicButton, 1403, 12, 59, 37, H::chip, 11);
+            put(skinButton, 1529, 12, 46, 37, H::chip, 11);
+        }
+        else // live performance
+        {
+            headerPresetBounds = {479, 59, 449, 49};
+            headerCategoryBounds = {592, 87, 278, 15};
+            put(browserButton, 522, 10, 94, 28, H::chip, 13);
+            put(synthButton, 617, 10, 92, 28, H::chip, 13, true);
+            synthButton.setButtonText("Synthesis");
+            put(modButton, 711, 10, 94, 28, H::chip, 13);
+            modButton.setButtonText("Modulation");
+            put(fxButton, 807, 10, 92, 28, H::chip, 13);
+            fxButton.setButtonText("Effects");
+            put(classicButton, 902, 10, 102, 28, H::chip, 13);
+            classicButton.setButtonText("Full editor");
+            put(skinButton, 1026, 10, 34, 28, H::chip, 9);
+            put(previous, 481, 63, 38, 39, H::chevron);
+            put(presetButton, 589, 62, 282, 27, H::caption, 20, true);
+            put(next, 885, 63, 38, 39, H::chevron);
+            put(saveButton, 942, 70, 67, 28, H::chip, 12);
+            put(sceneA, 1047, 70, 31, 28, H::chip, 17, true);
+            put(sceneB, 1082, 70, 30, 28, H::chip, 16);
+        }
+        previous.present(H::chevron);
+        next.present(H::chevron);
+        // Preset background is painted once around the arrows/caption. Give its
+        // actual child buttons the appropriate ink without changing the patch.
+        const auto presetInk = style == "ivory"   ? juce::Colour(0xfffff9e8)
+                               : style == "space" ? juce::Colour(0xffffb53b)
+                               : style == "clear" ? theme.text
+                               : style == "tokyo" ? theme.secondary
+                                                  : theme.text;
+        for (auto *b : {&presetButton, &previous, &next})
+            b->setColour(juce::TextButton::textColourOffId, presetInk);
+    }
+    void headerMeters(juce::Graphics &g, Rect r, bool horizontal = false)
+    {
+        const auto low = theme.style == "ivory" ? juce::Colour(0xff659e36)
+                         : theme.style == "precision" || theme.style == "tokyo" ? theme.secondary
+                                                                                : theme.accent;
+        for (int channel = 0; channel < 2; ++channel)
+        {
+            const auto peak = channel ? visuals.right : visuals.left;
+            const float amount =
+                peak > 0 ? juce::jlimit(0.f, 1.f, (20.f * std::log10(peak) + 60.f) / 60.f) : 0.f;
+            auto bar = horizontal ? Rect(r.getX(), r.getY() + channel * r.getHeight() * .55f,
+                                         r.getWidth(), r.getHeight() * .37f)
+                                  : Rect(r.getX() + channel * r.getWidth() * .56f, r.getY(),
+                                         r.getWidth() * .35f, r.getHeight());
+            g.setColour(theme.display);
+            g.fillRoundedRectangle(bar, 1.f);
+            for (int segment = 0; segment < 24; ++segment)
+            {
+                auto ink =
+                    segment > 20 ? theme.secondary.interpolatedWith(theme.accent, .75f) : low;
+                g.setColour(ink.withAlpha(segment / 24.f < amount ? 1.f : .09f));
+                if (horizontal)
+                    g.fillRect(Rect(bar.getX() + segment * bar.getWidth() / 24.f, bar.getY(),
+                                    std::max(.5f, bar.getWidth() / 24.f - 1.f), bar.getHeight()));
+                else
+                    g.fillRect(Rect(bar.getX(),
+                                    bar.getBottom() - (segment + 1) * bar.getHeight() / 24.f,
+                                    bar.getWidth(), std::max(.5f, bar.getHeight() / 24.f - .7f)));
+            }
+        }
+    }
     void drawHeader(juce::Graphics &g)
     {
+        const auto &style = theme.style;
         const float h = number(manifest, "headerHeight", 92);
-        const bool shortHeader = h <= 70;
-        const auto headerFill = theme.style == "space" ? juce::Colour(0xffb9a582) : theme.panel;
-        const auto headerInk = theme.style == "space" ? juce::Colour(0xff211c12) : theme.text;
-        bezel(g, theme, {2, 2, 1582, h - 5}, headerFill, theme.radius);
-        if (theme.style == "spectral" || theme.style == "aurora")
+        const auto ink = style == "space" ? juce::Colour(0xff17150e) : theme.text;
+        if (style == "precision")
         {
-            g.setGradientFill(juce::ColourGradient(theme.accent.withAlpha(.18f), 15, 0,
-                                                   theme.accent.withAlpha(0.f), 365, h, false));
-            g.fillRoundedRectangle({4, 4, 355, h - 11}, theme.radius);
+            g.setGradientFill(juce::ColourGradient(juce::Colour(0xff343b42), 0, 0,
+                                                   juce::Colour(0xff252c32), 1586, 31, false));
+            g.fillRoundedRectangle({1, 1, 1584, 35}, 10);
+            text(g, theme, "Surge XT", {650, 5, 286, 23}, 15, theme.text, false,
+                 juce::Justification::centred);
+            text(g, theme, "HYBRID SYNTHESIZER", {18, 8, 230, 17}, 9, theme.muted);
+            bezel(g, theme, {1, 32, 1584, 78}, theme.background, 0);
         }
-        juce::Path logo;
-        const auto logoY = shortHeader ? 27.f : h * .40f;
-        for (int i = 0; i < 51; ++i)
+        else if (style == "space")
         {
-            float x = 22 + i * .9f, y = logoY + std::sin(i * .22f) * std::sin(i * .0628f) * 15;
-            if (i == 0)
-                logo.startNewSubPath(x, y);
-            else
-                logo.lineTo(x, y);
+            for (auto r : {Rect(5, 3, 464, 76), Rect(474, 3, 164, 76), Rect(643, 3, 618, 76),
+                           Rect(1266, 3, 314, 76)})
+                bezel(g, theme, r, juce::Colour(0xffbda685), 7);
         }
-        if (theme.style == "bauhaus")
+        else if (style == "tokyo")
         {
-            g.setColour(theme.red);
-            juce::Path halfDisc;
-            halfDisc.addPieSegment(20, logoY - 22, 45, 45, juce::MathConstants<float>::pi,
+            for (auto r : {Rect(2, 1, 482, 68), Rect(489, 1, 183, 68), Rect(678, 1, 426, 68),
+                           Rect(1110, 1, 473, 68)})
+                bezel(g, theme, r, theme.panel, 5);
+        }
+        else if (style == "flow")
+        {
+            for (auto r : {Rect(2, 1, 332, 60), Rect(341, 1, 250, 60), Rect(598, 1, 521, 60),
+                           Rect(1126, 1, 458, 60)})
+                bezel(g, theme, r, theme.panel, 3);
+        }
+        else if (style == "live")
+        {
+            bezel(g, theme, {1, 0, 1584, 47}, theme.panel, 11);
+            bezel(g, theme, {3, 57, 458, 52}, theme.panel, 16);
+            bezel(g, theme, {1032, 57, 548, 52}, theme.panel, 14);
+            text(g, theme, "Preset Browser", {27, 66, 166, 31}, 15, ink, true);
+        }
+        else if (style == "spectral")
+            bezel(g, theme, {19, 18, 1548, 77}, theme.display, 5);
+        else if (style == "aurora")
+        {
+            g.setGradientFill(juce::ColourGradient(juce::Colour(0xff302045), 0, 0,
+                                                   juce::Colour(0xff0e0a19), 0, h, false));
+            g.fillRect(0.f, 0.f, 1586.f, h);
+        }
+        else
+            bezel(g, theme, {2, 2, 1582, h - 4}, theme.panel, style == "ivory" ? 12.f : 2.f);
+
+        if (!headerPresetBounds.isEmpty() && style != "aurora" && style != "clear")
+            bezel(g, theme, headerPresetBounds,
+                  style == "ivory" ? juce::Colour(0xff153721) : theme.display,
+                  style == "live"    ? 15.f
+                  : style == "ivory" ? 9.f
+                                     : 4.f);
+
+        auto line = [&](float x, float y, float height) {
+            g.setColour(ink.withAlpha(style == "bauhaus" ? .60f : .25f));
+            g.drawLine(x, y, x, y + height, 1.f);
+        };
+        auto logo = [&](float x, float y, float w, float height) {
+            if (style == "bauhaus")
+            {
+                g.setColour(theme.red);
+                juce::Path disk;
+                disk.addPieSegment(x, y, w, height, juce::MathConstants<float>::pi,
                                    juce::MathConstants<float>::twoPi, 0.f);
-            g.fillPath(halfDisc);
-            g.setColour(theme.text);
-            g.fillRect(Rect(43, logoY, 22, 22));
-            g.setColour(theme.yellow);
-            juce::Path triangle;
-            triangle.addTriangle(43, logoY, 65, logoY, 43, logoY + 22);
-            g.fillPath(triangle);
-        }
-        else if (theme.style == "space" || theme.style == "tokyo")
-        {
-            g.setColour(theme.style == "space" ? juce::Colour(0xffb15a20) : theme.accent);
-            for (int i = 0; i < 3; ++i)
+                g.fillPath(disk);
+                g.setColour(ink);
+                g.fillRect(Rect(x + w * .52f, y + height * .38f, w * .36f, height * .62f));
+                juce::Path triangle;
+                triangle.addTriangle(x + w * .52f, y + height * .45f, x + w, y + height * .45f,
+                                     x + w * .52f, y + height * .86f);
+                g.setColour(theme.yellow);
+                g.fillPath(triangle);
+            }
+            else if (style == "space" || style == "tokyo")
             {
-                juce::Path slash;
-                slash.startNewSubPath(20 + i * 11.f, logoY + 17);
-                slash.lineTo(36 + i * 11.f, logoY - 17);
-                g.strokePath(slash, juce::PathStrokeType(theme.style == "space" ? 7.f : 3.f));
+                for (int i = 0; i < 3; ++i)
+                {
+                    juce::Path slash;
+                    slash.startNewSubPath(x + i * w * .23f, y + height);
+                    slash.lineTo(x + w * .43f + i * w * .23f, y);
+                    g.setColour(style == "space" ? juce::Colour(0xffb96322) : theme.red);
+                    g.strokePath(slash, juce::PathStrokeType(style == "space" ? 10.f : 3.2f));
+                }
+            }
+            else if (style == "flow")
+            {
+                for (int i = 0; i < 9; ++i)
+                {
+                    const float px = x + (i % 3) * w * .34f, py = y + (i / 3) * height * .34f;
+                    g.setColour(theme.accent.withAlpha(.65f + (i % 2) * .35f));
+                    g.drawEllipse(px, py, 4, 4, 1.4f);
+                }
+            }
+            else
+            {
+                juce::Path wave;
+                for (int point = 0; point <= 80; ++point)
+                {
+                    const float t = point / 80.f;
+                    const float px = x + t * w;
+                    const float py = y + height * .5f +
+                                     std::sin(t * 12.2f) *
+                                         std::sin(t * juce::MathConstants<float>::pi) * height *
+                                         .45f;
+                    if (point == 0)
+                        wave.startNewSubPath(px, py);
+                    else
+                        wave.lineTo(px, py);
+                }
+                if (style == "spectral" || style == "aurora")
+                {
+                    for (int layer = -3; layer <= 3; ++layer)
+                    {
+                        g.setColour(theme.accent.withAlpha(.12f));
+                        g.strokePath(wave, juce::PathStrokeType(4.f),
+                                     juce::AffineTransform::translation(0, layer * 1.6f));
+                    }
+                }
+                if (style == "ivory")
+                {
+                    g.setColour(juce::Colours::black.withAlpha(.3f));
+                    g.strokePath(wave, juce::PathStrokeType(3.5f),
+                                 juce::AffineTransform::translation(0, 1.5f));
+                }
+                g.setColour(style == "ivory" ? juce::Colour(0xffa0803c) : theme.accent);
+                g.strokePath(wave, juce::PathStrokeType(style == "clear" ? 3.8f : 2.2f));
+            }
+        };
+        auto brand = [&](Rect r, float size, bool upper = true) {
+            auto font = theme.type(size, style != "ivory");
+            if (style == "space")
+                font.setStyleFlags(juce::Font::bold | juce::Font::italic);
+            g.setFont(font);
+            g.setColour(ink);
+            const auto prefix = upper ? juce::String("SURGE ") : juce::String("Surge ");
+            const float prefixWidth =
+                std::min(r.getWidth() * .79f, font.getStringWidthFloat(prefix));
+            g.drawFittedText(prefix, r.withWidth(prefixWidth).toNearestInt(),
+                             juce::Justification::centredLeft, 1, .9f);
+            g.setColour(style == "precision" || style == "tokyo" || style == "flow" ? theme.accent
+                                                                                    : ink);
+            g.drawFittedText("XT", r.withTrimmedLeft(prefixWidth).toNearestInt(),
+                             juce::Justification::centredLeft, 1, .9f);
+        };
+        if (style == "precision")
+        {
+            logo(25, 49, 44, 38);
+            brand({80, 43, 161, 36}, 32);
+            text(g, theme, "H Y B R I D  S Y N T H E S I Z E R", {82, 79, 180, 14}, 10, ink);
+            line(269, 49, 42);
+            line(1346, 49, 42);
+            text(g, theme, "SCENE", {1211, 80, 100, 17}, 11, theme.muted, false,
+                 juce::Justification::centred);
+            headerMeters(g, {1533, 47, 23, 47});
+        }
+        else if (style == "ivory")
+        {
+            logo(30, 23, 54, 34);
+            brand({101, 13, 200, 39}, 36);
+            text(g, theme, "HYBRID SYNTHESIZER", {102, 52, 202, 18}, 13, ink);
+            line(322, 25, 39);
+            line(1298, 25, 38);
+            text(g, theme, "SCENE", {350, 31, 55, 22}, 14, ink);
+            headerMeters(g, {1536, 17, 21, 54});
+        }
+        else if (style == "spectral")
+        {
+            logo(37, 29, 75, 45);
+            brand({123, 29, 172, 36}, 30);
+            text(g, theme, "H Y B R I D  S Y N T H E S I Z E R", {125, 65, 188, 12}, 8,
+                 theme.muted);
+            line(305, 37, 36);
+            text(g, theme, "S P E C T R A L", {319, 36, 106, 14}, 10, theme.accent, true);
+            text(g, theme, "O B S E R V A T O R Y", {319, 52, 113, 14}, 9, theme.accent, true);
+            // The observatory badge is cosmetic vector artwork, not an audio display.
+            g.setColour(theme.accent.withAlpha(.12f));
+            g.fillEllipse(425, 20, 103, 60);
+            g.setColour(theme.accent.withAlpha(.5f));
+            g.drawEllipse(440, 28, 62, 49, 1);
+            g.drawLine(471, 28, 471, 78, 1);
+            g.drawLine(440, 60, 502, 60, 1);
+            text(g, theme, "PRESET", {662, 28, 128, 13}, 9, theme.muted, false,
+                 juce::Justification::centred);
+            text(g, theme, "Scene", {1204, 32, 72, 14}, 11, theme.muted);
+            text(g, theme, parameters.display("master.volume"), {1484, 49, 67, 24}, 11, theme.text,
+                 false, juce::Justification::centred);
+        }
+        else if (style == "bauhaus")
+        {
+            logo(20, 14, 49, 55);
+            brand({82, 7, 241, 58}, 53);
+            text(g, theme, "HYBRID", {339, 13, 126, 18}, 15, ink, true);
+            text(g, theme, "SYNTHESIZER", {339, 29, 134, 18}, 15, ink, true);
+            text(g, theme, "OPEN SOURCE", {339, 45, 134, 18}, 15, ink, true);
+            line(478, 8, 69);
+            line(614, 8, 69);
+            line(1120, 8, 69);
+            line(1305, 8, 69);
+            text(g, theme, "SCENE", {502, 8, 87, 18}, 13, ink, true);
+            text(g, theme, "PRESET", {635, 7, 135, 18}, 13, ink, true);
+            text(g, theme, "VOICES", {1141, 8, 108, 18}, 12, ink, true);
+            headerMeters(g, {1327, 40, 155, 27}, true);
+        }
+        else if (style == "space")
+        {
+            logo(34, 18, 60, 43);
+            brand({108, 7, 245, 58}, 48);
+            text(g, theme, "HYBRID", {367, 15, 93, 16}, 13, ink, true);
+            text(g, theme, "SYNTHESIZER", {367, 30, 93, 16}, 13, ink, true);
+            text(g, theme, "OPEN SOURCE", {367, 45, 93, 16}, 13, ink, true);
+            text(g, theme, "PATCH MEMORY", {488, 7, 135, 18}, 12, ink, true,
+                 juce::Justification::centred);
+            bezel(g, theme, {508, 28, 89, 34}, theme.display, 4);
+            text(g, theme, parameters.getScene() == 0 ? "SCENE A" : "SCENE B", {511, 30, 83, 28},
+                 16, theme.secondary, true, juce::Justification::centred);
+            text(g, theme, "CURRENT PATCH", {695, 7, 213, 17}, 12, ink, true);
+            text(g, theme, "SURGE XT  /  HYBRID ENGINE", {1280, 52, 192, 16}, 11, ink);
+            for (int i = 0; i < 5; ++i)
+            {
+                g.setColour(theme.display);
+                g.fillRoundedRectangle({1482, 14 + i * 10.f, 70, 5}, 2.5f);
             }
         }
-        else if (theme.style == "flow")
+        else if (style == "tokyo")
         {
-            for (int i = 0; i < 9; ++i)
-            {
-                g.setColour(theme.accent.withAlpha(i % 2 ? .55f : 1.f));
-                g.drawEllipse(25 + (i % 3) * 13.f, logoY - 14 + (i / 3) * 13.f, 5, 5, 1.4f);
-            }
+            logo(21, 17, 29, 36);
+            brand({66, 7, 215, 49}, 43);
+            text(g, theme, "HYBRID SYNTHESIZER", {305, 10, 164, 22}, 14, ink);
+            text(g, theme, "SURGE XT", {305, 36, 163, 20}, 12, theme.muted);
+            text(g, theme, "SCENE", {500, 3, 107, 18}, 15, ink);
+            text(g, theme, "PRESET", {692, 3, 126, 18}, 15, ink);
+            text(g, theme, "VOICES  " + parameters.display("scene.polylimit"), {1133, 11, 114, 21},
+                 12, ink);
+            text(g, theme, "SCENE  " + juce::String(parameters.getScene() ? "B" : "A"),
+                 {1133, 36, 114, 20}, 12, ink);
+            headerMeters(g, {1312, 15, 174, 33}, true);
+        }
+        else if (style == "aurora")
+        {
+            logo(19, 13, 61, 34);
+            brand({94, 1, 191, 38}, 34);
+            text(g, theme, "Hybrid Synthesizer - Liquid Aurora", {95, 38, 226, 18}, 13,
+                 theme.muted);
+            text(g, theme, "Voices  " + parameters.display("scene.polylimit"), {1321, 10, 109, 18},
+                 12, theme.muted);
+            text(g, theme, "Output", {1321, 34, 76, 17}, 12, theme.muted);
+            headerMeters(g, {1442, 16, 121, 31}, true);
+        }
+        else if (style == "clear")
+        {
+            logo(17, 14, 50, 34);
+            brand({79, 5, 139, 34}, 32, false);
+            text(g, theme, "Hybrid Synthesizer", {80, 38, 183, 19}, 14, ink);
+            text(g, theme, "SURGE XT", {229, 9, 80, 18}, 11, theme.muted, true);
+            text(g, theme, "PRESET", {786, 1, 120, 17}, 12, ink, true);
+            text(g, theme, "Voices  " + parameters.display("scene.polylimit"), {1241, 10, 207, 20},
+                 13, ink, true);
+            headerMeters(g, {1241, 36, 212, 13}, true);
+        }
+        else if (style == "flow")
+        {
+            logo(24, 17, 24, 26);
+            brand({70, 3, 169, 35}, 31);
+            text(g, theme, "H Y B R I D  S Y N T H E S I Z E R", {70, 37, 222, 16}, 10,
+                 theme.accent);
+            text(g, theme, "PRESET", {772, 6, 172, 13}, 10, theme.muted, false,
+                 juce::Justification::centred);
+            text(g, theme, parameters.display("scene.mode"), {355, 33, 223, 23}, 13, theme.muted,
+                 false, juce::Justification::centred);
         }
         else
         {
-            if (theme.style == "spectral" || theme.style == "aurora")
-                for (int layer = 0; layer < 5; ++layer)
-                {
-                    g.setColour(
-                        theme.secondary.interpolatedWith(theme.accent, layer / 4.f).withAlpha(.4f));
-                    g.strokePath(logo, juce::PathStrokeType(1.2f),
-                                 juce::AffineTransform::translation(0, (layer - 2) * 2.f));
-                }
-            g.setColour(theme.accent);
-            g.strokePath(logo, juce::PathStrokeType(theme.style == "clear" ? 3.6f : 2.5f));
-        }
-        const float titleSize = theme.style == "bauhaus" ? 38.f : shortHeader ? 29.f : 34.f;
-        text(g, theme, "SURGE XT", {80, shortHeader ? 6.f : 9.f, 245, shortHeader ? 32.f : 40.f},
-             titleSize, headerInk, theme.style != "ivory");
-        text(g, theme, "HYBRID SYNTHESIZER", {82, shortHeader ? 40.f : 53.f, 215, 15},
-             theme.style == "ivory" ? 10.f : 9.f, headerInk.withAlpha(.8f));
-        if (h > 90)
-            text(g, theme, string(manifest, "name"), {82, h - 24, 208, 15}, 9, theme.accent);
-        if (!shortHeader)
-            text(g, theme, "SCENE", {365, 3, 120, 13}, 9, headerInk.withAlpha(.7f), false,
+            logo(25, 8, 31, 28);
+            brand({65, 3, 146, 30}, 27);
+            text(g, theme, "H Y B R I D  S Y N T H E S I Z E R", {66, 31, 174, 12}, 8, ink);
+            text(g, theme, "Live Performance Command Deck", {266, 13, 237, 22}, 13, theme.secondary,
+                 true);
+            text(g, theme, "OUTPUT", {1168, 12, 59, 20}, 10, theme.muted);
+            headerMeters(g, {1227, 17, 62, 11}, true);
+            text(g, theme, "Scene mode", {1156, 62, 202, 17}, 11, theme.muted, false,
                  juce::Justification::centred);
-        text(g, theme, "PRESET", {550, 3, 520, 13}, 9, headerInk.withAlpha(.7f), false,
-             juce::Justification::centred);
-        if (theme.style == "space")
+            text(g, theme, parameters.display("scene.mode"), {1156, 81, 202, 20}, 15, theme.accent,
+                 true, juce::Justification::centred);
+        }
+        if (!headerPresetBounds.isEmpty())
         {
-            for (float x : {9.f, 1574.f})
-                for (float y : {9.f, h - 12})
-                {
-                    g.setColour(theme.border);
-                    g.fillEllipse(x - 3, y - 3, 6, 6);
-                    g.setColour(theme.display);
-                    g.drawLine(x - 2, y, x + 2, y);
-                }
+            if (!headerCategoryBounds.isEmpty())
+            {
+                const auto category = juce::String(processor.surge->storage.getPatch().category);
+                text(g, theme, category.isEmpty() ? "Current patch" : category,
+                     headerCategoryBounds, style == "ivory" ? 13.f : 11.f,
+                     style == "ivory"     ? ink
+                     : style == "bauhaus" ? juce::Colour(0xfff6e5c3)
+                                          : theme.muted,
+                     false, juce::Justification::centred);
+            }
         }
     }
     void plotBase(juce::Graphics &g, Rect r, bool pale = false)
@@ -1601,11 +2518,14 @@ struct Workspace::Impl
         g.drawFittedText(caption, r.reduced(3).toNearestInt(), juce::Justification::centred,
                          r.getHeight() >= 35 ? 3 : 1, .8f);
     }
-    void drawEnvelope(juce::Graphics &g, Rect r, int index, juce::Colour color)
+    void drawEnvelope(juce::Graphics &g, Rect r, int index, juce::Colour color,
+                      bool lfoEnvelope = false)
     {
         plotBase(g, r, theme.style == "clear");
         r = r.reduced(8);
-        const juce::String prefix = "env" + juce::String(std::clamp(index, 1, 2)) + ".";
+        const juce::String prefix = lfoEnvelope
+                                        ? "lfo" + juce::String(std::clamp(index, 1, 12)) + "."
+                                        : "env" + juce::String(std::clamp(index, 1, 2)) + ".";
         auto at = parameters.value(prefix + "attack"), de = parameters.value(prefix + "decay");
         auto su = parameters.value(prefix + "sustain"), re = parameters.value(prefix + "release");
         float ax = r.getX() + r.getWidth() * (.07f + .22f * at),
@@ -1635,13 +2555,42 @@ struct Workspace::Impl
     {
         if (base)
             plotBase(g, r);
-        r = r.reduced(7, 12);
+        const bool miniature = r.getHeight() < 65;
+        const auto frame = r;
+        r = miniature ? r.reduced(4, 3) : r.reduced(7, 15);
         const auto &curve = filterCurves[juce::jlimit(0, 1, index - 1)];
         if (!curve.available || curve.values.size() < 2)
         {
             text(g, theme, curve.caption, r, 10, theme.display.contrasting(.8f), false,
                  juce::Justification::centred);
             return;
+        }
+        if (base && !miniature)
+        {
+            const float frequencies[]{20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000};
+            for (float frequency : frequencies)
+            {
+                const auto x =
+                    r.getX() + std::log(frequency / filterPreviewMinimumHz) /
+                                   std::log(filterPreviewMaximumHz / filterPreviewMinimumHz) *
+                                   r.getWidth();
+                g.setColour(theme.secondary.withAlpha(.10f));
+                g.drawLine(x, r.getY(), x, r.getBottom(), .7f);
+                const auto label = frequency >= 1000 ? juce::String(frequency / 1000.f, 0) + "k"
+                                                     : juce::String(static_cast<int>(frequency));
+                text(g, theme, label, {x - 13, frame.getBottom() - 13, 26, 12},
+                     r.getWidth() > 400 ? 11.f : 9.f, theme.display.contrasting(.80f), false,
+                     juce::Justification::centred);
+            }
+            for (float db = filterPreviewMinimumDb; db <= filterPreviewMaximumDb; db += 12)
+            {
+                const auto y =
+                    r.getBottom() - (db - filterPreviewMinimumDb) /
+                                        (filterPreviewMaximumDb - filterPreviewMinimumDb) *
+                                        r.getHeight();
+                g.setColour(theme.secondary.withAlpha(db == 0 ? .18f : .09f));
+                g.drawLine(r.getX(), y, r.getRight(), y, db == 0 ? 1.f : .7f);
+            }
         }
         juce::Path p;
         for (size_t i = 0; i < curve.values.size(); ++i)
@@ -1664,9 +2613,34 @@ struct Workspace::Impl
         g.fillPath(fill);
         g.setColour(color);
         g.strokePath(p, juce::PathStrokeType(1.7f));
-        text(g, theme, "20     100     500     2k     10k",
-             r.withY(r.getBottom() - 1).withHeight(11), 9, theme.display.contrasting(.8f), false,
-             juce::Justification::centred);
+        if (!miniature)
+        {
+            const auto binding = "filter" + juce::String(index) + ".cutoff";
+            if (const auto *parameter = parameters.parameter(binding))
+            {
+                auto cutoff = parameter->val.f;
+                const auto &scene =
+                    processor.surge->storage.getPatch().scene[parameters.getScene()];
+                if (index == 2 && scene.f2_cutoff_is_offset.val.b)
+                    cutoff += scene.filterunit[0].cutoff.val.f;
+                const auto hz = 440.f * std::pow(2.f, cutoff / 12.f);
+                const auto position =
+                    juce::jlimit(0.f, 1.f,
+                                 std::log(hz / filterPreviewMinimumHz) /
+                                     std::log(filterPreviewMaximumHz / filterPreviewMinimumHz));
+                const auto at = static_cast<size_t>(position * (curve.values.size() - 1));
+                const auto y = r.getBottom() -
+                               r.getHeight() *
+                                   std::clamp((curve.values[at] - filterPreviewMinimumDb) /
+                                                  (filterPreviewMaximumDb - filterPreviewMinimumDb),
+                                              0.f, 1.f);
+                const auto x = r.getX() + position * r.getWidth();
+                g.setColour(theme.display);
+                g.fillEllipse(x - 3.7f, y - 3.7f, 7.4f, 7.4f);
+                g.setColour(color);
+                g.drawEllipse(x - 3.7f, y - 3.7f, 7.4f, 7.4f, 1.5f);
+            }
+        }
     }
     void drawLfo(juce::Graphics &g, Rect r, int index)
     {
@@ -1692,8 +2666,6 @@ struct Workspace::Impl
         }
         g.setColour(theme.style == "clear" ? theme.accent : theme.secondary);
         g.strokePath(p, juce::PathStrokeType(1.8f));
-        text(g, theme, curve.caption, r.removeFromBottom(12), 8,
-             theme.style == "clear" ? theme.text : theme.display.contrasting(.8f));
     }
     void drawSpectrum(juce::Graphics &g, Rect r, bool history)
     {
@@ -1754,12 +2726,42 @@ struct Workspace::Impl
             g.strokePath(path, juce::PathStrokeType(1.4f));
         }
         text(g, theme,
-             history ? "Live STFT • time → / log frequency ↑"
-                     : "20 Hz     100     1k     10k     • dBFS",
+             utf8(history ? "Live STFT • time → / log frequency ↑"
+                          : "20 Hz     100     1k     10k     • dBFS"),
              r.removeFromBottom(13), 9, captionInk, false, juce::Justification::centred);
     }
-    void drawMeters(juce::Graphics &g, Rect r)
+    void drawMeters(juce::Graphics &g, Rect r, bool horizontal = false)
     {
+        if (horizontal)
+        {
+            bezel(g, theme, r, theme.display, 3);
+            auto channels = r.reduced(5);
+            const float rowHeight = channels.getHeight() * .5f;
+            for (int ch = 0; ch < 2; ++ch)
+            {
+                auto row = channels.removeFromTop(rowHeight);
+                const float peak = ch ? visuals.right : visuals.left;
+                const float db = peak > 0 ? 20.f * std::log10(peak) : -100.f;
+                const float proportion = std::clamp((db + 60.f) / 60.f, 0.f, 1.f);
+                text(g, theme, ch ? "R" : "L", row.removeFromLeft(14), 11, theme.text, true);
+                if (row.getWidth() > 160)
+                    text(g, theme, peak > 0 ? juce::String(db, 1) + " dB" : utf8("−∞ dB"),
+                         row.removeFromRight(48), 10, theme.muted, false,
+                         juce::Justification::centredRight);
+                auto bar = row.withSizeKeepingCentre(row.getWidth(),
+                                                     std::min(13.f, row.getHeight() - 4.f));
+                for (int segment = 0; segment < 24; ++segment)
+                {
+                    auto colour = segment > 21   ? juce::Colour(0xffff6831)
+                                  : segment > 16 ? theme.accent
+                                                 : juce::Colour(0xffa6d93d);
+                    g.setColour(colour.withAlpha(segment / 24.f < proportion ? 1.f : .13f));
+                    g.fillRect(Rect(bar.getX() + segment * bar.getWidth() / 24.f, bar.getY(),
+                                    std::max(.5f, bar.getWidth() / 24.f - 1.f), bar.getHeight()));
+                }
+            }
+            return;
+        }
         const float gap = std::max(3.f, r.getWidth() * .15f);
         float w = (r.getWidth() - gap) / 2;
         for (int ch = 0; ch < 2; ++ch)
@@ -1822,11 +2824,22 @@ struct Workspace::Impl
                 else
                     pr = {r.getX() + 10, r.getY() + 61, r.getWidth() - 20, r.getHeight() * .38f};
             }
-            plotBase(g, pr);
+            if (theme.style != "aurora")
+                plotBase(g, pr);
             if (index <= 3)
             {
-                Visuals::waveform(g, pr.reduced(5), visuals.oscillator[index - 1], waveformInk,
-                                  theme.accent, variant == "terrain");
+                const bool layers =
+                    variant == "terrain" || theme.style == "aurora" || theme.style == "live";
+                if (layers && visuals.wavetable[index - 1].available())
+                    Visuals::wavetable(g, pr.reduced(5), visuals.wavetable[index - 1], waveformInk,
+                                       theme.accent,
+                                       theme.style == "aurora" || theme.style == "live"
+                                           ? Visuals::WavetableView::ribbons
+                                           : Visuals::WavetableView::perspective);
+                else
+                    Visuals::waveform(g, pr.reduced(5), visuals.oscillator[index - 1], waveformInk,
+                                      theme.style == "tokyo" ? waveformInk : theme.accent,
+                                      variant == "terrain");
                 if (visuals.oscillator[index - 1].empty())
                     unavailableOscillator(g, pr, index - 1);
             }
@@ -1834,28 +2847,73 @@ struct Workspace::Impl
         else if (kind == "waveform")
         {
             pr = arrayRect(v["plot"], content.withTrimmedBottom(variant == "terrain" ? 20 : 3));
-            plotBase(g, pr);
-            Visuals::waveform(g, pr.reduced(8), visuals.oscillator[0], theme.secondary,
-                              theme.accent,
-                              variant == "terrain" || theme.style == "bauhaus" ||
-                                  theme.style == "live" || theme.style == "aurora");
+            if (theme.style != "aurora" && theme.style != "live")
+                plotBase(g, pr);
+            if (visuals.wavetable[0].available())
+                Visuals::wavetable(
+                    g, pr.reduced(8), visuals.wavetable[0], theme.secondary, theme.accent,
+                    theme.style == "aurora" || theme.style == "live" || theme.style == "bauhaus"
+                        ? Visuals::WavetableView::ribbons
+                        : Visuals::WavetableView::perspective);
+            else
+                Visuals::waveform(g, pr.reduced(8), visuals.oscillator[0], theme.secondary,
+                                  theme.accent,
+                                  variant == "terrain" || theme.style == "bauhaus" ||
+                                      theme.style == "live" || theme.style == "aurora");
             if (visuals.oscillator[0].empty())
                 unavailableOscillator(g, pr.withTrimmedBottom(22), 0);
-            text(g, theme, "OSCILLATOR PREVIEW", {pr.getX() + 9, pr.getBottom() - 19, 220, 16}, 9,
-                 theme.display.contrasting(.7f));
+        }
+        else if (kind == "inspector" && theme.style == "clear")
+        {
+            if (routes.empty())
+                text(g, theme, "Choose a modulation route to inspect", content, 14, theme.muted,
+                     false, juce::Justification::centred);
+            else
+            {
+                const auto found =
+                    std::find_if(routes.begin(), routes.end(), [this](const RouteRow &candidate) {
+                        return candidate.key == inspectedRoute;
+                    });
+                const auto &route = found == routes.end() ? routes.front() : *found;
+                auto heading = Rect(r.getX() + 14, r.getY() + 39, r.getWidth() - 28, 32);
+                g.setColour(theme.border.withAlpha(.12f));
+                g.fillRoundedRectangle(heading, 5);
+                text(g, theme, route.source + utf8("   →   ") + route.destination,
+                     heading.reduced(9, 0), 15, theme.text, true);
+                auto tile = pr;
+                bezel(g, theme, tile, theme.accent, 5);
+                const auto trace = tile.reduced(10, 15);
+                g.setColour(juce::Colours::white.withAlpha(.85f));
+                const auto depth = std::clamp(route.normalizedDepth, -1.f, 1.f);
+                g.drawLine(trace.getX(), trace.getCentreY() + depth * trace.getHeight() * .5f,
+                           trace.getRight(), trace.getCentreY() - depth * trace.getHeight() * .5f,
+                           2);
+                text(g, theme, "Amount", {tile.getRight() + 16, tile.getY() - 1, 110, 20}, 14,
+                     theme.text, true);
+                text(g, theme, route.amount, {tile.getRight() + 16, tile.getY() + 20, 260, 32}, 22,
+                     theme.text, true);
+                text(g, theme, route.muted ? "Muted route" : "Scaled to destination range",
+                     {r.getX() + 14, r.getBottom() - 41, r.getWidth() - 28, 25}, 13, theme.text);
+            }
         }
         else if (kind == "filter" || kind == "inspector")
         {
-            drawFilter(g, pr, index, index == 2 ? theme.secondary : curveInk);
+            drawFilter(g, pr, index,
+                       theme.style == "bauhaus" ? theme.secondary
+                       : index == 2             ? theme.secondary
+                                                : curveInk);
             if (variant == "combined")
                 drawFilter(g, pr, 2, theme.secondary, false);
-            text(g, theme, "Base-parameter response", {pr.getX() + 4, pr.getY() + 2, 180, 12}, 9,
-                 theme.display.contrasting(.8f));
         }
         else if (kind == "envelope" || kind == "amp")
             drawEnvelope(g, pr, index, curveInk);
         else if (kind == "lfo")
-            drawLfo(g, pr, index);
+        {
+            if (static_cast<bool>(v["envelope"]))
+                drawEnvelope(g, pr, index, curveInk, true);
+            else
+                drawLfo(g, pr, index);
+        }
         else if (kind == "analyzer")
         {
             auto meter = content.removeFromRight(std::min(45.f, content.getWidth() * .15f));
@@ -1876,8 +2934,17 @@ struct Workspace::Impl
             }
         }
         else if (kind == "output")
-            drawMeters(
-                g, content.removeFromRight(std::min(58.f, content.getWidth() * .28f)).reduced(4));
+        {
+            if (theme.style == "space")
+                drawMeters(g,
+                           content.removeFromRight(std::min(108.f, content.getWidth() * .46f))
+                               .reduced(2, 13),
+                           true);
+            else
+                drawMeters(
+                    g,
+                    content.removeFromRight(std::min(58.f, content.getWidth() * .28f)).reduced(4));
+        }
         else if (kind == "matrix")
         {
             if (theme.style == "space")
@@ -1886,40 +2953,82 @@ struct Workspace::Impl
                 g.fillRoundedRectangle(content.expanded(3), 3);
             }
             const bool accessible = theme.style == "clear";
+            const bool twoColumns = theme.style == "tokyo" && variant == "horizontal";
+            const int columns = twoColumns ? 2 : 1;
+            const int maximumRows = accessible || theme.style == "space" || twoColumns ? 8 : 6;
             const float rowText = accessible ? 13.f : 11.f;
-            const auto h = accessible ? juce::jlimit(24.f, 29.f, (content.getHeight() - 22) / 8.f)
-                                      : juce::jlimit(16.f, 27.f, content.getHeight() * .18f);
-            text(g, theme, "SOURCE                         AMOUNT           DESTINATION",
-                 content.removeFromTop(22), accessible ? 11.f : 10.f, theme.muted, true);
-            const auto rowCount = std::min(
-                accessible ? 8 : 6, static_cast<int>(std::max(0.f, content.getHeight()) / h));
-            for (int i = 0; i < rowCount; ++i)
-            {
-                auto row = content.removeFromTop(h);
-                g.setColour(theme.border.withAlpha(.35f));
-                g.drawHorizontalLine(static_cast<int>(row.getBottom()), row.getX(), row.getRight());
-                text(g, theme, juce::String(i + 1), row.removeFromLeft(20),
-                     accessible ? 12.f : 10.f, theme.muted);
-                if (i < static_cast<int>(routes.size()))
+            const float gap = twoColumns ? 14.f : 0.f;
+            const float width = (content.getWidth() - gap) / columns;
+            const float h = juce::jlimit(accessible ? 24.f : 16.f, accessible ? 29.f : 30.f,
+                                         (content.getHeight() - 22.f) /
+                                             static_cast<float>(maximumRows / columns));
+            const auto rowsPerColumn =
+                std::min(maximumRows / columns,
+                         static_cast<int>(std::max(0.f, content.getHeight() - 22.f) / h));
+            auto fields = [&](Rect row) {
+                std::array<Rect, 4> result;
+                result[0] = row.removeFromLeft(20);
+                const auto fieldWidth = row.getWidth();
+                result[1] = row.removeFromLeft(fieldWidth * (accessible ? .26f : .29f));
+                if (accessible)
                 {
-                    const auto &route = routes[i];
-                    const float width = row.getWidth();
-                    text(g, theme, route.source, row.removeFromLeft(width * .29f), rowText,
-                         route.muted ? theme.muted : theme.text);
-                    auto amount = row.removeFromLeft(width * .25f);
-                    auto bar = amount.reduced(3, 9);
-                    g.setColour(theme.border);
-                    g.fillRoundedRectangle(bar, 2);
-                    bar.setWidth(bar.getWidth() * std::min(1.f, std::abs(route.normalizedDepth)));
-                    g.setColour(route.muted ? theme.muted : theme.accent);
-                    g.fillRoundedRectangle(bar, 2);
-                    text(g, theme, route.amount, amount, accessible ? 12.f : 10.f, theme.text,
-                         false, juce::Justification::centred);
-                    text(g, theme, route.destination, row.reduced(5, 0), rowText, theme.text);
+                    result[3] = row.removeFromLeft(fieldWidth * .44f);
+                    result[2] = row;
                 }
                 else
-                    text(g, theme, i == 0 ? "No routes in this patch — use Edit routes" : "—", row,
-                         rowText, theme.muted);
+                {
+                    result[2] = row.removeFromLeft(fieldWidth * .25f);
+                    result[3] = row;
+                }
+                return result;
+            };
+            for (int column = 0; column < columns; ++column)
+            {
+                auto table = Rect(content.getX() + column * (width + gap), content.getY(), width,
+                                  content.getHeight());
+                const auto heading = fields(table.removeFromTop(22));
+                text(g, theme, "#", heading[0], 10, theme.muted, true);
+                text(g, theme, "SOURCE", heading[1], accessible ? 11.f : 10.f, theme.muted, true);
+                text(g, theme, "AMOUNT", heading[2], accessible ? 11.f : 10.f, theme.muted, true);
+                text(g, theme, "DESTINATION", heading[3].reduced(5, 0), accessible ? 11.f : 10.f,
+                     theme.muted, true);
+                for (int rowIndex = 0; rowIndex < rowsPerColumn; ++rowIndex)
+                {
+                    const int index = column * rowsPerColumn + rowIndex;
+                    auto row = table.removeFromTop(h);
+                    const auto cell = fields(row);
+                    g.setColour(theme.border.withAlpha(.35f));
+                    g.drawHorizontalLine(static_cast<int>(row.getBottom()), row.getX(),
+                                         row.getRight());
+                    text(g, theme, juce::String(index + 1), cell[0], accessible ? 12.f : 10.f,
+                         theme.muted);
+                    if (index < static_cast<int>(routes.size()))
+                    {
+                        const auto &route = routes[index];
+                        text(g, theme, route.source, cell[1], rowText,
+                             route.muted ? theme.muted : theme.text);
+                        auto amount = cell[2];
+                        auto bar =
+                            accessible ? amount.withTrimmedLeft(amount.getWidth() * .48f) : amount;
+                        bar = bar.reduced(3, std::max(3.f, (bar.getHeight() - 7.f) * .5f));
+                        g.setColour(theme.border);
+                        g.fillRoundedRectangle(bar, 2);
+                        bar.setWidth(bar.getWidth() *
+                                     std::min(1.f, std::abs(route.normalizedDepth)));
+                        g.setColour(route.muted ? theme.muted : theme.accent);
+                        g.fillRoundedRectangle(bar, 2);
+                        if (accessible)
+                            amount.setWidth(amount.getWidth() * .48f);
+                        text(g, theme, route.amount, amount, accessible ? 12.f : 10.f, theme.text,
+                             false, juce::Justification::centred);
+                        text(g, theme, route.destination, cell[3].reduced(5, 0), rowText,
+                             theme.text);
+                    }
+                    else
+                        text(g, theme,
+                             utf8(index == 0 ? "No routes in this patch — use Edit routes" : "—"),
+                             row.withTrimmedLeft(20), rowText, theme.muted);
+                }
             }
         }
         else if (kind == "browser")
@@ -1939,10 +3048,11 @@ struct Workspace::Impl
             {
                 Rect s(slots.getX() + i * sw + 2, slots.getY(), sw - 4, slots.getHeight());
                 bezel(g, theme, s, theme.display, 4);
-                text(g, theme, juce::String(i + 1), s.withHeight(15), 10, theme.muted, false,
-                     juce::Justification::centred);
+                text(g, theme, juce::String(i + 1), s.withHeight(15), 10,
+                     theme.display.contrasting(.65f), false, juce::Justification::centred);
                 text(g, theme, parameters.display("fx" + juce::String(i + 1) + ".type"),
-                     s.withTrimmedTop(16), 10, theme.text, false, juce::Justification::centred);
+                     s.withTrimmedTop(16), 10, theme.display.contrasting(.9f), false,
+                     juce::Justification::centred);
             }
             if (content.getHeight() > 36)
                 text(g, theme, "16 native FX slots available in the full editor",
@@ -1950,15 +3060,26 @@ struct Workspace::Impl
         }
         else if (kind == "keyboard")
         {
-            text(g, theme, "Playable MIDI keyboard  •  native scene modes available above",
+            text(g, theme, utf8("Playable MIDI keyboard  •  native scene modes available above"),
                  content.withHeight(23), 12, theme.muted);
         }
         if (theme.style == "space" || theme.style == "tokyo")
         {
             for (float x : {r.getX() + 5, r.getRight() - 5})
             {
-                g.setColour(theme.border);
-                g.fillEllipse(x - 1.7f, r.getY() + 5, 3.4f, 3.4f);
+                for (float y : {r.getY() + 6, r.getBottom() - 6})
+                {
+                    const float size = theme.style == "space" ? 7.f : 5.f;
+                    Rect screw(x - size * .5f, y - size * .5f, size, size);
+                    g.setColour(juce::Colours::black.withAlpha(.6f));
+                    g.fillEllipse(screw.expanded(.6f).translated(0, .6f));
+                    g.setGradientFill(juce::ColourGradient(
+                        theme.border.brighter(.25f), screw.getTopLeft(), theme.border.darker(.4f),
+                        screw.getBottomRight(), false));
+                    g.fillEllipse(screw);
+                    g.setColour(theme.display);
+                    g.drawLine(x - size * .27f, y + .7f, x + size * .27f, y - .7f, 1.2f);
+                }
             }
         }
     }
@@ -1978,7 +3099,8 @@ struct Workspace::Impl
             {
                 Rect n(r.getX() + 2, r.getY() + j * h + 1, r.getWidth() - 4, std::max(12.f, h - 9));
                 bezel(g, theme, n, theme.display, 3);
-                text(g, theme, labels[j], n, 10, theme.text, false, juce::Justification::centred);
+                text(g, theme, labels[j], n, 10, theme.display.contrasting(.9f), false,
+                     juce::Justification::centred);
                 if (j < 3)
                 {
                     g.setColour(theme.accent);
@@ -2001,7 +3123,8 @@ struct Workspace::Impl
                 Rect n(line.getX() + i * w + 3, line.getY(), w - 12,
                        std::max(20.f, line.getHeight() - 3));
                 bezel(g, theme, n, theme.display, 3);
-                text(g, theme, labels[i], n, 11, theme.text, false, juce::Justification::centred);
+                text(g, theme, labels[i], n, 11, theme.display.contrasting(.9f), false,
+                     juce::Justification::centred);
                 if (i < 3)
                 {
                     g.setColour(theme.accent);
@@ -2018,7 +3141,15 @@ struct Workspace::Impl
                 arrayRect(nodes[key], {r.getX() + x * r.getWidth(), r.getY() + y * r.getHeight(),
                                        w * r.getWidth(), h * r.getHeight()});
             bezel(g, theme, n, theme.panel, 7);
-            text(g, theme, title, n.reduced(8, 2).withHeight(19), 13, theme.text, true);
+            if (title == "MOD SOURCES" && n.getWidth() < 110)
+            {
+                g.setColour(theme.text);
+                g.setFont(theme.type(13, true));
+                g.drawFittedText("MOD\nSOURCES", n.reduced(6).toNearestInt(),
+                                 juce::Justification::centred, 2, .85f);
+            }
+            else
+                text(g, theme, title, n.reduced(8, 2).withHeight(19), 13, theme.text, true);
             return n;
         };
         auto wire = [&](juce::Point<float> a, juce::Point<float> b) {
@@ -2093,7 +3224,8 @@ struct Workspace::Impl
         auto modbus = node("modbus", "MOD BUS / ROUTING", .46f, .80f, .30f, .15f);
         text(g, theme, juce::String(static_cast<int>(routes.size())) + " route entries shown",
              modbus.reduced(8).withTrimmedTop(20), 11, theme.muted);
-        text(g, theme, "Routing: " + parameters.display("routing") + "  •  schematic overview",
+        text(g, theme,
+             "Routing: " + parameters.display("routing") + utf8("  •  schematic overview"),
              {r.getX(), r.getBottom() + 7, r.getWidth(), 17}, 11, theme.muted);
     }
 };
@@ -2174,25 +3306,7 @@ void Workspace::resized()
     impl->canvas.setTransform(juce::AffineTransform::scale(impl->scale).translated(impl->offset));
     for (auto &p : impl->placements)
         p.first->setBounds(p.second.toNearestInt());
-    const float h = number(impl->manifest, "headerHeight", 92);
-    const bool compact = h <= 70;
-    const bool wideScenes = impl->theme.style == "aurora" || impl->theme.style == "flow";
-    const int by = compact ? 6 : 19, bh = compact ? 27 : 30;
-    impl->sceneA.setButtonText(wideScenes ? "Scene A" : "A");
-    impl->sceneB.setButtonText(wideScenes ? "Scene B" : "B");
-    impl->sceneA.setBounds(wideScenes ? 330 : 365, by, wideScenes ? 91 : 56, bh);
-    impl->sceneB.setBounds(wideScenes ? 426 : 426, by, wideScenes ? 91 : 56, bh);
-    const int presetY = compact ? 21 : 22;
-    impl->previous.setBounds(538, presetY, 29, 31);
-    impl->presetButton.setBounds(572, presetY, 460, 31);
-    impl->next.setBounds(1037, presetY, 29, 31);
-    impl->skinButton.setBounds(1300, compact ? 16 : 24, 88, compact ? 31 : 33);
-    impl->classicButton.setBounds(1395, compact ? 16 : 24, 166, compact ? 31 : 33);
-    const int navY = static_cast<int>(h) - (compact ? 22 : 25), navH = compact ? 18 : 21;
-    impl->browserButton.setBounds(315, navY, 62, navH);
-    impl->saveButton.setBounds(382, navY, 43, navH);
-    impl->modButton.setBounds(430, navY, 43, navH);
-    impl->fxButton.setBounds(478, navY, 39, navH);
+    impl->layoutHeader();
 }
 void Workspace::paint(juce::Graphics &g)
 {

@@ -11,15 +11,15 @@
   "radius": 7,
   "glow": 0.14,
   "palette": {
-    "background": "#05121D",
-    "panel": "#0B2335",
-    "border": "#41677D",
-    "text": "#E8F2F8",
+    "background": "#031423",
+    "panel": "#071C30",
+    "border": "#416B85",
+    "text": "#EAF4FB",
     "muted": "#B1C9D7",
     "accent": "#83F5D2",
     "secondary": "#74C6DF",
     "display": "#041723",
-    "knob": "#16384B",
+    "knob": "#12334C",
     "red": "#DF8587",
     "yellow": "#EFCB7A",
     "blue": "#26546D"
@@ -32,7 +32,8 @@
       "x": 7,
       "y": 70,
       "w": 238,
-      "h": 675
+      "h": 675,
+      "fontSize": 14
     },
     {
       "id": "panel.flow",
@@ -117,7 +118,8 @@
           227,
           66
         ]
-      }
+      },
+      "fontSize": 14
     },
     {
       "id": "panel.inspector",
@@ -133,7 +135,8 @@
         434,
         268,
         145
-      ]
+      ],
+      "fontSize": 14
     },
     {
       "id": "panel.env1",
@@ -149,7 +152,8 @@
         645,
         192,
         86
-      ]
+      ],
+      "fontSize": 14
     },
     {
       "id": "panel.lfo1",
@@ -165,12 +169,13 @@
         645,
         151,
         86
-      ]
+      ],
+      "fontSize": 14
     },
     {
       "id": "panel.analyzer",
       "kind": "analyzer",
-      "title": "LIVE OUTPUT / ANALYZER",
+      "title": "SPECTROGRAM / ANALYZER",
       "x": 1182,
       "y": 601,
       "w": 397,
@@ -180,7 +185,9 @@
         638,
         316,
         91
-      ]
+      ],
+      "variant": "spectrogram",
+      "fontSize": 14
     },
     {
       "id": "panel.macros",
@@ -190,7 +197,8 @@
       "x": 7,
       "y": 753,
       "w": 388,
-      "h": 229
+      "h": 229,
+      "fontSize": 14
     },
     {
       "id": "panel.matrix",
@@ -199,7 +207,8 @@
       "x": 404,
       "y": 753,
       "w": 708,
-      "h": 229
+      "h": 229,
+      "fontSize": 14
     },
     {
       "id": "panel.output",
@@ -208,29 +217,21 @@
       "x": 1120,
       "y": 753,
       "w": 459,
-      "h": 229
+      "h": 229,
+      "fontSize": 14
     }
   ],
   "controls": [
     {
-      "id": "global.scene-mode",
-      "binding": "scene.mode",
-      "label": "Scene mode",
-      "x": 1092,
-      "y": 27,
-      "w": 112,
-      "h": 26,
-      "kind": "menu"
-    },
-    {
       "id": "global.voice-limit",
       "binding": "scene.polylimit",
       "label": "Voices",
-      "x": 1211,
-      "y": 27,
-      "w": 76,
+      "x": 1134,
+      "y": 793,
+      "w": 100,
       "h": 26,
-      "kind": "menu"
+      "kind": "menu",
+      "fontSize": 11.5
     },
     {
       "id": "flow.routing",
@@ -240,7 +241,8 @@
       "y": 77,
       "w": 174,
       "h": 26,
-      "kind": "menu"
+      "kind": "menu",
+      "fontSize": 11.5
     },
     {
       "id": "flow.osc1.type",
@@ -250,7 +252,8 @@
       "y": 177,
       "w": 120,
       "h": 20,
-      "kind": "menu"
+      "kind": "menu",
+      "fontSize": 11.5
     },
     {
       "id": "flow.osc1.mute",
@@ -281,7 +284,8 @@
       "y": 269,
       "w": 120,
       "h": 20,
-      "kind": "menu"
+      "kind": "menu",
+      "fontSize": 11.5
     },
     {
       "id": "flow.osc2.mute",
@@ -312,7 +316,8 @@
       "y": 361,
       "w": 120,
       "h": 20,
-      "kind": "menu"
+      "kind": "menu",
+      "fontSize": 11.5
     },
     {
       "id": "flow.osc3.mute",
@@ -343,7 +348,8 @@
       "y": 215,
       "w": 133,
       "h": 23,
-      "kind": "menu"
+      "kind": "menu",
+      "fontSize": 11.5
     },
     {
       "id": "flow.filter2.type",
@@ -353,7 +359,8 @@
       "y": 327,
       "w": 133,
       "h": 23,
-      "kind": "menu"
+      "kind": "menu",
+      "fontSize": 11.5
     },
     {
       "id": "flow.fx1.type",
@@ -363,7 +370,8 @@
       "y": 188,
       "w": 96,
       "h": 21,
-      "kind": "menu"
+      "kind": "menu",
+      "fontSize": 11.5
     },
     {
       "id": "flow.fx2.type",
@@ -373,7 +381,8 @@
       "y": 212,
       "w": 96,
       "h": 21,
-      "kind": "menu"
+      "kind": "menu",
+      "fontSize": 11.5
     },
     {
       "id": "flow.fx3.type",
@@ -383,7 +392,8 @@
       "y": 236,
       "w": 96,
       "h": 21,
-      "kind": "menu"
+      "kind": "menu",
+      "fontSize": 11.5
     },
     {
       "id": "flow.fx4.type",
@@ -393,7 +403,8 @@
       "y": 260,
       "w": 96,
       "h": 21,
-      "kind": "menu"
+      "kind": "menu",
+      "fontSize": 11.5
     },
     {
       "id": "flow.fx5.type",
@@ -403,7 +414,8 @@
       "y": 284,
       "w": 96,
       "h": 21,
-      "kind": "menu"
+      "kind": "menu",
+      "fontSize": 11.5
     },
     {
       "id": "flow.fx6.type",
@@ -413,7 +425,8 @@
       "y": 308,
       "w": 96,
       "h": 21,
-      "kind": "menu"
+      "kind": "menu",
+      "fontSize": 11.5
     },
     {
       "id": "flow.fx7.type",
@@ -423,7 +436,8 @@
       "y": 332,
       "w": 96,
       "h": 21,
-      "kind": "menu"
+      "kind": "menu",
+      "fontSize": 11.5
     },
     {
       "id": "flow.fx8.type",
@@ -433,7 +447,8 @@
       "y": 356,
       "w": 96,
       "h": 21,
-      "kind": "menu"
+      "kind": "menu",
+      "fontSize": 11.5
     },
     {
       "id": "inspector.filter1.type",
@@ -443,7 +458,8 @@
       "y": 109,
       "w": 198,
       "h": 25,
-      "kind": "menu"
+      "kind": "menu",
+      "fontSize": 11.5
     },
     {
       "id": "inspector.filter1.subtype",
@@ -453,7 +469,8 @@
       "y": 141,
       "w": 198,
       "h": 25,
-      "kind": "menu"
+      "kind": "menu",
+      "fontSize": 11.5
     },
     {
       "id": "inspector.filter1.cutoff",
@@ -494,9 +511,9 @@
       "accent": "secondary"
     },
     {
-      "id": "inspector.filter2.cutoff",
-      "binding": "filter2.cutoff",
-      "label": "F2 cutoff",
+      "id": "inspector.filter1.keytrack",
+      "binding": "filter1.keytrack",
+      "label": "Keytrack",
       "labelPosition": "top",
       "x": 1295,
       "y": 315,
@@ -507,9 +524,9 @@
       "accent": "secondary"
     },
     {
-      "id": "inspector.filter2.resonance",
-      "binding": "filter2.resonance",
-      "label": "F2 reso",
+      "id": "inspector.filter1.envmod",
+      "binding": "filter1.envmod",
+      "label": "Env Amt",
       "labelPosition": "top",
       "x": 1389,
       "y": 315,
@@ -520,9 +537,9 @@
       "accent": "secondary"
     },
     {
-      "id": "inspector.filter1.envmod",
-      "binding": "filter1.envmod",
-      "label": "F1 env amt",
+      "id": "inspector.filter2.cutoff",
+      "binding": "filter2.cutoff",
+      "label": "F2 Cutoff",
       "labelPosition": "top",
       "x": 1483,
       "y": 315,
@@ -532,16 +549,6 @@
       "fontSize": 12
     },
     {
-      "id": "inspector.filter2.subtype",
-      "binding": "filter2.subtype",
-      "label": "Filter 2 subtype",
-      "x": 1380,
-      "y": 405,
-      "w": 184,
-      "h": 23,
-      "kind": "menu"
-    },
-    {
       "id": "env1.mode",
       "binding": "env1.mode",
       "label": "Envelope mode",
@@ -549,7 +556,8 @@
       "y": 606,
       "w": 161,
       "h": 23,
-      "kind": "menu"
+      "kind": "menu",
+      "fontSize": 11.5
     },
     {
       "id": "env1.attack",
@@ -611,7 +619,8 @@
       "y": 606,
       "w": 146,
       "h": 23,
-      "kind": "menu"
+      "kind": "menu",
+      "fontSize": 11.5
     },
     {
       "id": "lfo1.rate",
@@ -761,7 +770,8 @@
       "y": 942,
       "w": 115,
       "h": 25,
-      "kind": "menu"
+      "kind": "menu",
+      "fontSize": 11.5
     },
     {
       "id": "output.poly-mode",
@@ -771,7 +781,8 @@
       "y": 854,
       "w": 65,
       "h": 27,
-      "kind": "menu"
+      "kind": "menu",
+      "fontSize": 11.5
     },
     {
       "id": "output.glide",
@@ -846,6 +857,7 @@
     "The plot is a qualified filter-response preview. Output meters reflect actual signal levels, and the full native oscilloscope is available through Open scope.",
     "The header uses functioning preset navigation, Scene A/B, skin selection and Full editor access. Exact generated logos, miniature icons, and inert concept tabs are not reproduced as fake controls.",
     "The modulation panel reports native patch routes; route creation and detailed editing use the existing modulation editor.",
-    "These are native vector controls and labels, not an image pasted over the synth. Pixel-identical photographic materials, illustration details and impossible generated labels are not claimed."
+    "These are native vector controls and labels, not an image pasted over the synth. Pixel-identical photographic materials, illustration details and impossible generated labels are not claimed.",
+    "The inspector's lower row exposes first-filter keytrack, first-filter envelope depth, and explicitly labeled F2 cutoff. The concept's per-filter velocity amount is not an independent native parameter. The analysis tile selects the genuine output spectrogram."
   ]
 }

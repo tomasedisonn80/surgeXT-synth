@@ -11,15 +11,15 @@
   "radius": 8,
   "glow": 0.11,
   "palette": {
-    "background": "#B09A76",
-    "panel": "#41412A",
-    "border": "#D0B889",
+    "background": "#BDA380",
+    "panel": "#3D3D28",
+    "border": "#D9C09A",
     "text": "#F7E8BF",
     "muted": "#D1BE8F",
     "accent": "#FFB30B",
     "secondary": "#FFCB39",
     "display": "#160F05",
-    "knob": "#C8B68C",
+    "knob": "#CBB38B",
     "red": "#D96C23",
     "yellow": "#F2BF3B",
     "blue": "#656B45"
@@ -29,23 +29,25 @@
       "id": "space-browser",
       "kind": "browser",
       "title": "PRESET BROWSER",
-      "color": "#B9A582",
+      "color": "#BFA581",
       "ink": "#211C12",
       "x": 5,
       "y": 85,
       "w": 244,
-      "h": 543
+      "h": 543,
+      "fontSize": 16
     },
     {
       "id": "space-global",
       "kind": "scene",
       "title": "",
-      "color": "#B9A582",
+      "color": "#BFA581",
       "ink": "#211C12",
       "x": 256,
       "y": 85,
       "w": 1322,
-      "h": 68
+      "h": 68,
+      "fontSize": 16
     },
     {
       "id": "space-oscillator-1",
@@ -62,7 +64,8 @@
         194,
         250,
         122
-      ]
+      ],
+      "fontSize": 14
     },
     {
       "id": "space-oscillator-2",
@@ -78,7 +81,8 @@
         194,
         250,
         122
-      ]
+      ],
+      "fontSize": 14
     },
     {
       "id": "space-oscillator-3",
@@ -94,7 +98,8 @@
         194,
         250,
         122
-      ]
+      ],
+      "fontSize": 14
     },
     {
       "id": "space-filter-1",
@@ -111,7 +116,8 @@
         194,
         230,
         74
-      ]
+      ],
+      "fontSize": 14
     },
     {
       "id": "space-filter-2",
@@ -128,19 +134,21 @@
         323,
         230,
         74
-      ]
+      ],
+      "fontSize": 14
     },
     {
       "id": "space-mixer",
       "kind": "mixer",
       "title": "OSC MIXER",
-      "color": "#B9A582",
+      "color": "#BFA581",
       "ink": "#211C12",
       "x": 256,
       "y": 420,
       "w": 259,
       "h": 208,
-      "variant": "faders"
+      "variant": "faders",
+      "fontSize": 16
     },
     {
       "id": "space-mixer-inset",
@@ -150,7 +158,8 @@
       "y": 452,
       "w": 176,
       "h": 168,
-      "color": "panel"
+      "color": "panel",
+      "fontSize": 14
     },
     {
       "id": "space-env-1",
@@ -159,7 +168,8 @@
       "x": 520,
       "y": 420,
       "w": 172,
-      "h": 208
+      "h": 208,
+      "fontSize": 14
     },
     {
       "id": "space-env-2",
@@ -168,7 +178,8 @@
       "x": 698,
       "y": 420,
       "w": 174,
-      "h": 208
+      "h": 208,
+      "fontSize": 14
     },
     {
       "id": "space-lfo-envelope",
@@ -177,7 +188,8 @@
       "x": 878,
       "y": 420,
       "w": 173,
-      "h": 208
+      "h": 208,
+      "fontSize": 14
     },
     {
       "id": "space-lfo-panel-1",
@@ -193,7 +205,8 @@
         455,
         148,
         51
-      ]
+      ],
+      "fontSize": 14
     },
     {
       "id": "space-lfo-panel-2",
@@ -209,7 +222,8 @@
         455,
         148,
         51
-      ]
+      ],
+      "fontSize": 14
     },
     {
       "id": "space-lfo-panel-3",
@@ -225,7 +239,8 @@
         455,
         148,
         51
-      ]
+      ],
+      "fontSize": 14
     },
     {
       "id": "space-matrix",
@@ -235,20 +250,22 @@
       "y": 635,
       "w": 495,
       "h": 343,
-      "color": "#B9A582",
-      "ink": "#211C12"
+      "color": "#BFA581",
+      "ink": "#211C12",
+      "fontSize": 16
     },
     {
       "id": "space-effects",
       "kind": "effects",
-      "title": "EFFECTS RACK",
-      "color": "#B9A582",
+      "title": "EFFECTS RACK (8 SLOTS)",
+      "color": "#BFA581",
       "ink": "#211C12",
       "x": 506,
       "y": 635,
       "w": 524,
       "h": 343,
-      "variant": "vertical"
+      "variant": "vertical",
+      "fontSize": 16
     },
     {
       "id": "space-effects-inset",
@@ -258,128 +275,129 @@
       "y": 679,
       "w": 365,
       "h": 266,
-      "color": "panel"
+      "color": "panel",
+      "fontSize": 14
     },
     {
       "id": "space-macros",
       "kind": "macros",
       "title": "MACROS",
-      "color": "#B9A582",
+      "color": "#BFA581",
       "ink": "#211C12",
       "x": 1036,
       "y": 635,
       "w": 283,
-      "h": 343
+      "h": 343,
+      "fontSize": 16
     },
     {
       "id": "space-meters",
       "kind": "output",
       "title": "METERS / MASTER",
-      "color": "#B9A582",
+      "color": "#BFA581",
       "ink": "#211C12",
       "x": 1325,
       "y": 635,
       "w": 253,
-      "h": 151
+      "h": 151,
+      "fontSize": 16
     },
     {
       "id": "space-info",
       "kind": "scene",
       "title": "SCENE CONTROLS",
-      "color": "#B9A582",
+      "color": "#BFA581",
       "ink": "#211C12",
       "x": 1325,
       "y": 794,
       "w": 253,
-      "h": 184
+      "h": 184,
+      "fontSize": 16
     }
   ],
   "controls": [
     {
       "id": "space-scene-mode",
       "binding": "scene.mode",
-      "x": 276,
-      "y": 108,
-      "w": 142,
-      "h": 27,
+      "x": 430,
+      "y": 110,
+      "w": 222,
+      "h": 28,
       "kind": "menu",
       "label": "Scene mode"
     },
     {
       "id": "space-poly-mode",
       "binding": "scene.polymode",
-      "x": 435,
-      "y": 108,
-      "w": 146,
-      "h": 27,
+      "x": 752,
+      "y": 110,
+      "w": 193,
+      "h": 28,
       "kind": "menu",
       "label": "Voice mode"
     },
     {
       "id": "space-voices",
       "binding": "scene.polylimit",
-      "x": 600,
-      "y": 92,
-      "w": 110,
-      "h": 55,
-      "kind": "horizontal",
+      "x": 674,
+      "y": 96,
+      "w": 69,
+      "h": 48,
+      "kind": "value",
       "label": "Voices",
-      "ink": "#211C12"
+      "ink": "#211C12",
+      "fontSize": 10
     },
     {
       "id": "space-glide",
       "binding": "scene.portamento",
-      "x": 736,
-      "y": 92,
-      "w": 152,
-      "h": 55,
-      "kind": "horizontal",
+      "x": 956,
+      "y": 96,
+      "w": 128,
+      "h": 48,
+      "kind": "knob",
       "label": "Glide",
-      "ink": "#211C12"
+      "ink": "#211C12",
+      "labelPosition": "left",
+      "fontSize": 11
     },
     {
       "id": "space-scene-pitch",
       "binding": "scene.pitch",
-      "x": 912,
-      "y": 92,
-      "w": 145,
-      "h": 55,
-      "kind": "horizontal",
-      "label": "Scene pitch",
-      "ink": "#211C12"
+      "x": 1091,
+      "y": 96,
+      "w": 79,
+      "h": 48,
+      "kind": "value",
+      "label": "Pitch",
+      "ink": "#211C12",
+      "fontSize": 10
     },
     {
       "id": "space-scene-width",
       "binding": "scene.width",
-      "x": 1080,
-      "y": 92,
-      "w": 145,
-      "h": 55,
-      "kind": "horizontal",
+      "x": 1176,
+      "y": 96,
+      "w": 106,
+      "h": 48,
+      "kind": "knob",
       "label": "Width",
-      "ink": "#211C12"
-    },
-    {
-      "id": "space-waveshaper-drive",
-      "binding": "filter.drive",
-      "x": 1250,
-      "y": 92,
-      "w": 141,
-      "h": 55,
-      "kind": "horizontal",
-      "label": "Waveshaper drive",
-      "ink": "#211C12"
+      "ink": "#211C12",
+      "labelPosition": "left",
+      "fontSize": 10
     },
     {
       "id": "space-scene-level",
       "binding": "scene.volume",
-      "x": 1413,
-      "y": 92,
-      "w": 145,
-      "h": 55,
-      "kind": "horizontal",
-      "label": "Scene output",
-      "ink": "#211C12"
+      "x": 1293,
+      "y": 95,
+      "w": 121,
+      "h": 49,
+      "kind": "knob",
+      "label": "Output",
+      "ink": "#211C12",
+      "labelPosition": "left",
+      "fontSize": 11
     },
     {
       "id": "space-osc1-type",
@@ -419,7 +437,8 @@
       "w": 47,
       "h": 81,
       "kind": "knob",
-      "label": "Pitch"
+      "label": "Pitch",
+      "fontSize": 11
     },
     {
       "id": "space-osc1-parameter1",
@@ -428,7 +447,8 @@
       "y": 325,
       "w": 47,
       "h": 81,
-      "kind": "knob"
+      "kind": "knob",
+      "fontSize": 11
     },
     {
       "id": "space-osc1-parameter2",
@@ -437,7 +457,8 @@
       "y": 325,
       "w": 47,
       "h": 81,
-      "kind": "knob"
+      "kind": "knob",
+      "fontSize": 11
     },
     {
       "id": "space-osc1-parameter3",
@@ -446,7 +467,8 @@
       "y": 325,
       "w": 47,
       "h": 81,
-      "kind": "knob"
+      "kind": "knob",
+      "fontSize": 11
     },
     {
       "id": "space-osc1-parameter4",
@@ -455,7 +477,8 @@
       "y": 325,
       "w": 47,
       "h": 81,
-      "kind": "knob"
+      "kind": "knob",
+      "fontSize": 11
     },
     {
       "id": "space-osc1-parameter5",
@@ -464,7 +487,8 @@
       "y": 325,
       "w": 47,
       "h": 81,
-      "kind": "knob"
+      "kind": "knob",
+      "fontSize": 11
     },
     {
       "id": "space-osc2-type",
@@ -504,7 +528,8 @@
       "w": 47,
       "h": 81,
       "kind": "knob",
-      "label": "Pitch"
+      "label": "Pitch",
+      "fontSize": 11
     },
     {
       "id": "space-osc2-parameter1",
@@ -513,7 +538,8 @@
       "y": 325,
       "w": 47,
       "h": 81,
-      "kind": "knob"
+      "kind": "knob",
+      "fontSize": 11
     },
     {
       "id": "space-osc2-parameter2",
@@ -522,7 +548,8 @@
       "y": 325,
       "w": 47,
       "h": 81,
-      "kind": "knob"
+      "kind": "knob",
+      "fontSize": 11
     },
     {
       "id": "space-osc2-parameter3",
@@ -531,7 +558,8 @@
       "y": 325,
       "w": 47,
       "h": 81,
-      "kind": "knob"
+      "kind": "knob",
+      "fontSize": 11
     },
     {
       "id": "space-osc2-parameter4",
@@ -540,7 +568,8 @@
       "y": 325,
       "w": 47,
       "h": 81,
-      "kind": "knob"
+      "kind": "knob",
+      "fontSize": 11
     },
     {
       "id": "space-osc2-parameter5",
@@ -549,7 +578,8 @@
       "y": 325,
       "w": 47,
       "h": 81,
-      "kind": "knob"
+      "kind": "knob",
+      "fontSize": 11
     },
     {
       "id": "space-osc3-type",
@@ -589,7 +619,8 @@
       "w": 47,
       "h": 81,
       "kind": "knob",
-      "label": "Pitch"
+      "label": "Pitch",
+      "fontSize": 11
     },
     {
       "id": "space-osc3-parameter1",
@@ -598,7 +629,8 @@
       "y": 325,
       "w": 47,
       "h": 81,
-      "kind": "knob"
+      "kind": "knob",
+      "fontSize": 11
     },
     {
       "id": "space-osc3-parameter2",
@@ -607,7 +639,8 @@
       "y": 325,
       "w": 47,
       "h": 81,
-      "kind": "knob"
+      "kind": "knob",
+      "fontSize": 11
     },
     {
       "id": "space-osc3-parameter3",
@@ -616,7 +649,8 @@
       "y": 325,
       "w": 47,
       "h": 81,
-      "kind": "knob"
+      "kind": "knob",
+      "fontSize": 11
     },
     {
       "id": "space-osc3-parameter4",
@@ -625,7 +659,8 @@
       "y": 325,
       "w": 47,
       "h": 81,
-      "kind": "knob"
+      "kind": "knob",
+      "fontSize": 11
     },
     {
       "id": "space-osc3-parameter5",
@@ -634,7 +669,8 @@
       "y": 325,
       "w": 47,
       "h": 81,
-      "kind": "knob"
+      "kind": "knob",
+      "fontSize": 11
     },
     {
       "id": "space-filter1-type",
@@ -894,7 +930,9 @@
       "w": 50,
       "h": 79,
       "kind": "knob",
-      "label": "Rate"
+      "label": "Rate",
+      "labelPosition": "top",
+      "fontSize": 10
     },
     {
       "id": "space-lfo1-phase",
@@ -904,7 +942,9 @@
       "w": 50,
       "h": 79,
       "kind": "knob",
-      "label": "Phase"
+      "label": "Phase",
+      "labelPosition": "top",
+      "fontSize": 10
     },
     {
       "id": "space-lfo1-magnitude",
@@ -914,7 +954,9 @@
       "w": 50,
       "h": 79,
       "kind": "knob",
-      "label": "Amount"
+      "label": "Amount",
+      "labelPosition": "top",
+      "fontSize": 10
     },
     {
       "id": "space-lfo2-shape",
@@ -934,7 +976,9 @@
       "w": 50,
       "h": 79,
       "kind": "knob",
-      "label": "Rate"
+      "label": "Rate",
+      "labelPosition": "top",
+      "fontSize": 10
     },
     {
       "id": "space-lfo2-phase",
@@ -944,7 +988,9 @@
       "w": 50,
       "h": 79,
       "kind": "knob",
-      "label": "Phase"
+      "label": "Phase",
+      "labelPosition": "top",
+      "fontSize": 10
     },
     {
       "id": "space-lfo2-magnitude",
@@ -954,7 +1000,9 @@
       "w": 50,
       "h": 79,
       "kind": "knob",
-      "label": "Amount"
+      "label": "Amount",
+      "labelPosition": "top",
+      "fontSize": 10
     },
     {
       "id": "space-lfo3-shape",
@@ -974,7 +1022,9 @@
       "w": 50,
       "h": 79,
       "kind": "knob",
-      "label": "Rate"
+      "label": "Rate",
+      "labelPosition": "top",
+      "fontSize": 10
     },
     {
       "id": "space-lfo3-phase",
@@ -984,7 +1034,9 @@
       "w": 50,
       "h": 79,
       "kind": "knob",
-      "label": "Phase"
+      "label": "Phase",
+      "labelPosition": "top",
+      "fontSize": 10
     },
     {
       "id": "space-lfo3-magnitude",
@@ -994,7 +1046,9 @@
       "w": 50,
       "h": 79,
       "kind": "knob",
-      "label": "Amount"
+      "label": "Amount",
+      "labelPosition": "top",
+      "fontSize": 10
     },
     {
       "id": "space-fx1-type",
@@ -1009,14 +1063,15 @@
     {
       "id": "space-macro1",
       "binding": "macro1",
-      "x": 1045,
-      "y": 681,
-      "w": 63,
-      "h": 113,
+      "x": 1039,
+      "y": 678,
+      "w": 66,
+      "h": 126,
       "kind": "knob",
-      "label": "Macro 1",
+      "label": "MACRO 1",
       "labelPosition": "top",
-      "ink": "#211C12"
+      "ink": "#211C12",
+      "fontSize": 11
     },
     {
       "id": "space-fx2-type",
@@ -1031,14 +1086,15 @@
     {
       "id": "space-macro2",
       "binding": "macro2",
-      "x": 1112,
-      "y": 681,
-      "w": 63,
-      "h": 113,
+      "x": 1109,
+      "y": 678,
+      "w": 66,
+      "h": 126,
       "kind": "knob",
-      "label": "Macro 2",
+      "label": "MACRO 2",
       "labelPosition": "top",
-      "ink": "#211C12"
+      "ink": "#211C12",
+      "fontSize": 11
     },
     {
       "id": "space-fx3-type",
@@ -1054,13 +1110,14 @@
       "id": "space-macro3",
       "binding": "macro3",
       "x": 1179,
-      "y": 681,
-      "w": 63,
-      "h": 113,
+      "y": 678,
+      "w": 66,
+      "h": 126,
       "kind": "knob",
-      "label": "Macro 3",
+      "label": "MACRO 3",
       "labelPosition": "top",
-      "ink": "#211C12"
+      "ink": "#211C12",
+      "fontSize": 11
     },
     {
       "id": "space-fx4-type",
@@ -1075,14 +1132,15 @@
     {
       "id": "space-macro4",
       "binding": "macro4",
-      "x": 1246,
-      "y": 681,
-      "w": 63,
-      "h": 113,
+      "x": 1249,
+      "y": 678,
+      "w": 66,
+      "h": 126,
       "kind": "knob",
-      "label": "Macro 4",
+      "label": "MACRO 4",
       "labelPosition": "top",
-      "ink": "#211C12"
+      "ink": "#211C12",
+      "fontSize": 11
     },
     {
       "id": "space-fx5-type",
@@ -1095,18 +1153,6 @@
       "label": "FX slot 5"
     },
     {
-      "id": "space-macro5",
-      "binding": "macro5",
-      "x": 1045,
-      "y": 811,
-      "w": 63,
-      "h": 113,
-      "kind": "knob",
-      "label": "Macro 5",
-      "labelPosition": "top",
-      "ink": "#211C12"
-    },
-    {
       "id": "space-fx6-type",
       "binding": "fx6.type",
       "x": 520,
@@ -1115,18 +1161,6 @@
       "h": 28,
       "kind": "menu",
       "label": "FX slot 6"
-    },
-    {
-      "id": "space-macro6",
-      "binding": "macro6",
-      "x": 1112,
-      "y": 811,
-      "w": 63,
-      "h": 113,
-      "kind": "knob",
-      "label": "Macro 6",
-      "labelPosition": "top",
-      "ink": "#211C12"
     },
     {
       "id": "space-fx7-type",
@@ -1139,18 +1173,6 @@
       "label": "FX slot 7"
     },
     {
-      "id": "space-macro7",
-      "binding": "macro7",
-      "x": 1179,
-      "y": 811,
-      "w": 63,
-      "h": 113,
-      "kind": "knob",
-      "label": "Macro 7",
-      "labelPosition": "top",
-      "ink": "#211C12"
-    },
-    {
       "id": "space-fx8-type",
       "binding": "fx8.type",
       "x": 520,
@@ -1159,18 +1181,6 @@
       "h": 28,
       "kind": "menu",
       "label": "FX slot 8"
-    },
-    {
-      "id": "space-macro8",
-      "binding": "macro8",
-      "x": 1246,
-      "y": 811,
-      "w": 63,
-      "h": 113,
-      "kind": "knob",
-      "label": "Macro 8",
-      "labelPosition": "top",
-      "ink": "#211C12"
     },
     {
       "id": "space-fx1-param0",
@@ -1319,10 +1329,11 @@
     "This is a live native reconstruction of the supplied concept, not a pixel-identical raster overlay. Brushed-brass outer panels, olive control wells, dark outer-panel headings and cream inner-panel type are expressed with native vectors; the concept's photographic texture and condensed display typography remain approximations.",
     "All three oscillators have independent actual algorithm menus and parameter controls. Algorithm names and parameter labels follow the current Surge engine, not nonexistent generic Sample or Granular modes.",
     "Surge has two dedicated envelope generators. The concept's third ADSR bank is explicitly labeled LFO 3 ENVELOPE and edits LFO 3's actual envelope parameters; it is not a third independent EG.",
-    "All eight actual macro controls are presented in two rows of four. The concept exposes only four and leaves the lower macro panel empty.",
+    "Four visible macros follow the reference. The remaining four native macros remain available in Full editor.",
     "Eight front-panel effect type menus and the first slot's dynamic parameters are exposed. The first six parameter knobs follow the concept's upper row, with the remaining two at the lower right; their labels and values remain tied to the actual selected effect. All sixteen native effect slots remain available through Full FX editor.",
     "The original editor remains available for complete preset browsing, modulation editing, advanced oscillator settings and host functions. Browser and routing displays must not be mistaken for new engine capabilities.",
     "Displayed controls and meters show the loaded patch's real values, so they intentionally do not retain the fabricated readouts or apparent activity shown in the reference.",
-    "Filter plots use the actual selected filter-algorithm response. Compact amber FREQ and RES fields follow the reference geometry. Both explicitly labeled WS DRIVE fields and the global drive control edit the same real shared waveshaper drive, not independent per-filter drive."
+    "Filter plots use the actual selected filter-algorithm response. Compact amber FREQ and RES fields follow the reference geometry. Both explicitly labeled WS DRIVE fields and the global drive control edit the same real shared waveshaper drive, not independent per-filter drive.",
+    "The upper brass global strip follows the measured scene-mode, voice, glide, pitch and output placements. Its Width control is labeled accurately; no independent fine-tune parameter is invented. Shared waveshaper drive remains in both filter fields and Full editor."
   ]
 }

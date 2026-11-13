@@ -8,6 +8,7 @@ on:
       - 'resources/data/skins/**/workspace.json'
       - 'resources/data/skins/reference-*/**'
       - 'scripts/reference-workspaces/**'
+      - 'doc/reference-workspaces/references/**'
       - 'src/surge-xt/gui/reference/**'
       - 'src/surge-xt/SurgeSynthEditor.cpp'
       - 'src/surge-xt/SurgeSynthEditor.h'
@@ -55,7 +56,7 @@ jobs:
             libasound2-dev libfreetype-dev libfontconfig1-dev \
             libx11-dev libxext-dev libxrandr-dev libxcursor-dev \
             libxinerama-dev libxrender-dev libxcomposite-dev \
-            xvfb xauth openbox x11-utils
+            xvfb xauth openbox x11-utils python3-pil
 
       - name: Restore native compiler cache
         uses: actions/cache/restore@v4
@@ -108,7 +109,8 @@ jobs:
       - name: Test live native controls and processor behavior
         if: ${{ !cancelled() && steps.native_build.outcome == 'success' }}
         run: |
-          bash scripts/reference-workspaces/run-native-ui.sh \
+          timeout --signal=TERM --kill-after=15s 8m \
+            bash scripts/reference-workspaces/run-native-ui.sh \
             build/src/surge-xt/xt-tests/surge-xt-tests '[reference-workspaces]~[reference-render]' \
             2>&1 | tee screenshot-artifact/native-tests.log
 
@@ -117,7 +119,8 @@ jobs:
         # screenshot evidence from the same successfully built executable.
         if: ${{ !cancelled() && steps.native_build.outcome == 'success' }}
         run: |
-          bash scripts/reference-workspaces/run-native-ui.sh \
+          timeout --signal=TERM --kill-after=15s 10m \
+            bash scripts/reference-workspaces/run-native-ui.sh \
             build/src/surge-xt/xt-tests/surge-xt-tests '[reference-render]' \
             2>&1 | tee screenshot-artifact/native-capture.log
 
@@ -128,6 +131,26 @@ jobs:
         run: |
           bash scripts/reference-workspaces/test-audio-tap.sh normal 2>&1 | tee screenshot-artifact/audio-tap.log
           TSAN_OPTIONS=halt_on_error=1 bash scripts/reference-workspaces/test-audio-tap.sh thread 2>&1 | tee screenshot-artifact/audio-tap-tsan.log
+
+      - name: Compare retained references with actual native captures
+        if: ${{ !cancelled() && steps.native_build.outcome == 'success' }}
+        run: |
+          if [[ -f screenshot-artifact/capture-evidence.json ]]; then
+            python3 scripts/reference-workspaces/compare_renders.py \
+              --references doc/reference-workspaces/references \
+              --captures screenshot-artifact \
+              --output native-comparison \
+              --expect-commit "$GITHUB_SHA"
+          fi
+
+      - name: Upload reference comparison sheets
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-reference-comparison-${{ github.sha }}
+          path: native-comparison/
+          if-no-files-found: ignore
+          retention-days: 14
 
       - name: Upload native screenshots and diagnostic evidence
         if: always()

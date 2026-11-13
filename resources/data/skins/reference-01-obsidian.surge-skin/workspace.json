@@ -12,14 +12,14 @@
   "glow": 0.14,
   "palette": {
     "background": "#0B1014",
-    "panel": "#161B1F",
-    "border": "#53606A",
+    "panel": "#11161A",
+    "border": "#424E58",
     "text": "#E9EEF2",
     "muted": "#B0BEC7",
     "accent": "#FFAD4A",
     "secondary": "#7AD9ED",
     "display": "#090E12",
-    "knob": "#1B252C",
+    "knob": "#1E242A",
     "red": "#D85B45",
     "yellow": "#EAC26E",
     "blue": "#317B91"
@@ -40,7 +40,8 @@
         161,
         221,
         124
-      ]
+      ],
+      "fontSize": 17
     },
     {
       "id": "panel.osc2",
@@ -48,15 +49,16 @@
       "title": "OSC 2",
       "index": 2,
       "x": 9,
-      "y": 299,
+      "y": 298,
       "w": 502,
-      "h": 172,
+      "h": 173,
       "plot": [
         16,
-        343,
+        340,
         221,
-        118
-      ]
+        121
+      ],
+      "fontSize": 17
     },
     {
       "id": "panel.osc3",
@@ -64,15 +66,16 @@
       "title": "OSC 3",
       "index": 3,
       "x": 9,
-      "y": 475,
+      "y": 473,
       "w": 502,
-      "h": 180,
+      "h": 182,
       "plot": [
         16,
-        519,
+        515,
         221,
-        126
-      ]
+        130
+      ],
+      "fontSize": 17
     },
     {
       "id": "panel.filter1",
@@ -88,7 +91,8 @@
         163,
         271,
         114
-      ]
+      ],
+      "fontSize": 15.5
     },
     {
       "id": "panel.filter2",
@@ -104,7 +108,8 @@
         163,
         270,
         114
-      ]
+      ],
+      "fontSize": 15.5
     },
     {
       "id": "panel.routing",
@@ -120,7 +125,8 @@
         412,
         286,
         32
-      ]
+      ],
+      "fontSize": 15.5
     },
     {
       "id": "panel.mixer",
@@ -130,7 +136,8 @@
       "x": 521,
       "y": 465,
       "w": 289,
-      "h": 194
+      "h": 194,
+      "fontSize": 15.5
     },
     {
       "id": "panel.amp",
@@ -146,7 +153,8 @@
         503,
         206,
         70
-      ]
+      ],
+      "fontSize": 15.5
     },
     {
       "id": "panel.macros",
@@ -156,7 +164,8 @@
       "x": 1171,
       "y": 118,
       "w": 405,
-      "h": 198
+      "h": 198,
+      "fontSize": 15.5
     },
     {
       "id": "panel.envelope",
@@ -172,7 +181,8 @@
         359,
         289,
         115
-      ]
+      ],
+      "fontSize": 15.5
     },
     {
       "id": "panel.lfo",
@@ -188,7 +198,8 @@
         535,
         151,
         110
-      ]
+      ],
+      "fontSize": 15.5
     },
     {
       "id": "panel.matrix",
@@ -197,16 +208,18 @@
       "x": 9,
       "y": 670,
       "w": 523,
-      "h": 269
+      "h": 269,
+      "fontSize": 15.5
     },
     {
       "id": "panel.effects",
       "kind": "effects",
-      "title": "FX RACK",
+      "title": "FX RACK (8 SLOTS)",
       "x": 542,
       "y": 670,
       "w": 646,
-      "h": 269
+      "h": 269,
+      "fontSize": 15.5
     },
     {
       "id": "panel.analyzer",
@@ -221,7 +234,8 @@
         743,
         302,
         176
-      ]
+      ],
+      "fontSize": 15.5
     },
     {
       "id": "panel.utility",
@@ -230,7 +244,8 @@
       "x": 9,
       "y": 942,
       "w": 1568,
-      "h": 49
+      "h": 49,
+      "fontSize": 15.5
     }
   ],
   "controls": [
@@ -239,7 +254,7 @@
       "binding": "osc1.type",
       "x": 118,
       "y": 126,
-      "w": 206,
+      "w": 164,
       "h": 25,
       "kind": "menu",
       "label": "Oscillator 1 algorithm"
@@ -247,9 +262,9 @@
     {
       "id": "osc1.keytrack",
       "binding": "osc1.keytrack",
-      "x": 337,
+      "x": 292,
       "y": 128,
-      "w": 56,
+      "w": 64,
       "h": 21,
       "kind": "toggle",
       "label": "KEY"
@@ -299,59 +314,59 @@
     {
       "id": "osc1.shape0",
       "binding": "osc1.param0",
-      "x": 250,
-      "y": 211,
+      "x": 247,
+      "y": 209,
       "w": 48,
       "h": 73,
       "kind": "knob",
-      "fontSize": 10
+      "fontSize": 11
     },
     {
       "id": "osc1.shape1",
       "binding": "osc1.param1",
-      "x": 300,
-      "y": 211,
+      "x": 302,
+      "y": 209,
       "w": 48,
       "h": 73,
       "kind": "knob",
-      "fontSize": 10
+      "fontSize": 11
     },
     {
       "id": "osc1.shape2",
       "binding": "osc1.param2",
-      "x": 350,
-      "y": 211,
+      "x": 357,
+      "y": 209,
       "w": 48,
       "h": 73,
       "kind": "knob",
-      "fontSize": 10
+      "fontSize": 11
     },
     {
       "id": "osc1.shape3",
       "binding": "osc1.param3",
-      "x": 400,
-      "y": 211,
+      "x": 412,
+      "y": 209,
       "w": 48,
       "h": 73,
       "kind": "knob",
-      "fontSize": 10
+      "fontSize": 11
     },
     {
       "id": "osc1.shape4",
       "binding": "osc1.param4",
-      "x": 450,
-      "y": 211,
+      "x": 462,
+      "y": 209,
       "w": 48,
       "h": 73,
       "kind": "knob",
-      "fontSize": 10
+      "fontSize": 11
     },
     {
       "id": "osc2.algorithm",
       "binding": "osc2.type",
       "x": 118,
       "y": 306,
-      "w": 206,
+      "w": 164,
       "h": 25,
       "kind": "menu",
       "label": "Oscillator 2 algorithm"
@@ -359,9 +374,9 @@
     {
       "id": "osc2.keytrack",
       "binding": "osc2.keytrack",
-      "x": 337,
+      "x": 292,
       "y": 308,
-      "w": 56,
+      "w": 64,
       "h": 21,
       "kind": "toggle",
       "label": "KEY"
@@ -411,59 +426,59 @@
     {
       "id": "osc2.shape0",
       "binding": "osc2.param0",
-      "x": 250,
-      "y": 391,
+      "x": 247,
+      "y": 388,
       "w": 48,
       "h": 73,
       "kind": "knob",
-      "fontSize": 10
+      "fontSize": 11
     },
     {
       "id": "osc2.shape1",
       "binding": "osc2.param1",
-      "x": 300,
-      "y": 391,
+      "x": 302,
+      "y": 388,
       "w": 48,
       "h": 73,
       "kind": "knob",
-      "fontSize": 10
+      "fontSize": 11
     },
     {
       "id": "osc2.shape2",
       "binding": "osc2.param2",
-      "x": 350,
-      "y": 391,
+      "x": 357,
+      "y": 388,
       "w": 48,
       "h": 73,
       "kind": "knob",
-      "fontSize": 10
+      "fontSize": 11
     },
     {
       "id": "osc2.shape3",
       "binding": "osc2.param3",
-      "x": 400,
-      "y": 391,
+      "x": 412,
+      "y": 388,
       "w": 48,
       "h": 73,
       "kind": "knob",
-      "fontSize": 10
+      "fontSize": 11
     },
     {
       "id": "osc2.shape4",
       "binding": "osc2.param4",
-      "x": 450,
-      "y": 391,
+      "x": 462,
+      "y": 388,
       "w": 48,
       "h": 73,
       "kind": "knob",
-      "fontSize": 10
+      "fontSize": 11
     },
     {
       "id": "osc3.algorithm",
       "binding": "osc3.type",
       "x": 118,
       "y": 482,
-      "w": 206,
+      "w": 164,
       "h": 25,
       "kind": "menu",
       "label": "Oscillator 3 algorithm"
@@ -471,9 +486,9 @@
     {
       "id": "osc3.keytrack",
       "binding": "osc3.keytrack",
-      "x": 337,
+      "x": 292,
       "y": 484,
-      "w": 56,
+      "w": 64,
       "h": 21,
       "kind": "toggle",
       "label": "KEY"
@@ -523,52 +538,52 @@
     {
       "id": "osc3.shape0",
       "binding": "osc3.param0",
-      "x": 250,
-      "y": 567,
+      "x": 247,
+      "y": 563,
       "w": 48,
       "h": 73,
       "kind": "knob",
-      "fontSize": 10
+      "fontSize": 11
     },
     {
       "id": "osc3.shape1",
       "binding": "osc3.param1",
-      "x": 300,
-      "y": 567,
+      "x": 302,
+      "y": 563,
       "w": 48,
       "h": 73,
       "kind": "knob",
-      "fontSize": 10
+      "fontSize": 11
     },
     {
       "id": "osc3.shape2",
       "binding": "osc3.param2",
-      "x": 350,
-      "y": 567,
+      "x": 357,
+      "y": 563,
       "w": 48,
       "h": 73,
       "kind": "knob",
-      "fontSize": 10
+      "fontSize": 11
     },
     {
       "id": "osc3.shape3",
       "binding": "osc3.param3",
-      "x": 400,
-      "y": 567,
+      "x": 412,
+      "y": 563,
       "w": 48,
       "h": 73,
       "kind": "knob",
-      "fontSize": 10
+      "fontSize": 11
     },
     {
       "id": "osc3.shape4",
       "binding": "osc3.param4",
-      "x": 450,
-      "y": 567,
+      "x": 462,
+      "y": 563,
       "w": 48,
       "h": 73,
       "kind": "knob",
-      "fontSize": 10
+      "fontSize": 11
     },
     {
       "id": "filter1.algorithm",
@@ -583,46 +598,46 @@
     {
       "id": "filter1.cutoff",
       "binding": "filter1.cutoff",
-      "x": 546,
-      "y": 287,
+      "x": 548,
+      "y": 291,
       "w": 61,
-      "h": 85,
+      "h": 82,
       "kind": "knob",
       "label": "CUTOFF",
-      "fontSize": 11
+      "fontSize": 12
     },
     {
       "id": "filter1.resonance",
       "binding": "filter1.resonance",
-      "x": 622,
-      "y": 287,
+      "x": 625,
+      "y": 291,
       "w": 61,
-      "h": 85,
+      "h": 82,
       "kind": "knob",
       "label": "RES",
-      "fontSize": 11
+      "fontSize": 12
     },
     {
       "id": "filter1.envmod",
       "binding": "filter1.envmod",
       "x": 698,
-      "y": 287,
+      "y": 291,
       "w": 61,
-      "h": 85,
+      "h": 82,
       "kind": "knob",
       "label": "ENV",
-      "fontSize": 11
+      "fontSize": 12
     },
     {
       "id": "filter1.keytrack",
       "binding": "filter1.keytrack",
-      "x": 774,
-      "y": 287,
+      "x": 769,
+      "y": 291,
       "w": 56,
-      "h": 85,
+      "h": 82,
       "kind": "knob",
       "label": "KEY",
-      "fontSize": 11
+      "fontSize": 12
     },
     {
       "id": "filter2.algorithm",
@@ -637,50 +652,50 @@
     {
       "id": "filter2.cutoff",
       "binding": "filter2.cutoff",
-      "x": 869,
-      "y": 287,
+      "x": 871,
+      "y": 291,
       "w": 61,
-      "h": 85,
+      "h": 82,
       "kind": "knob",
       "label": "CUTOFF",
-      "accent": "secondary",
-      "fontSize": 11
+      "accent": "accent",
+      "fontSize": 12
     },
     {
       "id": "filter2.resonance",
       "binding": "filter2.resonance",
-      "x": 945,
-      "y": 287,
+      "x": 948,
+      "y": 291,
       "w": 61,
-      "h": 85,
+      "h": 82,
       "kind": "knob",
       "label": "RES",
-      "accent": "secondary",
-      "fontSize": 11
+      "accent": "accent",
+      "fontSize": 12
     },
     {
       "id": "filter2.envmod",
       "binding": "filter2.envmod",
       "x": 1021,
-      "y": 287,
+      "y": 291,
       "w": 61,
-      "h": 85,
+      "h": 82,
       "kind": "knob",
       "label": "ENV",
-      "accent": "secondary",
-      "fontSize": 11
+      "accent": "accent",
+      "fontSize": 12
     },
     {
       "id": "filter2.keytrack",
       "binding": "filter2.keytrack",
-      "x": 1097,
-      "y": 287,
+      "x": 1092,
+      "y": 291,
       "w": 56,
-      "h": 85,
+      "h": 82,
       "kind": "knob",
       "label": "KEY",
-      "accent": "secondary",
-      "fontSize": 11
+      "accent": "accent",
+      "fontSize": 12
     },
     {
       "id": "routing.mode",
@@ -923,7 +938,7 @@
       "w": 78,
       "h": 74,
       "kind": "knob",
-      "fontSize": 11
+      "fontSize": 12
     },
     {
       "id": "macros.2",
@@ -933,7 +948,7 @@
       "w": 78,
       "h": 74,
       "kind": "knob",
-      "fontSize": 11
+      "fontSize": 12
     },
     {
       "id": "macros.3",
@@ -943,7 +958,7 @@
       "w": 78,
       "h": 74,
       "kind": "knob",
-      "fontSize": 11
+      "fontSize": 12
     },
     {
       "id": "macros.4",
@@ -953,7 +968,7 @@
       "w": 78,
       "h": 74,
       "kind": "knob",
-      "fontSize": 11
+      "fontSize": 12
     },
     {
       "id": "macros.5",
@@ -963,7 +978,7 @@
       "w": 78,
       "h": 74,
       "kind": "knob",
-      "fontSize": 11
+      "fontSize": 12
     },
     {
       "id": "macros.6",
@@ -973,7 +988,7 @@
       "w": 78,
       "h": 74,
       "kind": "knob",
-      "fontSize": 11
+      "fontSize": 12
     },
     {
       "id": "macros.7",
@@ -983,7 +998,7 @@
       "w": 78,
       "h": 74,
       "kind": "knob",
-      "fontSize": 11
+      "fontSize": 12
     },
     {
       "id": "macros.8",
@@ -993,7 +1008,7 @@
       "w": 78,
       "h": 74,
       "kind": "knob",
-      "fontSize": 11
+      "fontSize": 12
     },
     {
       "id": "envelope.attack",
@@ -1235,13 +1250,14 @@
     {
       "id": "master.level",
       "binding": "master.volume",
-      "x": 1151,
-      "y": 22,
-      "w": 86,
-      "h": 81,
+      "x": 1362,
+      "y": 45,
+      "w": 144,
+      "h": 53,
       "kind": "knob",
       "label": "MASTER",
-      "fontSize": 11
+      "fontSize": 12,
+      "labelPosition": "left"
     },
     {
       "id": "scene.mode",
@@ -1316,8 +1332,9 @@
     "Per-filter envelope depth replaces the concept's independent drive knobs. The actual shared waveshaper drive remains available in the routing strip.",
     "The routing diagram is a schematic of supported native modes, not a general-purpose modular patcher. All controls use native parameter IDs.",
     "The first eight FX algorithms and six current slot-1 parameters are shown; the full editor retains all sixteen FX slots and every effect parameter.",
-    "Live output meters and the native scope action replace fabricated spectrum activity. Oscillator and envelope graphics reflect current state rather than baked image traces.",
+    "The output spectrum and meters use actual main-output samples from the independent processor tap; the native scope action opens the detailed analyzer. Oscillator and envelope graphics reflect current state rather than baked image traces.",
     "A compact bottom utility strip adds real scene and voice controls in the concept's otherwise unused lower margin. Full original editor, advanced modulation and preset workflows remain available.",
-    "The compact oscillator tuning readouts and stacked right-envelope A/D/S/R fields are live, draggable and unit-aware numeric controls. Macro knob centres have been aligned to the concept's two measured rows."
+    "The compact oscillator tuning readouts and stacked right-envelope A/D/S/R fields are live, draggable and unit-aware numeric controls. Macro knob centres have been aligned to the concept's two measured rows.",
+    "The oscillator knob centres, filter controls and dark-panel tones were measured against the native b93cc34 capture and reference pixels; native material and header rendering still require separate comparison."
   ]
 }

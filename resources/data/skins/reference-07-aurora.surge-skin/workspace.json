@@ -11,15 +11,15 @@
   "radius": 11,
   "glow": 0.18,
   "palette": {
-    "background": "#1B1028",
-    "panel": "#2A203C",
-    "border": "#70568C",
+    "background": "#170E25",
+    "panel": "#2A2243",
+    "border": "#71518E",
     "text": "#F1E8FF",
     "muted": "#CEBDE0",
     "accent": "#C285F4",
     "secondary": "#77DDFB",
-    "display": "#160F25",
-    "knob": "#30233F",
+    "display": "#1B1030",
+    "knob": "#302044",
     "red": "#F49ADD",
     "yellow": "#E0CCFF",
     "blue": "#5A6DDC"
@@ -32,7 +32,8 @@
       "x": 8,
       "y": 75,
       "w": 236,
-      "h": 610
+      "h": 610,
+      "fontSize": 14
     },
     {
       "id": "p.global",
@@ -41,7 +42,8 @@
       "x": 8,
       "y": 693,
       "w": 236,
-      "h": 289
+      "h": 289,
+      "fontSize": 14
     },
     {
       "id": "p.osc1",
@@ -58,7 +60,8 @@
         143,
         174,
         43
-      ]
+      ],
+      "fontSize": 14
     },
     {
       "id": "p.osc2",
@@ -75,7 +78,8 @@
         143,
         248,
         43
-      ]
+      ],
+      "fontSize": 14
     },
     {
       "id": "p.osc3",
@@ -92,7 +96,8 @@
         143,
         174,
         43
-      ]
+      ],
+      "fontSize": 14
     },
     {
       "id": "p.playground",
@@ -108,7 +113,8 @@
         309,
         969,
         179
-      ]
+      ],
+      "fontSize": 14
     },
     {
       "id": "p.filter1",
@@ -124,7 +130,8 @@
         112,
         178,
         62
-      ]
+      ],
+      "fontSize": 14
     },
     {
       "id": "p.filter2",
@@ -140,7 +147,8 @@
         257,
         178,
         62
-      ]
+      ],
+      "fontSize": 14
     },
     {
       "id": "p.mixer",
@@ -150,48 +158,61 @@
       "x": 1259,
       "y": 369,
       "w": 320,
-      "h": 183
+      "h": 183,
+      "fontSize": 14
     },
     {
       "id": "p.amp-env",
       "kind": "envelope",
-      "title": "AMP ENV",
+      "title": "Amp Env",
       "index": 1,
       "x": 253,
       "y": 560,
       "w": 232,
       "h": 127,
       "plot": [
-        268,
-        591,
-        201,
-        28
-      ]
+        340,
+        575,
+        129,
+        39
+      ],
+      "fontSize": 14
     },
     {
       "id": "p.filter-env",
       "kind": "envelope",
-      "title": "ENV 2",
+      "title": "Env 2",
       "index": 2,
       "x": 494,
       "y": 560,
       "w": 225,
       "h": 127,
       "plot": [
-        508,
-        591,
-        197,
-        28
-      ]
+        579,
+        575,
+        126,
+        39
+      ],
+      "fontSize": 14
     },
     {
       "id": "p.lfo3-env",
-      "kind": "tabs",
+      "kind": "lfo",
       "title": "LFO 3 ENVELOPE",
       "x": 728,
       "y": 560,
       "w": 213,
-      "h": 127
+      "h": 127,
+      "index": 3,
+      "variant": "compact",
+      "plot": [
+        837,
+        575,
+        91,
+        39
+      ],
+      "envelope": true,
+      "fontSize": 12
     },
     {
       "id": "p.lfo1",
@@ -204,10 +225,11 @@
       "h": 127,
       "plot": [
         961,
-        595,
+        592,
         180,
-        28
-      ]
+        33
+      ],
+      "fontSize": 14
     },
     {
       "id": "p.lfo2",
@@ -220,10 +242,11 @@
       "h": 127,
       "plot": [
         1172,
-        595,
+        592,
         182,
-        28
-      ]
+        33
+      ],
+      "fontSize": 14
     },
     {
       "id": "p.lfo3",
@@ -236,10 +259,11 @@
       "h": 127,
       "plot": [
         1385,
-        595,
+        592,
         182,
-        28
-      ]
+        33
+      ],
+      "fontSize": 14
     },
     {
       "id": "p.matrix",
@@ -248,7 +272,8 @@
       "x": 253,
       "y": 695,
       "w": 599,
-      "h": 194
+      "h": 194,
+      "fontSize": 14
     },
     {
       "id": "p.fx",
@@ -259,7 +284,8 @@
       "x": 860,
       "y": 695,
       "w": 719,
-      "h": 194
+      "h": 194,
+      "fontSize": 14
     },
     {
       "id": "p.macros",
@@ -268,7 +294,8 @@
       "x": 253,
       "y": 897,
       "w": 996,
-      "h": 85
+      "h": 85,
+      "fontSize": 14
     },
     {
       "id": "p.mod-overview",
@@ -284,7 +311,8 @@
         930,
         296,
         40
-      ]
+      ],
+      "fontSize": 14
     }
   ],
   "controls": [
@@ -310,9 +338,9 @@
     {
       "id": "c.osc1-param0",
       "binding": "osc1.param0",
-      "x": 263,
+      "x": 272,
       "y": 148,
-      "w": 65,
+      "w": 49,
       "h": 107,
       "fontSize": 11
     },
@@ -480,9 +508,9 @@
     {
       "id": "c.osc3-param0",
       "binding": "osc3.param0",
-      "x": 933,
+      "x": 946,
       "y": 148,
-      "w": 65,
+      "w": 49,
       "h": 107,
       "fontSize": 11
     },
@@ -962,45 +990,49 @@
       "id": "c.lfo3-env-attack",
       "binding": "lfo3.attack",
       "x": 739,
-      "y": 596,
+      "y": 623,
       "w": 44,
-      "h": 83,
-      "kind": "fader",
+      "h": 59,
+      "kind": "knob",
       "label": "A",
-      "fontSize": 10
+      "fontSize": 10,
+      "labelPosition": "top"
     },
     {
       "id": "c.lfo3-env-decay",
       "binding": "lfo3.decay",
       "x": 787,
-      "y": 596,
+      "y": 623,
       "w": 44,
-      "h": 83,
-      "kind": "fader",
+      "h": 59,
+      "kind": "knob",
       "label": "D",
-      "fontSize": 10
+      "fontSize": 10,
+      "labelPosition": "top"
     },
     {
       "id": "c.lfo3-env-sustain",
       "binding": "lfo3.sustain",
       "x": 835,
-      "y": 596,
+      "y": 623,
       "w": 44,
-      "h": 83,
-      "kind": "fader",
+      "h": 59,
+      "kind": "knob",
       "label": "S",
-      "fontSize": 10
+      "fontSize": 10,
+      "labelPosition": "top"
     },
     {
       "id": "c.lfo3-env-release",
       "binding": "lfo3.release",
       "x": 883,
-      "y": 596,
+      "y": 623,
       "w": 44,
-      "h": 83,
-      "kind": "fader",
+      "h": 59,
+      "kind": "knob",
       "label": "R",
-      "fontSize": 10
+      "fontSize": 10,
+      "labelPosition": "top"
     },
     {
       "id": "c.lfo1-shape",
@@ -1248,102 +1280,82 @@
     {
       "id": "c.macro1",
       "binding": "macro1",
-      "x": 267,
-      "y": 922,
-      "w": 112,
-      "h": 55,
+      "x": 291,
+      "y": 921,
+      "w": 106,
+      "h": 47,
       "labelPosition": "right",
       "fontSize": 11
     },
     {
       "id": "c.macro2",
       "binding": "macro2",
-      "x": 389,
-      "y": 922,
-      "w": 112,
-      "h": 55,
+      "x": 425,
+      "y": 921,
+      "w": 106,
+      "h": 47,
       "labelPosition": "right",
       "fontSize": 11
     },
     {
       "id": "c.macro3",
       "binding": "macro3",
-      "x": 511,
-      "y": 922,
-      "w": 112,
-      "h": 55,
+      "x": 545,
+      "y": 921,
+      "w": 106,
+      "h": 47,
       "labelPosition": "right",
       "fontSize": 11
     },
     {
       "id": "c.macro4",
       "binding": "macro4",
-      "x": 633,
-      "y": 922,
-      "w": 112,
-      "h": 55,
+      "x": 667,
+      "y": 921,
+      "w": 106,
+      "h": 47,
       "labelPosition": "right",
       "fontSize": 11
     },
     {
       "id": "c.macro5",
       "binding": "macro5",
-      "x": 755,
-      "y": 922,
-      "w": 112,
-      "h": 55,
+      "x": 788,
+      "y": 921,
+      "w": 106,
+      "h": 47,
       "labelPosition": "right",
       "fontSize": 11
     },
     {
       "id": "c.macro6",
       "binding": "macro6",
-      "x": 877,
-      "y": 922,
-      "w": 112,
-      "h": 55,
+      "x": 904,
+      "y": 921,
+      "w": 106,
+      "h": 47,
       "labelPosition": "right",
       "fontSize": 11
     },
     {
       "id": "c.macro7",
       "binding": "macro7",
-      "x": 999,
-      "y": 922,
-      "w": 112,
-      "h": 55,
+      "x": 1027,
+      "y": 921,
+      "w": 106,
+      "h": 47,
       "labelPosition": "right",
       "fontSize": 11
     },
     {
       "id": "c.macro8",
       "binding": "macro8",
-      "x": 1121,
-      "y": 922,
-      "w": 112,
-      "h": 55,
+      "x": 1143,
+      "y": 921,
+      "w": 106,
+      "h": 47,
       "labelPosition": "right",
       "fontSize": 11
-    },
-    {
-      "id": "c.header-routing",
-      "binding": "routing",
-      "x": 1092,
-      "y": 25,
-      "w": 98,
-      "h": 26,
-      "kind": "menu",
-      "label": "Filter routing"
-    },
-    {
-      "id": "c.header-waveshaper",
-      "binding": "filter.waveshaper",
-      "x": 1197,
-      "y": 25,
-      "w": 94,
-      "h": 26,
-      "kind": "menu",
-      "label": "Waveshaper"
     }
   ],
   "adaptations": [
@@ -1354,6 +1366,8 @@
     "Eight visible effect algorithm menus are functional; all sixteen effect slots and advanced editors remain available through Full editor.",
     "X/Y morph, fabricated browser patch names and counts, arbitrary signal rewiring and unsupported sample playback are not implied. Native scene modes and filter routing use the actual engine options.",
     "The header is the shared working preset, scene and skin navigation. All eight macro controls keep their real assignable names and current values. Global parameter rows use real typed-value controls in place of the concept's unsupported parameter fields.",
-    "Plot titles identify previews; the original full editor retains the measured output oscilloscope and detailed modulation assignment workflows."
+    "Plot titles identify previews; the original full editor retains the measured output oscilloscope and detailed modulation assignment workflows.",
+    "The third envelope bank now uses the reference's rotary ADSR arrangement and a trace from LFO 3's native envelope stages; its LFO 3 ENVELOPE title preserves the engine distinction.",
+    "Header filter-routing and waveshaper duplicates are removed to match the functional navigation band; their complete native controls remain in Full editor."
   ]
 }

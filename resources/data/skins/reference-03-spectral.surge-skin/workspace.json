@@ -12,12 +12,12 @@
   "glow": 0.18,
   "palette": {
     "background": "#080911",
-    "panel": "#121526",
-    "border": "#4F426F",
+    "panel": "#080B16",
+    "border": "#41466F",
     "text": "#E9E6FF",
     "muted": "#B7B8D1",
-    "accent": "#B864FF",
-    "secondary": "#20D3F0",
+    "accent": "#B65CFF",
+    "secondary": "#12D1F4",
     "display": "#060811",
     "knob": "#151A2B",
     "red": "#EE77CC",
@@ -112,20 +112,31 @@
       ]
     },
     {
+      "id": "p.filter-heading",
+      "kind": "tabs",
+      "title": "DUAL FILTERS",
+      "x": 454,
+      "y": 463,
+      "w": 694,
+      "h": 25,
+      "fontSize": 12
+    },
+    {
       "id": "p.filter1",
       "kind": "filter",
       "title": "FILTER 1",
       "index": 1,
       "x": 454,
-      "y": 463,
+      "y": 488,
       "w": 325,
-      "h": 247,
+      "h": 222,
       "plot": [
-        465,
+        495,
         523,
-        196,
+        212,
         165
-      ]
+      ],
+      "fontSize": 14
     },
     {
       "id": "p.filter2",
@@ -133,15 +144,16 @@
       "title": "FILTER 2",
       "index": 2,
       "x": 785,
-      "y": 463,
+      "y": 488,
       "w": 285,
-      "h": 247,
+      "h": 222,
       "plot": [
-        796,
+        799,
         523,
-        163,
+        208,
         165
-      ]
+      ],
+      "fontSize": 14
     },
     {
       "id": "p.routing",
@@ -149,15 +161,16 @@
       "title": "ROUTING",
       "variant": "vertical",
       "x": 1077,
-      "y": 463,
+      "y": 488,
       "w": 71,
-      "h": 247,
+      "h": 222,
       "plot": [
         1086,
-        532,
+        542,
         53,
-        163
-      ]
+        153
+      ],
+      "fontSize": 11
     },
     {
       "id": "p.macros",
@@ -192,7 +205,7 @@
       "x": 1157,
       "y": 463,
       "w": 405,
-      "h": 174,
+      "h": 247,
       "plot": [
         1170,
         503,
@@ -212,7 +225,7 @@
     {
       "id": "p.effects",
       "kind": "effects",
-      "title": "FX RACK",
+      "title": "FX (8 Slots)",
       "index": 1,
       "x": 692,
       "y": 724,
@@ -240,21 +253,22 @@
       "id": "c.scene-volume",
       "binding": "scene.volume",
       "label": "Scene level",
-      "x": 1114,
-      "y": 10,
-      "w": 78,
-      "h": 77,
-      "fontSize": 11
+      "x": 1270,
+      "y": 640,
+      "w": 56,
+      "h": 63,
+      "fontSize": 9.5
     },
     {
       "id": "c.master-volume",
       "binding": "master.volume",
       "label": "Master",
-      "x": 1208,
-      "y": 10,
-      "w": 78,
-      "h": 77,
-      "fontSize": 11
+      "x": 1364,
+      "y": 29,
+      "w": 113,
+      "h": 57,
+      "fontSize": 12,
+      "labelPosition": "left"
     },
     {
       "id": "c.osc1-type",
@@ -289,38 +303,38 @@
       "id": "c.osc1-pitch",
       "binding": "osc1.pitch",
       "label": "Tune",
-      "x": 223,
+      "x": 221,
       "y": 153,
-      "w": 51,
+      "w": 46,
       "h": 78,
-      "fontSize": 10
+      "fontSize": 11
     },
     {
       "id": "c.osc1-param0",
       "binding": "osc1.param0",
-      "x": 277,
+      "x": 270,
       "y": 153,
-      "w": 51,
+      "w": 46,
       "h": 78,
-      "fontSize": 10
+      "fontSize": 11
     },
     {
       "id": "c.osc1-param1",
       "binding": "osc1.param1",
-      "x": 331,
+      "x": 328,
       "y": 153,
-      "w": 51,
+      "w": 46,
       "h": 78,
-      "fontSize": 10
+      "fontSize": 11
     },
     {
       "id": "c.osc1-param2",
       "binding": "osc1.param2",
-      "x": 385,
+      "x": 388,
       "y": 153,
-      "w": 51,
+      "w": 46,
       "h": 78,
-      "fontSize": 10
+      "fontSize": 11
     },
     {
       "id": "c.osc2-type",
@@ -355,41 +369,41 @@
       "id": "c.osc2-pitch",
       "binding": "osc2.pitch",
       "label": "Tune",
-      "x": 223,
+      "x": 221,
       "y": 295,
-      "w": 51,
+      "w": 46,
       "h": 78,
-      "fontSize": 10,
+      "fontSize": 11,
       "accent": "secondary"
     },
     {
       "id": "c.osc2-param0",
       "binding": "osc2.param0",
-      "x": 277,
+      "x": 270,
       "y": 295,
-      "w": 51,
+      "w": 46,
       "h": 78,
-      "fontSize": 10,
+      "fontSize": 11,
       "accent": "secondary"
     },
     {
       "id": "c.osc2-param1",
       "binding": "osc2.param1",
-      "x": 331,
+      "x": 328,
       "y": 295,
-      "w": 51,
+      "w": 46,
       "h": 78,
-      "fontSize": 10,
+      "fontSize": 11,
       "accent": "secondary"
     },
     {
       "id": "c.osc2-param2",
       "binding": "osc2.param2",
-      "x": 385,
+      "x": 388,
       "y": 295,
-      "w": 51,
+      "w": 46,
       "h": 78,
-      "fontSize": 10,
+      "fontSize": 11,
       "accent": "secondary"
     },
     {
@@ -425,38 +439,38 @@
       "id": "c.osc3-pitch",
       "binding": "osc3.pitch",
       "label": "Tune",
-      "x": 223,
+      "x": 221,
       "y": 435,
-      "w": 51,
+      "w": 46,
       "h": 78,
-      "fontSize": 10
+      "fontSize": 11
     },
     {
       "id": "c.osc3-param0",
       "binding": "osc3.param0",
-      "x": 277,
+      "x": 270,
       "y": 435,
-      "w": 51,
+      "w": 46,
       "h": 78,
-      "fontSize": 10
+      "fontSize": 11
     },
     {
       "id": "c.osc3-param1",
       "binding": "osc3.param1",
-      "x": 331,
+      "x": 328,
       "y": 435,
-      "w": 51,
+      "w": 46,
       "h": 78,
-      "fontSize": 10
+      "fontSize": 11
     },
     {
       "id": "c.osc3-param2",
       "binding": "osc3.param2",
-      "x": 385,
+      "x": 388,
       "y": 435,
-      "w": 51,
+      "w": 46,
       "h": 78,
-      "fontSize": 10
+      "fontSize": 11
     },
     {
       "id": "c.scene-polymode",
@@ -493,221 +507,229 @@
       "binding": "osc1.level",
       "kind": "fader",
       "label": "OSC 1",
-      "x": 40,
+      "x": 51,
       "y": 611,
       "w": 58,
-      "h": 91
+      "h": 91,
+      "fontSize": 11
     },
     {
       "id": "c.osc2-level",
       "binding": "osc2.level",
       "kind": "fader",
       "label": "OSC 2",
-      "x": 109,
+      "x": 136,
       "y": 611,
       "w": 58,
-      "h": 91
+      "h": 91,
+      "fontSize": 11
     },
     {
       "id": "c.osc3-level",
       "binding": "osc3.level",
       "kind": "fader",
       "label": "OSC 3",
-      "x": 178,
+      "x": 220,
       "y": 611,
       "w": 58,
-      "h": 91
+      "h": 91,
+      "fontSize": 11
     },
     {
       "id": "c.noise-level",
       "binding": "noise.level",
       "label": "Noise",
-      "x": 247,
-      "y": 612,
-      "w": 57,
-      "h": 88
+      "x": 314,
+      "y": 620,
+      "w": 48,
+      "h": 82,
+      "fontSize": 11
     },
     {
       "id": "c.ring12-level",
       "binding": "ring12.level",
       "label": "Ring 1×2",
-      "x": 312,
-      "y": 612,
-      "w": 57,
-      "h": 88
+      "x": 374,
+      "y": 620,
+      "w": 48,
+      "h": 82,
+      "fontSize": 11
     },
     {
       "id": "c.ring23-level",
       "binding": "ring23.level",
       "label": "Ring 2×3",
-      "x": 377,
-      "y": 612,
-      "w": 57,
-      "h": 88
+      "x": 1180,
+      "y": 640,
+      "w": 80,
+      "h": 63,
+      "fontSize": 10.5
     },
     {
       "id": "c.observatory-param0",
       "binding": "osc1.param0",
-      "x": 479,
+      "x": 527,
       "y": 383,
-      "w": 82,
+      "w": 56,
       "h": 65,
-      "fontSize": 10
+      "fontSize": 10.5
     },
     {
       "id": "c.observatory-param1",
       "binding": "osc1.param1",
-      "x": 573,
+      "x": 616,
       "y": 383,
-      "w": 82,
+      "w": 56,
       "h": 65,
-      "fontSize": 10
+      "fontSize": 10.5
     },
     {
       "id": "c.observatory-param2",
       "binding": "osc1.param2",
-      "x": 667,
+      "x": 705,
       "y": 383,
-      "w": 82,
+      "w": 56,
       "h": 65,
-      "fontSize": 10
+      "fontSize": 10.5
     },
     {
       "id": "c.observatory-param3",
       "binding": "osc1.param3",
-      "x": 761,
+      "x": 794,
       "y": 383,
-      "w": 82,
+      "w": 56,
       "h": 65,
-      "fontSize": 10
+      "fontSize": 10.5
     },
     {
       "id": "c.observatory-param4",
       "binding": "osc1.param4",
-      "x": 855,
+      "x": 883,
       "y": 383,
-      "w": 82,
+      "w": 56,
       "h": 65,
-      "fontSize": 10
+      "fontSize": 10.5
     },
     {
       "id": "c.observatory-param5",
       "binding": "osc1.param5",
-      "x": 949,
+      "x": 975,
       "y": 383,
-      "w": 82,
+      "w": 56,
       "h": 65,
-      "fontSize": 10
+      "fontSize": 10.5
     },
     {
       "id": "c.observatory-param6",
       "binding": "osc1.param6",
-      "x": 1043,
+      "x": 1067,
       "y": 383,
-      "w": 82,
+      "w": 56,
       "h": 65,
-      "fontSize": 10
+      "fontSize": 10.5
     },
     {
       "id": "c.filter1-type",
       "binding": "filter1.type",
       "kind": "menu",
-      "x": 555,
-      "y": 474,
-      "w": 212,
+      "x": 591,
+      "y": 493,
+      "w": 111,
       "h": 24
     },
     {
       "id": "c.filter1-cutoff",
       "binding": "filter1.cutoff",
       "label": "Cutoff",
-      "x": 667,
-      "y": 516,
-      "w": 48,
-      "h": 82,
-      "fontSize": 10
+      "x": 713,
+      "y": 525,
+      "w": 55,
+      "h": 66,
+      "fontSize": 10.5
     },
     {
       "id": "c.filter1-resonance",
       "binding": "filter1.resonance",
       "label": "Reso",
-      "x": 721,
-      "y": 516,
-      "w": 48,
-      "h": 82,
-      "fontSize": 10
+      "x": 713,
+      "y": 592,
+      "w": 55,
+      "h": 61,
+      "fontSize": 10.5
     },
     {
       "id": "c.filter1-keytrack",
       "binding": "filter1.keytrack",
       "label": "Keytrack",
-      "x": 667,
-      "y": 609,
-      "w": 48,
-      "h": 82,
-      "fontSize": 10
+      "x": 495,
+      "y": 690,
+      "w": 212,
+      "h": 18,
+      "fontSize": 9.5,
+      "kind": "value"
     },
     {
       "id": "c.filter1-envmod",
       "binding": "filter1.envmod",
       "label": "Env amt",
-      "x": 721,
-      "y": 609,
-      "w": 48,
-      "h": 82,
-      "fontSize": 10
+      "x": 713,
+      "y": 655,
+      "w": 55,
+      "h": 48,
+      "fontSize": 10.5
     },
     {
       "id": "c.filter2-type",
       "binding": "filter2.type",
       "kind": "menu",
-      "x": 886,
-      "y": 474,
-      "w": 173,
+      "x": 918,
+      "y": 493,
+      "w": 97,
       "h": 24
     },
     {
       "id": "c.filter2-cutoff",
       "binding": "filter2.cutoff",
       "label": "Cutoff",
-      "x": 964,
-      "y": 516,
-      "w": 46,
-      "h": 82,
-      "fontSize": 10,
+      "x": 1010,
+      "y": 525,
+      "w": 55,
+      "h": 66,
+      "fontSize": 10.5,
       "accent": "secondary"
     },
     {
       "id": "c.filter2-resonance",
       "binding": "filter2.resonance",
       "label": "Reso",
-      "x": 1014,
-      "y": 516,
-      "w": 46,
-      "h": 82,
-      "fontSize": 10,
+      "x": 1010,
+      "y": 592,
+      "w": 55,
+      "h": 61,
+      "fontSize": 10.5,
       "accent": "secondary"
     },
     {
       "id": "c.filter2-keytrack",
       "binding": "filter2.keytrack",
       "label": "Keytrack",
-      "x": 964,
-      "y": 609,
-      "w": 46,
-      "h": 82,
-      "fontSize": 10,
-      "accent": "secondary"
+      "x": 799,
+      "y": 690,
+      "w": 208,
+      "h": 18,
+      "fontSize": 9.5,
+      "accent": "secondary",
+      "kind": "value"
     },
     {
       "id": "c.filter2-envmod",
       "binding": "filter2.envmod",
       "label": "Env amt",
-      "x": 1014,
-      "y": 609,
-      "w": 46,
-      "h": 82,
-      "fontSize": 10,
+      "x": 1010,
+      "y": 655,
+      "w": 55,
+      "h": 48,
+      "fontSize": 10.5,
       "accent": "secondary"
     },
     {
@@ -716,83 +738,83 @@
       "kind": "menu",
       "label": "Filter routing",
       "x": 1081,
-      "y": 493,
+      "y": 515,
       "w": 63,
-      "h": 25
+      "h": 23
     },
     {
       "id": "c.macro1",
       "binding": "macro1",
-      "x": 1166,
-      "y": 148,
-      "w": 47,
+      "x": 1167,
+      "y": 152,
+      "w": 58,
       "h": 88,
-      "fontSize": 10
+      "fontSize": 11
     },
     {
       "id": "c.macro2",
       "binding": "macro2",
-      "x": 1215,
-      "y": 148,
-      "w": 47,
+      "x": 1233,
+      "y": 152,
+      "w": 58,
       "h": 88,
-      "fontSize": 10,
+      "fontSize": 11,
       "accent": "secondary"
     },
     {
       "id": "c.macro3",
       "binding": "macro3",
-      "x": 1264,
-      "y": 148,
-      "w": 47,
+      "x": 1299,
+      "y": 152,
+      "w": 58,
       "h": 88,
-      "fontSize": 10
+      "fontSize": 11
     },
     {
       "id": "c.macro4",
       "binding": "macro4",
-      "x": 1313,
-      "y": 148,
-      "w": 47,
+      "x": 1364,
+      "y": 152,
+      "w": 58,
       "h": 88,
-      "fontSize": 10,
+      "fontSize": 11,
       "accent": "secondary"
     },
     {
       "id": "c.macro5",
       "binding": "macro5",
-      "x": 1362,
-      "y": 148,
-      "w": 47,
+      "x": 1430,
+      "y": 152,
+      "w": 58,
       "h": 88,
-      "fontSize": 10
+      "fontSize": 11
     },
     {
       "id": "c.macro6",
       "binding": "macro6",
-      "x": 1411,
-      "y": 148,
-      "w": 47,
+      "x": 1495,
+      "y": 152,
+      "w": 58,
       "h": 88,
-      "fontSize": 10
+      "fontSize": 11
     },
     {
       "id": "c.macro7",
       "binding": "macro7",
-      "x": 1460,
-      "y": 148,
-      "w": 47,
-      "h": 88,
-      "fontSize": 10
+      "x": 1336,
+      "y": 640,
+      "w": 80,
+      "h": 63,
+      "fontSize": 10.5
     },
     {
       "id": "c.macro8",
       "binding": "macro8",
-      "x": 1509,
-      "y": 148,
-      "w": 47,
-      "h": 88,
-      "fontSize": 10
+      "x": 1450,
+      "y": 640,
+      "w": 80,
+      "h": 63,
+      "fontSize": 10.5
     },
     {
       "id": "c.env1-mode",
@@ -989,12 +1011,13 @@
   "adaptations": [
     "Faithful native layout adaptation, not a pixel-identical copy of generated concept art; all displayed values come from the real processor.",
     "The observatory draws a perspective stack of the current actual oscillator preview. It is not represented as a live spectrum or a sweep of different wavetable frames.",
-    "All eight native macros are displayed in the reference's top-right macro strip, replacing the six-knob concept arrangement.",
+    "Six primary macros occupy the reference's top-right strip. The remaining two real native macros and the ring 2 × 3 level remain accessible in the utility row beneath the LFO plot.",
     "Only actual Surge oscillator algorithms and dynamically named parameters are offered. The concept-only generic Sample and Granular modes are not fabricated.",
     "Filter plots are explicitly labeled response previews. Real cutoff, resonance, keytracking and envelope-amount controls remain independently bound to each filter.",
     "The visible envelope is native ENV 1, enlarged to the reference plot with compact live ADSR controls along its right edge. ENV 2, the other LFOs, modulation routing and all sixteen effect slots remain available through Full editor.",
-    "The output section shows actual output meters. Open scope leads to the native detailed analyzer rather than displaying a fabricated spectrum.",
+    "The output section shows an actual main-output spectrum and meters from the independent processor tap. Open scope leads to the native detailed analyzer; an inactive stream is not replaced with fabricated spectrum activity.",
     "The native header supplies preset navigation, scene selection, skin selection and Full editor access; decorative observatory artwork and concept-only navigation tabs are not reproduced.",
-    "The LFO and envelope use compact editable numeric fields in the reference's right-side value columns; the field values and units are the actual engine values, not text baked into artwork."
+    "The LFO and envelope use compact editable numeric fields in the reference's right-side value columns; the field values and units are the actual engine values, not text baked into artwork.",
+    "The filter plots use the reference single-column rotary arrangement, with keytracking retained as a compact field beneath each plot. Oscillator faders and observatory controls use measured reference centres."
   ]
 }

@@ -30,7 +30,7 @@
     add_custom_command(TARGET ${name}
       POST_BUILD
       WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-      COMMAND ${pluginval_exe} --validate-in-process --output-dir "." --validate "${plugin_location}/${plugin_name}" || exit 1
+      COMMAND ${pluginval_exe} --validate-in-process --output-dir "." --validate "${plugin_location}/${plugin}" || exit 1
       )
     add_dependencies(surge-pluginval-all ${name})
   endfunction()

@@ -15,6 +15,27 @@ class SurgeSynthProcessor;
 namespace Surge::GUI::Reference
 {
 
+/** A bounded, owned snapshot of the source wavetable, before oscillator warping.
+    Rows interpolate actual source frames; columns interpolate their phase samples.
+    These are neither frequency bins nor captures of currently sounding voices.
+    A busy table loader produces an empty snapshot and never stalls the audio thread.
+*/
+struct WavetablePreview
+{
+    static constexpr int pointsPerFrame = 256;
+    static constexpr int maximumFrames = 48;
+    std::vector<float> samples;
+    int frames{0}, sourceFrames{0}, sourceFrameSize{0};
+    float position{0.f};
+    bool sampleMode{false};
+
+    bool available() const
+    {
+        return frames > 0 && frames <= maximumFrames &&
+               samples.size() == static_cast<size_t>(frames * pointsPerFrame);
+    }
+};
+
 /** Message-thread display data, independent of the audible oscillator instances.
 
     `oscillator` contains previews produced by the actual oscillator algorithms at
@@ -32,6 +53,7 @@ struct VisualData
 {
     std::array<std::vector<float>, 3> oscillator;
     std::array<juce::String, 3> oscillatorStatus;
+    std::array<WavetablePreview, 3> wavetable;
     std::vector<float> output;
     float left{0.f};
     float right{0.f};
@@ -52,6 +74,20 @@ class Visuals
     */
     static void waveform(juce::Graphics &, juce::Rectangle<float>, const std::vector<float> &,
                          juce::Colour primary, juce::Colour secondary, bool terrain = false);
+
+    enum class WavetableView
+    {
+        perspective,
+        ribbons
+    };
+    /** Render actual copied source frames. Perspective is a wire mesh; ribbons
+        projects the same source frames along a nearly frontal plane. Colour,
+        glow and projection are cosmetic, while every ordinate comes from samples.
+        The highlighted row follows the actual unmodulated wavetable position.
+    */
+    static void wavetable(juce::Graphics &, juce::Rectangle<float>, const WavetablePreview &,
+                          juce::Colour primary, juce::Colour secondary,
+                          WavetableView = WavetableView::perspective);
 
     static void grid(juce::Graphics &, juce::Rectangle<float>, juce::Colour);
 };

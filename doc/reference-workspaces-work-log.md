@@ -154,3 +154,34 @@ passed. Its real native run is a separate, still-pending verification step.
   without a completed native render comparison.
 * Waves 1–8 are complete (48 distinct agents); waves 9–10 remain. Work is
   recorded as complete only when actually executed.
+
+
+## Wave 9 — native comparison corrections (six further agents, completed)
+
+This continuation recovered `4406bbe` and preserved the previous session's
+uncommitted encoding, fixture and lifecycle fixes in an isolated checkout.
+The supplied references remain comparison inputs; their PNG pixels are never
+loaded by the operative workspace renderer.
+
+| Agent | Substantive result |
+|---|---|
+| w09_visual_01_04 | Inspected concepts and actual native renders 01–04; calibrated surfaces and control centres, Ivory ordering, Spectral filter columns, Bauhaus fields |
+| w09_visual_05_10 | Inspected concepts and actual native renders 05–10; aligned hardware global rows, Aurora envelopes, ClearSignal inspector and Live filter/mixer geometry |
+| w09_native_build | Reproduced missing local Freetype/X11 build headers; downloaded and inspected `4406bbe` native evidence; identified and reviewed real lifecycle/test-harness fixes |
+| w09_header_reconstruction | Reconstructed ten measured native headers, real navigation and meters; checked all 115 positioned header buttons for mutual overlap |
+| w09_modulation_controls | Added stable native route identities, undoable depth editing, selection/mute/removal, keyboard controls and safe zero-depth crossing |
+| w09_live_visuals | Added bounded snapshots of actual source wavetable frames and native mesh/ribbon projections without mutating audible oscillators |
+
+Root integrated the components, removed five manifest controls overlapping the
+new Tokyo/ClearSignal navigation, added material-specific vector surfaces and
+knobs, metallic faders, visible plot grids, true logarithmic filter ticks, a
+selected-route inspector and real LFO envelope views. All ten packages pass
+strict geometry validation. Native runtime and render verification of this
+checkpoint is the next gate; a successful syntax check is not visual acceptance.
+
+## Wave 10 — native verification and comparison (in progress)
+
+The final six assignments cover native behavior and independent reference
+comparison for five pairs of skins. Results will be recorded against the exact
+compiled commit after the native screenshots arrive. The completed work count
+is 54 distinct agents at the end of wave 9.

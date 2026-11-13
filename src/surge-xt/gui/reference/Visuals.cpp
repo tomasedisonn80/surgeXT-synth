@@ -45,7 +45,7 @@ std::vector<float> sampleOscillator(SurgeStorage &storage, OscillatorStorage &os
     status = "Preview unavailable";
     if (!(storage.dsamplerate > 0.0) || !std::isfinite(storage.dsamplerate))
     {
-        status = "Preview unavailable — sample rate";
+        status = juce::String::fromUTF8("Preview unavailable — sample rate");
         return result;
     }
     const auto type = oscillatorStorage.type.val.i;
@@ -55,12 +55,12 @@ std::vector<float> sampleOscillator(SurgeStorage &storage, OscillatorStorage &os
     {
         // Plaits uses a global engine RNG. Do not perturb audible instances or
         // attempt to save/reseed it while the audio callback can be running.
-        status = "Twist preview unavailable — use native oscillator editor";
+        status = juce::String::fromUTF8("Twist preview unavailable — use native oscillator editor");
         return result;
     }
     if (type == ot_audioinput)
     {
-        status = "Audio Input — no source preview";
+        status = juce::String::fromUTF8("Audio Input — no source preview");
         return result;
     }
     if (type == ot_alias)
@@ -99,7 +99,7 @@ std::vector<float> sampleOscillator(SurgeStorage &storage, OscillatorStorage &os
         std::unique_lock<std::mutex> lock(storage.waveTableDataMutex, std::try_to_lock);
         if (!lock.owns_lock())
         {
-            status = "Preview updating — wavetable busy";
+            status = juce::String::fromUTF8("Preview updating — wavetable busy");
             return result;
         }
 
@@ -130,7 +130,7 @@ std::vector<float> sampleOscillator(SurgeStorage &storage, OscillatorStorage &os
         std::unique_lock<std::mutex> lock(storage.waveTableDataMutex, std::try_to_lock);
         if (!lock.owns_lock())
         {
-            status = "Preview updating — wavetable busy";
+            status = juce::String::fromUTF8("Preview updating — wavetable busy");
             return result;
         }
         // Display mode resets phase and keeps preview-only delay lines private.
@@ -152,7 +152,7 @@ std::vector<float> sampleOscillator(SurgeStorage &storage, OscillatorStorage &os
             std::unique_lock<std::mutex> lock(storage.waveTableDataMutex, std::try_to_lock);
             if (!lock.owns_lock())
             {
-                status = "Preview updating — wavetable busy";
+                status = juce::String::fromUTF8("Preview updating — wavetable busy");
                 return {}; // no partial or misleading waveform during a table replacement
             }
 
@@ -171,6 +171,69 @@ std::vector<float> sampleOscillator(SurgeStorage &storage, OscillatorStorage &os
     }
 
     status = "Native oscillator preview";
+    return result;
+}
+
+WavetablePreview sampleWavetable(SurgeStorage &storage, const OscillatorStorage &oscillator)
+{
+    WavetablePreview result;
+    const auto type = oscillator.type.val.i;
+    if (type != ot_wavetable && type != ot_window)
+        return result;
+
+    // Allocate before locking. The lock protects only a bounded, read-only copy;
+    // no oscillator, graphic object or shared random generator is used here.
+    std::vector<float> samples(WavetablePreview::maximumFrames * WavetablePreview::pointsPerFrame);
+    {
+        std::unique_lock<std::mutex> lock(storage.waveTableDataMutex, std::try_to_lock);
+        if (!lock.owns_lock())
+            return result;
+        if (oscillator.type.val.i != type)
+            return result;
+        const auto &table = oscillator.wt;
+        if (!table.everBuilt || table.size < 1 || table.size > max_wtable_size ||
+            table.n_tables < 1 || table.n_tables > max_subtables || table.TableF32Data == nullptr)
+            return result;
+
+        result.sampleMode = (table.flags & wtf_is_sample) != 0;
+        // Ignore only the silent padding appended by the loader. Keep actual
+        // source silence: it is valid data and must remain visible.
+        result.sourceFrames = table.data_n_tables > 0
+                                  ? std::min(table.data_n_tables, static_cast<int>(table.n_tables))
+                                  : static_cast<int>(table.n_tables);
+        result.sourceFrameSize = table.size;
+        result.frames = result.sourceFrames == 1 ? 1 : WavetablePreview::maximumFrames;
+        result.position = juce::jlimit(0.f, 1.f, finiteSample(oscillator.p[0].val.f));
+
+        for (int frame = 0; frame < result.frames; ++frame)
+        {
+            const float sourcePosition = static_cast<float>(frame) * (result.sourceFrames - 1) /
+                                         static_cast<float>(std::max(1, result.frames - 1));
+            const int lowerFrame = static_cast<int>(sourcePosition);
+            const int upperFrame = std::min(result.sourceFrames - 1, lowerFrame + 1);
+            const auto *lower = table.TableF32WeakPointers[0][lowerFrame];
+            const auto *upper = table.TableF32WeakPointers[0][upperFrame];
+            if (lower == nullptr || upper == nullptr)
+                return {};
+            const float blend = sourcePosition - lowerFrame;
+            for (int point = 0; point < WavetablePreview::pointsPerFrame; ++point)
+            {
+                const float phase = static_cast<float>(point) * (table.size - 1) /
+                                    (WavetablePreview::pointsPerFrame - 1);
+                const auto left = static_cast<int>(phase);
+                const auto right = std::min(table.size - 1, left + 1);
+                const float fraction = phase - left;
+                const float a = finiteSample(lower[left]) * (1.f - fraction) +
+                                finiteSample(lower[right]) * fraction;
+                const float b = finiteSample(upper[left]) * (1.f - fraction) +
+                                finiteSample(upper[right]) * fraction;
+                samples[frame * WavetablePreview::pointsPerFrame + point] =
+                    finiteSample(a * (1.f - blend) + b * blend);
+            }
+        }
+    }
+    samples.resize(result.frames * WavetablePreview::pointsPerFrame);
+    result.samples = std::move(samples);
     return result;
 }
 
@@ -208,9 +271,13 @@ VisualData Visuals::sample(SurgeSynthProcessor &processor, int scene)
     // channel peaks from its independent SPSC output tap on the message thread.
 
     for (int oscillator = 0; oscillator < n_oscs; ++oscillator)
+    {
         data.oscillator[static_cast<std::size_t>(oscillator)] =
             sampleOscillator(synth.storage, synth.storage.getPatch().scene[scene].osc[oscillator],
                              data.oscillatorStatus[static_cast<std::size_t>(oscillator)]);
+        data.wavetable[static_cast<std::size_t>(oscillator)] =
+            sampleWavetable(synth.storage, synth.storage.getPatch().scene[scene].osc[oscillator]);
+    }
 
     return data;
 }
@@ -222,7 +289,9 @@ void Visuals::grid(juce::Graphics &graphics, juce::Rectangle<float> bounds, juce
 
     juce::Graphics::ScopedSaveState saved(graphics);
     graphics.reduceClipRegion(bounds.toNearestInt());
-    graphics.setColour(colour.withMultipliedAlpha(0.12f));
+    // Callers already supply a subdued grid colour. Multiplying by .12 here
+    // made a .10-alpha grid effectively invisible in the native captures.
+    graphics.setColour(colour.withMultipliedAlpha(0.65f));
     constexpr int columns = 16;
     constexpr int rows = 8;
     for (int column = 0; column <= columns; ++column)
@@ -235,7 +304,7 @@ void Visuals::grid(juce::Graphics &graphics, juce::Rectangle<float> bounds, juce
         const float y = bounds.getY() + bounds.getHeight() * row / rows;
         graphics.drawHorizontalLine(juce::roundToInt(y), bounds.getX(), bounds.getRight());
     }
-    graphics.setColour(colour.withMultipliedAlpha(0.25f));
+    graphics.setColour(colour);
     graphics.drawHorizontalLine(juce::roundToInt(bounds.getCentreY()), bounds.getX(),
                                 bounds.getRight());
 }
@@ -304,6 +373,133 @@ void Visuals::waveform(juce::Graphics &graphics, juce::Rectangle<float> bounds,
         graphics.strokePath(path, juce::PathStrokeType(4.f));
         graphics.setColour(colour.withMultipliedAlpha(0.30f + 0.62f * t));
         graphics.strokePath(path, juce::PathStrokeType(layer == layerCount - 1 ? 1.8f : 0.9f));
+    }
+}
+
+void Visuals::wavetable(juce::Graphics &g, juce::Rectangle<float> bounds,
+                        const WavetablePreview &data, juce::Colour primary, juce::Colour secondary,
+                        WavetableView view)
+{
+    if (bounds.isEmpty() || !data.available())
+        return;
+    juce::Graphics::ScopedSaveState save(g);
+    g.reduceClipRegion(bounds.toNearestInt());
+    const bool ribbons = view == WavetableView::ribbons;
+    const bool miniature = bounds.getWidth() < 300 || bounds.getHeight() < 100;
+    const auto sampleAt = [&](float frame, int phase) {
+        const float selected = juce::jlimit(0.f, 1.f, frame) * (data.frames - 1);
+        const int lo = static_cast<int>(selected), hi = std::min(data.frames - 1, lo + 1);
+        const auto p = juce::jlimit(0, WavetablePreview::pointsPerFrame - 1, phase);
+        const float mix = selected - lo;
+        return juce::jlimit(
+            -1.35f, 1.35f,
+            finiteSample(data.samples[lo * WavetablePreview::pointsPerFrame + p]) * (1.f - mix) +
+                finiteSample(data.samples[hi * WavetablePreview::pointsPerFrame + p]) * mix);
+    };
+    const auto project = [&](float frame, int phase) -> juce::Point<float> {
+        const float u = static_cast<float>(phase) / (WavetablePreview::pointsPerFrame - 1);
+        const auto amplitude = sampleAt(frame, phase);
+        if (ribbons)
+        {
+            // Nearly frontal projection; depth subtly displaces each real frame.
+            const float depth = frame - .5f;
+            return {bounds.getX() + bounds.getWidth() * (.025f + .95f * u),
+                    bounds.getCentreY() +
+                        bounds.getHeight() * (depth * .17f - amplitude * (.28f + .05f * frame))};
+        }
+        const float depth = 1.f - frame;
+        return {bounds.getX() +
+                    bounds.getWidth() * (.025f + .13f * depth + u * (.95f - .26f * depth)),
+                bounds.getY() +
+                    bounds.getHeight() * (.40f + .37f * frame - amplitude * (.19f + .07f * frame))};
+    };
+    const auto trace = [&](float frame) {
+        juce::Path path;
+        for (int phase = 0; phase < WavetablePreview::pointsPerFrame; ++phase)
+        {
+            const auto p = project(frame, phase);
+            if (phase == 0)
+                path.startNewSubPath(p);
+            else
+                path.lineTo(p);
+        }
+        return path;
+    };
+    const auto gradient = [&](float alpha) {
+        auto paint = juce::ColourGradient(secondary.withMultipliedAlpha(alpha), bounds.getTopLeft(),
+                                          primary.withMultipliedAlpha(alpha),
+                                          bounds.getBottomRight(), false);
+        if (ribbons)
+        {
+            paint.addColour(.35, primary.withMultipliedAlpha(alpha));
+            paint.addColour(
+                .63,
+                secondary.interpolatedWith(juce::Colours::white, .16f).withMultipliedAlpha(alpha));
+            paint.addColour(.9, secondary.withMultipliedAlpha(alpha));
+        }
+        return paint;
+    };
+
+    // Connect actual adjacent frames to create a true, phase-aligned wire mesh.
+    // No frequency-domain interpretation is implied by these connections.
+    if (!ribbons && data.frames > 1)
+    {
+        g.setGradientFill(gradient(miniature ? .11f : .20f));
+        for (int phase = 0; phase < WavetablePreview::pointsPerFrame; phase += miniature ? 24 : 8)
+        {
+            juce::Path seam;
+            for (int frame = 0; frame < data.frames; ++frame)
+            {
+                const auto p = project(static_cast<float>(frame) / (data.frames - 1), phase);
+                if (frame == 0)
+                    seam.startNewSubPath(p);
+                else
+                    seam.lineTo(p);
+            }
+            g.strokePath(seam, juce::PathStrokeType(.65f));
+        }
+    }
+    for (int frame = 0; frame < data.frames; ++frame)
+    {
+        if (miniature && (frame % 2 != 0) && frame != data.frames - 1)
+            continue;
+        const float t = static_cast<float>(frame) / std::max(1, data.frames - 1);
+        auto path = trace(t);
+        if (ribbons && frame % 4 == 0)
+        {
+            auto fill = path;
+            fill.lineTo(bounds.getRight(), bounds.getCentreY());
+            fill.lineTo(bounds.getX(), bounds.getCentreY());
+            fill.closeSubPath();
+            g.setGradientFill(gradient(miniature ? .012f : .023f));
+            g.fillPath(fill);
+        }
+        g.setGradientFill(gradient(ribbons ? .032f : .024f));
+        g.strokePath(path, juce::PathStrokeType(miniature ? 3.f : ribbons ? 8.f : 5.f));
+        g.setGradientFill(gradient(ribbons ? .20f + .37f * t : .28f + .51f * t));
+        g.strokePath(path, juce::PathStrokeType(miniature ? .7f : .85f));
+    }
+    // Sample-mode morph is not a playback-head position. Do not imply that the
+    // source table's static morph setting tracks sample playback.
+    if (!data.sampleMode)
+    {
+        const auto selected = trace(data.position);
+        g.setGradientFill(gradient(.11f));
+        g.strokePath(selected, juce::PathStrokeType(miniature ? 4.f : 9.f));
+        g.setGradientFill(gradient(.35f));
+        g.strokePath(selected, juce::PathStrokeType(miniature ? 2.4f : 4.f));
+        auto highlight = gradient(.95f);
+        highlight.addColour(.5, primary.interpolatedWith(juce::Colours::white, .55f));
+        g.setGradientFill(highlight);
+        g.strokePath(selected, juce::PathStrokeType(miniature ? 1.3f : 1.7f));
+        if (!miniature && !ribbons)
+        {
+            const auto point = project(data.position, WavetablePreview::pointsPerFrame / 2);
+            g.setColour(primary.withAlpha(.17f));
+            g.fillEllipse(point.x - 9, point.y - 9, 18, 18);
+            g.setColour(primary.interpolatedWith(juce::Colours::white, .5f));
+            g.drawEllipse(point.x - 4, point.y - 4, 8, 8, 1.5f);
+        }
     }
 }
 

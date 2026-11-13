@@ -11,17 +11,17 @@
   "radius": 14,
   "glow": 0.035,
   "palette": {
-    "background": "#E7D9C8",
-    "panel": "#F0E5D7",
-    "border": "#AE9878",
-    "text": "#24271C",
-    "muted": "#625845",
+    "background": "#EADCC9",
+    "panel": "#F0E4D8",
+    "border": "#B6A17D",
+    "text": "#1D2018",
+    "muted": "#4F4B3A",
     "accent": "#31543A",
     "secondary": "#A2DD8D",
     "display": "#102B1B",
-    "knob": "#F4EADA",
+    "knob": "#F5E8D0",
     "red": "#A24B35",
-    "yellow": "#B9A05E",
+    "yellow": "#B59A59",
     "blue": "#45696C"
   },
   "panels": [
@@ -32,7 +32,8 @@
       "x": 4,
       "y": 95,
       "w": 498,
-      "h": 565
+      "h": 565,
+      "fontSize": 18
     },
     {
       "id": "ivory.oscillator1",
@@ -49,7 +50,8 @@
         190,
         241,
         119
-      ]
+      ],
+      "fontSize": 14
     },
     {
       "id": "ivory.oscillator2",
@@ -66,7 +68,8 @@
         367,
         241,
         119
-      ]
+      ],
+      "fontSize": 14
     },
     {
       "id": "ivory.oscillator3",
@@ -83,7 +86,8 @@
         542,
         241,
         104
-      ]
+      ],
+      "fontSize": 14
     },
     {
       "id": "ivory.filters",
@@ -92,7 +96,8 @@
       "x": 508,
       "y": 95,
       "w": 615,
-      "h": 326
+      "h": 326,
+      "fontSize": 18
     },
     {
       "id": "ivory.filter1",
@@ -108,7 +113,8 @@
         176,
         237,
         138
-      ]
+      ],
+      "fontSize": 14
     },
     {
       "id": "ivory.filter2",
@@ -124,12 +130,13 @@
         176,
         240,
         138
-      ]
+      ],
+      "fontSize": 14
     },
     {
       "id": "ivory.routing",
       "kind": "routing",
-      "title": "ROUTE",
+      "title": "ROUTING",
       "variant": "vertical",
       "x": 778,
       "y": 129,
@@ -140,7 +147,8 @@
         201,
         45,
         98
-      ]
+      ],
+      "fontSize": 12
     },
     {
       "id": "ivory.mixer",
@@ -150,7 +158,8 @@
       "x": 508,
       "y": 424,
       "w": 615,
-      "h": 236
+      "h": 236,
+      "fontSize": 18
     },
     {
       "id": "ivory.ring12",
@@ -159,7 +168,8 @@
       "x": 909,
       "y": 463,
       "w": 204,
-      "h": 93
+      "h": 93,
+      "fontSize": 14
     },
     {
       "id": "ivory.ring23",
@@ -168,7 +178,8 @@
       "x": 909,
       "y": 561,
       "w": 204,
-      "h": 93
+      "h": 93,
+      "fontSize": 14
     },
     {
       "id": "ivory.macros",
@@ -177,7 +188,8 @@
       "x": 1127,
       "y": 95,
       "w": 455,
-      "h": 205
+      "h": 205,
+      "fontSize": 18
     },
     {
       "id": "ivory.envelopes",
@@ -194,7 +206,8 @@
         357,
         320,
         139
-      ]
+      ],
+      "fontSize": 16
     },
     {
       "id": "ivory.matrix",
@@ -203,7 +216,8 @@
       "x": 4,
       "y": 667,
       "w": 541,
-      "h": 305
+      "h": 305,
+      "fontSize": 18
     },
     {
       "id": "ivory.effects",
@@ -213,7 +227,8 @@
       "x": 552,
       "y": 667,
       "w": 593,
-      "h": 305
+      "h": 305,
+      "fontSize": 18
     },
     {
       "id": "ivory.fx1",
@@ -222,7 +237,8 @@
       "x": 561,
       "y": 818,
       "w": 575,
-      "h": 121
+      "h": 121,
+      "fontSize": 14
     },
     {
       "id": "ivory.analyzer",
@@ -237,7 +253,8 @@
         741,
         330,
         183
-      ]
+      ],
+      "fontSize": 18
     }
   ],
   "controls": [
@@ -274,72 +291,81 @@
     {
       "id": "ivory.osc1.param0",
       "binding": "osc1.param0",
-      "x": 276,
-      "y": 215,
-      "w": 46,
-      "h": 79,
+      "x": 271,
+      "y": 196,
+      "w": 52,
+      "h": 88,
       "kind": "knob",
-      "fontSize": 10.5
+      "fontSize": 11.5,
+      "labelPosition": "top",
+      "accent": "yellow"
     },
     {
       "id": "ivory.osc1.param1",
       "binding": "osc1.param1",
-      "x": 329,
-      "y": 215,
-      "w": 46,
-      "h": 79,
+      "x": 324,
+      "y": 196,
+      "w": 52,
+      "h": 88,
       "kind": "knob",
-      "fontSize": 10.5
+      "fontSize": 11.5,
+      "labelPosition": "top",
+      "accent": "yellow"
     },
     {
       "id": "ivory.osc1.param2",
       "binding": "osc1.param2",
-      "x": 382,
-      "y": 215,
-      "w": 46,
-      "h": 79,
+      "x": 377,
+      "y": 196,
+      "w": 52,
+      "h": 88,
       "kind": "knob",
-      "fontSize": 10.5
+      "fontSize": 11.5,
+      "labelPosition": "top",
+      "accent": "yellow"
     },
     {
       "id": "ivory.osc1.octave",
       "binding": "osc1.octave",
       "x": 438,
-      "y": 183,
+      "y": 216,
       "w": 48,
-      "h": 21,
+      "h": 23,
       "kind": "menu",
       "label": "Octave"
     },
     {
       "id": "ivory.osc1.pitch",
       "binding": "osc1.pitch",
-      "x": 436,
-      "y": 208,
-      "w": 54,
-      "h": 83,
-      "kind": "knob",
-      "label": "Tune"
+      "x": 434,
+      "y": 253,
+      "w": 60,
+      "h": 31,
+      "kind": "value",
+      "label": "Tune",
+      "fontSize": 9.5
     },
     {
       "id": "ivory.osc1.keytrack",
       "binding": "osc1.keytrack",
-      "x": 280,
+      "x": 278,
       "y": 294,
-      "w": 100,
+      "w": 101,
       "h": 20,
       "kind": "toggle",
-      "label": "Keytrack"
+      "label": "Keytrack",
+      "fontSize": 10
     },
     {
       "id": "ivory.osc1.retrigger",
       "binding": "osc1.retrigger",
-      "x": 385,
+      "x": 383,
       "y": 294,
-      "w": 100,
+      "w": 107,
       "h": 20,
       "kind": "toggle",
-      "label": "Retrigger"
+      "label": "Retrigger",
+      "fontSize": 10
     },
     {
       "id": "ivory.osc2.type",
@@ -374,72 +400,81 @@
     {
       "id": "ivory.osc2.param0",
       "binding": "osc2.param0",
-      "x": 276,
-      "y": 392,
-      "w": 46,
-      "h": 79,
+      "x": 271,
+      "y": 374,
+      "w": 52,
+      "h": 88,
       "kind": "knob",
-      "fontSize": 10.5
+      "fontSize": 11.5,
+      "labelPosition": "top",
+      "accent": "yellow"
     },
     {
       "id": "ivory.osc2.param1",
       "binding": "osc2.param1",
-      "x": 329,
-      "y": 392,
-      "w": 46,
-      "h": 79,
+      "x": 324,
+      "y": 374,
+      "w": 52,
+      "h": 88,
       "kind": "knob",
-      "fontSize": 10.5
+      "fontSize": 11.5,
+      "labelPosition": "top",
+      "accent": "yellow"
     },
     {
       "id": "ivory.osc2.param2",
       "binding": "osc2.param2",
-      "x": 382,
-      "y": 392,
-      "w": 46,
-      "h": 79,
+      "x": 377,
+      "y": 374,
+      "w": 52,
+      "h": 88,
       "kind": "knob",
-      "fontSize": 10.5
+      "fontSize": 11.5,
+      "labelPosition": "top",
+      "accent": "yellow"
     },
     {
       "id": "ivory.osc2.octave",
       "binding": "osc2.octave",
       "x": 438,
-      "y": 360,
+      "y": 394,
       "w": 48,
-      "h": 21,
+      "h": 23,
       "kind": "menu",
       "label": "Octave"
     },
     {
       "id": "ivory.osc2.pitch",
       "binding": "osc2.pitch",
-      "x": 436,
-      "y": 385,
-      "w": 54,
-      "h": 83,
-      "kind": "knob",
-      "label": "Tune"
+      "x": 434,
+      "y": 431,
+      "w": 60,
+      "h": 31,
+      "kind": "value",
+      "label": "Tune",
+      "fontSize": 9.5
     },
     {
       "id": "ivory.osc2.keytrack",
       "binding": "osc2.keytrack",
-      "x": 280,
+      "x": 278,
       "y": 471,
-      "w": 100,
+      "w": 101,
       "h": 20,
       "kind": "toggle",
-      "label": "Keytrack"
+      "label": "Keytrack",
+      "fontSize": 10
     },
     {
       "id": "ivory.osc2.retrigger",
       "binding": "osc2.retrigger",
-      "x": 385,
+      "x": 383,
       "y": 471,
-      "w": 100,
+      "w": 107,
       "h": 20,
       "kind": "toggle",
-      "label": "Retrigger"
+      "label": "Retrigger",
+      "fontSize": 10
     },
     {
       "id": "ivory.osc3.type",
@@ -474,72 +509,81 @@
     {
       "id": "ivory.osc3.param0",
       "binding": "osc3.param0",
-      "x": 276,
-      "y": 558,
-      "w": 46,
-      "h": 76,
+      "x": 271,
+      "y": 544,
+      "w": 52,
+      "h": 88,
       "kind": "knob",
-      "fontSize": 10.5
+      "fontSize": 11.5,
+      "labelPosition": "top",
+      "accent": "yellow"
     },
     {
       "id": "ivory.osc3.param1",
       "binding": "osc3.param1",
-      "x": 329,
-      "y": 558,
-      "w": 46,
-      "h": 76,
+      "x": 324,
+      "y": 544,
+      "w": 52,
+      "h": 88,
       "kind": "knob",
-      "fontSize": 10.5
+      "fontSize": 11.5,
+      "labelPosition": "top",
+      "accent": "yellow"
     },
     {
       "id": "ivory.osc3.param2",
       "binding": "osc3.param2",
-      "x": 382,
-      "y": 558,
-      "w": 46,
-      "h": 76,
+      "x": 377,
+      "y": 544,
+      "w": 52,
+      "h": 88,
       "kind": "knob",
-      "fontSize": 10.5
+      "fontSize": 11.5,
+      "labelPosition": "top",
+      "accent": "yellow"
     },
     {
       "id": "ivory.osc3.octave",
       "binding": "osc3.octave",
       "x": 438,
-      "y": 533,
+      "y": 564,
       "w": 48,
-      "h": 21,
+      "h": 23,
       "kind": "menu",
       "label": "Octave"
     },
     {
       "id": "ivory.osc3.pitch",
       "binding": "osc3.pitch",
-      "x": 436,
-      "y": 559,
-      "w": 54,
-      "h": 76,
-      "kind": "knob",
-      "label": "Tune"
+      "x": 434,
+      "y": 601,
+      "w": 60,
+      "h": 31,
+      "kind": "value",
+      "label": "Tune",
+      "fontSize": 9.5
     },
     {
       "id": "ivory.osc3.keytrack",
       "binding": "osc3.keytrack",
-      "x": 280,
+      "x": 278,
       "y": 636,
-      "w": 100,
+      "w": 101,
       "h": 20,
       "kind": "toggle",
-      "label": "Keytrack"
+      "label": "Keytrack",
+      "fontSize": 10
     },
     {
       "id": "ivory.osc3.retrigger",
       "binding": "osc3.retrigger",
-      "x": 385,
+      "x": 383,
       "y": 636,
-      "w": 100,
+      "w": 107,
       "h": 20,
       "kind": "toggle",
-      "label": "Retrigger"
+      "label": "Retrigger",
+      "fontSize": 10
     },
     {
       "id": "ivory.filter1.type",
@@ -566,10 +610,12 @@
       "binding": "filter1.cutoff",
       "x": 529,
       "y": 325,
-      "w": 57,
-      "h": 79,
+      "w": 61,
+      "h": 83,
       "kind": "knob",
-      "label": "FREQ"
+      "label": "FREQ",
+      "accent": "yellow",
+      "fontSize": 12
     },
     {
       "id": "ivory.filter1.resonance",
@@ -579,7 +625,9 @@
       "w": 57,
       "h": 79,
       "kind": "knob",
-      "label": "RES"
+      "label": "RES",
+      "accent": "yellow",
+      "fontSize": 12
     },
     {
       "id": "ivory.filter1.drive",
@@ -589,7 +637,9 @@
       "w": 57,
       "h": 79,
       "kind": "knob",
-      "label": "SHAPER"
+      "label": "SHAPER",
+      "accent": "yellow",
+      "fontSize": 12
     },
     {
       "id": "ivory.filter1.keytrack",
@@ -599,47 +649,57 @@
       "w": 57,
       "h": 79,
       "kind": "knob",
-      "label": "KEY"
+      "label": "KEY",
+      "accent": "yellow",
+      "fontSize": 12
     },
     {
       "id": "ivory.filter2.cutoff",
       "binding": "filter2.cutoff",
-      "x": 865,
+      "x": 870,
       "y": 325,
-      "w": 57,
-      "h": 79,
+      "w": 61,
+      "h": 83,
       "kind": "knob",
-      "label": "FREQ"
+      "label": "FREQ",
+      "accent": "yellow",
+      "fontSize": 12
     },
     {
       "id": "ivory.filter2.resonance",
       "binding": "filter2.resonance",
-      "x": 927,
+      "x": 932,
       "y": 325,
       "w": 57,
       "h": 79,
       "kind": "knob",
-      "label": "RES"
+      "label": "RES",
+      "accent": "yellow",
+      "fontSize": 12
     },
     {
       "id": "ivory.filter2.envmod",
       "binding": "filter2.envmod",
-      "x": 988,
+      "x": 993,
       "y": 325,
       "w": 57,
       "h": 79,
       "kind": "knob",
-      "label": "ENV"
+      "label": "ENV",
+      "accent": "yellow",
+      "fontSize": 12
     },
     {
       "id": "ivory.filter2.keytrack",
       "binding": "filter2.keytrack",
-      "x": 1049,
+      "x": 1054,
       "y": 325,
       "w": 57,
       "h": 79,
       "kind": "knob",
-      "label": "KEY"
+      "label": "KEY",
+      "accent": "yellow",
+      "fontSize": 12
     },
     {
       "id": "ivory.routing.mode",
@@ -659,24 +719,27 @@
       "w": 60,
       "h": 84,
       "kind": "knob",
-      "label": "BLEND"
+      "label": "BLEND",
+      "accent": "yellow"
     },
     {
       "id": "ivory.mixer.osc1.level",
       "binding": "osc1.level",
-      "x": 531,
-      "y": 474,
-      "w": 79,
-      "h": 116,
+      "x": 530,
+      "y": 477,
+      "w": 72,
+      "h": 114,
       "kind": "knob",
       "label": "OSC 1",
-      "labelPosition": "top"
+      "labelPosition": "top",
+      "accent": "yellow",
+      "fontSize": 13
     },
     {
       "id": "ivory.mixer.osc1.solo",
       "binding": "osc1.solo",
-      "x": 539,
-      "y": 607,
+      "x": 541,
+      "y": 600,
       "w": 26,
       "h": 25,
       "kind": "toggle",
@@ -685,8 +748,8 @@
     {
       "id": "ivory.mixer.osc1.mute",
       "binding": "osc1.mute",
-      "x": 574,
-      "y": 607,
+      "x": 570,
+      "y": 600,
       "w": 26,
       "h": 25,
       "kind": "toggle",
@@ -695,19 +758,21 @@
     {
       "id": "ivory.mixer.osc2.level",
       "binding": "osc2.level",
-      "x": 622,
-      "y": 474,
-      "w": 79,
-      "h": 116,
+      "x": 624,
+      "y": 477,
+      "w": 72,
+      "h": 114,
       "kind": "knob",
       "label": "OSC 2",
-      "labelPosition": "top"
+      "labelPosition": "top",
+      "accent": "yellow",
+      "fontSize": 13
     },
     {
       "id": "ivory.mixer.osc2.solo",
       "binding": "osc2.solo",
-      "x": 630,
-      "y": 607,
+      "x": 635,
+      "y": 600,
       "w": 26,
       "h": 25,
       "kind": "toggle",
@@ -716,8 +781,8 @@
     {
       "id": "ivory.mixer.osc2.mute",
       "binding": "osc2.mute",
-      "x": 665,
-      "y": 607,
+      "x": 664,
+      "y": 600,
       "w": 26,
       "h": 25,
       "kind": "toggle",
@@ -726,19 +791,21 @@
     {
       "id": "ivory.mixer.osc3.level",
       "binding": "osc3.level",
-      "x": 713,
-      "y": 474,
-      "w": 79,
-      "h": 116,
+      "x": 719,
+      "y": 477,
+      "w": 72,
+      "h": 114,
       "kind": "knob",
       "label": "OSC 3",
-      "labelPosition": "top"
+      "labelPosition": "top",
+      "accent": "yellow",
+      "fontSize": 13
     },
     {
       "id": "ivory.mixer.osc3.solo",
       "binding": "osc3.solo",
-      "x": 721,
-      "y": 607,
+      "x": 730,
+      "y": 600,
       "w": 26,
       "h": 25,
       "kind": "toggle",
@@ -747,8 +814,8 @@
     {
       "id": "ivory.mixer.osc3.mute",
       "binding": "osc3.mute",
-      "x": 756,
-      "y": 607,
+      "x": 759,
+      "y": 600,
       "w": 26,
       "h": 25,
       "kind": "toggle",
@@ -757,19 +824,21 @@
     {
       "id": "ivory.mixer.noise.level",
       "binding": "noise.level",
-      "x": 804,
-      "y": 474,
-      "w": 79,
-      "h": 116,
+      "x": 817,
+      "y": 477,
+      "w": 72,
+      "h": 114,
       "kind": "knob",
       "label": "NOISE",
-      "labelPosition": "top"
+      "labelPosition": "top",
+      "accent": "yellow",
+      "fontSize": 13
     },
     {
       "id": "ivory.mixer.noise.solo",
       "binding": "noise.solo",
-      "x": 812,
-      "y": 607,
+      "x": 828,
+      "y": 600,
       "w": 26,
       "h": 25,
       "kind": "toggle",
@@ -778,8 +847,8 @@
     {
       "id": "ivory.mixer.noise.mute",
       "binding": "noise.mute",
-      "x": 847,
-      "y": 607,
+      "x": 857,
+      "y": 600,
       "w": 26,
       "h": 25,
       "kind": "toggle",
@@ -804,7 +873,8 @@
       "h": 64,
       "kind": "knob",
       "label": "AMOUNT",
-      "labelPosition": "top"
+      "labelPosition": "top",
+      "accent": "yellow"
     },
     {
       "id": "ivory.ring23.mute",
@@ -825,79 +895,104 @@
       "h": 64,
       "kind": "knob",
       "label": "AMOUNT",
-      "labelPosition": "top"
+      "labelPosition": "top",
+      "accent": "yellow"
     },
     {
       "id": "ivory.macro1",
       "binding": "macro1",
       "x": 1158,
-      "y": 138,
+      "y": 133,
       "w": 74,
-      "h": 76,
-      "kind": "knob"
+      "h": 81,
+      "kind": "knob",
+      "label": "Macro 1",
+      "fontSize": 12.5,
+      "accent": "yellow"
     },
     {
       "id": "ivory.macro2",
       "binding": "macro2",
       "x": 1247,
-      "y": 138,
+      "y": 133,
       "w": 74,
-      "h": 76,
-      "kind": "knob"
+      "h": 81,
+      "kind": "knob",
+      "label": "Macro 2",
+      "fontSize": 12.5,
+      "accent": "yellow"
     },
     {
       "id": "ivory.macro3",
       "binding": "macro3",
       "x": 1336,
-      "y": 138,
+      "y": 133,
       "w": 74,
-      "h": 76,
-      "kind": "knob"
+      "h": 81,
+      "kind": "knob",
+      "label": "Macro 3",
+      "fontSize": 12.5,
+      "accent": "yellow"
     },
     {
       "id": "ivory.macro4",
       "binding": "macro4",
       "x": 1425,
-      "y": 138,
+      "y": 133,
       "w": 74,
-      "h": 76,
-      "kind": "knob"
+      "h": 81,
+      "kind": "knob",
+      "label": "Macro 4",
+      "fontSize": 12.5,
+      "accent": "yellow"
     },
     {
       "id": "ivory.macro5",
       "binding": "macro5",
       "x": 1158,
-      "y": 220,
+      "y": 215,
       "w": 74,
-      "h": 76,
-      "kind": "knob"
+      "h": 84,
+      "kind": "knob",
+      "label": "Macro 5",
+      "fontSize": 12.5,
+      "accent": "yellow"
     },
     {
       "id": "ivory.macro6",
       "binding": "macro6",
       "x": 1247,
-      "y": 220,
+      "y": 215,
       "w": 74,
-      "h": 76,
-      "kind": "knob"
+      "h": 84,
+      "kind": "knob",
+      "label": "Macro 6",
+      "fontSize": 12.5,
+      "accent": "yellow"
     },
     {
       "id": "ivory.macro7",
       "binding": "macro7",
       "x": 1336,
-      "y": 220,
+      "y": 215,
       "w": 74,
-      "h": 76,
-      "kind": "knob"
+      "h": 84,
+      "kind": "knob",
+      "label": "Macro 7",
+      "fontSize": 12.5,
+      "accent": "yellow"
     },
     {
       "id": "ivory.macro8",
       "binding": "macro8",
       "x": 1425,
-      "y": 220,
+      "y": 215,
       "w": 74,
-      "h": 76,
-      "kind": "knob"
+      "h": 84,
+      "kind": "knob",
+      "label": "Macro 8",
+      "fontSize": 12.5,
+      "accent": "yellow"
     },
     {
       "id": "ivory.env1.attack",
@@ -908,7 +1003,8 @@
       "h": 89,
       "kind": "knob",
       "label": "A",
-      "labelPosition": "top"
+      "labelPosition": "top",
+      "accent": "yellow"
     },
     {
       "id": "ivory.env2.attack",
@@ -920,7 +1016,8 @@
       "kind": "knob",
       "label": "A2",
       "labelPosition": "top",
-      "fontSize": 10.5
+      "fontSize": 10.5,
+      "accent": "yellow"
     },
     {
       "id": "ivory.env1.decay",
@@ -931,7 +1028,8 @@
       "h": 89,
       "kind": "knob",
       "label": "D",
-      "labelPosition": "top"
+      "labelPosition": "top",
+      "accent": "yellow"
     },
     {
       "id": "ivory.env2.decay",
@@ -943,7 +1041,8 @@
       "kind": "knob",
       "label": "D2",
       "labelPosition": "top",
-      "fontSize": 10.5
+      "fontSize": 10.5,
+      "accent": "yellow"
     },
     {
       "id": "ivory.env1.sustain",
@@ -954,7 +1053,8 @@
       "h": 89,
       "kind": "knob",
       "label": "S",
-      "labelPosition": "top"
+      "labelPosition": "top",
+      "accent": "yellow"
     },
     {
       "id": "ivory.env2.sustain",
@@ -966,7 +1066,8 @@
       "kind": "knob",
       "label": "S2",
       "labelPosition": "top",
-      "fontSize": 10.5
+      "fontSize": 10.5,
+      "accent": "yellow"
     },
     {
       "id": "ivory.env1.release",
@@ -977,7 +1078,8 @@
       "h": 89,
       "kind": "knob",
       "label": "R",
-      "labelPosition": "top"
+      "labelPosition": "top",
+      "accent": "yellow"
     },
     {
       "id": "ivory.env2.release",
@@ -989,7 +1091,8 @@
       "kind": "knob",
       "label": "R2",
       "labelPosition": "top",
-      "fontSize": 10.5
+      "fontSize": 10.5,
+      "accent": "yellow"
     },
     {
       "id": "ivory.env1.mode",
@@ -1010,7 +1113,8 @@
       "h": 90,
       "kind": "knob",
       "label": "VEL",
-      "labelPosition": "top"
+      "labelPosition": "top",
+      "accent": "yellow"
     },
     {
       "id": "ivory.amp.level",
@@ -1020,7 +1124,8 @@
       "w": 76,
       "h": 81,
       "kind": "knob",
-      "label": "AMP"
+      "label": "AMP",
+      "accent": "yellow"
     },
     {
       "id": "ivory.scene.width",
@@ -1030,7 +1135,8 @@
       "w": 76,
       "h": 72,
       "kind": "knob",
-      "label": "WIDTH"
+      "label": "WIDTH",
+      "accent": "yellow"
     },
     {
       "id": "ivory.fx1.type",
@@ -1121,7 +1227,8 @@
       "h": 96,
       "kind": "knob",
       "fontSize": 10.5,
-      "labelPosition": "top"
+      "labelPosition": "top",
+      "accent": "yellow"
     },
     {
       "id": "ivory.fx1.param1",
@@ -1132,7 +1239,8 @@
       "h": 96,
       "kind": "knob",
       "fontSize": 10.5,
-      "labelPosition": "top"
+      "labelPosition": "top",
+      "accent": "yellow"
     },
     {
       "id": "ivory.fx1.param2",
@@ -1143,7 +1251,8 @@
       "h": 96,
       "kind": "knob",
       "fontSize": 10.5,
-      "labelPosition": "top"
+      "labelPosition": "top",
+      "accent": "yellow"
     },
     {
       "id": "ivory.fx1.param3",
@@ -1154,7 +1263,8 @@
       "h": 96,
       "kind": "knob",
       "fontSize": 10.5,
-      "labelPosition": "top"
+      "labelPosition": "top",
+      "accent": "yellow"
     },
     {
       "id": "ivory.fx1.param4",
@@ -1165,17 +1275,21 @@
       "h": 96,
       "kind": "knob",
       "fontSize": 10.5,
-      "labelPosition": "top"
+      "labelPosition": "top",
+      "accent": "yellow"
     },
     {
       "id": "ivory.master.volume",
       "binding": "master.volume",
-      "x": 1177,
-      "y": 5,
-      "w": 84,
-      "h": 78,
+      "x": 1312,
+      "y": 10,
+      "w": 150,
+      "h": 72,
       "kind": "knob",
-      "label": "MASTER"
+      "label": "MASTER",
+      "accent": "yellow",
+      "labelPosition": "left",
+      "fontSize": 13
     }
   ],
   "adaptations": [
@@ -1186,8 +1300,9 @@
     "The reference's Sub block is replaced by the real ring-modulation 2 × 3 mixer stage, rather than presenting an unsupported independent sub oscillator.",
     "The shared drive control is the real waveshaper drive, not a separate fictional drive stage for each filter. Filter plots are explicitly response previews.",
     "Eight effect selectors are promoted here; all sixteen native effect slots and full parameter editing remain available through Full FX editor. Unused algorithm-specific controls are disabled rather than mapped to unrelated parameters.",
-    "The analyzer uses real output levels and the native scope action. It does not paint static reference spectrum activity as live audio.",
+    "The analyzer draws a spectrum and output levels from actual main-output samples; the native scope action remains available for detailed analysis. It does not paint static reference spectrum activity as live audio.",
     "Modulation assignment is handled by the native modulation editor; reference-only fabricated route values and botanical bitmap ornamentation are not copied into the live interface.",
-    "Mixer, envelope and selected-effect controls use the concept's label-above/knob/value order. Macro rows and the amplifier velocity knob use measured centres; the additional real filter-envelope row remains an explicit functional adaptation."
+    "Mixer, envelope and selected-effect controls use the concept's label-above/knob/value order. Macro rows and the amplifier velocity knob use measured centres; the additional real filter-envelope row remains an explicit functional adaptation.",
+    "The cream surface palette and brass control rims are calibrated from the supplied reference. Oscillator labels now sit above the controls; compact tuning fields preserve the engine tuning binding rather than inventing independent semitone/cents parameters."
   ]
 }

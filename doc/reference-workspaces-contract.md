@@ -18,7 +18,7 @@ Namespace: `Surge::GUI::Reference`. Sources: `src/surge-xt/gui/reference/`.
   `choices(const juce::String&) const -> juce::StringArray`.
   Bindings: `master.volume`, `scene.volume`, `scene.pitch`, `scene.pan`,
   `scene.width`, `scene.portamento`, `scene.polylimit`, `scene.mode`,
-  `scene.mix`, `routing`, `osc1.type`, `osc1.pitch`, `osc1.param0` through
+  `routing`, `osc1.type`, `osc1.pitch`, `osc1.param0` through
   `osc1.param6`, `osc1.level`, `osc1.mute`, `osc1.solo` (likewise 2/3),
   `noise.level`, `ring12.level`, `ring23.level`,
   `filter1.type`, `filter1.subtype`, `filter1.cutoff`, `filter1.resonance`,
@@ -35,14 +35,13 @@ Namespace: `Surge::GUI::Reference`. Sources: `src/surge-xt/gui/reference/`.
   `Workspace(SurgeSynthProcessor&)`; methods
   `bool load(const juce::File& manifest, juce::String& error)`,
   `void refresh()`, `ParameterBridge& bridge()`,
-  `juce::String currentId() const`, `void selectScene(int)`;
+  `juce::String currentId() const`, `void selectScene(int, bool notify = true)`;
   callbacks `std::function<void()> onFullEditor`,
   `std::function<void()> onChooseSkin`,
   `std::function<void(const juce::String&)> onAction`.
   It renders in 1586×992 logical coordinates with aspect-preserving scaling.
 
-* `Visuals` is stateless painting helpers. Call contract to be agreed by parent
-  before integrating. Waveforms must be computed from the actual oscillator
+* `Visuals` is stateless painting helpers. Waveforms must be computed from the actual oscillator
   or explicitly identified as parameter previews. Output meters must use actual
   signal levels, never random or hard-coded activity. Prefer live waveform data.
 
@@ -59,11 +58,17 @@ Kinds: `oscillator`, `filter`, `mixer`, `envelope`, `lfo`, `macros`,
 `matrix`, `effects`, `analyzer`, `waveform`, `browser`, `routing`,
 `scene`, `output`, `xy`, `keyboard`, `inspector`, `amp`, `tabs`.
 Indices are 1-based. `variant` can be `compact`, `horizontal`, `vertical`,
-`large`, `combined`, `terrain`, `flow`, `faders`, `knobs`.
+`large`, `combined`, `terrain`, `flow`, `faders`, `knobs`, `scope`, `spectrum`, `spectrogram`.
+`plot`/`plot2` are absolute rectangles confined to the panel; `ink` is a hexadecimal
+heading color and `fontSize` controls heading size. `flowNodes` are named rectangles
+within a routing panel, not arbitrary DSP graph connections.
 The header is a built-in top band; `headerHeight` gives its height.
 
 `controls`: objects `{id, binding, label?, x, y, w, h, kind?, accent?}`.
-Kinds `knob` (default), `fader`, `horizontal`, `menu`, `toggle`.
+Kinds `knob` (default), `fader`, `horizontal`, `menu`, `toggle`, `value`.
+`value` is a real parameter slider presented as a compact numeric field, with the
+same typed-entry and accessibility support as knobs. `labelPosition` can be
+`left`, `right`, or `top` for knobs. Optional `ink` and `fontSize` affect controls.
 Coordinates are absolute logical pixels. Knob bounds include label/value.
 All controls are real named, keyboard-accessible child components. Algorithm
 parameters should use their real dynamic label when label is omitted.

@@ -6,6 +6,7 @@ add_executable(${PROJECT_NAME}
         XTTestLifecycle.cpp
         XTTestOSC.cpp
         XTTestReferenceWorkspaces.cpp
+        XTTestReferencePreviews.cpp
   )
 
 # Absolute source lookup keeps native skin tests runnable from any build directory.

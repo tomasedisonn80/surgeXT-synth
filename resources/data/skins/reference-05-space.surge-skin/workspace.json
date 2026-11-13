@@ -6,20 +6,20 @@
   "width": 1586,
   "height": 992,
   "style": "space",
-  "font": "mono",
+  "font": "sans",
   "headerHeight": 80,
   "radius": 8,
   "glow": 0.11,
   "palette": {
-    "background": "#B6A078",
-    "panel": "#45432D",
-    "border": "#C6AF7D",
-    "text": "#F5E6B8",
-    "muted": "#CEB985",
-    "accent": "#FFB31A",
-    "secondary": "#FFD46A",
-    "display": "#1C1508",
-    "knob": "#B9A77A",
+    "background": "#B09A76",
+    "panel": "#41412A",
+    "border": "#D0B889",
+    "text": "#F7E8BF",
+    "muted": "#D1BE8F",
+    "accent": "#FFB30B",
+    "secondary": "#FFCB39",
+    "display": "#160F05",
+    "knob": "#C8B68C",
     "red": "#D96C23",
     "yellow": "#F2BF3B",
     "blue": "#656B45"
@@ -29,6 +29,8 @@
       "id": "space-browser",
       "kind": "browser",
       "title": "PRESET BROWSER",
+      "color": "#B9A582",
+      "ink": "#211C12",
       "x": 5,
       "y": 85,
       "w": 244,
@@ -38,6 +40,8 @@
       "id": "space-global",
       "kind": "scene",
       "title": "",
+      "color": "#B9A582",
+      "ink": "#211C12",
       "x": 256,
       "y": 85,
       "w": 1322,
@@ -52,6 +56,7 @@
       "w": 307,
       "h": 256,
       "index": 1,
+      "variant": "terrain",
       "plot": [
         270,
         194,
@@ -129,11 +134,23 @@
       "id": "space-mixer",
       "kind": "mixer",
       "title": "OSC MIXER",
+      "color": "#B9A582",
+      "ink": "#211C12",
       "x": 256,
       "y": 420,
       "w": 259,
       "h": 208,
       "variant": "faders"
+    },
+    {
+      "id": "space-mixer-inset",
+      "kind": "tabs",
+      "title": "",
+      "x": 264,
+      "y": 452,
+      "w": 176,
+      "h": 168,
+      "color": "panel"
     },
     {
       "id": "space-env-1",
@@ -217,12 +234,16 @@
       "x": 5,
       "y": 635,
       "w": 495,
-      "h": 343
+      "h": 343,
+      "color": "#B9A582",
+      "ink": "#211C12"
     },
     {
       "id": "space-effects",
       "kind": "effects",
       "title": "EFFECTS RACK",
+      "color": "#B9A582",
+      "ink": "#211C12",
       "x": 506,
       "y": 635,
       "w": 524,
@@ -230,9 +251,21 @@
       "variant": "vertical"
     },
     {
+      "id": "space-effects-inset",
+      "kind": "tabs",
+      "title": "FX 1 · LIVE PARAMETERS",
+      "x": 656,
+      "y": 679,
+      "w": 365,
+      "h": 266,
+      "color": "panel"
+    },
+    {
       "id": "space-macros",
       "kind": "macros",
       "title": "MACROS",
+      "color": "#B9A582",
+      "ink": "#211C12",
       "x": 1036,
       "y": 635,
       "w": 283,
@@ -242,6 +275,8 @@
       "id": "space-meters",
       "kind": "output",
       "title": "METERS / MASTER",
+      "color": "#B9A582",
+      "ink": "#211C12",
       "x": 1325,
       "y": 635,
       "w": 253,
@@ -251,6 +286,8 @@
       "id": "space-info",
       "kind": "scene",
       "title": "SCENE CONTROLS",
+      "color": "#B9A582",
+      "ink": "#211C12",
       "x": 1325,
       "y": 794,
       "w": 253,
@@ -286,7 +323,8 @@
       "w": 110,
       "h": 55,
       "kind": "horizontal",
-      "label": "Voices"
+      "label": "Voices",
+      "ink": "#211C12"
     },
     {
       "id": "space-glide",
@@ -296,7 +334,8 @@
       "w": 152,
       "h": 55,
       "kind": "horizontal",
-      "label": "Glide"
+      "label": "Glide",
+      "ink": "#211C12"
     },
     {
       "id": "space-scene-pitch",
@@ -306,7 +345,8 @@
       "w": 145,
       "h": 55,
       "kind": "horizontal",
-      "label": "Scene pitch"
+      "label": "Scene pitch",
+      "ink": "#211C12"
     },
     {
       "id": "space-scene-width",
@@ -316,7 +356,8 @@
       "w": 145,
       "h": 55,
       "kind": "horizontal",
-      "label": "Width"
+      "label": "Width",
+      "ink": "#211C12"
     },
     {
       "id": "space-waveshaper-drive",
@@ -326,7 +367,8 @@
       "w": 141,
       "h": 55,
       "kind": "horizontal",
-      "label": "Waveshaper drive"
+      "label": "Waveshaper drive",
+      "ink": "#211C12"
     },
     {
       "id": "space-scene-level",
@@ -336,7 +378,8 @@
       "w": 145,
       "h": 55,
       "kind": "horizontal",
-      "label": "Scene output"
+      "label": "Scene output",
+      "ink": "#211C12"
     },
     {
       "id": "space-osc1-type",
@@ -606,22 +649,26 @@
     {
       "id": "space-filter1-cutoff",
       "binding": "filter1.cutoff",
-      "x": 1447,
-      "y": 194,
-      "w": 57,
-      "h": 82,
-      "kind": "knob",
-      "label": "Cutoff"
+      "x": 1450,
+      "y": 201,
+      "w": 117,
+      "h": 24,
+      "kind": "value",
+      "label": "FREQ",
+      "ink": "#FFB30B",
+      "fontSize": 11
     },
     {
       "id": "space-filter1-resonance",
       "binding": "filter1.resonance",
-      "x": 1510,
-      "y": 194,
-      "w": 57,
-      "h": 82,
-      "kind": "knob",
-      "label": "Reso"
+      "x": 1450,
+      "y": 226,
+      "w": 117,
+      "h": 24,
+      "kind": "value",
+      "label": "RES",
+      "ink": "#FFB30B",
+      "fontSize": 11
     },
     {
       "id": "space-filter2-type",
@@ -636,22 +683,26 @@
     {
       "id": "space-filter2-cutoff",
       "binding": "filter2.cutoff",
-      "x": 1447,
-      "y": 323,
-      "w": 57,
-      "h": 82,
-      "kind": "knob",
-      "label": "Cutoff"
+      "x": 1450,
+      "y": 330,
+      "w": 117,
+      "h": 24,
+      "kind": "value",
+      "label": "FREQ",
+      "ink": "#FFB30B",
+      "fontSize": 11
     },
     {
       "id": "space-filter2-resonance",
       "binding": "filter2.resonance",
-      "x": 1510,
-      "y": 323,
-      "w": 57,
-      "h": 82,
-      "kind": "knob",
-      "label": "Reso"
+      "x": 1450,
+      "y": 355,
+      "w": 117,
+      "h": 24,
+      "kind": "value",
+      "label": "RES",
+      "ink": "#FFB30B",
+      "fontSize": 11
     },
     {
       "id": "space-mixer-osc1",
@@ -691,7 +742,8 @@
       "w": 58,
       "h": 78,
       "kind": "knob",
-      "label": "Noise"
+      "label": "Noise",
+      "ink": "#211C12"
     },
     {
       "id": "space-mixer-ring",
@@ -701,7 +753,8 @@
       "w": 58,
       "h": 78,
       "kind": "knob",
-      "label": "Ring 1×2"
+      "label": "Ring 1×2",
+      "ink": "#211C12"
     },
     {
       "id": "space-env1-attack",
@@ -961,7 +1014,8 @@
       "w": 63,
       "h": 113,
       "kind": "knob",
-      "label": "Macro 1"
+      "label": "Macro 1",
+      "ink": "#211C12"
     },
     {
       "id": "space-fx2-type",
@@ -981,7 +1035,8 @@
       "w": 63,
       "h": 113,
       "kind": "knob",
-      "label": "Macro 2"
+      "label": "Macro 2",
+      "ink": "#211C12"
     },
     {
       "id": "space-fx3-type",
@@ -1001,7 +1056,8 @@
       "w": 63,
       "h": 113,
       "kind": "knob",
-      "label": "Macro 3"
+      "label": "Macro 3",
+      "ink": "#211C12"
     },
     {
       "id": "space-fx4-type",
@@ -1021,7 +1077,8 @@
       "w": 63,
       "h": 113,
       "kind": "knob",
-      "label": "Macro 4"
+      "label": "Macro 4",
+      "ink": "#211C12"
     },
     {
       "id": "space-fx5-type",
@@ -1041,7 +1098,8 @@
       "w": 63,
       "h": 113,
       "kind": "knob",
-      "label": "Macro 5"
+      "label": "Macro 5",
+      "ink": "#211C12"
     },
     {
       "id": "space-fx6-type",
@@ -1061,7 +1119,8 @@
       "w": 63,
       "h": 113,
       "kind": "knob",
-      "label": "Macro 6"
+      "label": "Macro 6",
+      "ink": "#211C12"
     },
     {
       "id": "space-fx7-type",
@@ -1081,7 +1140,8 @@
       "w": 63,
       "h": 113,
       "kind": "knob",
-      "label": "Macro 7"
+      "label": "Macro 7",
+      "ink": "#211C12"
     },
     {
       "id": "space-fx8-type",
@@ -1101,7 +1161,8 @@
       "w": 63,
       "h": 113,
       "kind": "knob",
-      "label": "Macro 8"
+      "label": "Macro 8",
+      "ink": "#211C12"
     },
     {
       "id": "space-fx1-param0",
@@ -1183,7 +1244,8 @@
       "w": 117,
       "h": 102,
       "kind": "knob",
-      "label": "Master"
+      "label": "Master",
+      "ink": "#211C12"
     },
     {
       "id": "space-scene-pan",
@@ -1193,7 +1255,8 @@
       "w": 72,
       "h": 114,
       "kind": "knob",
-      "label": "Pan"
+      "label": "Pan",
+      "ink": "#211C12"
     },
     {
       "id": "space-scene-octave",
@@ -1203,7 +1266,8 @@
       "w": 72,
       "h": 114,
       "kind": "knob",
-      "label": "Octave"
+      "label": "Octave",
+      "ink": "#211C12"
     },
     {
       "id": "space-scene-drift",
@@ -1213,17 +1277,42 @@
       "w": 72,
       "h": 114,
       "kind": "knob",
-      "label": "Drift"
+      "label": "Drift",
+      "ink": "#211C12"
+    },
+    {
+      "id": "space-filter1-shared-drive",
+      "binding": "filter.drive",
+      "kind": "value",
+      "label": "WS DRIVE",
+      "x": 1450,
+      "y": 251,
+      "w": 117,
+      "h": 24,
+      "ink": "#FFB30B",
+      "fontSize": 11
+    },
+    {
+      "id": "space-filter2-shared-drive",
+      "binding": "filter.drive",
+      "kind": "value",
+      "label": "WS DRIVE",
+      "x": 1450,
+      "y": 380,
+      "w": 117,
+      "h": 24,
+      "ink": "#FFB30B",
+      "fontSize": 11
     }
   ],
   "adaptations": [
-    "This is a live native reconstruction of the supplied concept, not a pixel-identical raster overlay. Bronze/olive material and fine grain are procedural vector treatment rather than the reference's photographic brushed-metal texture.",
+    "This is a live native reconstruction of the supplied concept, not a pixel-identical raster overlay. Brushed-brass outer panels, olive control wells, dark outer-panel headings and cream inner-panel type are expressed with native vectors; the concept's photographic texture and condensed display typography remain approximations.",
     "All three oscillators have independent actual algorithm menus and parameter controls. Algorithm names and parameter labels follow the current Surge engine, not nonexistent generic Sample or Granular modes.",
     "Surge has two dedicated envelope generators. The concept's third ADSR bank is explicitly labeled LFO 3 ENVELOPE and edits LFO 3's actual envelope parameters; it is not a third independent EG.",
     "All eight actual macro controls are presented in two rows of four. The concept exposes only four and leaves the lower macro panel empty.",
     "Eight front-panel effect type menus and the first slot's dynamic parameters are exposed. All sixteen native effect slots remain available through Full FX editor.",
     "The original editor remains available for complete preset browsing, modulation editing, advanced oscillator settings and host functions. Browser and routing displays must not be mistaken for new engine capabilities.",
     "Displayed controls and meters show the loaded patch's real values, so they intentionally do not retain the fabricated readouts or apparent activity shown in the reference.",
-    "Filter plots are labeled response previews. The real shared waveshaper drive appears in the global strip; no nonexistent per-filter drive parameters are invented."
+    "Filter plots use the actual selected filter-algorithm response. Compact amber FREQ and RES fields follow the reference geometry. Both explicitly labeled WS DRIVE fields and the global drive control edit the same real shared waveshaper drive, not independent per-filter drive."
   ]
 }

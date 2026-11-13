@@ -11,15 +11,15 @@
   "radius": 14,
   "glow": 0.035,
   "palette": {
-    "background": "#E5D5C2",
-    "panel": "#EEE2D3",
-    "border": "#AE9572",
+    "background": "#E7D9C8",
+    "panel": "#F0E5D7",
+    "border": "#AE9878",
     "text": "#24271C",
     "muted": "#625845",
     "accent": "#31543A",
     "secondary": "#A2DD8D",
     "display": "#102B1B",
-    "knob": "#F3E8D7",
+    "knob": "#F4EADA",
     "red": "#A24B35",
     "yellow": "#B9A05E",
     "blue": "#45696C"
@@ -665,11 +665,12 @@
       "id": "ivory.mixer.osc1.level",
       "binding": "osc1.level",
       "x": 531,
-      "y": 478,
+      "y": 474,
       "w": 79,
       "h": 116,
       "kind": "knob",
-      "label": "OSC 1"
+      "label": "OSC 1",
+      "labelPosition": "top"
     },
     {
       "id": "ivory.mixer.osc1.solo",
@@ -695,11 +696,12 @@
       "id": "ivory.mixer.osc2.level",
       "binding": "osc2.level",
       "x": 622,
-      "y": 478,
+      "y": 474,
       "w": 79,
       "h": 116,
       "kind": "knob",
-      "label": "OSC 2"
+      "label": "OSC 2",
+      "labelPosition": "top"
     },
     {
       "id": "ivory.mixer.osc2.solo",
@@ -725,11 +727,12 @@
       "id": "ivory.mixer.osc3.level",
       "binding": "osc3.level",
       "x": 713,
-      "y": 478,
+      "y": 474,
       "w": 79,
       "h": 116,
       "kind": "knob",
-      "label": "OSC 3"
+      "label": "OSC 3",
+      "labelPosition": "top"
     },
     {
       "id": "ivory.mixer.osc3.solo",
@@ -755,11 +758,12 @@
       "id": "ivory.mixer.noise.level",
       "binding": "noise.level",
       "x": 804,
-      "y": 478,
+      "y": 474,
       "w": 79,
       "h": 116,
       "kind": "knob",
-      "label": "NOISE"
+      "label": "NOISE",
+      "labelPosition": "top"
     },
     {
       "id": "ivory.mixer.noise.solo",
@@ -799,7 +803,8 @@
       "w": 70,
       "h": 64,
       "kind": "knob",
-      "label": "AMOUNT"
+      "label": "AMOUNT",
+      "labelPosition": "top"
     },
     {
       "id": "ivory.ring23.mute",
@@ -819,13 +824,14 @@
       "w": 70,
       "h": 64,
       "kind": "knob",
-      "label": "AMOUNT"
+      "label": "AMOUNT",
+      "labelPosition": "top"
     },
     {
       "id": "ivory.macro1",
       "binding": "macro1",
       "x": 1158,
-      "y": 126,
+      "y": 138,
       "w": 74,
       "h": 76,
       "kind": "knob"
@@ -834,7 +840,7 @@
       "id": "ivory.macro2",
       "binding": "macro2",
       "x": 1247,
-      "y": 126,
+      "y": 138,
       "w": 74,
       "h": 76,
       "kind": "knob"
@@ -843,7 +849,7 @@
       "id": "ivory.macro3",
       "binding": "macro3",
       "x": 1336,
-      "y": 126,
+      "y": 138,
       "w": 74,
       "h": 76,
       "kind": "knob"
@@ -852,7 +858,7 @@
       "id": "ivory.macro4",
       "binding": "macro4",
       "x": 1425,
-      "y": 126,
+      "y": 138,
       "w": 74,
       "h": 76,
       "kind": "knob"
@@ -861,7 +867,7 @@
       "id": "ivory.macro5",
       "binding": "macro5",
       "x": 1158,
-      "y": 208,
+      "y": 220,
       "w": 74,
       "h": 76,
       "kind": "knob"
@@ -870,7 +876,7 @@
       "id": "ivory.macro6",
       "binding": "macro6",
       "x": 1247,
-      "y": 208,
+      "y": 220,
       "w": 74,
       "h": 76,
       "kind": "knob"
@@ -879,7 +885,7 @@
       "id": "ivory.macro7",
       "binding": "macro7",
       "x": 1336,
-      "y": 208,
+      "y": 220,
       "w": 74,
       "h": 76,
       "kind": "knob"
@@ -888,7 +894,7 @@
       "id": "ivory.macro8",
       "binding": "macro8",
       "x": 1425,
-      "y": 208,
+      "y": 220,
       "w": 74,
       "h": 76,
       "kind": "knob"
@@ -897,81 +903,93 @@
       "id": "ivory.env1.attack",
       "binding": "env1.attack",
       "x": 1148,
-      "y": 505,
+      "y": 503,
       "w": 66,
-      "h": 77,
+      "h": 89,
       "kind": "knob",
-      "label": "A"
+      "label": "A",
+      "labelPosition": "top"
     },
     {
       "id": "ivory.env2.attack",
       "binding": "env2.attack",
       "x": 1148,
-      "y": 586,
+      "y": 596,
       "w": 66,
-      "h": 66,
+      "h": 56,
       "kind": "knob",
-      "label": "A2"
+      "label": "A2",
+      "labelPosition": "top",
+      "fontSize": 10.5
     },
     {
       "id": "ivory.env1.decay",
       "binding": "env1.decay",
       "x": 1231,
-      "y": 505,
+      "y": 503,
       "w": 66,
-      "h": 77,
+      "h": 89,
       "kind": "knob",
-      "label": "D"
+      "label": "D",
+      "labelPosition": "top"
     },
     {
       "id": "ivory.env2.decay",
       "binding": "env2.decay",
       "x": 1231,
-      "y": 586,
+      "y": 596,
       "w": 66,
-      "h": 66,
+      "h": 56,
       "kind": "knob",
-      "label": "D2"
+      "label": "D2",
+      "labelPosition": "top",
+      "fontSize": 10.5
     },
     {
       "id": "ivory.env1.sustain",
       "binding": "env1.sustain",
       "x": 1314,
-      "y": 505,
+      "y": 503,
       "w": 66,
-      "h": 77,
+      "h": 89,
       "kind": "knob",
-      "label": "S"
+      "label": "S",
+      "labelPosition": "top"
     },
     {
       "id": "ivory.env2.sustain",
       "binding": "env2.sustain",
       "x": 1314,
-      "y": 586,
+      "y": 596,
       "w": 66,
-      "h": 66,
+      "h": 56,
       "kind": "knob",
-      "label": "S2"
+      "label": "S2",
+      "labelPosition": "top",
+      "fontSize": 10.5
     },
     {
       "id": "ivory.env1.release",
       "binding": "env1.release",
       "x": 1397,
-      "y": 505,
+      "y": 503,
       "w": 66,
-      "h": 77,
+      "h": 89,
       "kind": "knob",
-      "label": "R"
+      "label": "R",
+      "labelPosition": "top"
     },
     {
       "id": "ivory.env2.release",
       "binding": "env2.release",
       "x": 1397,
-      "y": 586,
+      "y": 596,
       "w": 66,
-      "h": 66,
+      "h": 56,
       "kind": "knob",
-      "label": "R2"
+      "label": "R2",
+      "labelPosition": "top",
+      "fontSize": 10.5
     },
     {
       "id": "ivory.env1.mode",
@@ -987,11 +1005,12 @@
       "id": "ivory.amp.velocity",
       "binding": "amp.velocity",
       "x": 1484,
-      "y": 397,
+      "y": 401,
       "w": 76,
-      "h": 83,
+      "h": 90,
       "kind": "knob",
-      "label": "VEL"
+      "label": "VEL",
+      "labelPosition": "top"
     },
     {
       "id": "ivory.amp.level",
@@ -1099,9 +1118,10 @@
       "x": 703,
       "y": 841,
       "w": 72,
-      "h": 89,
+      "h": 96,
       "kind": "knob",
-      "fontSize": 10.5
+      "fontSize": 10.5,
+      "labelPosition": "top"
     },
     {
       "id": "ivory.fx1.param1",
@@ -1109,9 +1129,10 @@
       "x": 783,
       "y": 841,
       "w": 72,
-      "h": 89,
+      "h": 96,
       "kind": "knob",
-      "fontSize": 10.5
+      "fontSize": 10.5,
+      "labelPosition": "top"
     },
     {
       "id": "ivory.fx1.param2",
@@ -1119,9 +1140,10 @@
       "x": 863,
       "y": 841,
       "w": 72,
-      "h": 89,
+      "h": 96,
       "kind": "knob",
-      "fontSize": 10.5
+      "fontSize": 10.5,
+      "labelPosition": "top"
     },
     {
       "id": "ivory.fx1.param3",
@@ -1129,9 +1151,10 @@
       "x": 943,
       "y": 841,
       "w": 72,
-      "h": 89,
+      "h": 96,
       "kind": "knob",
-      "fontSize": 10.5
+      "fontSize": 10.5,
+      "labelPosition": "top"
     },
     {
       "id": "ivory.fx1.param4",
@@ -1139,9 +1162,10 @@
       "x": 1023,
       "y": 841,
       "w": 72,
-      "h": 89,
+      "h": 96,
       "kind": "knob",
-      "fontSize": 10.5
+      "fontSize": 10.5,
+      "labelPosition": "top"
     },
     {
       "id": "ivory.master.volume",
@@ -1163,6 +1187,7 @@
     "The shared drive control is the real waveshaper drive, not a separate fictional drive stage for each filter. Filter plots are explicitly response previews.",
     "Eight effect selectors are promoted here; all sixteen native effect slots and full parameter editing remain available through Full FX editor. Unused algorithm-specific controls are disabled rather than mapped to unrelated parameters.",
     "The analyzer uses real output levels and the native scope action. It does not paint static reference spectrum activity as live audio.",
-    "Modulation assignment is handled by the native modulation editor; reference-only fabricated route values and botanical bitmap ornamentation are not copied into the live interface."
+    "Modulation assignment is handled by the native modulation editor; reference-only fabricated route values and botanical bitmap ornamentation are not copied into the live interface.",
+    "Mixer, envelope and selected-effect controls use the concept's label-above/knob/value order. Macro rows and the amplifier velocity knob use measured centres; the additional real filter-envelope row remains an explicit functional adaptation."
   ]
 }

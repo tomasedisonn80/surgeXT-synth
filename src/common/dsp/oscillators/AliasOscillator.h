@@ -116,7 +116,12 @@ class AliasOscillator : public Oscillator
 
         uint8_t x, y, z, a;
         uint8_t stepCount;
-        UInt8RNG() : x(21), y(229), z(181), a(rand() & 0xFF), stepCount(0) {}
+        UInt8RNG()
+            : x(21), y(229), z(181),
+              a(Surge::Oscillator::DisplayPreviewScope::active() ? 73 : (rand() & 0xFF)),
+              stepCount(0)
+        {
+        }
 
         inline uint8_t step()
         {

@@ -24,8 +24,8 @@ STYLES = set("precision ivory spectral bauhaus space tokyo aurora clear flow liv
 FONTS = {"sans", "serif", "mono"}
 PALETTE = set("background panel border text muted accent secondary display knob red yellow blue".split())
 PANELS = set("oscillator filter mixer envelope lfo macros matrix effects analyzer waveform browser routing scene output xy keyboard inspector amp tabs".split())
-VARIANTS = set("compact horizontal vertical large combined terrain flow faders knobs".split())
-CONTROLS = {"knob", "fader", "horizontal", "menu", "toggle"}
+VARIANTS = set("compact horizontal vertical large combined terrain flow faders knobs scope spectrum spectrogram".split())
+CONTROLS = {"knob", "fader", "horizontal", "menu", "toggle", "value"}
 FLOW_NODES = set("osc1 osc2 osc3 mixer filter1 filter2 amp fx output modsources modbus".split())
 IDENTIFIER = re.compile(r"[a-zA-Z0-9_.-]{1,80}\Z")
 COLOUR = re.compile(r"#[0-9a-fA-F]{6}(?:[0-9a-fA-F]{2})?\Z")
@@ -179,9 +179,9 @@ def validate_manifest(data: object) -> None:
                     number_field(item, "fontSize", 8, 24, where)
                 if "labelPosition" in item:
                     require(isinstance(item["labelPosition"], str) and
-                            item["labelPosition"] in ("left", "right") and
+                            item["labelPosition"] in ("left", "right", "top") and
                             item.get("kind", "knob") == "knob",
-                            f"{where}.labelPosition must be left/right on a knob")
+                            f"{where}.labelPosition must be left/right/top on a knob")
                 minimum = {"fader": (24, 46), "horizontal": (24, 40)}.get(item.get("kind"))
                 if minimum:
                     require(item["w"] >= minimum[0] and item["h"] >= minimum[1],

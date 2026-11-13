@@ -5,6 +5,8 @@
 #include "Visuals.h"
 
 #include "Oscillator.h"
+#include "AliasOscillator.h"
+#include "DisplayPreviewScope.h"
 #include "SurgeSynthProcessor.h"
 #include "SurgeStorage.h"
 #include "sst/filters/HalfRateFilter.h"
@@ -36,11 +38,43 @@ struct DisplayOscillatorDeleter
     }
 };
 
-std::vector<float> sampleOscillator(SurgeStorage &storage, OscillatorStorage &oscillatorStorage)
+std::vector<float> sampleOscillator(SurgeStorage &storage, OscillatorStorage &oscillatorStorage,
+                                    juce::String &status)
 {
     std::vector<float> result;
+    status = "Preview unavailable";
     if (!(storage.dsamplerate > 0.0) || !std::isfinite(storage.dsamplerate))
+    {
+        status = "Preview unavailable — sample rate";
         return result;
+    }
+    const auto type = oscillatorStorage.type.val.i;
+    if (type < 0 || type >= n_osc_types)
+        return result;
+    if (type == ot_twist)
+    {
+        // Plaits uses a global engine RNG. Do not perturb audible instances or
+        // attempt to save/reseed it while the audio callback can be running.
+        status = "Twist preview unavailable — use native oscillator editor";
+        return result;
+    }
+    if (type == ot_audioinput)
+    {
+        status = "Audio Input — no source preview";
+        return result;
+    }
+    if (type == ot_alias)
+    {
+        const auto mode = oscillatorStorage.p[AliasOscillator::ao_wave].val.i;
+        if (mode >= AliasOscillator::aow_mem_alias && mode <= AliasOscillator::aow_audiobuffer)
+        {
+            status = "Alias live-memory preview unavailable";
+            return result;
+        }
+    }
+    // Includes construction: Alias's small RNG otherwise consumes the shared C
+    // generator before init(is_display) gets a chance to seed its private state.
+    Surge::Oscillator::DisplayPreviewScope previewScope;
 
     alignas(16) unsigned char memory[oscillator_buffer_size]{};
     pdata parameters[n_scene_params]{};
@@ -64,7 +98,10 @@ std::vector<float> sampleOscillator(SurgeStorage &storage, OscillatorStorage &os
     {
         std::unique_lock<std::mutex> lock(storage.waveTableDataMutex, std::try_to_lock);
         if (!lock.owns_lock())
+        {
+            status = "Preview updating — wavetable busy";
             return result;
+        }
 
         oscillator.reset(spawn_osc(oscillatorStorage.type.val.i, &storage, &oscillatorStorage,
                                    parameters, parameters, memory));
@@ -92,7 +129,10 @@ std::vector<float> sampleOscillator(SurgeStorage &storage, OscillatorStorage &os
     {
         std::unique_lock<std::mutex> lock(storage.waveTableDataMutex, std::try_to_lock);
         if (!lock.owns_lock())
+        {
+            status = "Preview updating — wavetable busy";
             return result;
+        }
         // Display mode resets phase and keeps preview-only delay lines private.
         // Disable initial drift to make repeated UI renders reproducible.
         oscillator->init(pitch, true, false);
@@ -111,7 +151,10 @@ std::vector<float> sampleOscillator(SurgeStorage &storage, OscillatorStorage &os
         {
             std::unique_lock<std::mutex> lock(storage.waveTableDataMutex, std::try_to_lock);
             if (!lock.owns_lock())
+            {
+                status = "Preview updating — wavetable busy";
                 return {}; // no partial or misleading waveform during a table replacement
+            }
 
             oscillator->process_block(pitch, 0.f, false, false, 0.f);
             std::memcpy(buffer[0], oscillator->output, sizeof(buffer[0]));
@@ -127,6 +170,7 @@ std::vector<float> sampleOscillator(SurgeStorage &storage, OscillatorStorage &os
         result.push_back(finiteSample(sum / averagingWindow));
     }
 
+    status = "Native oscillator preview";
     return result;
 }
 
@@ -160,12 +204,13 @@ VisualData Visuals::sample(SurgeSynthProcessor &processor, int scene)
         return data;
 
     auto &synth = *processor.surge;
-    data.left = std::max(0.f, finiteSample(synth.vu_peak[0]));
-    data.right = std::max(0.f, finiteSample(synth.vu_peak[1]));
+    // Do not read audio-thread-owned vu_peak floats here. Workspace obtains
+    // channel peaks from its independent SPSC output tap on the message thread.
 
     for (int oscillator = 0; oscillator < n_oscs; ++oscillator)
         data.oscillator[static_cast<std::size_t>(oscillator)] =
-            sampleOscillator(synth.storage, synth.storage.getPatch().scene[scene].osc[oscillator]);
+            sampleOscillator(synth.storage, synth.storage.getPatch().scene[scene].osc[oscillator],
+                             data.oscillatorStatus[static_cast<std::size_t>(oscillator)]);
 
     return data;
 }

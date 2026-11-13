@@ -24,6 +24,7 @@
 #define SURGE_SRC_COMMON_DSP_OSCILLATORS_OSCILLATORCOMMONFUNCTIONS_H
 
 #include "sst/basic-blocks/dsp/OscillatorDriftUnisonCharacter.h"
+#include "DisplayPreviewScope.h"
 #include "DSPUtils.h"
 #include "SurgeStorage.h"
 
@@ -31,7 +32,19 @@ namespace Surge
 {
 namespace Oscillator
 {
-using DriftLFO = sst::basic_blocks::dsp::DriftLFO;
+struct DriftLFO : sst::basic_blocks::dsp::DriftLFO
+{
+    using Base = sst::basic_blocks::dsp::DriftLFO;
+    void init(bool nonzero) { Base::init(nonzero && !DisplayPreviewScope::active()); }
+    float next()
+    {
+        // A preview is always processed with drift=0, so drawing random drift is
+        // both invisible and harmful: the base implementation consumes std::rand.
+        // Outside the explicitly scoped preview, preserve the exact base call.
+        return DisplayPreviewScope::active() ? 0.f : Base::next();
+    }
+};
+static_assert(sizeof(DriftLFO) == sizeof(sst::basic_blocks::dsp::DriftLFO));
 
 template <typename valtype>
 using CharacterFilter = sst::basic_blocks::dsp::CharacterFilter<valtype, SurgeStorage>;

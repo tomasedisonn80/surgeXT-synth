@@ -23,7 +23,8 @@ permissions:
 
 concurrency:
   group: reference-workspaces-${{ github.ref }}
-  cancel-in-progress: true
+  # Preserve a complete build/capture record while the next checkpoint is queued.
+  cancel-in-progress: false
 
 defaults:
   run:
@@ -96,6 +97,11 @@ jobs:
             -DSURGE_SKIP_JACK=ON \
             -DSURGE_COPY_AFTER_BUILD=OFF \
             2>&1 | tee screenshot-artifact/configure.log
+
+      - name: Stress the independent audio display tap
+        run: |
+          bash scripts/reference-workspaces/test-audio-tap.sh normal 2>&1 | tee screenshot-artifact/audio-tap.log
+          TSAN_OPTIONS=halt_on_error=1 bash scripts/reference-workspaces/test-audio-tap.sh thread 2>&1 | tee screenshot-artifact/audio-tap-tsan.log
 
       - name: Build the real synthesizer test executable
         run: |

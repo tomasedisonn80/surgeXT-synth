@@ -7,6 +7,7 @@
 #include "WorkspaceData.h"
 #include "SurgeSynthProcessor.h"
 #include <juce_audio_utils/juce_audio_utils.h>
+#include <juce_dsp/juce_dsp.h>
 #include <algorithm>
 #include <cmath>
 
@@ -110,8 +111,12 @@ struct Theme
         auto family = font == "serif"  ? juce::Font::getDefaultSerifFontName()
                       : font == "mono" ? juce::Font::getDefaultMonospacedFontName()
                                        : juce::Font::getDefaultSansSerifFontName();
+#if JUCE_MAJOR_VERSION >= 8
         return juce::Font(
             juce::FontOptions(family, size, bold ? juce::Font::bold : juce::Font::plain));
+#else
+        return juce::Font(family, size, bold ? juce::Font::bold : juce::Font::plain);
+#endif
     }
 };
 void text(juce::Graphics &g, const Theme &t, const juce::String &s, Rect r, float size,
@@ -135,6 +140,49 @@ void bezel(juce::Graphics &g, const Theme &t, Rect r, juce::Colour fill, float r
     g.setColour(juce::Colours::white.withAlpha(t.light() ? 0.55f : 0.09f));
     g.drawLine(r.getX() + radius, r.getY() + 1, r.getRight() - radius, r.getY() + 1, 1);
 }
+void themedButton(juce::Graphics &g, const Theme &theme, juce::TextButton &button, bool highlighted,
+                  bool down)
+{
+    auto r = button.getLocalBounds().toFloat().reduced(.7f);
+    const bool selected = button.getToggleState();
+    auto fill = selected ? theme.accent : button.findColour(juce::TextButton::buttonColourId);
+    if (highlighted)
+        fill = fill.brighter(.10f);
+    if (down)
+        fill = fill.darker(.12f);
+    const auto radius = theme.style == "bauhaus" || theme.style == "tokyo" ? 2.f
+                        : theme.style == "clear" ? 5.f
+                                                 : std::min(5.f, theme.radius);
+    bezel(g, theme, r, fill, radius);
+    auto ink =
+        selected ? fill.contrasting(.95f) : button.findColour(juce::TextButton::textColourOffId);
+    if (!button.isEnabled())
+        ink = ink.withAlpha(.45f);
+    const auto size =
+        std::min(theme.style == "clear" ? 14.f : 12.f, std::max(9.f, r.getHeight() * .48f));
+    text(g, theme, button.getButtonText(), r.reduced(4, 0), size, ink,
+         selected || theme.style == "bauhaus", juce::Justification::centred);
+    if (button.hasKeyboardFocus(true))
+    {
+        g.setColour(theme.accent);
+        g.drawRoundedRectangle(r.reduced(1), radius, 2);
+    }
+}
+
+// Painting is local to each component, so asynchronous native popups never retain
+// a pointer to an editor-owned LookAndFeel after its editor has closed.
+class ThemeButton : public juce::TextButton
+{
+  public:
+    ThemeButton(Theme &t, const juce::String &caption = {}) : juce::TextButton(caption), theme(t) {}
+    void paintButton(juce::Graphics &g, bool over, bool down) override
+    {
+        themedButton(g, theme, *this, over, down);
+    }
+
+  private:
+    Theme &theme;
+};
 void knob(juce::Graphics &g, const Theme &t, Rect r, float value, juce::Colour accent, bool focus,
           bool enabled)
 {
@@ -415,9 +463,41 @@ class BoundSlider : public juce::Slider
         auto ink = spec.hasProperty("ink") ? theme.color(string(spec, "ink")) : theme.text;
         auto valueInk = spec.hasProperty("ink") ? ink.withAlpha(.85f) : theme.muted;
         float fs = number(spec, "fontSize", theme.style == "clear" ? 15 : 11.5f);
+        if (kind == "value")
+        {
+            const float labelWidth =
+                label.length() <= 3 ? std::min(24.f, r.getWidth() * .25f) : r.getWidth() * .44f;
+            text(g, theme, label, r.removeFromLeft(labelWidth), fs, ink);
+            auto box = r.reduced(2, 1);
+            bezel(g, theme, box, theme.style == "clear" ? theme.panel : theme.display, 3);
+            auto fieldInk = theme.style == "clear" ? theme.text : theme.display.contrasting(.85f);
+            text(g, theme, value, box.reduced(4, 0), fs, fieldInk, theme.style == "clear",
+                 juce::Justification::centredRight);
+            if (hasKeyboardFocus(true))
+            {
+                g.setColour(accent);
+                g.drawRoundedRectangle(box, 3, 2);
+            }
+            return;
+        }
         if (kind == "knob")
         {
             const auto labelPosition = string(spec, "labelPosition");
+            if (labelPosition == "top")
+            {
+                const float line = std::min(19.f, r.getHeight() * .23f);
+                text(g, theme, label, r.removeFromTop(line), fs, ink, false,
+                     juce::Justification::centred);
+                text(g, theme, value, r.removeFromBottom(line), fs,
+                     theme.style == "clear" ? ink : valueInk, theme.style == "clear",
+                     juce::Justification::centred);
+                auto faceTheme = theme;
+                if (theme.style == "space" && binding.startsWith("macro"))
+                    faceTheme.knob = theme.display;
+                knob(g, faceTheme, r, static_cast<float>(getValue()), accent,
+                     hasKeyboardFocus(true), isEnabled());
+                return;
+            }
             if (labelPosition == "left" || labelPosition == "right")
             {
                 const float side = std::min(r.getHeight(), r.getWidth() * .48f);
@@ -436,7 +516,10 @@ class BoundSlider : public juce::Slider
             auto face = r.withTrimmedBottom(lower);
             const float side = std::min(face.getWidth(), face.getHeight());
             face = Rect(face.getCentreX() - side / 2, face.getCentreY() - side / 2, side, side);
-            knob(g, theme, face, static_cast<float>(getValue()), accent, hasKeyboardFocus(true),
+            auto faceTheme = theme;
+            if (theme.style == "space" && binding.startsWith("macro"))
+                faceTheme.knob = theme.display;
+            knob(g, faceTheme, face, static_cast<float>(getValue()), accent, hasKeyboardFocus(true),
                  isEnabled());
             text(g, theme, label, r.removeFromBottom(lower).withHeight(lower / 2), fs, ink, false,
                  juce::Justification::centred);
@@ -612,13 +695,47 @@ class BoundMenu : public juce::ComboBox
         setTitle(getName());
         setTooltip(getName() + ": " + bridge.display(binding));
         setColour(juce::ComboBox::backgroundColourId, theme.display);
-        setColour(juce::ComboBox::textColourId, theme.light() ? theme.text : theme.text);
+        setColour(juce::ComboBox::textColourId, theme.text);
         // Cream themes use dark ink on cream menu surfaces, not on the green plotting well.
-        if (theme.light())
+        if (theme.light() && theme.style != "space")
             setColour(juce::ComboBox::backgroundColourId, theme.panel.brighter(.08f));
+        if (theme.style == "space")
+            setColour(juce::ComboBox::textColourId, theme.display.contrasting(.9f));
+        else if (spec.hasProperty("ink"))
+            setColour(juce::ComboBox::textColourId, theme.color(string(spec, "ink")));
         setColour(juce::ComboBox::outlineColourId, theme.border);
         setColour(juce::ComboBox::arrowColourId, theme.accent);
         polling = false;
+    }
+    void paint(juce::Graphics &g) override
+    {
+        auto r = getLocalBounds().toFloat().reduced(.5f);
+        bezel(g, theme, r, findColour(juce::ComboBox::backgroundColourId),
+              theme.style == "bauhaus" || theme.style == "tokyo" ? 2.f : 4.f);
+        auto arrow = r.removeFromRight(std::min(20.f, r.getWidth() * .2f));
+        const auto c = arrow.getCentre();
+        juce::Path p;
+        p.startNewSubPath(c.x - 3, c.y - 1.5f);
+        p.lineTo(c.x, c.y + 1.5f);
+        p.lineTo(c.x + 3, c.y - 1.5f);
+        g.setColour(isEnabled() ? theme.text : theme.muted);
+        g.strokePath(p, juce::PathStrokeType(1.3f));
+        if (hasKeyboardFocus(true))
+        {
+            g.setColour(theme.accent);
+            g.drawRoundedRectangle(getLocalBounds().toFloat().reduced(1), 3, 2);
+        }
+    }
+    void resized() override
+    {
+        juce::ComboBox::resized();
+        for (auto *child : getChildren())
+            if (auto *label = dynamic_cast<juce::Label *>(child))
+            {
+                label->setFont(
+                    theme.type(number(spec, "fontSize", theme.style == "clear" ? 13.f : 11.f)));
+                label->setBounds(5, 0, std::max(1, getWidth() - 25), getHeight());
+            }
     }
 
   private:
@@ -657,6 +774,10 @@ class BoundToggle : public juce::TextButton
         setColour(juce::TextButton::buttonOnColourId, theme.accent);
         setColour(juce::TextButton::textColourOffId, theme.text);
         setColour(juce::TextButton::textColourOnId, theme.background);
+    }
+    void paintButton(juce::Graphics &g, bool over, bool down) override
+    {
+        themedButton(g, theme, *this, over, down);
     }
 
   private:
@@ -983,7 +1104,11 @@ class PerformanceKeyboard : public juce::MidiKeyboardComponent
         : juce::MidiKeyboardComponent(state, juce::MidiKeyboardComponent::horizontalKeyboard)
     {
     }
-    void releaseHeldNotes() { resetAnyKeysInUse(); }
+    void releaseHeldNotes()
+    {
+        // Public in JUCE 7 and 8; releases only keys owned by this component.
+        juce::MidiKeyboardComponent::focusLost(juce::Component::focusChangedDirectly);
+    }
     ~PerformanceKeyboard() override { releaseHeldNotes(); }
 };
 } // anonymous namespace
@@ -996,6 +1121,13 @@ struct Workspace::Impl
     juce::var manifest;
     Theme theme;
     VisualData visuals;
+    juce::dsp::FFT outputFFT{11};
+    std::array<float, 2048> outputHistory{};
+    std::array<float, 4096> fftData{};
+    size_t outputWrite{0}, outputCount{0};
+    std::uint32_t lastDroppedFrames{0};
+    std::vector<float> spectrumDb;
+    std::vector<std::vector<float>> spectrumHistory;
     std::array<PreviewCurve, 2> filterCurves;
     std::array<PreviewCurve, 12> lfoCurves;
     bool audioSubscribed{false};
@@ -1009,8 +1141,11 @@ struct Workspace::Impl
     std::unique_ptr<PerformanceKeyboard> keyboard;
     juce::String browserQuery;
     int browserSelectedPatch{-1};
-    juce::TextButton skinButton{"Skins"}, classicButton{"Full editor"}, sceneA{"A"}, sceneB{"B"};
-    juce::TextButton presetButton, previous{"<"}, next{">"};
+    ThemeButton skinButton{theme, "Skins"}, classicButton{theme, "Full editor"}, sceneA{theme, "A"},
+        sceneB{theme, "B"};
+    ThemeButton presetButton{theme}, previous{theme, "<"}, next{theme, ">"};
+    ThemeButton browserButton{theme, "Browser"}, saveButton{theme, "Save"}, modButton{theme, "Mod"},
+        fxButton{theme, "FX"};
     int ticks{0};
     float scale{1};
     juce::Point<float> offset;
@@ -1019,8 +1154,8 @@ struct Workspace::Impl
     {
         owner.addAndMakeVisible(canvas);
         canvas.setInterceptsMouseClicks(false, true);
-        for (auto *b :
-             {&skinButton, &classicButton, &sceneA, &sceneB, &presetButton, &previous, &next})
+        for (auto *b : {&skinButton, &classicButton, &sceneA, &sceneB, &presetButton, &previous,
+                        &next, &browserButton, &saveButton, &modButton, &fxButton})
         {
             canvas.addAndMakeVisible(b);
             b->setWantsKeyboardFocus(true);
@@ -1034,6 +1169,14 @@ struct Workspace::Impl
         presetButton.setComponentID("workspace.preset");
         previous.setComponentID("workspace.previous-preset");
         next.setComponentID("workspace.next-preset");
+        browserButton.setComponentID("workspace.navigation.browser");
+        saveButton.setComponentID("workspace.navigation.save");
+        modButton.setComponentID("workspace.navigation.modulation");
+        fxButton.setComponentID("workspace.navigation.effects");
+        browserButton.setTooltip("Open the native preset browser");
+        saveButton.setTooltip("Save the current patch with the native editor");
+        modButton.setTooltip("Open the full modulation editor");
+        fxButton.setTooltip("Open the full effects editor");
         previous.setName("Previous preset");
         previous.setTitle(previous.getName());
         next.setName("Next preset");
@@ -1055,6 +1198,10 @@ struct Workspace::Impl
         presetButton.onClick = [this] { action("browser"); };
         previous.onClick = [this] { action("previous-preset"); };
         next.onClick = [this] { action("next-preset"); };
+        browserButton.onClick = [this] { action("browser"); };
+        saveButton.onClick = [this] { action("save"); };
+        modButton.onClick = [this] { action("modulation"); };
+        fxButton.onClick = [this] { action("effects"); };
     }
     void action(const juce::String &a)
     {
@@ -1063,7 +1210,7 @@ struct Workspace::Impl
     }
     void button(const juce::String &label, const juce::String &actionId, Rect r)
     {
-        auto b = std::make_unique<juce::TextButton>(label);
+        auto b = std::make_unique<ThemeButton>(theme, label);
         b->setName(label);
         b->setTitle(label);
         b->setComponentID("workspace.action." + actionId + juce::String(actions.size()));
@@ -1145,8 +1292,10 @@ struct Workspace::Impl
                     button("Full FX editor", "effects",
                            r.removeFromTop(28).removeFromRight(110).reduced(3));
                 if (kind == "analyzer")
-                    button("Open scope", "analyzer",
-                           r.removeFromTop(28).removeFromRight(92).reduced(3));
+                    button(r.getWidth() < 320 ? "Scope" : "Open scope", "analyzer",
+                           r.removeFromTop(28)
+                               .removeFromRight(r.getWidth() < 320 ? 54.f : 92.f)
+                               .reduced(3));
                 if (kind == "xy")
                 {
                     xy = std::make_unique<MacroXY>(parameters, theme);
@@ -1177,11 +1326,16 @@ struct Workspace::Impl
                         {keyboard.get(), arrayRect(v["plot"], r.reduced(12).withTrimmedTop(50))});
                 }
             }
-        for (auto *b :
-             {&skinButton, &classicButton, &sceneA, &sceneB, &presetButton, &previous, &next})
+        for (auto *b : {&skinButton, &classicButton, &sceneA, &sceneB, &presetButton, &previous,
+                        &next, &browserButton, &saveButton, &modButton, &fxButton})
             styleButton(*b);
         for (auto &b : actions)
             styleButton(*b);
+        presetButton.setColour(juce::TextButton::buttonColourId,
+                               theme.style == "clear" ? theme.panel : theme.display);
+        presetButton.setColour(juce::TextButton::textColourOffId,
+                               theme.style == "clear" ? theme.text
+                                                      : theme.display.contrasting(.95f));
         owner.resized();
     }
     void setAudioSubscription(bool active)
@@ -1193,11 +1347,16 @@ struct Workspace::Impl
             // Only the consumer index is touched; never reset a running producer.
             processor.referenceAudio.popall();
             processor.referenceAudio.subscribe();
+            lastDroppedFrames = processor.referenceAudio.droppedFrames();
         }
         else
         {
             processor.referenceAudio.unsubscribe();
             visuals.output.clear();
+            visuals.left = visuals.right = 0;
+            spectrumDb.clear();
+            spectrumHistory.clear();
+            outputWrite = outputCount = 0;
         }
         audioSubscribed = active;
     }
@@ -1224,8 +1383,11 @@ struct Workspace::Impl
         if ((ticks++ % 8) == 0)
         {
             auto output = std::move(visuals.output);
+            const auto leftPeak = visuals.left, rightPeak = visuals.right;
             visuals = Visuals::sample(processor, parameters.getScene());
             visuals.output = std::move(output);
+            visuals.left = leftPeak;
+            visuals.right = rightPeak;
             std::array<bool, 2> filtersNeeded{};
             std::array<bool, 12> lfosNeeded{};
             if (auto *panels = manifest["panels"].getArray())
@@ -1237,6 +1399,8 @@ struct Workspace::Impl
                         filtersNeeded[index] = true;
                     if (kind == "filter" && string(panel, "variant") == "combined")
                         filtersNeeded[1] = true;
+                    if (kind == "routing" && string(panel, "variant") == "flow")
+                        filtersNeeded = {true, true};
                     if (kind == "lfo" && index >= 0 && index < 12)
                         lfosNeeded[index] = true;
                 }
@@ -1253,9 +1417,34 @@ struct Workspace::Impl
         if (audioSubscribed)
         {
             auto [left, right] = processor.referenceAudio.popall();
+            const auto dropped = processor.referenceAudio.droppedFrames();
+            if (dropped != lastDroppedFrames)
+            {
+                // Never splice an audio history across lost display frames.
+                lastDroppedFrames = dropped;
+                outputWrite = outputCount = 0;
+                spectrumDb.clear();
+                spectrumHistory.clear();
+                visuals.output.clear();
+                visuals.left = visuals.right = 0;
+                return;
+            }
+            visuals.left *= .8f;
+            visuals.right *= .8f;
             const auto frames = std::min(left.size(), right.size());
             if (frames > 0)
             {
+                for (size_t i = 0; i < frames; ++i)
+                {
+                    if (std::isfinite(left[i]))
+                        visuals.left = std::max(visuals.left, std::abs(left[i]));
+                    if (std::isfinite(right[i]))
+                        visuals.right = std::max(visuals.right, std::abs(right[i]));
+                    const float sample = (left[i] + right[i]) * .5f;
+                    outputHistory[outputWrite] = std::isfinite(sample) ? sample : 0.f;
+                    outputWrite = (outputWrite + 1) % outputHistory.size();
+                    outputCount = std::min(outputCount + 1, outputHistory.size());
+                }
                 const auto count = std::min<size_t>(512, frames);
                 visuals.output.resize(count);
                 for (size_t i = 0; i < count; ++i)
@@ -1264,31 +1453,123 @@ struct Workspace::Impl
                     const float value = (left[at] + right[at]) * .5f;
                     visuals.output[i] = std::isfinite(value) ? value : 0.f;
                 }
+                if (outputCount == outputHistory.size())
+                {
+                    fftData.fill(0.f);
+                    for (size_t i = 0; i < outputHistory.size(); ++i)
+                    {
+                        const float window =
+                            .5f - .5f * std::cos(juce::MathConstants<float>::twoPi * i /
+                                                 (outputHistory.size() - 1));
+                        fftData[i] =
+                            outputHistory[(outputWrite + i) % outputHistory.size()] * window;
+                    }
+                    outputFFT.performFrequencyOnlyForwardTransform(fftData.data());
+                    spectrumDb.resize(160);
+                    const auto rate = std::max(1.0, processor.getSampleRate());
+                    const auto top = std::min(20000.0, rate * .5);
+                    for (size_t i = 0; i < spectrumDb.size(); ++i)
+                    {
+                        const auto frequency =
+                            20.0 *
+                            std::pow(top / 20.0, static_cast<double>(i) / (spectrumDb.size() - 1));
+                        const auto bin =
+                            std::clamp(frequency * outputHistory.size() / rate, 1.0, 1023.0);
+                        const auto low = static_cast<size_t>(bin);
+                        const auto fraction = static_cast<float>(bin - low);
+                        const auto magnitude =
+                            (fftData[low] + fraction * (fftData[low + 1] - fftData[low])) *
+                            (4.f / static_cast<float>(outputHistory.size()));
+                        spectrumDb[i] = juce::jlimit(
+                            -96.f, 12.f, 20.f * std::log10(std::max(1.e-8f, magnitude)));
+                    }
+                    spectrumHistory.push_back(spectrumDb);
+                    if (spectrumHistory.size() > 64)
+                        spectrumHistory.erase(spectrumHistory.begin());
+                }
             }
         }
     }
     void drawHeader(juce::Graphics &g)
     {
         const float h = number(manifest, "headerHeight", 92);
-        bezel(g, theme, {2, 2, 1582, h - 5}, theme.panel, theme.radius);
+        const bool shortHeader = h <= 70;
+        const auto headerFill = theme.style == "space" ? juce::Colour(0xffb9a582) : theme.panel;
+        const auto headerInk = theme.style == "space" ? juce::Colour(0xff211c12) : theme.text;
+        bezel(g, theme, {2, 2, 1582, h - 5}, headerFill, theme.radius);
+        if (theme.style == "spectral" || theme.style == "aurora")
+        {
+            g.setGradientFill(juce::ColourGradient(theme.accent.withAlpha(.18f), 15, 0,
+                                                   theme.accent.withAlpha(0.f), 365, h, false));
+            g.fillRoundedRectangle({4, 4, 355, h - 11}, theme.radius);
+        }
         juce::Path logo;
+        const auto logoY = shortHeader ? 27.f : h * .40f;
         for (int i = 0; i < 51; ++i)
         {
-            float x = 22 + i * .9f, y = h * .43f + std::sin(i * .22f) * std::sin(i * .0628f) * 15;
+            float x = 22 + i * .9f, y = logoY + std::sin(i * .22f) * std::sin(i * .0628f) * 15;
             if (i == 0)
                 logo.startNewSubPath(x, y);
             else
                 logo.lineTo(x, y);
         }
-        g.setColour(theme.accent);
-        g.strokePath(logo, juce::PathStrokeType(2.5f));
-        text(g, theme, "SURGE XT", {80, 9, 260, h * .52f}, theme.style == "bauhaus" ? 42 : 34,
-             theme.text, true);
-        text(g, theme, string(manifest, "name").toUpperCase(), {82, h * .62f, 290, 17}, 11,
-             theme.accent);
-        text(g, theme, "SCENE", {405, 8, 100, 17}, 11, theme.muted, false,
-             juce::Justification::centred);
-        text(g, theme, "PRESET", {550, 7, 450, 15}, 10, theme.muted, false,
+        if (theme.style == "bauhaus")
+        {
+            g.setColour(theme.red);
+            juce::Path halfDisc;
+            halfDisc.addPieSegment(20, logoY - 22, 45, 45, juce::MathConstants<float>::pi,
+                                   juce::MathConstants<float>::twoPi, 0.f);
+            g.fillPath(halfDisc);
+            g.setColour(theme.text);
+            g.fillRect(Rect(43, logoY, 22, 22));
+            g.setColour(theme.yellow);
+            juce::Path triangle;
+            triangle.addTriangle(43, logoY, 65, logoY, 43, logoY + 22);
+            g.fillPath(triangle);
+        }
+        else if (theme.style == "space" || theme.style == "tokyo")
+        {
+            g.setColour(theme.style == "space" ? juce::Colour(0xffb15a20) : theme.accent);
+            for (int i = 0; i < 3; ++i)
+            {
+                juce::Path slash;
+                slash.startNewSubPath(20 + i * 11.f, logoY + 17);
+                slash.lineTo(36 + i * 11.f, logoY - 17);
+                g.strokePath(slash, juce::PathStrokeType(theme.style == "space" ? 7.f : 3.f));
+            }
+        }
+        else if (theme.style == "flow")
+        {
+            for (int i = 0; i < 9; ++i)
+            {
+                g.setColour(theme.accent.withAlpha(i % 2 ? .55f : 1.f));
+                g.drawEllipse(25 + (i % 3) * 13.f, logoY - 14 + (i / 3) * 13.f, 5, 5, 1.4f);
+            }
+        }
+        else
+        {
+            if (theme.style == "spectral" || theme.style == "aurora")
+                for (int layer = 0; layer < 5; ++layer)
+                {
+                    g.setColour(
+                        theme.secondary.interpolatedWith(theme.accent, layer / 4.f).withAlpha(.4f));
+                    g.strokePath(logo, juce::PathStrokeType(1.2f),
+                                 juce::AffineTransform::translation(0, (layer - 2) * 2.f));
+                }
+            g.setColour(theme.accent);
+            g.strokePath(logo, juce::PathStrokeType(theme.style == "clear" ? 3.6f : 2.5f));
+        }
+        const float titleSize = theme.style == "bauhaus" ? 38.f : shortHeader ? 29.f : 34.f;
+        text(g, theme, "SURGE XT", {80, shortHeader ? 6.f : 9.f, 245, shortHeader ? 32.f : 40.f},
+             titleSize, headerInk, theme.style != "ivory");
+        text(g, theme, "HYBRID SYNTHESIZER", {82, shortHeader ? 40.f : 53.f, 215, 15},
+             theme.style == "ivory" ? 10.f : 9.f, headerInk.withAlpha(.8f));
+        if (h > 90)
+            text(g, theme, string(manifest, "name"), {82, h - 24, 208, 15}, 9, theme.accent);
+        if (!shortHeader)
+            text(g, theme, "SCENE", {365, 3, 120, 13}, 9, headerInk.withAlpha(.7f), false,
+                 juce::Justification::centred);
+        text(g, theme, "PRESET", {550, 3, 520, 13}, 9, headerInk.withAlpha(.7f), false,
              juce::Justification::centred);
         if (theme.style == "space")
         {
@@ -1302,17 +1583,27 @@ struct Workspace::Impl
                 }
         }
     }
-    void plotBase(juce::Graphics &g, Rect r)
+    void plotBase(juce::Graphics &g, Rect r, bool pale = false)
     {
-        g.setColour(theme.display);
+        g.setColour(pale ? theme.panel.brighter(.03f) : theme.display);
         g.fillRoundedRectangle(r, 3);
         g.setColour(theme.border.withAlpha(.4f));
         g.drawRoundedRectangle(r, 3, 1);
         Visuals::grid(g, r.reduced(2), theme.secondary.withAlpha(theme.light() ? .16f : .1f));
     }
+    void unavailableOscillator(juce::Graphics &g, Rect r, int index)
+    {
+        auto caption = visuals.oscillatorStatus[juce::jlimit(0, 2, index)];
+        if (caption.isEmpty())
+            caption = "Oscillator preview unavailable";
+        g.setColour(theme.display.contrasting(.8f));
+        g.setFont(theme.type(r.getWidth() < 120 ? 8.f : 10.f));
+        g.drawFittedText(caption, r.reduced(3).toNearestInt(), juce::Justification::centred,
+                         r.getHeight() >= 35 ? 3 : 1, .8f);
+    }
     void drawEnvelope(juce::Graphics &g, Rect r, int index, juce::Colour color)
     {
-        plotBase(g, r);
+        plotBase(g, r, theme.style == "clear");
         r = r.reduced(8);
         const juce::String prefix = "env" + juce::String(std::clamp(index, 1, 2)) + ".";
         auto at = parameters.value(prefix + "attack"), de = parameters.value(prefix + "decay");
@@ -1379,12 +1670,13 @@ struct Workspace::Impl
     }
     void drawLfo(juce::Graphics &g, Rect r, int index)
     {
-        plotBase(g, r);
+        plotBase(g, r, theme.style == "clear");
         r = r.reduced(6);
         const auto &curve = lfoCurves[juce::jlimit(0, 11, index - 1)];
         if (!curve.available || curve.values.size() < 2)
         {
-            text(g, theme, curve.caption, r, 10, theme.display.contrasting(.8f), false,
+            text(g, theme, curve.caption, r, 10,
+                 theme.style == "clear" ? theme.text : theme.display.contrasting(.8f), false,
                  juce::Justification::centred);
             return;
         }
@@ -1398,9 +1690,73 @@ struct Workspace::Impl
             else
                 p.lineTo(r.getX() + x * r.getWidth(), r.getY() + y * r.getHeight());
         }
-        g.setColour(theme.secondary);
+        g.setColour(theme.style == "clear" ? theme.accent : theme.secondary);
         g.strokePath(p, juce::PathStrokeType(1.8f));
-        text(g, theme, curve.caption, r.removeFromBottom(12), 8, theme.display.contrasting(.8f));
+        text(g, theme, curve.caption, r.removeFromBottom(12), 8,
+             theme.style == "clear" ? theme.text : theme.display.contrasting(.8f));
+    }
+    void drawSpectrum(juce::Graphics &g, Rect r, bool history)
+    {
+        r = r.reduced(6);
+        const auto captionInk = theme.display.contrasting(.8f);
+        if (spectrumDb.empty())
+        {
+            text(g, theme, "Awaiting live audio", r, 11, captionInk, false,
+                 juce::Justification::centred);
+            return;
+        }
+        auto graph = r.withTrimmedBottom(15);
+        if (history)
+        {
+            // Columns are actual captured FFT frames, oldest left. Empty time stays blank.
+            const auto columnWidth = graph.getWidth() / 64.f;
+            for (size_t frame = 0; frame < spectrumHistory.size(); ++frame)
+            {
+                const auto &bins = spectrumHistory[frame];
+                for (size_t bin = 0; bin < bins.size(); ++bin)
+                {
+                    const float strength = std::clamp((bins[bin] + 90.f) / 78.f, 0.f, 1.f);
+                    auto color = theme.display.interpolatedWith(theme.secondary,
+                                                                std::min(1.f, strength * 1.6f));
+                    if (strength > .6f)
+                        color = color.interpolatedWith(theme.accent, (strength - .6f) * 2.5f);
+                    g.setColour(color);
+                    g.fillRect(Rect(graph.getX() + frame * columnWidth,
+                                    graph.getBottom() - (bin + 1) * graph.getHeight() / bins.size(),
+                                    columnWidth + .5f, graph.getHeight() / bins.size() + .5f));
+                }
+            }
+        }
+        else
+        {
+            juce::Path path;
+            for (size_t i = 0; i < spectrumDb.size(); ++i)
+            {
+                const auto x = graph.getX() + graph.getWidth() * i / (spectrumDb.size() - 1);
+                const auto y =
+                    graph.getBottom() -
+                    graph.getHeight() * std::clamp((spectrumDb[i] + 96.f) / 108.f, 0.f, 1.f);
+                if (i == 0)
+                    path.startNewSubPath(x, y);
+                else
+                    path.lineTo(x, y);
+            }
+            auto fill = path;
+            fill.lineTo(graph.getBottomRight());
+            fill.lineTo(graph.getBottomLeft());
+            fill.closeSubPath();
+            const auto ink = theme.style == "clear" ? theme.accent : theme.secondary;
+            g.setGradientFill(juce::ColourGradient(ink.withAlpha(.45f), graph.getTopLeft(),
+                                                   ink.withAlpha(.025f), graph.getBottomLeft(),
+                                                   false));
+            g.fillPath(fill);
+            g.setColour(ink);
+            g.strokePath(path, juce::PathStrokeType(1.4f));
+        }
+        text(g, theme,
+             history ? "Live STFT • time → / log frequency ↑"
+                     : "20 Hz     100     1k     10k     • dBFS",
+             r.removeFromBottom(13), 9, captionInk, false, juce::Justification::centred);
     }
     void drawMeters(juce::Graphics &g, Rect r)
     {
@@ -1439,11 +1795,24 @@ struct Workspace::Impl
         if (theme.style == "bauhaus" &&
             (string(v, "color") == "red" || string(v, "color") == "blue"))
             titleColor = juce::Colours::white;
-        text(g, theme, title, r.reduced(12, 3).withHeight(25), theme.style == "ivory" ? 18 : 15,
+        auto titleBounds = r.reduced(12, 3).withHeight(25);
+        if (kind == "matrix")
+            titleBounds.setWidth(std::max(25.f, titleBounds.getWidth() - 112.f));
+        else if (kind == "effects")
+            titleBounds.setWidth(std::max(25.f, titleBounds.getWidth() - 110.f));
+        else if (kind == "analyzer")
+            titleBounds.setWidth(
+                std::max(25.f, titleBounds.getWidth() - (r.getWidth() < 320 ? 54.f : 92.f)));
+        text(g, theme, title, titleBounds, number(v, "fontSize", theme.style == "ivory" ? 18 : 15),
              titleColor, true);
         auto content = r.reduced(10).withTrimmedTop(24);
         auto pr =
             arrayRect(v["plot"], content.withHeight(std::max(25.f, content.getHeight() * .56f)));
+        const auto curveInk =
+            theme.style == "ivory" || theme.style == "space" || theme.style == "tokyo"
+                ? theme.secondary
+                : theme.accent;
+        const auto waveformInk = theme.style == "clear" ? theme.accent : theme.secondary;
         if (kind == "oscillator")
         {
             if (!v.hasProperty("plot"))
@@ -1455,8 +1824,12 @@ struct Workspace::Impl
             }
             plotBase(g, pr);
             if (index <= 3)
-                Visuals::waveform(g, pr.reduced(5), visuals.oscillator[index - 1], theme.secondary,
+            {
+                Visuals::waveform(g, pr.reduced(5), visuals.oscillator[index - 1], waveformInk,
                                   theme.accent, variant == "terrain");
+                if (visuals.oscillator[index - 1].empty())
+                    unavailableOscillator(g, pr, index - 1);
+            }
         }
         else if (kind == "waveform")
         {
@@ -1466,19 +1839,21 @@ struct Workspace::Impl
                               theme.accent,
                               variant == "terrain" || theme.style == "bauhaus" ||
                                   theme.style == "live" || theme.style == "aurora");
+            if (visuals.oscillator[0].empty())
+                unavailableOscillator(g, pr.withTrimmedBottom(22), 0);
             text(g, theme, "OSCILLATOR PREVIEW", {pr.getX() + 9, pr.getBottom() - 19, 220, 16}, 9,
-                 theme.muted);
+                 theme.display.contrasting(.7f));
         }
         else if (kind == "filter" || kind == "inspector")
         {
-            drawFilter(g, pr, index, index == 2 ? theme.secondary : theme.accent);
+            drawFilter(g, pr, index, index == 2 ? theme.secondary : curveInk);
             if (variant == "combined")
                 drawFilter(g, pr, 2, theme.secondary, false);
             text(g, theme, "Base-parameter response", {pr.getX() + 4, pr.getY() + 2, 180, 12}, 9,
                  theme.display.contrasting(.8f));
         }
         else if (kind == "envelope" || kind == "amp")
-            drawEnvelope(g, pr, index, theme.accent);
+            drawEnvelope(g, pr, index, curveInk);
         else if (kind == "lfo")
             drawLfo(g, pr, index);
         else if (kind == "analyzer")
@@ -1487,16 +1862,17 @@ struct Workspace::Impl
             drawMeters(g, meter.reduced(4));
             pr = arrayRect(v["plot"], content.reduced(3));
             plotBase(g, pr);
-            if (!visuals.output.empty())
+            if (variant != "scope")
+                drawSpectrum(g, pr, variant == "spectrogram");
+            else if (!visuals.output.empty())
                 Visuals::waveform(g, pr.reduced(5), visuals.output, theme.secondary, theme.accent,
                                   false);
             else
             {
                 g.setColour(theme.secondary.withAlpha(.5f));
                 g.drawLine(pr.getX() + 5, pr.getCentreY(), pr.getRight() - 5, pr.getCentreY());
-                text(g, theme, "Live output • use Open scope for spectrum",
-                     pr.reduced(9).removeFromBottom(23), 10, theme.muted, false,
-                     juce::Justification::centred);
+                text(g, theme, "Awaiting live output", pr.reduced(9).removeFromBottom(23), 10,
+                     theme.muted, false, juce::Justification::centred);
             }
         }
         else if (kind == "output")
@@ -1504,22 +1880,31 @@ struct Workspace::Impl
                 g, content.removeFromRight(std::min(58.f, content.getWidth() * .28f)).reduced(4));
         else if (kind == "matrix")
         {
-            const auto h = juce::jlimit(16.f, 27.f, content.getHeight() * .18f);
+            if (theme.style == "space")
+            {
+                g.setColour(theme.display);
+                g.fillRoundedRectangle(content.expanded(3), 3);
+            }
+            const bool accessible = theme.style == "clear";
+            const float rowText = accessible ? 13.f : 11.f;
+            const auto h = accessible ? juce::jlimit(24.f, 29.f, (content.getHeight() - 22) / 8.f)
+                                      : juce::jlimit(16.f, 27.f, content.getHeight() * .18f);
             text(g, theme, "SOURCE                         AMOUNT           DESTINATION",
-                 content.removeFromTop(22), 10, theme.muted, true);
-            const auto rowCount =
-                std::min(6, static_cast<int>(std::max(0.f, content.getHeight()) / h));
+                 content.removeFromTop(22), accessible ? 11.f : 10.f, theme.muted, true);
+            const auto rowCount = std::min(
+                accessible ? 8 : 6, static_cast<int>(std::max(0.f, content.getHeight()) / h));
             for (int i = 0; i < rowCount; ++i)
             {
                 auto row = content.removeFromTop(h);
                 g.setColour(theme.border.withAlpha(.35f));
                 g.drawHorizontalLine(static_cast<int>(row.getBottom()), row.getX(), row.getRight());
-                text(g, theme, juce::String(i + 1), row.removeFromLeft(20), 10, theme.muted);
+                text(g, theme, juce::String(i + 1), row.removeFromLeft(20),
+                     accessible ? 12.f : 10.f, theme.muted);
                 if (i < static_cast<int>(routes.size()))
                 {
                     const auto &route = routes[i];
                     const float width = row.getWidth();
-                    text(g, theme, route.source, row.removeFromLeft(width * .29f), 11,
+                    text(g, theme, route.source, row.removeFromLeft(width * .29f), rowText,
                          route.muted ? theme.muted : theme.text);
                     auto amount = row.removeFromLeft(width * .25f);
                     auto bar = amount.reduced(3, 9);
@@ -1528,13 +1913,13 @@ struct Workspace::Impl
                     bar.setWidth(bar.getWidth() * std::min(1.f, std::abs(route.normalizedDepth)));
                     g.setColour(route.muted ? theme.muted : theme.accent);
                     g.fillRoundedRectangle(bar, 2);
-                    text(g, theme, route.amount, amount, 10, theme.text, false,
-                         juce::Justification::centred);
-                    text(g, theme, route.destination, row.reduced(5, 0), 11, theme.text);
+                    text(g, theme, route.amount, amount, accessible ? 12.f : 10.f, theme.text,
+                         false, juce::Justification::centred);
+                    text(g, theme, route.destination, row.reduced(5, 0), rowText, theme.text);
                 }
                 else
                     text(g, theme, i == 0 ? "No routes in this patch — use Edit routes" : "—", row,
-                         11, theme.muted);
+                         rowText, theme.muted);
             }
         }
         else if (kind == "browser")
@@ -1651,12 +2036,44 @@ struct Workspace::Impl
             auto key = "osc" + juce::String(i + 1);
             auto n = node(key.toRawUTF8(), "OSC " + juce::String(i + 1), .02f, .08f + i * .23f,
                           .20f, .13f);
+            auto preview = n.withTrimmedLeft(n.getWidth() * .52f).withHeight(22).reduced(4, 2);
+            if (!visuals.oscillator[i].empty())
+                Visuals::waveform(g, preview, visuals.oscillator[i], theme.accent, theme.secondary,
+                                  false);
+            else
+                unavailableOscillator(g, preview, i);
             wire({n.getRight(), n.getCentreY()}, {mix.getX(), mix.getCentreY()});
         }
         auto f1 = node("filter1", "FILTER 1", .45f, .15f, .18f, .15f),
              f2 = node("filter2", "FILTER 2", .45f, .43f, .18f, .15f);
         auto amp = node("amp", "AMP", .70f, .29f, .10f, .17f),
              fx = node("fx", "FX CHAIN", .86f, .22f, .11f, .30f);
+        for (int index = 0; index < 2; ++index)
+        {
+            const auto &curve = filterCurves[index];
+            auto plot = (index == 0 ? f1 : f2).withTrimmedTop(58).reduced(8, 2);
+            if (plot.getHeight() > 4 && curve.available && curve.values.size() > 1)
+            {
+                juce::Path trace;
+                for (size_t i = 0; i < curve.values.size(); ++i)
+                {
+                    const float x = plot.getX() + plot.getWidth() * i / (curve.values.size() - 1);
+                    const float y =
+                        plot.getBottom() -
+                        plot.getHeight() *
+                            std::clamp((curve.values[i] - filterPreviewMinimumDb) /
+                                           (filterPreviewMaximumDb - filterPreviewMinimumDb),
+                                       0.f, 1.f);
+                    if (i == 0)
+                        trace.startNewSubPath(x, y);
+                    else
+                        trace.lineTo(x, y);
+                }
+                g.setColour(theme.accent);
+                g.strokePath(trace, juce::PathStrokeType(1.2f));
+            }
+        }
+        drawEnvelope(g, amp.withTrimmedTop(22).reduced(4), 1, theme.accent);
         wire({mix.getRight(), mix.getCentreY()}, {f1.getX(), f1.getCentreY()});
         if (parallel)
         {
@@ -1673,7 +2090,9 @@ struct Workspace::Impl
             wire({fx.getRight(), fx.getCentreY()}, {out.getX(), out.getCentreY()});
         }
         node("modsources", "MOD SOURCES", .05f, .80f, .27f, .15f);
-        node("modbus", "MOD BUS / ROUTING", .46f, .80f, .30f, .15f);
+        auto modbus = node("modbus", "MOD BUS / ROUTING", .46f, .80f, .30f, .15f);
+        text(g, theme, juce::String(static_cast<int>(routes.size())) + " route entries shown",
+             modbus.reduced(8).withTrimmedTop(20), 11, theme.muted);
         text(g, theme, "Routing: " + parameters.display("routing") + "  •  schematic overview",
              {r.getX(), r.getBottom() + 7, r.getWidth(), 17}, 11, theme.muted);
     }
@@ -1756,15 +2175,24 @@ void Workspace::resized()
     for (auto &p : impl->placements)
         p.first->setBounds(p.second.toNearestInt());
     const float h = number(impl->manifest, "headerHeight", 92);
-    const int by = static_cast<int>(std::max(25.f, h * .30f)),
-              bh = static_cast<int>(std::max(22.f, std::min(36.f, h * .44f)));
-    impl->sceneA.setBounds(410, by, 44, bh);
-    impl->sceneB.setBounds(458, by, 44, bh);
-    impl->previous.setBounds(540, by, 32, bh);
-    impl->presetButton.setBounds(577, by, 460, bh);
-    impl->next.setBounds(1042, by, 32, bh);
-    impl->skinButton.setBounds(1300, by, 95, bh);
-    impl->classicButton.setBounds(1402, by, 155, bh);
+    const bool compact = h <= 70;
+    const bool wideScenes = impl->theme.style == "aurora" || impl->theme.style == "flow";
+    const int by = compact ? 6 : 19, bh = compact ? 27 : 30;
+    impl->sceneA.setButtonText(wideScenes ? "Scene A" : "A");
+    impl->sceneB.setButtonText(wideScenes ? "Scene B" : "B");
+    impl->sceneA.setBounds(wideScenes ? 330 : 365, by, wideScenes ? 91 : 56, bh);
+    impl->sceneB.setBounds(wideScenes ? 426 : 426, by, wideScenes ? 91 : 56, bh);
+    const int presetY = compact ? 21 : 22;
+    impl->previous.setBounds(538, presetY, 29, 31);
+    impl->presetButton.setBounds(572, presetY, 460, 31);
+    impl->next.setBounds(1037, presetY, 29, 31);
+    impl->skinButton.setBounds(1300, compact ? 16 : 24, 88, compact ? 31 : 33);
+    impl->classicButton.setBounds(1395, compact ? 16 : 24, 166, compact ? 31 : 33);
+    const int navY = static_cast<int>(h) - (compact ? 22 : 25), navH = compact ? 18 : 21;
+    impl->browserButton.setBounds(315, navY, 62, navH);
+    impl->saveButton.setBounds(382, navY, 43, navH);
+    impl->modButton.setBounds(430, navY, 43, navH);
+    impl->fxButton.setBounds(478, navY, 39, navH);
 }
 void Workspace::paint(juce::Graphics &g)
 {

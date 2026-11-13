@@ -12,15 +12,15 @@
   "glow": 0.08,
   "palette": {
     "background": "#111416",
-    "panel": "#202426",
-    "border": "#62696B",
+    "panel": "#242729",
+    "border": "#5B6163",
     "text": "#E8ECEE",
     "muted": "#B1BBBE",
-    "accent": "#EE2B2B",
-    "secondary": "#21D9E8",
-    "display": "#050D10",
-    "knob": "#242B2D",
-    "red": "#EE2B2B",
+    "accent": "#F32D31",
+    "secondary": "#11DBE9",
+    "display": "#030C0F",
+    "knob": "#282D30",
+    "red": "#F32D31",
     "yellow": "#FFAD32",
     "blue": "#1C8FA2"
   },
@@ -321,43 +321,49 @@
     {
       "id": "tokyo-osc1-pitch",
       "binding": "osc1.pitch",
-      "x": 286,
-      "y": 302,
-      "w": 50,
-      "h": 85,
-      "label": "PITCH"
+      "x": 341,
+      "y": 394,
+      "w": 67,
+      "h": 22,
+      "label": "SEMI",
+      "kind": "value",
+      "fontSize": 10
     },
     {
       "id": "tokyo-osc1-param0",
       "binding": "osc1.param0",
-      "x": 338,
+      "x": 289,
       "y": 302,
-      "w": 50,
-      "h": 85
+      "w": 58,
+      "h": 85,
+      "labelPosition": "top"
     },
     {
       "id": "tokyo-osc1-param1",
       "binding": "osc1.param1",
-      "x": 390,
+      "x": 354,
       "y": 302,
-      "w": 50,
-      "h": 85
+      "w": 58,
+      "h": 85,
+      "labelPosition": "top"
     },
     {
       "id": "tokyo-osc1-param2",
       "binding": "osc1.param2",
-      "x": 442,
+      "x": 419,
       "y": 302,
-      "w": 50,
-      "h": 85
+      "w": 58,
+      "h": 85,
+      "labelPosition": "top"
     },
     {
       "id": "tokyo-osc1-param3",
       "binding": "osc1.param3",
-      "x": 494,
+      "x": 484,
       "y": 302,
-      "w": 50,
-      "h": 85
+      "w": 58,
+      "h": 85,
+      "labelPosition": "top"
     },
     {
       "id": "tokyo-osc1-octave",
@@ -372,9 +378,9 @@
     {
       "id": "tokyo-osc1-keytrack",
       "binding": "osc1.keytrack",
-      "x": 345,
+      "x": 502,
       "y": 394,
-      "w": 60,
+      "w": 43,
       "h": 22,
       "kind": "toggle",
       "label": "KEY"
@@ -382,9 +388,9 @@
     {
       "id": "tokyo-osc1-mute",
       "binding": "osc1.mute",
-      "x": 413,
+      "x": 414,
       "y": 394,
-      "w": 45,
+      "w": 38,
       "h": 22,
       "kind": "toggle",
       "label": "M"
@@ -392,9 +398,9 @@
     {
       "id": "tokyo-osc1-solo",
       "binding": "osc1.solo",
-      "x": 466,
+      "x": 458,
       "y": 394,
-      "w": 45,
+      "w": 38,
       "h": 22,
       "kind": "toggle",
       "label": "S"
@@ -412,50 +418,56 @@
     {
       "id": "tokyo-osc2-pitch",
       "binding": "osc2.pitch",
-      "x": 571,
-      "y": 302,
-      "w": 45,
-      "h": 85,
-      "label": "PITCH"
+      "x": 621,
+      "y": 394,
+      "w": 67,
+      "h": 22,
+      "label": "SEMI",
+      "kind": "value",
+      "fontSize": 10
     },
     {
       "id": "tokyo-osc2-param0",
       "binding": "osc2.param0",
-      "x": 618,
+      "x": 572,
       "y": 302,
-      "w": 45,
-      "h": 85
+      "w": 52,
+      "h": 85,
+      "labelPosition": "top"
     },
     {
       "id": "tokyo-osc2-param1",
       "binding": "osc2.param1",
-      "x": 665,
+      "x": 631,
       "y": 302,
-      "w": 45,
-      "h": 85
+      "w": 52,
+      "h": 85,
+      "labelPosition": "top"
     },
     {
       "id": "tokyo-osc2-param2",
       "binding": "osc2.param2",
-      "x": 712,
+      "x": 690,
       "y": 302,
-      "w": 45,
-      "h": 85
+      "w": 52,
+      "h": 85,
+      "labelPosition": "top"
     },
     {
       "id": "tokyo-osc2-param3",
       "binding": "osc2.param3",
-      "x": 759,
+      "x": 749,
       "y": 302,
-      "w": 45,
-      "h": 85
+      "w": 52,
+      "h": 85,
+      "labelPosition": "top"
     },
     {
       "id": "tokyo-osc2-octave",
       "binding": "osc2.octave",
       "x": 572,
       "y": 394,
-      "w": 50,
+      "w": 42,
       "h": 22,
       "kind": "menu",
       "label": "OCTAVE"
@@ -463,9 +475,9 @@
     {
       "id": "tokyo-osc2-keytrack",
       "binding": "osc2.keytrack",
-      "x": 630,
+      "x": 771,
       "y": 394,
-      "w": 60,
+      "w": 34,
       "h": 22,
       "kind": "toggle",
       "label": "KEY"
@@ -473,9 +485,9 @@
     {
       "id": "tokyo-osc2-mute",
       "binding": "osc2.mute",
-      "x": 698,
+      "x": 695,
       "y": 394,
-      "w": 45,
+      "w": 32,
       "h": 22,
       "kind": "toggle",
       "label": "M"
@@ -483,9 +495,9 @@
     {
       "id": "tokyo-osc2-solo",
       "binding": "osc2.solo",
-      "x": 751,
+      "x": 733,
       "y": 394,
-      "w": 45,
+      "w": 32,
       "h": 22,
       "kind": "toggle",
       "label": "S"
@@ -503,50 +515,56 @@
     {
       "id": "tokyo-osc3-pitch",
       "binding": "osc3.pitch",
-      "x": 831,
-      "y": 302,
-      "w": 47,
-      "h": 85,
-      "label": "PITCH"
+      "x": 881,
+      "y": 394,
+      "w": 67,
+      "h": 22,
+      "label": "SEMI",
+      "kind": "value",
+      "fontSize": 10
     },
     {
       "id": "tokyo-osc3-param0",
       "binding": "osc3.param0",
-      "x": 880,
+      "x": 832,
       "y": 302,
-      "w": 47,
-      "h": 85
+      "w": 55,
+      "h": 85,
+      "labelPosition": "top"
     },
     {
       "id": "tokyo-osc3-param1",
       "binding": "osc3.param1",
-      "x": 929,
+      "x": 894,
       "y": 302,
-      "w": 47,
-      "h": 85
+      "w": 55,
+      "h": 85,
+      "labelPosition": "top"
     },
     {
       "id": "tokyo-osc3-param2",
       "binding": "osc3.param2",
-      "x": 978,
+      "x": 956,
       "y": 302,
-      "w": 47,
-      "h": 85
+      "w": 55,
+      "h": 85,
+      "labelPosition": "top"
     },
     {
       "id": "tokyo-osc3-param3",
       "binding": "osc3.param3",
-      "x": 1027,
+      "x": 1018,
       "y": 302,
-      "w": 47,
-      "h": 85
+      "w": 55,
+      "h": 85,
+      "labelPosition": "top"
     },
     {
       "id": "tokyo-osc3-octave",
       "binding": "osc3.octave",
       "x": 832,
       "y": 394,
-      "w": 50,
+      "w": 42,
       "h": 22,
       "kind": "menu",
       "label": "OCTAVE"
@@ -554,9 +572,9 @@
     {
       "id": "tokyo-osc3-keytrack",
       "binding": "osc3.keytrack",
-      "x": 890,
+      "x": 1031,
       "y": 394,
-      "w": 60,
+      "w": 44,
       "h": 22,
       "kind": "toggle",
       "label": "KEY"
@@ -564,9 +582,9 @@
     {
       "id": "tokyo-osc3-mute",
       "binding": "osc3.mute",
-      "x": 958,
+      "x": 955,
       "y": 394,
-      "w": 45,
+      "w": 32,
       "h": 22,
       "kind": "toggle",
       "label": "M"
@@ -574,9 +592,9 @@
     {
       "id": "tokyo-osc3-solo",
       "binding": "osc3.solo",
-      "x": 1011,
+      "x": 993,
       "y": 394,
-      "w": 45,
+      "w": 32,
       "h": 22,
       "kind": "toggle",
       "label": "S"
@@ -608,7 +626,8 @@
       "y": 174,
       "w": 60,
       "h": 88,
-      "label": "CUTOFF"
+      "label": "CUTOFF",
+      "labelPosition": "top"
     },
     {
       "id": "tokyo-filter1-resonance",
@@ -617,7 +636,8 @@
       "y": 174,
       "w": 60,
       "h": 88,
-      "label": "RESO"
+      "label": "RESO",
+      "labelPosition": "top"
     },
     {
       "id": "tokyo-filter1-third",
@@ -626,7 +646,8 @@
       "y": 174,
       "w": 60,
       "h": 88,
-      "label": "WS DRIVE"
+      "label": "WS DRIVE",
+      "labelPosition": "top"
     },
     {
       "id": "tokyo-filter2-type",
@@ -655,7 +676,8 @@
       "y": 327,
       "w": 60,
       "h": 88,
-      "label": "CUTOFF"
+      "label": "CUTOFF",
+      "labelPosition": "top"
     },
     {
       "id": "tokyo-filter2-resonance",
@@ -664,7 +686,8 @@
       "y": 327,
       "w": 60,
       "h": 88,
-      "label": "RESO"
+      "label": "RESO",
+      "labelPosition": "top"
     },
     {
       "id": "tokyo-filter2-third",
@@ -673,7 +696,8 @@
       "y": 327,
       "w": 60,
       "h": 88,
-      "label": "BALANCE"
+      "label": "BALANCE",
+      "labelPosition": "top"
     },
     {
       "id": "tokyo-mixer-0",
@@ -751,7 +775,8 @@
       "y": 550,
       "w": 60,
       "h": 72,
-      "label": "A"
+      "label": "A",
+      "labelPosition": "top"
     },
     {
       "id": "tokyo-env1-decay",
@@ -760,7 +785,8 @@
       "y": 550,
       "w": 60,
       "h": 72,
-      "label": "D"
+      "label": "D",
+      "labelPosition": "top"
     },
     {
       "id": "tokyo-env1-sustain",
@@ -769,7 +795,8 @@
       "y": 550,
       "w": 60,
       "h": 72,
-      "label": "S"
+      "label": "S",
+      "labelPosition": "top"
     },
     {
       "id": "tokyo-env1-release",
@@ -778,7 +805,8 @@
       "y": 550,
       "w": 60,
       "h": 72,
-      "label": "R"
+      "label": "R",
+      "labelPosition": "top"
     },
     {
       "id": "tokyo-env2-mode",
@@ -797,7 +825,8 @@
       "y": 550,
       "w": 60,
       "h": 72,
-      "label": "A"
+      "label": "A",
+      "labelPosition": "top"
     },
     {
       "id": "tokyo-env2-decay",
@@ -806,7 +835,8 @@
       "y": 550,
       "w": 60,
       "h": 72,
-      "label": "D"
+      "label": "D",
+      "labelPosition": "top"
     },
     {
       "id": "tokyo-env2-sustain",
@@ -815,7 +845,8 @@
       "y": 550,
       "w": 60,
       "h": 72,
-      "label": "S"
+      "label": "S",
+      "labelPosition": "top"
     },
     {
       "id": "tokyo-env2-release",
@@ -824,7 +855,8 @@
       "y": 550,
       "w": 60,
       "h": 72,
-      "label": "R"
+      "label": "R",
+      "labelPosition": "top"
     },
     {
       "id": "tokyo-lfo3-shape",
@@ -843,7 +875,8 @@
       "y": 550,
       "w": 62,
       "h": 72,
-      "label": "A"
+      "label": "A",
+      "labelPosition": "top"
     },
     {
       "id": "tokyo-lfo3-decay",
@@ -852,7 +885,8 @@
       "y": 550,
       "w": 62,
       "h": 72,
-      "label": "D"
+      "label": "D",
+      "labelPosition": "top"
     },
     {
       "id": "tokyo-lfo3-sustain",
@@ -861,7 +895,8 @@
       "y": 550,
       "w": 62,
       "h": 72,
-      "label": "S"
+      "label": "S",
+      "labelPosition": "top"
     },
     {
       "id": "tokyo-lfo3-release",
@@ -870,7 +905,8 @@
       "y": 550,
       "w": 62,
       "h": 72,
-      "label": "R"
+      "label": "R",
+      "labelPosition": "top"
     },
     {
       "id": "tokyo-lfo1-shape",
@@ -889,7 +925,8 @@
       "y": 726,
       "w": 49,
       "h": 77,
-      "label": "RATE"
+      "label": "RATE",
+      "labelPosition": "top"
     },
     {
       "id": "tokyo-lfo1-phase",
@@ -898,7 +935,8 @@
       "y": 726,
       "w": 49,
       "h": 77,
-      "label": "PHASE"
+      "label": "PHASE",
+      "labelPosition": "top"
     },
     {
       "id": "tokyo-lfo1-deform",
@@ -907,7 +945,8 @@
       "y": 726,
       "w": 49,
       "h": 77,
-      "label": "DEFORM"
+      "label": "DEFORM",
+      "labelPosition": "top"
     },
     {
       "id": "tokyo-lfo1-delay",
@@ -916,7 +955,8 @@
       "y": 726,
       "w": 49,
       "h": 77,
-      "label": "DELAY"
+      "label": "DELAY",
+      "labelPosition": "top"
     },
     {
       "id": "tokyo-lfo1-mode",
@@ -1025,7 +1065,8 @@
       "y": 885,
       "w": 78,
       "h": 92,
-      "label": "MACRO 1"
+      "label": "MACRO 1",
+      "labelPosition": "top"
     },
     {
       "id": "tokyo-macro2",
@@ -1034,7 +1075,8 @@
       "y": 885,
       "w": 78,
       "h": 92,
-      "label": "MACRO 2"
+      "label": "MACRO 2",
+      "labelPosition": "top"
     },
     {
       "id": "tokyo-macro3",
@@ -1043,7 +1085,8 @@
       "y": 885,
       "w": 78,
       "h": 92,
-      "label": "MACRO 3"
+      "label": "MACRO 3",
+      "labelPosition": "top"
     },
     {
       "id": "tokyo-macro4",
@@ -1052,7 +1095,8 @@
       "y": 885,
       "w": 78,
       "h": 92,
-      "label": "MACRO 4"
+      "label": "MACRO 4",
+      "labelPosition": "top"
     },
     {
       "id": "tokyo-macro5",
@@ -1061,7 +1105,8 @@
       "y": 885,
       "w": 78,
       "h": 92,
-      "label": "MACRO 5"
+      "label": "MACRO 5",
+      "labelPosition": "top"
     },
     {
       "id": "tokyo-macro6",
@@ -1070,7 +1115,8 @@
       "y": 885,
       "w": 78,
       "h": 92,
-      "label": "MACRO 6"
+      "label": "MACRO 6",
+      "labelPosition": "top"
     },
     {
       "id": "tokyo-macro7",
@@ -1079,7 +1125,8 @@
       "y": 885,
       "w": 78,
       "h": 92,
-      "label": "MACRO 7"
+      "label": "MACRO 7",
+      "labelPosition": "top"
     },
     {
       "id": "tokyo-macro8",
@@ -1088,7 +1135,8 @@
       "y": 885,
       "w": 78,
       "h": 92,
-      "label": "MACRO 8"
+      "label": "MACRO 8",
+      "labelPosition": "top"
     },
     {
       "id": "tokyo-scene-pitch",
@@ -1198,6 +1246,7 @@
   "adaptations": [
     "Native JUCE alternative layout with live parameter controls; no reference PNG is used as a background or screenshot.",
     "All three oscillator algorithms and parameter names come from the current patch, replacing illustrative wavetable, analogue and FM labels and made-up preset names.",
+    "Each oscillator uses the reference's four-column primary-knob geometry; pitch remains a live compact semitone field in the lower tuning row. Mute and solo remain accessible alongside octave and key tracking.",
     "The concept's third standalone envelope is an explicitly labeled LFO 3 envelope bank, using Surge's real LFO 3 ADSR controls. The real amplitude and filter envelopes remain independently visible.",
     "Filter A and B denote Surge's two filter units within the selected scene, not two different scenes. Shared waveshaper drive and filter balance replace nonexistent independent per-filter drive or mix controls.",
     "The compact routing strip depicts the native routing selection rather than claiming arbitrary cable editing.",

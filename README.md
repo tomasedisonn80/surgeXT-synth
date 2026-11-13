@@ -1,5 +1,20 @@
 # Surge XT
 
+## This fork: ten native reference workspaces
+
+This fork adds ten alternative, interactive Surge XT layouts selected through
+**Settings → Skins → Reference Workspaces**. They require this fork's modified
+native build; installing their JSON/skin files into ordinary upstream Surge XT
+does not install the renderer. The original full editor remains available.
+
+See the [installation and controls guide](doc/reference-workspaces-user-guide.md),
+[engineering work log](doc/reference-workspaces-work-log.md), and
+[native build/capture workflow](https://github.com/tomasedisonn80/surgeXT-synth/actions/workflows/reference-workspaces.yml).
+The layouts follow supplied design references, with explicit engine adaptations;
+neither pixel identity nor release certification is implied by a source checkout.
+
+The upstream project documentation follows below.
+
 **If you are a musician looking to use Surge XT, please download the appropriate binary
 [from our website](https://surge-synthesizer.github.io). Surge Synth Team makes regular releases for all supported
 platforms.**

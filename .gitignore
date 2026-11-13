@@ -1,6 +1,10 @@
 # Prerequisites
 *.d
 
+# Reproducible reference-workspace build/capture outputs, not source changes.
+.ccache-reference/
+screenshot-artifact/
+
 # Compiled Object files
 *.slo
 *.lo

@@ -21,15 +21,17 @@ namespace Surge::GUI::Reference
     a fixed display pitch, as in the stock Surge waveform display. These are not
     captures of the currently sounding voices, nor frequency-domain spectra.
 
-    `output` is deliberately empty until a non-destructive, independently owned
-    output tap is available. The stock oscilloscope owns a single-consumer ring
-    buffer: reading that buffer here would steal its samples. An empty output
-    vector must not be replaced by invented activity. `left`/`right` are the
-    existing synth's master peak readings, in linear amplitude.
+    `output` is filled separately by Workspace from its independent processor
+    tap. The stock oscilloscope owns a different single-consumer ring, which this
+    display never reads. An empty output vector must not be replaced by invented
+    activity. `left`/`right` are filled separately with channel peaks from that
+    same tap, in linear amplitude; sample() never reads audio-owned VU floats.
+    The FFT/spectrogram uses the actual tap, not these oscillator previews.
 */
 struct VisualData
 {
     std::array<std::vector<float>, 3> oscillator;
+    std::array<juce::String, 3> oscillatorStatus;
     std::vector<float> output;
     float left{0.f};
     float right{0.f};

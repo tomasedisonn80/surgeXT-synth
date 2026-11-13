@@ -77,6 +77,47 @@ Target guards correct that configuration error; it was not a successful native
 build or a screenshot capture. The original release matrix also encountered a
 missing macOS signing configuration in this fork; this is separate from UI code.
 
+## Wave 6 — measured layout refinement and portability (six agents, completed)
+
+| Agent | Substantive result |
+|---|---|
+| w06_geometry_01_02 | Reference-measured Obsidian numeric fields and macro centers; Ivory knob ordering and cream palette |
+| w06_geometry_03_04 | Spectral envelope/LFO geometry; Bauhaus labels, scene rows and actual-output plot layout |
+| w06_geometry_05_06 | Space-Age brass/olive material hierarchy and value fields; Tokyo four-column oscillator controls |
+| w06_geometry_07_08 | Aurora oscillator geometry and global fields; ClearSignal label ordering and contrast |
+| w06_geometry_09_10 | Flow node/control geometry; Live compact values, macro colors and honestly bound performance faders |
+| w06_build_portability | Unsigned fork macOS workflow, independent matrix builds and actual JUCE 7 compatibility checks |
+
+Root added native compact value controls, top-positioned knob labels, panel font
+sizes, theme-specific plot/menu contrast, and an actual output FFT/spectrogram.
+The initial native build configuration error is fixed; run `43353009245` reached
+native compilation. Rendering and runtime results are still pending at this point.
+
+## Wave 7 — behavioral regressions and delivery infrastructure (six agents, completed)
+
+| Agent | Scope |
+|---|---|
+| w07_header_fidelity | Real header navigation, native widget styling and rendering collisions |
+| w07_audio_safety | Producer/consumer race review and bounded output-tap stress tests |
+| w07_runtime_isolation | Deterministic editor fixtures, parameter controls and test side-effect isolation |
+| w07_preview_regression | Filter/LFO/oscillator preview correctness and state-preservation tests |
+| w07_distribution_guide | Modified-build installation guide and deterministic validated skin packaging |
+| w07_visual_evidence_tools | Genuine-render comparison, contact sheets and explicit reference/native labels |
+
+The output tap passed independent normal, ASan/UBSan and TSan stress tests over
+eight million generated frames per run. The new tap never overwrites unread
+storage. Native sample/parameter assertions still need the full linked test run.
+The preview audit found shared random-state consumption in oscillator display
+work. A narrow thread-local preview scope now avoids it while keeping the normal
+audible drift path bit-identical (512-sample standalone comparison passed).
+Twist and unsafe Alias mini-previews explicitly report unavailable instead of
+touching shared audio memory or RNG state.
+
+Packaging and visual-comparison tools passed their synthetic/reproducibility
+self-tests. No reference-versus-native fidelity metric has yet been measured.
+The full build at `4ffd53a` stopped on a GCC C++20 deprecation under `-Werror`;
+`550d469` fixes platform-native path conversion without suppressing the warning.
+
 ## Verification status at this checkpoint
 
 * Package validation checks geometry, IDs, field bounds, package confinement,
@@ -86,5 +127,4 @@ missing macOS signing configuration in this fork; this is separate from UI code.
   GitHub Actions job because local development-header downloads are denied.
 * Each layout contains an explicit `adaptations` list. No 1:1 match is claimed
   without a completed native render comparison.
-* Waves 5–10 are subsequent review, implementation, test and release work; they
-  are recorded only when actually executed.
+* Waves 8–10 remain; work is recorded only when actually executed.

@@ -47,16 +47,15 @@ namespace
 
 // Called only by the active float audio-processing path. Copying to the fixed-size ring does
 // not allocate, lock, modify the host output, or touch the original oscilloscope's consumer.
-// Its usable capacity is N - 1: retain the newest frames if a host supplies an enormous block.
-void publishReferenceAudio(sst::cpputils::StereoRingBuffer<float, 8192> &tap, const float *left,
+// The bounded SPSC tap itself accounts for full/oversize callback losses without overwriting
+// unread frames. It retains the newest portion of a callback that fits the available space.
+void publishReferenceAudio(Surge::GUI::Reference::AudioTap<> &tap, const float *left,
                            const float *right, std::size_t samples) noexcept
 {
     if (!tap.subscribed() || samples == 0 || !left || !right)
         return;
 
-    const auto count = std::min(samples, std::size_t{8191});
-    const auto offset = samples - count;
-    tap.push(left + offset, right + offset, count);
+    tap.push(left, right, samples);
 }
 
 // DI'd file loader.

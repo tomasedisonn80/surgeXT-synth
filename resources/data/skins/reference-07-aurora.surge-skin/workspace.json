@@ -11,7 +11,7 @@
   "radius": 11,
   "glow": 0.18,
   "palette": {
-    "background": "#160D24",
+    "background": "#1B1028",
     "panel": "#2A203C",
     "border": "#70568C",
     "text": "#F1E8FF",
@@ -71,9 +71,9 @@
       "w": 326,
       "h": 188,
       "plot": [
-        673,
+        601,
         143,
-        174,
+        248,
         43
       ]
     },
@@ -319,7 +319,7 @@
     {
       "id": "c.osc1-param1",
       "binding": "osc1.param1",
-      "x": 338,
+      "x": 345,
       "y": 189,
       "w": 49,
       "h": 66,
@@ -328,7 +328,7 @@
     {
       "id": "c.osc1-param2",
       "binding": "osc1.param2",
-      "x": 392,
+      "x": 404,
       "y": 189,
       "w": 49,
       "h": 66,
@@ -337,7 +337,7 @@
     {
       "id": "c.osc1-param3",
       "binding": "osc1.param3",
-      "x": 446,
+      "x": 463,
       "y": 189,
       "w": 49,
       "h": 66,
@@ -395,36 +395,36 @@
     {
       "id": "c.osc2-param0",
       "binding": "osc2.param0",
-      "x": 598,
-      "y": 148,
-      "w": 65,
-      "h": 107,
-      "fontSize": 11
+      "x": 605,
+      "y": 189,
+      "w": 48,
+      "h": 66,
+      "fontSize": 10
     },
     {
       "id": "c.osc2-param1",
       "binding": "osc2.param1",
-      "x": 673,
+      "x": 668,
       "y": 189,
-      "w": 49,
+      "w": 48,
       "h": 66,
       "fontSize": 10
     },
     {
       "id": "c.osc2-param2",
       "binding": "osc2.param2",
-      "x": 727,
+      "x": 731,
       "y": 189,
-      "w": 49,
+      "w": 48,
       "h": 66,
       "fontSize": 10
     },
     {
       "id": "c.osc2-param3",
       "binding": "osc2.param3",
-      "x": 781,
+      "x": 794,
       "y": 189,
-      "w": 49,
+      "w": 48,
       "h": 66,
       "fontSize": 10
     },
@@ -489,7 +489,7 @@
     {
       "id": "c.osc3-param1",
       "binding": "osc3.param1",
-      "x": 1008,
+      "x": 1016,
       "y": 189,
       "w": 49,
       "h": 66,
@@ -498,7 +498,7 @@
     {
       "id": "c.osc3-param2",
       "binding": "osc3.param2",
-      "x": 1062,
+      "x": 1080,
       "y": 189,
       "w": 49,
       "h": 66,
@@ -507,7 +507,7 @@
     {
       "id": "c.osc3-param3",
       "binding": "osc3.param3",
-      "x": 1116,
+      "x": 1141,
       "y": 189,
       "w": 49,
       "h": 66,
@@ -799,66 +799,72 @@
       "binding": "scene.pitch",
       "x": 24,
       "y": 765,
-      "w": 62,
-      "h": 75,
+      "w": 204,
+      "h": 27,
+      "kind": "value",
       "label": "Pitch",
-      "fontSize": 11
+      "fontSize": 12
     },
     {
       "id": "c.global-top-1",
       "binding": "scene.octave",
-      "x": 93,
-      "y": 765,
-      "w": 62,
-      "h": 75,
+      "x": 24,
+      "y": 794,
+      "w": 204,
+      "h": 27,
+      "kind": "value",
       "label": "Octave",
-      "fontSize": 11
+      "fontSize": 12
     },
     {
       "id": "c.global-top-2",
       "binding": "scene.width",
-      "x": 162,
-      "y": 765,
-      "w": 62,
-      "h": 75,
+      "x": 24,
+      "y": 823,
+      "w": 204,
+      "h": 27,
+      "kind": "value",
       "label": "Width",
-      "fontSize": 11
+      "fontSize": 12
     },
     {
       "id": "c.global-bottom-0",
       "binding": "scene.portamento",
       "x": 24,
-      "y": 846,
-      "w": 62,
-      "h": 76,
+      "y": 852,
+      "w": 204,
+      "h": 27,
+      "kind": "value",
       "label": "Glide",
-      "fontSize": 11
+      "fontSize": 12
     },
     {
       "id": "c.global-bottom-1",
       "binding": "filter.balance",
-      "x": 93,
-      "y": 846,
-      "w": 62,
-      "h": 76,
+      "x": 24,
+      "y": 881,
+      "w": 204,
+      "h": 27,
+      "kind": "value",
       "label": "Filter mix",
-      "fontSize": 11
+      "fontSize": 12
     },
     {
       "id": "c.global-bottom-2",
       "binding": "master.volume",
-      "x": 162,
-      "y": 846,
-      "w": 62,
-      "h": 76,
+      "x": 24,
+      "y": 910,
+      "w": 204,
+      "h": 27,
+      "kind": "value",
       "label": "Master",
-      "fontSize": 11
+      "fontSize": 12
     },
     {
       "id": "c.global-scene-mode",
       "binding": "scene.mode",
       "x": 24,
-      "y": 938,
+      "y": 944,
       "w": 204,
       "h": 26,
       "kind": "menu",
@@ -867,6 +873,7 @@
     {
       "id": "c.env1-attack",
       "binding": "env1.attack",
+      "labelPosition": "top",
       "x": 264,
       "y": 623,
       "w": 49,
@@ -877,6 +884,7 @@
     {
       "id": "c.env1-decay",
       "binding": "env1.decay",
+      "labelPosition": "top",
       "x": 318,
       "y": 623,
       "w": 49,
@@ -887,6 +895,7 @@
     {
       "id": "c.env1-sustain",
       "binding": "env1.sustain",
+      "labelPosition": "top",
       "x": 372,
       "y": 623,
       "w": 49,
@@ -897,6 +906,7 @@
     {
       "id": "c.env1-release",
       "binding": "env1.release",
+      "labelPosition": "top",
       "x": 426,
       "y": 623,
       "w": 49,
@@ -907,6 +917,7 @@
     {
       "id": "c.env2-attack",
       "binding": "env2.attack",
+      "labelPosition": "top",
       "x": 505,
       "y": 623,
       "w": 46,
@@ -917,6 +928,7 @@
     {
       "id": "c.env2-decay",
       "binding": "env2.decay",
+      "labelPosition": "top",
       "x": 556,
       "y": 623,
       "w": 46,
@@ -927,6 +939,7 @@
     {
       "id": "c.env2-sustain",
       "binding": "env2.sustain",
+      "labelPosition": "top",
       "x": 607,
       "y": 623,
       "w": 46,
@@ -937,6 +950,7 @@
     {
       "id": "c.env2-release",
       "binding": "env2.release",
+      "labelPosition": "top",
       "x": 658,
       "y": 623,
       "w": 46,
@@ -1339,7 +1353,7 @@
     "Actual oscillator algorithms, retrigger and mute controls replace concept-only synthesis labels and unsupported switches. Algorithm parameter labels and values are dynamically read from the engine.",
     "Eight visible effect algorithm menus are functional; all sixteen effect slots and advanced editors remain available through Full editor.",
     "X/Y morph, fabricated browser patch names and counts, arbitrary signal rewiring and unsupported sample playback are not implied. Native scene modes and filter routing use the actual engine options.",
-    "The header is the shared working preset, scene and skin navigation. All eight macro controls keep their real assignable names and current values.",
+    "The header is the shared working preset, scene and skin navigation. All eight macro controls keep their real assignable names and current values. Global parameter rows use real typed-value controls in place of the concept's unsupported parameter fields.",
     "Plot titles identify previews; the original full editor retains the measured output oscilloscope and detailed modulation assignment workflows."
   ]
 }

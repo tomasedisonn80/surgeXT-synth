@@ -6,6 +6,8 @@
 #include "catch2/catch_amalgamated.hpp"
 #include "SurgeSynthEditor.h"
 #include "SurgeSynthProcessor.h"
+#include "PatchDB.h"
+#include "UserDefaults.h"
 #include "gui/reference/Manifest.h"
 #include "gui/reference/ParameterBridge.h"
 #include "gui/reference/Workspace.h"
@@ -27,6 +29,67 @@ constexpr int sampleBlock = 512;
 constexpr double sampleRate = 48000.0;
 
 juce::File sourceRoot() { return juce::File(juce::String(SURGE_REFERENCE_SOURCE_DIR)); }
+
+/** The processor constructor may read platform defaults. Before exercising an
+    editor, redirect all subsequent preference/DB/keymap/backup writes into this
+    unique test-owned directory. Declare this BEFORE the processor so its DB
+    worker and editor are destroyed before the directory is removed. This does
+    not change HOME, XDG settings, or a user's configured data-path override. */
+struct IsolatedUserData
+{
+    IsolatedUserData()
+        : directory(juce::File::getSpecialLocation(juce::File::tempDirectory)
+                        .getChildFile("surge-reference-tests-" + juce::Uuid().toString()))
+    {
+        REQUIRE(!directory.exists());
+        REQUIRE(directory.createDirectory().wasOk());
+    }
+    ~IsolatedUserData() { directory.deleteRecursively(); }
+
+    void attach(SurgeSynthProcessor &processor, const juce::String &name = "processor")
+    {
+        REQUIRE(processor.surge != nullptr);
+        auto &storage = processor.surge->storage;
+        const auto path = directory.getChildFile(name);
+        REQUIRE(path.createDirectory().wasOk());
+        storage.patchDB.reset();
+        storage.userDataPath = fs::path(path.getFullPathName().toStdString());
+        storage.localAppDataPath = storage.userDataPath / "Application";
+        storage.initializeUserDataPaths();
+        storage.createUserDirectory();
+        storage.userDefaultsProvider = std::make_unique<Surge::Storage::UserDefaultsProvider>(
+            storage.userDataPath, "SurgeXT", Surge::Storage::defaultKeyToString,
+            [&storage](const std::string &message, const std::string &title) {
+                storage.reportError(message, title);
+            });
+        storage.patchDB = std::make_unique<Surge::PatchStorage::PatchDB>(&storage);
+        storage.patchDBInitialized = false;
+        // An editor starts from a deterministic factory skin and empty test
+        // preferences, never a developer's selected external skin.
+        storage.userDefaultsProvider->addOverride(Surge::Storage::DefaultSkin, "");
+        storage.userDefaultsProvider->addOverride(Surge::Storage::StartOSCIn, 0);
+        storage.userDefaultsProvider->addOverride(Surge::Storage::StartOSCOut, 0);
+    }
+
+    juce::File directory;
+};
+
+/** Typed-entry callouts are asynchronous by design. These synchronous unit tests
+    do not spin a nested modal event loop; dispose the test's modal manager after
+    checking the real callbacks, before its Workspace and GUI runtime disappear. */
+struct ScopedModalCleanup
+{
+    ScopedModalCleanup()
+    {
+        REQUIRE(juce::ModalComponentManager::getInstance()->getNumModalComponents() == 0);
+    }
+    ~ScopedModalCleanup()
+    {
+        if (auto *manager = juce::ModalComponentManager::getInstanceWithoutCreating())
+            manager->cancelAllModalComponents();
+        juce::ModalComponentManager::deleteInstance();
+    }
+};
 
 juce::Array<juce::File> workspaceManifests()
 {
@@ -277,7 +340,9 @@ TEST_CASE("Reference controls preserve scene isolation and host gestures",
           "[reference-workspaces][reference-bindings]")
 {
     juce::ScopedJuceInitialiser_GUI gui;
+    IsolatedUserData testData;
     SurgeSynthProcessor processor;
+    testData.attach(processor);
     REQUIRE(processor.surge != nullptr);
     ParameterBridge bridge(processor);
     bridge.setScene(0);
@@ -406,7 +471,9 @@ TEST_CASE("Reference menu indices round trip through native integer ranges",
           "[reference-workspaces][reference-bindings][reference-menus]")
 {
     juce::ScopedJuceInitialiser_GUI gui;
+    IsolatedUserData testData;
     SurgeSynthProcessor processor;
+    testData.attach(processor);
     REQUIRE(processor.surge != nullptr);
     ParameterBridge bridge(processor);
     std::set<juce::String> bindings;
@@ -498,7 +565,9 @@ TEST_CASE("Reference edits survive native processor state restore",
           "[reference-workspaces][reference-state]")
 {
     juce::ScopedJuceInitialiser_GUI gui;
+    IsolatedUserData testData;
     SurgeSynthProcessor processor;
+    testData.attach(processor);
     REQUIRE(processor.surge != nullptr);
     ParameterBridge bridge(processor);
     bridge.setScene(0);
@@ -548,7 +617,9 @@ TEST_CASE("The native editor switches and reloads reference skins without changi
     juce::ScopedJuceInitialiser_GUI gui;
     const auto manifests = workspaceManifests();
     REQUIRE(manifests.size() == 10);
+    IsolatedUserData testData;
     SurgeSynthProcessor processor;
+    testData.attach(processor);
     REQUIRE(processor.surge != nullptr);
     ParameterBridge bridge(processor);
     edit(bridge, "filter1.cutoff", 0.423f);
@@ -656,7 +727,9 @@ TEST_CASE("Performance workspace keyboard and XY controls release owned interact
         if (readManifest(path)["id"].toString() == "10-live-performance-deck")
             performanceManifest = path;
     REQUIRE(performanceManifest.existsAsFile());
+    IsolatedUserData testData;
     SurgeSynthProcessor processor;
+    testData.attach(processor);
     REQUIRE(processor.surge != nullptr);
     auto workspace = std::make_unique<Workspace>(processor);
     juce::String error;
@@ -793,6 +866,153 @@ TEST_CASE("Performance workspace keyboard and XY controls release owned interact
     processor.midiKeyboardState.noteOff(2, 71, 0.f);
 }
 
+TEST_CASE("Compact value controls preserve real drag and typed-unit editing",
+          "[reference-workspaces][reference-values][reference-interactions]")
+{
+    juce::ScopedJuceInitialiser_GUI gui;
+    IsolatedUserData testData;
+    SurgeSynthProcessor processor;
+    testData.attach(processor);
+    const auto manifests = workspaceManifests();
+    REQUIRE(manifests.size() == 10);
+    Workspace workspace(processor);
+    juce::String error;
+    const auto manifest = readManifest(manifests[0]);
+    REQUIRE(workspace.load(manifests[0], error));
+    workspace.setSize(referenceWidth, referenceHeight);
+    workspace.addToDesktop(0);
+    workspace.setVisible(true);
+    ScopedModalCleanup modalCleanup;
+    auto &bridge = workspace.bridge();
+
+    juce::String valueId;
+    for (const auto &control : *manifest["controls"].getArray())
+        if (control["kind"].toString() == "value" && control["binding"].toString() == "env1.attack")
+            valueId = control["id"].toString();
+    REQUIRE(valueId.isNotEmpty());
+    auto *slider = dynamic_cast<juce::Slider *>(findComponent(workspace, valueId));
+    REQUIRE(slider != nullptr);
+    REQUIRE(slider->isEnabled());
+    REQUIRE(slider->getWantsKeyboardFocus());
+    auto *adapter = adapterFor(processor, bridge, "env1.attack");
+    REQUIRE(adapter != nullptr);
+    GestureProbe probe(*adapter);
+    edit(bridge, "env1.attack", .4f);
+    workspace.refresh();
+    const auto before = bridge.value("env1.attack");
+    const auto start = slider->getLocalBounds().toFloat().getCentre();
+    const auto down = mouseEvent(*slider, start);
+    slider->mouseDown(down);
+    slider->mouseDrag(down.withNewPosition(start.translated(0, -25.f)));
+    slider->mouseUp(down.withNewPosition(start.translated(0, -25.f)));
+    CHECK(std::abs(bridge.value("env1.attack") - before) > .01f);
+    CHECK(bridge.activeGestureCount() == 0);
+    CHECK(probe.starts == probe.ends);
+    CHECK(probe.minimumBalance == 0);
+
+    // Open the actual nonblocking callout via its keyboard entry point; this is
+    // not a direct call to ParameterBridge::setText disguised as a UI test.
+    REQUIRE(slider->keyPressed(juce::KeyPress(juce::KeyPress::returnKey)));
+    auto *input =
+        dynamic_cast<juce::TextEditor *>(findComponent(workspace, "workspace.value-entry.input"));
+    auto *apply =
+        dynamic_cast<juce::Button *>(findComponent(workspace, "workspace.value-entry.apply"));
+    REQUIRE(input != nullptr);
+    REQUIRE(apply != nullptr);
+    REQUIRE(static_cast<bool>(apply->onClick));
+    const auto beforeInvalid = bridge.value("env1.attack");
+    input->setText("this is not a duration", false);
+    apply->onClick();
+    CHECK(bridge.value("env1.attack") == Catch::Approx(beforeInvalid));
+    CHECK(input->getDescription().isNotEmpty());
+    input->setText("250 ms", false);
+    apply->onClick();
+    REQUIRE(bridge.parameter("env1.attack") != nullptr);
+    CHECK(bridge.parameter("env1.attack")->val.f == Catch::Approx(-2.f).margin(.0001f));
+    CHECK(probe.starts == probe.ends);
+    CHECK(probe.balance == 0);
+    CHECK(bridge.activeGestureCount() == 0);
+    CHECK_FALSE(adapter->inEditGesture.load());
+}
+
+TEST_CASE("Live display refresh preserves audible state and independent audio samples",
+          "[reference-workspaces][reference-audio][reference-display-isolation]")
+{
+    juce::ScopedJuceInitialiser_GUI gui;
+    IsolatedUserData testData;
+    SurgeSynthProcessor withUI, withoutUI;
+    testData.attach(withUI, "with-ui");
+    testData.attach(withoutUI, "without-ui");
+    const auto patch =
+        sourceRoot().getChildFile("resources/data/patches_factory/Templates/Init Sine.fxp");
+    REQUIRE(patch.existsAsFile());
+    for (auto *processor : {&withUI, &withoutUI})
+    {
+        REQUIRE(processor->surge->loadPatchByPath(patch.getFullPathName().toRawUTF8(), -1,
+                                                  "Reference isolation fixture"));
+        processor->setRateAndBufferSizeDetails(sampleRate, sampleBlock);
+        processor->prepareToPlay(sampleRate, sampleBlock);
+        processor->surge->storage.rngGen.g.seed(0x5a117u);
+        processor->surge->storage.noiseRng.reseed(0x6b228u);
+    }
+    const auto manifests = workspaceManifests();
+    REQUIRE(manifests.size() == 10);
+    Workspace workspace(withUI);
+    juce::String error;
+    REQUIRE(workspace.load(manifests[0], error));
+    workspace.setSize(referenceWidth, referenceHeight);
+    workspace.addToDesktop(0);
+    workspace.setVisible(true);
+    const auto expected = hostParameterValues(withUI);
+    checkHostParameterValues(withoutUI, expected);
+
+    juce::AudioBuffer<float> uiAudio(6, sampleBlock), controlAudio(6, sampleBlock);
+    float audiblePeak = 0.f, maximumDifference = 0.f;
+    const auto started = juce::Time::getMillisecondCounterHiRes();
+    for (int block = 0; block < 24; ++block)
+    {
+        juce::MidiBuffer uiMidi, controlMidi;
+        if (block == 0)
+        {
+            const auto note = juce::MidiMessage::noteOn(1, 60, .8f);
+            uiMidi.addEvent(note, 0);
+            controlMidi.addEvent(note, 0);
+        }
+        uiAudio.clear();
+        controlAudio.clear();
+        withUI.processBlock(uiAudio, uiMidi);
+        withoutUI.processBlock(controlAudio, controlMidi);
+        for (int channel = 0; channel < 2; ++channel)
+            for (int sample = 0; sample < sampleBlock; ++sample)
+            {
+                const auto a = uiAudio.getSample(channel, sample);
+                const auto b = controlAudio.getSample(channel, sample);
+                REQUIRE(std::isfinite(a));
+                REQUIRE(std::isfinite(b));
+                audiblePeak = std::max(audiblePeak, std::abs(a));
+                maximumDifference = std::max(maximumDifference, std::abs(a - b));
+            }
+        const auto audibleRng = withUI.surge->storage.rngGen.g;
+        workspace.refresh();
+        // The preview has private model state; it must not advance the audible
+        // oscillator/modulation RNG merely because a window was repainted.
+        CHECK(withUI.surge->storage.rngGen.g == audibleRng);
+        if (block == 8 || block == 16)
+            REQUIRE(workspace.createComponentSnapshot(workspace.getLocalBounds()).isValid());
+    }
+    const auto elapsed = juce::Time::getMillisecondCounterHiRes() - started;
+    CHECK(std::isfinite(elapsed));
+    CHECK(elapsed >= 0.0);
+    CHECK(audiblePeak > .0001f);
+    CHECK(maximumDifference < .000001f);
+    checkHostParameterValues(withUI, expected);
+    CHECK(workspace.bridge().activeGestureCount() == 0);
+    withUI.reset();
+    withoutUI.reset();
+    withUI.releaseResources();
+    withoutUI.releaseResources();
+}
+
 TEST_CASE("Ten reference workspaces render native controls and export evidence",
           "[reference-workspaces][reference-render]")
 {
@@ -817,7 +1037,9 @@ TEST_CASE("Ten reference workspaces render native controls and export evidence",
         REQUIRE(!id.containsChar('/'));
         REQUIRE(!id.containsChar('\\'));
 
+        IsolatedUserData testData;
         SurgeSynthProcessor processor;
+        testData.attach(processor);
         REQUIRE(processor.surge != nullptr);
         processor.setRateAndBufferSizeDetails(sampleRate, sampleBlock);
         processor.prepareToPlay(sampleRate, sampleBlock);
@@ -857,6 +1079,20 @@ TEST_CASE("Ten reference workspaces render native controls and export evidence",
             CHECK(component->isVisible());
             CHECK(component->getWidth() > 0);
             CHECK(component->getHeight() > 0);
+            if (control["kind"].toString() == "value" ||
+                control["labelPosition"].toString() == "top")
+            {
+                // Numeric fields/top labels are new paint treatments of live
+                // sliders, not inert text standing in for an editable control.
+                auto *slider = findSlider(*component);
+                REQUIRE(slider != nullptr);
+                CHECK(slider->getWantsKeyboardFocus());
+                CHECK(slider->getName().isNotEmpty());
+                CHECK(slider->getMinimum() == Catch::Approx(0.0));
+                CHECK(slider->getMaximum() == Catch::Approx(1.0));
+                if (bridge.enabled(binding))
+                    CHECK(slider->getValue() == Catch::Approx(bridge.value(binding)).margin(.001f));
+            }
             ++resolvedControls;
         }
         REQUIRE(resolvedControls > 0);

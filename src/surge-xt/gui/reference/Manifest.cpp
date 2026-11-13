@@ -147,8 +147,8 @@ bool plotRectangle(const juce::var &v, const juce::String &where, juce::String &
            fail(error, where + " must be positive and inside the 1586 x 992 canvas");
 }
 
-bool insidePanel(const juce::var &v, const juce::DynamicObject &panel,
-                 const juce::String &where, juce::String &error)
+bool insidePanel(const juce::var &v, const juce::DynamicObject &panel, const juce::String &where,
+                 juce::String &error)
 {
     const auto *values = v.getArray(); // Call only after plotRectangle succeeds.
     const auto x = static_cast<double>(values->getReference(0));
@@ -207,10 +207,10 @@ class JSONPreflight
         for (int i = 0; i < 4; ++i)
         {
             const auto c = *cursor;
-            const int digit = c >= '0' && c <= '9' ? c - '0'
+            const int digit = c >= '0' && c <= '9'   ? c - '0'
                               : c >= 'a' && c <= 'f' ? c - 'a' + 10
                               : c >= 'A' && c <= 'F' ? c - 'A' + 10
-                                                      : -1;
+                                                     : -1;
             if (digit < 0)
                 return reject("Invalid JSON Unicode escape");
             ++cursor;
@@ -237,25 +237,38 @@ class JSONPreflight
                 ++cursor;
                 switch (c)
                 {
-                case '"': case '\\': case '/': break;
-                case 'b': c = '\b'; break;
-                case 'f': c = '\f'; break;
-                case 'n': c = '\n'; break;
-                case 'r': c = '\r'; break;
-                case 't': c = '\t'; break;
+                case '"':
+                case '\\':
+                case '/':
+                    break;
+                case 'b':
+                    c = '\b';
+                    break;
+                case 'f':
+                    c = '\f';
+                    break;
+                case 'n':
+                    c = '\n';
+                    break;
+                case 'r':
+                    c = '\r';
+                    break;
+                case 't':
+                    c = '\t';
+                    break;
                 case 'u':
                     if (!hex4(c))
                         return false;
                     if (c >= 0xd800 && c <= 0xdbff)
                     {
                         juce::juce_wchar low;
-                        if (!take('\\') || !take('u') || !hex4(low) || low < 0xdc00 ||
-                            low > 0xdfff)
+                        if (!take('\\') || !take('u') || !hex4(low) || low < 0xdc00 || low > 0xdfff)
                             return reject("Unpaired JSON Unicode surrogate");
                         c = 0x10000 + (c - 0xd800) * 0x400 + (low - 0xdc00);
                     }
                     break;
-                default: return reject("Invalid JSON escape");
+                default:
+                    return reject("Invalid JSON escape");
                 }
             }
             if (c == 0 || (c >= 0xd800 && c <= 0xdfff) || c > 0x10ffff)
@@ -474,9 +487,9 @@ bool validateManifest(const juce::var &data, juce::String &error)
                     return fail(error, where + ".kind is unknown");
                 if (item->hasProperty("variant") &&
                     (!item->getProperty("variant").isString() ||
-                     !oneOf(
-                         item->getProperty("variant").toString(),
-                         "compact|horizontal|vertical|large|combined|terrain|flow|faders|knobs")))
+                     !oneOf(item->getProperty("variant").toString(),
+                            "compact|horizontal|vertical|large|combined|terrain|flow|faders|knobs|"
+                            "scope|spectrum|spectrogram")))
                     return fail(error, where + ".variant is unknown");
                 if (item->hasProperty("index"))
                 {
@@ -496,13 +509,15 @@ bool validateManifest(const juce::var &data, juce::String &error)
                     auto *nodes = item->getProperty("flowNodes").getDynamicObject();
                     if (nodes == nullptr || item->getProperty("kind").toString() != "routing" ||
                         nodes->getProperties().size() == 0 || nodes->getProperties().size() > 11)
-                        return fail(error, where + ".flowNodes requires 1..11 routing node rectangles");
+                        return fail(error,
+                                    where + ".flowNodes requires 1..11 routing node rectangles");
                     const auto &properties = nodes->getProperties();
                     for (int n = 0; n < properties.size(); ++n)
                     {
                         const auto key = properties.getName(n).toString();
                         const auto nodeWhere = where + ".flowNodes." + key;
-                        if (!oneOf(key, "osc1|osc2|osc3|mixer|filter1|filter2|amp|fx|output|modsources|modbus"))
+                        if (!oneOf(key, "osc1|osc2|osc3|mixer|filter1|filter2|amp|fx|output|"
+                                        "modsources|modbus"))
                             return fail(error, nodeWhere + " is not a supported flow node");
                         const auto &rect = properties.getValueAt(n);
                         if (!plotRectangle(rect, nodeWhere, error) ||
@@ -519,9 +534,10 @@ bool validateManifest(const juce::var &data, juce::String &error)
                 if (!stringField(*item, "binding", 80, where, error) ||
                     !identifier(item->getProperty("binding").toString()))
                     return fail(error, where + ".binding must be a short parameter identifier");
-                if (item->hasProperty("kind") && (!item->getProperty("kind").isString() ||
-                                                  !oneOf(item->getProperty("kind").toString(),
-                                                         "knob|fader|horizontal|menu|toggle")))
+                if (item->hasProperty("kind") &&
+                    (!item->getProperty("kind").isString() ||
+                     !oneOf(item->getProperty("kind").toString(),
+                            "knob|fader|horizontal|menu|toggle|value")))
                     return fail(error, where + ".kind is unknown");
                 if (item->hasProperty("label") &&
                     !stringField(*item, "label", 160, where, error, true))
@@ -531,20 +547,18 @@ bool validateManifest(const juce::var &data, juce::String &error)
                     return false;
                 if (item->hasProperty("labelPosition") &&
                     (!item->getProperty("labelPosition").isString() ||
-                     !oneOf(item->getProperty("labelPosition").toString(), "left|right") ||
+                     !oneOf(item->getProperty("labelPosition").toString(), "left|right|top") ||
                      (item->hasProperty("kind") && item->getProperty("kind").toString() != "knob")))
-                    return fail(error, where + ".labelPosition must be left/right on a knob");
+                    return fail(error, where + ".labelPosition must be left/right/top on a knob");
                 const auto kind = item->getProperty("kind").toString();
-                if ((kind == "fader" &&
-                     (static_cast<double>(item->getProperty("w")) < 24 ||
-                      static_cast<double>(item->getProperty("h")) < 46)) ||
-                    (kind == "horizontal" &&
-                     (static_cast<double>(item->getProperty("w")) < 24 ||
-                      static_cast<double>(item->getProperty("h")) < 40)))
+                if ((kind == "fader" && (static_cast<double>(item->getProperty("w")) < 24 ||
+                                         static_cast<double>(item->getProperty("h")) < 46)) ||
+                    (kind == "horizontal" && (static_cast<double>(item->getProperty("w")) < 24 ||
+                                              static_cast<double>(item->getProperty("h")) < 40)))
                     return fail(error, where + " is too small for its labelled slider and track");
             }
-            if (item->hasProperty("ink") &&
-                (!item->getProperty("ink").isString() || !colour(item->getProperty("ink").toString())))
+            if (item->hasProperty("ink") && (!item->getProperty("ink").isString() ||
+                                             !colour(item->getProperty("ink").toString())))
                 return fail(error, where + ".ink must be #RRGGBB or #RRGGBBAA");
             if (panels && item->hasProperty("fontSize") &&
                 !boundedNumber(*item, "fontSize", 8, 24, where, error))

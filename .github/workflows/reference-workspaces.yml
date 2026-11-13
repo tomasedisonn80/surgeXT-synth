@@ -98,21 +98,35 @@ jobs:
             -DSURGE_COPY_AFTER_BUILD=OFF \
             2>&1 | tee screenshot-artifact/configure.log
 
-      - name: Stress the independent audio display tap
-        run: |
-          bash scripts/reference-workspaces/test-audio-tap.sh normal 2>&1 | tee screenshot-artifact/audio-tap.log
-          TSAN_OPTIONS=halt_on_error=1 bash scripts/reference-workspaces/test-audio-tap.sh thread 2>&1 | tee screenshot-artifact/audio-tap-tsan.log
-
       - name: Build the real synthesizer test executable
+        id: native_build
         run: |
           cmake --build build --target surge-xt-tests --parallel 2 \
             2>&1 | tee screenshot-artifact/build.log
 
-      - name: Test live controls and capture all ten native workspaces
+      - name: Test live native controls and processor behavior
+        if: ${{ !cancelled() && steps.native_build.outcome == 'success' }}
         run: |
           xvfb-run --auto-servernum --server-args='-screen 0 1920x1200x24' \
-            build/src/surge-xt/xt-tests/surge-xt-tests '[reference-workspaces]' \
+            build/src/surge-xt/xt-tests/surge-xt-tests '[reference-workspaces]~[reference-render]' \
             2>&1 | tee screenshot-artifact/native-tests.log
+
+      - name: Capture all ten native workspaces and edited states
+        # A behavior failure must remain red, but must not erase independent
+        # screenshot evidence from the same successfully built executable.
+        if: ${{ !cancelled() && steps.native_build.outcome == 'success' }}
+        run: |
+          xvfb-run --auto-servernum --server-args='-screen 0 1920x1200x24' \
+            build/src/surge-xt/xt-tests/surge-xt-tests '[reference-render]' \
+            2>&1 | tee screenshot-artifact/native-capture.log
+
+      - name: Stress the independent audio display tap
+        # Mandatory independent safety check; report its own failures without
+        # preventing native screenshots or hiding earlier behavior failures.
+        if: ${{ !cancelled() }}
+        run: |
+          bash scripts/reference-workspaces/test-audio-tap.sh normal 2>&1 | tee screenshot-artifact/audio-tap.log
+          TSAN_OPTIONS=halt_on_error=1 bash scripts/reference-workspaces/test-audio-tap.sh thread 2>&1 | tee screenshot-artifact/audio-tap-tsan.log
 
       - name: Upload native screenshots and diagnostic evidence
         if: always()

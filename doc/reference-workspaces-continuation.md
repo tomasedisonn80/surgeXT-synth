@@ -28,7 +28,8 @@ agent claim is made. The table below records completed work only.
 | --- | --- | --- |
 | 1 | Six assignments completed: reference audits 01–04 / 05–10, native build, interaction architecture, schema audit, exact native runtime gate | `f55bf8a` linked successfully; ten genuine baseline and edited captures; three runtime defects identified |
 | 2 | All six assignments completed: source/FX selection, materials/widgets, runtime corrections, schema contract, per-skin matrix geometry, native wavetable navigation | Native schema runner passed 104 cases plus ten manifests; current C++ syntax checks passed; linked behavior and captures pending for new shared renderer |
-| 3 | Obsidian, Ivory and Spectral implemented; Bauhaus, Space-Age and Tokyo are in progress | First three adopt genuine selection groups, WT selectors and measured controls; strict overlap passes |
+| 3 | All six individual reconstructions completed: Obsidian, Ivory, Spectral, Bauhaus, Space-Age, Tokyo | Genuine source/FX selection, WT browsing, measured controls and faithful internal panels; strict overlap passes |
+| 4 | Aurora, ClearSignal and Cartographer implemented; Live, real showcase fixtures and analyzer details follow | Compact native horizontal rows and real source-cluster navigation added |
 
 ## Native runtime checkpoint
 
@@ -47,6 +48,22 @@ of 0.000097008087323: the chorus delay cleared while its HP/LP biquad histories
 remained. The continuation adds both filter resets and extends the regression
 to no FX, distortion, chorus and the complete showcase chain. The original
 strict capture threshold remains unchanged.
+
+## Shared native checkpoint `0fb1810`
+
+Commit `0fb181091a7653b8ff6513adac9c657e89cfd9e1` published the shared
+source/FX/wavetable components and first three refined manifests. Run
+`43367321517` built the real executable. New source selection, wavetable
+navigation, schema parity and complete effects reset checks passed. All ten
+baseline/edited captures passed 8,243,009 capture assertions, including strict
+reset silence. Behavior passed 22/23 cases; the remaining older compact-value
+test assumed ENV2 was visible by default. It now selects the real filter-envelope
+tab before finding its live binding, preserving the same drag and typed-entry
+assertions.
+
+The next shared pass includes label/value/rotary stacking, measured Space macro
+nameplates/status/meters, compact native horizontal slider travel, single-slot
+FX cards, translucent Aurora curves and actual source-cluster navigation.
 
 ## Immediate implementation priorities
 

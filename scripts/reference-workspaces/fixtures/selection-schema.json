@@ -3251,6 +3251,510 @@
           ]
         }
       ]
+    },
+    {
+      "name": "top value beneath a top label",
+      "valid": true,
+      "changes": [
+        {
+          "path": [
+            "controls",
+            0,
+            "valuePosition"
+          ],
+          "value": "top"
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "labelPosition"
+          ],
+          "value": "top"
+        }
+      ]
+    },
+    {
+      "name": "top value requires a top label",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "controls",
+            0,
+            "valuePosition"
+          ],
+          "value": "top"
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "labelPosition"
+          ],
+          "value": "left"
+        }
+      ]
+    },
+    {
+      "name": "compact native horizontal minimum geometry",
+      "valid": true,
+      "changes": [
+        {
+          "path": [
+            "controls",
+            0,
+            "kind"
+          ],
+          "value": "horizontal"
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "faceDiameter"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "valuePosition"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "compact"
+          ],
+          "value": true
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "w"
+          ],
+          "value": 100
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "h"
+          ],
+          "value": 20
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "x"
+          ],
+          "value": 260
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "labelWidth"
+          ],
+          "value": 32
+        }
+      ]
+    },
+    {
+      "name": "compact horizontal minimum height",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "controls",
+            0,
+            "kind"
+          ],
+          "value": "horizontal"
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "faceDiameter"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "valuePosition"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "compact"
+          ],
+          "value": true
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "w"
+          ],
+          "value": 100
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "h"
+          ],
+          "value": 20
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "x"
+          ],
+          "value": 260
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "labelWidth"
+          ],
+          "value": 32
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "h"
+          ],
+          "value": 19
+        }
+      ]
+    },
+    {
+      "name": "compact horizontal minimum width",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "controls",
+            0,
+            "kind"
+          ],
+          "value": "horizontal"
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "faceDiameter"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "valuePosition"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "compact"
+          ],
+          "value": true
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "w"
+          ],
+          "value": 100
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "h"
+          ],
+          "value": 20
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "x"
+          ],
+          "value": 260
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "labelWidth"
+          ],
+          "value": 32
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "w"
+          ],
+          "value": 99
+        }
+      ]
+    },
+    {
+      "name": "compact horizontal leaves value and track space",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "controls",
+            0,
+            "kind"
+          ],
+          "value": "horizontal"
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "faceDiameter"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "valuePosition"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "compact"
+          ],
+          "value": true
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "w"
+          ],
+          "value": 100
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "h"
+          ],
+          "value": 20
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "x"
+          ],
+          "value": 260
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "labelWidth"
+          ],
+          "value": 32
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "labelWidth"
+          ],
+          "value": 49
+        }
+      ]
+    },
+    {
+      "name": "compact slider flag type",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "controls",
+            0,
+            "kind"
+          ],
+          "value": "horizontal"
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "faceDiameter"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "valuePosition"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "compact"
+          ],
+          "value": true
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "w"
+          ],
+          "value": 100
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "h"
+          ],
+          "value": 20
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "x"
+          ],
+          "value": 260
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "labelWidth"
+          ],
+          "value": 32
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "compact"
+          ],
+          "value": 1
+        }
+      ]
+    },
+    {
+      "name": "compact slider kind restriction",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "controls",
+            0,
+            "kind"
+          ],
+          "value": "horizontal"
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "faceDiameter"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "valuePosition"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "compact"
+          ],
+          "value": true
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "w"
+          ],
+          "value": 100
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "h"
+          ],
+          "value": 20
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "x"
+          ],
+          "value": 260
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "labelWidth"
+          ],
+          "value": 32
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "kind"
+          ],
+          "value": "value"
+        }
+      ]
     }
   ]
 }

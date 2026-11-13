@@ -169,3 +169,12 @@ controls. A right-hand tab strip leaves the available left title area visible.
 Selected effects panels may supply `plot` as a bounded algorithm-category icon
 well. It is decorative category information, not a measured transfer curve or
 audio signal. Effect card captions always show the actual current slot algorithm.
+
+`valuePosition: top` is also supported when `labelPosition: top`: label,
+current native value and rotary face are stacked in that order. Both validators
+reject a top value with a side/default label, and the shared fixture covers both.
+
+A horizontal control may set `compact: true` for one row containing its label,
+actual native slider and current value. Minimum size is 100 × 20; optional
+`labelWidth` is 0..w−52 (default32). Painting and hit travel share the native
+slider layout. Compact is a boolean valid only on horizontal controls.

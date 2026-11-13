@@ -33,12 +33,13 @@
       "y": 70,
       "w": 238,
       "h": 675,
-      "fontSize": 14
+      "fontSize": 13,
+      "titleHeight": 23
     },
     {
       "id": "panel.flow",
       "kind": "routing",
-      "title": "SIGNAL-FLOW CARTOGRAPHER",
+      "title": "Signal-Flow Cartographer",
       "variant": "flow",
       "color": "display",
       "x": 254,
@@ -119,29 +120,108 @@
           66
         ]
       },
-      "fontSize": 14
+      "fontSize": 12,
+      "titleInset": 864,
+      "titleHeight": 23,
+      "ink": "#83F5D2"
+    },
+    {
+      "id": "panel.mod-source-navigation",
+      "kind": "tabs",
+      "title": "",
+      "x": 426,
+      "y": 453,
+      "w": 68,
+      "h": 126,
+      "color": "display",
+      "titleHeight": 0,
+      "selection": {
+        "id": "flow.mod-sources",
+        "kind": "source",
+        "tabsRect": [
+          427,
+          454,
+          66,
+          123
+        ],
+        "default": "env1",
+        "choices": [
+          {
+            "id": "env1",
+            "label": "ENV 1",
+            "source": "envelope",
+            "index": 1
+          },
+          {
+            "id": "env2",
+            "label": "ENV 2",
+            "source": "envelope",
+            "index": 2
+          },
+          {
+            "id": "lfo3-env",
+            "label": "L3 ENV",
+            "source": "lfo-envelope",
+            "index": 3
+          },
+          {
+            "id": "lfo1",
+            "label": "LFO 1",
+            "source": "lfo",
+            "index": 1
+          },
+          {
+            "id": "lfo2",
+            "label": "LFO 2",
+            "source": "lfo",
+            "index": 2
+          },
+          {
+            "id": "lfo3",
+            "label": "LFO 3",
+            "source": "lfo",
+            "index": 3
+          }
+        ],
+        "fontSize": 9.5,
+        "columns": 1
+      }
     },
     {
       "id": "panel.inspector",
-      "kind": "inspector",
-      "title": "FILTER 1 / INSPECTOR",
+      "kind": "tabs",
+      "title": "FILTER 1 INSPECTOR",
       "index": 1,
       "x": 1284,
       "y": 70,
       "w": 295,
       "h": 524,
+      "fontSize": 12.5,
+      "titleHeight": 23
+    },
+    {
+      "id": "panel.inspector.response",
+      "kind": "filter",
+      "title": "FILTER 1 RESPONSE",
+      "index": 1,
+      "x": 1291,
+      "y": 399,
+      "w": 280,
+      "h": 187,
       "plot": [
-        1297,
-        434,
-        268,
-        145
+        1325,
+        432,
+        236,
+        134
       ],
-      "fontSize": 14
+      "fontSize": 12,
+      "titleHeight": 23,
+      "titleInset": 9
     },
     {
       "id": "panel.env1",
       "kind": "envelope",
-      "title": "ENV 1 / AMP",
+      "title": "ENVELOPE",
       "index": 1,
       "x": 254,
       "y": 601,
@@ -149,16 +229,49 @@
       "h": 144,
       "plot": [
         274,
-        645,
-        192,
-        86
+        647,
+        190,
+        83
       ],
-      "fontSize": 14
+      "fontSize": 14,
+      "titleHeight": 23,
+      "selection": {
+        "id": "flow.envelope",
+        "kind": "source",
+        "tabsRect": [
+          259,
+          604,
+          206,
+          23
+        ],
+        "default": "env1",
+        "choices": [
+          {
+            "id": "env1",
+            "label": "ENV 1",
+            "source": "envelope",
+            "index": 1
+          },
+          {
+            "id": "env2",
+            "label": "ENV 2",
+            "source": "envelope",
+            "index": 2
+          },
+          {
+            "id": "lfo3-env",
+            "label": "L3 ENV",
+            "source": "lfo-envelope",
+            "index": 3
+          }
+        ],
+        "fontSize": 11
+      }
     },
     {
       "id": "panel.lfo1",
       "kind": "lfo",
-      "title": "LFO 1",
+      "title": "LFO",
       "index": 1,
       "x": 691,
       "y": 601,
@@ -166,11 +279,44 @@
       "h": 144,
       "plot": [
         703,
-        645,
-        151,
-        86
+        647,
+        156,
+        78
       ],
-      "fontSize": 14
+      "fontSize": 14,
+      "titleHeight": 23,
+      "selection": {
+        "id": "flow.lfo",
+        "kind": "source",
+        "tabsRect": [
+          694,
+          604,
+          185,
+          23
+        ],
+        "default": "lfo1",
+        "choices": [
+          {
+            "id": "lfo1",
+            "label": "LFO 1",
+            "source": "lfo",
+            "index": 1
+          },
+          {
+            "id": "lfo2",
+            "label": "LFO 2",
+            "source": "lfo",
+            "index": 2
+          },
+          {
+            "id": "lfo3",
+            "label": "LFO 3",
+            "source": "lfo",
+            "index": 3
+          }
+        ],
+        "fontSize": 11
+      }
     },
     {
       "id": "panel.analyzer",
@@ -198,7 +344,8 @@
       "y": 753,
       "w": 388,
       "h": 229,
-      "fontSize": 14
+      "fontSize": 14,
+      "titleHeight": 23
     },
     {
       "id": "panel.matrix",
@@ -208,7 +355,8 @@
       "y": 753,
       "w": 708,
       "h": 229,
-      "fontSize": 14
+      "fontSize": 14,
+      "titleHeight": 23
     },
     {
       "id": "panel.output",
@@ -218,17 +366,24 @@
       "y": 753,
       "w": 459,
       "h": 229,
-      "fontSize": 14
+      "fontSize": 14,
+      "plot": [
+        1521,
+        797,
+        49,
+        155
+      ],
+      "titleHeight": 23
     }
   ],
   "controls": [
     {
       "id": "global.voice-limit",
       "binding": "scene.polylimit",
-      "label": "Voices",
-      "x": 1134,
-      "y": 793,
-      "w": 100,
+      "label": "Polyphony",
+      "x": 1128,
+      "y": 858,
+      "w": 69,
       "h": 26,
       "kind": "menu",
       "fontSize": 11.5
@@ -248,216 +403,219 @@
       "id": "flow.osc1.type",
       "binding": "osc1.type",
       "label": "Oscillator 1 algorithm",
-      "x": 310,
-      "y": 177,
-      "w": 120,
-      "h": 20,
+      "x": 336,
+      "y": 178,
+      "w": 66,
+      "h": 18,
       "kind": "menu",
-      "fontSize": 11.5
+      "fontSize": 10
     },
     {
       "id": "flow.osc1.mute",
       "binding": "osc1.mute",
-      "label": "M",
-      "x": 440,
-      "y": 177,
-      "w": 23,
-      "h": 20,
-      "kind": "toggle"
+      "label": "Mute oscillator 1",
+      "x": 306,
+      "y": 158,
+      "w": 22,
+      "h": 28,
+      "kind": "toggle",
+      "glyph": "power"
     },
     {
       "id": "flow.osc1.level",
       "binding": "osc1.level",
-      "label": "1",
-      "x": 534,
-      "y": 241,
-      "w": 26,
-      "h": 77,
+      "label": "",
+      "x": 539,
+      "y": 245,
+      "w": 24,
+      "h": 70,
       "kind": "fader",
-      "fontSize": 10
+      "fontSize": 9
     },
     {
       "id": "flow.osc2.type",
       "binding": "osc2.type",
       "label": "Oscillator 2 algorithm",
-      "x": 310,
-      "y": 269,
-      "w": 120,
-      "h": 20,
+      "x": 336,
+      "y": 270,
+      "w": 66,
+      "h": 18,
       "kind": "menu",
-      "fontSize": 11.5
+      "fontSize": 10
     },
     {
       "id": "flow.osc2.mute",
       "binding": "osc2.mute",
-      "label": "M",
-      "x": 440,
-      "y": 269,
-      "w": 23,
-      "h": 20,
-      "kind": "toggle"
+      "label": "Mute oscillator 2",
+      "x": 306,
+      "y": 250,
+      "w": 22,
+      "h": 28,
+      "kind": "toggle",
+      "glyph": "power"
     },
     {
       "id": "flow.osc2.level",
       "binding": "osc2.level",
-      "label": "2",
-      "x": 564,
-      "y": 241,
-      "w": 26,
-      "h": 77,
+      "label": "",
+      "x": 565,
+      "y": 245,
+      "w": 24,
+      "h": 70,
       "kind": "fader",
-      "fontSize": 10
+      "fontSize": 9
     },
     {
       "id": "flow.osc3.type",
       "binding": "osc3.type",
       "label": "Oscillator 3 algorithm",
-      "x": 310,
-      "y": 361,
-      "w": 120,
-      "h": 20,
+      "x": 336,
+      "y": 362,
+      "w": 66,
+      "h": 18,
       "kind": "menu",
-      "fontSize": 11.5
+      "fontSize": 10
     },
     {
       "id": "flow.osc3.mute",
       "binding": "osc3.mute",
-      "label": "M",
-      "x": 440,
-      "y": 361,
-      "w": 23,
-      "h": 20,
-      "kind": "toggle"
+      "label": "Mute oscillator 3",
+      "x": 306,
+      "y": 342,
+      "w": 22,
+      "h": 28,
+      "kind": "toggle",
+      "glyph": "power"
     },
     {
       "id": "flow.osc3.level",
       "binding": "osc3.level",
-      "label": "3",
-      "x": 594,
-      "y": 241,
-      "w": 26,
-      "h": 77,
+      "label": "",
+      "x": 592,
+      "y": 245,
+      "w": 24,
+      "h": 70,
       "kind": "fader",
-      "fontSize": 10
+      "fontSize": 9
     },
     {
       "id": "flow.filter1.type",
       "binding": "filter1.type",
       "label": "Filter 1 type",
-      "x": 677,
-      "y": 215,
-      "w": 133,
-      "h": 23,
+      "x": 702,
+      "y": 204,
+      "w": 108,
+      "h": 17,
       "kind": "menu",
-      "fontSize": 11.5
+      "fontSize": 10
     },
     {
       "id": "flow.filter2.type",
       "binding": "filter2.type",
       "label": "Filter 2 type",
-      "x": 677,
-      "y": 327,
-      "w": 133,
-      "h": 23,
+      "x": 702,
+      "y": 316,
+      "w": 108,
+      "h": 17,
       "kind": "menu",
-      "fontSize": 11.5
+      "fontSize": 10
     },
     {
       "id": "flow.fx1.type",
       "binding": "fx1.type",
       "label": "FX slot 1",
-      "x": 1060,
-      "y": 188,
-      "w": 96,
+      "x": 1066,
+      "y": 191,
+      "w": 92,
       "h": 21,
       "kind": "menu",
-      "fontSize": 11.5
+      "fontSize": 10.5
     },
     {
       "id": "flow.fx2.type",
       "binding": "fx2.type",
       "label": "FX slot 2",
-      "x": 1060,
-      "y": 212,
-      "w": 96,
+      "x": 1066,
+      "y": 215,
+      "w": 92,
       "h": 21,
       "kind": "menu",
-      "fontSize": 11.5
+      "fontSize": 10.5
     },
     {
       "id": "flow.fx3.type",
       "binding": "fx3.type",
       "label": "FX slot 3",
-      "x": 1060,
-      "y": 236,
-      "w": 96,
+      "x": 1066,
+      "y": 239,
+      "w": 92,
       "h": 21,
       "kind": "menu",
-      "fontSize": 11.5
+      "fontSize": 10.5
     },
     {
       "id": "flow.fx4.type",
       "binding": "fx4.type",
       "label": "FX slot 4",
-      "x": 1060,
-      "y": 260,
-      "w": 96,
+      "x": 1066,
+      "y": 263,
+      "w": 92,
       "h": 21,
       "kind": "menu",
-      "fontSize": 11.5
+      "fontSize": 10.5
     },
     {
       "id": "flow.fx5.type",
       "binding": "fx5.type",
       "label": "FX slot 5",
-      "x": 1060,
-      "y": 284,
-      "w": 96,
+      "x": 1066,
+      "y": 287,
+      "w": 92,
       "h": 21,
       "kind": "menu",
-      "fontSize": 11.5
+      "fontSize": 10.5
     },
     {
       "id": "flow.fx6.type",
       "binding": "fx6.type",
       "label": "FX slot 6",
-      "x": 1060,
-      "y": 308,
-      "w": 96,
+      "x": 1066,
+      "y": 311,
+      "w": 92,
       "h": 21,
       "kind": "menu",
-      "fontSize": 11.5
+      "fontSize": 10.5
     },
     {
       "id": "flow.fx7.type",
       "binding": "fx7.type",
       "label": "FX slot 7",
-      "x": 1060,
-      "y": 332,
-      "w": 96,
+      "x": 1066,
+      "y": 335,
+      "w": 92,
       "h": 21,
       "kind": "menu",
-      "fontSize": 11.5
+      "fontSize": 10.5
     },
     {
       "id": "flow.fx8.type",
       "binding": "fx8.type",
       "label": "FX slot 8",
-      "x": 1060,
-      "y": 356,
-      "w": 96,
+      "x": 1066,
+      "y": 359,
+      "w": 92,
       "h": 21,
       "kind": "menu",
-      "fontSize": 11.5
+      "fontSize": 10.5
     },
     {
       "id": "inspector.filter1.type",
       "binding": "filter1.type",
       "label": "Filter 1 algorithm",
-      "x": 1368,
+      "x": 1395,
       "y": 109,
-      "w": 198,
-      "h": 25,
+      "w": 172,
+      "h": 24,
       "kind": "menu",
       "fontSize": 11.5
     },
@@ -465,10 +623,10 @@
       "id": "inspector.filter1.subtype",
       "binding": "filter1.subtype",
       "label": "Filter 1 subtype",
-      "x": 1368,
-      "y": 141,
-      "w": 198,
-      "h": 25,
+      "x": 1395,
+      "y": 140,
+      "w": 172,
+      "h": 24,
       "kind": "menu",
       "fontSize": 11.5
     },
@@ -478,86 +636,81 @@
       "label": "Cutoff",
       "labelPosition": "top",
       "x": 1384,
-      "y": 186,
-      "w": 102,
+      "y": 178,
+      "w": 96,
       "h": 121,
       "kind": "knob",
-      "fontSize": 13
+      "fontSize": 13,
+      "faceDiameter": 84
     },
     {
       "id": "inspector.shared-drive",
       "binding": "filter.drive",
-      "label": "WS drive",
+      "label": "WS Drive",
       "labelPosition": "top",
-      "x": 1294,
-      "y": 211,
-      "w": 79,
-      "h": 96,
+      "x": 1303,
+      "y": 192,
+      "w": 52,
+      "h": 93,
       "kind": "knob",
-      "fontSize": 12,
-      "accent": "secondary"
+      "fontSize": 11.5,
+      "accent": "secondary",
+      "faceDiameter": 46
     },
     {
       "id": "inspector.filter1.resonance",
       "binding": "filter1.resonance",
       "label": "Resonance",
       "labelPosition": "top",
-      "x": 1492,
-      "y": 211,
-      "w": 79,
-      "h": 96,
+      "x": 1507,
+      "y": 192,
+      "w": 52,
+      "h": 93,
       "kind": "knob",
-      "fontSize": 12,
-      "accent": "secondary"
+      "fontSize": 11.5,
+      "accent": "secondary",
+      "faceDiameter": 46
     },
     {
       "id": "inspector.filter1.keytrack",
       "binding": "filter1.keytrack",
       "label": "Keytrack",
       "labelPosition": "top",
-      "x": 1295,
-      "y": 315,
-      "w": 83,
-      "h": 90,
+      "x": 1311,
+      "y": 309,
+      "w": 58,
+      "h": 78,
       "kind": "knob",
-      "fontSize": 12,
-      "accent": "secondary"
+      "fontSize": 11.5,
+      "accent": "secondary",
+      "faceDiameter": 44
     },
     {
       "id": "inspector.filter1.envmod",
       "binding": "filter1.envmod",
       "label": "Env Amt",
       "labelPosition": "top",
-      "x": 1389,
-      "y": 315,
-      "w": 83,
-      "h": 90,
+      "x": 1405,
+      "y": 309,
+      "w": 58,
+      "h": 78,
       "kind": "knob",
-      "fontSize": 12,
-      "accent": "secondary"
+      "fontSize": 11.5,
+      "accent": "secondary",
+      "faceDiameter": 44
     },
     {
       "id": "inspector.filter2.cutoff",
       "binding": "filter2.cutoff",
       "label": "F2 Cutoff",
       "labelPosition": "top",
-      "x": 1483,
-      "y": 315,
-      "w": 83,
-      "h": 90,
+      "x": 1498,
+      "y": 309,
+      "w": 58,
+      "h": 78,
       "kind": "knob",
-      "fontSize": 12
-    },
-    {
-      "id": "env1.mode",
-      "binding": "env1.mode",
-      "label": "Envelope mode",
-      "x": 509,
-      "y": 606,
-      "w": 161,
-      "h": 23,
-      "kind": "menu",
-      "fontSize": 11.5
+      "fontSize": 11.5,
+      "faceDiameter": 44
     },
     {
       "id": "env1.attack",
@@ -565,12 +718,19 @@
       "label": "A",
       "labelPosition": "top",
       "x": 482,
-      "y": 648,
+      "y": 639,
       "w": 44,
       "h": 79,
       "kind": "knob",
       "fontSize": 11,
-      "accent": "secondary"
+      "accent": "secondary",
+      "faceDiameter": 36,
+      "selectionGroup": "flow.envelope",
+      "bindings": {
+        "env1": "env1.attack",
+        "env2": "env2.attack",
+        "lfo3-env": "lfo3.attack"
+      }
     },
     {
       "id": "env1.decay",
@@ -578,12 +738,19 @@
       "label": "D",
       "labelPosition": "top",
       "x": 531,
-      "y": 648,
+      "y": 639,
       "w": 44,
       "h": 79,
       "kind": "knob",
       "fontSize": 11,
-      "accent": "secondary"
+      "accent": "secondary",
+      "faceDiameter": 36,
+      "selectionGroup": "flow.envelope",
+      "bindings": {
+        "env1": "env1.decay",
+        "env2": "env2.decay",
+        "lfo3-env": "lfo3.decay"
+      }
     },
     {
       "id": "env1.sustain",
@@ -591,12 +758,19 @@
       "label": "S",
       "labelPosition": "top",
       "x": 580,
-      "y": 648,
+      "y": 639,
       "w": 44,
       "h": 79,
       "kind": "knob",
       "fontSize": 11,
-      "accent": "accent"
+      "accent": "accent",
+      "faceDiameter": 36,
+      "selectionGroup": "flow.envelope",
+      "bindings": {
+        "env1": "env1.sustain",
+        "env2": "env2.sustain",
+        "lfo3-env": "lfo3.sustain"
+      }
     },
     {
       "id": "env1.release",
@@ -604,260 +778,293 @@
       "label": "R",
       "labelPosition": "top",
       "x": 629,
-      "y": 648,
+      "y": 639,
       "w": 44,
       "h": 79,
       "kind": "knob",
       "fontSize": 11,
-      "accent": "accent"
+      "accent": "accent",
+      "faceDiameter": 36,
+      "selectionGroup": "flow.envelope",
+      "bindings": {
+        "env1": "env1.release",
+        "env2": "env2.release",
+        "lfo3-env": "lfo3.release"
+      }
     },
     {
       "id": "lfo1.shape",
       "binding": "lfo1.shape",
       "label": "LFO shape",
-      "x": 1014,
-      "y": 606,
-      "w": 146,
-      "h": 23,
+      "x": 932,
+      "y": 665,
+      "w": 56,
+      "h": 24,
       "kind": "menu",
-      "fontSize": 11.5
+      "fontSize": 10.5,
+      "selectionGroup": "flow.lfo",
+      "bindings": {
+        "lfo1": "lfo1.shape",
+        "lfo2": "lfo2.shape",
+        "lfo3": "lfo3.shape"
+      }
     },
     {
       "id": "lfo1.rate",
       "binding": "lfo1.rate",
       "label": "Rate",
       "labelPosition": "top",
-      "x": 868,
-      "y": 648,
-      "w": 64,
-      "h": 82,
+      "x": 877,
+      "y": 639,
+      "w": 46,
+      "h": 80,
       "kind": "knob",
       "fontSize": 11,
-      "accent": "secondary"
+      "accent": "secondary",
+      "selectionGroup": "flow.lfo",
+      "bindings": {
+        "lfo1": "lfo1.rate",
+        "lfo2": "lfo2.rate",
+        "lfo3": "lfo3.rate"
+      },
+      "faceDiameter": 36
     },
     {
       "id": "lfo1.phase",
       "binding": "lfo1.phase",
       "label": "Phase",
       "labelPosition": "top",
-      "x": 940,
-      "y": 648,
-      "w": 64,
-      "h": 82,
+      "x": 998,
+      "y": 639,
+      "w": 44,
+      "h": 80,
       "kind": "knob",
       "fontSize": 11,
-      "accent": "secondary"
-    },
-    {
-      "id": "lfo1.deform",
-      "binding": "lfo1.deform",
-      "label": "Deform",
-      "labelPosition": "top",
-      "x": 1012,
-      "y": 648,
-      "w": 64,
-      "h": 82,
-      "kind": "knob",
-      "fontSize": 11,
-      "accent": "secondary"
-    },
-    {
-      "id": "lfo1.magnitude",
-      "binding": "lfo1.magnitude",
-      "label": "Depth",
-      "labelPosition": "top",
-      "x": 1084,
-      "y": 648,
-      "w": 64,
-      "h": 82,
-      "kind": "knob",
-      "fontSize": 11,
-      "accent": "secondary"
+      "accent": "secondary",
+      "selectionGroup": "flow.lfo",
+      "bindings": {
+        "lfo1": "lfo1.phase",
+        "lfo2": "lfo2.phase",
+        "lfo3": "lfo3.phase"
+      },
+      "faceDiameter": 36
     },
     {
       "id": "macro1",
       "binding": "macro1",
       "labelPosition": "top",
-      "x": 20,
+      "x": 22,
       "y": 790,
       "w": 78,
-      "h": 90,
+      "h": 89,
       "kind": "knob",
-      "fontSize": 12
+      "fontSize": 12,
+      "faceDiameter": 42
     },
     {
       "id": "macro2",
       "binding": "macro2",
       "labelPosition": "top",
-      "x": 113,
+      "x": 115,
       "y": 790,
       "w": 78,
-      "h": 90,
+      "h": 89,
       "kind": "knob",
-      "fontSize": 12
+      "fontSize": 12,
+      "faceDiameter": 42
     },
     {
       "id": "macro3",
       "binding": "macro3",
       "labelPosition": "top",
-      "x": 206,
+      "x": 210,
       "y": 790,
       "w": 78,
-      "h": 90,
+      "h": 89,
       "kind": "knob",
-      "fontSize": 12
+      "fontSize": 12,
+      "faceDiameter": 42
     },
     {
       "id": "macro4",
       "binding": "macro4",
       "labelPosition": "top",
-      "x": 299,
+      "x": 303,
       "y": 790,
       "w": 78,
-      "h": 90,
+      "h": 89,
       "kind": "knob",
-      "fontSize": 12
+      "fontSize": 12,
+      "faceDiameter": 42
     },
     {
       "id": "macro5",
       "binding": "macro5",
       "labelPosition": "top",
-      "x": 20,
+      "x": 22,
       "y": 883,
       "w": 78,
-      "h": 90,
+      "h": 89,
       "kind": "knob",
-      "fontSize": 12
+      "fontSize": 12,
+      "faceDiameter": 42
     },
     {
       "id": "macro6",
       "binding": "macro6",
       "labelPosition": "top",
-      "x": 113,
+      "x": 115,
       "y": 883,
       "w": 78,
-      "h": 90,
+      "h": 89,
       "kind": "knob",
-      "fontSize": 12
+      "fontSize": 12,
+      "faceDiameter": 42
     },
     {
       "id": "macro7",
       "binding": "macro7",
       "labelPosition": "top",
-      "x": 206,
+      "x": 210,
       "y": 883,
       "w": 78,
-      "h": 90,
+      "h": 89,
       "kind": "knob",
-      "fontSize": 12
+      "fontSize": 12,
+      "faceDiameter": 42
     },
     {
       "id": "macro8",
       "binding": "macro8",
       "labelPosition": "top",
-      "x": 299,
+      "x": 303,
       "y": 883,
       "w": 78,
-      "h": 90,
+      "h": 89,
       "kind": "knob",
-      "fontSize": 12
-    },
-    {
-      "id": "output.scene-mode",
-      "binding": "scene.mode",
-      "label": "Scene mode",
-      "x": 1134,
-      "y": 942,
-      "w": 115,
-      "h": 25,
-      "kind": "menu",
-      "fontSize": 11.5
-    },
-    {
-      "id": "output.poly-mode",
-      "binding": "scene.polymode",
-      "label": "Voice mode",
-      "x": 1134,
-      "y": 854,
-      "w": 65,
-      "h": 27,
-      "kind": "menu",
-      "fontSize": 11.5
+      "fontSize": 12,
+      "faceDiameter": 42
     },
     {
       "id": "output.glide",
       "binding": "scene.portamento",
       "label": "Glide",
       "labelPosition": "top",
-      "x": 1205,
-      "y": 834,
-      "w": 66,
-      "h": 102,
+      "x": 1211,
+      "y": 828,
+      "w": 48,
+      "h": 85,
       "kind": "knob",
       "fontSize": 12,
-      "accent": "secondary"
+      "accent": "secondary",
+      "faceDiameter": 42
     },
     {
       "id": "output.width",
       "binding": "scene.width",
       "label": "Spread",
       "labelPosition": "top",
-      "x": 1281,
-      "y": 834,
-      "w": 66,
-      "h": 102,
+      "x": 1286,
+      "y": 828,
+      "w": 48,
+      "h": 85,
       "kind": "knob",
       "fontSize": 12,
-      "accent": "secondary"
+      "accent": "secondary",
+      "faceDiameter": 42
     },
     {
       "id": "output.tune",
       "binding": "scene.pitch",
       "label": "Tune",
       "labelPosition": "top",
-      "x": 1355,
-      "y": 834,
-      "w": 66,
-      "h": 102,
+      "x": 1359,
+      "y": 828,
+      "w": 48,
+      "h": 85,
       "kind": "knob",
       "fontSize": 12,
-      "accent": "secondary"
-    },
-    {
-      "id": "output.scene-volume",
-      "binding": "scene.volume",
-      "label": "Selected scene level",
-      "x": 1263,
-      "y": 938,
-      "w": 250,
-      "h": 40,
-      "kind": "horizontal",
-      "fontSize": 10,
-      "accent": "secondary"
+      "accent": "secondary",
+      "faceDiameter": 42
     },
     {
       "id": "output.master",
       "binding": "master.volume",
-      "label": "Master gain",
+      "label": "Gain",
       "labelPosition": "top",
-      "x": 1427,
-      "y": 815,
-      "w": 89,
-      "h": 122,
+      "x": 1421,
+      "y": 805,
+      "w": 92,
+      "h": 126,
       "kind": "knob",
-      "fontSize": 13
+      "fontSize": 13,
+      "faceDiameter": 72
+    },
+    {
+      "id": "lfo1.fade",
+      "binding": "lfo1.attack",
+      "label": "Fade In",
+      "kind": "knob",
+      "x": 1050,
+      "y": 639,
+      "w": 44,
+      "h": 80,
+      "labelPosition": "top",
+      "faceDiameter": 36,
+      "fontSize": 11,
+      "accent": "secondary",
+      "selectionGroup": "flow.lfo",
+      "bindings": {
+        "lfo1": "lfo1.attack",
+        "lfo2": "lfo2.attack",
+        "lfo3": "lfo3.attack"
+      }
+    },
+    {
+      "id": "lfo1.trigmode",
+      "binding": "lfo1.trigmode",
+      "label": "LFO trigger mode",
+      "kind": "menu",
+      "x": 1106,
+      "y": 665,
+      "w": 55,
+      "h": 24,
+      "fontSize": 10.5,
+      "selectionGroup": "flow.lfo",
+      "bindings": {
+        "lfo1": "lfo1.trigmode",
+        "lfo2": "lfo2.trigmode",
+        "lfo3": "lfo3.trigmode"
+      }
+    },
+    {
+      "id": "lfo1.unipolar",
+      "binding": "lfo1.unipolar",
+      "label": "UNI",
+      "kind": "toggle",
+      "x": 1106,
+      "y": 694,
+      "w": 55,
+      "h": 20,
+      "fontSize": 10.5,
+      "selectionGroup": "flow.lfo",
+      "bindings": {
+        "lfo1": "lfo1.unipolar",
+        "lfo2": "lfo2.unipolar",
+        "lfo3": "lfo3.unipolar"
+      }
     }
   ],
   "adaptations": [
-    "The uploaded concept is the visual target, not a claim that the underlying synthesizer supports arbitrary modular cable rewiring. The routing selector exposes Surge's real eight routing configurations.",
-    "The routing canvas uses the reference's node geometry. Native menus inside oscillator, filter and effect nodes, mixer faders, and the right-hand parameter inspector control actual engine parameters.",
-    "The inspector promotes Filter 1 while its lower knob row also exposes Filter 2 cutoff/resonance; this replaces the concept's redundant velocity/keytrack row and keeps both filters immediately editable.",
-    "All eight macros are bound to the processor. Their actual names and current values replace reference-only labels and fabricated readouts.",
-    "Eight real FX algorithm selectors occupy the displayed chain. Remaining native slots and detailed effect parameters stay available through Full editor.",
-    "The plot is a qualified filter-response preview. Output meters reflect actual signal levels, and the full native oscilloscope is available through Open scope.",
-    "The header uses functioning preset navigation, Scene A/B, skin selection and Full editor access. Exact generated logos, miniature icons, and inert concept tabs are not reproduced as fake controls.",
-    "The modulation panel reports native patch routes; route creation and detailed editing use the existing modulation editor.",
-    "These are native vector controls and labels, not an image pasted over the synth. Pixel-identical photographic materials, illustration details and impossible generated labels are not claimed.",
-    "The inspector's lower row exposes first-filter keytrack, first-filter envelope depth, and explicitly labeled F2 cutoff. The concept's per-filter velocity amount is not an independent native parameter. The analysis tile selects the genuine output spectrogram."
+    "The routing canvas retains the supplied node geometry and exposes Surge's eight actual filter-routing configurations. It does not implement arbitrary modular cable rewiring.",
+    "All nineteen original node controls remain real processor operations: three oscillator algorithm selectors and power/mute controls, three mixer faders, two filter selectors and eight FX algorithm selectors.",
+    "The modulation-source cluster navigates actual lower source views. ENV 1 and ENV 2 are the two dedicated envelopes; L3 ENV is LFO 3's native envelope, replacing the concept's fictional third dedicated EG. LFO 1\u20133 select their real waveforms and controls.",
+    "Envelope source changes rebind the four native ADSR controls together with the preview. LFO source changes rebind rate, phase, envelope attack/fade-in, shape, trigger mode and unipolar state together with the preview, without editing audio parameters merely to navigate.",
+    "The inspector edits Filter 1, with the shared waveshaper drive explicitly labelled WS Drive. Its lower-right control is actual Filter 2 cutoff rather than an invented independent per-filter velocity amount. The separately framed response plot is the genuine Filter 1 preview.",
+    "Filter Type and Mode refer to the real native algorithm and subtype; the concept's generic Lowpass/Slope pair is not a separate filter engine. Full editor retains every specialized filter operation.",
+    "All eight macros show actual assigned names and native values. Their smaller faces and compact two-row layout follow the reference without freezing its labels or values.",
+    "The compact master row contains actual polyphony, portamento, stereo width, scene tuning and master gain. Redundant scene-mode and scene-level controls were removed from this reference surface; those operations remain in Full editor.",
+    "The analyzer and stereo meters use the real main-output tap. The native oscilloscope remains available through Open scope, and no reference spectrum or fabricated signal is painted into the display.",
+    "Patch names, browser contents, effect algorithms, modulation assignments and numeric readouts remain live. Native vectors reproduce the measured composition; static validation is not evidence of literal pixel identity."
   ]
 }

@@ -710,14 +710,22 @@ bool validateManifest(const juce::var &data, juce::String &error)
                 }
                 if (item->hasProperty("valuePosition") &&
                     (kind != "knob" || !item->getProperty("valuePosition").isString() ||
-                     !oneOf(item->getProperty("valuePosition").toString(), "bottom|right|hidden")))
-                    return fail(error, where + ".valuePosition must be bottom/right/hidden on a knob");
+                     !oneOf(item->getProperty("valuePosition").toString(), "bottom|right|hidden|top")))
+                    return fail(error, where + ".valuePosition must be bottom/right/hidden/top on a knob");
+                if (item->getProperty("valuePosition").toString() == "top" &&
+                    item->getProperty("labelPosition").toString() != "top")
+                    return fail(error, where + ".valuePosition top requires labelPosition top");
+                if (item->hasProperty("compact") &&
+                    (kind != "horizontal" || !item->getProperty("compact").isBool()))
+                    return fail(error, where + ".compact must be boolean on a horizontal slider");
+                const bool compact = kind == "horizontal" &&
+                                     static_cast<bool>(item->getProperty("compact"));
                 if (item->hasProperty("labelWidth"))
                 {
-                    if (kind != "value")
-                        return fail(error, where + ".labelWidth is only supported on a value control");
+                    if (kind != "value" && !compact)
+                        return fail(error, where + ".labelWidth requires a value or compact slider");
                     if (!boundedNumber(*item, "labelWidth", 0,
-                                       static_cast<double>(item->getProperty("w")) - 12,
+                                       static_cast<double>(item->getProperty("w")) - (compact ? 52 : 12),
                                        where, error))
                         return false;
                 }
@@ -730,8 +738,9 @@ bool validateManifest(const juce::var &data, juce::String &error)
                     return false;
                 if ((kind == "fader" && (static_cast<double>(item->getProperty("w")) < 24 ||
                                          static_cast<double>(item->getProperty("h")) < 46)) ||
-                    (kind == "horizontal" && (static_cast<double>(item->getProperty("w")) < 24 ||
-                                              static_cast<double>(item->getProperty("h")) < 40)))
+                    (kind == "horizontal" &&
+                     (static_cast<double>(item->getProperty("w")) < (compact ? 100 : 24) ||
+                      static_cast<double>(item->getProperty("h")) < (compact ? 20 : 40))))
                     return fail(error, where + " is too small for its labelled slider and track");
             }
             if (item->hasProperty("ink") && (!item->getProperty("ink").isString() ||

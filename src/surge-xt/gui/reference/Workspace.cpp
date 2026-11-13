@@ -11,6 +11,7 @@
 #include "ReferenceOrnaments.h"
 #include "SurgeSynthProcessor.h"
 #include "RuntimeFont.h"
+#include "version.h"
 #include <juce_audio_utils/juce_audio_utils.h>
 #include <juce_dsp/juce_dsp.h>
 #include <algorithm>
@@ -669,6 +670,20 @@ class ValueEntry : public juce::Component
     juce::TextButton applyButton{"Apply"}, cancelButton{"Cancel"};
 };
 
+class CompactSliderLookAndFeel : public juce::LookAndFeel_V4
+{
+  public:
+    juce::Slider::SliderLayout getSliderLayout(juce::Slider &slider) override
+    {
+        juce::Slider::SliderLayout layout;
+        const auto labelWidth = static_cast<int>(slider.getProperties()["reference.compact-label-width"]);
+        layout.sliderBounds = slider.getLocalBounds().withTrimmedLeft(labelWidth + 3)
+                                  .withTrimmedRight(43);
+        return layout;
+    }
+    int getSliderThumbRadius(juce::Slider &) override { return 6; }
+};
+
 class BoundSlider : public juce::Slider
 {
   public:
@@ -677,6 +692,12 @@ class BoundSlider : public juce::Slider
     {
         setComponentID(string(definition, "id"));
         kind = string(spec, "kind", "knob");
+        if (kind == "horizontal" && static_cast<bool>(spec["compact"]))
+        {
+            getProperties().set("reference.compact-label-width",
+                                number(spec, "labelWidth", 32));
+            setLookAndFeel(&compactLookAndFeel);
+        }
         setSliderStyle(kind == "fader"        ? juce::Slider::LinearVertical
                        : kind == "horizontal" ? juce::Slider::LinearHorizontal
                                               : juce::Slider::RotaryVerticalDrag);
@@ -705,6 +726,7 @@ class BoundSlider : public juce::Slider
     {
         cancelGesture();
         dismissEntry();
+        setLookAndFeel(nullptr);
     }
     void cancelGesture()
     {
@@ -842,10 +864,12 @@ class BoundSlider : public juce::Slider
                                                         : r.getWidth() * .44f));
             text(g, theme, label, r.removeFromLeft(labelWidth), fs, ink);
             auto box = r.reduced(2, 1);
-            bezel(g, theme, box, theme.style == "clear" ? theme.panel : theme.display, 3);
-            auto fieldInk = spec.hasProperty("ink")  ? ink
-                            : theme.style == "clear" ? theme.text
-                                                     : theme.display.contrasting(.85f);
+            const bool paperField = theme.style == "clear" || theme.style == "ivory" ||
+                                    theme.style == "bauhaus";
+            bezel(g, theme, box, paperField ? theme.panel : theme.display, 3);
+            auto fieldInk = paperField ? theme.text
+                                      : spec.hasProperty("ink") ? ink
+                                                                : theme.display.contrasting(.85f);
             text(g, theme, value, box.reduced(4, 0), fs, fieldInk, theme.style == "clear",
                  juce::Justification::centredRight);
             if (hasKeyboardFocus(true))
@@ -861,6 +885,7 @@ class BoundSlider : public juce::Slider
             const auto valuePosition = string(spec, "valuePosition", "bottom");
             const bool hideValue = valuePosition == "hidden";
             const bool valueAtRight = valuePosition == "right";
+            const bool valueAtTop = valuePosition == "top";
             const auto lineHeight = std::min(19.f, r.getHeight() * .23f);
             const bool coloredRim = theme.style == "bauhaus" &&
                                     (binding.startsWith("macro") ||
@@ -888,12 +913,36 @@ class BoundSlider : public juce::Slider
                      theme.style == "clear" ? ink : valueInk, theme.style == "clear",
                      juce::Justification::centredLeft);
             };
+            if (theme.style == "space" && binding.startsWith("macro"))
+            {
+                text(g, theme, label, r.withHeight(19), fs, ink, false,
+                     juce::Justification::centred);
+                auto faceTheme = theme;
+                faceTheme.knob = theme.display;
+                const auto diameter = number(spec, "faceDiameter", 60.f);
+                const auto face = Rect(0, 0, diameter, diameter).withCentre(
+                    {r.getCentreX(), r.getY() + 62.5f});
+                knob(g, faceTheme, face, static_cast<float>(getValue()), accent,
+                     hasKeyboardFocus(true), isEnabled());
+                auto plate = r.removeFromBottom(24).reduced(1, 0);
+                bezel(g, theme, plate, theme.knob.brighter(.18f), 1.5f);
+                auto name = bridge.label(binding);
+                const auto prefix = "M" + binding.substring(5) + ":";
+                if (name.startsWithIgnoreCase(prefix))
+                    name = name.substring(prefix.length()).trimStart();
+                text(g, theme, name.toUpperCase(), plate.reduced(3, 1), 10.5f,
+                     theme.display, true, juce::Justification::centred);
+                return;
+            }
             if (labelPosition == "top")
             {
                 const float line = lineHeight;
                 text(g, theme, label, r.removeFromTop(line), fs, ink, false,
                      juce::Justification::centred);
-                if (!hideValue && !valueAtRight)
+                if (!hideValue && valueAtTop)
+                    text(g, theme, value, r.removeFromTop(line), fs, valueInk,
+                         theme.style == "clear", juce::Justification::centred);
+                else if (!hideValue && !valueAtRight)
                     text(g, theme, value, r.removeFromBottom(line), fs,
                          theme.style == "clear" ? ink : valueInk, theme.style == "clear",
                          juce::Justification::centred);
@@ -945,6 +994,24 @@ class BoundSlider : public juce::Slider
                 text(g, theme, value, getLocalBounds().toFloat().removeFromBottom(lower / 2), fs,
                      theme.style == "clear" ? ink : valueInk, theme.style == "clear",
                      juce::Justification::centred);
+        }
+        else if (kind == "horizontal" && static_cast<bool>(spec["compact"]))
+        {
+            text(g, theme, label, r.withWidth(number(spec, "labelWidth", 32)), fs, ink);
+            text(g, theme, value, r.removeFromRight(40), fs, valueInk, false,
+                 juce::Justification::centredRight);
+            const auto start = getPositionOfValue(0), end = getPositionOfValue(1);
+            const auto y = getHeight() * .5f;
+            const auto track = Rect(start, y - 2, std::max(1.f, end - start), 4);
+            g.setColour(theme.border);
+            g.fillRoundedRectangle(track.expanded(1), 2);
+            g.setColour(accent);
+            g.fillRoundedRectangle(track.withWidth(track.getWidth() * getValue()), 2);
+            const auto x = getPositionOfValue(getValue());
+            g.setColour(theme.light() ? juce::Colours::white : theme.text);
+            g.fillEllipse(x - 5, y - 5, 10, 10);
+            g.setColour(hasKeyboardFocus(true) ? accent : theme.border);
+            g.drawEllipse(x - 5, y - 5, 10, 10, hasKeyboardFocus(true) ? 2.f : 1.f);
         }
         else
         {
@@ -1078,6 +1145,7 @@ class BoundSlider : public juce::Slider
     juce::var spec;
 
   private:
+    CompactSliderLookAndFeel compactLookAndFeel;
     void showEntry()
     {
         if (!isEnabled())
@@ -1429,7 +1497,24 @@ class ViewTabButton : public juce::TextButton
         if (selected && (theme.style == "precision" || theme.style == "tokyo" ||
                          theme.style == "flow"))
             ink = theme.accent;
-        if (effect && r.getHeight() >= 36)
+        if (effect && theme.style == "space" && r.getHeight() < 36)
+        {
+            const auto caption = getButtonText();
+            auto cells = r;
+            auto numberCell = cells.removeFromLeft(31);
+            g.setColour(ink.withAlpha(.5f));
+            g.drawVerticalLine(static_cast<int>(numberCell.getRight()), r.getY() + 3,
+                               r.getBottom() - 3);
+            g.setColour(ink);
+            g.setFont(theme.type(13, true));
+            g.drawFittedText(caption.upToFirstOccurrenceOf(" ", false, false),
+                             numberCell.toNearestInt(), juce::Justification::centred, 1, .7f);
+            g.setFont(theme.type(12.5f, selected));
+            g.drawFittedText(caption.fromFirstOccurrenceOf(" ", false, false).trim(),
+                             cells.reduced(7, 0).toNearestInt(), juce::Justification::centredLeft,
+                             1, .7f);
+        }
+        else if (effect && r.getHeight() >= 36)
         {
             const auto caption = getButtonText();
             const auto slot = caption.upToFirstOccurrenceOf(" ", false, false);
@@ -1604,7 +1689,9 @@ class WavetableSelector : public juce::Component
         getProperties().set("reference.wavetable-scene", scene);
         getProperties().set("reference.wavetable-oscillator", oscillator);
         getProperties().set("reference.wavetable-busy", state->loadQueued);
-        browse.setButtonText(state->applicable ? name : "No wavetable");
+        const auto algorithm = juce::String(processor.surge->storage.getPatch()
+                                                .scene[scene].osc[oscillator].type.get_display());
+        browse.setButtonText(state->applicable ? name : algorithm);
         previous.setName("Previous wavetable for " + source);
         next.setName("Next wavetable for " + source);
         browse.setName("Choose wavetable for " + source + ": " + name);
@@ -2372,12 +2459,42 @@ struct Workspace::Impl
                                      (string(panel, "kind") == "tabs" &&
                                       string(panel["selection"], "id") == id);
             const auto selected = state->choice();
-            if (!navigationOnly || string(selected, "source") != "oscillator")
+            if (!navigationOnly)
                 return;
-            const auto prefix = "osc" + juce::String(static_cast<int>(number(selected, "index", 1))) + ".";
+            const auto source = string(selected, "source");
+            const auto index = static_cast<int>(number(selected, "index", 1));
+            juce::String destinationGroup;
+            if (source != "oscillator" && source != "waveform")
+                if (auto *panels = manifest["panels"].getArray())
+                    for (const auto &panel : *panels)
+                    {
+                        if (string(panel, "kind") == "tabs" || destinationGroup.isNotEmpty())
+                            continue;
+                        const auto group = string(panel["selection"], "id");
+                        if (group.isEmpty() || group == id)
+                            continue;
+                        if (auto *choices = panel["selection"]["choices"].getArray())
+                            for (const auto &candidate : *choices)
+                                if (string(candidate, "source") == source &&
+                                    static_cast<int>(number(candidate, "index", 1)) == index)
+                                {
+                                    destinationGroup = group;
+                                    selectView(group, string(candidate, "id"));
+                                    break;
+                                }
+                    }
+            const auto family = source == "oscillator" || source == "waveform" ? "osc"
+                                : source == "envelope" ? "env" : "lfo";
+            const auto prefix = juce::String(family) + juce::String(index) + ".";
             for (auto &control : controls)
                 if (dynamic_cast<BoundSlider *>(control.get()) != nullptr &&
                     control->getProperties()["reference.binding"].toString().startsWith(prefix) &&
+                    (destinationGroup.isEmpty() ||
+                     std::any_of(selectionBindings.begin(), selectionBindings.end(),
+                                 [&](const auto &mapping) {
+                                     return mapping.control == control.get() &&
+                                            mapping.group == destinationGroup;
+                                 })) &&
                     control->isEnabled() && control->isShowing())
                 {
                     control->grabKeyboardFocus();
@@ -3485,7 +3602,8 @@ struct Workspace::Impl
     void drawEnvelope(juce::Graphics &g, Rect r, int index, juce::Colour color,
                       bool lfoEnvelope = false)
     {
-        plotBase(g, r, theme.style == "clear");
+        if (theme.style != "aurora")
+            plotBase(g, r, theme.style == "clear");
         r = r.reduced(8);
         const juce::String prefix = lfoEnvelope
                                         ? "lfo" + juce::String(std::clamp(index, 1, 12)) + "."
@@ -3517,7 +3635,7 @@ struct Workspace::Impl
     }
     void drawFilter(juce::Graphics &g, Rect r, int index, juce::Colour color, bool base = true)
     {
-        if (base)
+        if (base && theme.style != "aurora")
             plotBase(g, r);
         const bool miniature = r.getHeight() < 65;
         const bool ivoryReadouts = theme.style == "ivory" && !miniature;
@@ -3627,7 +3745,8 @@ struct Workspace::Impl
     }
     void drawLfo(juce::Graphics &g, Rect r, int index)
     {
-        plotBase(g, r, theme.style == "clear");
+        if (theme.style != "aurora")
+            plotBase(g, r, theme.style == "clear");
         r = r.reduced(6);
         const auto &curve = lfoCurves[juce::jlimit(0, 11, index - 1)];
         if (!curve.available || curve.values.size() < 2)
@@ -3790,6 +3909,22 @@ struct Workspace::Impl
                 kind = source;
         }
         auto title = string(v, "title", kind.toUpperCase());
+        juce::var inheritedEffect;
+        if (kind == "tabs")
+            if (auto *panels = manifest["panels"].getArray())
+                for (const auto &parent : *panels)
+                    if (string(parent, "kind") == "effects" &&
+                        r.getY() > bounds(parent).getY() + 40 && bounds(parent).contains(r))
+                    {
+                        const auto effect = selectedPanelChoice(parent);
+                        if (string(effect, "source") == "fx")
+                        {
+                            inheritedEffect = effect;
+                            title = parameters.display("fx" +
+                                juce::String(static_cast<int>(number(effect, "index", 1))) +
+                                ".type").toUpperCase();
+                        }
+                    }
         auto titleColor = theme.text;
         if (v.hasProperty("ink"))
             titleColor = theme.color(string(v, "ink"));
@@ -3797,8 +3932,14 @@ struct Workspace::Impl
             (string(v, "color") == "red" || string(v, "color") == "blue"))
             titleColor = juce::Colours::white;
         const auto titleInset = number(v, "titleInset", 12);
-        const auto titleY = theme.style == "ivory" && (kind == "oscillator" || kind == "filter")
-                                ? 9.f : 3.f;
+        auto titleY = theme.style == "ivory" && (kind == "oscillator" || kind == "filter")
+                          ? 9.f : 3.f;
+        if (theme.style == "clear")
+        {
+            const auto id = string(v, "id");
+            titleY = kind == "matrix" ? 3.f : kind == "oscillator" ? 9.f
+                         : id == "panel.osc-title" || id == "panel.macros-main" ? 13.f : 8.f;
+        }
         auto titleBounds = Rect(r.getX() + titleInset, r.getY() + titleY,
                                 std::max(0.f, r.getWidth() - titleInset - 12.f), 25);
         if (kind == "matrix")
@@ -3965,9 +4106,8 @@ struct Workspace::Impl
                                .reduced(2, 13)),
                            true);
             else
-                drawMeters(
-                    g,
-                    content.removeFromRight(std::min(58.f, content.getWidth() * .28f)).reduced(4));
+                drawMeters(g, arrayRect(v["plot"],
+                    content.removeFromRight(std::min(58.f, content.getWidth() * .28f)).reduced(4)));
         }
         else if (kind == "matrix")
         {
@@ -4256,6 +4396,18 @@ struct Workspace::Impl
         }
         else if (kind == "routing")
             drawRouting(g, arrayRect(v["plot"], content), variant, v["flowNodes"]);
+        else if (kind == "effects" && variant == "compact")
+        {
+            const auto algorithm = parameters.display("fx" + juce::String(index) + ".type");
+            effectGlyph(g, pr, theme.accent, algorithm);
+        }
+        else if (kind == "tabs" && inheritedEffect.isObject() && v["plot"].isArray())
+        {
+            const auto slot = static_cast<int>(number(inheritedEffect, "index", 1));
+            const auto algorithm = parameters.display("fx" + juce::String(slot) + ".type");
+            bezel(g, theme, pr, theme.display, 4);
+            effectGlyph(g, pr.reduced(13, 17), theme.secondary, algorithm);
+        }
         else if (kind == "effects" && selected.isObject() && v["plot"].isArray())
         {
             const auto algorithm = parameters.display("fx" + juce::String(index) + ".type");
@@ -4280,9 +4432,41 @@ struct Workspace::Impl
                      s.withTrimmedTop(16), 10, theme.display.contrasting(.9f), false,
                      juce::Justification::centred);
             }
-            if (content.getHeight() > 36)
+            if (variant == "vertical" && theme.style == "tokyo")
+                for (int slot = 1; slot <= 8; ++slot)
+                {
+                    const float centreY = r.getY() + 40.5f + (slot - 1) * 21.f;
+                    text(g, theme, juce::String(slot),
+                         {r.getX() + 12, centreY - 9, 25, 18}, 13, theme.text, true,
+                         juce::Justification::centred);
+                    const bool active = parameters.choiceIndex("fx" + juce::String(slot) + ".type") > 0;
+                    const auto lamp = Rect(r.getX() + 48, centreY - 3.5f, 7, 7);
+                    g.setColour(active ? theme.accent : theme.border.withAlpha(.5f));
+                    if (active)
+                        g.fillEllipse(lamp);
+                    else
+                        g.drawEllipse(lamp, 1);
+                }
+            if (variant != "vertical" && content.getHeight() > 36)
                 text(g, theme, "16 native FX slots available in the full editor",
                      content.removeFromBottom(18), 10, theme.muted);
+        }
+        else if (kind == "scene" && theme.style == "space" && string(v, "id") == "space-info")
+        {
+            auto status = arrayRect(v["plot"], content);
+            bezel(g, theme, status, theme.display, 2);
+            status = status.reduced(8, 3);
+            const auto voiceCount = processor.surge->storage.activeVoiceCount.load(std::memory_order_relaxed);
+            const std::array<juce::String, 4> lines{
+                "SCENE " + juce::String(parameters.getScene() == 0 ? "A" : "B") +
+                    "     VOICES " + juce::String(voiceCount),
+                "POLYPHONY " + parameters.display("scene.polylimit"),
+                "SAMPLE RATE " + juce::String(processor.getSampleRate() / 1000., 1) + " kHz",
+                "SURGE XT " + juce::String(Surge::Build::MajorVersionStr) + "." +
+                    juce::String(Surge::Build::SubVersionStr)};
+            const auto row = status.getHeight() / lines.size();
+            for (const auto &line : lines)
+                text(g, theme, line, status.removeFromTop(row), 11.5f, theme.secondary);
         }
         else if (kind == "keyboard")
         {
@@ -4298,6 +4482,19 @@ struct Workspace::Impl
                 botanicalEngraving(g, {1465, 599, 115, 60}, theme.border.darker(.3f));
             else if (panelId == "ivory.fx1")
                 botanicalEngraving(g, {1036, 829, 91, 108}, theme.border.darker(.3f));
+        }
+        if (theme.style == "space" && string(v, "id") == "space-mixer")
+            text(g, theme, "RING", {449, 447, 56, 18}, 13, theme.display, true,
+                 juce::Justification::centred);
+        if (theme.style == "tokyo" && string(v, "id") == "tokyo-filter-2")
+            text(g, theme, "MODE", {1526, 329, 46, 17}, 10, theme.text, false,
+                 juce::Justification::centred);
+        if (theme.style == "tokyo" && string(v, "id") == "tokyo-globals")
+        {
+            text(g, theme, parameters.label("osc1.param6").toUpperCase(),
+                 {1166, 881, 77, 18}, 10, theme.text, false, juce::Justification::centred);
+            text(g, theme, "VOICES", {1478, 881, 68, 18}, 10, theme.text, false,
+                 juce::Justification::centred);
         }
         if (theme.style == "space" || theme.style == "tokyo")
         {

@@ -1074,13 +1074,24 @@ TEST_CASE("Compact value controls preserve real drag and typed-unit editing",
     ScopedModalCleanup modalCleanup;
     auto &bridge = workspace.bridge();
 
-    // Obsidian's compact right-hand ADSR fields edit the filter envelope;
-    // its amplifier envelope uses rotary controls, not compact values.
+    // Obsidian's right-hand ADSR fields now follow native source tabs. Select
+    // the actual filter envelope before testing its compact value entry path.
     const juce::String valueBinding = "env2.attack";
+    bool selectedFilterEnvelope = false;
+    for (const auto &panel : *manifest["panels"].getArray())
+        if (auto *choices = panel["selection"]["choices"].getArray())
+            for (const auto &choice : *choices)
+                if (choice["source"].toString() == "envelope" &&
+                    static_cast<int>(choice["index"]) == 2)
+                    selectedFilterEnvelope = workspace.selectView(
+                        panel["selection"]["id"].toString(), choice["id"].toString());
+    REQUIRE(selectedFilterEnvelope);
     juce::String valueId;
     for (const auto &control : *manifest["controls"].getArray())
-        if (control["kind"].toString() == "value" && control["binding"].toString() == valueBinding)
-            valueId = control["id"].toString();
+        if (control["kind"].toString() == "value")
+            if (auto *component = findComponent(workspace, control["id"].toString()))
+                if (component->getProperties()["reference.binding"].toString() == valueBinding)
+                    valueId = control["id"].toString();
     REQUIRE(valueId.isNotEmpty());
     auto *slider = dynamic_cast<juce::Slider *>(findComponent(workspace, valueId));
     REQUIRE(slider != nullptr);

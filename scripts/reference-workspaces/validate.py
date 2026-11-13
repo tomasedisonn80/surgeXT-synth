@@ -272,17 +272,26 @@ def validate_manifest(data: object) -> None:
                     number_field(item, "faceDiameter", 8, min(160, item["w"], item["h"]), where)
                 if "valuePosition" in item:
                     require(kind == "knob" and isinstance(item["valuePosition"], str) and
-                            item["valuePosition"] in ("bottom", "right", "hidden"),
-                            f"{where}.valuePosition must be bottom/right/hidden on a knob")
+                            item["valuePosition"] in ("bottom", "right", "hidden", "top"),
+                            f"{where}.valuePosition must be bottom/right/hidden/top on a knob")
+                    require(item["valuePosition"] != "top" or item.get("labelPosition") == "top",
+                            f"{where}.valuePosition top requires labelPosition top")
                 if "labelWidth" in item:
-                    require(kind == "value", f"{where}.labelWidth is only supported on a value control")
-                    number_field(item, "labelWidth", 0, item["w"] - 12, where)
+                    require(kind == "value" or (kind == "horizontal" and item.get("compact") is True),
+                            f"{where}.labelWidth requires a value or compact slider")
+                    number_field(item, "labelWidth", 0,
+                                 item["w"] - (52 if item.get("compact") is True else 12), where)
+                if "compact" in item:
+                    require(kind == "horizontal" and isinstance(item["compact"], bool),
+                            f"{where}.compact must be boolean on a horizontal slider")
                 if "glyph" in item:
                     require(kind == "toggle" and item["glyph"] == "power",
                             f"{where}.glyph must be power on a toggle")
                 if "selectionGroup" in item or "bindings" in item:
                     validate_selection_bindings(item, where, selections)
                 minimum = {"fader": (24, 46), "horizontal": (24, 40)}.get(item.get("kind"))
+                if kind == "horizontal" and item.get("compact") is True:
+                    minimum = (100, 20)
                 if minimum:
                     require(item["w"] >= minimum[0] and item["h"] >= minimum[1],
                             f"{where} is too small for its labelled slider and track")

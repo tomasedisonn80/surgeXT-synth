@@ -2381,6 +2381,7 @@ TEST_CASE("Native distortion transfer previews follow model and drive without ed
     ParameterBridge bridge(processor);
     auto &storage = processor.surge->storage;
     const auto select = [&](const juce::String &binding, int nativeValue) {
+        CAPTURE(binding.toStdString(), nativeValue);
         auto *parameter = bridge.parameter(binding);
         REQUIRE(parameter != nullptr);
         const auto index = nativeValue - parameter->val_min.i;
@@ -2391,8 +2392,9 @@ TEST_CASE("Native distortion transfer previews follow model and drive without ed
         CHECK(parameter->val.i == nativeValue);
     };
     select("fx1.type", fxt_distortion);
-    const auto modelBinding = "fx1.param" + juce::String(DistortionEffect::dist_model + 1);
-    const auto driveBinding = "fx1.param" + juce::String(DistortionEffect::dist_drive + 1);
+    // ParameterBridge's param suffix is the native zero-based FX array index.
+    const auto modelBinding = "fx1.param" + juce::String(DistortionEffect::dist_model);
+    const auto driveBinding = "fx1.param" + juce::String(DistortionEffect::dist_drive);
     const auto setDrive = [&](float decibels) {
         auto *parameter = bridge.parameter(driveBinding);
         REQUIRE(parameter != nullptr);

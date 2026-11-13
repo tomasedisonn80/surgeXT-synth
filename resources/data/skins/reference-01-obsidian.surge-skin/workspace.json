@@ -426,7 +426,7 @@
       "x": 118,
       "y": 126,
       "w": 132,
-      "h": 25,
+      "h": 28,
       "kind": "menu",
       "label": "Oscillator 1 algorithm"
     },
@@ -474,59 +474,59 @@
       "h": 73,
       "kind": "knob",
       "fontSize": 10,
-      "faceDiameter": 36
+      "faceDiameter": 34
     },
     {
       "id": "osc1.shape1",
-      "binding": "osc1.param1",
+      "binding": "osc1.param3",
       "x": 302,
       "y": 209,
       "w": 48,
       "h": 73,
       "kind": "knob",
       "fontSize": 10,
-      "faceDiameter": 36
+      "faceDiameter": 34
     },
     {
       "id": "osc1.shape2",
-      "binding": "osc1.param2",
+      "binding": "osc1.param6",
       "x": 357,
       "y": 209,
       "w": 48,
       "h": 73,
       "kind": "knob",
       "fontSize": 10,
-      "faceDiameter": 36
+      "faceDiameter": 34
     },
     {
       "id": "osc1.shape3",
-      "binding": "osc1.param3",
-      "x": 412,
+      "binding": "osc1.param5",
+      "x": 410,
       "y": 209,
       "w": 48,
       "h": 73,
       "kind": "knob",
       "fontSize": 10,
-      "faceDiameter": 36
+      "faceDiameter": 34
     },
     {
       "id": "osc1.shape4",
       "binding": "osc1.param4",
-      "x": 462,
+      "x": 460,
       "y": 209,
       "w": 48,
       "h": 73,
       "kind": "knob",
       "fontSize": 10,
-      "faceDiameter": 36
+      "faceDiameter": 34
     },
     {
       "id": "osc2.algorithm",
       "binding": "osc2.type",
       "x": 118,
-      "y": 306,
+      "y": 304,
       "w": 132,
-      "h": 25,
+      "h": 29,
       "kind": "menu",
       "label": "Oscillator 2 algorithm"
     },
@@ -567,66 +567,66 @@
     },
     {
       "id": "osc2.shape0",
-      "binding": "osc2.param0",
+      "binding": "osc2.param1",
       "x": 247,
       "y": 388,
       "w": 48,
       "h": 73,
       "kind": "knob",
       "fontSize": 10,
-      "faceDiameter": 36
+      "faceDiameter": 34
     },
     {
       "id": "osc2.shape1",
-      "binding": "osc2.param1",
+      "binding": "osc2.param0",
       "x": 302,
       "y": 388,
       "w": 48,
       "h": 73,
       "kind": "knob",
       "fontSize": 10,
-      "faceDiameter": 36
+      "faceDiameter": 34
     },
     {
       "id": "osc2.shape2",
-      "binding": "osc2.param2",
+      "binding": "osc2.param3",
       "x": 357,
       "y": 388,
       "w": 48,
       "h": 73,
       "kind": "knob",
       "fontSize": 10,
-      "faceDiameter": 36
+      "faceDiameter": 34
     },
     {
       "id": "osc2.shape3",
-      "binding": "osc2.param3",
-      "x": 412,
+      "binding": "osc2.param2",
+      "x": 410,
       "y": 388,
       "w": 48,
       "h": 73,
       "kind": "knob",
       "fontSize": 10,
-      "faceDiameter": 36
+      "faceDiameter": 34
     },
     {
       "id": "osc2.shape4",
-      "binding": "osc2.param4",
-      "x": 462,
+      "binding": "osc2.param6",
+      "x": 460,
       "y": 388,
       "w": 48,
       "h": 73,
       "kind": "knob",
       "fontSize": 10,
-      "faceDiameter": 36
+      "faceDiameter": 34
     },
     {
       "id": "osc3.algorithm",
       "binding": "osc3.type",
       "x": 118,
-      "y": 482,
+      "y": 479,
       "w": 132,
-      "h": 25,
+      "h": 29,
       "kind": "menu",
       "label": "Oscillator 3 algorithm"
     },
@@ -700,7 +700,7 @@
     },
     {
       "id": "osc3.shape3",
-      "binding": "osc3.param3",
+      "binding": "osc3.param6",
       "x": 377,
       "y": 569,
       "w": 41,
@@ -711,7 +711,7 @@
     },
     {
       "id": "osc3.shape4",
-      "binding": "osc3.param4",
+      "binding": "osc3.param5",
       "x": 421,
       "y": 569,
       "w": 41,
@@ -1350,7 +1350,7 @@
     },
     {
       "id": "osc3.shape5",
-      "binding": "osc3.param5",
+      "binding": "osc3.param4",
       "x": 465,
       "y": 569,
       "w": 41,
@@ -1490,6 +1490,7 @@
     "Panel boundaries and control centres follow the supplied 1586 by 992 Obsidian reference. All controls and plots are native and remain live; no reference bitmap is used as the instrument UI.",
     "The header keeps working preset navigation, scene selection, skin selection, full-editor access and real master volume. Duplicate scene and voice controls have been removed from the otherwise empty lower reference margin; the original editor retains them.",
     "Oscillator power glyphs operate the actual mute parameters. Solo and mute remain available in the mixer. Algorithms, parameter names and values come from Surge; the generic concept Sample label is never fabricated.",
+    "The compact oscillator rows prioritize real native controls: Wavetable exposes Morph, Formant, Unison Voices, Unison Detune and Skew Horizontal; FM2 exposes M1 Ratio/Amount, M2 Ratio/Amount and Feedback; Classic exposes Shape, Width 1, Width 2, Unison Voices, Unison Detune and Sync. Captions and values follow the current algorithm when its type changes. The concept’s per-oscillator Spread and dedicated sample-loop controls have no equivalent in these selected native families.",
     "The three compact table strips browse the actual installed wavetable catalog for a wavetable-capable oscillator. OCT and TUNE use the native octave and pitch parameters; independent semitone and fine parameters are not invented.",
     "The envelope strip selects ENV 1, ENV 2, LFO 1 envelope and LFO 2 envelope, rebinding the same A/D/S/R fields to their real sources. Surge has two dedicated envelope generators; the two extra sources are accurately named LFO envelopes.",
     "LFO 1 through LFO 4 tabs select the actual source preview and rebind shape, rate, fade-in attack, phase, polarity and trigger mode. The full editor retains tempo-sync and all additional LFO parameters.",

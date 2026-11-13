@@ -474,12 +474,22 @@
     {
       "id": "ivory.osc1.solo",
       "binding": "osc1.solo",
-      "x": 438,
+      "x": 437,
       "y": 154,
-      "w": 24,
+      "w": 22,
       "h": 23,
       "kind": "toggle",
       "label": "S"
+    },
+    {
+      "id": "ivory.osc1.mute-button",
+      "binding": "osc1.mute",
+      "x": 463,
+      "y": 154,
+      "w": 22,
+      "h": 23,
+      "kind": "toggle",
+      "label": "M"
     },
     {
       "id": "ivory.osc1.mute",
@@ -506,8 +516,8 @@
       "faceDiameter": 44
     },
     {
-      "id": "ivory.osc1.param1",
-      "binding": "osc1.param1",
+      "id": "ivory.osc1.param3",
+      "binding": "osc1.param3",
       "x": 324,
       "y": 195,
       "w": 52,
@@ -568,12 +578,22 @@
     {
       "id": "ivory.osc2.solo",
       "binding": "osc2.solo",
-      "x": 438,
+      "x": 437,
       "y": 331,
-      "w": 24,
+      "w": 22,
       "h": 23,
       "kind": "toggle",
       "label": "S"
+    },
+    {
+      "id": "ivory.osc2.mute-button",
+      "binding": "osc2.mute",
+      "x": 463,
+      "y": 331,
+      "w": 22,
+      "h": 23,
+      "kind": "toggle",
+      "label": "M"
     },
     {
       "id": "ivory.osc2.mute",
@@ -662,12 +682,22 @@
     {
       "id": "ivory.osc3.solo",
       "binding": "osc3.solo",
-      "x": 438,
+      "x": 437,
       "y": 508,
-      "w": 24,
+      "w": 22,
       "h": 23,
       "kind": "toggle",
       "label": "S"
+    },
+    {
+      "id": "ivory.osc3.mute-button",
+      "binding": "osc3.mute",
+      "x": 463,
+      "y": 508,
+      "w": 22,
+      "h": 23,
+      "kind": "toggle",
+      "label": "M"
     },
     {
       "id": "ivory.osc3.mute",
@@ -694,8 +724,8 @@
       "faceDiameter": 44
     },
     {
-      "id": "ivory.osc3.param1",
-      "binding": "osc3.param1",
+      "id": "ivory.osc3.param3",
+      "binding": "osc3.param3",
       "x": 324,
       "y": 544,
       "w": 52,
@@ -766,7 +796,7 @@
     {
       "id": "ivory.filter1.cutoff",
       "binding": "filter1.cutoff",
-      "x": 524.0,
+      "x": 527.0,
       "y": 323,
       "w": 62,
       "h": 75,
@@ -774,7 +804,7 @@
       "label": "FREQ",
       "accent": "yellow",
       "fontSize": 12,
-      "faceDiameter": 48,
+      "faceDiameter": 50,
       "valuePosition": "hidden"
     },
     {
@@ -788,7 +818,7 @@
       "label": "RES",
       "accent": "yellow",
       "fontSize": 12,
-      "faceDiameter": 44,
+      "faceDiameter": 42,
       "valuePosition": "hidden"
     },
     {
@@ -802,7 +832,7 @@
       "label": "SHAPER",
       "accent": "yellow",
       "fontSize": 12,
-      "faceDiameter": 44,
+      "faceDiameter": 42,
       "valuePosition": "hidden"
     },
     {
@@ -830,7 +860,7 @@
       "label": "FREQ",
       "accent": "yellow",
       "fontSize": 12,
-      "faceDiameter": 48,
+      "faceDiameter": 50,
       "valuePosition": "hidden"
     },
     {
@@ -844,7 +874,7 @@
       "label": "RES",
       "accent": "yellow",
       "fontSize": 12,
-      "faceDiameter": 44,
+      "faceDiameter": 42,
       "valuePosition": "hidden"
     },
     {
@@ -858,7 +888,7 @@
       "label": "ENV",
       "accent": "yellow",
       "fontSize": 12,
-      "faceDiameter": 44,
+      "faceDiameter": 42,
       "valuePosition": "hidden"
     },
     {
@@ -897,7 +927,7 @@
       "labelPosition": "top",
       "accent": "yellow",
       "fontSize": 13,
-      "faceDiameter": 68
+      "faceDiameter": 58
     },
     {
       "id": "ivory.mixer.osc1.solo",
@@ -931,7 +961,7 @@
       "labelPosition": "top",
       "accent": "yellow",
       "fontSize": 13,
-      "faceDiameter": 68
+      "faceDiameter": 58
     },
     {
       "id": "ivory.mixer.osc2.solo",
@@ -965,7 +995,7 @@
       "labelPosition": "top",
       "accent": "yellow",
       "fontSize": 13,
-      "faceDiameter": 68
+      "faceDiameter": 58
     },
     {
       "id": "ivory.mixer.osc3.solo",
@@ -999,7 +1029,7 @@
       "labelPosition": "top",
       "accent": "yellow",
       "fontSize": 13,
-      "faceDiameter": 68
+      "faceDiameter": 58
     },
     {
       "id": "ivory.mixer.noise.solo",
@@ -1192,7 +1222,7 @@
       "label": "A",
       "labelPosition": "top",
       "accent": "yellow",
-      "faceDiameter": 50,
+      "faceDiameter": 47,
       "fontSize": 12,
       "selectionGroup": "ivory.mod-source",
       "bindings": {
@@ -1217,7 +1247,7 @@
       "label": "D",
       "labelPosition": "top",
       "accent": "yellow",
-      "faceDiameter": 50,
+      "faceDiameter": 47,
       "fontSize": 12,
       "selectionGroup": "ivory.mod-source",
       "bindings": {
@@ -1242,7 +1272,7 @@
       "label": "S",
       "labelPosition": "top",
       "accent": "yellow",
-      "faceDiameter": 50,
+      "faceDiameter": 47,
       "fontSize": 12,
       "selectionGroup": "ivory.mod-source",
       "bindings": {
@@ -1267,7 +1297,7 @@
       "label": "R",
       "labelPosition": "top",
       "accent": "yellow",
-      "faceDiameter": 50,
+      "faceDiameter": 47,
       "fontSize": 12,
       "selectionGroup": "ivory.mod-source",
       "bindings": {
@@ -1470,7 +1500,7 @@
   ],
   "adaptations": [
     "Native cream materials, brass rotary rims, serif headings, vector botanical engravings and measured geometry reproduce the reference composition. Current-source native captures remain the visual verification gate; no pixel-identical claim follows from schema validation.",
-    "All oscillator waveforms, wavetable names, numeric readouts, macro state, effect names and modulation rows come from the actual processor. Reference-only fixed values and waveforms are not baked into the UI. The third oscillator knob edits native parameter 7 (Unison Voices for Wavetable/Classic, and the actual differently named parameter for other algorithms); its dynamic label remains authoritative.",
+    "All oscillator waveforms, wavetable names, numeric readouts, macro state, effect names and modulation rows come from the actual processor. Reference-only fixed values and waveforms are not baked into the UI. Oscillators 1 and 3 expose native zero-based parameters 0, 3 and 6: Morph, Formant and Unison Voices for Wavetable. Oscillator 2 retains parameters 0, 1 and 6: M1 Amount, M1 Ratio and Feedback for FM2. Every caption follows the actual selected algorithm; Formant is not a fabricated percentage Shape parameter. The header M button, left power glyph and mixer M button share each oscillator's actual mute state.",
     "The OSCILLATORS 1/2/3 strip focuses the corresponding visible native oscillator controls. Wavetable strips browse actual installed tables; algorithms without a wavetable report that state and disable catalog operations.",
     "The envelope strip provides the actual amp/filter envelopes, LFO 1/2 envelopes and LFO 1\u20134 waveform views. The two additional envelope positions are labelled LFO1 EG and LFO2 EG because Surge has two dedicated scene ADSRs. The four stage controls edit the selected native envelope; its model/shape and decay curve disable where inapplicable.",
     "The reference Sub block is represented by the real ring-modulation 2 \u00d7 3 stage, with its own power/mute control. The engine has no independent sub oscillator matching the illustration.",

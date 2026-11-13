@@ -571,10 +571,11 @@
       "binding": "scene.polymode",
       "x": 1199,
       "y": 31,
-      "w": 90,
+      "w": 42,
       "h": 28,
       "kind": "menu",
-      "label": "Voice mode"
+      "label": "Voice mode",
+      "fontSize": 11.5
     },
     {
       "id": "waveform-shape",
@@ -694,20 +695,20 @@
     {
       "id": "scene-mode",
       "binding": "scene.mode",
-      "x": 1412,
+      "x": 1419,
       "y": 130,
-      "w": 158,
-      "h": 24,
+      "w": 145,
+      "h": 28,
       "kind": "menu",
       "label": "Scene mode"
     },
     {
       "id": "scene-volume",
       "binding": "scene.volume",
-      "x": 1412,
+      "x": 1416,
       "y": 169,
-      "w": 158,
-      "h": 34,
+      "w": 155,
+      "h": 38,
       "kind": "knob",
       "label": "Volume",
       "ink": "#FFF6E8",
@@ -718,10 +719,10 @@
     {
       "id": "scene-pitch",
       "binding": "scene.pitch",
-      "x": 1412,
+      "x": 1416,
       "y": 207,
-      "w": 158,
-      "h": 34,
+      "w": 155,
+      "h": 38,
       "kind": "knob",
       "label": "Pitch",
       "ink": "#FFF6E8",
@@ -732,10 +733,10 @@
     {
       "id": "scene-octave",
       "binding": "scene.octave",
-      "x": 1412,
-      "y": 245,
-      "w": 158,
-      "h": 34,
+      "x": 1416,
+      "y": 246,
+      "w": 155,
+      "h": 38,
       "kind": "knob",
       "label": "Octave",
       "ink": "#FFF6E8",
@@ -746,10 +747,10 @@
     {
       "id": "scene-pan",
       "binding": "scene.pan",
-      "x": 1412,
-      "y": 283,
-      "w": 158,
-      "h": 34,
+      "x": 1416,
+      "y": 284,
+      "w": 155,
+      "h": 38,
       "kind": "knob",
       "label": "Pan",
       "ink": "#FFF6E8",
@@ -771,7 +772,7 @@
       "id": "osc1-parameter0",
       "binding": "osc1.param0",
       "x": 264.0,
-      "y": 484,
+      "y": 483,
       "w": 50,
       "h": 88,
       "kind": "knob",
@@ -779,13 +780,13 @@
       "fontSize": 11.5,
       "accent": "#171A17",
       "labelPosition": "top",
-      "faceDiameter": 42
+      "faceDiameter": 38
     },
     {
       "id": "osc1-parameter1",
       "binding": "osc1.param1",
       "x": 321.0,
-      "y": 484,
+      "y": 483,
       "w": 50,
       "h": 88,
       "kind": "knob",
@@ -793,13 +794,13 @@
       "fontSize": 11.5,
       "accent": "#171A17",
       "labelPosition": "top",
-      "faceDiameter": 42
+      "faceDiameter": 38
     },
     {
       "id": "osc1-parameter2",
       "binding": "osc1.param2",
       "x": 378.0,
-      "y": 484,
+      "y": 483,
       "w": 50,
       "h": 88,
       "kind": "knob",
@@ -807,13 +808,13 @@
       "fontSize": 11.5,
       "accent": "#171A17",
       "labelPosition": "top",
-      "faceDiameter": 42
+      "faceDiameter": 38
     },
     {
       "id": "osc1-parameter3",
       "binding": "osc1.param3",
       "x": 435.0,
-      "y": 484,
+      "y": 483,
       "w": 50,
       "h": 88,
       "kind": "knob",
@@ -821,7 +822,7 @@
       "fontSize": 11.5,
       "accent": "#171A17",
       "labelPosition": "top",
-      "faceDiameter": 42
+      "faceDiameter": 38
     },
     {
       "id": "osc2-type",
@@ -837,7 +838,7 @@
       "id": "osc2-parameter0",
       "binding": "osc2.param0",
       "x": 508.0,
-      "y": 484,
+      "y": 483,
       "w": 50,
       "h": 88,
       "kind": "knob",
@@ -845,13 +846,13 @@
       "fontSize": 11.5,
       "accent": "#171A17",
       "labelPosition": "top",
-      "faceDiameter": 42
+      "faceDiameter": 38
     },
     {
       "id": "osc2-parameter1",
       "binding": "osc2.param1",
-      "x": 565.0,
-      "y": 484,
+      "x": 564.0,
+      "y": 483,
       "w": 50,
       "h": 88,
       "kind": "knob",
@@ -859,13 +860,13 @@
       "fontSize": 11.5,
       "accent": "#171A17",
       "labelPosition": "top",
-      "faceDiameter": 42
+      "faceDiameter": 38
     },
     {
       "id": "osc2-parameter2",
       "binding": "osc2.param2",
-      "x": 622.0,
-      "y": 484,
+      "x": 621.0,
+      "y": 483,
       "w": 50,
       "h": 88,
       "kind": "knob",
@@ -873,13 +874,13 @@
       "fontSize": 11.5,
       "accent": "#171A17",
       "labelPosition": "top",
-      "faceDiameter": 42
+      "faceDiameter": 38
     },
     {
       "id": "osc2-parameter3",
       "binding": "osc2.param3",
-      "x": 679.0,
-      "y": 484,
+      "x": 678.0,
+      "y": 483,
       "w": 50,
       "h": 88,
       "kind": "knob",
@@ -887,7 +888,7 @@
       "fontSize": 11.5,
       "accent": "#171A17",
       "labelPosition": "top",
-      "faceDiameter": 42
+      "faceDiameter": 38
     },
     {
       "id": "osc3-type",
@@ -902,8 +903,8 @@
     {
       "id": "osc3-parameter0",
       "binding": "osc3.param0",
-      "x": 752.0,
-      "y": 484,
+      "x": 753.0,
+      "y": 483,
       "w": 50,
       "h": 88,
       "kind": "knob",
@@ -911,13 +912,13 @@
       "fontSize": 11.5,
       "accent": "#171A17",
       "labelPosition": "top",
-      "faceDiameter": 42
+      "faceDiameter": 38
     },
     {
       "id": "osc3-parameter1",
       "binding": "osc3.param1",
-      "x": 809.0,
-      "y": 484,
+      "x": 810.0,
+      "y": 483,
       "w": 50,
       "h": 88,
       "kind": "knob",
@@ -925,13 +926,13 @@
       "fontSize": 11.5,
       "accent": "#171A17",
       "labelPosition": "top",
-      "faceDiameter": 42
+      "faceDiameter": 38
     },
     {
       "id": "osc3-parameter2",
       "binding": "osc3.param2",
-      "x": 866.0,
-      "y": 484,
+      "x": 867.0,
+      "y": 483,
       "w": 50,
       "h": 88,
       "kind": "knob",
@@ -939,13 +940,13 @@
       "fontSize": 11.5,
       "accent": "#171A17",
       "labelPosition": "top",
-      "faceDiameter": 42
+      "faceDiameter": 38
     },
     {
       "id": "osc3-parameter3",
       "binding": "osc3.param3",
-      "x": 923.0,
-      "y": 484,
+      "x": 924.0,
+      "y": 483,
       "w": 50,
       "h": 88,
       "kind": "knob",
@@ -953,7 +954,7 @@
       "fontSize": 11.5,
       "accent": "#171A17",
       "labelPosition": "top",
-      "faceDiameter": 42
+      "faceDiameter": 38
     },
     {
       "id": "filter1-type",
@@ -968,8 +969,8 @@
     {
       "id": "filter1-cutoff",
       "binding": "filter1.cutoff",
-      "x": 999.0,
-      "y": 506,
+      "x": 998.0,
+      "y": 505,
       "w": 50,
       "h": 76,
       "kind": "knob",
@@ -977,13 +978,13 @@
       "ink": "#FFF6E8",
       "fontSize": 11.5,
       "accent": "yellow",
-      "faceDiameter": 42
+      "faceDiameter": 36
     },
     {
       "id": "filter1-resonance",
       "binding": "filter1.resonance",
-      "x": 1054.0,
-      "y": 506,
+      "x": 1053.0,
+      "y": 505,
       "w": 50,
       "h": 76,
       "kind": "knob",
@@ -991,13 +992,13 @@
       "ink": "#FFF6E8",
       "fontSize": 11.5,
       "accent": "yellow",
-      "faceDiameter": 42
+      "faceDiameter": 36
     },
     {
       "id": "filter1-envmod",
       "binding": "filter1.envmod",
-      "x": 1109.0,
-      "y": 506,
+      "x": 1107.0,
+      "y": 505,
       "w": 50,
       "h": 76,
       "kind": "knob",
@@ -1005,7 +1006,7 @@
       "ink": "#FFF6E8",
       "fontSize": 11.5,
       "accent": "yellow",
-      "faceDiameter": 42
+      "faceDiameter": 36
     },
     {
       "id": "filter1-keytrack",
@@ -1034,8 +1035,8 @@
     {
       "id": "filter2-cutoff",
       "binding": "filter2.cutoff",
-      "x": 1235.0,
-      "y": 506,
+      "x": 1232.0,
+      "y": 505,
       "w": 50,
       "h": 76,
       "kind": "knob",
@@ -1043,13 +1044,13 @@
       "ink": "#FFF6E8",
       "fontSize": 11.5,
       "accent": "yellow",
-      "faceDiameter": 42
+      "faceDiameter": 36
     },
     {
       "id": "filter2-resonance",
       "binding": "filter2.resonance",
-      "x": 1290.0,
-      "y": 506,
+      "x": 1287.0,
+      "y": 505,
       "w": 50,
       "h": 76,
       "kind": "knob",
@@ -1057,13 +1058,13 @@
       "ink": "#FFF6E8",
       "fontSize": 11.5,
       "accent": "yellow",
-      "faceDiameter": 42
+      "faceDiameter": 36
     },
     {
       "id": "filter2-envmod",
       "binding": "filter2.envmod",
-      "x": 1345.0,
-      "y": 506,
+      "x": 1342.0,
+      "y": 505,
       "w": 50,
       "h": 76,
       "kind": "knob",
@@ -1071,7 +1072,7 @@
       "ink": "#FFF6E8",
       "fontSize": 11.5,
       "accent": "yellow",
-      "faceDiameter": 42
+      "faceDiameter": 36
     },
     {
       "id": "filter2-keytrack",
@@ -1112,7 +1113,7 @@
     {
       "id": "envelope1-attack",
       "binding": "env1.attack",
-      "x": 344.0,
+      "x": 345.0,
       "y": 644,
       "w": 42,
       "h": 68,
@@ -1121,7 +1122,7 @@
       "accent": "#20211F",
       "fontSize": 11,
       "labelPosition": "top",
-      "faceDiameter": 34,
+      "faceDiameter": 32,
       "selectionGroup": "bauhaus-envelope",
       "bindings": {
         "amp": "env1.attack",
@@ -1142,7 +1143,7 @@
       "accent": "#20211F",
       "fontSize": 11,
       "labelPosition": "top",
-      "faceDiameter": 34,
+      "faceDiameter": 32,
       "selectionGroup": "bauhaus-envelope",
       "bindings": {
         "amp": "env1.decay",
@@ -1163,7 +1164,7 @@
       "accent": "#20211F",
       "fontSize": 11,
       "labelPosition": "top",
-      "faceDiameter": 34,
+      "faceDiameter": 32,
       "selectionGroup": "bauhaus-envelope",
       "bindings": {
         "amp": "env1.sustain",
@@ -1184,7 +1185,7 @@
       "accent": "#20211F",
       "fontSize": 11,
       "labelPosition": "top",
-      "faceDiameter": 34,
+      "faceDiameter": 32,
       "selectionGroup": "bauhaus-envelope",
       "bindings": {
         "amp": "env1.release",
@@ -1217,13 +1218,13 @@
       "fontSize": 11.5,
       "accent": "yellow",
       "labelPosition": "top",
-      "faceDiameter": 36,
+      "faceDiameter": 34,
       "valuePosition": "top"
     },
     {
       "id": "lfo1-phase",
       "binding": "lfo1.phase",
-      "x": 807.0,
+      "x": 808.0,
       "y": 637,
       "w": 44,
       "h": 84,
@@ -1233,7 +1234,7 @@
       "fontSize": 11.5,
       "accent": "yellow",
       "labelPosition": "top",
-      "faceDiameter": 36,
+      "faceDiameter": 34,
       "valuePosition": "top"
     },
     {
@@ -1249,7 +1250,7 @@
       "fontSize": 11.5,
       "accent": "yellow",
       "labelPosition": "top",
-      "faceDiameter": 36,
+      "faceDiameter": 34,
       "valuePosition": "top"
     },
     {
@@ -1275,7 +1276,7 @@
       "fontSize": 11.5,
       "accent": "#20211F",
       "labelPosition": "top",
-      "faceDiameter": 36,
+      "faceDiameter": 34,
       "valuePosition": "top"
     },
     {
@@ -1290,13 +1291,13 @@
       "fontSize": 11.5,
       "accent": "#20211F",
       "labelPosition": "top",
-      "faceDiameter": 36,
+      "faceDiameter": 34,
       "valuePosition": "top"
     },
     {
       "id": "lfo2-delay",
       "binding": "lfo2.delay",
-      "x": 1192.0,
+      "x": 1191.0,
       "y": 637,
       "w": 44,
       "h": 84,
@@ -1305,7 +1306,7 @@
       "fontSize": 11.5,
       "accent": "#20211F",
       "labelPosition": "top",
-      "faceDiameter": 36,
+      "faceDiameter": 34,
       "valuePosition": "top"
     },
     {
@@ -1322,7 +1323,7 @@
     {
       "id": "lfo3-rate",
       "binding": "lfo3.rate",
-      "x": 1422.0,
+      "x": 1426.0,
       "y": 637,
       "w": 44,
       "h": 84,
@@ -1332,13 +1333,13 @@
       "fontSize": 11.5,
       "accent": "yellow",
       "labelPosition": "top",
-      "faceDiameter": 36,
+      "faceDiameter": 34,
       "valuePosition": "top"
     },
     {
       "id": "lfo3-phase",
       "binding": "lfo3.phase",
-      "x": 1474.0,
+      "x": 1478.0,
       "y": 637,
       "w": 44,
       "h": 84,
@@ -1348,13 +1349,13 @@
       "fontSize": 11.5,
       "accent": "yellow",
       "labelPosition": "top",
-      "faceDiameter": 36,
+      "faceDiameter": 34,
       "valuePosition": "top"
     },
     {
       "id": "lfo3-delay",
       "binding": "lfo3.delay",
-      "x": 1526.0,
+      "x": 1529.0,
       "y": 637,
       "w": 44,
       "h": 84,
@@ -1364,7 +1365,7 @@
       "fontSize": 11.5,
       "accent": "yellow",
       "labelPosition": "top",
-      "faceDiameter": 36,
+      "faceDiameter": 34,
       "valuePosition": "top"
     },
     {
@@ -1667,11 +1668,11 @@
     "Each oscillator has a native algorithm menu, power/mute control and real previous/catalog/next wavetable selector. Non-wavetable algorithms disable table navigation. Four dynamic parameter labels follow the current oscillator algorithm.",
     "The envelope tabs select the two native scene envelopes or the real LFO 1/LFO 2 envelope stages; the same ADSR controls rebind safely. The last two choices are labelled LFO envelopes rather than fictional independent ENV 3/4 processors.",
     "Eight native FX cards select the detail editor. All five detail controls and the algorithm menu rebind to the selected slot. The initial Distortion view exposes real drive, pre-EQ frequency, output gain and high-cut parameters; current labels remain authoritative when algorithms change.",
-    "The effect inset is an algorithm-category glyph, not a fabricated transfer function or signal measurement. The full native editor retains all sixteen FX slots and specialized editors.",
+    "Supported Distortion models display a cached native waveshaper transfer at the current drive. The preview is shaper-only, excluding EQ, feedback and output gain; other algorithms retain an honestly labelled category glyph. The full native editor retains all sixteen FX slots and specialized editors.",
     "The filter cards use real frequency-response previews, cutoff, resonance, envelope amount and key tracking. Envelope amount is not renamed Drive because the native shared waveshaper is a different control.",
     "Filter routing and mix use native parameters. The performance scene menu exposes native scene modes; the output slider adjusts selected scene level rather than inventing an A/B parameter morph.",
     "The browser uses the installed catalog. Reference-only category counts, preset descriptions and tags are not baked into the UI.",
     "The output plot and meters consume the real main-output tap. An inactive stream produces silence rather than invented spectrum activity.",
-    "Measured knob faces, envelope/source navigation, native effect cards, smaller header menus and white text on colored controls refine the internal reference proportions. Current-source native capture is required to assess remaining rendering differences."
+    "Measured rotary faces and centres, scene-row baselines and the compact voice-mode selector refine the native proportions against the supplied reference. Oscillator and effect labels remain dynamically derived from the current engine algorithm. Current-source native capture is required to assess remaining rendering differences."
   ]
 }

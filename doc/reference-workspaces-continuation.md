@@ -154,3 +154,33 @@ All twelve assignments above completed source checks. The combined linked native
 run is the next gate; source syntax checks and manifest checks are not reported
 as runtime passes. The next six agents refine individual skins against the
 reference and the newly captured native evidence.
+
+
+### Per-skin refinement wave 3
+
+All six assignments completed measured manifest work, strict validation and
+whitespace checks. Assignments 13–15 used the `9620144` image checkpoint while
+accounting for shared changes; 16–18 also inspected the new `e440b19` captures.
+
+| Assignment | Result |
+| --- | --- |
+| 13 — Obsidian | Real WT/FM/Classic control priorities, menu geometry and smaller oscillator dials |
+| 14 — Ivory | Actual oscillator mute buttons, Formant bindings, measured mixer/filter/ADSR diameters |
+| 15 — Spectral | Measured filter floors, wider live parameter captions and inner LFO framing |
+| 16 — Bauhaus | Oscillator/filter/ENV/LFO centres and diameters, scene rows and compact voice selector |
+| 17 — Space-Age | Actual Unison/Detune slots, LFO alignment and master-output position |
+| 18 — Tokyo | Measured graphite panel colour, ADSR alignment and genuine Classic/FM2 binding order |
+
+The coordinator also added paint-only native-label abbreviations, native-value
+Ivory mixer arcs, narrower Obsidian faders and top-aligned numerical readouts,
+Bauhaus FX arcs and a neutral-cream perspective inset, adaptive narrow-menu text,
+and darker Live XY glass reflections. Full accessible labels, parser behavior,
+parameter values and gesture paths remain intact.
+
+Workflow `43378622251` built `e440b196a085634385a58d3a313987029c56fdca` and
+passed all ten native captures with 24,095,238 assertions. All ten complete
+baseline/edited pairs and incremental provenance were retained. Behavior passed
+30 of 31 cases (9,949,817 passing assertions); the new Distortion regression used
+one-based FX parameter suffixes despite the documented zero-based adapter.
+Its model and drive bindings are corrected without weakening any assertion.
+The next combined linked run verifies that correction and the per-skin pass.

@@ -52,6 +52,20 @@ juce::String compactPaintValue(juce::String value)
         .replace(" (Left)", " L")
         .replace(" (Right)", " R");
 }
+juce::String compactPaintLabel(const juce::String &label)
+{
+    // Standard face abbreviations preserve the native meaning while avoiding
+    // horizontally crushed lettering. Tooltips and accessibility keep the full
+    // engine label, and user-authored macro names never pass through this map.
+    if (label == "Unison Voices") return "Unison";
+    if (label == "Unison Detune") return "Detune";
+    if (label == "Skew Vertical") return "V Skew";
+    if (label == "Skew Horizontal") return "H Skew";
+    if (label == "M1 Amount") return "M1 Amt";
+    if (label == "M2 Amount") return "M2 Amt";
+    if (label == "M1/2 Offset") return "FM Offset";
+    return label;
+}
 Rect bounds(const juce::var &v)
 {
     return {number(v, "x"), number(v, "y"), number(v, "w"), number(v, "h")};
@@ -542,11 +556,11 @@ void knob(juce::Graphics &g, const Theme &t, Rect r, float value, juce::Colour a
                        c.x + std::sin(angle) * outer, c.y - std::cos(angle) * outer, .8f);
         }
     }
-    else if ((!ivory && !bauhaus) || (bauhaus && coloredRim))
+    else if ((!ivory && !bauhaus) || ((ivory || bauhaus) && coloredRim))
     {
         g.setColour(bauhaus ? juce::Colour(0xff181b17) : t.border.withAlpha(clear ? .65f : .32f));
         g.strokePath(track, juce::PathStrokeType(bauhaus ? 3.6f : clear ? 3.f : 1.5f));
-        g.setColour(accent);
+        g.setColour(ivory ? t.accent : accent);
         g.strokePath(arc, juce::PathStrokeType(bauhaus ? 4.8f : clear ? 4.2f : 2.2f));
         if (glass)
         {
@@ -941,6 +955,8 @@ class BoundSlider : public juce::Slider
         auto accent =
             spec.hasProperty("accent") ? theme.color(string(spec, "accent")) : theme.accent;
         auto label = string(spec, "label", bridge.label(binding));
+        if (!spec.hasProperty("label") && !binding.startsWith("macro"))
+            label = compactPaintLabel(label);
         // Host parameter names include a redundant M1:/M2: identity prefix.
         // Keep that full name in accessibility/tooltips; the face caption uses
         // the actual assigned macro name and a separate index where designed.
@@ -963,6 +979,19 @@ class BoundSlider : public juce::Slider
         float fs = number(spec, "fontSize", theme.style == "clear" ? 15 : 11.5f);
         if (kind == "value")
         {
+            if (theme.style == "precision" && binding.startsWith("osc"))
+            {
+                text(g, theme, label, r.withHeight(13), fs - 1.f, theme.muted,
+                     false, juce::Justification::centred);
+                text(g, theme, value, r.withTrimmedTop(13), fs, ink,
+                     false, juce::Justification::centred);
+                if (isMouseOverOrDragging() || hasKeyboardFocus(true))
+                {
+                    g.setColour(accent.withAlpha(hasKeyboardFocus(true) ? 1.f : .35f));
+                    g.drawRoundedRectangle(r.reduced(1), 3, 1);
+                }
+                return;
+            }
             const float labelWidth =
                 juce::jlimit(0.f, r.getWidth(),
                              number(spec, "labelWidth",
@@ -997,9 +1026,13 @@ class BoundSlider : public juce::Slider
             const bool valueAtRight = valuePosition == "right";
             const bool valueAtTop = valuePosition == "top";
             const auto lineHeight = std::min(19.f, r.getHeight() * .23f);
-            const bool coloredRim = theme.style == "bauhaus" &&
-                                    (binding.startsWith("macro") ||
-                                     binding == "master.volume" || binding == "scene.volume");
+            const bool coloredRim =
+                (theme.style == "bauhaus" && (binding.startsWith("macro") ||
+                                              binding == "master.volume" ||
+                                              (binding.startsWith("fx") &&
+                                               string(spec, "accent") == "red"))) ||
+                (theme.style == "ivory" && (binding.endsWith(".level") ||
+                                            binding == "master.volume"));
             auto drawFace = [&](Rect face) {
                 const auto requested = number(spec, "faceDiameter", 0.f);
                 const auto available = std::min(face.getWidth(), face.getHeight());
@@ -1071,6 +1104,8 @@ class BoundSlider : public juce::Slider
                     labelPosition == "left" ? r.removeFromRight(side) : r.removeFromLeft(side);
                 drawFace(face);
                 auto labels = r.reduced(4, std::max(0.f, (r.getHeight() - 32) * .5f));
+                if (theme.style == "precision" && binding == "master.volume")
+                    labels = labels.withTrimmedRight(std::min(29.f, labels.getWidth() * .36f));
                 if (theme.style == "bauhaus" && labelPosition == "left")
                 {
                     // Bauhaus scene rows put the label, current value and real
@@ -1163,6 +1198,8 @@ class BoundSlider : public juce::Slider
                           std::min(5.f, r.getHeight() * .2f));
             if (track.isEmpty())
                 return;
+            if (kind == "fader" && theme.style == "precision")
+                track = track.withSizeKeepingCentre(3.f, track.getHeight());
             if (kind == "horizontal")
                 track =
                     track.withSizeKeepingCentre(track.getWidth(), std::min(5.f, track.getHeight()));
@@ -1486,7 +1523,8 @@ class BoundMenu : public juce::ComboBox
             {
                 label->setFont(
                     theme.type(number(spec, "fontSize", theme.style == "clear" ? 13.f : 11.f)));
-                label->setBounds(5, 0, std::max(1, getWidth() - 25), getHeight());
+                const auto arrowWidth = std::min(20, getWidth() / 5);
+                label->setBounds(5, 0, std::max(1, getWidth() - arrowWidth - 5), getHeight());
                 label->setVisible(segments.empty());
             }
         if (!segments.empty())
@@ -2339,22 +2377,51 @@ class MacroXY : public juce::Component
             juce::Path clip;
             clip.addRoundedRectangle(r.reduced(2), 16);
             g.reduceClipRegion(clip);
-            g.setGradientFill(juce::ColourGradient(theme.accent.withAlpha(.26f), r.getTopLeft(),
-                                                   theme.secondary.withAlpha(.20f),
+            g.setGradientFill(juce::ColourGradient(theme.accent.withAlpha(.16f), r.getTopLeft(),
+                                                   theme.secondary.withAlpha(.055f),
                                                    r.getBottomRight(), false));
             g.fillRect(r);
             // The glass is decorative; cursor and crosshairs always use live
             // macro values. No illustrated signal is presented as engine data.
-            g.setGradientFill(juce::ColourGradient(juce::Colours::white.withAlpha(.10f),
+            g.setGradientFill(juce::ColourGradient(juce::Colours::white.withAlpha(.045f),
                                                    r.getTopLeft(), juce::Colours::transparentWhite,
                                                    r.getBottomLeft(), false));
             g.fillRect(r.withHeight(r.getHeight() * .48f));
+            if (theme.style == "live")
+            {
+                // Layered glass reflections, not waveform data. Their broad
+                // translucent surfaces leave the actual XY cursor and axes clear.
+                for (int layer = 0; layer < 5; ++layer)
+                {
+                    const float offset = layer * r.getHeight() * .035f;
+                    juce::Path reflection;
+                    reflection.startNewSubPath(r.getX(), r.getY() + r.getHeight() * .13f + offset);
+                    reflection.cubicTo(r.getX() + r.getWidth() * .58f,
+                                       r.getY() + r.getHeight() * .12f + offset,
+                                       r.getX() + r.getWidth() * .24f,
+                                       r.getY() + r.getHeight() * .63f - offset,
+                                       r.getRight(), r.getY() + r.getHeight() * .42f + offset);
+                    reflection.lineTo(r.getRight(), r.getY() + r.getHeight() * .66f + offset);
+                    reflection.cubicTo(r.getX() + r.getWidth() * .63f,
+                                       r.getY() + r.getHeight() * .87f - offset,
+                                       r.getX() + r.getWidth() * .31f,
+                                       r.getY() + r.getHeight() * .60f + offset,
+                                       r.getX(), r.getY() + r.getHeight() * .90f - offset);
+                    reflection.closeSubPath();
+                    g.setGradientFill(juce::ColourGradient(theme.accent.withAlpha(.025f),
+                                                           r.getTopLeft(),
+                                                           theme.secondary.withAlpha(.035f),
+                                                           r.getBottomRight(), false));
+                    g.fillPath(reflection);
+                }
+            }
             Visuals::grid(g, r.reduced(5), theme.accent.withAlpha(.28f));
         }
         const float x = r.getX() + bridge.value("macro1") * r.getWidth();
         const float y = r.getBottom() - bridge.value("macro2") * r.getHeight();
-        g.setGradientFill(juce::ColourGradient(theme.secondary.withAlpha(.30f), {x, y},
-                                               theme.accent.withAlpha(.015f), r.getTopLeft(),
+        g.setGradientFill(juce::ColourGradient(theme.secondary.withAlpha(.22f), {x, y},
+                                               theme.secondary.withAlpha(0.f),
+                                               {x + r.getWidth() * .38f, y},
                                                true));
         g.fillRoundedRectangle(r, 18);
         g.setColour(theme.accent.withAlpha(.80f));
@@ -5224,9 +5291,11 @@ struct Workspace::Impl
             {
                 const bool layers =
                     variant == "terrain" || theme.style == "aurora" || theme.style == "live";
+                const bool paperTerrain = theme.style == "bauhaus" && variant == "terrain";
                 if (layers && visuals.wavetable[index - 1].available())
-                    Visuals::wavetable(g, pr.reduced(5), visuals.wavetable[index - 1], waveformInk,
-                                       theme.accent,
+                    Visuals::wavetable(g, pr.reduced(5), visuals.wavetable[index - 1],
+                                       paperTerrain ? juce::Colour(0xffe4dac4) : waveformInk,
+                                       paperTerrain ? juce::Colour(0xffc7bea9) : theme.accent,
                                        theme.style == "aurora" || theme.style == "live"
                                            ? Visuals::WavetableView::ribbons
                                            : Visuals::WavetableView::perspective);
@@ -5551,7 +5620,8 @@ struct Workspace::Impl
                              juce::Justification::centred);
 
                     const auto depth = juce::jlimit(-1.f, 1.f, route.normalizedDepth);
-                    const auto depthLabel = (depth >= 0 ? "+" : "") + juce::String(depth, 2);
+                    const auto decimals = std::abs(depth) > 0.f && std::abs(depth) < .01f ? 3 : 2;
+                    const auto depthLabel = (depth >= 0 ? "+" : "") + juce::String(depth, decimals);
                     text(g, theme, depthLabel, cell.value.reduced(1, 0),
                          clear ? 13.f : tokyo ? 12.f : layout.rowFont - .2f, color,
                          clear || bauhaus || ivory,
@@ -5736,7 +5806,7 @@ struct Workspace::Impl
             {
                 effectGlyph(g, pr.reduced(9, 10).withTrimmedBottom(10), ink, algorithm);
                 if (pr.getHeight() >= 38)
-                    text(g, theme, "Family icon",
+                    text(g, theme, algorithm,
                          pr.reduced(3, 0).withTop(pr.getBottom() - 17), 8.5f,
                          theme.display.contrasting(.7f), false, juce::Justification::centred);
             }

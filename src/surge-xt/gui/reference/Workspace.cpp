@@ -275,8 +275,8 @@ void bezel(juce::Graphics &g, const Theme &t, Rect r, juce::Colour fill, float r
     }
     else if (fill == t.panel && t.style == "aurora")
     {
-        top = juce::Colour(0xff48325f);
-        bottom = juce::Colour(0xff1f1b34);
+        top = juce::Colour(0xff2b1e43);
+        bottom = juce::Colour(0xff17142b);
     }
     else if (olive)
     {
@@ -342,7 +342,7 @@ void bezel(juce::Graphics &g, const Theme &t, Rect r, juce::Colour fill, float r
         clip.addRoundedRectangle(r.reduced(1), std::max(0.f, radius - 1));
         g.reduceClipRegion(clip);
         g.setGradientFill(juce::ColourGradient(
-            t.accent.withAlpha(t.style == "aurora" ? .10f : .035f),
+            t.accent.withAlpha(t.style == "aurora" ? .04f : .035f),
             r.getX() + r.getWidth() * .14f, r.getY(), t.accent.withAlpha(0.f),
             r.getX() + r.getWidth() * .77f, r.getBottom(), true));
         g.fillRect(r);
@@ -354,7 +354,7 @@ void bezel(juce::Graphics &g, const Theme &t, Rect r, juce::Colour fill, float r
             reflection.lineTo(r.getX() + r.getWidth() * .14f, r.getBottom());
             reflection.lineTo(r.getX() - r.getWidth() * .12f, r.getBottom());
             reflection.closeSubPath();
-            g.setGradientFill(juce::ColourGradient(juce::Colours::white.withAlpha(.035f),
+            g.setGradientFill(juce::ColourGradient(juce::Colours::white.withAlpha(.02f),
                                                    r.getTopLeft(),
                                                    juce::Colours::white.withAlpha(0.f),
                                                    r.getBottomRight(), false));
@@ -680,16 +680,47 @@ void knob(juce::Graphics &g, const Theme &t, Rect r, float value, juce::Colour a
             g.drawLine(c.x + std::sin(angle) * inner, c.y - std::cos(angle) * inner,
                        c.x + std::sin(angle) * outer, c.y - std::cos(angle) * outer, .5f);
         }
-        const bool darkCap = faceRadius > 20.f || t.knob.getPerceivedBrightness() < .35f;
-        g.setGradientFill(juce::ColourGradient(darkCap ? juce::Colour(0xff363729)
-                                                      : juce::Colour(0xffd1bc86),
-                                               cap.getTopLeft(),
-                                               darkCap ? juce::Colour(0xff11130e)
-                                                       : juce::Colour(0xff6e5e3d),
-                                               cap.getBottomRight(), false));
-        g.fillEllipse(cap);
-        g.setColour(juce::Colour(0xff282618).withAlpha(.85f));
-        g.drawEllipse(cap, .9f);
+        const bool darkCap = t.knob.getPerceivedBrightness() < .35f;
+        if (darkCap)
+        {
+            auto bevel = juce::ColourGradient(juce::Colour(0xff51503b), cap.getTopLeft(),
+                                               juce::Colour(0xff080b08), cap.getBottomRight(), false);
+            bevel.addColour(.40, juce::Colour(0xff262a20));
+            g.setGradientFill(bevel);
+            g.fillEllipse(cap);
+            const auto inset = cap.reduced(std::max(1.5f, faceRadius * .10f));
+            g.setGradientFill(juce::ColourGradient(juce::Colour(0xff24281e), inset.getTopLeft(),
+                                                   juce::Colour(0xff0b0e0a),
+                                                   inset.getBottomRight(), false));
+            g.fillEllipse(inset);
+            g.setColour(juce::Colour(0xff070a07).withAlpha(.95f));
+            g.drawEllipse(inset, 1.f);
+        }
+        else
+        {
+            // Opposed brushed-metal reflections are purely the dial material.
+            // Their fixed light direction never stands in for a parameter value.
+            const auto radius = cap.getWidth() * .5f;
+            constexpr int sectors = 48;
+            for (int sector = 0; sector < sectors; ++sector)
+            {
+                const auto angle = juce::MathConstants<float>::twoPi * sector / sectors;
+                const auto next = angle + juce::MathConstants<float>::twoPi / sectors + .004f;
+                const auto light = std::pow(.5f + .5f * std::cos(2.f * (angle + .65f)), 1.4f);
+                g.setColour(juce::Colour(0xff796848).interpolatedWith(
+                    juce::Colour(0xffffedbe), light));
+                juce::Path reflection;
+                reflection.startNewSubPath(c);
+                reflection.lineTo(c.x + std::sin(angle) * radius,
+                                  c.y - std::cos(angle) * radius);
+                reflection.lineTo(c.x + std::sin(next) * radius,
+                                  c.y - std::cos(next) * radius);
+                reflection.closeSubPath();
+                g.fillPath(reflection);
+            }
+        }
+        g.setColour(juce::Colour(0xff282618).withAlpha(.95f));
+        g.drawEllipse(cap, 1.2f);
     }
     if (!clear && !bauhaus)
     {
@@ -705,15 +736,17 @@ void knob(juce::Graphics &g, const Theme &t, Rect r, float value, juce::Colour a
         g.drawEllipse(face.reduced(1.1f), .8f);
     }
     g.setColour(bauhaus          ? juce::Colour(0xff151613)
-                : ivory || space ? juce::Colour(0xff958058)
+                : space          ? juce::Colour(0xff292719)
+                : ivory          ? juce::Colour(0xff958058)
                                  : t.border.withAlpha(clear ? .18f : .48f));
     g.drawEllipse(face, bauhaus ? 3.1f : ivory || space ? 1.8f : .9f);
     if (!clear && !bauhaus)
     {
         juce::Path shine;
         shine.addCentredArc(c.x, c.y, faceRadius - 1.5f, faceRadius - 1.5f, 0, -1.45f, .65f, true);
-        g.setColour(juce::Colours::white.withAlpha(ivory || space ? .70f : .35f));
-        g.strokePath(shine, juce::PathStrokeType(.8f));
+        g.setColour(juce::Colours::white.withAlpha(
+            ivory || space ? .70f : t.style == "tokyo" ? .65f : .35f));
+        g.strokePath(shine, juce::PathStrokeType(t.style == "tokyo" ? 1.4f : .8f));
     }
     const float inner = rad * (clear ? .54f : .48f), outer = rad * .84f;
     g.setColour(ivory                ? juce::Colour(0xff264c33)
@@ -1048,7 +1081,8 @@ class BoundSlider : public juce::Slider
                 value = value.substring(prefix.length()).trimStart();
         }
         auto ink = spec.hasProperty("ink") ? theme.color(string(spec, "ink")) : theme.text;
-        auto valueInk = spec.hasProperty("ink") ? ink.withAlpha(.85f) : theme.muted;
+        auto valueInk = theme.style == "tokyo" ? theme.text
+                            : spec.hasProperty("ink") ? ink.withAlpha(.85f) : theme.muted;
         float fs = number(spec, "fontSize", theme.style == "clear" ? 15 : 11.5f);
         if (kind == "value")
         {
@@ -1090,7 +1124,8 @@ class BoundSlider : public juce::Slider
         }
         if (kind == "knob")
         {
-            const bool emphasizeLabel = theme.style == "ivory" && binding.startsWith("macro");
+            const bool emphasizeLabel = (theme.style == "ivory" || theme.style == "space") &&
+                                        binding.startsWith("macro");
             if (binding.startsWith("macro") &&
                 (theme.style == "precision" || theme.style == "spectral"))
                 r.removeFromTop(14.f); // Explicit number band in these manifest bounds.
@@ -1139,6 +1174,7 @@ class BoundSlider : public juce::Slider
                      juce::Justification::centred);
                 auto faceTheme = theme;
                 faceTheme.knob = theme.display;
+                faceTheme.text = theme.display; // Dark graduations on the brass macro plate.
                 const auto diameter = number(spec, "faceDiameter", 60.f);
                 const auto face = Rect(0, 0, diameter, diameter).withCentre(
                     {r.getCentreX(), r.getY() + 62.5f});
@@ -1163,9 +1199,18 @@ class BoundSlider : public juce::Slider
                     text(g, theme, value, r.removeFromTop(line), fs, valueInk,
                          theme.style == "clear", juce::Justification::centred);
                 else if (!hideValue && !valueAtRight)
-                    text(g, theme, value, r.removeFromBottom(line), fs,
-                         theme.style == "clear" ? ink : valueInk, theme.style == "clear",
+                {
+                    auto readout = r.removeFromBottom(line);
+                    if (theme.style == "tokyo" && binding.startsWith("osc"))
+                    {
+                        g.setColour(juce::Colour(0xff121416));
+                        g.fillRoundedRectangle(readout.reduced(1.f, .5f), 2.f);
+                    }
+                    text(g, theme, value, readout, fs,
+                         theme.style == "clear" ? ink : valueInk,
+                         theme.style == "clear" || theme.style == "tokyo",
                          juce::Justification::centred);
+                }
                 else if (valueAtRight)
                     valueOnRight(r);
                 drawFace(r);
@@ -1272,12 +1317,18 @@ class BoundSlider : public juce::Slider
                           std::min(5.f, r.getHeight() * .2f));
             if (track.isEmpty())
                 return;
-            if (kind == "fader" && theme.style == "precision")
+            const bool spectralFader = kind == "fader" && theme.style == "spectral";
+            if (kind == "fader" && (theme.style == "precision" || spectralFader))
                 track = track.withSizeKeepingCentre(3.f, track.getHeight());
             if (kind == "horizontal")
                 track =
                     track.withSizeKeepingCentre(track.getWidth(), std::min(5.f, track.getHeight()));
             bezel(g, theme, track.expanded(2), theme.display, 3);
+            if (spectralFader)
+            {
+                g.setColour(theme.secondary.withAlpha(.20f));
+                g.fillRoundedRectangle(track, 1.5f);
+            }
             auto active = track;
             if (kind == "fader")
                 active = track.withTop(track.getBottom() - track.getHeight() * getValue());
@@ -1296,16 +1347,17 @@ class BoundSlider : public juce::Slider
             }
             if (!hardware || kind == "horizontal")
             {
+                const auto travelInk = spectralFader ? theme.secondary : accent;
                 g.setGradientFill(juce::ColourGradient(
-                    accent.interpolatedWith(juce::Colours::white, .3f), active.getTopLeft(), accent,
-                    active.getBottomLeft(), false));
+                    travelInk.interpolatedWith(juce::Colours::white, .3f), active.getTopLeft(),
+                    travelInk, active.getBottomLeft(), false));
                 g.fillRoundedRectangle(active, 2);
             }
             Rect handle;
             if (kind == "fader")
             {
                 const auto width = std::min(24.f, static_cast<float>(getWidth()) - 2.f);
-                const auto height = std::min(8.f, r.getHeight());
+                const auto height = std::min(spectralFader ? 14.f : 8.f, r.getHeight());
                 handle = {track.getCentreX() - width * .5f, active.getY() - height * .5f, width,
                           height};
             }
@@ -1329,6 +1381,13 @@ class BoundSlider : public juce::Slider
             g.fillRoundedRectangle(handle, 2);
             g.setColour(theme.border);
             g.drawRoundedRectangle(handle, 2, 1);
+            if (spectralFader)
+            {
+                g.setColour(theme.display.withAlpha(.78f));
+                g.fillRoundedRectangle(handle.reduced(2.5f, 3.f), 1.f);
+                g.setColour(theme.accent.interpolatedWith(juce::Colours::white, .55f));
+                g.drawRoundedRectangle(handle.reduced(1.2f), 1.2f, 1.f);
+            }
             if (kind == "fader")
             {
                 g.setColour(cap.interpolatedWith(juce::Colours::white, .7f));
@@ -1556,6 +1615,12 @@ class BoundMenu : public juce::ComboBox
             setColour(juce::ComboBox::textColourId, theme.display.contrasting(.9f));
         else if (spec.hasProperty("ink"))
             setColour(juce::ComboBox::textColourId, theme.color(string(spec, "ink")));
+        if (theme.style == "bauhaus" && binding.startsWith("filter") &&
+            binding.endsWith(".type"))
+        {
+            setColour(juce::ComboBox::backgroundColourId, juce::Colour(0xff18364f));
+            setColour(juce::ComboBox::textColourId, juce::Colour(0xfff9edd3));
+        }
         setColour(juce::ComboBox::outlineColourId, theme.border);
         setColour(juce::ComboBox::arrowColourId, theme.accent);
         updateSegments();
@@ -5999,6 +6064,25 @@ struct Workspace::Impl
              panelId == "p.filter-chain");
         if (!connectedLivePanel)
             bezel(g, theme, r, fill);
+        if (theme.style == "aurora" && kind == "macros")
+        {
+            g.setGradientFill(juce::ColourGradient(juce::Colour(0xff1d1a35), r.getTopLeft(),
+                                                   juce::Colour(0xff19172e),
+                                                   r.getBottomLeft(), false));
+            g.fillRoundedRectangle(r.reduced(1), std::max(0.f, theme.radius - 1.f));
+        }
+        if (theme.style == "bauhaus" && panelId == "output-panel")
+        {
+            // The output plate has its own warm vertical coating. Keep the
+            // bezel and all live analyzer/slider content above this material.
+            auto coating = juce::ColourGradient(juce::Colour(0xfff7c124), r.getTopLeft(),
+                                                  juce::Colour(0xfffddb5c),
+                                                  r.getBottomLeft(), false);
+            coating.addColour(.45, juce::Colour(0xfffcd55a));
+            coating.addColour(.80, juce::Colour(0xfffede65));
+            g.setGradientFill(coating);
+            g.fillRoundedRectangle(r.reduced(1), std::max(0.f, theme.radius - 1.f));
+        }
         int index = std::max(1, static_cast<int>(number(v, "index", 1)));
         bool lfoEnvelope = static_cast<bool>(v["envelope"]);
         const auto selected = selectedPanelChoice(v);
@@ -6022,7 +6106,9 @@ struct Workspace::Impl
             if (auto *panels = manifest["panels"].getArray())
                 for (const auto &parent : *panels)
                     if (string(parent, "kind") == "effects" &&
-                        r.getY() > bounds(parent).getY() + 40 && bounds(parent).contains(r))
+                        r.getY() >= bounds(parent).getY() +
+                                        std::max(1.f, number(parent, "titleHeight", 24)) &&
+                        bounds(parent).contains(r))
                     {
                         const auto effect = selectedPanelChoice(parent);
                         if (string(effect, "source") == "fx")
@@ -6100,7 +6186,8 @@ struct Workspace::Impl
                 if (layers && visuals.wavetable[index - 1].available())
                     Visuals::wavetable(g, pr.reduced(5), visuals.wavetable[index - 1],
                                        paperTerrain ? juce::Colour(0xffe4dac4) : waveformInk,
-                                       paperTerrain ? juce::Colour(0xffc7bea9) : theme.accent,
+                                       paperTerrain ? juce::Colour(0xffc7bea9)
+                                           : theme.style == "tokyo" ? waveformInk : theme.accent,
                                        theme.style == "aurora" || theme.style == "live"
                                            ? Visuals::WavetableView::ribbons
                                            : Visuals::WavetableView::perspective);

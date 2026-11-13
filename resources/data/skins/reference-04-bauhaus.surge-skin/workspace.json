@@ -20,7 +20,7 @@
     "secondary": "#F8CF39",
     "display": "#20211F",
     "knob": "#FFF2D7",
-    "red": "#D83C28",
+    "red": "#C93F2A",
     "yellow": "#FFD851",
     "blue": "#2E6080"
   },
@@ -211,14 +211,15 @@
       "y": 341,
       "w": 230,
       "h": 247,
-      "color": "blue",
+      "color": "#265171",
       "plot": [
         999,
         403,
         205,
         85
       ],
-      "fontSize": 18
+      "fontSize": 18,
+      "ink": "#FFFFFF"
     },
     {
       "id": "filter2-panel",
@@ -229,14 +230,15 @@
       "y": 341,
       "w": 231,
       "h": 247,
-      "color": "blue",
+      "color": "#265171",
       "plot": [
         1235,
         403,
         205,
         85
       ],
-      "fontSize": 18
+      "fontSize": 18,
+      "ink": "#FFFFFF"
     },
     {
       "id": "filter-routing-panel",
@@ -334,7 +336,7 @@
       "y": 608,
       "w": 328,
       "h": 120,
-      "color": "yellow",
+      "color": "#FBCC3A",
       "variant": "horizontal",
       "plot": [
         929,
@@ -381,8 +383,9 @@
       "y": 747,
       "w": 524,
       "h": 38,
-      "color": "blue",
-      "fontSize": 18
+      "color": "#245476",
+      "fontSize": 18,
+      "ink": "#FFFFFF"
     },
     {
       "id": "effects-panel",
@@ -505,8 +508,9 @@
       "y": 747,
       "w": 309,
       "h": 38,
-      "color": "blue",
-      "fontSize": 18
+      "color": "#245476",
+      "fontSize": 18,
+      "ink": "#FFFFFF"
     },
     {
       "id": "output-panel",

@@ -865,7 +865,7 @@
       "label": "Cutoff",
       "fontSize": 10.5,
       "accent": "accent",
-      "faceDiameter": 42
+      "faceDiameter": 35
     },
     {
       "id": "c.filter1-resonance",
@@ -877,7 +877,7 @@
       "label": "Res",
       "fontSize": 10.5,
       "accent": "accent",
-      "faceDiameter": 42
+      "faceDiameter": 35
     },
     {
       "id": "c.filter1-subtype",
@@ -911,7 +911,7 @@
       "label": "Cutoff",
       "fontSize": 10.5,
       "accent": "secondary",
-      "faceDiameter": 42
+      "faceDiameter": 35
     },
     {
       "id": "c.filter2-resonance",
@@ -923,7 +923,7 @@
       "label": "Res",
       "fontSize": 10.5,
       "accent": "secondary",
-      "faceDiameter": 42
+      "faceDiameter": 35
     },
     {
       "id": "c.filter2-subtype",

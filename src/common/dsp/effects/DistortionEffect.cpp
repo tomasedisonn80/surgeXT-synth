@@ -46,6 +46,11 @@ void DistortionEffect::init()
     band2.suspend();
     lp1.suspend();
     lp2.suspend();
+    // suspend() calls init() during host reset/panic. The decimation filters
+    // retain signal history too; clearing only EQ/feedback leaks that history
+    // into the first silent blocks after all voices have been stopped.
+    hr_a.reset();
+    hr_b.reset();
     bi = 0.f;
     L = 0.f;
     R = 0.f;

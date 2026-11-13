@@ -1127,6 +1127,52 @@ TEST_CASE("Compact value controls preserve real drag and typed-unit editing",
     CHECK_FALSE(adapter->inEditGesture.load());
 }
 
+TEST_CASE("Typed native values reject missing numbers and retain native units and names",
+          "[reference-workspaces][reference-interactions][reference-typed-values]")
+{
+    juce::ScopedJuceInitialiser_GUI gui;
+    IsolatedUserData testData;
+    SurgeSynthProcessor processor;
+    testData.attach(processor);
+    ParameterBridge bridge(processor);
+    juce::String error;
+    REQUIRE(bridge.enabled("env2.attack"));
+    REQUIRE(bridge.setText("env2.attack", "250 ms", error));
+    const auto expected = bridge.value("env2.attack");
+    for (const auto *input : {"", "   ", "this is not a duration", "ms", "NaN", "inf", "-inf"})
+    {
+        CAPTURE(input);
+        CHECK_FALSE(bridge.setText("env2.attack", input, error));
+        CHECK(error.isNotEmpty());
+        CHECK(bridge.value("env2.attack") == Catch::Approx(expected));
+    }
+    REQUIRE(bridge.setText("env2.attack", "0.5 s", error));
+    CHECK(bridge.parameter("env2.attack")->val.f == Catch::Approx(-1.f).margin(.0001f));
+    REQUIRE(bridge.setText("env2.attack", "0 ms", error));
+    CHECK(bridge.parameter("env2.attack")->val.f ==
+          Catch::Approx(bridge.parameter("env2.attack")->val_min.f));
+
+    REQUIRE(bridge.setText("filter1.cutoff", "440 Hz", error));
+    CHECK(bridge.parameter("filter1.cutoff")->val.f == Catch::Approx(0.f).margin(.0001f));
+    REQUIRE(bridge.setText("filter1.cutoff", "A4", error));
+    const auto noteValue = bridge.value("filter1.cutoff");
+    for (const auto *input : {"garbage", "banana", "A bad note", "C#x"})
+    {
+        CAPTURE(input);
+        CHECK_FALSE(bridge.setText("filter1.cutoff", input, error));
+        CHECK(bridge.value("filter1.cutoff") == Catch::Approx(noteValue));
+    }
+    REQUIRE(bridge.setText("osc1.retrigger", "On", error));
+    CHECK(bridge.value("osc1.retrigger") == Catch::Approx(1.f));
+    REQUIRE(bridge.setText("osc1.retrigger", "Off", error));
+    CHECK(bridge.value("osc1.retrigger") == Catch::Approx(0.f));
+    const auto modes = bridge.choices("scene.mode");
+    REQUIRE(!modes.isEmpty());
+    REQUIRE(bridge.setText("scene.mode", modes[0], error));
+    CHECK(bridge.choiceIndex("scene.mode") == 0);
+    CHECK(bridge.activeGestureCount() == 0);
+}
+
 TEST_CASE("Live display refresh preserves audible state and independent audio samples",
           "[reference-workspaces][reference-audio][reference-display-isolation]")
 {
@@ -1399,6 +1445,25 @@ TEST_CASE("Native modulation row edits preserve stable targets, undo, and scene 
     REQUIRE(processor.undoManager->undo());
     CHECK(synth.getModDepth01(targetA->id, ms_ctrl1, 0, 0) == Catch::Approx(-.35f));
     CHECK(synth.isModulationMuted(targetA->id, ms_ctrl1, 0, 0));
+    // These are discrete UI gestures even when executed within the old 200 ms
+    // merge window: undo the crossed-zero drag, then mute, independently.
+    REQUIRE(processor.undoManager->undo());
+    CHECK(synth.getModDepth01(targetA->id, ms_ctrl1, 0, 0) == Catch::Approx(.42f));
+    CHECK(synth.isModulationMuted(targetA->id, ms_ctrl1, 0, 0));
+    REQUIRE(processor.undoManager->undo());
+    CHECK(synth.getModDepth01(targetA->id, ms_ctrl1, 0, 0) == Catch::Approx(.42f));
+    CHECK_FALSE(synth.isModulationMuted(targetA->id, ms_ctrl1, 0, 0));
+    REQUIRE(processor.undoManager->redo());
+    CHECK(synth.isModulationMuted(targetA->id, ms_ctrl1, 0, 0));
+    REQUIRE(processor.undoManager->redo());
+    CHECK(synth.getModDepth01(targetA->id, ms_ctrl1, 0, 0) == Catch::Approx(-.35f));
+    CHECK(synth.isModulationMuted(targetA->id, ms_ctrl1, 0, 0));
+    // Redo must transfer those same boundaries, not merge them back together.
+    REQUIRE(processor.undoManager->undo());
+    CHECK(synth.getModDepth01(targetA->id, ms_ctrl1, 0, 0) == Catch::Approx(.42f));
+    CHECK(synth.isModulationMuted(targetA->id, ms_ctrl1, 0, 0));
+    REQUIRE(processor.undoManager->redo());
+    CHECK(synth.getModDepth01(targetA->id, ms_ctrl1, 0, 0) == Catch::Approx(-.35f));
 
     auto stale = rowFor(0, targetA->id, ms_ctrl1);
     ++stale.key.targetType;
@@ -1459,6 +1524,54 @@ TEST_CASE("Native modulation row edits preserve stable targets, undo, and scene 
     CHECK(listener.clears > 0);
     checkHostParameterValues(processor, parametersBefore);
     processor.releaseResources();
+}
+
+TEST_CASE("Host reset clears active distortion decimation history",
+          "[reference-workspaces][reference-audio][reference-reset]")
+{
+    juce::ScopedJuceInitialiser_GUI gui;
+    for (const bool distortionEnabled : {false, true})
+    {
+        CAPTURE(distortionEnabled);
+        IsolatedUserData testData;
+        SurgeSynthProcessor processor;
+        testData.attach(processor);
+        processor.setRateAndBufferSizeDetails(sampleRate, sampleBlock);
+        processor.prepareToPlay(sampleRate, sampleBlock);
+        configureShowcaseFixture(processor);
+        ParameterBridge bridge(processor);
+        // Isolate the suspected effect from the other seven showcase slots.
+        // Edits still use native deferred effect initialization, before audio.
+        for (int slot = 1; slot <= n_fx_slots; ++slot)
+        {
+            const auto binding = "fx" + juce::String(slot) + ".type";
+            const auto type = distortionEnabled && slot == 1 ? fxt_distortion : fxt_off;
+            auto *parameter = bridge.parameter(binding);
+            REQUIRE(parameter != nullptr);
+            edit(bridge, binding, bridge.choiceValue(binding, type - parameter->val_min.i));
+            processor.surge->processAudioThreadOpsWhenAudioEngineUnavailable();
+        }
+        float playingPeak = 0.f;
+        for (int block = 0; block < 64; ++block)
+        {
+            juce::MidiBuffer notes;
+            if (block == 0)
+                notes.addEvent(juce::MidiMessage::noteOn(1, 60, .65f), 0);
+            playingPeak = std::max(playingPeak, processBlock(processor, notes));
+        }
+        REQUIRE(playingPeak > .0001f);
+        const auto values = hostParameterValues(processor);
+        processor.reset();
+        CHECK(processor.surge->voices[0].empty());
+        CHECK(processor.surge->voices[1].empty());
+        float resetPeak = 0.f;
+        for (int block = 0; block < 4; ++block)
+            resetPeak = std::max(resetPeak, processBlock(processor));
+        CAPTURE(resetPeak);
+        CHECK(resetPeak < .000001f);
+        checkHostParameterValues(processor, values);
+        processor.releaseResources();
+    }
 }
 
 TEST_CASE("Ten reference workspaces render native controls and export evidence",

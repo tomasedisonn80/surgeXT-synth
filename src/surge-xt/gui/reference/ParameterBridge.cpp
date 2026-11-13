@@ -2,6 +2,8 @@
 #include "ParameterBridge.h"
 #include "SurgeSynthProcessor.h"
 #include "UndoManager.h"
+#include "UnitConversions.h"
+#include "sst/basic-blocks/params/ParamMetadata.h"
 
 #include <algorithm>
 #include <array>
@@ -30,6 +32,86 @@ int indexAfter(const juce::String &name, const juce::String &prefix, int limit,
 float safeNormalized(float value)
 {
     return std::isfinite(value) ? std::clamp(value, 0.f, 1.f) : 0.f;
+}
+
+bool completeNoteName(const juce::String &input)
+{
+    // The legacy note parser accepts a word beginning with A..G as octave zero.
+    // Require an actual note token before delegating its pitch/tuning semantics.
+    if (input.isEmpty() || !juce::String("ABCDEFGabcdefg").containsChar(input[0]))
+        return false;
+    int at = 1;
+    while (at < input.length() && (input[at] == '#' || input[at] == 'b'))
+        ++at;
+    if (at < input.length() && (input[at] == '+' || input[at] == '-'))
+        ++at;
+    return at < input.length() && input.substring(at).containsOnly("0123456789");
+}
+
+bool hasNativeInputValue(Parameter &parameter, const juce::String &input)
+{
+    // Keep native units, range conversion, tuning and formatter semantics. This
+    // preflight only prevents the legacy number parser's missing-value fallback
+    // (zero) from turning malformed input into a successful parameter edit.
+    if (input.isEmpty() || input.length() > 256)
+        return false;
+    const auto bytes = input.toStdString();
+    if (bytes.find('\0') != std::string::npos)
+        return false;
+    if (const auto *metadata = parameter.basicBlocksParamMetaData;
+        metadata && metadata->supportsStringConversion)
+    {
+        std::string reason;
+        if (const auto value = metadata->valueFromString(bytes, reason))
+            return std::isfinite(*value);
+        if (!reason.empty())
+            return false;
+    }
+    if (parameter.displayType == Parameter::DelegatedToFormatter)
+        if (const auto *formatter =
+                dynamic_cast<const ParameterExternalFormatter *>(parameter.user_data))
+        {
+            float value{};
+            if (formatter->stringToValue(&parameter, bytes.c_str(), value))
+                return std::isfinite(value);
+        }
+    if (parameter.valtype == vt_float)
+    {
+        for (const auto *label : {parameter.displayInfo.minLabel, parameter.displayInfo.maxLabel})
+            if (*label && input.equalsIgnoreCase(juce::String(label)))
+                return true;
+    }
+    if ((parameter.displayInfo.supportsNoteName || parameter.ctrltype == ct_midikey ||
+         parameter.ctrltype == ct_midikey_or_channel ||
+         (parameter.ctrltype == ct_fmratio && parameter.absolute)) &&
+        completeNoteName(input))
+        return true;
+    if (parameter.valtype == vt_bool)
+        return input.equalsIgnoreCase("On") || input.equalsIgnoreCase("Off");
+    if (parameter.valtype == vt_int)
+    {
+        const auto count = static_cast<int64_t>(parameter.val_max.i) - parameter.val_min.i + 1;
+        if (count > 0 && count <= 1024)
+            for (int64_t i = parameter.val_min.i; i <= parameter.val_max.i; ++i)
+            {
+                const auto value = Parameter::intScaledToFloat(
+                    static_cast<int>(i), parameter.val_max.i, parameter.val_min.i);
+                if (input.equalsIgnoreCase(juce::String(parameter.get_display(true, value))))
+                    return true;
+            }
+    }
+    auto numeric = input;
+    if (parameter.ctrltype == ct_fmratio && !parameter.absolute &&
+        numeric.startsWithIgnoreCase("C"))
+    {
+        numeric = numeric.substring(1).trimStart();
+        if (!numeric.startsWithChar(':'))
+            return false;
+        numeric = numeric.substring(1).trimStart();
+    }
+    bool parsed{false};
+    const auto value = clocalestr_to_double(numeric.toRawUTF8(), &parsed);
+    return parsed && std::isfinite(value);
 }
 } // namespace
 
@@ -486,11 +568,22 @@ bool ParameterBridge::setText(const juce::String &binding, const juce::String &t
     }
     if (auto *p = parameter(binding))
     {
+        const auto input = text.trim();
+        if (!hasNativeInputValue(*p, input))
+        {
+            error = "Enter a number, supported unit, note name, or native parameter label.";
+            return false;
+        }
         pdata parsed{};
         std::string reason;
-        if (!p->set_value_from_string_onto(text.toStdString(), parsed, reason))
+        if (!p->set_value_from_string_onto(input.toStdString(), parsed, reason))
         {
             error = juce::String(reason);
+            return false;
+        }
+        if (p->valtype == vt_float && !std::isfinite(parsed.f))
+        {
+            error = "Enter a finite value within this parameter's range.";
             return false;
         }
         float result{};

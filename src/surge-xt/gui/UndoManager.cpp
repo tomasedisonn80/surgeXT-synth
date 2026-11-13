@@ -425,7 +425,7 @@ struct UndoManagerImpl
         return "UNK";
     }
 
-    void pushUndo(const UndoAction &r)
+    void pushUndo(const UndoAction &r, bool allowCoalescing = true)
     {
         if (!doPush)
             return;
@@ -443,7 +443,10 @@ struct UndoManagerImpl
         }
 
         auto &t = undoStack.back();
-        if (r.index() != t.action.index())
+        // Undo/redo transfers an existing history boundary; it is not another
+        // user drag sample. Preserve that boundary even when several redos are
+        // performed within the normal repeated-edit merge window.
+        if (!allowCoalescing || !clearRedoOnUndo || r.index() != t.action.index())
         {
             undoStack.emplace_back(r);
             undoStackMem += actionSize(r);
@@ -601,13 +604,14 @@ struct UndoManagerImpl
     }
 
     void pushModulationChange(int paramId, const Parameter *p, modsources modsource, int sc,
-                              int idx, float val, bool muted, UndoManager::Target to)
+                              int idx, float val, bool muted, UndoManager::Target to,
+                              bool allowCoalescing)
     {
         auto r = UndoModulation();
         populateUndoModulation(paramId, p, modsource, sc, idx, val, muted, r);
 
         if (to == UndoManager::UNDO)
-            pushUndo(r);
+            pushUndo(r, allowCoalescing);
         else
             pushRedo(r);
     }
@@ -1421,9 +1425,10 @@ void UndoManager::pushParameterChange(int paramId, const Parameter *p, pdata val
 }
 
 void UndoManager::pushModulationChange(int paramId, const Parameter *p, modsources modsource,
-                                       int scene, int idx, float val, bool muted, Target to)
+                                       int scene, int idx, float val, bool muted, Target to,
+                                       bool allowCoalescing)
 {
-    impl->pushModulationChange(paramId, p, modsource, scene, idx, val, muted, to);
+    impl->pushModulationChange(paramId, p, modsource, scene, idx, val, muted, to, allowCoalescing);
 }
 
 void UndoManager::pushOscillator(int scene, int oscnum) { impl->pushOscillator(scene, oscnum); }

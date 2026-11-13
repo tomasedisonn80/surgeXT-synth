@@ -51,9 +51,13 @@ void pushRouteUndo(SurgeSynthProcessor &processor, const RouteKey &key, Paramete
                    float depth, bool muted)
 {
     if (processor.undoManager)
+        // This caller already captures once per drag or discrete action. Two
+        // separate gestures (especially mute/delete) must never collapse merely
+        // because they happened within the stock editor's 200 ms repeat window.
         processor.undoManager->pushModulationChange(key.parameterId, parameter,
                                                     static_cast<modsources>(key.sourceId),
-                                                    key.sourceScene, key.sourceIndex, depth, muted);
+                                                    key.sourceScene, key.sourceIndex, depth, muted,
+                                                    Surge::GUI::UndoManager::UNDO, false);
 }
 } // namespace
 

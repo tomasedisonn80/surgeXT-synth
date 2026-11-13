@@ -54,8 +54,11 @@ struct UndoManager
     std::unique_ptr<UndoManagerImpl> impl;
     void pushParameterChange(int paramId, const Parameter *p, pdata val, Target to = UNDO);
     void pushMacroChange(int macroid, float val);
+    // Callers which already capture once per complete gesture/discrete action
+    // can opt out of the stock 200 ms repeated-edit coalescing window.
     void pushModulationChange(int paramId, const Parameter *p, modsources modsource, int scene,
-                              int index, float val, bool muted, Target to = UNDO);
+                              int index, float val, bool muted, Target to = UNDO,
+                              bool allowCoalescing = true);
     void pushOscillator(int scene, int oscnum);
     void pushWavetable(int scene, int oscnum);
     void pushOscillatorExtraConfig(int scene, int oscnum);

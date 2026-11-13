@@ -3,11 +3,11 @@
 Twenty unmodified native PNGs: a baseline and a real edited state for each of the ten skins.
 Each image is 1586 × 992 pixels.
 
-**Source:** [a362667839b8e1d742cf3af94bb8710fa3c6d1fd](https://github.com/tomasedisonn80/surgeXT-synth/commit/a362667839b8e1d742cf3af94bb8710fa3c6d1fd)  
-**Native verification:** [workflow run 43486541422](https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43486541422)  
-**Capture time:** 2026-11-13T18:54:42.733Z
+**Source:** [2a5a621241e28e15eda57ff5be3bad6dc3f36ff3](https://github.com/tomasedisonn80/surgeXT-synth/commit/2a5a621241e28e15eda57ff5be3bad6dc3f36ff3)  
+**Native verification:** [workflow run 43491379963](https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43491379963)  
+**Capture time:** 2026-11-13T19:25:20.801Z
 
-Behavior: 42 cases / 10,316,058 assertions. Capture: 24,100,990 assertions. Normal and ThreadSanitizer audio-display checks passed.
+Behavior: 43 cases / 10,317,666 assertions. Capture: 24,100,990 assertions. Normal and ThreadSanitizer audio-display checks passed.
 
 [Open the comparison HTML](index.html) after downloading this directory with its sibling references directory. This README also renders the native gallery directly on GitHub.
 

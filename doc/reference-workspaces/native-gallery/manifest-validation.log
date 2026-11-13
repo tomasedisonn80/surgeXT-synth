@@ -10,5 +10,5 @@ PASS 08 ClearSignal Accessible: 27 panels, 77 controls
   WARNING plot/control bounds overlap: panel.lfo.plot / lfo1.shape (60 x 21); inspect rendered labels
 PASS 09 Signal-Flow Cartographer: 11 panels, 51 controls
   NOTE panel.flow: 19 live controls intentionally overlay routing plot
-PASS 10 Live Performance Deck: 22 panels, 64 controls
+PASS 10 Live Performance Deck: 23 panels, 64 controls
 PASS: 10 reference workspaces validated

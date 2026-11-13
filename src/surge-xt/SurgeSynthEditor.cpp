@@ -31,9 +31,12 @@
 #include <version.h>
 #include "gui/widgets/CurrentFxDisplay.h"
 #include "gui/widgets/MainFrame.h"
+#include "gui/reference/ParameterBridge.h"
 #include "gui/reference/Workspace.h"
 
+#include <algorithm>
 #include <filesystem>
+#include <limits>
 
 struct VKeyboardWheel : public juce::Component
 {
@@ -462,6 +465,10 @@ void SurgeSynthEditor::idle()
         updateReferenceWorkspaceFromSkin();
     }
 
+    if (referenceWorkspace && referenceWorkspace->isVisible() &&
+        referenceWorkspace->bridge().getScene() != sge->getCurrentScene())
+        referenceWorkspace->selectScene(sge->getCurrentScene(), false);
+
     if (processor.surge->refresh_vkb)
     {
         const int curTypeinBPM = std::atoi(tempoTypein->getText().toStdString().c_str());
@@ -550,6 +557,15 @@ void SurgeSynthEditor::resetWindowFromSkin()
     resized();
 }
 
+void SurgeSynthEditor::selectSkin(const Surge::GUI::SkinDB::Entry &entry)
+{
+    if (!sge || !processor.surge)
+        return;
+    sge->selectSkinFromReferenceWorkspace(entry);
+    processor.surge->refresh_editor = true;
+    resetWindowFromSkin();
+}
+
 void SurgeSynthEditor::updateReferenceWorkspaceFromSkin(bool force)
 {
     if (!sge || !sge->currentSkin)
@@ -566,6 +582,8 @@ void SurgeSynthEditor::updateReferenceWorkspaceFromSkin(bool force)
         layoutTime == referenceLayoutModificationTime)
         return;
 
+    const bool keepFullEditor = referenceWorkspace && !referenceWorkspace->isVisible() &&
+                                key == referenceSkinKey;
     referenceSkinKey = key;
     referenceSkinModificationTime = xmlTime;
     referenceLayoutModificationTime = layoutTime;
@@ -660,6 +678,9 @@ void SurgeSynthEditor::updateReferenceWorkspaceFromSkin(bool force)
         return;
     }
 
+    // Initialising a skin must not dispatch a scene-change action: the native
+    // scene selector also releases latched notes, even when selecting the same B scene.
+    next->selectScene(sge->getCurrentScene(), false);
     const juce::Component::SafePointer<SurgeSynthEditor> safe(this);
     next->onFullEditor = [safe]() {
         if (safe)
@@ -673,7 +694,6 @@ void SurgeSynthEditor::updateReferenceWorkspaceFromSkin(bool force)
         if (safe)
             safe->handleReferenceWorkspaceAction(action);
     };
-    next->selectScene(sge->getCurrentScene());
     referenceWorkspace = std::move(next);
     addChildComponent(*referenceWorkspace);
 
@@ -686,7 +706,7 @@ void SurgeSynthEditor::updateReferenceWorkspaceFromSkin(bool force)
             safe->showReferenceWorkspace(true);
     };
     addChildComponent(*returnToReferenceWorkspace);
-    showReferenceWorkspace(true);
+    showReferenceWorkspace(!keepFullEditor);
 }
 
 void SurgeSynthEditor::showReferenceWorkspace(bool show)
@@ -706,7 +726,7 @@ void SurgeSynthEditor::showReferenceWorkspace(bool show)
     auto rezoom = BlockRezoom(this);
     if (show)
     {
-        referenceWorkspace->selectScene(sge->getCurrentScene());
+        referenceWorkspace->selectScene(sge->getCurrentScene(), false);
         auto width = referenceWorkspaceSize.x;
         auto height = referenceWorkspaceSize.y;
         if (auto *display = juce::Desktop::getInstance().getDisplays().getDisplayForRect(getScreenBounds()))
@@ -741,6 +761,8 @@ void SurgeSynthEditor::showReferenceSkinMenu()
 
 void SurgeSynthEditor::handleReferenceWorkspaceAction(const juce::String &action)
 {
+    if (!sge || !processor.surge)
+        return;
     if (action == "settings" || action == "skins")
     {
         showReferenceSkinMenu();
@@ -748,16 +770,75 @@ void SurgeSynthEditor::handleReferenceWorkspaceAction(const juce::String &action
     else if (action == "scene-a" || action == "scene-b")
     {
         const auto scene = action == "scene-a" ? 0 : 1;
-        sge->selectSceneFromReferenceWorkspace(scene);
+        if (sge->getCurrentScene() != scene)
+            sge->selectSceneFromReferenceWorkspace(scene);
         if (referenceWorkspace)
-            referenceWorkspace->selectScene(scene);
+            referenceWorkspace->selectScene(scene, false);
+    }
+    else if (action.startsWith("load-preset:"))
+    {
+        const auto suffix = action.substring(12);
+        // String::getIntValue accepts trailing junk and can overflow. Only a
+        // complete, non-negative decimal catalog ID is an actionable selection.
+        if (suffix.isEmpty() || suffix.length() > 10 || !suffix.containsOnly("0123456789"))
+            return;
+        const auto index = suffix.getLargeIntValue();
+        auto &catalog = processor.surge->storage.patch_list;
+        if (index > std::numeric_limits<int>::max() ||
+            static_cast<uint64_t>(index) >= catalog.size())
+            return;
+        const auto path = catalog[static_cast<size_t>(index)].path;
+        if (path.empty())
+            return;
+
+        // The stock editor owns the dirty-patch confirmation. Never hide its
+        // prompt underneath the alternative workspace.
+        if (processor.surge->storage.getPatch().isDirty)
+            showReferenceWorkspace(false);
+        const juce::Component::SafePointer<SurgeSynthEditor> safe(this);
+        sge->loadPatchWithDirtyCheck([safe, index, path]() {
+            if (!safe || !safe->sge || !safe->processor.surge)
+                return;
+            auto &synth = *safe->processor.surge;
+            auto &currentCatalog = synth.storage.patch_list;
+            auto resolved = static_cast<int>(index);
+            // A rescan while the confirmation is open can move catalog indices.
+            // Keep the user's selected file, never a new patch occupying its row.
+            if (static_cast<size_t>(resolved) >= currentCatalog.size() ||
+                currentCatalog[static_cast<size_t>(resolved)].path != path)
+            {
+                auto found =
+                    std::find_if(currentCatalog.begin(), currentCatalog.end(),
+                                 [&path](const auto &patch) { return patch.path == path; });
+                if (found == currentCatalog.end())
+                    return;
+                resolved = static_cast<int>(std::distance(currentCatalog.begin(), found));
+            }
+            if (safe->referenceWorkspace)
+                safe->referenceWorkspace->bridge().endAll();
+            safe->sge->closeOverlay(SurgeGUIEditor::SAVE_PATCH);
+            safe->sge->undoManager()->pushPatch();
+            synth.patchSelectedFromFavorites = false;
+            safe->sge->enqueuePatchId = resolved;
+            safe->sge->flushEnqueuedPatchId();
+        });
     }
     else if (action == "next-preset" || action == "previous-preset")
     {
         // The native dirty-patch confirmation belongs to the full editor.
         if (processor.surge->storage.getPatch().isDirty)
             showReferenceWorkspace(false);
-        sge->loadPatchWithDirtyCheck(action == "next-preset", false);
+        const juce::Component::SafePointer<SurgeSynthEditor> safe(this);
+        const bool increment = action == "next-preset";
+        sge->loadPatchWithDirtyCheck([safe, increment]() {
+            if (!safe || !safe->sge || !safe->processor.surge)
+                return;
+            if (safe->referenceWorkspace)
+                safe->referenceWorkspace->bridge().endAll();
+            safe->sge->undoManager()->pushPatch();
+            safe->sge->closeOverlay(SurgeGUIEditor::SAVE_PATCH);
+            safe->processor.surge->jogPatchOrCategory(increment, false);
+        });
     }
     else if (action == "browser" || action == "save" || action == "modulation" ||
              action == "matrix" || action == "analyzer" || action == "effects" ||
@@ -782,7 +863,7 @@ void SurgeSynthEditor::resized()
         referenceWorkspace->setBounds(getLocalBounds());
         // Skin reload may temporarily size the hidden original editor. Do not
         // mistake that for a user resize of the currently displayed workspace.
-        if (sge->currentSkin &&
+        if (rezoomGuard == 0 && sge->currentSkin &&
             referenceSkinKey == juce::String(sge->currentSkin->root + sge->currentSkin->name))
             referenceWorkspaceSize = {getWidth(), getHeight()};
         if (getConstrainer())

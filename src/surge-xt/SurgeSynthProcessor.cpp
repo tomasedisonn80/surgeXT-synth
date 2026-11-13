@@ -45,6 +45,20 @@
 namespace
 {
 
+// Called only by the active float audio-processing path. Copying to the fixed-size ring does
+// not allocate, lock, modify the host output, or touch the original oscilloscope's consumer.
+// Its usable capacity is N - 1: retain the newest frames if a host supplies an enormous block.
+void publishReferenceAudio(sst::cpputils::StereoRingBuffer<float, 8192> &tap, const float *left,
+                           const float *right, std::size_t samples) noexcept
+{
+    if (!tap.subscribed() || samples == 0 || !left || !right)
+        return;
+
+    const auto count = std::min(samples, std::size_t{8191});
+    const auto offset = samples - count;
+    tap.push(left + offset, right + offset, count);
+}
+
 // DI'd file loader.
 SurgeStorage::AudioFileInput loadAudioFile(std::string file)
 {
@@ -633,6 +647,8 @@ void SurgeSynthProcessor::processBlock(juce::AudioBuffer<float> &buffer,
         if (bypassCountdown == 0)
         {
             buffer.clear();
+            publishReferenceAudio(referenceAudio, buffer.getReadPointer(0),
+                                  buffer.getReadPointer(1), buffer.getNumSamples());
             return;
         }
 
@@ -797,6 +813,8 @@ void SurgeSynthProcessor::processBlock(juce::AudioBuffer<float> &buffer,
         midiIt++;
     }
 
+    publishReferenceAudio(referenceAudio, mainOutput.getReadPointer(0), mainOutput.getReadPointer(1),
+                          mainOutput.getNumSamples());
     processBlockPostFunction();
 }
 
@@ -1296,6 +1314,10 @@ clap_process_status SurgeSynthProcessor::clap_direct_process(const clap_process 
         currev++;
     }
 
+    const auto &mainOutput = process->audio_outputs[0];
+    publishReferenceAudio(referenceAudio, mainOutput.data32[0],
+                          mainOutput.data32[mainOutput.channel_count == 2 ? 1 : 0],
+                          process->frames_count);
     processBlockPostFunction();
     return CLAP_PROCESS_CONTINUE;
 }

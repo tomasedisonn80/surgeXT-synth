@@ -11,6 +11,9 @@ on:
       - 'src/surge-xt/gui/reference/**'
       - 'src/surge-xt/SurgeSynthEditor.cpp'
       - 'src/surge-xt/SurgeSynthEditor.h'
+      - 'src/surge-xt/SurgeSynthProcessor.cpp'
+      - 'src/surge-xt/SurgeSynthProcessor.h'
+      - 'src/cmake/pluginval.cmake'
       - 'src/surge-xt/CMakeLists.txt'
       - 'src/surge-xt/xt-tests/**'
   workflow_dispatch:

@@ -90,6 +90,8 @@ target_sources(${PROJECT_NAME} PRIVATE
   gui/reference/Manifest.h
   gui/reference/Visuals.cpp
   gui/reference/Visuals.h
+  gui/reference/PreviewCurves.cpp
+  gui/reference/PreviewCurves.h
 
   SurgeCLAPPresetDiscovery.cpp
 

@@ -47,7 +47,7 @@ Root fixes included scene-selection recursion protection, narrow native scene
 wrapper, keyboard note release on hide, removal of duplicate refresh work,
 per-control ink, side-label knobs, and compact/vertical routing.
 
-## Wave 4 — remaining designs and actual patch data (six agents)
+## Wave 4 — remaining designs and actual patch data (six agents, completed)
 
 | Agent | Scope |
 |---|---|
@@ -57,6 +57,25 @@ per-control ink, side-label knobs, and compact/vertical routing.
 | w04_flow_skin | 09 Signal-Flow Cartographer |
 | w04_live_skin | 10 Live Performance Deck |
 | w04_live_data | Read-only snapshots of real modulation routes and installed preset catalog |
+
+## Wave 5 — interaction, lifecycle and truthful displays (six agents, completed)
+
+| Agent | Substantive result |
+|---|---|
+| w05_interaction_hardening | Unit-aware typed entry, accessible controls, searchable native preset list, gesture cancellation |
+| w05_bridge_lifecycle | Dirty-checked preset loading, native undo, scene-safe skin transitions and hot reload |
+| w05_model_previews | Actual filter-algorithm response and private native LFO previews; unsupported displays labeled |
+| w05_live_audio_tap | Independent processor-owned output tap; original oscilloscope consumer untouched |
+| w05_runtime_tests | Extended native editor, state, menu, input, audio and lifecycle regression coverage |
+| w05_schema_security | Strict bounded JSON syntax and metadata validation with malformed-input fixtures |
+
+Root integrated filter/LFO previews and the independently subscribed output tap.
+The first published checkpoint is `adc55c04ca8ec5f4bab4125ae7ae1f2cef52cac4`.
+Its Actions run reached package validation (all ten passed), then exposed an
+existing pluginval configuration assumption that `surge-fx` is always enabled.
+Target guards correct that configuration error; it was not a successful native
+build or a screenshot capture. The original release matrix also encountered a
+missing macOS signing configuration in this fork; this is separate from UI code.
 
 ## Verification status at this checkpoint
 

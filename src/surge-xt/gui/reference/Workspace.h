@@ -22,7 +22,8 @@ class Workspace : public juce::Component, private juce::Timer
     void refresh();
     ParameterBridge &bridge();
     juce::String currentId() const;
-    void selectScene(int scene);
+    /** notify=false synchronises the native/host scene without requesting another scene change. */
+    void selectScene(int scene, bool notify = true);
     void paint(juce::Graphics &) override;
     void resized() override;
     void visibilityChanged() override;

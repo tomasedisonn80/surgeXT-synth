@@ -4,6 +4,7 @@
  */
 
 #include "catch2/catch_amalgamated.hpp"
+#include "SurgeSynthEditor.h"
 #include "SurgeSynthProcessor.h"
 #include "gui/reference/Manifest.h"
 #include "gui/reference/ParameterBridge.h"
@@ -13,6 +14,7 @@
 #include <cmath>
 #include <limits>
 #include <set>
+#include <vector>
 
 namespace
 {
@@ -128,14 +130,78 @@ void edit(ParameterBridge &bridge, const juce::String &binding, float value)
     bridge.end(binding);
 }
 
-void processBlock(SurgeSynthProcessor &processor, juce::MidiBuffer midi = {})
+float processBlock(SurgeSynthProcessor &processor, juce::MidiBuffer midi = {})
 {
     juce::AudioBuffer<float> audio(6, sampleBlock);
     audio.clear();
     processor.processBlock(audio, midi);
+    float peak = 0.f;
     for (int channel = 0; channel < audio.getNumChannels(); ++channel)
         for (int sample = 0; sample < audio.getNumSamples(); ++sample)
+        {
             REQUIRE(std::isfinite(audio.getSample(channel, sample)));
+            if (channel < 2)
+                peak = std::max(peak, std::abs(audio.getSample(channel, sample)));
+        }
+    return peak;
+}
+
+std::vector<float> hostParameterValues(const SurgeSynthProcessor &processor)
+{
+    std::vector<float> result;
+    for (const auto *parameter : processor.getParameters())
+    {
+        const auto value = parameter->getValue();
+        REQUIRE(std::isfinite(value));
+        result.push_back(value);
+    }
+    return result;
+}
+
+void checkHostParameterValues(const SurgeSynthProcessor &processor,
+                              const std::vector<float> &expected, float margin = 0.00001f)
+{
+    const auto &parameters = processor.getParameters();
+    REQUIRE(static_cast<size_t>(parameters.size()) == expected.size());
+    for (int index = 0; index < parameters.size(); ++index)
+    {
+        INFO("Host parameter " << index << ": " << parameters[index]->getName(128).toStdString());
+        CHECK(parameters[index]->getValue() ==
+              Catch::Approx(expected[static_cast<size_t>(index)]).margin(margin));
+    }
+}
+
+Surge::GUI::SkinDB::Entry skinEntry(const juce::File &manifest)
+{
+    const auto directory = manifest.getParentDirectory();
+    Surge::GUI::SkinDB::Entry entry;
+    entry.rootType = Surge::GUI::FACTORY;
+    entry.root =
+        (directory.getParentDirectory().getFullPathName() + juce::File::getSeparatorString())
+            .toStdString();
+    entry.name = (directory.getFileName() + juce::File::getSeparatorString()).toStdString();
+    entry.parseable = true;
+    return entry;
+}
+
+juce::MouseEvent mouseEvent(juce::Component &component, juce::Point<float> position)
+{
+    const auto now = juce::Time::getCurrentTime();
+    return {juce::Desktop::getInstance().getMainMouseSource(),
+            position,
+            juce::ModifierKeys(juce::ModifierKeys::leftButtonModifier),
+            1.f,
+            0.f,
+            0.f,
+            0.f,
+            0.f,
+            &component,
+            &component,
+            now,
+            position,
+            now,
+            1,
+            false};
 }
 
 bool writePng(const juce::Image &image, const juce::File &destination)
@@ -292,6 +358,142 @@ TEST_CASE("Reference controls preserve scene isolation and host gestures",
     CHECK(bridge.value("filter1.cutoff") <= 1.0f);
 }
 
+TEST_CASE("Reference JSON rejects ambiguous encodings before native parsing",
+          "[reference-workspaces][reference-manifest][reference-security]")
+{
+    const auto manifests = workspaceManifests();
+    REQUIRE(!manifests.isEmpty());
+    const auto original = manifests[0].loadFileAsString();
+    const auto data = readManifest(manifests[0]);
+    const auto encodedName = juce::JSON::toString(data["name"]);
+    REQUIRE(original.contains(encodedName));
+    const auto withName = [&original, &encodedName](const juce::String &encoded) {
+        return original.replace(encodedName, encoded);
+    };
+    const std::vector<std::pair<juce::String, juce::String>> malformed = {
+        {"escaped duplicate key", "{\"sch\\u0065ma\": 1," + original.substring(1)},
+        {"trailing comma", original.upToLastOccurrenceOf("}", false, false) + ",}"},
+        {"unknown escape", withName(R"("bad\q")")},
+        {"lone high surrogate", withName(R"("\ud800")")},
+        {"lone low surrogate", withName(R"("\udfff")")},
+        {"embedded NUL", withName(R"("bad\u0000name")")},
+        {"integer overflow",
+         original.replace("\"schema\": 1", "\"schema\": 18446744073709551617")}};
+    juce::TemporaryFile temporary(".json");
+    for (const auto &[name, text] : malformed)
+    {
+        CAPTURE(name.toStdString());
+        REQUIRE(text != original);
+        REQUIRE(temporary.getFile().replaceWithText(text));
+        juce::var loaded = data;
+        juce::String error;
+        CHECK_FALSE(Surge::GUI::Reference::loadManifest(temporary.getFile(), loaded, error));
+        CHECK(loaded.isVoid());
+        CHECK(error.isNotEmpty());
+    }
+
+    // A valid supplementary Unicode character is not the same as an unpaired
+    // surrogate. Rejecting all escaped Unicode would silently break valid names.
+    REQUIRE(temporary.getFile().replaceWithText(withName(R"("Orbit \ud83c\udf19")")));
+    juce::var loaded;
+    juce::String error;
+    REQUIRE(Surge::GUI::Reference::loadManifest(temporary.getFile(), loaded, error));
+    CHECK(error.isEmpty());
+    CHECK(loaded["name"].toString().startsWith("Orbit "));
+}
+
+TEST_CASE("Reference menu indices round trip through native integer ranges",
+          "[reference-workspaces][reference-bindings][reference-menus]")
+{
+    juce::ScopedJuceInitialiser_GUI gui;
+    SurgeSynthProcessor processor;
+    REQUIRE(processor.surge != nullptr);
+    ParameterBridge bridge(processor);
+    std::set<juce::String> bindings;
+    for (const auto &path : workspaceManifests())
+    {
+        const auto manifest = readManifest(path);
+        for (const auto &control : *manifest["controls"].getArray())
+            if (control["kind"].toString() == "menu")
+                bindings.insert(control["binding"].toString());
+    }
+    REQUIRE(bindings.size() >= 30);
+
+    // These ranges expose bugs hidden by zero-based menus: octave is signed and
+    // polyphony starts above zero. Boolean controls use a third normalization path.
+    REQUIRE(bridge.parameter("osc1.octave")->val_min.i < 0);
+    REQUIRE(bridge.parameter("scene.polylimit")->val_min.i > 0);
+    bindings.insert("osc1.keytrack");
+    bindings.insert("osc1.mute");
+
+    const auto roundTripChoices = [&bridge, &processor](const juce::String &binding) {
+        CAPTURE(binding.toStdString());
+        REQUIRE(bridge.valid(binding));
+        REQUIRE(bridge.enabled(binding));
+        auto *parameter = bridge.parameter(binding);
+        REQUIRE(parameter != nullptr);
+        auto *adapter = adapterFor(processor, bridge, binding);
+        REQUIRE(adapter != nullptr);
+        GestureProbe probe(*adapter);
+        const auto original = bridge.value(binding);
+        const auto choices = bridge.choices(binding);
+        REQUIRE(!choices.isEmpty());
+        for (int index = 0; index < choices.size(); ++index)
+        {
+            CAPTURE(index, choices[index].toStdString());
+            REQUIRE(choices[index].isNotEmpty());
+            const auto normalized = bridge.choiceValue(binding, index);
+            REQUIRE(std::isfinite(normalized));
+            REQUIRE(normalized >= 0.f);
+            REQUIRE(normalized <= 1.f);
+            edit(bridge, binding, normalized);
+            CHECK(bridge.choiceIndex(binding) == index);
+            if (parameter->valtype == vt_bool)
+                CHECK(parameter->val.b == (index != 0));
+            else
+                CHECK(parameter->val.i == parameter->val_min.i + index);
+            CHECK(bridge.activeGestureCount() == 0);
+            CHECK_FALSE(adapter->inEditGesture.load());
+        }
+        edit(bridge, binding, original);
+        CHECK(probe.starts == choices.size() + 1);
+        CHECK(probe.ends == probe.starts);
+        CHECK(probe.balance == 0);
+        CHECK(probe.minimumBalance == 0);
+    };
+
+    for (int scene = 0; scene < n_scenes; ++scene)
+    {
+        CAPTURE(scene);
+        bridge.setScene(scene);
+        for (const auto &binding : bindings)
+        {
+            auto *parameter = bridge.parameter(binding);
+            REQUIRE(parameter != nullptr);
+            // Global/FX bindings target the same parameter in both scenes.
+            if (scene == 0 || parameter->scene != 0)
+                roundTripChoices(binding);
+        }
+
+        // Subtype counts are algorithm-dependent, unlike the declared parameter
+        // storage range. Exercise every advertised subtype for every filter type.
+        for (const auto *prefix : {"filter1", "filter2"})
+        {
+            const auto type = juce::String(prefix) + ".type";
+            const auto subtype = juce::String(prefix) + ".subtype";
+            const auto original = bridge.value(type);
+            const auto types = bridge.choices(type);
+            for (int index = 0; index < types.size(); ++index)
+            {
+                CAPTURE(type.toStdString(), index);
+                edit(bridge, type, bridge.choiceValue(type, index));
+                roundTripChoices(subtype);
+            }
+            edit(bridge, type, original);
+        }
+    }
+}
+
 TEST_CASE("Reference edits survive native processor state restore",
           "[reference-workspaces][reference-state]")
 {
@@ -302,24 +504,293 @@ TEST_CASE("Reference edits survive native processor state restore",
     bridge.setScene(0);
     edit(bridge, "filter1.cutoff", 0.412f);
     edit(bridge, "macro1", 0.62f);
+    edit(bridge, "osc2.pitch", 0.591f);
+    edit(bridge, "env1.attack", 0.247f);
+    edit(bridge, "lfo1.rate", 0.427f);
     bridge.setScene(1);
     edit(bridge, "filter1.cutoff", 0.691f);
+    edit(bridge, "osc3.pitch", 0.381f);
+    edit(bridge, "env2.release", 0.671f);
+    for (int index = 0; index < 8; ++index)
+        edit(bridge, "macro" + juce::String(index + 1), 0.12f + 0.1f * index);
 
     juce::MemoryBlock state;
     processor.getStateInformation(state);
     REQUIRE(state.getSize() > 0);
+    const auto expected = hostParameterValues(processor);
+    REQUIRE(expected.size() > 100);
     edit(bridge, "filter1.cutoff", 0.17f);
+    edit(bridge, "osc3.pitch", 0.52f);
+    edit(bridge, "env2.release", 0.2f);
     bridge.setScene(0);
     edit(bridge, "filter1.cutoff", 0.83f);
-    edit(bridge, "macro1", 0.06f);
+    edit(bridge, "osc2.pitch", 0.4f);
+    edit(bridge, "env1.attack", 0.7f);
+    edit(bridge, "lfo1.rate", 0.1f);
+    for (int index = 0; index < 8; ++index)
+        edit(bridge, "macro" + juce::String(index + 1), 0.96f - 0.1f * index);
 
     // The engine has not started an audio callback in this test, so the processor's
     // existing idle-engine state restore path deserializes the queued state safely.
     processor.setStateInformation(state.getData(), static_cast<int>(state.getSize()));
+    // Compare every host-visible value, including currently hidden parameters;
+    // restoring only the handful of displayed controls is not sufficient.
+    checkHostParameterValues(processor, expected);
     CHECK(bridge.value("filter1.cutoff") == Catch::Approx(0.412f).margin(0.001f));
-    CHECK(bridge.value("macro1") == Catch::Approx(0.62f).margin(0.001f));
+    CHECK(bridge.value("macro1") == Catch::Approx(0.12f).margin(0.001f));
     bridge.setScene(1);
     CHECK(bridge.value("filter1.cutoff") == Catch::Approx(0.691f).margin(0.001f));
+}
+
+TEST_CASE("The native editor switches and reloads reference skins without changing the patch",
+          "[reference-workspaces][reference-editor][reference-lifecycle]")
+{
+    juce::ScopedJuceInitialiser_GUI gui;
+    const auto manifests = workspaceManifests();
+    REQUIRE(manifests.size() == 10);
+    SurgeSynthProcessor processor;
+    REQUIRE(processor.surge != nullptr);
+    ParameterBridge bridge(processor);
+    edit(bridge, "filter1.cutoff", 0.423f);
+    edit(bridge, "macro1", 0.273f);
+    bridge.setScene(1);
+    edit(bridge, "filter1.cutoff", 0.672f);
+
+    for (int lifecycle = 0; lifecycle < 2; ++lifecycle)
+    {
+        CAPTURE(lifecycle);
+        std::unique_ptr<juce::AudioProcessorEditor> owner(processor.createEditorIfNeeded());
+        auto *editor = dynamic_cast<SurgeSynthEditor *>(owner.get());
+        REQUIRE(editor != nullptr);
+        REQUIRE(processor.getActiveEditor() == editor);
+        editor->addToDesktop(0);
+        editor->setVisible(true);
+        const auto stock = Surge::GUI::SkinDB::get()->getDefaultSkinEntry();
+
+        // The first lifecycle covers every package in one live host editor; the
+        // second proves reconstruction against the same processor and patch.
+        const int count = lifecycle == 0 ? manifests.size() : 1;
+        for (int index = 0; index < count; ++index)
+        {
+            const auto &path = manifests[index];
+            const auto manifest = readManifest(path);
+            CAPTURE(manifest["id"].toString().toStdString());
+            const auto expected = hostParameterValues(processor);
+            const bool dirty = processor.surge->storage.getPatch().isDirty;
+            processor.surge->release_if_latched[0] = false;
+            processor.surge->release_if_latched[1] = false;
+            editor->selectSkin(skinEntry(path));
+            INFO(editor->getReferenceWorkspaceError().toStdString());
+            REQUIRE(editor->getReferenceWorkspaceError().isEmpty());
+            auto *workspace = editor->getReferenceWorkspace();
+            REQUIRE(workspace != nullptr);
+            CHECK(workspace->currentId() == manifest["id"].toString());
+            CHECK(workspace->isVisible());
+            CHECK(workspace->getWidth() > 0);
+            CHECK(workspace->getHeight() > 0);
+            checkHostParameterValues(processor, expected);
+            CHECK(processor.surge->storage.getPatch().isDirty == dirty);
+            CHECK_FALSE(processor.surge->release_if_latched[0]);
+            CHECK_FALSE(processor.surge->release_if_latched[1]);
+
+            // The real full-editor action and return must retain the selected
+            // native workspace, scene and all hidden host parameters.
+            auto *full =
+                dynamic_cast<juce::Button *>(findComponent(*workspace, "workspace.full-editor"));
+            REQUIRE(full != nullptr);
+            REQUIRE(static_cast<bool>(full->onClick));
+            full->onClick();
+            CHECK_FALSE(workspace->isVisible());
+            editor->showReferenceWorkspace(true);
+            CHECK(workspace->isVisible());
+            checkHostParameterValues(processor, expected);
+            CHECK_FALSE(processor.surge->release_if_latched[0]);
+            CHECK_FALSE(processor.surge->release_if_latched[1]);
+
+            if (index == 0 || index == count - 1)
+            {
+                // Explicit skin reload replaces the component. Never retain a
+                // raw pointer to a control or bridge across this operation.
+                juce::Component::SafePointer<Workspace> previous(workspace);
+                editor->resetWindowFromSkin();
+                CHECK(previous == nullptr);
+                workspace = editor->getReferenceWorkspace();
+                REQUIRE(workspace != nullptr);
+                CHECK(workspace->currentId() == manifest["id"].toString());
+                checkHostParameterValues(processor, expected);
+                CHECK_FALSE(processor.surge->release_if_latched[0]);
+                CHECK_FALSE(processor.surge->release_if_latched[1]);
+            }
+
+            if (index == 0)
+            {
+                // Put the real editor in scene B before the remaining theme
+                // switches. This catches redundant scene-change actions that
+                // would release latched voices despite no sound-design edit.
+                workspace->selectScene(1);
+                CHECK(workspace->bridge().getScene() == 1);
+                CHECK(processor.surge->storage.getPatch().scene_active.val.i == 1);
+            }
+        }
+
+        const auto expected = hostParameterValues(processor);
+        juce::Component::SafePointer<Workspace> previous(editor->getReferenceWorkspace());
+        editor->selectSkin(stock);
+        CHECK(editor->getReferenceWorkspace() == nullptr);
+        CHECK(previous == nullptr);
+        CHECK(editor->getReferenceWorkspaceError().isEmpty());
+        checkHostParameterValues(processor, expected);
+        owner.reset();
+        CHECK(processor.getActiveEditor() == nullptr);
+        checkHostParameterValues(processor, expected);
+    }
+}
+
+TEST_CASE("Performance workspace keyboard and XY controls release owned interactions",
+          "[reference-workspaces][reference-performance][reference-lifecycle]")
+{
+    juce::ScopedJuceInitialiser_GUI gui;
+    const auto manifests = workspaceManifests();
+    juce::File performanceManifest;
+    for (const auto &path : manifests)
+        if (readManifest(path)["id"].toString() == "10-live-performance-deck")
+            performanceManifest = path;
+    REQUIRE(performanceManifest.existsAsFile());
+    SurgeSynthProcessor processor;
+    REQUIRE(processor.surge != nullptr);
+    auto workspace = std::make_unique<Workspace>(processor);
+    juce::String error;
+    REQUIRE(workspace->load(performanceManifest, error));
+    workspace->setSize(referenceWidth, referenceHeight);
+    workspace->addToDesktop(0);
+    workspace->setVisible(true);
+    auto &bridge = workspace->bridge();
+    REQUIRE(processor.macrosById.size() == 8);
+
+    // Screen-reader numeric values are normalized, whereas text must be parsed
+    // in the parameter's displayed unit; "440 Hz" must never mean normalized 440.
+    const auto manifest = readManifest(performanceManifest);
+    auto *macroControl = findBindingControl(*workspace, manifest, "macro1");
+    REQUIRE(macroControl != nullptr);
+    auto *macroSlider = findSlider(*macroControl);
+    REQUIRE(macroSlider != nullptr);
+    auto *macroHandler = macroSlider->getAccessibilityHandler();
+    REQUIRE(macroHandler != nullptr);
+    auto *macroValue = macroHandler->getValueInterface();
+    REQUIRE(macroValue != nullptr);
+    CHECK_FALSE(macroValue->isReadOnly());
+    macroValue->setValue(.42);
+    CHECK(bridge.value("macro1") == Catch::Approx(.42f).margin(.00001f));
+    macroValue->setValueAsString("0.37");
+    CHECK(bridge.value("macro1") == Catch::Approx(.37f).margin(.00001f));
+    for (const auto *invalid : {"not a number", "NaN", "1.1"})
+    {
+        macroValue->setValueAsString(invalid);
+        CHECK(bridge.value("macro1") == Catch::Approx(.37f).margin(.00001f));
+    }
+    auto *cutoffControl = findBindingControl(*workspace, manifest, "filter1.cutoff");
+    REQUIRE(cutoffControl != nullptr);
+    auto *cutoffSlider = findSlider(*cutoffControl);
+    REQUIRE(cutoffSlider != nullptr);
+    auto *cutoffHandler = cutoffSlider->getAccessibilityHandler();
+    REQUIRE(cutoffHandler != nullptr);
+    auto *cutoffValue = cutoffHandler->getValueInterface();
+    REQUIRE(cutoffValue != nullptr);
+    cutoffValue->setValueAsString("440 Hz");
+    REQUIRE(bridge.parameter("filter1.cutoff") != nullptr);
+    CHECK(bridge.parameter("filter1.cutoff")->val.f == Catch::Approx(0.f).margin(.0001f));
+    CHECK(bridge.value("filter1.cutoff") < .9f);
+    CHECK(bridge.activeGestureCount() == 0);
+
+    GestureProbe xProbe(*processor.macrosById[0]);
+    GestureProbe yProbe(*processor.macrosById[1]);
+    auto *xy = findComponent(*workspace, "workspace.macro-xy");
+    REQUIRE(xy != nullptr);
+    const auto pad = xy->getLocalBounds().toFloat().reduced(3);
+    REQUIRE(pad.getWidth() > 0.f);
+    REQUIRE(pad.getHeight() > 0.f);
+    const auto quarter =
+        pad.getTopLeft() + juce::Point<float>(pad.getWidth() * .25f, pad.getHeight() * .25f);
+    xy->mouseDown(mouseEvent(*xy, quarter));
+    CHECK(bridge.value("macro1") == Catch::Approx(.25f).margin(.00001f));
+    CHECK(bridge.value("macro2") == Catch::Approx(.75f).margin(.00001f));
+    CHECK(bridge.activeGestureCount() == 2);
+    xy->mouseDrag(mouseEvent(*xy, {pad.getRight() + 100.f, pad.getY() - 100.f}));
+    CHECK(bridge.value("macro1") == Catch::Approx(1.f));
+    CHECK(bridge.value("macro2") == Catch::Approx(1.f));
+    xy->mouseUp(mouseEvent(*xy, quarter));
+    CHECK(bridge.activeGestureCount() == 0);
+    CHECK(xProbe.starts == 1);
+    CHECK(xProbe.ends == 1);
+    CHECK(yProbe.starts == 1);
+    CHECK(yProbe.ends == 1);
+
+    REQUIRE(xy->keyPressed(juce::KeyPress(juce::KeyPress::leftKey)));
+    REQUIRE(xy->keyPressed(
+        juce::KeyPress(juce::KeyPress::downKey, juce::ModifierKeys::shiftModifier, 0)));
+    CHECK(bridge.value("macro1") == Catch::Approx(.99f).margin(.00001f));
+    CHECK(bridge.value("macro2") == Catch::Approx(.999f).margin(.00001f));
+    CHECK(xProbe.balance == 0);
+    CHECK(yProbe.balance == 0);
+
+    // Resize and scene changes must cancel two-axis gestures, not merely hide
+    // their display while the host remains in an automation-edit transaction.
+    xy->mouseDown(mouseEvent(*xy, quarter));
+    workspace->setSize(referenceWidth - 100, referenceHeight - 60);
+    CHECK(bridge.activeGestureCount() == 0);
+    CHECK(xProbe.balance == 0);
+    CHECK(yProbe.balance == 0);
+    xy->mouseDown(mouseEvent(*xy, quarter));
+    workspace->selectScene(1);
+    CHECK(bridge.activeGestureCount() == 0);
+    CHECK(xProbe.balance == 0);
+    CHECK(yProbe.balance == 0);
+
+    auto *keyboard = dynamic_cast<juce::MidiKeyboardComponent *>(
+        findComponent(*workspace, "workspace.performance-keyboard"));
+    REQUIRE(keyboard != nullptr);
+    REQUIRE(keyboard->getRangeStart() <= 60);
+    REQUIRE(keyboard->getRangeEnd() >= 60);
+    const auto key = keyboard->getRectangleForKey(60);
+    const auto keyPoint = juce::Point<float>(key.getCentreX(), key.getBottom() - 3.f);
+    REQUIRE(keyboard->getNoteAndVelocityAtPosition(keyPoint).note == 60);
+    keyboard->mouseDown(mouseEvent(*keyboard, keyPoint));
+    REQUIRE(processor.midiKeyboardState.isNoteOn(1, 60));
+    // A host/external note is not owned by this keyboard and must be untouched.
+    processor.midiKeyboardState.noteOn(2, 71, .6f);
+    xy->mouseDown(mouseEvent(*xy, quarter));
+    workspace->setVisible(false);
+    CHECK_FALSE(processor.midiKeyboardState.isNoteOn(1, 60));
+    CHECK(processor.midiKeyboardState.isNoteOn(2, 71));
+    CHECK(bridge.activeGestureCount() == 0);
+    CHECK(xProbe.balance == 0);
+    CHECK(yProbe.balance == 0);
+    workspace->setVisible(true);
+    keyboard->mouseDown(mouseEvent(*keyboard, keyPoint));
+    REQUIRE(processor.midiKeyboardState.isNoteOn(1, 60));
+    xy->mouseDown(mouseEvent(*xy, quarter));
+    juce::Component::SafePointer<juce::Component> oldKeyboard(keyboard);
+    juce::Component::SafePointer<juce::Component> oldXY(xy);
+    REQUIRE(workspace->load(performanceManifest, error));
+    CHECK(oldKeyboard == nullptr);
+    CHECK(oldXY == nullptr);
+    CHECK_FALSE(processor.midiKeyboardState.isNoteOn(1, 60));
+    CHECK(processor.midiKeyboardState.isNoteOn(2, 71));
+    CHECK(bridge.activeGestureCount() == 0);
+    CHECK(xProbe.balance == 0);
+    CHECK(yProbe.balance == 0);
+
+    keyboard = dynamic_cast<juce::MidiKeyboardComponent *>(
+        findComponent(*workspace, "workspace.performance-keyboard"));
+    REQUIRE(keyboard != nullptr);
+    keyboard->mouseDown(mouseEvent(*keyboard, keyPoint));
+    REQUIRE(processor.midiKeyboardState.isNoteOn(1, 60));
+    workspace.reset();
+    CHECK_FALSE(processor.midiKeyboardState.isNoteOn(1, 60));
+    CHECK(processor.midiKeyboardState.isNoteOn(2, 71));
+    CHECK(xProbe.minimumBalance == 0);
+    CHECK(yProbe.minimumBalance == 0);
+    processor.midiKeyboardState.noteOff(2, 71, 0.f);
 }
 
 TEST_CASE("Ten reference workspaces render native controls and export evidence",
@@ -358,7 +829,18 @@ TEST_CASE("Ten reference workspaces render native controls and export evidence",
         REQUIRE(error.isEmpty());
         REQUIRE(workspace.currentId() == id);
         workspace.setSize(referenceWidth, referenceHeight);
+        workspace.addToDesktop(0);
+        workspace.setVisible(true);
         workspace.selectScene(0);
+        // The output views consume the real processor tap only while visible.
+        // Feed a reproducible held note; no external image or invented samples
+        // are used to fill an oscilloscope, spectrum or output meter.
+        juce::MidiBuffer note;
+        note.addEvent(juce::MidiMessage::noteOn(1, 60, 0.8f), 0);
+        float audioPeak = processBlock(processor, note);
+        for (int block = 0; block < 4; ++block)
+            audioPeak = std::max(audioPeak, processBlock(processor));
+        CHECK(audioPeak > 0.0001f);
         workspace.refresh();
 
         auto &bridge = workspace.bridge();
@@ -379,8 +861,8 @@ TEST_CASE("Ten reference workspaces render native controls and export evidence",
         }
         REQUIRE(resolvedControls > 0);
 
-        // Snapshot the real component before modifying any parameter. No concept PNG is
-        // loaded by this harness, and no preset numbers are fabricated to resemble the art.
+        // Snapshot the real component before modifying any parameter. It shows
+        // the startup patch with the documented live-note fixture, not reference art.
         auto initial = workspace.createComponentSnapshot(workspace.getLocalBounds());
         REQUIRE(initial.isValid());
         REQUIRE(initial.getWidth() == referenceWidth);
@@ -400,6 +882,8 @@ TEST_CASE("Ten reference workspaces render native controls and export evidence",
         REQUIRE(cutoffSlider->getMinimum() == Catch::Approx(0.0));
         REQUIRE(cutoffSlider->getMaximum() == Catch::Approx(1.0));
         cutoffSlider->setValue(requested, juce::sendNotificationSync);
+        for (int block = 0; block < 4; ++block)
+            processBlock(processor);
         workspace.refresh();
         const float after = bridge.value("filter1.cutoff");
         CHECK(after == Catch::Approx(requested).margin(0.001f));
@@ -434,14 +918,14 @@ TEST_CASE("Ten reference workspaces render native controls and export evidence",
         workspace.setSize(referenceWidth, referenceHeight);
         edit(bridge, "filter1.cutoff", before);
         workspace.refresh();
-        // Feed real MIDI through the existing engine and check finite audio. This does
-        // not claim a device/DAW listening test or a measured spectrum screenshot.
-        juce::MidiBuffer note;
-        note.addEvent(juce::MidiMessage::noteOn(1, 60, 0.8f), 0);
-        processBlock(processor, note);
-        processBlock(processor);
+        // Feed real MIDI through the existing engine. Finite silence is not enough:
+        // the restored startup patch must produce a nonzero main-output signal.
+        // This remains an offline DSP check, not a device/DAW listening test.
+        for (int block = 0; block < 4; ++block)
+            audioPeak = std::max(audioPeak, processBlock(processor));
+        CHECK(audioPeak > 0.0001f);
         processor.reset();
-        processBlock(processor);
+        CHECK(processBlock(processor) < 0.000001f);
         processor.releaseResources();
 
         auto capture = object();
@@ -454,6 +938,9 @@ TEST_CASE("Ten reference workspaces render native controls and export evidence",
         property(capture, "width", referenceWidth);
         property(capture, "height", referenceHeight);
         property(capture, "patch", "Processor startup patch; no reference image loaded");
+        property(capture, "audioFixture",
+                 "Held MIDI channel 1 note 60, velocity 0.8; five 512-sample blocks at 48 kHz "
+                 "before baseline capture; output visuals read the real processor audio tap");
         property(capture, "scene", "A");
         property(capture, "resolvedManifestControls", resolvedControls);
         property(capture, "editedBinding", "filter1.cutoff");
@@ -461,6 +948,7 @@ TEST_CASE("Ten reference workspaces render native controls and export evidence",
         property(capture, "normalizedAfter", after);
         property(capture, "changedPixelsAfterControlEdit", differences);
         property(capture, "hostUpdateNormalized", 0.579);
+        property(capture, "offlineMainOutputPeak", audioPeak);
         property(capture, "scalesRendered", juce::var(juce::Array<juce::var>{1.0, 1.25, 1.5}));
         property(capture, "fidelityAssessment", "Requires human comparison; no pixel-exact claim");
         captures.add(capture);

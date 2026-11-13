@@ -26,6 +26,7 @@
 #include "SurgeSynthesizer.h"
 #include "SurgeStorage.h"
 #include "util/LockFreeStack.h"
+#include "sst/cpputils/ring_buffer.h"
 
 #include "osc/OpenSoundControl.h"
 
@@ -456,6 +457,12 @@ class SurgeSynthProcessor : public juce::AudioProcessor,
     void surgeMacroUpdated(long macroNum, float d) override;
 
     std::unique_ptr<SurgeSynthesizer> surge;
+
+    // UI-only, single-consumer tap of the final main output. The reference workspace owns
+    // subscribe/popall/unsubscribe on the message thread; storage.audioOut remains exclusively
+    // available to the original oscilloscope. This processor-owned ring outlives its editor.
+    sst::cpputils::StereoRingBuffer<float, 8192> referenceAudio;
+
     std::unordered_map<SurgeSynthesizer::ID, SurgeParamToJuceParamAdapter *> paramsByID;
     std::vector<SurgeMacroToJuceParamAdapter *> macrosById;
 

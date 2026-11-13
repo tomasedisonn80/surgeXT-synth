@@ -14,16 +14,19 @@ import json
 import math
 import re
 import sys
+import tempfile
 import xml.etree.ElementTree as ET
 from pathlib import Path, PurePosixPath
 
 MAX_BYTES = 1024 * 1024
+MAX_EXACT_INTEGER = 9007199254740991
 STYLES = set("precision ivory spectral bauhaus space tokyo aurora clear flow live".split())
 FONTS = {"sans", "serif", "mono"}
 PALETTE = set("background panel border text muted accent secondary display knob red yellow blue".split())
 PANELS = set("oscillator filter mixer envelope lfo macros matrix effects analyzer waveform browser routing scene output xy keyboard inspector amp tabs".split())
 VARIANTS = set("compact horizontal vertical large combined terrain flow faders knobs".split())
 CONTROLS = {"knob", "fader", "horizontal", "menu", "toggle"}
+FLOW_NODES = set("osc1 osc2 osc3 mixer filter1 filter2 amp fx output modsources modbus".split())
 IDENTIFIER = re.compile(r"[a-zA-Z0-9_.-]{1,80}\Z")
 COLOUR = re.compile(r"#[0-9a-fA-F]{6}(?:[0-9a-fA-F]{2})?\Z")
 
@@ -40,10 +43,16 @@ def require(condition: bool, message: str) -> None:
 def numeric(value: object) -> bool:
     if not isinstance(value, (int, float)) or isinstance(value, bool):
         return False
+    if isinstance(value, int) and abs(value) > MAX_EXACT_INTEGER:
+        return False
     try:
         return math.isfinite(value)
     except OverflowError:
         return False
+
+
+def unicode_text(value: str) -> bool:
+    return all(char != "\x00" and not 0xD800 <= ord(char) <= 0xDFFF for char in value)
 
 
 def text_field(obj: dict, key: str, limit: int, where: str, empty: bool = False) -> None:
@@ -63,14 +72,16 @@ def bounded_tree(value: object, depth: int = 0) -> None:
     if isinstance(value, dict):
         require(len(value) <= 128, "object exceeds 128 properties")
         for key, item in value.items():
-            require(isinstance(key, str) and len(key) <= 80, "invalid property name")
+            require(isinstance(key, str) and 0 < len(key) <= 80 and unicode_text(key),
+                    "invalid property name")
             bounded_tree(item, depth + 1)
     elif isinstance(value, list):
         require(len(value) <= 512, "array exceeds 512 items")
         for item in value:
             bounded_tree(item, depth + 1)
     elif isinstance(value, str):
-        require(len(value) <= 4096, "string exceeds 4096 characters")
+        require(len(value) <= 4096 and unicode_text(value),
+                "string must be valid non-NUL Unicode <= 4096 characters")
     elif isinstance(value, bool) or value is None:
         pass
     else:
@@ -82,6 +93,18 @@ def rectangle(obj: dict, where: str) -> None:
         number_field(obj, key, low, high, where)
     require(obj["x"] + obj["w"] <= 1586.001 and obj["y"] + obj["h"] <= 992.001,
             f"{where} extends outside 1586 x 992 canvas")
+
+
+def array_rectangle(values: object, where: str, panel: dict | None = None) -> None:
+    require(isinstance(values, list) and len(values) == 4 and all(numeric(v) for v in values),
+            f"{where} must be [x, y, width, height] with finite numbers")
+    rectangle(dict(zip(("x", "y", "w", "h"), values)), where)
+    if panel is not None:
+        x, y, width, height = values
+        require(x >= panel["x"] - .001 and y >= panel["y"] - .001 and
+                x + width <= panel["x"] + panel["w"] + .001 and
+                y + height <= panel["y"] + panel["h"] + .001,
+                f"{where} must be inside its panel")
 
 
 def validate_manifest(data: object) -> None:
@@ -133,11 +156,15 @@ def validate_manifest(data: object) -> None:
                             f"{where}.index must be integer 1..16")
                 for key in ("plot", "plot2"):
                     if key in item:
-                        values = item[key]
-                        require(isinstance(values, list) and len(values) == 4 and
-                                all(numeric(value) for value in values),
-                                f"{where}.{key} must be [x, y, width, height] with finite numbers")
-                        rectangle(dict(zip(("x", "y", "w", "h"), values)), f"{where}.{key}")
+                        array_rectangle(item[key], f"{where}.{key}", item)
+                if "flowNodes" in item:
+                    nodes = item["flowNodes"]
+                    require(isinstance(nodes, dict) and 1 <= len(nodes) <= 11 and
+                            item["kind"] == "routing",
+                            f"{where}.flowNodes requires 1..11 routing node rectangles")
+                    for key, values in nodes.items():
+                        require(key in FLOW_NODES, f"{where}.flowNodes.{key} is not a supported flow node")
+                        array_rectangle(values, f"{where}.flowNodes.{key}", item)
                 if "titleHeight" in item:
                     number_field(item, "titleHeight", 0, 120, where)
             else:
@@ -150,6 +177,20 @@ def validate_manifest(data: object) -> None:
                     text_field(item, "label", 160, where, empty=True)
                 if "fontSize" in item:
                     number_field(item, "fontSize", 8, 24, where)
+                if "labelPosition" in item:
+                    require(isinstance(item["labelPosition"], str) and
+                            item["labelPosition"] in ("left", "right") and
+                            item.get("kind", "knob") == "knob",
+                            f"{where}.labelPosition must be left/right on a knob")
+                minimum = {"fader": (24, 46), "horizontal": (24, 40)}.get(item.get("kind"))
+                if minimum:
+                    require(item["w"] >= minimum[0] and item["h"] >= minimum[1],
+                            f"{where} is too small for its labelled slider and track")
+            if "ink" in item:
+                require(isinstance(item["ink"], str) and bool(COLOUR.fullmatch(item["ink"])),
+                        f"{where}.ink must be #RRGGBB or #RRGGBBAA")
+            if collection == "panels" and "fontSize" in item:
+                number_field(item, "fontSize", 8, 24, where)
             colour_key = "color" if collection == "panels" else "accent"
             if colour_key in item:
                 value = item[colour_key]
@@ -173,26 +214,131 @@ def unique_object(pairs: list[tuple[str, object]]) -> dict:
     return result
 
 
+def bounded_json(text: str) -> None:
+    """Cap container depth before Python's recursive JSON parser is called."""
+    require(text.lstrip(" \t\r\n").startswith("{"), "manifest must be a JSON object")
+    stack: list[str] = []
+    quoted = escaped = ended = False
+    for char in text:
+        if quoted:
+            if escaped:
+                escaped = False
+            elif char == "\\":
+                escaped = True
+            elif char == '"':
+                quoted = False
+            continue
+        if char in " \t\r\n":
+            continue
+        require(not ended, "unexpected text after manifest JSON object")
+        if char == '"':
+            quoted = True
+        elif char in "{[":
+            stack.append(char)
+            # Root is depth zero. Scalar depth is checked by bounded_tree.
+            require(len(stack) <= 13, "manifest nesting exceeds 12 levels")
+        elif char in "}]":
+            require(bool(stack) and stack[-1] == {"}": "{", "]": "["}[char],
+                    "unbalanced manifest JSON delimiters")
+            stack.pop()
+            ended = not stack
+    require(ended and not stack and not quoted, "incomplete manifest JSON object")
+
+
+def number_token(token: str, integral: bool) -> int | float:
+    require(len(token) <= 128, "JSON number exceeds its 128-character limit")
+    parts = re.split("[eE]", token.lstrip("-"))
+    if len(parts) == 2:
+        require(len(parts[1].lstrip("+-")) <= 4, "JSON exponent exceeds its four-digit limit")
+    whole = parts[0].split(".", 1)[0]
+    require(len(whole) < 19 or len(whole) == 19 and whole <= "9223372036854775807",
+            "JSON number's integer part exceeds the parser's safe range")
+    value = int(token) if integral else float(token)
+    require(numeric(value), "JSON number is nonfinite or outside the exact integer range")
+    return value
+
+
+def load_bytes(raw: bytes) -> dict:
+    require(0 < len(raw) <= MAX_BYTES, "manifest must be nonempty and <= one MiB")
+    require(b"\x00" not in raw, "manifest contains a NUL byte")
+    text = raw.decode("utf-8")
+    bounded_json(text)
+    data = json.loads(text, object_pairs_hook=unique_object,
+                      parse_int=lambda token: number_token(token, True),
+                      parse_float=lambda token: number_token(token, False))
+    validate_manifest(data)
+    return data
+
+
 def load_manifest(path: Path) -> dict:
     # Read one extra byte rather than trusting a pre-read stat against file growth.
     with path.open("rb") as stream:
-        raw = stream.read(MAX_BYTES + 1)
-    require(0 < len(raw) <= MAX_BYTES, "manifest must be nonempty and <= one MiB")
-    require(b"\x00" not in raw, "manifest contains a NUL byte")
-    data = json.loads(raw.decode("utf-8"), object_pairs_hook=unique_object)
-    validate_manifest(data)
-    return data
+        return load_bytes(stream.read(MAX_BYTES + 1))
+
+
+def resolve_layout(package: Path, relative: str) -> Path:
+    relative_path = PurePosixPath(relative)
+    require(bool(relative) and not relative_path.is_absolute() and
+            ".." not in relative_path.parts and "\\" not in relative and
+            ":" not in relative and "\x00" not in relative,
+            "manifest layout must be a confined relative path")
+    manifest_path = (package / relative).resolve(strict=True)
+    require(manifest_path.is_relative_to(package.resolve()), "manifest symlink escapes skin package")
+    require(manifest_path.is_file(), "manifest layout must name a file")
+    return manifest_path
+
+
+def intersection(a: dict, b: dict) -> tuple[float, float]:
+    return (min(a["x"] + a["w"], b["x"] + b["w"]) - max(a["x"], b["x"]),
+            min(a["y"] + a["h"], b["y"] + b["h"]) - max(a["y"], b["y"]))
 
 
 def overlaps(controls: list[dict]) -> list[str]:
     result = []
     for index, a in enumerate(controls):
         for b in controls[index + 1:]:
-            width = min(a["x"] + a["w"], b["x"] + b["w"]) - max(a["x"], b["x"])
-            height = min(a["y"] + a["h"], b["y"] + b["h"]) - max(a["y"], b["y"])
+            width, height = intersection(a, b)
             if width > 0.5 and height > 0.5:
                 result.append(f"control bounds overlap: {a['id']} / {b['id']} ({width:g} x {height:g})")
     return result
+
+
+def visual_overlaps(data: dict) -> tuple[list[str], list[str]]:
+    """Diagnostic only: a route graph intentionally contains live node controls.
+
+    A panel is a container, so panel/control intersections are not collisions.
+    Unexpected plot/control or plot/plot intersections are reported separately
+    from the fatal control hit-target test; labels may need visual inspection.
+    """
+    warnings: list[str] = []
+    intentional: list[str] = []
+    plots = []
+    for panel in data["panels"]:
+        route = panel["kind"] == "routing" and ("flowNodes" in panel or panel.get("variant") == "flow")
+        route_count = 0
+        for key in ("plot", "plot2"):
+            if key not in panel:
+                continue
+            plot = dict(zip(("x", "y", "w", "h"), panel[key]))
+            plot["id"] = f"{panel['id']}.{key}"
+            plots.append(plot)
+            for control in data["controls"]:
+                width, height = intersection(plot, control)
+                if width <= .5 or height <= .5:
+                    continue
+                if route:
+                    route_count += 1
+                else:
+                    warnings.append(f"plot/control bounds overlap: {plot['id']} / {control['id']} "
+                                    f"({width:g} x {height:g}); inspect rendered labels")
+        if route_count:
+            intentional.append(f"{panel['id']}: {route_count} live controls intentionally overlay routing plot")
+    for index, a in enumerate(plots):
+        for b in plots[index + 1:]:
+            width, height = intersection(a, b)
+            if width > .5 and height > .5:
+                warnings.append(f"plot bounds overlap: {a['id']} / {b['id']} ({width:g} x {height:g})")
+    return warnings, intentional
 
 
 def validate_packages(root: Path, allow_partial: bool, strict_overlap: bool) -> dict:
@@ -221,13 +367,7 @@ def validate_packages(root: Path, allow_partial: bool, strict_overlap: bool) -> 
             require(bool(name) and name not in skin_names, "skin name is empty or duplicated")
             skin_names.add(name)
             relative = tags[0].get("layout", "")
-            relative_path = PurePosixPath(relative)
-            require(bool(relative) and not relative_path.is_absolute() and
-                    ".." not in relative_path.parts and "\\" not in relative and ":" not in relative,
-                    "manifest layout must be a confined relative path")
-            manifest_path = (xml_path.parent / relative).resolve(strict=True)
-            require(manifest_path.is_relative_to(xml_path.parent.resolve()),
-                    "manifest symlink escapes skin package")
+            manifest_path = resolve_layout(xml_path.parent, relative)
             data = load_manifest(manifest_path)
             require(data["id"] not in workspace_ids, "duplicate workspace id")
             require(data["style"] not in styles, "duplicate concept style")
@@ -235,10 +375,12 @@ def validate_packages(root: Path, allow_partial: bool, strict_overlap: bool) -> 
             styles.add(data["style"])
             warnings = overlaps(data["controls"])
             require(not strict_overlap or not warnings, "; ".join(warnings))
+            visual_warnings, intentional = visual_overlaps(data)
+            warnings.extend(visual_warnings)
             results.append({"id": data["id"], "name": name, "style": data["style"],
                             "manifest": str(manifest_path.relative_to(root.resolve())),
                             "panels": len(data["panels"]), "controls": len(data["controls"]),
-                            "warnings": warnings})
+                            "warnings": warnings, "intentional_overlays": intentional})
         except (InvalidManifest, OSError, ValueError, ET.ParseError, RecursionError) as error:
             errors.append(f"{xml_path.relative_to(root)}: {error}")
     if not allow_partial and len(results) != 10:
@@ -263,7 +405,17 @@ def self_test() -> None:
                         (('panels', 0, 'kind'), "webview"), (('adaptations',), [None]),
                         (('controls', 0, 'binding'), "../../secret"),
                         (('controls', 0, 'fontSize'), 7), (('panels', 0, 'plot'), [0, 0, 5000, 40]),
-                        (('controls', 0, 'x'), 10**1000), (('palette', 'extra'), 3)]:
+                        (('controls', 0, 'x'), 10**1000), (('palette', 'extra'), 3),
+                        (('controls', 0, 'labelPosition'), "bottom"),
+                        (('controls', 0, 'labelPosition'), None),
+                        (('controls', 0, 'fontSize'), float('inf')),
+                        (('controls', 0, 'ink'), "text"),
+                        (('panels', 0, 'ink'), "#12345Z"),
+                        (('panels', 0, 'fontSize'), 25),
+                        (('panels', 0, 'plot'), [0, 0, 100, 20]),
+                        (('panels', 0, 'plot2'), [0, 90, 100, -20]),
+                        (('panels', 0, 'flowNodes'), {}),
+                        (('name',), "unpaired\ud800"), (('name',), "NUL\x00text")]:
         case = copy.deepcopy(base)
         parent = case
         for key in path[:-1]:
@@ -271,15 +423,97 @@ def self_test() -> None:
         parent[path[-1]] = value
         bad_cases.append(case)
     bad_cases.append({**base, "controls": []})
+    for kind, width, height in (("fader", 23, 80), ("fader", 24, 45),
+                                ("horizontal", 24, 39), ("horizontal", 23, 60)):
+        case = copy.deepcopy(base)
+        case["controls"][0].update(kind=kind, w=width, h=height)
+        bad_cases.append(case)
+    route = copy.deepcopy(base)
+    route["panels"][0].update(kind="routing", flowNodes={"osc1": [10, 90, 100, 60]},
+                              plot=[5, 85, 390, 190])
+    validate_manifest(route)
+    for nodes in ([], {}, {"remote": [10, 90, 100, 60]}, {"osc1": [10, 90, 0, 60]},
+                  {"osc1": [10, 90, 100, float("nan")]}, {"osc1": [10, 90, 100]},
+                  {"osc1": [500, 90, 100, 60]}, {"osc1": "https://invalid.example/image"}):
+        case = copy.deepcopy(route)
+        case["panels"][0]["flowNodes"] = nodes
+        bad_cases.append(case)
+    case = copy.deepcopy(base)
+    case["controls"][0].update(kind="fader", labelPosition="left")
+    bad_cases.append(case)
+    case = copy.deepcopy(base)
+    nested = case
+    for _ in range(14):
+        nested["extension"] = {}
+        nested = nested["extension"]
+    bad_cases.append(case)
     for index, case in enumerate(bad_cases):
         try:
             validate_manifest(case)
         except InvalidManifest:
             continue
         raise AssertionError(f"invalid case {index} was accepted")
+    duplicates = copy.deepcopy(base)
+    duplicates["controls"].append({**duplicates["controls"][0], "id": "second", "x": 400})
+    validate_manifest(duplicates)  # A parameter may intentionally have two views.
+    unicode_case = copy.deepcopy(base)
+    unicode_case["name"] = "Café 日本語 فارسی 🟩"
+    for ascii_only in (True, False):
+        raw = json.dumps(unicode_case, ensure_ascii=ascii_only).encode("utf-8")
+        assert load_bytes(raw)["name"] == unicode_case["name"]
+    raw = json.dumps(base).encode("utf-8")
+    malformed = [b"", b"x" * (MAX_BYTES + 1), raw + b"{}", raw + b"\x00", b"\xef\xbb\xbf" + raw,
+                 raw.replace(b'"Test"', b'"bad\\q"'), raw.replace(b'"Test"', b'"bad\\a"'),
+                 raw.replace(b'"Test"', b'"bad\\u0000"'), raw.replace(b'"Test"', b'"bad\\ud800"'),
+                 raw.replace(b'"Test"', b'"bad\\udc00"'), raw.replace(b'"Test"', b'"bad\xff"'),
+                 raw.replace(b'"Test"', b'"bad\ntext"'), raw[:-1] + b",}",
+                 raw.replace(b'"schema": 1', b'"schema": 1, "\\u0073chema": 1'),
+                 raw.replace(b'"schema": 1', b'"schema": 18446744073709551617'),
+                 raw[:-1] + b', "extra": 999999999999999999999.0}',
+                 raw[:-1] + b', "extra": 1e999999999999}',
+                 raw[:-1] + b', "extra": 1e309}', raw[:-1] + b', "extra": 01}',
+                 raw[:-1] + b', "extra": 1.}', raw[:-1] + b', "extra": +1}',
+                 raw[:-1] + b', "extra": 9007199254740992}',
+                 raw[:-1] + b', "extra": "unterminated}',
+                 raw[:-1] + b', "extra": ' + b'[' * 20 + b'0' + b']' * 20 + b'}']
+    for index, payload in enumerate(malformed):
+        try:
+            load_bytes(payload)
+        except (InvalidManifest, ValueError, UnicodeError):
+            continue
+        raise AssertionError(f"malformed JSON fixture {index} was accepted")
+    paths_checked = 0
+    with tempfile.TemporaryDirectory(prefix="surge-manifest-selftest-") as directory:
+        root = Path(directory)
+        package = root / "test.surge-skin"
+        package.mkdir()
+        (package / "workspace.json").write_bytes(raw)
+        (root / "outside.json").write_bytes(raw)
+        assert load_manifest(resolve_layout(package, "workspace.json"))["id"] == "test"
+        for relative in ("", "../outside.json", "/outside.json", "C:/outside.json",
+                         "https://invalid.example/layout", "..\\outside.json", ".", "\x00"):
+            try:
+                resolve_layout(package, relative)
+            except (InvalidManifest, OSError, ValueError):
+                paths_checked += 1
+                continue
+            raise AssertionError(f"unconfined layout path {relative!r} was accepted")
+        (package / "escape.json").symlink_to(root / "outside.json")
+        try:
+            resolve_layout(package, "escape.json")
+        except InvalidManifest:
+            paths_checked += 1
+        else:
+            raise AssertionError("escaping manifest symlink was accepted")
     assert overlaps(base["controls"]) == []
     assert len(overlaps(base["controls"] * 2)) == 1
-    print(f"PASS: valid fixture, {len(bad_cases)} rejected fixtures, overlap checks")
+    assert len(visual_overlaps(route)[1]) == 1
+    assert not visual_overlaps(route)[0]
+    unexpected = copy.deepcopy(route)
+    unexpected["panels"][0]["kind"] = "waveform"
+    assert len(visual_overlaps(unexpected)[0]) == 1
+    print(f"PASS: valid/Unicode/duplicate-binding fixtures; {len(bad_cases)} schema rejections; "
+          f"{len(malformed)} malformed JSON rejections; {paths_checked} confined-path checks; overlap checks")
 
 
 def main() -> int:
@@ -304,6 +538,8 @@ def main() -> int:
             print(f"PASS {item['name']}: {item['panels']} panels, {item['controls']} controls")
             for warning in item["warnings"]:
                 print(f"  WARNING {warning}")
+            for info in item["intentional_overlays"]:
+                print(f"  NOTE {info}")
         for error in report["errors"]:
             print(f"FAIL {error}", file=sys.stderr)
         print(f"{'PASS' if report['ok'] else 'FAIL'}: {report['count']} reference workspaces validated")

@@ -258,6 +258,10 @@ class SurgeGUIEditor : public Surge::GUI::IComponentTagValue::Listener,
         if (scene >= 0 && scene < n_scenes)
             changeSelectedScene(scene);
     }
+    void selectSkinFromReferenceWorkspace(const Surge::GUI::SkinDB::Entry &entry)
+    {
+        setupSkinFromEntry(entry);
+    }
     int getCurrentLFOIDInEditor()
     {
         auto lfo_id = modsource_editor[current_scene] - ms_lfo1;

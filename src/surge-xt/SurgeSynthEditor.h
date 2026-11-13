@@ -64,6 +64,8 @@ class SurgeSynthEditor : public juce::AudioProcessorEditor,
     };
     void parentHierarchyChanged() override;
     void resetWindowFromSkin();
+    // Apply a skin to this editor without rewriting the user's default-skin preference.
+    void selectSkin(const Surge::GUI::SkinDB::Entry &entry);
 
     // Alternative native workspaces use the same processor and host parameters.
     // The original editor remains available for every advanced Surge operation.

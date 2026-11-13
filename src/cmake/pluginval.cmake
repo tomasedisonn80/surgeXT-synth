@@ -35,8 +35,12 @@
     add_dependencies(surge-pluginval-all ${name})
   endfunction()
 
-  get_target_property(fxn surge-fx JUCE_PRODUCT_NAME)
-  get_target_property(xtn surge-xt JUCE_PRODUCT_NAME)
+  if(TARGET surge-fx)
+    get_target_property(fxn surge-fx JUCE_PRODUCT_NAME)
+  endif()
+  if(TARGET surge-xt)
+    get_target_property(xtn surge-xt JUCE_PRODUCT_NAME)
+  endif()
 
   if(TARGET surge-xt_VST3)
     create_pluginval_target(surge-xt-pluginval-vst3 surge-xt_VST3 "${xtn}.vst3")
@@ -45,7 +49,9 @@
     create_pluginval_target(surge-fx-pluginval-vst3 surge-fx_VST3 "${fxn}.vst3")
   endif()
 
-  if(APPLE)
+  if(APPLE AND TARGET surge-xt_AU)
     create_pluginval_target(surge-xt-pluginval-au surge-xt_AU "${xtn}.component")
+  endif()
+  if(APPLE AND TARGET surge-fx_AU)
     create_pluginval_target(surge-fx-pluginval-au surge-fx_AU "${fxn}.component")
   endif()

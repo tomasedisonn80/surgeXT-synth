@@ -337,6 +337,13 @@ void ParameterBridge::set(const juce::String &binding, float normalized)
     // Reject non-finite events rather than unexpectedly moving a control to 0.
     if (!std::isfinite(normalized))
         return;
+    // A host automation or algorithm switch can deactivate a target while the
+    // mouse is still down. End its gesture rather than writing an unused slot.
+    if (!enabled(binding))
+    {
+        end(binding);
+        return;
+    }
     const auto key = binding.toStdString();
     const bool oneShot = gestures.find(key) == gestures.end();
     if (oneShot)

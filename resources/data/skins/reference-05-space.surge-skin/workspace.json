@@ -133,10 +133,10 @@
       "index": 1,
       "variant": "horizontal",
       "plot": [
-        1210,
+        1206,
         194,
-        230,
-        74
+        236,
+        76
       ],
       "fontSize": 14
     },
@@ -151,10 +151,10 @@
       "index": 2,
       "variant": "horizontal",
       "plot": [
-        1210,
+        1206,
         323,
-        230,
-        74
+        236,
+        76
       ],
       "fontSize": 14
     },
@@ -540,8 +540,9 @@
       "h": 81,
       "kind": "knob",
       "label": "Pitch",
-      "fontSize": 10.5,
-      "faceDiameter": 36
+      "fontSize": 11.5,
+      "faceDiameter": 36,
+      "ink": "#F7E8BF"
     },
     {
       "id": "space-osc1-parameter1",
@@ -551,8 +552,9 @@
       "w": 47,
       "h": 81,
       "kind": "knob",
-      "fontSize": 10.5,
-      "faceDiameter": 36
+      "fontSize": 11.5,
+      "faceDiameter": 36,
+      "ink": "#F7E8BF"
     },
     {
       "id": "space-osc1-parameter2",
@@ -562,8 +564,9 @@
       "w": 47,
       "h": 81,
       "kind": "knob",
-      "fontSize": 10.5,
-      "faceDiameter": 36
+      "fontSize": 11.5,
+      "faceDiameter": 36,
+      "ink": "#F7E8BF"
     },
     {
       "id": "space-osc1-parameter3",
@@ -573,8 +576,9 @@
       "w": 47,
       "h": 81,
       "kind": "knob",
-      "fontSize": 10.5,
-      "faceDiameter": 36
+      "fontSize": 11.5,
+      "faceDiameter": 36,
+      "ink": "#F7E8BF"
     },
     {
       "id": "space-osc1-parameter4",
@@ -584,8 +588,9 @@
       "w": 47,
       "h": 81,
       "kind": "knob",
-      "fontSize": 10.5,
-      "faceDiameter": 36
+      "fontSize": 11.5,
+      "faceDiameter": 36,
+      "ink": "#F7E8BF"
     },
     {
       "id": "space-osc1-parameter5",
@@ -595,8 +600,9 @@
       "w": 47,
       "h": 81,
       "kind": "knob",
-      "fontSize": 10.5,
-      "faceDiameter": 36
+      "fontSize": 11.5,
+      "faceDiameter": 36,
+      "ink": "#F7E8BF"
     },
     {
       "id": "space-osc2-type",
@@ -637,8 +643,9 @@
       "h": 81,
       "kind": "knob",
       "label": "Pitch",
-      "fontSize": 10.5,
-      "faceDiameter": 36
+      "fontSize": 11.5,
+      "faceDiameter": 36,
+      "ink": "#F7E8BF"
     },
     {
       "id": "space-osc2-parameter1",
@@ -648,8 +655,9 @@
       "w": 47,
       "h": 81,
       "kind": "knob",
-      "fontSize": 10.5,
-      "faceDiameter": 36
+      "fontSize": 11.5,
+      "faceDiameter": 36,
+      "ink": "#F7E8BF"
     },
     {
       "id": "space-osc2-parameter2",
@@ -659,8 +667,9 @@
       "w": 47,
       "h": 81,
       "kind": "knob",
-      "fontSize": 10.5,
-      "faceDiameter": 36
+      "fontSize": 11.5,
+      "faceDiameter": 36,
+      "ink": "#F7E8BF"
     },
     {
       "id": "space-osc2-parameter3",
@@ -670,8 +679,9 @@
       "w": 47,
       "h": 81,
       "kind": "knob",
-      "fontSize": 10.5,
-      "faceDiameter": 36
+      "fontSize": 11.5,
+      "faceDiameter": 36,
+      "ink": "#F7E8BF"
     },
     {
       "id": "space-osc2-parameter4",
@@ -681,8 +691,9 @@
       "w": 47,
       "h": 81,
       "kind": "knob",
-      "fontSize": 10.5,
-      "faceDiameter": 36
+      "fontSize": 11.5,
+      "faceDiameter": 36,
+      "ink": "#F7E8BF"
     },
     {
       "id": "space-osc2-parameter5",
@@ -692,8 +703,9 @@
       "w": 47,
       "h": 81,
       "kind": "knob",
-      "fontSize": 10.5,
-      "faceDiameter": 36
+      "fontSize": 11.5,
+      "faceDiameter": 36,
+      "ink": "#F7E8BF"
     },
     {
       "id": "space-osc3-type",
@@ -734,8 +746,9 @@
       "h": 81,
       "kind": "knob",
       "label": "Pitch",
-      "fontSize": 10.5,
-      "faceDiameter": 36
+      "fontSize": 11.5,
+      "faceDiameter": 36,
+      "ink": "#F7E8BF"
     },
     {
       "id": "space-osc3-parameter1",
@@ -745,8 +758,9 @@
       "w": 47,
       "h": 81,
       "kind": "knob",
-      "fontSize": 10.5,
-      "faceDiameter": 36
+      "fontSize": 11.5,
+      "faceDiameter": 36,
+      "ink": "#F7E8BF"
     },
     {
       "id": "space-osc3-parameter2",
@@ -756,8 +770,9 @@
       "w": 47,
       "h": 81,
       "kind": "knob",
-      "fontSize": 10.5,
-      "faceDiameter": 36
+      "fontSize": 11.5,
+      "faceDiameter": 36,
+      "ink": "#F7E8BF"
     },
     {
       "id": "space-osc3-parameter3",
@@ -767,8 +782,9 @@
       "w": 47,
       "h": 81,
       "kind": "knob",
-      "fontSize": 10.5,
-      "faceDiameter": 36
+      "fontSize": 11.5,
+      "faceDiameter": 36,
+      "ink": "#F7E8BF"
     },
     {
       "id": "space-osc3-parameter4",
@@ -778,8 +794,9 @@
       "w": 47,
       "h": 81,
       "kind": "knob",
-      "fontSize": 10.5,
-      "faceDiameter": 36
+      "fontSize": 11.5,
+      "faceDiameter": 36,
+      "ink": "#F7E8BF"
     },
     {
       "id": "space-osc3-parameter5",
@@ -789,8 +806,9 @@
       "w": 47,
       "h": 81,
       "kind": "knob",
-      "fontSize": 10.5,
-      "faceDiameter": 36
+      "fontSize": 11.5,
+      "faceDiameter": 36,
+      "ink": "#F7E8BF"
     },
     {
       "id": "space-filter1-type",
@@ -1298,7 +1316,8 @@
         "fx8": "fx8.param0"
       },
       "faceDiameter": 44,
-      "fontSize": 10.5
+      "fontSize": 11.5,
+      "ink": "#F7E8BF"
     },
     {
       "id": "space-fx-detail-param1",
@@ -1320,7 +1339,8 @@
         "fx8": "fx8.param1"
       },
       "faceDiameter": 44,
-      "fontSize": 10.5
+      "fontSize": 11.5,
+      "ink": "#F7E8BF"
     },
     {
       "id": "space-fx-detail-param2",
@@ -1342,7 +1362,8 @@
         "fx8": "fx8.param2"
       },
       "faceDiameter": 44,
-      "fontSize": 10.5
+      "fontSize": 11.5,
+      "ink": "#F7E8BF"
     },
     {
       "id": "space-fx-detail-param3",
@@ -1364,7 +1385,8 @@
         "fx8": "fx8.param3"
       },
       "faceDiameter": 44,
-      "fontSize": 10.5
+      "fontSize": 11.5,
+      "ink": "#F7E8BF"
     },
     {
       "id": "space-fx-detail-param4",
@@ -1386,7 +1408,8 @@
         "fx8": "fx8.param4"
       },
       "faceDiameter": 44,
-      "fontSize": 10.5
+      "fontSize": 11.5,
+      "ink": "#F7E8BF"
     },
     {
       "id": "space-fx-detail-param5",
@@ -1408,7 +1431,8 @@
         "fx8": "fx8.param5"
       },
       "faceDiameter": 44,
-      "fontSize": 10.5
+      "fontSize": 11.5,
+      "ink": "#F7E8BF"
     },
     {
       "id": "space-fx-detail-param6",
@@ -1431,7 +1455,8 @@
         "fx8": "fx8.param6"
       },
       "faceDiameter": 36,
-      "fontSize": 10.5
+      "fontSize": 11.5,
+      "ink": "#F7E8BF"
     },
     {
       "id": "space-fx-detail-param7",
@@ -1454,7 +1479,8 @@
         "fx8": "fx8.param7"
       },
       "faceDiameter": 36,
-      "fontSize": 10.5
+      "fontSize": 11.5,
+      "ink": "#F7E8BF"
     },
     {
       "id": "space-filter1-shared-drive",

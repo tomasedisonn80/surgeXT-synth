@@ -99,13 +99,14 @@
       "color": "#20211F",
       "ink": "#FFF6E8",
       "plot": [
-        994,
-        139,
-        169,
-        80
+        990,
+        135,
+        181,
+        93
       ],
       "fontSize": 11,
-      "index": 1
+      "index": 1,
+      "titleInset": 14
     },
     {
       "id": "osc-mixer-panel",
@@ -385,7 +386,8 @@
       "h": 38,
       "color": "#245476",
       "fontSize": 18,
-      "ink": "#FFFFFF"
+      "ink": "#FFFFFF",
+      "titleInset": 16
     },
     {
       "id": "effects-panel",
@@ -470,7 +472,8 @@
       "w": 498,
       "h": 38,
       "color": "red",
-      "fontSize": 17
+      "fontSize": 17,
+      "titleInset": 14
     },
     {
       "id": "effects-detail-panel",
@@ -510,7 +513,8 @@
       "h": 38,
       "color": "#245476",
       "fontSize": 18,
-      "ink": "#FFFFFF"
+      "ink": "#FFFFFF",
+      "titleInset": 13
     },
     {
       "id": "output-panel",
@@ -586,25 +590,29 @@
       "id": "waveform-shape",
       "binding": "osc1.param0",
       "x": 996,
-      "y": 223,
-      "w": 166,
-      "h": 40,
+      "y": 235,
+      "w": 176,
+      "h": 22,
       "kind": "horizontal",
       "ink": "#FFF6E8",
       "accent": "yellow",
-      "fontSize": 10
+      "fontSize": 11,
+      "compact": true,
+      "labelWidth": 50
     },
     {
       "id": "waveform-morph",
       "binding": "osc1.param1",
       "x": 996,
-      "y": 268,
-      "w": 166,
-      "h": 40,
+      "y": 263,
+      "w": 176,
+      "h": 22,
       "kind": "horizontal",
       "ink": "#FFF6E8",
       "accent": "yellow",
-      "fontSize": 10
+      "fontSize": 11,
+      "compact": true,
+      "labelWidth": 50
     },
     {
       "id": "mixer-osc1",
@@ -616,7 +624,8 @@
       "kind": "fader",
       "label": "1",
       "accent": "#20211F",
-      "fontSize": 12
+      "fontSize": 12,
+      "ink": "#171A17"
     },
     {
       "id": "mixer-solo1",
@@ -639,7 +648,8 @@
       "kind": "fader",
       "label": "2",
       "accent": "#20211F",
-      "fontSize": 12
+      "fontSize": 12,
+      "ink": "#171A17"
     },
     {
       "id": "mixer-solo2",
@@ -662,7 +672,8 @@
       "kind": "fader",
       "label": "3",
       "accent": "#20211F",
-      "fontSize": 12
+      "fontSize": 12,
+      "ink": "#171A17"
     },
     {
       "id": "mixer-solo3",
@@ -1521,7 +1532,8 @@
       "kind": "knob",
       "fontSize": 12,
       "faceDiameter": 38,
-      "accent": "red"
+      "accent": "red",
+      "ink": "#171A17"
     },
     {
       "id": "macro2",
@@ -1533,7 +1545,8 @@
       "kind": "knob",
       "fontSize": 12,
       "faceDiameter": 38,
-      "accent": "red"
+      "accent": "red",
+      "ink": "#171A17"
     },
     {
       "id": "macro3",
@@ -1545,7 +1558,8 @@
       "kind": "knob",
       "fontSize": 12,
       "faceDiameter": 38,
-      "accent": "red"
+      "accent": "red",
+      "ink": "#171A17"
     },
     {
       "id": "macro4",
@@ -1557,7 +1571,8 @@
       "kind": "knob",
       "fontSize": 12,
       "faceDiameter": 38,
-      "accent": "red"
+      "accent": "red",
+      "ink": "#171A17"
     },
     {
       "id": "macro5",
@@ -1569,7 +1584,8 @@
       "kind": "knob",
       "fontSize": 12,
       "faceDiameter": 38,
-      "accent": "red"
+      "accent": "red",
+      "ink": "#171A17"
     },
     {
       "id": "macro6",
@@ -1581,7 +1597,8 @@
       "kind": "knob",
       "fontSize": 12,
       "faceDiameter": 38,
-      "accent": "red"
+      "accent": "red",
+      "ink": "#171A17"
     },
     {
       "id": "macro7",
@@ -1593,7 +1610,8 @@
       "kind": "knob",
       "fontSize": 12,
       "faceDiameter": 38,
-      "accent": "red"
+      "accent": "red",
+      "ink": "#171A17"
     },
     {
       "id": "macro8",
@@ -1605,7 +1623,8 @@
       "kind": "knob",
       "fontSize": 12,
       "faceDiameter": 38,
-      "accent": "red"
+      "accent": "red",
+      "ink": "#171A17"
     },
     {
       "id": "master-output",

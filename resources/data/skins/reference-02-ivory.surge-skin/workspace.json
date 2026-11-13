@@ -80,15 +80,15 @@
       "h": 172,
       "plot": [
         23,
-        190,
+        188,
         241,
-        119
+        117
       ],
       "fontSize": 14,
       "titleInset": 48,
       "wavetableRect": [
         28,
-        277,
+        276,
         231,
         24
       ]
@@ -105,15 +105,15 @@
       "h": 172,
       "plot": [
         23,
-        367,
-        241,
+        366,
+        242,
         119
       ],
       "fontSize": 14,
       "titleInset": 48,
       "wavetableRect": [
         28,
-        457,
+        456,
         231,
         24
       ]
@@ -131,7 +131,7 @@
       "plot": [
         23,
         542,
-        241,
+        242,
         104
       ],
       "fontSize": 14,
@@ -164,9 +164,9 @@
       "w": 257,
       "h": 282,
       "plot": [
-        526,
+        524,
         176,
-        237,
+        239,
         138
       ],
       "fontSize": 14
@@ -181,7 +181,7 @@
       "w": 262,
       "h": 282,
       "plot": [
-        861,
+        863,
         176,
         240,
         138
@@ -261,10 +261,10 @@
       "w": 455,
       "h": 354,
       "plot": [
-        1138,
+        1139,
         357,
-        320,
-        139
+        321,
+        137
       ],
       "fontSize": 16,
       "titleHeight": 0,
@@ -414,7 +414,7 @@
             "index": 8
           }
         ],
-        "fontSize": 11.5
+        "fontSize": 12.5
       },
       "titleHeight": 23
     },
@@ -505,41 +505,44 @@
     {
       "id": "ivory.osc1.param0",
       "binding": "osc1.param0",
-      "x": 271,
+      "x": 270.5,
       "y": 195,
-      "w": 52,
+      "w": 53,
       "h": 88,
       "kind": "knob",
-      "fontSize": 11.5,
+      "fontSize": 12.5,
       "labelPosition": "top",
       "accent": "yellow",
-      "faceDiameter": 44
+      "faceDiameter": 44,
+      "ink": "#1D2018"
     },
     {
       "id": "ivory.osc1.param3",
       "binding": "osc1.param3",
-      "x": 324,
+      "x": 323.5,
       "y": 195,
-      "w": 52,
+      "w": 53,
       "h": 88,
       "kind": "knob",
-      "fontSize": 11.5,
+      "fontSize": 12.5,
       "labelPosition": "top",
       "accent": "yellow",
-      "faceDiameter": 44
+      "faceDiameter": 44,
+      "ink": "#1D2018"
     },
     {
       "id": "ivory.osc1.param6",
       "binding": "osc1.param6",
-      "x": 377,
+      "x": 376.5,
       "y": 195,
-      "w": 52,
+      "w": 53,
       "h": 88,
       "kind": "knob",
-      "fontSize": 11.5,
+      "fontSize": 12.5,
       "labelPosition": "top",
       "accent": "yellow",
-      "faceDiameter": 44
+      "faceDiameter": 44,
+      "ink": "#1D2018"
     },
     {
       "id": "ivory.osc1.octave",
@@ -609,41 +612,44 @@
     {
       "id": "ivory.osc2.param0",
       "binding": "osc2.param0",
-      "x": 271,
+      "x": 270.5,
       "y": 373,
-      "w": 52,
+      "w": 53,
       "h": 88,
       "kind": "knob",
-      "fontSize": 11.5,
+      "fontSize": 12.5,
       "labelPosition": "top",
       "accent": "yellow",
-      "faceDiameter": 44
+      "faceDiameter": 44,
+      "ink": "#1D2018"
     },
     {
       "id": "ivory.osc2.param1",
       "binding": "osc2.param1",
-      "x": 324,
+      "x": 323.5,
       "y": 373,
-      "w": 52,
+      "w": 53,
       "h": 88,
       "kind": "knob",
-      "fontSize": 11.5,
+      "fontSize": 12.5,
       "labelPosition": "top",
       "accent": "yellow",
-      "faceDiameter": 44
+      "faceDiameter": 44,
+      "ink": "#1D2018"
     },
     {
       "id": "ivory.osc2.param6",
       "binding": "osc2.param6",
-      "x": 377,
+      "x": 376.5,
       "y": 373,
-      "w": 52,
+      "w": 53,
       "h": 88,
       "kind": "knob",
-      "fontSize": 11.5,
+      "fontSize": 12.5,
       "labelPosition": "top",
       "accent": "yellow",
-      "faceDiameter": 44
+      "faceDiameter": 44,
+      "ink": "#1D2018"
     },
     {
       "id": "ivory.osc2.octave",
@@ -713,41 +719,44 @@
     {
       "id": "ivory.osc3.param0",
       "binding": "osc3.param0",
-      "x": 271,
+      "x": 270.5,
       "y": 544,
-      "w": 52,
+      "w": 53,
       "h": 88,
       "kind": "knob",
-      "fontSize": 11.5,
+      "fontSize": 12.5,
       "labelPosition": "top",
       "accent": "yellow",
-      "faceDiameter": 44
+      "faceDiameter": 44,
+      "ink": "#1D2018"
     },
     {
       "id": "ivory.osc3.param3",
       "binding": "osc3.param3",
-      "x": 324,
+      "x": 323.5,
       "y": 544,
-      "w": 52,
+      "w": 53,
       "h": 88,
       "kind": "knob",
-      "fontSize": 11.5,
+      "fontSize": 12.5,
       "labelPosition": "top",
       "accent": "yellow",
-      "faceDiameter": 44
+      "faceDiameter": 44,
+      "ink": "#1D2018"
     },
     {
       "id": "ivory.osc3.param6",
       "binding": "osc3.param6",
-      "x": 377,
+      "x": 376.5,
       "y": 544,
-      "w": 52,
+      "w": 53,
       "h": 88,
       "kind": "knob",
-      "fontSize": 11.5,
+      "fontSize": 12.5,
       "labelPosition": "top",
       "accent": "yellow",
-      "faceDiameter": 44
+      "faceDiameter": 44,
+      "ink": "#1D2018"
     },
     {
       "id": "ivory.osc3.octave",
@@ -918,16 +927,17 @@
     {
       "id": "ivory.mixer.osc1.level",
       "binding": "osc1.level",
-      "x": 530,
-      "y": 476,
+      "x": 531,
+      "y": 474,
       "w": 72,
-      "h": 110,
+      "h": 112,
       "kind": "knob",
       "label": "OSC 1",
       "labelPosition": "top",
       "accent": "yellow",
-      "fontSize": 13,
-      "faceDiameter": 58
+      "fontSize": 14,
+      "faceDiameter": 58,
+      "ink": "#1D2018"
     },
     {
       "id": "ivory.mixer.osc1.solo",
@@ -952,16 +962,17 @@
     {
       "id": "ivory.mixer.osc2.level",
       "binding": "osc2.level",
-      "x": 624,
-      "y": 476,
+      "x": 626,
+      "y": 474,
       "w": 72,
-      "h": 110,
+      "h": 112,
       "kind": "knob",
       "label": "OSC 2",
       "labelPosition": "top",
       "accent": "yellow",
-      "fontSize": 13,
-      "faceDiameter": 58
+      "fontSize": 14,
+      "faceDiameter": 58,
+      "ink": "#1D2018"
     },
     {
       "id": "ivory.mixer.osc2.solo",
@@ -986,16 +997,17 @@
     {
       "id": "ivory.mixer.osc3.level",
       "binding": "osc3.level",
-      "x": 719,
-      "y": 476,
+      "x": 721,
+      "y": 474,
       "w": 72,
-      "h": 110,
+      "h": 112,
       "kind": "knob",
       "label": "OSC 3",
       "labelPosition": "top",
       "accent": "yellow",
-      "fontSize": 13,
-      "faceDiameter": 58
+      "fontSize": 14,
+      "faceDiameter": 58,
+      "ink": "#1D2018"
     },
     {
       "id": "ivory.mixer.osc3.solo",
@@ -1020,16 +1032,17 @@
     {
       "id": "ivory.mixer.noise.level",
       "binding": "noise.level",
-      "x": 817,
-      "y": 476,
+      "x": 818,
+      "y": 474,
       "w": 72,
-      "h": 110,
+      "h": 112,
       "kind": "knob",
       "label": "NOISE",
       "labelPosition": "top",
       "accent": "yellow",
-      "fontSize": 13,
-      "faceDiameter": 58
+      "fontSize": 14,
+      "faceDiameter": 58,
+      "ink": "#1D2018"
     },
     {
       "id": "ivory.mixer.noise.solo",
@@ -1214,16 +1227,16 @@
     {
       "id": "ivory.env1.attack",
       "binding": "env1.attack",
-      "x": 1147,
-      "y": 503,
+      "x": 1144,
+      "y": 502,
       "w": 66,
-      "h": 89,
+      "h": 90,
       "kind": "knob",
       "label": "A",
       "labelPosition": "top",
       "accent": "yellow",
       "faceDiameter": 47,
-      "fontSize": 12,
+      "fontSize": 13,
       "selectionGroup": "ivory.mod-source",
       "bindings": {
         "amp": "env1.attack",
@@ -1234,21 +1247,22 @@
         "lfo2": "lfo2.attack",
         "lfo3": "lfo3.attack",
         "lfo4": "lfo4.attack"
-      }
+      },
+      "ink": "#1D2018"
     },
     {
       "id": "ivory.env1.decay",
       "binding": "env1.decay",
-      "x": 1225,
-      "y": 503,
+      "x": 1227,
+      "y": 502,
       "w": 66,
-      "h": 89,
+      "h": 90,
       "kind": "knob",
       "label": "D",
       "labelPosition": "top",
       "accent": "yellow",
       "faceDiameter": 47,
-      "fontSize": 12,
+      "fontSize": 13,
       "selectionGroup": "ivory.mod-source",
       "bindings": {
         "amp": "env1.decay",
@@ -1259,21 +1273,22 @@
         "lfo2": "lfo2.decay",
         "lfo3": "lfo3.decay",
         "lfo4": "lfo4.decay"
-      }
+      },
+      "ink": "#1D2018"
     },
     {
       "id": "ivory.env1.sustain",
       "binding": "env1.sustain",
-      "x": 1308,
-      "y": 503,
+      "x": 1309,
+      "y": 502,
       "w": 66,
-      "h": 89,
+      "h": 90,
       "kind": "knob",
       "label": "S",
       "labelPosition": "top",
       "accent": "yellow",
       "faceDiameter": 47,
-      "fontSize": 12,
+      "fontSize": 13,
       "selectionGroup": "ivory.mod-source",
       "bindings": {
         "amp": "env1.sustain",
@@ -1284,21 +1299,22 @@
         "lfo2": "lfo2.sustain",
         "lfo3": "lfo3.sustain",
         "lfo4": "lfo4.sustain"
-      }
+      },
+      "ink": "#1D2018"
     },
     {
       "id": "ivory.env1.release",
       "binding": "env1.release",
-      "x": 1392,
-      "y": 503,
+      "x": 1391,
+      "y": 502,
       "w": 66,
-      "h": 89,
+      "h": 90,
       "kind": "knob",
       "label": "R",
       "labelPosition": "top",
       "accent": "yellow",
       "faceDiameter": 47,
-      "fontSize": 12,
+      "fontSize": 13,
       "selectionGroup": "ivory.mod-source",
       "bindings": {
         "amp": "env1.release",
@@ -1309,7 +1325,8 @@
         "lfo2": "lfo2.release",
         "lfo3": "lfo3.release",
         "lfo4": "lfo4.release"
-      }
+      },
+      "ink": "#1D2018"
     },
     {
       "id": "ivory.env1.mode",
@@ -1368,12 +1385,12 @@
     {
       "id": "ivory.fx1.param0",
       "binding": "fx1.param1",
-      "x": 723,
+      "x": 720,
       "y": 844,
-      "w": 66,
+      "w": 72,
       "h": 94,
       "kind": "knob",
-      "fontSize": 11.5,
+      "fontSize": 13,
       "labelPosition": "top",
       "accent": "yellow",
       "faceDiameter": 50,
@@ -1387,17 +1404,18 @@
         "fx6": "fx6.param0",
         "fx7": "fx7.param0",
         "fx8": "fx8.param0"
-      }
+      },
+      "ink": "#1D2018"
     },
     {
       "id": "ivory.fx1.param1",
       "binding": "fx1.param2",
-      "x": 803,
+      "x": 798,
       "y": 844,
-      "w": 66,
+      "w": 72,
       "h": 94,
       "kind": "knob",
-      "fontSize": 11.5,
+      "fontSize": 13,
       "labelPosition": "top",
       "accent": "yellow",
       "faceDiameter": 50,
@@ -1411,17 +1429,18 @@
         "fx6": "fx6.param1",
         "fx7": "fx7.param1",
         "fx8": "fx8.param1"
-      }
+      },
+      "ink": "#1D2018"
     },
     {
       "id": "ivory.fx1.param2",
       "binding": "fx1.param6",
-      "x": 881,
+      "x": 877,
       "y": 844,
-      "w": 66,
+      "w": 72,
       "h": 94,
       "kind": "knob",
-      "fontSize": 11.5,
+      "fontSize": 13,
       "labelPosition": "top",
       "accent": "yellow",
       "faceDiameter": 50,
@@ -1435,17 +1454,18 @@
         "fx6": "fx6.param2",
         "fx7": "fx7.param2",
         "fx8": "fx8.param2"
-      }
+      },
+      "ink": "#1D2018"
     },
     {
       "id": "ivory.fx1.param3",
       "binding": "fx1.param7",
-      "x": 961,
+      "x": 957,
       "y": 844,
-      "w": 66,
+      "w": 72,
       "h": 94,
       "kind": "knob",
-      "fontSize": 11.5,
+      "fontSize": 13,
       "labelPosition": "top",
       "accent": "yellow",
       "faceDiameter": 50,
@@ -1459,7 +1479,8 @@
         "fx6": "fx6.param3",
         "fx7": "fx7.param3",
         "fx8": "fx8.param3"
-      }
+      },
+      "ink": "#1D2018"
     },
     {
       "id": "ivory.master.volume",

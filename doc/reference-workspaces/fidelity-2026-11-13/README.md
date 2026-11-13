@@ -13,10 +13,10 @@ The original references and previous native gallery are present. Most outer pane
 | Wave | Scope | Completed assignments |
 | --- | --- | --- |
 | 1 | Original references, native differences, rendering and validation baseline | 6 of 6 completed |
-| 2 | Shared materials, controls, plot and header rendering | 6 of 6 completed; native checkpoint pending |
-| 3 | Individual refinement of skins 01–06 | Not started |
-| 4 | Individual refinement of skins 07–10 and major interactive surfaces | Not started |
-| 5 | Detail, typography and source-driven visual refinement | Not started |
+| 2 | Shared materials, controls, plot and header rendering | 6 of 6 completed; published in a362667, native build and capture passed |
+| 3 | Individual refinement of skins 01–06 | 6 of 6 completed; individual corrections integrated, next native capture pending |
+| 4 | Individual refinement of skins 07–10 and major interactive surfaces | 6 of 6 completed; source reviewed and ready for native capture |
+| 5 | Detail, typography and source-driven visual refinement | Original source families and actual capture profiles active |
 | 6 | Native verification and capture comparison | Not started |
 | 7 | Corrections from actual native comparison | Not started |
 | 8 | Interaction, display scaling and rendering verification | Not started |
@@ -25,4 +25,15 @@ The original references and previous native gallery are present. Most outer pane
 
 ## Verification
 
-The first two waves pass strict manifest validation, schema self-tests and whitespace checks. Native build/capture verification is pending for this pass. The prior gallery predates all new source changes. New screenshots must be from the exact compiled source and retain capture evidence. A passing build or package validator is not a pixel-identity claim.
+The first two waves pass strict manifest validation, schema self-tests and whitespace checks. Native workflow [43486541422](https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43486541422) passed on source `a362667839b8e1d742cf3af94bb8710fa3c6d1fd`: 42 behavior cases / 10,316,058 assertions, all twenty baseline/edited captures / 24,100,990 capture assertions, and normal plus ThreadSanitizer audio-tap checks. Gallery commit `418151a6200a35f4a7522ef346f0bde9263ea3fb` contains that evidence. Wave 3 and later changes still require their own exact-source native capture. A passing build or package validator is not a pixel-identity claim.
+
+## Coordinator integration
+
+Wave 3 measurement handoffs are integrated in the shared renderer: major Ivory
+headings move down six logical pixels, dark Space headings on brass move down
+six pixels while cream instrument-well headings retain their inset, and the
+Bauhaus harmonic/matrix/macro headings use their measured baselines. Bauhaus
+macro captions now use the intended bold weight. Spectral's previously missing
+cool satin surround and recessed chassis are drawn as decorative enclosure
+material inside the existing canvas; processor and child-control bounds are
+unchanged. All require the next exact-source native visual check.

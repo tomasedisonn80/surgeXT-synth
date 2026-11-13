@@ -90,6 +90,11 @@ struct BrowserRow
 
 enum class BrowserFilter { all, factory, user, favorites };
 
+/** The native catalog ID only while its name and category match the live patch.
+    Loading an external patch or editing its metadata can leave patchid pointing
+    at an earlier catalog entry. Such an ID is not the current preset identity. */
+int currentCatalogPatchId(SurgeSynthProcessor &);
+
 /** Read-only message-thread view of the installed native patch catalog.
     Empty queries show real category headings, expanding the current category where possible.
     Searches match installed patch names or category names. Patch IDs are native patch_list indices;

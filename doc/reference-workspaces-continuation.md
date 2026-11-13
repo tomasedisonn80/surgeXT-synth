@@ -9,7 +9,7 @@ and screenshots. The delivery records below describe the previous pass and do
 not certify newly changed source. Preserve all real processor bindings and keep
 reference concepts distinct from native captures.
 
-## Current delivery record — 13 November 2026
+## Previous delivery record — 13 November 2026
 
 All **60 numbered assignments across ten waves** have delivered their scoped
 implementation or review results. The [ten-wave ledger](reference-workspaces/ten-wave-ledger.md)

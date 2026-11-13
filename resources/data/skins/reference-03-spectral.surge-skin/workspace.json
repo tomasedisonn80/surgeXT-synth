@@ -189,12 +189,13 @@
       "w": 325,
       "h": 222,
       "plot": [
-        495,
+        472,
         523,
-        212,
+        243,
         135
       ],
-      "fontSize": 14
+      "fontSize": 14,
+      "titleInset": 41
     },
     {
       "id": "p.filter2",
@@ -206,12 +207,13 @@
       "w": 285,
       "h": 222,
       "plot": [
-        799,
+        788,
         523,
-        208,
+        219,
         135
       ],
-      "fontSize": 14
+      "fontSize": 14,
+      "titleInset": 36
     },
     {
       "id": "p.routing",
@@ -538,7 +540,7 @@
       "x": 221,
       "y": 153,
       "w": 46,
-      "h": 78,
+      "h": 75,
       "fontSize": 11,
       "faceDiameter": 30
     },
@@ -548,7 +550,7 @@
       "x": 270,
       "y": 153,
       "w": 46,
-      "h": 78,
+      "h": 75,
       "fontSize": 11,
       "faceDiameter": 30
     },
@@ -558,7 +560,7 @@
       "x": 328,
       "y": 153,
       "w": 46,
-      "h": 78,
+      "h": 75,
       "fontSize": 11,
       "faceDiameter": 40
     },
@@ -568,7 +570,7 @@
       "x": 388,
       "y": 153,
       "w": 46,
-      "h": 78,
+      "h": 75,
       "fontSize": 11,
       "faceDiameter": 32
     },
@@ -600,7 +602,7 @@
       "x": 221,
       "y": 295,
       "w": 46,
-      "h": 78,
+      "h": 75,
       "fontSize": 11,
       "accent": "secondary",
       "faceDiameter": 30
@@ -611,7 +613,7 @@
       "x": 270,
       "y": 295,
       "w": 46,
-      "h": 78,
+      "h": 75,
       "fontSize": 11,
       "accent": "secondary",
       "faceDiameter": 30
@@ -622,7 +624,7 @@
       "x": 328,
       "y": 295,
       "w": 46,
-      "h": 78,
+      "h": 75,
       "fontSize": 11,
       "accent": "secondary",
       "faceDiameter": 40
@@ -633,7 +635,7 @@
       "x": 388,
       "y": 295,
       "w": 46,
-      "h": 78,
+      "h": 75,
       "fontSize": 11,
       "accent": "secondary",
       "faceDiameter": 32
@@ -666,7 +668,7 @@
       "x": 221,
       "y": 435,
       "w": 46,
-      "h": 78,
+      "h": 75,
       "fontSize": 11,
       "faceDiameter": 30
     },
@@ -676,7 +678,7 @@
       "x": 270,
       "y": 435,
       "w": 46,
-      "h": 78,
+      "h": 75,
       "fontSize": 11,
       "faceDiameter": 30
     },
@@ -686,7 +688,7 @@
       "x": 328,
       "y": 435,
       "w": 46,
-      "h": 78,
+      "h": 75,
       "fontSize": 11,
       "faceDiameter": 40
     },
@@ -696,7 +698,7 @@
       "x": 388,
       "y": 435,
       "w": 46,
-      "h": 78,
+      "h": 75,
       "fontSize": 11,
       "faceDiameter": 32
     },
@@ -913,9 +915,9 @@
       "binding": "filter1.cutoff",
       "label": "Cutoff",
       "x": 718,
-      "y": 524,
+      "y": 527,
       "w": 55,
-      "h": 76,
+      "h": 65,
       "fontSize": 11,
       "faceDiameter": 35
     },
@@ -924,9 +926,9 @@
       "binding": "filter1.resonance",
       "label": "Reso",
       "x": 718,
-      "y": 601,
+      "y": 594,
       "w": 55,
-      "h": 51,
+      "h": 58,
       "fontSize": 11,
       "faceDiameter": 30
     },
@@ -934,9 +936,9 @@
       "id": "c.filter1-keytrack",
       "binding": "filter1.keytrack",
       "label": "Keytrack",
-      "x": 495,
+      "x": 472,
       "y": 672,
-      "w": 212,
+      "w": 243,
       "h": 26,
       "fontSize": 11,
       "kind": "value",
@@ -967,9 +969,9 @@
       "binding": "filter2.cutoff",
       "label": "Cutoff",
       "x": 1007,
-      "y": 524,
+      "y": 527,
       "w": 55,
-      "h": 76,
+      "h": 65,
       "fontSize": 11,
       "accent": "secondary",
       "faceDiameter": 35
@@ -979,9 +981,9 @@
       "binding": "filter2.resonance",
       "label": "Reso",
       "x": 1007,
-      "y": 601,
+      "y": 594,
       "w": 55,
-      "h": 51,
+      "h": 58,
       "fontSize": 11,
       "accent": "secondary",
       "faceDiameter": 30
@@ -990,9 +992,9 @@
       "id": "c.filter2-keytrack",
       "binding": "filter2.keytrack",
       "label": "Keytrack",
-      "x": 799,
+      "x": 788,
       "y": 672,
-      "w": 208,
+      "w": 219,
       "h": 26,
       "fontSize": 11,
       "accent": "secondary",

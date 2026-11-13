@@ -1334,7 +1334,8 @@ class BoundSlider : public juce::Slider
         if (kind == "knob")
         {
             const bool emphasizeLabel = theme.style == "clear" ||
-                ((theme.style == "ivory" || theme.style == "space") && binding.startsWith("macro"));
+                ((theme.style == "ivory" || theme.style == "space" ||
+                  theme.style == "bauhaus") && binding.startsWith("macro"));
             if (binding.startsWith("macro") &&
                 (theme.style == "precision" || theme.style == "spectral"))
                 r.removeFromTop(14.f); // Explicit number band in these manifest bounds.
@@ -1527,6 +1528,78 @@ class BoundSlider : public juce::Slider
             auto track = CompactSliderLookAndFeel::standardTrackBounds(*this, kind == "fader");
             if (track.isEmpty())
                 return;
+            if (theme.style == "tokyo" && kind == "fader" &&
+                (binding == "scene.pitch" || binding == "scene.fmdepth"))
+            {
+                // Fixed roller ribs are surface detail, independent of the
+                // parameter. Only the red side stripe follows native travel.
+                // Keep the existing caption/value bands and slider hit layout.
+                const auto housing = track.withSizeKeepingCentre(
+                    std::min(43.f, static_cast<float>(getWidth()) - 6.f),
+                    track.getHeight() + 6.f);
+                g.setColour(juce::Colours::black.withAlpha(.65f));
+                g.fillRoundedRectangle(housing.expanded(1.f).translated(0, .8f), 4.f);
+                g.setGradientFill(juce::ColourGradient(
+                    juce::Colour(0xff141719), housing.getTopLeft(),
+                    juce::Colour(0xff030405), housing.getBottomLeft(), false));
+                g.fillRoundedRectangle(housing, 3.f);
+                g.setColour(theme.border.darker(.5f));
+                g.drawRoundedRectangle(housing, 3.f, .8f);
+
+                const auto roller = housing.reduced(4.f, 3.f).withTrimmedRight(11.f);
+                auto rubber = juce::ColourGradient(
+                    juce::Colour(0xff101214), roller.getTopLeft(),
+                    juce::Colour(0xff050607), roller.getBottomLeft(), false);
+                rubber.addColour(.30, juce::Colour(0xff292d30));
+                rubber.addColour(.60, juce::Colour(0xff141719));
+                g.setGradientFill(rubber);
+                g.fillRoundedRectangle(roller, 2.f);
+                for (float y = roller.getY() + 2.f; y < roller.getBottom() - 1.f; y += 2.6f)
+                {
+                    const auto phase = (y - roller.getY()) / roller.getHeight();
+                    const auto crown = 1.f - std::abs(phase - .30f);
+                    g.setColour(juce::Colours::black.withAlpha(.8f));
+                    g.drawLine(roller.getX() + 1.f, y + .9f, roller.getRight() - 1.f,
+                               y + .9f, 1.f);
+                    g.setColour(theme.text.withAlpha(.05f + .38f * crown * crown * crown));
+                    g.drawLine(roller.getX() + 1.5f, y, roller.getRight() - 1.5f, y, .7f);
+                }
+                auto edgeShade = juce::ColourGradient(
+                    juce::Colours::black.withAlpha(.8f), roller.getTopLeft(),
+                    juce::Colours::black.withAlpha(.75f), roller.getTopRight(), false);
+                edgeShade.addColour(.20, juce::Colours::transparentBlack);
+                edgeShade.addColour(.74, juce::Colours::transparentBlack);
+                g.setGradientFill(edgeShade);
+                g.fillRoundedRectangle(roller, 2.f);
+
+                const auto indicator = Rect(housing.getRight() - 10.f, track.getY(), 6.f,
+                                            track.getHeight());
+                g.setColour(juce::Colour(0xff020304));
+                g.fillRoundedRectangle(indicator.expanded(1.5f, 0), 2.f);
+                g.setColour(theme.border.withAlpha(.28f));
+                g.drawLine(indicator.getRight() + 1.f, indicator.getY() + 1.f,
+                           indicator.getRight() + 1.f, indicator.getBottom() - 1.f, .7f);
+                const auto y = getPositionOfValue(getValue());
+                const auto bottom = getPositionOfValue(0);
+                const auto liveInk = isEnabled() ? theme.red : theme.muted.darker(.6f);
+                auto red = juce::ColourGradient(liveInk.darker(.6f), indicator.getTopLeft(),
+                                                liveInk.darker(.35f), indicator.getTopRight(), false);
+                red.addColour(.45, liveInk.brighter(.15f));
+                g.setGradientFill(red);
+                g.fillRoundedRectangle(indicator.withY(y).withHeight(std::max(0.f, bottom - y)),
+                                       1.f);
+                g.setColour(liveInk);
+                g.fillRoundedRectangle(indicator.withY(y - 1.25f).withHeight(2.5f), .8f);
+                g.setColour(liveInk.interpolatedWith(juce::Colours::white, .65f));
+                g.drawLine(indicator.getX() + .8f, y - .4f, indicator.getRight() - .8f,
+                           y - .4f, .7f);
+                if (hasKeyboardFocus(true))
+                {
+                    g.setColour(theme.accent);
+                    g.drawRoundedRectangle(getLocalBounds().toFloat().reduced(1), 3, 2);
+                }
+                return;
+            }
             const bool spectralFader = kind == "fader" && theme.style == "spectral";
             if (kind == "fader" && (theme.style == "precision" || spectralFader ||
                                     theme.style == "aurora" || theme.style == "live"))
@@ -2942,20 +3015,157 @@ class MacroXY : public juce::Component
     void paint(juce::Graphics &g) override
     {
         auto r = getLocalBounds().toFloat().reduced(3);
-        bezel(g, theme, r, theme.display, 18);
         if (theme.style == "live")
         {
-            g.setColour(juce::Colour(0xff030b09));
-            g.drawRoundedRectangle(r.expanded(1), 19, 3);
-            auto brass = juce::ColourGradient(juce::Colour(0xffffe0ac), r.getTopLeft(),
-                                               juce::Colour(0xff8a5a2c), r.getBottomRight(), false);
-            brass.addColour(.32, juce::Colour(0xff6c725b));
-            brass.addColour(.63, juce::Colour(0xffdab884));
-            g.setGradientFill(brass);
-            g.drawRoundedRectangle(r, 18, 2);
-            g.setColour(juce::Colour(0xffc9e9da).withAlpha(.6f));
-            g.drawRoundedRectangle(r.reduced(2), 16, .7f);
+            const float x = r.getX() + bridge.value("macro1") * r.getWidth();
+            const float y = r.getBottom() - bridge.value("macro2") * r.getHeight();
+            g.setColour(juce::Colour(0xff020705));
+            g.fillRoundedRectangle(r.expanded(1.5f), 19.5f);
+            auto glass = juce::ColourGradient(juce::Colour(0xff0b201a), r.getTopLeft(),
+                                              juce::Colour(0xff050d09), r.getBottomLeft(), false);
+            glass.addColour(.54, juce::Colour(0xff04100c));
+            g.setGradientFill(glass);
+            g.fillRoundedRectangle(r, 18);
+            {
+                juce::Graphics::ScopedSaveState save(g);
+                juce::Path clip;
+                clip.addRoundedRectangle(r.reduced(2), 16);
+                g.reduceClipRegion(clip);
+                g.setGradientFill(juce::ColourGradient(
+                    theme.accent.withAlpha(.22f),
+                    {r.getX() + r.getWidth() * .42f, r.getY() - r.getHeight() * .08f},
+                    theme.accent.withAlpha(0.f),
+                    {r.getX() + r.getWidth() * 1.22f, r.getY() - r.getHeight() * .08f}, true));
+                g.fillRect(r);
+                g.setGradientFill(juce::ColourGradient(
+                    juce::Colour(0xff38bd86).withAlpha(.28f),
+                    {r.getCentreX(), r.getBottom() + r.getHeight() * .06f},
+                    theme.accent.withAlpha(0.f),
+                    {r.getCentreX() + r.getWidth() * .65f,
+                     r.getBottom() + r.getHeight() * .06f}, true));
+                g.fillRect(r);
+
+                // Broad, unoutlined reflections describe glass only. They do
+                // not depict a signal, route, gesture history or macro value.
+                const auto glassTransform = juce::AffineTransform::scale(r.getWidth(), r.getHeight())
+                                                .translated(r.getX(), r.getY());
+                juce::Path upperReflection;
+                upperReflection.startNewSubPath(0.f, .04f);
+                upperReflection.cubicTo(.18f, .25f, .38f, .12f, .58f, .15f);
+                upperReflection.cubicTo(.84f, .18f, 1.f, .37f, 1.f, .59f);
+                upperReflection.cubicTo(.77f, .36f, .52f, .23f, .28f, .20f);
+                upperReflection.cubicTo(.13f, .18f, .06f, .10f, 0.f, .04f);
+                upperReflection.closeSubPath();
+                g.setGradientFill(juce::ColourGradient(theme.accent.withAlpha(.025f),
+                                                       r.getTopLeft(),
+                                                       theme.accent.withAlpha(.13f),
+                                                       {r.getRight(), r.getCentreY()}, false));
+                g.fillPath(upperReflection, glassTransform);
+                juce::Path lowerReflection;
+                lowerReflection.startNewSubPath(0.f, .76f);
+                lowerReflection.cubicTo(.38f, .70f, .56f, .29f, 1.f, .26f);
+                lowerReflection.lineTo(1.f, .47f);
+                lowerReflection.cubicTo(.62f, .43f, .38f, .84f, 0.f, .86f);
+                lowerReflection.closeSubPath();
+                g.setGradientFill(juce::ColourGradient(theme.accent.withAlpha(.13f),
+                                                       r.getBottomLeft(),
+                                                       theme.accent.withAlpha(.055f),
+                                                       r.getTopRight(), false));
+                g.fillPath(lowerReflection, glassTransform);
+                juce::Path warmReflection;
+                warmReflection.startNewSubPath(1.f, .32f);
+                warmReflection.cubicTo(.93f, .12f, .80f, .18f, .63f, .35f);
+                warmReflection.cubicTo(.48f, .51f, .39f, .61f, .24f, .70f);
+                warmReflection.cubicTo(.60f, .58f, .80f, .75f, 1.f, .83f);
+                warmReflection.closeSubPath();
+                const auto amber = juce::Colour(0xffee914c);
+                auto warmLight = juce::ColourGradient(
+                    amber.withAlpha(.56f), {r.getRight(), r.getY() + r.getHeight() * .48f},
+                    amber.withAlpha(0.f), {r.getX(), r.getY() + r.getHeight() * .48f}, true);
+                warmLight.addColour(.38, amber.withAlpha(.18f));
+                warmLight.addColour(.80, amber.withAlpha(.035f));
+                g.setGradientFill(warmLight);
+                g.fillPath(warmReflection, glassTransform);
+
+                // The reference's nearly square, quiet glass lattice has no
+                // emphasized fixed midline competing with the actual axes.
+                g.setColour(theme.accent.withAlpha(.095f));
+                for (int column = 1; column < 14; ++column)
+                {
+                    const float gx = r.getX() + r.getWidth() * column / 14.f;
+                    g.drawLine(gx, r.getY(), gx, r.getBottom(), .65f);
+                }
+                for (int row = 1; row < 12; ++row)
+                {
+                    const float gy = r.getY() + r.getHeight() * row / 12.f;
+                    g.drawLine(r.getX(), gy, r.getRight(), gy, .65f);
+                }
+                g.setColour(juce::Colours::black.withAlpha(.32f));
+                g.drawRoundedRectangle(r.reduced(3.5f), 14.5f, 3);
+            }
+
+            // Opposing metal highlights and a dark channel form two distinct
+            // rounded lips without changing the pad's interaction rectangle.
+            auto rim = juce::ColourGradient(juce::Colour(0xfff1e6ce), r.getTopLeft(),
+                                            juce::Colour(0xffd2b47c), r.getBottomRight(), false);
+            rim.addColour(.13, juce::Colour(0xff849087));
+            rim.addColour(.29, juce::Colour(0xff344b3d));
+            rim.addColour(.50, juce::Colour(0xffd4a377));
+            rim.addColour(.72, juce::Colour(0xff263e30));
+            rim.addColour(.88, juce::Colour(0xff947443));
+            g.setGradientFill(rim);
+            g.drawRoundedRectangle(r, 18, 2.2f);
+            g.setColour(juce::Colour(0xff06100b));
+            g.drawRoundedRectangle(r.reduced(1.4f), 16.6f, 1.2f);
+            g.setGradientFill(juce::ColourGradient(juce::Colour(0xffc2ecdc).withAlpha(.75f),
+                                                   r.getTopLeft(),
+                                                   juce::Colour(0xff79af92).withAlpha(.43f),
+                                                   r.getBottomRight(), false));
+            g.drawRoundedRectangle(r.reduced(2.3f), 15.7f, .75f);
+
+            g.setColour(theme.accent.withAlpha(.10f));
+            g.drawLine(x, r.getY(), x, r.getBottom(), 3.3f);
+            g.drawLine(r.getX(), y, r.getRight(), y, 3.3f);
+            g.setGradientFill(juce::ColourGradient(juce::Colour(0xffd4ffea).withAlpha(.82f),
+                                                   r.getTopLeft(),
+                                                   theme.accent.withAlpha(.70f),
+                                                   r.getBottomLeft(), false));
+            g.drawLine(x, r.getY(), x, r.getBottom(), .85f);
+            g.setGradientFill(juce::ColourGradient(juce::Colour(0xffbdf6d8).withAlpha(.85f),
+                                                   r.getTopLeft(),
+                                                   juce::Colour(0xffffead0).withAlpha(.92f),
+                                                   r.getTopRight(), false));
+            g.drawLine(r.getX(), y, r.getRight(), y, .85f);
+            g.setColour(juce::Colour(0xffd5ffe7).withAlpha(.8f));
+            g.fillRect(x - 1.f, r.getY(), 2.f, 2.f);
+            g.fillRect(x - 1.f, r.getBottom() - 2.f, 2.f, 2.f);
+            g.fillRect(r.getX(), y - 1.f, 2.f, 2.f);
+            g.fillRect(r.getRight() - 2.f, y - 1.f, 2.f, 2.f);
+
+            // All cursor light follows the unmodified normalized macro values.
+            // Radial falloff replaces the former concentric solid discs.
+            g.setGradientFill(juce::ColourGradient(theme.accent.withAlpha(.17f), {x, y},
+                                                   theme.accent.withAlpha(0.f), {x + 34.f, y}, true));
+            g.fillRoundedRectangle(r, 18);
+            auto cursorLight = juce::ColourGradient(juce::Colour(0xffffefb5).withAlpha(.9f),
+                                                    {x, y}, theme.secondary.withAlpha(0.f),
+                                                    {x + 23.f, y}, true);
+            cursorLight.addColour(.22, juce::Colour(0xffffc574).withAlpha(.55f));
+            cursorLight.addColour(.55, juce::Colour(0xffefad48).withAlpha(.13f));
+            g.setGradientFill(cursorLight);
+            g.fillRoundedRectangle(r, 18);
+            g.setColour(juce::Colour(0xffffbc78));
+            g.fillEllipse(x - 5.5f, y - 5.5f, 11.f, 11.f);
+            g.setColour(juce::Colour(0xfffffcf0));
+            g.fillEllipse(x - 3.7f, y - 3.7f, 7.4f, 7.4f);
+            if (hasKeyboardFocus(true))
+            {
+                g.setColour(theme.accent);
+                g.drawRoundedRectangle(r, 18, 2);
+            }
+            return;
         }
+        bezel(g, theme, r, theme.display, 18);
         {
             juce::Graphics::ScopedSaveState save(g);
             juce::Path clip;
@@ -2971,34 +3181,6 @@ class MacroXY : public juce::Component
                                                    r.getTopLeft(), juce::Colours::transparentWhite,
                                                    r.getBottomLeft(), false));
             g.fillRect(r.withHeight(r.getHeight() * .48f));
-            if (theme.style == "live")
-            {
-                // Layered glass reflections, not waveform data. Their broad
-                // translucent surfaces leave the actual XY cursor and axes clear.
-                for (int layer = 0; layer < 5; ++layer)
-                {
-                    const float offset = layer * r.getHeight() * .035f;
-                    juce::Path reflection;
-                    reflection.startNewSubPath(r.getX(), r.getY() + r.getHeight() * .13f + offset);
-                    reflection.cubicTo(r.getX() + r.getWidth() * .58f,
-                                       r.getY() + r.getHeight() * .12f + offset,
-                                       r.getX() + r.getWidth() * .24f,
-                                       r.getY() + r.getHeight() * .63f - offset,
-                                       r.getRight(), r.getY() + r.getHeight() * .42f + offset);
-                    reflection.lineTo(r.getRight(), r.getY() + r.getHeight() * .66f + offset);
-                    reflection.cubicTo(r.getX() + r.getWidth() * .63f,
-                                       r.getY() + r.getHeight() * .87f - offset,
-                                       r.getX() + r.getWidth() * .31f,
-                                       r.getY() + r.getHeight() * .60f + offset,
-                                       r.getX(), r.getY() + r.getHeight() * .90f - offset);
-                    reflection.closeSubPath();
-                    g.setGradientFill(juce::ColourGradient(theme.accent.withAlpha(.025f),
-                                                           r.getTopLeft(),
-                                                           theme.secondary.withAlpha(.035f),
-                                                           r.getBottomRight(), false));
-                    g.fillPath(reflection);
-                }
-            }
             Visuals::grid(g, r.reduced(5), theme.accent.withAlpha(.28f));
         }
         const float x = r.getX() + bridge.value("macro1") * r.getWidth();
@@ -3011,7 +3193,7 @@ class MacroXY : public juce::Component
         g.setColour(theme.accent.withAlpha(.80f));
         g.drawLine(x, r.getY(), x, r.getBottom());
         g.drawLine(r.getX(), y, r.getRight(), y);
-        g.setColour(theme.secondary.withAlpha(theme.style == "live" ? .07f : .12f));
+        g.setColour(theme.secondary.withAlpha(.12f));
         g.fillEllipse(x - 23, y - 23, 46, 46);
         g.setColour(theme.secondary.withAlpha(.24f));
         g.fillEllipse(x - 16, y - 16, 32, 32);
@@ -3019,10 +3201,9 @@ class MacroXY : public juce::Component
         g.fillEllipse(x - 6, y - 6, 12, 12);
         g.setColour(juce::Colours::white);
         g.drawEllipse(x - 6, y - 6, 12, 12, 2);
-        if (theme.style != "live")
-            text(g, theme, "X: " + bridge.label("macro1") + "  /  Y: " + bridge.label("macro2"),
-                 r.withTrimmedTop(r.getHeight() - 20), 10, theme.text, false,
-                 juce::Justification::centred);
+        text(g, theme, "X: " + bridge.label("macro1") + "  /  Y: " + bridge.label("macro2"),
+             r.withTrimmedTop(r.getHeight() - 20), 10, theme.text, false,
+             juce::Justification::centred);
         if (hasKeyboardFocus(true))
         {
             g.setColour(theme.accent);
@@ -3120,7 +3301,8 @@ class PresetBrowser : public juce::Component, private juce::ListBoxModel
         search.setColour(juce::TextEditor::outlineColourId, theme.border.withAlpha(.6f));
         search.setColour(juce::TextEditor::focusedOutlineColourId, theme.accent);
         search.setIndents(25, 5);
-        search.setFont(theme.type(theme.style == "tokyo" ? 13.f : 12.f));
+        search.setFont(theme.type(theme.style == "space" ? 13.5f :
+                                  theme.style == "tokyo" ? 13.f : 12.5f));
         search.setText(query, false);
         search.onTextChange = [this] { refreshRows(); };
         search.onReturnKey = [this] {
@@ -3146,6 +3328,12 @@ class PresetBrowser : public juce::Component, private juce::ListBoxModel
         list.setRowHeight(theme.style == "tokyo" ? 26 : theme.style == "flow" ? 20 :
                           theme.style == "bauhaus" ? 21 : 24);
         list.setOutlineThickness(0);
+        list.getViewport()->setScrollBarThickness(theme.style == "space" ? 8 : 7);
+        auto &scrollbar = list.getViewport()->getVerticalScrollBar();
+        scrollbar.setColour(juce::ScrollBar::thumbColourId,
+                            theme.muted.withAlpha(theme.style == "space" ? .58f : .4f));
+        scrollbar.setColour(juce::ScrollBar::trackColourId, theme.border.withAlpha(.12f));
+        scrollbar.setColour(juce::ScrollBar::backgroundColourId, juce::Colours::transparentBlack);
         addAndMakeVisible(list);
         status.setName("Preset search status");
         status.setColour(juce::Label::textColourId, theme.muted);
@@ -3203,13 +3391,17 @@ class PresetBrowser : public juce::Component, private juce::ListBoxModel
         detailCategory.setName("Actual preset category and author");
         detailComment.setName("Actual preset description");
         detailTags.setName("Actual preset tags");
+        detailTitle.setComponentID("workspace.browser.detail.title");
+        detailCategory.setComponentID("workspace.browser.detail.category");
+        detailComment.setComponentID("workspace.browser.detail.comment");
+        detailTags.setComponentID("workspace.browser.detail.tags");
         detailTitle.setFont(theme.type(theme.style == "flow" ? 13.f : 14.f, true));
         detailCategory.setFont(theme.type(10.5f));
         detailCategory.setColour(juce::Label::textColourId, theme.muted);
         detailComment.setFont(theme.type(11.5f));
         detailTags.setFont(theme.type(10.f));
         refreshRows();
-        selectPatch(selectedPatch >= 0 ? selectedPatch : processor.surge->patchid);
+        selectPatch(selectedPatch >= 0 ? selectedPatch : currentCatalogPatchId(processor));
         refreshDetails();
     }
     ~PresetBrowser() override { list.setModel(nullptr); }
@@ -3234,7 +3426,20 @@ class PresetBrowser : public juce::Component, private juce::ListBoxModel
             auto card = detailBounds.toFloat();
             g.setColour(theme.border.withAlpha(theme.style == "bauhaus" ? .5f : .55f));
             g.drawLine(card.getX(), card.getY(), card.getRight(), card.getY(), 1);
-            if (theme.style == "aurora" || theme.style == "flow")
+            if (theme.style == "aurora")
+            {
+                const auto inset = card.reduced(0, 3);
+                g.setGradientFill(juce::ColourGradient(
+                    browserFill().interpolatedWith(theme.panel, .22f), inset.getTopLeft(),
+                    theme.display, inset.getBottomRight(), false));
+                g.fillRoundedRectangle(inset, 7);
+                g.setColour(theme.border.withAlpha(.8f));
+                g.drawRoundedRectangle(inset.reduced(.5f), 7, 1);
+                g.setColour(theme.text.withAlpha(.08f));
+                g.drawLine(inset.getX() + 7, inset.getY() + 1, inset.getRight() - 7,
+                           inset.getY() + 1, 1);
+            }
+            else if (theme.style == "flow")
                 bezel(g, theme, card.reduced(0, 3), theme.panel, 7);
             if (!thumbnail.isEmpty())
             {
@@ -3273,7 +3478,7 @@ class PresetBrowser : public juce::Component, private juce::ListBoxModel
                     folder.lineTo(thumb.getRight() - 7, thumb.getBottom() - 9);
                     folder.lineTo(thumb.getX() + 8, thumb.getBottom() - 9);
                     folder.closeSubPath();
-                    g.setColour(theme.text.withAlpha(.75f));
+                    g.setColour(theme.text.withAlpha(.5f));
                     g.strokePath(folder, juce::PathStrokeType(1.2f));
                 }
             }
@@ -3340,7 +3545,7 @@ class PresetBrowser : public juce::Component, private juce::ListBoxModel
             rows = std::move(updated);
             list.deselectAllRows();
             list.updateContent();
-            selectPatch(selection >= 0 ? selection : processor.surge->patchid);
+            selectPatch(selection >= 0 ? selection : currentCatalogPatchId(processor));
             list.repaint();
         }
         const auto count = static_cast<int>(std::count_if(rows.begin(), rows.end(),
@@ -3400,14 +3605,16 @@ class PresetBrowser : public juce::Component, private juce::ListBoxModel
             if (!r.isEmpty())
                 r.removeFromBottom(8);
         }
-        list.setBounds(r);
+        list.setBounds(r.reduced(theme.style == "aurora" || theme.style == "space" ? 5 :
+                                 theme.style == "tokyo" ? 4 : 0, 0));
         list.setVisible(page != Page::patch);
         auto details = detailBounds.reduced(8, 10);
         const bool hasThumb = hasCard && theme.style != "flow";
         if (hasThumb)
         {
             thumbnail = details.removeFromLeft(theme.style == "bauhaus" ? 48 : 52);
-            thumbnail.setHeight(std::min(71, thumbnail.getHeight()));
+            thumbnail.setHeight(std::min(theme.style == "aurora" ? 60 : 71,
+                                         thumbnail.getHeight()));
             details.removeFromLeft(9);
         }
         detailTitle.setBounds(details.removeFromTop(22));
@@ -3486,7 +3693,7 @@ class PresetBrowser : public juce::Component, private juce::ListBoxModel
     void rememberCurrentPatch()
     {
         const auto &catalog = processor.surge->storage.patch_list;
-        const int id = processor.surge->patchid;
+        const int id = currentCatalogPatchId(processor);
         if (id < 0 || static_cast<size_t>(id) >= catalog.size())
             return;
         const auto path = path_to_string(catalog[id].path);
@@ -3502,15 +3709,15 @@ class PresetBrowser : public juce::Component, private juce::ListBoxModel
     {
         auto &storage = processor.surge->storage;
         const auto selected = selectedPatchId();
-        const bool current = page == Page::patch || selected < 0 || selected == processor.surge->patchid;
-        juce::String name, category, comment, tags;
+        const bool current = page == Page::patch || selected < 0 ||
+                             selected == currentCatalogPatchId(processor);
+        juce::String name, category, author, comment, tags;
         if (current)
         {
             const auto &patch = storage.getPatch();
             name = juce::String(patch.name).substring(0, 160);
             category = juce::String(patch.category).substring(0, 160);
-            if (!patch.author.empty())
-                category += (category.isEmpty() ? "" : " / ") + juce::String(patch.author).substring(0, 100);
+            author = juce::String(patch.author).substring(0, 100);
             comment = juce::String(patch.comment).substring(0, 320);
             for (const auto &tag : patch.tags)
             {
@@ -3535,6 +3742,14 @@ class PresetBrowser : public juce::Component, private juce::ListBoxModel
         detailCategory.setText(category, juce::dontSendNotification);
         detailComment.setText(comment, juce::dontSendNotification);
         detailTags.setText(tags, juce::dontSendNotification);
+        detailTitle.setTooltip(name);
+        auto attribution = category;
+        if (author.isNotEmpty())
+            attribution += (attribution.isEmpty() ? "" : " / ") + author;
+        detailCategory.setTooltip(attribution);
+        detailCategory.setDescription(attribution);
+        detailComment.setTooltip(comment);
+        detailTags.setTooltip(tags);
     }
     void selectPatch(int id)
     {
@@ -3577,9 +3792,11 @@ class PresetBrowser : public juce::Component, private juce::ListBoxModel
     }
     juce::String getTooltipForRow(int row) override
     {
-        return validRow(row) ? rows[row].name + utf8(rows[row].category ? " — Enter to open folder"
-                                                                        : " — Enter to load")
-                             : juce::String();
+        if (!validRow(row))
+            return {};
+        const auto &entry = rows[row];
+        return entry.name + (entry.category ? " (" + juce::String(entry.patchCount) + ")" : "") +
+               utf8(entry.category ? " — Enter to open folder" : " — Enter to load");
     }
     void paintListBoxItem(int row, juce::Graphics &g, int width, int height, bool selected) override
     {
@@ -3592,9 +3809,16 @@ class PresetBrowser : public juce::Component, private juce::ListBoxModel
             auto fill = theme.accent;
             if (theme.style == "space")
                 fill = juce::Colour(0xff9a4e10);
+            else if (theme.style == "aurora")
+                fill = fill.interpolatedWith(browserFill(), .5f);
+            else if (theme.style == "tokyo")
+                fill = fill.interpolatedWith(browserFill(), .32f);
             g.setGradientFill(juce::ColourGradient(fill, r.getTopLeft(), fill.darker(.2f),
                                                   r.getBottomLeft(), false));
-            g.fillRoundedRectangle(r.reduced(1, .5f), 3);
+            const float radius = theme.style == "bauhaus" || theme.style == "tokyo" ? 1.f : 3.f;
+            g.fillRoundedRectangle(r.reduced(1, .5f), radius);
+            g.setColour(fill.brighter(.3f).withAlpha(.65f));
+            g.drawRoundedRectangle(r.reduced(1.5f, 1.f), radius, .7f);
         }
         else if (theme.style == "tokyo" && !entry.category)
         {
@@ -3603,35 +3827,67 @@ class PresetBrowser : public juce::Component, private juce::ListBoxModel
         }
         auto ink = selected && theme.style == "flow" ? theme.display
                    : selected && theme.style == "bauhaus" ? juce::Colours::white : theme.text;
-        auto icon = r.removeFromLeft(entry.category ? 30.f : theme.style == "flow" ? 38.f : 33.f);
+        const bool nestedPatch = !entry.category && !rows.empty() && rows.front().category;
+        if (nestedPatch && theme.style == "aurora")
+        {
+            g.setColour(theme.border.withAlpha(.2f));
+            g.drawVerticalLine(12, 0.f, static_cast<float>(height));
+        }
+        r.removeFromLeft(entry.category ? (theme.style == "aurora" ? 40.f : 30.f)
+                         : nestedPatch ? (theme.style == "aurora" ? 60.f : 50.f) : 8.f);
         if (entry.category)
         {
+            const bool expanded = validRow(row + 1) && !rows[row + 1].category;
+            const float arrowX = theme.style == "aurora" ? 8.f : 3.f;
+            const float centreY = height * .5f;
             juce::Path chevron;
-            chevron.addTriangle(3, height * .5f - 3, 3, height * .5f + 3, 7, height * .5f);
+            if (theme.style == "aurora")
+            {
+                chevron.startNewSubPath(arrowX, centreY - 3);
+                chevron.lineTo(arrowX + 3, centreY);
+                chevron.lineTo(arrowX + (expanded ? 6.f : 0.f),
+                               centreY + (expanded ? -3.f : 3.f));
+            }
+            else if (expanded)
+                chevron.addTriangle(arrowX, centreY - 2, arrowX + 6, centreY - 2,
+                                    arrowX + 3, centreY + 2);
+            else
+                chevron.addTriangle(arrowX, centreY - 3, arrowX, centreY + 3,
+                                    arrowX + 4, centreY);
             g.setColour(ink.withAlpha(.75f));
-            g.fillPath(chevron);
-            const float y = height * .5f - 4;
+            if (theme.style == "aurora")
+                g.strokePath(chevron, juce::PathStrokeType(1.2f));
+            else
+                g.fillPath(chevron);
+            const float folderX = theme.style == "aurora" ? 20.f : 12.f;
+            const float y = centreY - 4;
             juce::Path folder;
-            folder.startNewSubPath(12, y + 1);
-            folder.lineTo(12, y - 2);
-            folder.lineTo(18, y - 2);
-            folder.lineTo(20, y + 1);
-            folder.lineTo(26, y + 1);
-            folder.lineTo(26, y + 8);
-            folder.lineTo(12, y + 8);
+            folder.startNewSubPath(folderX, y + 1);
+            folder.lineTo(folderX, y - 2);
+            folder.lineTo(folderX + 6, y - 2);
+            folder.lineTo(folderX + 8, y + 1);
+            folder.lineTo(folderX + 14, y + 1);
+            folder.lineTo(folderX + 14, y + 8);
+            folder.lineTo(folderX, y + 8);
             folder.closeSubPath();
             if (theme.style == "bauhaus")
                 g.strokePath(folder, juce::PathStrokeType(1.2f));
             else
                 g.fillPath(folder);
-            auto count = r.removeFromRight(theme.style == "bauhaus" ? 28.f : 39.f);
-            if (theme.style == "bauhaus")
+            if (theme.style != "space")
             {
-                g.setColour(theme.border.withAlpha(.35f));
-                g.fillRoundedRectangle(count.reduced(1, 2), 3);
+                auto count = r.removeFromRight(theme.style == "bauhaus" ? 32.f : 43.f);
+                if (theme.style == "bauhaus")
+                {
+                    g.setColour(theme.border.withAlpha(.35f));
+                    g.fillRoundedRectangle(count.reduced(1, 3), 2);
+                }
+                auto caption = juce::String(entry.patchCount);
+                if (theme.style == "aurora" || theme.style == "tokyo")
+                    caption = "(" + caption + ")";
+                text(g, theme, caption, count.reduced(3, 0), 11.5f, ink.withAlpha(.8f),
+                     false, juce::Justification::centredRight);
             }
-            text(g, theme, juce::String(entry.patchCount), count, 10.5f, ink.withAlpha(.8f),
-                 false, juce::Justification::centredRight);
         }
         else if (entry.favorite)
         {
@@ -3641,8 +3897,18 @@ class PresetBrowser : public juce::Component, private juce::ListBoxModel
             g.strokePath(star, juce::PathStrokeType(1));
             r.removeFromRight(20);
         }
-        text(g, theme, entry.name, r.reduced(2, 0), theme.style == "tokyo" ? 13.f : 12.f,
-             ink, entry.category && theme.style != "space");
+        const float size = theme.style == "tokyo" || theme.style == "space" ? 14.f
+                           : theme.style == "bauhaus" ? 13.5f
+                           : theme.style == "aurora" ? 13.f : 12.f;
+        auto font = theme.type(size, entry.category && theme.style != "space" &&
+                                     theme.style != "tokyo");
+        if (theme.style == "space")
+            font = font.withHorizontalScale(.94f);
+        g.setFont(font);
+        g.setColour(ink);
+        // Keep compact names readable rather than squeezing long catalog names
+        // into thin lettering. The tooltip and accessible row keep the full name.
+        g.drawText(entry.name, r.reduced(2, 0), juce::Justification::centredLeft, true);
     }
     void selectedRowsChanged(int) override { refreshDetails(); }
     void listBoxItemDoubleClicked(int row, const juce::MouseEvent &) override { activate(row); }
@@ -6611,6 +6877,23 @@ struct Workspace::Impl
         auto titleY = theme.style == "ivory" && (kind == "oscillator" || kind == "filter")
                           ? 11.f : theme.style == "precision" ? 6.f
                           : theme.style == "spectral" ? 5.f : 3.f;
+        if (theme.style == "ivory" && kind != "oscillator" && kind != "filter" &&
+            number(v, "fontSize", 18) >= 16.f)
+            // Major serif headings sit below the engraved top lip. Keep the
+            // smaller routing/ring/effect subgroup captions at their own inset.
+            titleY = 9.f;
+        if (theme.style == "space" && titleColor.getPerceivedBrightness() < .4f &&
+            number(v, "fontSize", 14) >= 16.f)
+            // Ink on the brass plates sits below the raised metal lip. The
+            // cream labels inside the olive instrument wells keep their inset.
+            titleY = 9.f;
+        if (theme.style == "bauhaus")
+        {
+            if (panelId == "harmonic-waveform-panel")
+                titleY = 9.f;
+            else if (panelId == "matrix-heading" || panelId == "macros-heading")
+                titleY = 6.f;
+        }
         if (theme.style == "bauhaus" && panelId == "output-panel")
             titleY = 6.f;
         if (theme.style == "clear")
@@ -6677,15 +6960,18 @@ struct Workspace::Impl
                 const bool paperTerrain = theme.style == "bauhaus" && variant == "terrain";
                 if (layers && visuals.wavetable[index - 1].available())
                     Visuals::wavetable(g, pr.reduced(5), visuals.wavetable[index - 1],
-                                       paperTerrain ? juce::Colour(0xffe4dac4) : waveformInk,
+                                       paperTerrain ? juce::Colour(0xffe4dac4)
+                                           : theme.style == "precision" ? theme.accent : waveformInk,
                                        paperTerrain ? juce::Colour(0xffc7bea9)
-                                           : theme.style == "tokyo" ? waveformInk : theme.accent,
+                                           : theme.style == "tokyo" || theme.style == "precision"
+                                               ? waveformInk : theme.accent,
                                        theme.style == "aurora" || theme.style == "live"
                                            ? Visuals::WavetableView::ribbons
                                            : Visuals::WavetableView::perspective);
                 else
                     Visuals::waveform(g, pr.reduced(5), visuals.oscillator[index - 1], waveformInk,
-                                      theme.style == "tokyo" ? waveformInk : theme.accent,
+                                      theme.style == "tokyo" || theme.style == "precision"
+                                          ? waveformInk : theme.accent,
                                       variant == "terrain");
                 if (visuals.oscillator[index - 1].empty())
                     unavailableOscillator(g, pr, index - 1);
@@ -6757,12 +7043,29 @@ struct Workspace::Impl
                 g.drawLine(trace.getX(), trace.getCentreY() + depth * trace.getHeight() * .5f,
                            trace.getRight(), trace.getCentreY() - depth * trace.getHeight() * .5f,
                            2);
-                text(g, theme, "Amount", {tile.getRight() + 16, tile.getY() - 1, 110, 20}, 14,
+                // The large amount uses the same signed native normalization as
+                // the editable matrix row. Its physical depth/range remains a
+                // separate readout, never a reference-image example value.
+                const auto decimals = std::abs(depth) > 0.f && std::abs(depth) < .01f ? 3 : 2;
+                const auto depthLabel = (depth >= 0 ? "+" : "") + juce::String(depth, decimals);
+                const auto amountX = tile.getRight() + 13;
+                const auto amountWidth = std::max(1.f, r.getRight() - amountX - 14);
+                text(g, theme, "Amount", {amountX + 13, tile.getY() - 3, 110, 20}, 13,
                      theme.text, true);
-                text(g, theme, route.amount, {tile.getRight() + 16, tile.getY() + 20, 260, 32}, 22,
+                text(g, theme, depthLabel, {amountX, tile.getY() + 15, amountWidth, 32}, 24,
                      theme.text, true);
-                text(g, theme, route.muted ? "Muted route" : "Scaled to destination range",
-                     {r.getX() + 14, r.getBottom() - 41, r.getWidth() - 28, 25}, 13, theme.text);
+                text(g, theme, route.amount, {amountX, tile.getY() + 49, amountWidth, 18},
+                     12.5f, theme.text);
+                g.setColour(theme.border.withAlpha(.6f));
+                g.drawHorizontalLine(static_cast<int>(tile.getBottom() + 10),
+                                     r.getX() + 18, r.getRight() - 18);
+                auto status = juce::String(route.bipolar ? "Bipolar" : "Unipolar") +
+                              utf8(" · Scaled to destination range");
+                if (route.muted)
+                    status = utf8("Muted · ") + status;
+                text(g, theme, status,
+                     {r.getX() + 18, r.getBottom() - 57, r.getWidth() - 36, 25},
+                     12.5f, theme.text);
             }
         }
         else if (kind == "filter" || kind == "inspector")
@@ -7443,10 +7746,16 @@ struct Workspace::Impl
                           bool active = true, bool arrow = true) {
             if (path.isEmpty())
                 return;
-            const auto width = control ? 1.15f : variant == "flow" ? 2.2f : 1.8f;
+            const auto width = control ? 1.15f : variant == "flow" ? 2.4f : 1.8f;
             const auto opacity = active ? 1.f : .24f;
             if (!control && active)
             {
+                if (variant == "flow")
+                {
+                    g.setColour(ink.withAlpha(.045f));
+                    g.strokePath(path, juce::PathStrokeType(width + 6.5f,
+                        juce::PathStrokeType::curved, juce::PathStrokeType::rounded));
+                }
                 g.setColour(ink.withAlpha(variant == "flow" ? .16f : .12f));
                 g.strokePath(path, juce::PathStrokeType(width + 4.f,
                     juce::PathStrokeType::curved, juce::PathStrokeType::rounded));
@@ -7460,8 +7769,16 @@ struct Workspace::Impl
                 g.fillPath(dashes);
             }
             else
+            {
                 g.strokePath(path, juce::PathStrokeType(width,
                     juce::PathStrokeType::curved, juce::PathStrokeType::rounded));
+                if (variant == "flow" && active)
+                {
+                    g.setColour(ink.interpolatedWith(juce::Colour(0xffb1fff3), .8f));
+                    g.strokePath(path, juce::PathStrokeType(1.1f,
+                        juce::PathStrokeType::curved, juce::PathStrokeType::rounded));
+                }
+            }
             const auto length = path.getLength();
             if (arrow && length > 8.f)
             {
@@ -7498,14 +7815,30 @@ struct Workspace::Impl
                 path.cubicTo(middle, a.y, middle, b.y, b.x, b.y);
             stroke(path, audioInk, false, active);
         };
-        auto pin = [&](juce::Point<float> point, juce::Colour ink, bool active = true) {
+        auto pin = [&](juce::Point<float> point, juce::Colour ink, bool active = true,
+                       float radius = 2.7f) {
+            if (variant == "flow" && active)
+            {
+                g.setColour(ink.withAlpha(.10f));
+                g.fillEllipse(point.x - radius - 2.f, point.y - radius - 2.f,
+                              2.f * radius + 4.f, 2.f * radius + 4.f);
+            }
             g.setColour(theme.display);
-            g.fillEllipse(point.x - 3.6f, point.y - 3.6f, 7.2f, 7.2f);
+            g.fillEllipse(point.x - radius - .9f, point.y - radius - .9f,
+                          2.f * radius + 1.8f, 2.f * radius + 1.8f);
             g.setColour(ink.withAlpha(active ? 1.f : .3f));
             if (active)
-                g.fillEllipse(point.x - 2.7f, point.y - 2.7f, 5.4f, 5.4f);
+            {
+                g.fillEllipse(point.x - radius, point.y - radius, 2.f * radius, 2.f * radius);
+                if (variant == "flow")
+                {
+                    g.setColour(ink.interpolatedWith(juce::Colours::white, .32f).withAlpha(.72f));
+                    g.drawEllipse(point.x - radius + .4f, point.y - radius + .4f,
+                                  2.f * radius - .8f, 2.f * radius - .8f, .7f);
+                }
+            }
             else
-                g.drawEllipse(point.x - 2.7f, point.y - 2.7f, 5.4f, 5.4f, 1.f);
+                g.drawEllipse(point.x - radius, point.y - radius, 2.f * radius, 2.f * radius, 1.f);
         };
         auto filterOn = [&](int index) { return scene.filterunit[index].type.val.i != 0; };
         const juce::StringArray labels =
@@ -7612,7 +7945,8 @@ struct Workspace::Impl
         juce::Graphics::ScopedSaveState saved(g);
         g.reduceClipRegion(r.toNearestInt());
         const auto plot = r;
-        g.setColour(theme.display);
+        g.setGradientFill(juce::ColourGradient(juce::Colour(0xff041b2b), plot.getTopLeft(),
+                                               juce::Colour(0xff02131f), plot.getBottomLeft(), false));
         g.fillRoundedRectangle(plot, 3);
         // The cartographer has a fine drafting grid, unlike the signal plots.
         for (int x = 0; x <= static_cast<int>(plot.getWidth()); x += 10)
@@ -7643,13 +7977,32 @@ struct Workspace::Impl
         const auto sources = rectangle("modsources", .05f, .80f, .27f, .15f);
         const auto modbus = rectangle("modbus", .46f, .80f, .30f, .15f);
         auto node = [&](Rect n, const juce::String &title, bool active = true,
-                        float titleInset = 10.f) {
-            bezel(g, theme, n, theme.panel, 7);
-            g.setColour(theme.secondary.withAlpha(active ? .80f : .28f));
-            g.drawRoundedRectangle(n.reduced(.5f), 7, .9f);
+                        float titleInset = 10.f,
+                        int titleAlign = juce::Justification::centredLeft, float titleTop = 5.f) {
+            // Flow cards have a pale double rim and a small lit lip. Keep this
+            // finish local: the graph cards are not the other skins' panels.
+            constexpr float radius = 8.5f;
+            g.setColour(juce::Colours::black.withAlpha(.52f));
+            g.fillRoundedRectangle(n.expanded(.8f).translated(0, 1.f), radius + .8f);
+            auto material = juce::ColourGradient(juce::Colour(0xff10283b), n.getTopLeft(),
+                                                   juce::Colour(0xff06192b), n.getBottomLeft(), false);
+            material.addColour(.12, juce::Colour(0xff0c2234));
+            g.setGradientFill(material);
+            g.fillRoundedRectangle(n, radius);
+            g.setGradientFill(juce::ColourGradient(
+                juce::Colour(0xff9bcbd0).withAlpha(active ? .90f : .32f), n.getTopLeft(),
+                juce::Colour(0xff90b8c0).withAlpha(active ? .85f : .30f), n.getBottomRight(), false));
+            g.drawRoundedRectangle(n.reduced(.5f), radius, 1.15f);
+            g.setColour(juce::Colours::black.withAlpha(.62f));
+            g.drawRoundedRectangle(n.reduced(1.7f), radius - 1.2f, .8f);
+            g.setGradientFill(juce::ColourGradient(
+                juce::Colours::white.withAlpha(.12f), n.getX(), n.getY() + 2.5f,
+                juce::Colours::white.withAlpha(0.f), n.getX(), n.getY() + 9.f, false));
+            g.drawRoundedRectangle(n.reduced(2.6f), radius - 2.f, .8f);
             if (title.isNotEmpty())
-                text(g, theme, title, n.reduced(titleInset, 4).withHeight(18), 12.5f,
-                     theme.text.withAlpha(active ? 1.f : .48f), true);
+                text(g, theme, title, n.reduced(titleInset, 0).withY(n.getY() + titleTop)
+                                                  .withHeight(18), 12.5f,
+                     theme.text.withAlpha(active ? 1.f : .48f), true, titleAlign);
         };
         // Draw audio paths behind the node surfaces. Parallel paths have an
         // explicit summing/ring junction, while Wide remains a serial pair.
@@ -7782,7 +8135,7 @@ struct Workspace::Impl
                 stroke(ingress, colour, true, sourceActive[i] > 0);
                 stroke(egress, colour, true, sourceActive[i] > 0);
             }
-            pin({chips[i].getRight() + 5, chips[i].getCentreY()}, colour, sourceActive[i] > 0);
+            pin({chips[i].getRight() + 5, chips[i].getCentreY()}, colour, sourceActive[i] > 0, 3.2f);
         }
         if (sourceCounts[6] > 0)
         {
@@ -7850,27 +8203,46 @@ struct Workspace::Impl
             stroke(route, ink, true, targetActive[i] > 0);
         }
 
-        node(mix, "MIXER");
+        node(mix, "MIXER", true, 10.f, juce::Justification::centred);
         for (int i = 0; i < 3; ++i)
         {
             const auto n = oscillators[i];
             const bool active = parameters.value("osc" + juce::String(i + 1) + ".mute") < .5f;
             node(n, {}, active);
             text(g, theme, "OSC " + juce::String(i + 1),
-                 {n.getX() + 37, n.getY() + 4, 68, 19}, 12.5f, theme.text, true);
-            const auto preview = Rect(n.getX() + 102, n.getY() + 10,
-                                      std::max(15.f, n.getWidth() - 112), 30);
+                 {n.getX() + 37, n.getY() + 5, 68, 19}, 12.5f, theme.text, true);
+            const auto preview = Rect(n.getX() + 106, n.getY() + 12,
+                                      std::max(15.f, n.getWidth() - 118), 30);
             if (!visuals.oscillator[i].empty())
-                Visuals::waveform(g, preview, visuals.oscillator[i], theme.accent,
-                                  theme.secondary, false);
+            {
+                // These small glyphs use the same actual preview samples as
+                // the larger display, with the reference's restrained trace.
+                const auto &samples = visuals.oscillator[i];
+                const auto denominator = static_cast<float>(std::max<size_t>(1, samples.size() - 1));
+                juce::Path trace;
+                for (size_t j = 0; j < samples.size(); ++j)
+                {
+                    const auto x = preview.getX() +
+                                   preview.getWidth() * static_cast<float>(j) / denominator;
+                    const auto sample = std::isfinite(samples[j]) ? samples[j] : 0.f;
+                    const auto y = preview.getCentreY() - std::clamp(sample, -1.35f, 1.35f) *
+                                                               preview.getHeight() * .34f;
+                    if (j == 0) trace.startNewSubPath(x, y); else trace.lineTo(x, y);
+                }
+                g.setColour(audioInk.withAlpha(.13f));
+                g.strokePath(trace, juce::PathStrokeType(3.f));
+                g.setColour(audioInk.interpolatedWith(juce::Colours::white, .12f));
+                g.strokePath(trace, juce::PathStrokeType(1.25f));
+            }
             else
                 unavailableOscillator(g, preview, i);
-            pin({n.getRight(), n.getCentreY()}, audioInk, active);
+            pin({n.getRight(), n.getCentreY()}, audioInk, active, 4.2f);
         }
         for (int i = 0; i < 2; ++i)
         {
             const auto n = i == 0 ? f1 : f2;
-            node(n, "FILTER " + juce::String(i + 1), filterOn(i), 37.f);
+            node(n, "FILTER " + juce::String(i + 1), filterOn(i), 37.f,
+                 juce::Justification::centredLeft, 3.f);
             g.setColour(audioInk.withAlpha(filterOn(i) ? .8f : .2f));
             g.fillEllipse(n.getX() + 16.f, n.getY() + 11.f, 5.f, 5.f);
             const auto &curve = filterCurves[i];
@@ -7886,16 +8258,27 @@ struct Workspace::Impl
                         (filterPreviewMaximumDb - filterPreviewMinimumDb), 0.f, 1.f);
                     if (j == 0) trace.startNewSubPath(x, y); else trace.lineTo(x, y);
                 }
-                g.setColour(audioInk.withAlpha(.15f));
+                auto fill = trace;
+                fill.lineTo(area.getBottomRight());
+                fill.lineTo(area.getBottomLeft());
+                fill.closeSubPath();
+                g.setGradientFill(juce::ColourGradient(
+                    audioInk.withAlpha(.16f), area.getTopLeft(),
+                    audioInk.withAlpha(.01f), area.getBottomLeft(), false));
+                g.fillPath(fill);
+                g.setColour(audioInk.withAlpha(.12f));
                 g.strokePath(trace, juce::PathStrokeType(4.f));
                 g.setColour(audioInk);
                 g.strokePath(trace, juce::PathStrokeType(1.3f));
             }
-            pin({n.getRight(), n.getCentreY()}, audioInk);
+            pin({n.getRight(), n.getCentreY()}, audioInk, true, 4.2f);
         }
-        node(amp, "AMP");
+        node(amp, {});
+        text(g, theme, "AMP", amp.withTrimmedLeft(25).withTrimmedRight(9)
+                                    .withY(amp.getY() + 5).withHeight(18),
+             12.5f, theme.text, true, juce::Justification::centred);
         drawEnvelope(g, amp.withTrimmedTop(22).reduced(4), 1, theme.accent);
-        node(fx, "FX SLOTS (1-8)");
+        node(fx, "FX SLOTS (1-8)", true, 10.f, juce::Justification::centred, 6.f);
         for (int i = 0; i < 8; ++i)
         {
             const float y = fx.getY() + 40 + i * 24;
@@ -7904,6 +8287,8 @@ struct Workspace::Impl
                         : patch.fx_bypass.val.i == fxb_all_fx || patch.fx_bypass.val.i == fxb_no_sends;
             const bool enabled = groupEnabled && patch.fx[i].type.val.i != fxt_off &&
                                  (patch.fx_disable.val.i & (1 << i)) == 0;
+            g.setColour(theme.secondary.withAlpha(.07f));
+            g.fillRoundedRectangle(fx.getX() + 8, y - 8.5f, 17.f, 17.f, 5.f);
             text(g, theme, juce::String(i + 1), {fx.getX() + 8, y - 9, 17, 18}, 10,
                  theme.text, false, juce::Justification::centred);
             g.setColour(audioInk.withAlpha(enabled ? .95f : .18f));
@@ -7911,7 +8296,7 @@ struct Workspace::Impl
         }
         if (nodes.hasProperty("output"))
         {
-            node(out, "OUT");
+            node(out, "OUT", true, 5.f, juce::Justification::centred);
             const auto c = out.getCentre().translated(0, 10);
             juce::Path speaker;
             speaker.startNewSubPath(c.x - 10, c.y - 4);
@@ -7929,7 +8314,7 @@ struct Workspace::Impl
             pin({mix.getX(), mix.getY() + 30.f + i * 22.f}, audioInk,
                 parameters.value("osc" + juce::String(i + 1) + ".mute") < .5f);
         for (const auto n : {mix, amp, fx})
-            pin({n.getRight(), n.getCentreY()}, audioInk);
+            pin({n.getRight(), n.getCentreY()}, audioInk, true, 4.2f);
         pin({f1.getX(), f1.getCentreY()}, audioInk);
         pin({amp.getX(), amp.getCentreY()}, audioInk);
         pin({fx.getX(), fx.getCentreY()}, audioInk);
@@ -7966,13 +8351,13 @@ struct Workspace::Impl
                             juce::Point<float>(iconX + 15, iconY + 7)})
             g.fillRoundedRectangle(p.x - 2.5f, p.y - 2.5f, 5, 5, 1);
         text(g, theme, "MOD BUS & ROUTING",
-             {modbus.getX() + 58, modbus.getY() + 12, modbus.getWidth() - 64, 20},
+             {modbus.getX() + 73, modbus.getY() + 14, modbus.getWidth() - 79, 20},
              12.5f, theme.text, true);
         int count = 0;
         for (const auto active : targetActive) count += active;
         text(g, theme, juce::String(count) + " active / " + juce::String(static_cast<int>(routes.size())) + " routes",
-             {modbus.getX() + 58, modbus.getY() + 35, modbus.getWidth() - 64, 18},
-             10.5f, theme.muted);
+             {modbus.getX() + 73, modbus.getY() + 35, modbus.getWidth() - 79, 18},
+             10.5f, theme.muted, false, juce::Justification::centred);
         const auto legend = Rect(out.getRight() - 148, modbus.getCentreY() - 6, 148, 67);
         node(legend, {});
         for (int i = 0; i < 2; ++i)
@@ -7985,7 +8370,8 @@ struct Workspace::Impl
             text(g, theme, i == 0 ? "Audio (signal)" : "Modulation", {legend.getX() + 49, y - 8, 93, 16},
                  9.5f, theme.text);
         }
-        pin({legend.getX() + 26, legend.getY() + 53}, controlInk, false);
+        g.setColour(controlInk);
+        g.drawEllipse(legend.getX() + 23, legend.getY() + 48, 10.f, 10.f, 1.2f);
         text(g, theme, "Module port", {legend.getX() + 49, legend.getY() + 45, 93, 16}, 9.5f,
              theme.text);
         text(g, theme, parameters.display("routing") + utf8(" • topology overview"),
@@ -8178,6 +8564,23 @@ void Workspace::paint(juce::Graphics &g)
         g.fillRoundedRectangle({.5f, 31.f, 1585.f, 921.f}, 15.f);
         g.setColour(juce::Colour(0xff5f686e).withAlpha(.55f));
         g.drawRoundedRectangle({.5f, 31.f, 1585.f, 921.f}, 15.f, .8f);
+    }
+    if (i.theme.style == "spectral")
+    {
+        // The reference instrument stands on a cool satin surround. This
+        // enclosure is decorative; the dark working surface and all native
+        // child bounds remain unchanged inside it.
+        g.setGradientFill(juce::ColourGradient(juce::Colour(0xff6f7c8b), 0, 0,
+                                               juce::Colour(0xff6b798b), 1586, 992, false));
+        g.fillRect(0.f, 0.f, 1586.f, 992.f);
+        juce::Path chassis;
+        chassis.addRoundedRectangle({17.f, 17.f, 1554.f, 944.f}, 8.f);
+        juce::DropShadow(juce::Colours::black.withAlpha(.72f), 18, {0, 8})
+            .drawForPath(g, chassis);
+        g.setColour(juce::Colour(0xff03060e));
+        g.fillPath(chassis);
+        g.setColour(juce::Colour(0xff28324c).withAlpha(.8f));
+        g.strokePath(chassis, juce::PathStrokeType(.8f));
     }
     if (i.theme.style == "space" || i.theme.style == "ivory")
     {

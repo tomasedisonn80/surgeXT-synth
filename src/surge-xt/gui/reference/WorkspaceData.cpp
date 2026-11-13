@@ -309,6 +309,22 @@ bool ModulationEditorModel::remove(const RouteRow &row)
     return true;
 }
 
+int currentCatalogPatchId(SurgeSynthProcessor &processor)
+{
+    if (!processor.surge)
+        return -1;
+    const auto &storage = processor.surge->storage;
+    const auto id = processor.surge->patchid;
+    if (!validIndex(id, storage.patch_list.size()))
+        return -1;
+    const auto &entry = storage.patch_list[id];
+    const auto &patch = storage.getPatch();
+    return validIndex(entry.category, storage.patch_category.size()) &&
+                   entry.name == patch.name &&
+                   storage.patch_category[entry.category].name == patch.category
+               ? id : -1;
+}
+
 std::vector<BrowserRow> browserRows(SurgeSynthProcessor &processor, const juce::String &query,
                                     int maxRows, BrowserFilter filter, int categoryId)
 {
@@ -421,16 +437,28 @@ std::vector<BrowserRow> browserRows(SurgeSynthProcessor &processor, const juce::
         }
     };
     int currentCategory = -1;
-    if (inScope(processor.surge->patchid))
-        currentCategory = storage.patch_list[processor.surge->patchid].category;
+    const auto currentId = currentCatalogPatchId(processor);
+    if (inScope(currentId))
+        currentCategory = storage.patch_list[currentId].category;
     if (currentCategory < 0)
+    {
+        // A renamed/external patch may still name a real installed category.
+        // Match that live metadata first. A retained catalog ID can only
+        // disambiguate identical Factory/User folder names after they match.
         for (size_t i = 0; i < storage.patch_category.size(); ++i)
             if (storage.patch_category[i].name == storage.getPatch().category &&
                 countInCategory(static_cast<int>(i)) > 0)
             {
-                currentCategory = static_cast<int>(i);
-                break;
+                if (currentCategory < 0)
+                    currentCategory = static_cast<int>(i);
+                if (inScope(processor.surge->patchid) &&
+                    storage.patch_list[processor.surge->patchid].category == static_cast<int>(i))
+                {
+                    currentCategory = static_cast<int>(i);
+                    break;
+                }
             }
+    }
     addCategory(currentCategory, true);
 
     const auto &categoryOrder = storage.patchCategoryOrdering;
@@ -442,7 +470,7 @@ std::vector<BrowserRow> browserRows(SurgeSynthProcessor &processor, const juce::
         if (id == currentCategory || !validIndex(id, storage.patch_category.size()) ||
             !storage.patch_category[id].isRoot)
             continue;
-        addCategory(id, result.empty());
+        addCategory(id, false);
     }
     if (result.empty())
         for (size_t i = 0; i < patchCount && !full(); ++i)

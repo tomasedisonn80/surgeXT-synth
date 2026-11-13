@@ -412,6 +412,7 @@ void installBrowserTestCatalog(SurgeSynthProcessor &processor, const juce::File 
     storage.patchCategoryOrdering = {0, 2, 3, 5, 1, 4};
     storage.favoritesOrdering = {4, 0};
     processor.surge->patchid = 0;
+    storage.getPatch().name = "Test Factory Root";
     storage.getPatch().category = "Shared";
 }
 
@@ -2194,6 +2195,128 @@ TEST_CASE("Native preset scopes preserve catalog partitions and stable patch ide
             CHECK(row.patchCount == (row.categoryId == 3 ? 2 : 1));
         }
     CHECK(userFolders == std::vector<int>{3, 5});
+    CHECK(processor.surge->patchid == 0);
+    checkHostParameterValues(processor, before);
+}
+
+TEST_CASE("Native browser rejects stale catalog identities after patch metadata changes",
+          "[reference-workspaces][reference-browser][reference-interactions]")
+{
+    using Surge::GUI::Reference::browserRows;
+    using Surge::GUI::Reference::currentCatalogPatchId;
+    juce::ScopedJuceInitialiser_GUI gui;
+    IsolatedUserData testData;
+    SurgeSynthProcessor processor;
+    testData.attach(processor);
+    installBrowserTestCatalog(processor, testData.directory);
+    auto &storage = processor.surge->storage;
+    auto &patch = storage.getPatch();
+    const auto before = hostParameterValues(processor);
+
+    patch.name = storage.patch_list[0].name;
+    CHECK(currentCatalogPatchId(processor) == 0);
+    auto rows = browserRows(processor, {}, 100);
+    REQUIRE(rows.size() > 1);
+    CHECK(rows[0].categoryId == 0);
+    CHECK(rows[1].patchId == 0);
+
+    // Renaming the patch breaks catalog identity, while its actual category
+    // may still be useful. Equal Factory/User category names stay separate.
+    processor.surge->patchid = 4;
+    patch.name = "Renamed scratch patch";
+    patch.category = "Shared/Child";
+    CHECK(currentCatalogPatchId(processor) == -1);
+    rows = browserRows(processor, {}, 100);
+    REQUIRE(rows.size() > 1);
+    CHECK(rows[0].categoryId == 4);
+    CHECK(rows[1].patchId == 4);
+    patch.category = "User Only";
+    rows = browserRows(processor, {}, 100);
+    REQUIRE(rows.size() > 1);
+    CHECK(rows[0].categoryId == 5);
+    CHECK(rows[1].patchId == 5);
+
+    // An external/uncatalogued patch must not promote its retained catalog ID,
+    // invent a folder for its metadata, or expand an unrelated first folder.
+    processor.surge->patchid = 0;
+    patch.category = "Uncatalogued scratch folder";
+    CHECK(currentCatalogPatchId(processor) == -1);
+    rows = browserRows(processor, {}, 100);
+    std::vector<int> folders;
+    for (const auto &row : rows)
+    {
+        CHECK(row.category);
+        CHECK(row.patchId == -1);
+        folders.push_back(row.categoryId);
+    }
+    CHECK(folders == std::vector<int>{0, 2, 3, 5});
+
+    Workspace workspace(processor);
+    juce::String error;
+    REQUIRE(workspace.load(sourceRoot().getChildFile(
+        "resources/data/skins/reference-04-bauhaus.surge-skin/workspace.json"), error));
+    workspace.setSize(referenceWidth, referenceHeight);
+    auto *list = dynamic_cast<juce::ListBox *>(
+        findComponent(workspace, "workspace.browser.list"));
+    auto *search = dynamic_cast<juce::TextEditor *>(
+        findComponent(workspace, "workspace.browser.search"));
+    auto *title = dynamic_cast<juce::Label *>(
+        findComponent(workspace, "workspace.browser.detail.title"));
+    auto *category = dynamic_cast<juce::Label *>(
+        findComponent(workspace, "workspace.browser.detail.category"));
+    REQUIRE(list != nullptr);
+    REQUIRE(search != nullptr);
+    REQUIRE(title != nullptr);
+    REQUIRE(category != nullptr);
+#if JUCE_MAJOR_VERSION >= 8
+    auto *model = list->getListBoxModel();
+#else
+    auto *model = list->getModel();
+#endif
+    REQUIRE(model != nullptr);
+    CHECK(list->getSelectedRow() == -1);
+    CHECK(title->getText() == juce::String(patch.name));
+    CHECK(category->getText() == juce::String(patch.category));
+    const auto tab = [&](int index) {
+        auto *button = dynamic_cast<juce::Button *>(findComponent(
+            workspace, "workspace.browser.tab." + juce::String(index)));
+        REQUIRE(button != nullptr);
+        REQUIRE(static_cast<bool>(button->onClick));
+        button->onClick();
+    };
+    tab(2);
+    CHECK(model->getNumRows() == 0);
+
+    // Selecting the stale ID explicitly still inspects and loads that real
+    // installed preset; it must not display the uncatalogued patch's metadata.
+    REQUIRE(static_cast<bool>(search->onTextChange));
+    search->setText("Test Factory Root", false);
+    tab(0);
+    REQUIRE(model->getNumRows() == 1);
+    list->selectRow(0);
+    CHECK(title->getText() == juce::String(storage.patch_list[0].name));
+    CHECK(category->getText() == "Shared");
+    juce::StringArray actions;
+    workspace.onAction = [&](const juce::String &action) { actions.add(action); };
+    REQUIRE(static_cast<bool>(search->onReturnKey));
+    search->onReturnKey();
+    REQUIRE(actions.size() == 1);
+    CHECK(actions[0] == "load-preset:0");
+    tab(1);
+    CHECK(title->getText() == juce::String(patch.name));
+
+    // Genuine loaded identities still enter history, and a subsequent rename
+    // does not erase an earlier genuine visit or append a new spurious visit.
+    patch.name = storage.patch_list[0].name;
+    patch.category = "Shared";
+    search->setText({}, false);
+    tab(2);
+    REQUIRE(model->getNumRows() == 1);
+    CHECK(model->getNameForRow(0) == "Preset: Test Factory Root");
+    patch.name = "Renamed again";
+    patch.category = "Uncatalogued scratch folder";
+    tab(2);
+    CHECK(model->getNumRows() == 1);
     CHECK(processor.surge->patchid == 0);
     checkHostParameterValues(processor, before);
 }

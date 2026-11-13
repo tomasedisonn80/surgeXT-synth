@@ -46,18 +46,18 @@
       "w": 440,
       "h": 126,
       "plot": [
-        21,
-        235,
-        220,
-        57
+        18,
+        233,
+        223,
+        61
       ],
       "titleInset": 45,
-      "fontSize": 15.5,
+      "fontSize": 14.5,
       "wavetableRect": [
-        21,
+        18,
         294,
-        220,
-        23
+        223,
+        24
       ]
     },
     {
@@ -71,18 +71,18 @@
       "w": 440,
       "h": 126,
       "plot": [
-        21,
-        369,
-        220,
-        57
+        18,
+        367,
+        223,
+        61
       ],
       "titleInset": 45,
-      "fontSize": 15.5,
+      "fontSize": 14.5,
       "wavetableRect": [
-        21,
+        18,
         428,
-        220,
-        23
+        223,
+        24
       ]
     },
     {
@@ -96,18 +96,18 @@
       "w": 440,
       "h": 126,
       "plot": [
-        21,
-        501,
-        220,
-        57
+        18,
+        499,
+        223,
+        61
       ],
       "titleInset": 45,
-      "fontSize": 15.5,
+      "fontSize": 14.5,
       "wavetableRect": [
-        21,
+        18,
         560,
-        220,
-        23
+        223,
+        24
       ]
     },
     {
@@ -128,7 +128,20 @@
       "x": 8,
       "y": 601,
       "w": 440,
-      "h": 175
+      "h": 175,
+      "titleInset": 45,
+      "fontSize": 14.5
+    },
+    {
+      "id": "p.wave-glass",
+      "kind": "tabs",
+      "title": "",
+      "titleHeight": 0,
+      "color": "#040807",
+      "x": 459,
+      "y": 122,
+      "w": 665,
+      "h": 163
     },
     {
       "id": "p.wave",
@@ -140,10 +153,10 @@
       "w": 667,
       "h": 165,
       "plot": [
-        466,
-        155,
-        654,
-        126
+        458,
+        153,
+        667,
+        133
       ],
       "titleHeight": 23,
       "fontSize": 12,
@@ -216,7 +229,8 @@
       "w": 667,
       "h": 118,
       "fontSize": 14,
-      "titleHeight": 23
+      "titleHeight": 23,
+      "titleInset": 49
     },
     {
       "id": "p.filter1",
@@ -362,7 +376,7 @@
         256,
         71
       ],
-      "titleInset": 41,
+      "titleInset": 43,
       "titleHeight": 23,
       "fontSize": 14,
       "selection": {
@@ -413,7 +427,8 @@
       "w": 443,
       "h": 149,
       "titleHeight": 23,
-      "fontSize": 14.5
+      "fontSize": 14.5,
+      "titleInset": 43
     },
     {
       "id": "p.effects",
@@ -423,7 +438,7 @@
       "y": 667,
       "w": 443,
       "h": 109,
-      "titleInset": 41,
+      "titleInset": 43,
       "titleHeight": 23,
       "fontSize": 14.5,
       "selection": {
@@ -504,7 +519,8 @@
         42
       ],
       "titleHeight": 23,
-      "fontSize": 14.5
+      "fontSize": 14.5,
+      "titleInset": 39
     },
     {
       "id": "p.midi-performance",
@@ -567,7 +583,8 @@
         804,
         38,
         155
-      ]
+      ],
+      "titleInset": 7
     }
   ],
   "controls": [
@@ -636,7 +653,7 @@
     {
       "id": "c.osc1-pitch",
       "binding": "osc1.param6",
-      "x": 260,
+      "x": 259,
       "y": 266,
       "w": 55,
       "h": 57,
@@ -647,7 +664,7 @@
     {
       "id": "c.osc1-param0",
       "binding": "osc1.param0",
-      "x": 326,
+      "x": 323,
       "y": 266,
       "w": 55,
       "h": 57,
@@ -658,7 +675,7 @@
     {
       "id": "c.osc1-param1",
       "binding": "osc1.level",
-      "x": 391,
+      "x": 388,
       "y": 266,
       "w": 51,
       "h": 57,
@@ -703,7 +720,7 @@
     {
       "id": "c.osc2-pitch",
       "binding": "osc2.param6",
-      "x": 260,
+      "x": 259,
       "y": 400,
       "w": 55,
       "h": 57,
@@ -714,7 +731,7 @@
     {
       "id": "c.osc2-param0",
       "binding": "osc2.param0",
-      "x": 326,
+      "x": 323,
       "y": 400,
       "w": 55,
       "h": 57,
@@ -725,7 +742,7 @@
     {
       "id": "c.osc2-param1",
       "binding": "osc2.level",
-      "x": 391,
+      "x": 388,
       "y": 400,
       "w": 51,
       "h": 57,
@@ -770,7 +787,7 @@
     {
       "id": "c.osc3-pitch",
       "binding": "osc3.param6",
-      "x": 260,
+      "x": 259,
       "y": 532,
       "w": 55,
       "h": 57,
@@ -781,7 +798,7 @@
     {
       "id": "c.osc3-param0",
       "binding": "osc3.param0",
-      "x": 326,
+      "x": 323,
       "y": 532,
       "w": 55,
       "h": 57,
@@ -792,7 +809,7 @@
     {
       "id": "c.osc3-param1",
       "binding": "osc3.level",
-      "x": 391,
+      "x": 388,
       "y": 532,
       "w": 51,
       "h": 57,
@@ -858,7 +875,7 @@
       "binding": "amp.level",
       "label": "Amp Gain",
       "x": 370,
-      "y": 635,
+      "y": 638,
       "w": 70,
       "h": 126,
       "accent": "secondary",
@@ -1237,7 +1254,7 @@
       "kind": "value",
       "label": "Oct",
       "labelWidth": 20,
-      "x": 262,
+      "x": 261,
       "y": 234,
       "w": 51,
       "h": 27,
@@ -1249,7 +1266,7 @@
       "kind": "value",
       "label": "",
       "labelWidth": 0,
-      "x": 328,
+      "x": 325,
       "y": 234,
       "w": 51,
       "h": 27,
@@ -1261,7 +1278,7 @@
       "kind": "value",
       "label": "",
       "labelWidth": 0,
-      "x": 393,
+      "x": 390,
       "y": 234,
       "w": 49,
       "h": 27,
@@ -1273,7 +1290,7 @@
       "kind": "value",
       "label": "Oct",
       "labelWidth": 20,
-      "x": 262,
+      "x": 261,
       "y": 368,
       "w": 51,
       "h": 27,
@@ -1285,7 +1302,7 @@
       "kind": "value",
       "label": "",
       "labelWidth": 0,
-      "x": 328,
+      "x": 325,
       "y": 368,
       "w": 51,
       "h": 27,
@@ -1297,7 +1314,7 @@
       "kind": "value",
       "label": "",
       "labelWidth": 0,
-      "x": 393,
+      "x": 390,
       "y": 368,
       "w": 49,
       "h": 27,
@@ -1309,7 +1326,7 @@
       "kind": "value",
       "label": "Oct",
       "labelWidth": 20,
-      "x": 262,
+      "x": 261,
       "y": 500,
       "w": 51,
       "h": 27,
@@ -1321,7 +1338,7 @@
       "kind": "value",
       "label": "",
       "labelWidth": 0,
-      "x": 328,
+      "x": 325,
       "y": 500,
       "w": 51,
       "h": 27,
@@ -1333,7 +1350,7 @@
       "kind": "value",
       "label": "",
       "labelWidth": 0,
-      "x": 393,
+      "x": 390,
       "y": 500,
       "w": 49,
       "h": 27,

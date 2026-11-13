@@ -1455,7 +1455,7 @@
     "LFO 1\u20134 tabs select the actual source and rebind shape, rate, phase, amplitude attack/fade, delay and trigger mode together. Changing the visible LFO does not change the sound.",
     "The vertical effects list provides eight independent real algorithm menus. Slot labels/status reflect actual effect state; the full native editor exposes all sixteen slots and their detailed controls.",
     "The compact signal-flow strip follows the native filter routing configuration, with no arbitrary cable-editing claim.",
-    "Eight native macros follow the measured lower strip. Pitch/FM faders remain honestly bound to scene pitch and FM depth; real MIDI expression wheels require the native full editor.",
+    "Eight native macros follow the measured lower strip. The ribbed Pitch/FM controls remain bound to scene pitch and FM depth, with fixed decorative ribs and red position stripes that follow their actual values. Real MIDI expression wheels require the native full editor.",
     "Voice mode is a genuine native menu rather than three inert Mono/Poly/Legato buttons. Scene mode, pan, drift and less prominent controls remain accessible through the full editor.",
     "Header preset, scene, skin and editor navigation remain functional. Materials, condensed headings and bevels are procedural native painting. Captures, keyboard/parameter behavior and scaling must be verified from a compiled current-source build; static validation does not establish pixel identity."
   ]

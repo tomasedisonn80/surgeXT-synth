@@ -435,7 +435,7 @@ juce::var configureShowcaseFixture(SurgeSynthProcessor &processor,
         int routing{fc_dual1};
         int firstFilter{sst::filters::fut_lp24};
         int secondFilter{sst::filters::fut_bp12};
-        float position{.37f}, verticalSkew{.12f};
+        float position{.37f}, verticalSkew{.12f}, thirdPosition{.48f};
         float secondLevelDb{-3.f}, thirdLevelDb{-6.f};
         bool noiseEnabled{false};
         float noiseLevelDb{-18.f};
@@ -460,6 +460,11 @@ juce::var configureShowcaseFixture(SurgeSynthProcessor &processor,
     case 1:
         profile.name = "Init";
         profile.routing = fc_serial1;
+        // The concept disagrees with itself: AMP / OUT says 100% sustain,
+        // while the upper ENV 1 says 70%. Keep one real amp envelope and the
+        // separate 70% filter envelope, rather than painting different values.
+        profile.ampEnvelope = {.005f, .2f, 1.f, .32f};
+        profile.lfoHz = 2.f; // Illustrated quarter note at the fixture's 120 BPM.
         profile.macroNames = {"Tone", "Edge", "Drive", "Space", "Motion", "Width", "Env Amt", "FX Mix"};
         break;
     case 2:
@@ -469,6 +474,14 @@ juce::var configureShowcaseFixture(SurgeSynthProcessor &processor,
         profile.secondOscillator = ot_classic;
         profile.thirdOscillator = ot_wavetable;
         profile.routing = fc_serial1;
+        profile.position = 0.f;
+        profile.thirdPosition = .32f;
+        profile.firstFilter = sst::filters::fut_lpmoog;
+        profile.firstCutoffHz = 2400.f;
+        profile.secondCutoffHz = 824.f;
+        profile.firstResonance = .17f;
+        profile.secondResonance = .48f;
+        profile.ampEnvelope = {.005f, .28f, .70f, .48f};
         profile.effects = {fxt_chorus4, fxt_delay, fxt_reverb2, fxt_distortion,
                            fxt_eq, fxt_conditioner, fxt_phaser, fxt_eq};
         profile.macroNames = {"Tone", "Motion", "Color", "Space", "Drive", "Width", "Attack", "Release"};
@@ -478,20 +491,33 @@ juce::var configureShowcaseFixture(SurgeSynthProcessor &processor,
         profile.wavetable = "Spectral Bloom";
         profile.position = .723f;
         profile.verticalSkew = .412f;
+        profile.routing = fc_serial1;
+        profile.secondLevelDb = -3.2f;
         profile.firstCutoffHz = 1740.f;
         profile.secondCutoffHz = 7400.f;
         profile.secondFilter = sst::filters::fut_lpmoog;
+        // Surge has no filter named Peak 24; retain the real LP 24 dB choice.
+        profile.ampEnvelope = {.005f, .286f, .76f, 1.25f};
+        profile.lfoHz = 3.f; // Illustrated quarter-note triplet at 120 BPM.
         profile.macroNames = {"Atmos", "Motion", "Color", "Space", "Drive", "FX Mix", "Width", "Release"};
         break;
     case 4:
         profile.name = "Bauhaus Harmonic Lab";
         profile.wavetable = "Bauhaus Waves";
+        profile.position = .427f;
+        profile.routing = fc_serial1;
         profile.secondLevelDb = -4.6f;
         profile.thirdLevelDb = -2.1f;
+        profile.firstCutoffHz = 2600.f;
+        profile.secondCutoffHz = 1150.f;
+        profile.firstResonance = .38f;
+        profile.secondResonance = .71f;
+        profile.ampEnvelope = {.01f, .32f, .76f, 1.2f};
         // The illustrated quarter/eighth/sixteenth-note rates correspond to
         // 2/4/8 Hz at 120 BPM. The native LFOs remain key-triggered.
         profile.lfoHz = 2.f;
         profile.macroNames = {"Harmonic", "Motion", "Texture", "Space", "Drive", "Color", "Width", "FX Mix"};
+        profile.macroValues = {.76f, .42f, .68f, .53f, .31f, .57f, .85f, .47f};
         break;
     case 5:
         profile.name = "Space-Age Instrument 1977";
@@ -543,6 +569,7 @@ juce::var configureShowcaseFixture(SurgeSynthProcessor &processor,
         profile.thirdOscillator = ot_wavetable;
         profile.position = .38f;
         profile.verticalSkew = .62f;
+        profile.thirdPosition = .71f;
         profile.firstFilter = sst::filters::fut_lp12;
         profile.secondFilter = sst::filters::fut_comb_pos;
         profile.firstCutoffHz = 4200.f;
@@ -552,8 +579,11 @@ juce::var configureShowcaseFixture(SurgeSynthProcessor &processor,
         profile.secondLevelDb = -3.1f;
         profile.thirdLevelDb = -4.6f;
         profile.noiseEnabled = true;
+        profile.ampEnvelope = {.012f, .68f, .86f, 2.4f};
+        profile.filterEnvelope = {.024f, .42f, .73f, 1.8f};
         profile.lfoHz = .24f;
         profile.macroNames = {"Brightness", "Motion", "Color", "Space", "Grit", "Ensemble", "Attack", "Release"};
+        profile.macroValues = {.71f, .68f, .54f, .76f, .21f, .67f, .19f, .63f};
         break;
     case 8:
         profile.name = "ClearSignal Pad";
@@ -713,7 +743,7 @@ juce::var configureShowcaseFixture(SurgeSynthProcessor &processor,
     {
         loadWavetable(2, profile.thirdWavetable, wavetableDirectory, 48, 512,
                       originalWavetableProvenance);
-        setNative("osc3.param0", .48f);
+        setNative("osc3.param0", profile.thirdPosition);
     }
     setNative("osc1.param0", profile.position);
     setNative("osc1.param1", profile.verticalSkew);
@@ -724,6 +754,7 @@ juce::var configureShowcaseFixture(SurgeSynthProcessor &processor,
         setNative("osc2.param0", 0.f);
         setNative("osc2.param1", .5f);
         select("osc2.param6", 4);
+        select("osc3.param6", 8);
     }
     else if (skinNumber == 5)
     {
@@ -745,6 +776,15 @@ juce::var configureShowcaseFixture(SurgeSynthProcessor &processor,
         setNative("osc3.param1", 0.f);
         setNative("osc3.param5", 0.f);
         select("osc3.param6", 1);
+    }
+    else if (skinNumber == 7)
+    {
+        // These are Classic's real width, detune and voice-count parameters;
+        // its fourth control remains Shape, not the concept's Phase label.
+        setNative("osc2.param0", 0.f);
+        setNative("osc2.param1", .72f);
+        select("osc2.param6", 7);
+        setDisplay("osc2.param5", "14 cents");
     }
     else
         setNative("osc2.param0", .38f);
@@ -775,6 +815,11 @@ juce::var configureShowcaseFixture(SurgeSynthProcessor &processor,
     setNative("filter1.resonance", profile.firstResonance);
     setDisplay("filter2.cutoff", juce::String(profile.secondCutoffHz) + " Hz");
     setNative("filter2.resonance", profile.secondResonance);
+    if (skinNumber == 1)
+    {
+        setNative("filter1.keytrack", .5f);
+        setNative("filter2.keytrack", 0.f);
+    }
     setDisplay("scene.volume", "0 dB");
     setDisplay("master.volume", "-6 dB");
     setNative("scene.width", .82f);
@@ -816,6 +861,20 @@ juce::var configureShowcaseFixture(SurgeSynthProcessor &processor,
         // Random steps are generated by the native seeded S&H preview/engine.
         configureLfo(3, skinNumber == 4 ? lt_square : lt_snh,
                      skinNumber == 4 ? 8.f : 4.f, 0.f, skinNumber == 7 ? .48f : 1.f);
+    }
+    if (skinNumber >= 5 && skinNumber <= 7)
+    {
+        // The third card is honestly labelled LFO 3 ENV by these workspaces.
+        // Tokyo's illustrated 1 ms attack is below the native nonzero range;
+        // use the same explicit 4 ms adaptation as its filter envelope.
+        const std::array<float, 4> envelope =
+            skinNumber == 5 ? std::array<float, 4>{.01f, 1.f, .5f, 2.4f}
+            : skinNumber == 6 ? std::array<float, 4>{.004f, .12f, 0.f, .25f}
+                              : std::array<float, 4>{.005f, 1.2f, 0.f, 4.5f};
+        setNative("lfo3.attack", std::log2(envelope[0]));
+        setNative("lfo3.decay", std::log2(envelope[1]));
+        setNative("lfo3.sustain", envelope[2]);
+        setNative("lfo3.release", std::log2(envelope[3]));
     }
     for (size_t index = 0; index < profile.effects.size(); ++index)
     {
@@ -923,9 +982,10 @@ juce::var configureShowcaseFixture(SurgeSynthProcessor &processor,
             routes.add(route);
         };
         // These routes are audible engine assignments, not painted matrix rows.
-        // Modest depths leave the existing capture headroom/reset assertions
-        // meaningful while giving each styled patch actual envelope/LFO motion.
-        addRoute(ms_lfo1, "filter1.cutoff", .025f, "LFO 1");
+        // ClearSignal's inspector shows a readable +0.64 LFO 1 assignment.
+        // Apply it to the actual audible route; other unmeasured depths stay
+        // modest and every profile retains the same headroom/reset assertions.
+        addRoute(ms_lfo1, "filter1.cutoff", skinNumber == 8 ? .64f : .025f, "LFO 1");
         addRoute(ms_filtereg, "osc1.param0", .06f, "Filter EG");
         if (skinNumber == 9 || skinNumber == 10)
         {
@@ -1012,6 +1072,28 @@ juce::var configureShowcaseFixture(SurgeSynthProcessor &processor,
     property(fixture, "settings", juce::var(settings));
     property(fixture, "modulationRoutes", juce::var(routes));
     property(fixture, "resolvedRouteRows", juce::var(resolvedRows));
+    juce::Array<juce::var> referenceNotes;
+    referenceNotes.add("Readable values are applied through native parameters; units and algorithm "
+                       "labels remain native. Unnumbered macro positions are not treated as exact values.");
+    if (skinNumber == 1)
+        referenceNotes.add("The concept gives conflicting amp sustains: upper ENV 1 70%, AMP / OUT "
+                           "100%. The real amp envelope uses 100%; the separate filter envelope uses 70%.");
+    if (skinNumber == 3)
+        referenceNotes.add("The concept's Peak 24 filter has no identically named native algorithm; "
+                           "LP 24 dB is retained. Serial 1 follows its Series (1 -> 2) routing diagram, "
+                           "despite the separate Dual Multimode caption.");
+    if (skinNumber == 5)
+        referenceNotes.add("The illustrated 2 ms amp attack is below the native nonzero range and "
+                           "uses 4 ms. The third envelope is the real LFO 3 envelope.");
+    if (skinNumber == 6)
+        referenceNotes.add("The illustrated 3.2 ms filter and 1 ms third-envelope attacks are below "
+                           "the native nonzero range and use 4 ms. The third envelope is the real "
+                           "LFO 3 envelope.");
+    if (skinNumber == 7)
+        referenceNotes.add("The third envelope is the real LFO 3 envelope. Classic provides Width 1, "
+                           "Unison Detune (14 cents), seven unison voices and Shape; no independent "
+                           "Phase control is invented.");
+    property(fixture, "referenceValueNotes", juce::var(referenceNotes));
     property(fixture, "scope",
              "Actual engine patch derived from a checked-in template using native parameter "
              "and wavetable APIs. Not an assertion that every illustrated value is reproduced.");
@@ -3566,10 +3648,27 @@ TEST_CASE("Ten reference workspaces render native controls and export evidence",
         workspace.setVisible(true);
         workspace.selectScene(0);
         // The output views consume the real processor tap only while visible.
-        // Feed a reproducible chord and enough real output to fill all 64 FFT
-        // history rows. Refresh each four blocks so the bounded tap does not
+        // Feed a reproducible phrase and enough real output for the eight-second
+        // FFT history. Refresh each four blocks so the bounded tap does not
         // overflow. No image or invented samples fill any output display.
         const bool liveControllerFixture = id == "10-live-performance-deck";
+        struct PhraseNote
+        {
+            int onBlock, offBlock, pitch, velocity;
+        };
+        // Integer MIDI velocities make the demonstration exactly reproducible.
+        // Gated notes never exceed three; real release/FX tails remain audible.
+        // A negative offBlock leaves the final chord held through the existing
+        // edit, host-update and restore checks, until their processor.reset().
+        constexpr std::array<PhraseNote, 17> phrase{{
+            {0, 72, 48, 48},
+            {96, 168, 60, 58}, {96, 168, 67, 53},
+            {192, 264, 72, 44},
+            {288, 360, 48, 64}, {288, 360, 55, 57},
+            {384, 456, 55, 51}, {384, 456, 62, 47}, {384, 456, 69, 43},
+            {480, 552, 60, 60}, {480, 552, 64, 55}, {480, 552, 67, 50},
+            {576, 624, 48, 49}, {640, 672, 72, 42},
+            {704, -1, 48, 70}, {704, -1, 60, 76}, {704, -1, 67, 73}}};
         float audioPeak = 0.f;
         for (int block = 0; block < showcaseAudioBlocks; ++block)
         {
@@ -3585,9 +3684,14 @@ TEST_CASE("Ten reference workspaces render native controls and export evidence",
                     notes.addEvent(juce::MidiMessage::controllerEvent(1, 11, 56), 0);
                     notes.addEvent(juce::MidiMessage::channelPressureChange(1, 85), 0);
                 }
-                for (const auto pitch : {48, 60, 67})
-                    notes.addEvent(juce::MidiMessage::noteOn(1, pitch, 0.65f), 0);
             }
+            for (const auto &note : phrase)
+                if (block == note.offBlock)
+                    notes.addEvent(juce::MidiMessage::noteOff(1, note.pitch), 0);
+            for (const auto &note : phrase)
+                if (block == note.onBlock)
+                    notes.addEvent(juce::MidiMessage::noteOn(
+                                       1, note.pitch, static_cast<juce::uint8>(note.velocity)), 0);
             audioPeak = std::max(audioPeak, processBlock(processor, notes));
             if ((block + 1) % 4 == 0)
                 workspace.refresh();
@@ -3750,7 +3854,7 @@ TEST_CASE("Ten reference workspaces render native controls and export evidence",
         if (liveControllerFixture)
         {
             auto controllers = object();
-            property(controllers, "source", "Real incoming MIDI before baseline notes, channel 1");
+            property(controllers, "source", "Real incoming MIDI before phrase notes, channel 1");
             property(controllers, "signedPitchBend", 6616);
             property(controllers, "pitchWheel14Bit", 14808);
             property(controllers, "modulationCC1", 104);
@@ -3758,8 +3862,32 @@ TEST_CASE("Ten reference workspaces render native controls and export evidence",
             property(controllers, "channelPressure", 85);
             property(capture, "incomingMidiControllers", controllers);
         }
+        juce::Array<juce::var> phraseEvidence;
+        for (const auto &note : phrase)
+        {
+            auto event = object();
+            property(event, "channel", 1);
+            property(event, "pitch", note.pitch);
+            property(event, "velocity7Bit", note.velocity);
+            property(event, "sampleOffsetInBlock", 0);
+            property(event, "noteOnBlock", note.onBlock);
+            property(event, "noteOnSeconds", note.onBlock * sampleBlock / sampleRate);
+            if (note.offBlock >= 0)
+            {
+                property(event, "noteOffBlock", note.offBlock);
+                property(event, "noteOffSeconds", note.offBlock * sampleBlock / sampleRate);
+                property(event, "noteOffVelocity7Bit", 0);
+            }
+            else
+                property(event, "release", "Held through baseline, edit, host update and restore; "
+                                           "released by processor.reset");
+            phraseEvidence.add(event);
+        }
+        property(capture, "incomingMidiNoteSchedule", juce::var(phraseEvidence));
         property(capture, "audioFixture",
-                 "Held MIDI channel 1 notes 48, 60 and 67, velocity 0.65; " +
+                 "Deterministic MIDI channel 1 phrase with explicit note-offs, pitch and velocity changes; "
+                 "exact schedule in incomingMidiNoteSchedule. Final notes 48, 60 and 67 held from block 704 "
+                 "at 7-bit velocities 70, 76 and 73; " +
                      juce::String(showcaseAudioBlocks) + " " + juce::String(sampleBlock) +
                      "-sample blocks at " + juce::String(sampleRate) +
                      " Hz before baseline capture, refreshing each four blocks; "

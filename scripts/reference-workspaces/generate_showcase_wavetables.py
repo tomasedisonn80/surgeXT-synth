@@ -94,16 +94,27 @@ def signal(family: str, x: float, morph: float) -> float:
             + 0.08 * math.sin(9 * phase)
         )
     if family == "aurora":
-        # An audible periodic harmonic family with opposing phase travel.
-        # The periodic window leaves quiet ends and broad crossing central
-        # lobes; the native preview reads these same source samples.
-        envelope = 0.16 + 0.84 * math.sin(0.5 * phase) ** 2
-        phase -= 0.15 * math.pi
+        # Three main crests cross neighboring harmonics whose phase travel and
+        # level evolve independently. The wider periodic window and quieter
+        # upper partials retain asymmetric shoulders across the audible table.
+        # Multiplication by this first-harmonic window remains finite-band.
+        envelope = 0.60 + 0.40 * math.sin(0.5 * phase) ** 2
+        phase -= 0.08 * math.pi
+        drift = (
+            0.28 * math.sin(TAU * 0.72 * morph + 0.3)
+            + 0.10 * math.sin(TAU * 1.75 * morph + 1.0)
+        )
+        counter = 0.23 * math.sin(TAU * 1.15 * morph + 1.1)
         return envelope * (
-            0.62 * math.sin(2 * phase + 1.45 * travel)
-            + (0.23 + 0.12 * math.cos(travel)) * math.sin(3 * phase - 1.2 * travel + 0.25)
-            + 0.13 * math.sin(5 * phase + 0.55 * travel)
-            + 0.08 * math.sin(phase - 0.7 * travel)
+            (0.60 + 0.06 * math.cos(1.3 * math.pi * morph + 0.2))
+            * math.sin(3 * phase + 1.48 * travel + drift)
+            + (0.18 + 0.045 * math.sin(math.pi * morph + 0.35))
+            * math.sin(4 * phase - 1.22 * travel + counter + 0.35)
+            + 0.15 * math.sin(2 * phase - 0.82 * travel - 0.6 * drift + 0.65)
+            + (0.10 + 0.035 * math.cos(TAU * 0.8 * morph + 1.0))
+            * math.sin(5 * phase + 0.55 * travel - counter)
+            + 0.075 * math.sin(7 * phase - 0.9 * travel + 0.4)
+            + 0.055 * math.sin(phase - 0.7 * travel)
         )
     if family == "glass":
         return (
@@ -112,11 +123,24 @@ def signal(family: str, x: float, morph: float) -> float:
             + (0.10 + 0.12 * morph) * math.sin(5 * phase + 0.4 * travel)
         )
     if family == "horizon":
+        # Independent, nonlinear morph travel separates the three broad folds;
+        # small sixth/seventh partials add audible, periodic crest shoulders.
+        drift = (
+            0.31 * math.sin(TAU * 0.8 * morph + 0.2)
+            + 0.10 * math.sin(TAU * 1.6 * morph + 1.1)
+        )
+        counter = 0.26 * math.sin(TAU * 1.1 * morph + 1.4)
         return (
-            0.60 * math.sin(3 * phase + 0.90 * travel)
-            + 0.27 * math.sin(2 * phase - 0.8 * travel)
-            + 0.18 * math.sin(5 * phase + 0.6 * travel)
-            + 0.12 * math.sin(phase - travel)
+            (0.47 + 0.065 * math.cos(TAU * 0.65 * morph + 0.3))
+            * math.sin(3 * phase + 1.08 * travel + drift)
+            + (0.23 + 0.055 * math.sin(TAU * 0.75 * morph + 0.6))
+            * math.sin(2 * phase - 0.92 * travel + 0.5 * counter)
+            + (0.17 + 0.045 * math.cos(TAU * 0.9 * morph + 1.2))
+            * math.sin(4 * phase - 1.25 * travel + counter + 0.5)
+            + 0.17 * math.sin(5 * phase + 0.58 * travel - 0.7 * drift + 0.8)
+            + 0.06 * math.sin(6 * phase - 0.63 * travel + 0.4)
+            + 0.065 * math.sin(7 * phase + 0.76 * travel + counter)
+            + 0.10 * math.sin(phase - 0.88 * travel)
         )
     if family == "vocal":
         return (

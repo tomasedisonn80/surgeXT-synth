@@ -307,8 +307,8 @@ void bezel(juce::Graphics &g, const Theme &t, Rect r, juce::Colour fill, float r
     }
     else if (fill == t.panel && t.style == "clear")
     {
-        top = juce::Colour(0xfffafafa);
-        bottom = juce::Colour(0xfff5f6f7);
+        top = juce::Colour(0xfffdfdfd);
+        bottom = juce::Colour(0xfff8f8f9);
     }
     else if (fill == t.panel && t.style == "aurora")
     {
@@ -1451,6 +1451,23 @@ class BoundSlider : public juce::Slider
                 }
                 const int align = labelPosition == "left" ? juce::Justification::centredRight
                                                           : juce::Justification::centredLeft;
+                if (theme.style == "live" && binding.startsWith("macro") && !hideValue)
+                {
+                    // Only the side captions move: the measured dial centres and
+                    // native hit bounds remain fixed. Fit custom names inside the
+                    // component after opening the reference's wider dial gutter.
+                    const auto captions =
+                        labels.translated(labelPosition == "left" ? -12.f : 12.f, 0.f)
+                            .getIntersection(getLocalBounds().toFloat().reduced(1.f, 0.f));
+                    g.setFont(theme.type(fs).withHorizontalScale(.9f));
+                    g.setColour(ink);
+                    g.drawFittedText(label,
+                                     captions.withHeight(16.f).translated(0.f, -4.f).toNearestInt(),
+                                     align, 1, .7f);
+                    text(g, theme, value, captions.withTrimmedTop(16.f).translated(0.f, -1.f),
+                         fs, ink, false, align);
+                    return;
+                }
                 if (hideValue)
                     text(g, theme, label, labels, fs, ink, emphasizeLabel, align);
                 else
@@ -1593,6 +1610,104 @@ class BoundSlider : public juce::Slider
                 g.setColour(liveInk.interpolatedWith(juce::Colours::white, .65f));
                 g.drawLine(indicator.getX() + .8f, y - .4f, indicator.getRight() - .8f,
                            y - .4f, .7f);
+                if (hasKeyboardFocus(true))
+                {
+                    g.setColour(theme.accent);
+                    g.drawRoundedRectangle(getLocalBounds().toFloat().reduced(1), 3, 2);
+                }
+                return;
+            }
+            if (kind == "fader" && (theme.style == "bauhaus" || theme.style == "space"))
+            {
+                // The narrow rails and wider caps are paint only. Native travel
+                // still comes from standardTrackBounds and getPositionOfValue.
+                const auto y = getPositionOfValue(getValue());
+                const auto material = [this](juce::Colour colour) {
+                    return colour.withMultipliedAlpha(isEnabled() ? 1.f : .45f);
+                };
+                {
+                    juce::Graphics::ScopedSaveState save(g);
+                    // Thick caps at the endpoints must not enter the reserved
+                    // caption/value bands or change their hit layout.
+                    g.reduceClipRegion(r.toNearestInt());
+                    if (theme.style == "bauhaus")
+                    {
+                        const auto rail = track.withSizeKeepingCentre(7.f, track.getHeight());
+                        g.setColour(material(theme.display));
+                        g.fillRoundedRectangle(rail, 3.5f);
+                        const auto width = std::min(30.f, static_cast<float>(getWidth()) - 4.f);
+                        const auto handle = Rect(track.getCentreX() - width * .5f, y - 6.f,
+                                                 width, 12.f);
+                        g.setColour(material(juce::Colours::black.withAlpha(.20f)));
+                        g.fillRoundedRectangle(handle.translated(0, 1.2f), 1.5f);
+                        g.setColour(material(theme.knob));
+                        g.fillRoundedRectangle(handle, 1.5f);
+                        g.setColour(material(theme.display));
+                        g.drawRoundedRectangle(handle.reduced(.5f), 1.2f, 1.f);
+                        g.setColour(material(juce::Colours::white.withAlpha(.65f)));
+                        g.drawLine(handle.getX() + 2.f, handle.getY() + 2.f,
+                                   handle.getRight() - 2.f, handle.getY() + 2.f, 1.f);
+                    }
+                    else
+                    {
+                        const auto slot = track.withSizeKeepingCentre(5.f, track.getHeight());
+                        const auto rim = slot.expanded(1.f, 0);
+                        auto recess = juce::ColourGradient(
+                            material(juce::Colour(0xff15160d)), rim.getTopLeft(),
+                            material(juce::Colour(0xff99845c)), rim.getTopRight(), false);
+                        recess.addColour(.45, material(juce::Colour(0xff222215)));
+                        g.setGradientFill(recess);
+                        g.fillRoundedRectangle(rim, 3.5f);
+                        g.setColour(material(juce::Colour(0xff0d0e08)));
+                        g.fillRoundedRectangle(slot, 2.5f);
+
+                        for (int tick = 0; tick <= 20; ++tick)
+                        {
+                            const auto tickY = getPositionOfValue(tick / 20.0);
+                            const bool major = tick % 5 == 0;
+                            const float length = major ? 8.f : 3.5f;
+                            g.setColour(material(theme.knob.withAlpha(major ? .66f : .38f)));
+                            g.drawLine(slot.getX() - 3.f - length, tickY,
+                                       slot.getX() - 3.f, tickY, major ? .9f : .7f);
+                            g.drawLine(slot.getRight() + 3.f, tickY,
+                                       slot.getRight() + 3.f + length, tickY, major ? .9f : .7f);
+                        }
+
+                        const auto width = std::min(28.f, static_cast<float>(getWidth()) - 8.f);
+                        const auto handle = Rect(track.getCentreX() - width * .5f, y - 6.5f,
+                                                 width, 13.f);
+                        const auto cap = juce::Colour(0xffd4bf94);
+                        g.setColour(material(juce::Colours::black.withAlpha(.60f)));
+                        g.fillRoundedRectangle(handle.expanded(.8f).translated(0, 1.8f), 1.5f);
+                        auto brass = juce::ColourGradient(
+                            material(cap.darker(.30f)), handle.getTopLeft(),
+                            material(cap.darker(.45f)), handle.getBottomLeft(), false);
+                        brass.addColour(
+                            .13, material(cap.interpolatedWith(juce::Colours::white, .50f)));
+                        brass.addColour(.34, material(cap));
+                        brass.addColour(.48, material(cap.darker(.25f)));
+                        brass.addColour(
+                            .59, material(cap.interpolatedWith(juce::Colours::white, .62f)));
+                        brass.addColour(.78, material(cap));
+                        g.setGradientFill(brass);
+                        g.fillRoundedRectangle(handle, .8f);
+                        g.setColour(material(juce::Colour(0xff6a5738)));
+                        g.drawRoundedRectangle(handle.reduced(.4f), .6f, .8f);
+                        g.setColour(material(cap.interpolatedWith(juce::Colours::white, .72f)));
+                        g.drawLine(handle.getX() + 1.3f, handle.getY() + 1.3f,
+                                   handle.getRight() - 1.3f, handle.getY() + 1.3f, .85f);
+                        g.drawLine(handle.getX() + 1.2f, handle.getY() + 1.4f,
+                                   handle.getX() + 1.2f, handle.getBottom() - 1.5f, .7f);
+                        g.drawLine(handle.getRight() - 1.2f, handle.getY() + 1.4f,
+                                   handle.getRight() - 1.2f, handle.getBottom() - 1.5f, .7f);
+                        g.setColour(material(juce::Colour(0xff685338)));
+                        g.drawLine(handle.getX() + 2.f, handle.getCentreY() - .5f,
+                                   handle.getRight() - 2.f, handle.getCentreY() - .5f, .85f);
+                        g.setColour(material(cap.interpolatedWith(juce::Colours::white, .75f)));
+                        g.drawLine(handle.getX() + 2.f, handle.getCentreY() + .7f,
+                                   handle.getRight() - 2.f, handle.getCentreY() + .7f, .85f);
+                    }
+                }
                 if (hasKeyboardFocus(true))
                 {
                     g.setColour(theme.accent);
@@ -4946,8 +5061,9 @@ struct Workspace::Impl
                 if (theme.style == "live" && string(v, "id") == "p.scene")
                     for (int scene = 0; scene < 2; ++scene)
                     {
-                        auto button = std::make_unique<ThemeButton>(theme,
-                            scene == 0 ? "SCENE A" : "SCENE B");
+                        auto button = std::make_unique<HeaderButton>(theme,
+                            scene == 0 ? "Scene A" : "Scene B");
+                        button->present(HeaderButton::chip, 16.5f, true);
                         button->setComponentID(scene == 0 ? "workspace.scene-card.a"
                                                          : "workspace.scene-card.b");
                         button->setName(scene == 0 ? "Select Scene A" : "Select Scene B");
@@ -5186,6 +5302,15 @@ struct Workspace::Impl
     {
         if (routeEditor.isEditing())
             return; // A dragged route must survive the engine's deletion at zero depth.
+        // The inspector and native rows share one effective selection. Preserve
+        // an explicit route across refresh/reordering; after removal (or initial
+        // load), select the same first real route that the inspector displays.
+        if (routes.empty())
+            inspectedRoute = {};
+        else if (std::none_of(routes.begin(), routes.end(), [this](const RouteRow &route) {
+                     return route.key == inspectedRoute;
+                 }))
+            inspectedRoute = routes.front().key;
         const auto geometry = routePlacements();
         bool rebuild = geometry.size() != routeControls.size();
         if (!rebuild)
@@ -6989,7 +7114,8 @@ struct Workspace::Impl
                 plotBase(g, pr, false, theme.style != "bauhaus");
             if (visuals.wavetable[oscillator].available())
                 Visuals::wavetable(
-                    g, pr.reduced(theme.style == "aurora" ? 1.f : 8.f),
+                    g, pr.reduced(theme.style == "aurora" ? 1.f
+                                    : theme.style == "spectral" ? 0.f : 8.f),
                     visuals.wavetable[oscillator], primary, secondary,
                     theme.style == "bauhaus" ? Visuals::WavetableView::harmonicRibbons
                     : theme.style == "spectral" ? Visuals::WavetableView::spectralTerrain
@@ -7314,7 +7440,7 @@ struct Workspace::Impl
                                     float fontSize) {
                 if (field.isEmpty())
                     return;
-                const auto height = std::min(field.getHeight() - 2.f,
+                const auto height = std::min(field.getHeight() - (bauhaus ? 5.f : 2.f),
                                              ivory ? 25.f : aurora ? 19.f : tokyo ? 22.f : 24.f);
                 auto face = field.withSizeKeepingCentre(field.getWidth(), height);
                 if (!clear && !live)
@@ -7338,8 +7464,8 @@ struct Workspace::Impl
                     }
                     else if (aurora)
                     {
-                        fill = juce::Colour(0xff28223e);
-                        edge = juce::Colour(0xff5b4d77).withAlpha(.7f);
+                        fill = juce::Colour(0xff241c37);
+                        edge = juce::Colour(0xff67547f).withAlpha(.72f);
                     }
                     else if (spectral)
                         edge = juce::Colour(0xff414d70).withAlpha(.85f);
@@ -7392,9 +7518,21 @@ struct Workspace::Impl
                 {
                     const int index = column * layout.rowsPerColumn + rowIndex;
                     const auto cell = layout.row(index);
-                    if (clear && rowIndex % 2 == 0)
+                    const bool rowSelected = index < static_cast<int>(routes.size()) &&
+                                             routes[index].key == inspectedRoute;
+                    if (clear && rowSelected)
                     {
-                        g.setColour(theme.border.withAlpha(.075f));
+                        // Paint beneath every label, including the row number.
+                        // The native row adds its subtle selection/focus overlay.
+                        g.setGradientFill(juce::ColourGradient(juce::Colour(0xffb2f8f2),
+                                                              cell.row.getTopLeft(),
+                                                              juce::Colour(0xffbafaf4),
+                                                              cell.row.getTopRight(), false));
+                        g.fillRoundedRectangle(cell.row, 2);
+                    }
+                    else if (clear && rowIndex % 2 == 0)
+                    {
+                        g.setColour(theme.border.withAlpha(.11f));
                         g.fillRect(cell.row);
                     }
                     if (!ivory && !aurora && !bauhaus)
@@ -7405,7 +7543,7 @@ struct Workspace::Impl
                                              cell.row.getX(), cell.row.getRight());
                     }
                     text(g, theme, juce::String(index + 1), cell.number, layout.rowFont - .5f,
-                         quiet, clear || bauhaus);
+                         clear && rowSelected ? ink : quiet, clear || bauhaus);
                     if (index >= static_cast<int>(routes.size()))
                     {
                         text(g, theme,
@@ -7417,12 +7555,21 @@ struct Workspace::Impl
                     const auto &route = routes[index];
                     const auto color = route.muted ? quiet : ink;
                     const auto accent = route.muted ? quiet : active;
-                    if (clear && route.key == inspectedRoute)
+                    auto sourceLabel = route.source;
+                    if (clear || aurora || spectral || bauhaus)
                     {
-                        g.setColour(theme.accent.withAlpha(.15f));
-                        g.fillRoundedRectangle(cell.row, 2);
+                        // Compact native identities fit these narrow cells. The
+                        // row/slider accessibility and tooltips retain the full
+                        // source name, including the user's macro assignment name.
+                        if (route.key.sourceId >= ms_ctrl1 && route.key.sourceId <= ms_ctrl8)
+                            sourceLabel = "Macro " + juce::String(route.key.sourceId - ms_ctrl1 + 1);
+                        else if (route.key.sourceId >= ms_lfo1 &&
+                                 route.key.sourceId <= ms_lfo6 &&
+                                 sourceLabel == "Voice LFO " +
+                                                    juce::String(route.key.sourceId - ms_lfo1 + 1))
+                            sourceLabel = "LFO " + juce::String(route.key.sourceId - ms_lfo1 + 1);
                     }
-                    readOnlyCell(cell.source, route.source, color, layout.rowFont);
+                    readOnlyCell(cell.source, sourceLabel, color, layout.rowFont);
                     auto destination = route.destination;
                     const juce::String scenePrefix = parameters.getScene() == 0 ? "A " : "B ";
                     if (destination.startsWith(scenePrefix))
@@ -7437,7 +7584,7 @@ struct Workspace::Impl
                     const auto depthLabel = (depth >= 0 ? "+" : "") + juce::String(depth, decimals);
                     text(g, theme, depthLabel, cell.value.reduced(1, 0),
                          clear ? 13.f : tokyo ? 12.f : layout.rowFont - .2f, color,
-                         clear || bauhaus || ivory,
+                         clear || bauhaus || ivory || spectral,
                          layout.valuePosition == MatrixLayout::ValuePosition::above && ivory
                              ? juce::Justification::centredRight
                              : juce::Justification::centred);
@@ -7465,28 +7612,38 @@ struct Workspace::Impl
                     const auto handleX = track.getX() + (depth + 1.f) * .5f * track.getWidth();
                     const auto radius = std::min(3.f, track.getHeight() * .5f);
                     auto trackColor = theme.border.withAlpha(.65f);
-                    if (ivory || bauhaus)
+                    if (bauhaus)
+                        trackColor = juce::Colour(0xfffff1d6);
+                    else if (ivory)
                         trackColor = juce::Colour(0xffe4d7bb);
+                    else if (spectral)
+                        trackColor = juce::Colour(0xff151525);
                     else if (space)
                         trackColor = juce::Colour(0xff3b3018);
                     else if (aurora)
                         trackColor = juce::Colour(0xff51416d);
                     else if (clear)
                         trackColor = juce::Colour(0xffdce2e5);
-                    g.setColour(trackColor);
+                    if (spectral || bauhaus)
+                        g.setGradientFill(juce::ColourGradient(trackColor.darker(.12f),
+                                                              track.getTopLeft(), trackColor,
+                                                              track.getBottomLeft(), false));
+                    else
+                        g.setColour(trackColor);
                     g.fillRoundedRectangle(track, radius);
                     if (ivory || bauhaus || spectral || space)
                     {
-                        g.setColour((ivory || bauhaus ? juce::Colour(0xff8c846c) : quiet)
-                                        .withAlpha(.55f));
+                        g.setColour((spectral ? juce::Colour(0xff51436e)
+                                             : ivory || bauhaus ? juce::Colour(0xff8c846c) : quiet)
+                                        .withAlpha(spectral || bauhaus ? .8f : .55f));
                         g.drawRoundedRectangle(track, radius, .7f);
                     }
                     // Native normalized depth is signed. The centre tick is zero and
                     // coloured travel extends from zero to its actual slider position.
                     auto travel = track.withX(std::min(midpoint, handleX))
                                       .withWidth(std::max(.8f, std::abs(handleX - midpoint)));
-                    auto fill = clear && depth < 0 ? theme.red : accent;
-                    if (bauhaus)
+                    auto fill = clear && depth < 0 && !route.muted ? theme.red : accent;
+                    if (bauhaus && !route.muted)
                         fill = juce::Colour(0xffffcf21);
                     if (spectral || aurora || flow)
                     {
@@ -7521,16 +7678,28 @@ struct Workspace::Impl
 
                     if (!cell.curve.isEmpty())
                     {
-                        readOnlyCell(cell.curve, {}, color, layout.rowFont);
-                        auto curve = cell.curve.reduced(tokyo ? 3.f : 5.f, 5.f);
+                        if (!aurora)
+                            readOnlyCell(cell.curve, {}, color, layout.rowFont);
+                        auto curve = cell.curve.reduced(aurora ? 2.f : tokyo ? 3.f : 5.f,
+                                                        aurora ? 3.f : 5.f);
                         const auto y = curve.getCentreY();
                         // Surge applies this route's linear signed depth. Do not display
                         // invented S-curves or non-functional curve-selection controls.
-                        g.setColour((flow || spectral || aurora ? accent : color)
-                                        .withAlpha(route.muted ? .5f : .9f));
-                        g.drawLine(curve.getX(), y + depth * curve.getHeight() * .4f,
-                                   curve.getRight(), y - depth * curve.getHeight() * .4f,
-                                   bauhaus ? 1.8f : 1.3f);
+                        const auto linearInk = aurora ? accent.interpolatedWith(color, .55f)
+                                               : spectral ? accent.brighter(.18f)
+                                               : flow ? accent : color;
+                        juce::Path linear;
+                        linear.startNewSubPath(curve.getX(), y + depth * curve.getHeight() * .4f);
+                        linear.lineTo(curve.getRight(), y - depth * curve.getHeight() * .4f);
+                        if (spectral && !route.muted)
+                        {
+                            g.setColour(linearInk.withAlpha(.15f));
+                            g.strokePath(linear, juce::PathStrokeType(4));
+                        }
+                        g.setColour(linearInk.withAlpha(route.muted ? .6f : .95f));
+                        g.strokePath(linear, juce::PathStrokeType(
+                            bauhaus ? 1.8f : spectral ? 1.6f : 1.3f,
+                            juce::PathStrokeType::curved, juce::PathStrokeType::rounded));
                     }
                     if (!cell.polarity.isEmpty())
                     {

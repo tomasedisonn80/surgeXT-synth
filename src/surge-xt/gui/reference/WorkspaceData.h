@@ -38,8 +38,10 @@ struct RouteRow
 
 /** Read-only message-thread snapshot of the selected scene and applicable global routes.
     At most 128 rows are returned. A busy routing lock returns no rows rather than blocking audio.
+    If supplied, available distinguishes a successful (possibly empty) snapshot
+    from an unavailable processor or busy lock, so callers can retain a same-scene cache.
 */
-std::vector<RouteRow> modulationRows(SurgeSynthProcessor &, int scene);
+std::vector<RouteRow> modulationRows(SurgeSynthProcessor &, int scene, bool *available = nullptr);
 
 /** Message-thread editing of an existing native modulation route.
 

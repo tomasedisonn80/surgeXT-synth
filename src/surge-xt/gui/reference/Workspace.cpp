@@ -458,17 +458,46 @@ void bezel(juce::Graphics &g, const Theme &t, Rect r, juce::Colour fill, float r
         static const auto bluePaperGrain = [] {
             juce::Image result(juce::Image::ARGB, 512, 256, true);
             juce::Image::BitmapData pixels(result, juce::Image::BitmapData::writeOnly);
+            const auto noise = [](unsigned x, unsigned y) {
+                auto hash = x + 0x9e3779b9u;
+                hash ^= (y + 1u) * 0x85ebca6bu;
+                hash ^= hash >> 16;
+                hash *= 0x7feb352du;
+                hash ^= hash >> 15;
+                hash *= 0x846ca68bu;
+                hash ^= hash >> 16;
+                return static_cast<float>(hash & 65535u) / 32767.5f - 1.f;
+            };
+            // Keep the smaller coarse field centred on the accepted paper tone.
+            float paperMean = 0.f;
+            for (unsigned row = 0; row < 16u; ++row)
+                for (unsigned column = 0; column < 32u; ++column)
+                    paperMean += noise(column, row);
+            paperMean /= 512.f;
+            const auto paper = [&](unsigned column, unsigned row) {
+                return noise((column + 1u) % 32u, (row + 1u) % 16u) - paperMean;
+            };
+            const auto smooth = [](float position) {
+                return position * position * (3.f - 2.f * position);
+            };
             for (int y = 0; y < pixels.height; ++y)
                 for (int x = 0; x < pixels.width; ++x)
                 {
-                    auto hash = static_cast<unsigned>(x) + 0x9e3779b9u;
-                    hash ^= (static_cast<unsigned>(y) + 1u) * 0x85ebca6bu;
-                    hash ^= hash >> 16;
-                    hash *= 0x7feb352du;
-                    hash ^= hash >> 15;
-                    hash *= 0x846ca68bu;
-                    hash ^= hash >> 16;
-                    const auto grain = static_cast<float>(hash & 65535u) / 32767.5f - 1.f;
+                    // Correlated paper colour varies over 16-pixel cells, with
+                    // only one percent independent tooth. Periodic corners
+                    // join the tile smoothly; bounded gain keeps its old range.
+                    const auto column = static_cast<unsigned>(x / 16);
+                    const auto row = static_cast<unsigned>(y / 16);
+                    const auto u = smooth((x % 16) / 16.f);
+                    const auto v = smooth((y % 16) / 16.f);
+                    const auto upper = paper(column, row) * (1.f - u) +
+                                       paper(column + 1u, row) * u;
+                    const auto lower = paper(column, row + 1u) * (1.f - u) +
+                                       paper(column + 1u, row + 1u) * u;
+                    const auto broad = upper * (1.f - v) + lower * v;
+                    const auto grain = .99f * std::clamp(1.5f * broad, -1.f, 1.f) +
+                                       .01f * noise(static_cast<unsigned>(x),
+                                                    static_cast<unsigned>(y));
                     pixels.setPixelColour(
                         x, y, grain > 0 ? juce::Colours::white.withAlpha(grain * .010f)
                                         : juce::Colours::black.withAlpha(-grain * .10f));
@@ -1594,8 +1623,10 @@ class BoundSlider : public juce::Slider
                 const bool glide = binding == "scene.portamento";
                 const auto dialX = glide ? 62.f : 26.f;
                 drawFace(Rect(0, 0, 34, 34).withCentre({r.getX() + dialX, r.getY() + 30}));
+                // Width's fitted ink stays inside the child while clearing the
+                // top graduation; its dial, live value and hit bounds stay put.
                 text(g, theme, label.toUpperCase(),
-                     Rect(r.getX() + (glide ? 2.f : 5.f), r.getY() + (glide ? 5.f : 1.f),
+                     Rect(r.getX() + (glide ? 2.f : 5.f), r.getY() + (glide ? 5.f : -3.f),
                           glide ? 45.f : 42.f, 16),
                      fs, ink, false, glide ? juce::Justification::centredLeft
                                            : juce::Justification::centred);
@@ -4733,6 +4764,7 @@ struct Workspace::Impl
     std::array<PreviewCurve, n_fx_slots> effectCurves;
     bool audioSubscribed{false};
     std::vector<RouteRow> routes;
+    int routesScene{-1};
     ModulationEditorModel routeEditor;
     std::vector<std::unique_ptr<ModulationRowInteraction>> routeControls;
     RouteKey inspectedRoute;
@@ -5251,6 +5283,7 @@ struct Workspace::Impl
         cancelInteractions();
         routeControls.clear();
         routes.clear();
+        routesScene = -1;
         inspectedRoute = {};
         if (browser)
         {
@@ -5670,6 +5703,44 @@ struct Workspace::Impl
         for (int i = 0; i < 2; ++i)
             if (filtersNeeded[i])
                 filterCurves[i] = filterResponse(processor, parameters.getScene(), i);
+        // Native route amounts include the destination's current base value and
+        // physical range. Refresh them with the bound controls, including host
+        // edits and patch restores; the slower preview cadence can otherwise
+        // leave the inspector and accessible row descriptions showing old values.
+        // This remains a bounded message-thread snapshot with a nonblocking lock.
+        const auto routeScene = parameters.getScene();
+        if (routesScene != routeScene)
+        {
+            // A busy snapshot may retain only this scene's data, including when
+            // the bridge was changed directly instead of through selectScene().
+            for (auto &row : routeControls)
+                row->cancelGesture();
+            routeEditor.end();
+            routes.clear();
+            inspectedRoute = {};
+            routesScene = routeScene;
+        }
+        bool routesAvailable = false;
+        auto updatedRoutes = modulationRows(processor, routeScene, &routesAvailable);
+        if (!routeEditor.isEditing())
+        {
+            if (routesAvailable)
+                routes = std::move(updatedRoutes);
+        }
+        else
+            for (auto &row : routes)
+                if (routeEditor.isEditing(row.key))
+                {
+                    row.normalizedDepth = routeEditor.currentDepth();
+                    if (routesAvailable)
+                    {
+                        const auto match = std::find_if(
+                            updatedRoutes.begin(), updatedRoutes.end(),
+                            [&row](const auto &updated) { return updated.key == row.key; });
+                        row.amount = match == updatedRoutes.end() ? "0" : match->amount;
+                    }
+                }
+        syncRouteControls();
         if ((ticks++ % 8) == 0)
         {
             auto output = std::move(visuals.output);
@@ -5684,20 +5755,6 @@ struct Workspace::Impl
             for (int i = 0; i < n_fx_slots; ++i)
                 if (effectsNeeded[i])
                     effectCurves[i] = distortionTransfer(processor, i);
-            auto updatedRoutes = modulationRows(processor, parameters.getScene());
-            if (!routeEditor.isEditing())
-                routes = std::move(updatedRoutes);
-            else
-                for (auto &row : routes)
-                    if (routeEditor.isEditing(row.key))
-                    {
-                        row.normalizedDepth = routeEditor.currentDepth();
-                        const auto match = std::find_if(
-                            updatedRoutes.begin(), updatedRoutes.end(),
-                            [&row](const auto &updated) { return updated.key == row.key; });
-                        row.amount = match == updatedRoutes.end() ? "0" : match->amount;
-                    }
-            syncRouteControls();
             if (browser)
                 browser->refreshRows();
         }

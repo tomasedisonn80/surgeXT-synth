@@ -2857,6 +2857,77 @@ TEST_CASE("Filter response miniatures follow each control and host edit on the n
     CHECK(checkedWorkspaces == 2);
 }
 
+TEST_CASE("Spectral terrain frames one source floor without magnifying silence",
+          "[reference-workspaces][reference-display-isolation][reference-wavetable]")
+{
+    using Surge::GUI::Reference::Visuals;
+    using Surge::GUI::Reference::WavetablePreview;
+    juce::ScopedJuceInitialiser_GUI gui;
+    const juce::Rectangle<int> plot(20, 20, 640, 200);
+    const auto render = [&](const WavetablePreview &source) {
+        juce::Image image(juce::Image::RGB, 680, 240, true);
+        juce::Graphics graphics(image);
+        graphics.fillAll(juce::Colours::black);
+        Visuals::wavetable(graphics, plot.toFloat(), source, juce::Colour(0xff12d1f4),
+                          juce::Colour(0xffaf50ff), Visuals::WavetableView::spectralTerrain);
+        return image;
+    };
+    WavetablePreview source;
+    source.frames = source.sourceFrames = 4;
+    source.sourceFrameSize = WavetablePreview::pointsPerFrame;
+    source.position = 1.f;
+    source.samples.assign(source.frames * WavetablePreview::pointsPerFrame, 0.f);
+    const auto silent = render(source);
+
+    // A silent near row and its selected trace meet the source floor. The
+    // foreground must not consist solely of a disconnected decorative grid.
+    bool visibleFrontRow = false;
+    for (int y = plot.getBottom() - 3; y < plot.getBottom(); ++y)
+        for (int x = plot.getX() + 40; x < plot.getX() + 180; ++x)
+        {
+            const auto pixel = silent.getPixelAt(x, y);
+            visibleFrontRow |= std::max({pixel.getRed(), pixel.getGreen(), pixel.getBlue()}) > 100;
+        }
+    CHECK(visibleFrontRow);
+
+    auto tiny = source;
+    for (std::size_t i = 0; i < tiny.samples.size(); ++i)
+        tiny.samples[i] = i % 2 ? 1.e-12f : -1.e-12f;
+    CHECK(changedPixels(silent, render(tiny)) == 0);
+    auto nonfinite = source;
+    nonfinite.samples[0] = std::numeric_limits<float>::quiet_NaN();
+    nonfinite.samples[1] = std::numeric_limits<float>::infinity();
+    nonfinite.samples[2] = -std::numeric_limits<float>::infinity();
+    CHECK(changedPixels(silent, render(nonfinite)) == 0);
+
+    auto extreme = source;
+    for (std::size_t i = 0; i < extreme.samples.size(); ++i)
+        extreme.samples[i] = i % 32 < 16 ? std::numeric_limits<float>::max()
+                                          : -std::numeric_limits<float>::max();
+    const auto wide = render(extreme);
+    CHECK(changedPixels(silent, wide) > 100);
+    bool outsideUntouched = true;
+    for (int y = 0; y < wide.getHeight(); ++y)
+        for (int x = 0; x < wide.getWidth(); ++x)
+            if (!plot.contains(x, y))
+                outsideUntouched &= wide.getPixelAt(x, y) == juce::Colours::black;
+    CHECK(outsideUntouched);
+
+    // A one-frame table has one actual trace, regardless of its morph setting.
+    // Translating every signed sample together must not change its shape.
+    source.frames = source.sourceFrames = 1;
+    source.samples.resize(WavetablePreview::pointsPerFrame);
+    for (std::size_t i = 0; i < source.samples.size(); ++i)
+        source.samples[i] = i % 64 < 32 ? .5f : -.5f;
+    source.position = 0.f;
+    const auto single = render(source);
+    source.position = 1.f;
+    CHECK(changedPixels(single, render(source)) == 0);
+    for (auto &sample : source.samples)
+        sample += 2.f;
+    CHECK(changedPixels(single, render(source)) == 0);
+}
+
 TEST_CASE("Wavetable terrain snapshots own distinct real source frames without editing the synth",
           "[reference-workspaces][reference-display-isolation][reference-wavetable]")
 {
@@ -3123,6 +3194,371 @@ TEST_CASE("Native modulation row edits preserve stable targets, undo, and scene 
     CHECK(listener.mutes > 0);
     CHECK(listener.clears > 0);
     checkHostParameterValues(processor, parametersBefore);
+    processor.releaseResources();
+}
+
+TEST_CASE("Native modulation ranges follow base edits and state restore on the first refresh",
+          "[reference-workspaces][reference-modulation][reference-state][reference-interactions]")
+{
+    using Surge::GUI::Reference::modulationRows;
+    using Surge::GUI::Reference::ModulationRowInteraction;
+    using Surge::GUI::Reference::RouteKey;
+    using Surge::GUI::Reference::RouteRow;
+    juce::ScopedJuceInitialiser_GUI gui;
+    IsolatedUserData testData;
+    SurgeSynthProcessor processor;
+    testData.attach(processor);
+    processor.setRateAndBufferSizeDetails(sampleRate, sampleBlock);
+    processor.prepareToPlay(sampleRate, sampleBlock);
+    configureShowcaseFixture(processor, "08-clearsignal-accessible");
+    auto &synth = *processor.surge;
+    ParameterBridge setup(processor);
+    setup.setScene(1);
+    edit(setup, "filter1.cutoff", .41f);
+    edit(setup, "lfo1.shape", setup.choiceValue("lfo1.shape", lt_sine));
+    edit(setup, "lfo1.unipolar", 0.f);
+    auto *targetB = setup.parameter("filter1.cutoff");
+    REQUIRE(targetB != nullptr);
+    REQUIRE(synth.setModDepth01(targetB->id, ms_lfo1, 1, 0, -.31f));
+    const auto routeFor = [&](int scene) -> RouteRow {
+        const auto rows = modulationRows(processor, scene);
+        const auto found = std::find_if(rows.begin(), rows.end(), [&](const auto &row) {
+            return row.key.sourceId == ms_lfo1 && row.key.sourceScene == scene &&
+                   row.key.parameterId ==
+                       synth.storage.getPatch().scene[scene].filterunit[0].cutoff.id;
+        });
+        REQUIRE(found != rows.end());
+        return *found;
+    };
+    const auto baselineA = routeFor(0), baselineB = routeFor(1);
+    REQUIRE(baselineA.key != baselineB.key);
+    REQUIRE(baselineA.bipolar);
+    REQUIRE(baselineB.bipolar);
+    juce::MemoryBlock savedState;
+    processor.getStateInformation(savedState);
+    REQUIRE(savedState.getSize() > 0);
+    const auto manifests = workspaceManifests();
+    REQUIRE(manifests.size() == 10);
+    int inspectorsChecked = 0;
+    for (const auto &path : manifests)
+    {
+        const auto manifest = readManifest(path);
+        const auto id = manifest["id"].toString();
+        CAPTURE(id.toStdString());
+        // No audio callback has run, so use the processor's real idle-engine
+        // restore path, as in the state regression above.
+        processor.setStateInformation(savedState.getData(), static_cast<int>(savedState.getSize()));
+        Workspace workspace(processor);
+        juce::String error;
+        REQUIRE(workspace.load(path, error));
+        workspace.setSize(referenceWidth, referenceHeight);
+        workspace.addToDesktop(0);
+        workspace.setVisible(true);
+        auto &bridge = workspace.bridge();
+        REQUIRE(bridge.getScene() == 0);
+        auto *control = findBindingControl(workspace, manifest, "filter1.cutoff");
+        REQUIRE(control != nullptr);
+        auto *cutoff = findSlider(*control);
+        REQUIRE(cutoff != nullptr);
+        auto *adapter = adapterFor(processor, bridge, "filter1.cutoff");
+        REQUIRE(adapter != nullptr);
+        const auto rowComponent = [&](const RouteKey &key) {
+            const auto suffix = juce::String(key.parameterId) + "." +
+                                juce::String(key.sourceId) + "." +
+                                juce::String(key.sourceScene) + "." +
+                                juce::String(key.sourceIndex);
+            auto *row = dynamic_cast<ModulationRowInteraction *>(
+                findComponent(workspace, "workspace.modulation.row." + suffix));
+            REQUIRE(row != nullptr);
+            return row;
+        };
+        const auto checkCurrentRow = [&](int scene) {
+            const auto live = routeFor(scene);
+            auto *row = rowComponent(live.key);
+            // Compare the displayed range with the native formatter, including
+            // its current base value, rather than a fixture's remembered text.
+            auto *parameter = synth.storage.getPatch().param_ptr[live.key.parameterId];
+            REQUIRE(parameter != nullptr);
+            const auto *route = synth.getModRouting(live.key.parameterId, ms_lfo1, scene, 0);
+            REQUIRE(route != nullptr);
+            char amount[TXT_SIZE]{};
+            ModulationDisplayInfoWindowStrings info;
+            parameter->get_display_of_modulation_depth(
+                amount, parameter->extend_range ? parameter->get_extended(route->depth)
+                                                : route->depth,
+                true, Parameter::InfoWindow, &info);
+            const juce::String nativeAmount(amount);
+            CHECK(live.amount == nativeAmount);
+            CHECK(row->route().amount == nativeAmount);
+            CHECK(row->getDescription().contains(nativeAmount));
+            CHECK(row->depthSlider().getTooltip().contains(nativeAmount));
+            CHECK(row->route().normalizedDepth == Catch::Approx(live.normalizedDepth));
+            CHECK(row->depthSlider().getValue() == Catch::Approx(live.normalizedDepth));
+            return nativeAmount;
+        };
+        rowComponent(baselineA.key)->mouseDown(
+            mouseEvent(*rowComponent(baselineA.key), {5.f, 5.f}));
+        const auto initialAmount = checkCurrentRow(0);
+        CHECK(initialAmount == baselineA.amount);
+        juce::Rectangle<int> inspectorBounds;
+        if (auto *panels = manifest["panels"].getArray())
+            for (const auto &panel : *panels)
+                if (panel["kind"].toString() == "inspector")
+                    inspectorBounds = {static_cast<int>(panel["x"]),
+                                       static_cast<int>(panel["y"]),
+                                       static_cast<int>(panel["w"]),
+                                       static_cast<int>(panel["h"])};
+        juce::Image initialInspector, previousInspector;
+        if (!inspectorBounds.isEmpty())
+        {
+            ++inspectorsChecked;
+            REQUIRE(id == "08-clearsignal-accessible");
+            initialInspector = workspace.createComponentSnapshot(inspectorBounds);
+            REQUIRE(initialInspector.isValid());
+            previousInspector = initialInspector;
+        }
+        auto previousAmount = initialAmount;
+        for (int stage = 0; stage < 3; ++stage)
+        {
+            CAPTURE(stage);
+            if (stage == 0)
+                cutoff->setValue(.283f, juce::sendNotificationSync);
+            else if (stage == 1)
+                adapter->setValueNotifyingHost(.579f);
+            else
+                processor.setStateInformation(savedState.getData(),
+                                              static_cast<int>(savedState.getSize()));
+            const auto values = hostParameterValues(processor);
+            const auto rng = synth.storage.rngGen.g;
+            auto noise = synth.storage.noiseRng;
+            const auto dirty = synth.storage.getPatch().isDirty.load();
+            // Exactly one public refresh: no timer pumping, forced slow tick,
+            // catch-up loop, or changed assertion threshold hides a stale range.
+            workspace.refresh();
+            const auto currentAmount = checkCurrentRow(0);
+            CHECK(currentAmount != previousAmount);
+            CHECK(cutoff->getValue() == Catch::Approx(bridge.value("filter1.cutoff")));
+            CHECK(routeFor(0).normalizedDepth == Catch::Approx(baselineA.normalizedDepth));
+            CHECK(routeFor(1).amount == baselineB.amount);
+            CHECK(routeFor(1).normalizedDepth == Catch::Approx(baselineB.normalizedDepth));
+            if (!inspectorBounds.isEmpty())
+            {
+                const auto currentInspector = workspace.createComponentSnapshot(inspectorBounds);
+                REQUIRE(currentInspector.isValid());
+                CHECK(changedPixels(previousInspector, currentInspector) > 0);
+                if (stage == 2)
+                    CHECK(changedPixels(initialInspector, currentInspector) == 0);
+                previousInspector = currentInspector;
+            }
+            if (stage == 2)
+                CHECK(currentAmount == initialAmount);
+            CHECK(synth.storage.rngGen.g == rng);
+            auto currentNoise = synth.storage.noiseRng;
+            for (int sample = 0; sample < 16; ++sample)
+                CHECK(noise.unifU32() == currentNoise.unifU32());
+            CHECK(synth.storage.getPatch().isDirty.load() == dirty);
+            checkHostParameterValues(processor, values);
+            previousAmount = currentAmount;
+        }
+        // A source with the same LFO index in B must select B's destination and
+        // range. Switching back retains A's restored values and stable route key.
+        workspace.selectScene(1);
+        CHECK(checkCurrentRow(1) == baselineB.amount);
+        auto *adapterB = adapterFor(processor, bridge, "filter1.cutoff");
+        REQUIRE(adapterB != nullptr);
+        adapterB->setValueNotifyingHost(.37f);
+        workspace.refresh();
+        CHECK(checkCurrentRow(1) != baselineB.amount);
+        CHECK(routeFor(0).amount == baselineA.amount);
+        workspace.selectScene(0);
+        CHECK(checkCurrentRow(0) == baselineA.amount);
+        if (!inspectorBounds.isEmpty())
+        {
+            // Keep the actual native row alive while a drag crosses the engine's
+            // zero-depth removal; the faster refresh must not rebuild its target.
+            juce::Component::SafePointer<ModulationRowInteraction> dragged(
+                rowComponent(baselineA.key));
+            dragged->depthSlider().onDragStart();
+            dragged->depthSlider().setValue(0.f, juce::sendNotificationSync);
+            workspace.refresh();
+            REQUIRE(dragged != nullptr);
+            CHECK(rowComponent(baselineA.key) == dragged.getComponent());
+            CHECK(synth.getModRouting(baselineA.key.parameterId, ms_lfo1, 0, 0) == nullptr);
+            dragged->depthSlider().setValue(-.35f, juce::sendNotificationSync);
+            workspace.refresh();
+            REQUIRE(dragged != nullptr);
+            CHECK(rowComponent(baselineA.key) == dragged.getComponent());
+            CHECK(synth.getModDepth01(baselineA.key.parameterId, ms_lfo1, 0, 0) ==
+                  Catch::Approx(-.35f));
+            dragged->depthSlider().onDragEnd();
+            workspace.refresh();
+            CHECK(checkCurrentRow(0) == routeFor(0).amount);
+            CHECK(synth.getModDepth01(baselineB.key.parameterId, ms_lfo1, 1, 0) ==
+                  Catch::Approx(baselineB.normalizedDepth));
+        }
+        CHECK(bridge.activeGestureCount() == 0);
+        workspace.setVisible(false);
+    }
+    CHECK(inspectorsChecked == 1);
+    processor.releaseResources();
+}
+
+TEST_CASE("Busy native route snapshots preserve selection without leaking across scenes",
+          "[reference-workspaces][reference-modulation][reference-state][reference-interactions]")
+{
+    using Surge::GUI::Reference::modulationRows;
+    using Surge::GUI::Reference::ModulationRowInteraction;
+    using Surge::GUI::Reference::RouteKey;
+    juce::ScopedJuceInitialiser_GUI gui;
+    IsolatedUserData testData;
+    SurgeSynthProcessor processor;
+    testData.attach(processor);
+    processor.setRateAndBufferSizeDetails(sampleRate, sampleBlock);
+    processor.prepareToPlay(sampleRate, sampleBlock);
+    configureShowcaseFixture(processor, "08-clearsignal-accessible");
+    auto &synth = *processor.surge;
+    ParameterBridge setup(processor);
+    setup.setScene(1);
+    auto *targetB = setup.parameter("filter1.cutoff");
+    REQUIRE(targetB != nullptr);
+    REQUIRE(synth.setModDepth01(targetB->id, ms_lfo1, 1, 0, -.31f));
+    bool available = false;
+    const auto rowsA = modulationRows(processor, 0, &available);
+    REQUIRE(available);
+    REQUIRE(rowsA.size() >= 2);
+    const auto rowsB = modulationRows(processor, 1, &available);
+    REQUIRE(available);
+    const auto b = std::find_if(rowsB.begin(), rowsB.end(), [&](const auto &row) {
+        return row.key.parameterId == targetB->id && row.key.sourceId == ms_lfo1 &&
+               row.key.sourceScene == 1;
+    });
+    REQUIRE(b != rowsB.end());
+    const auto manifests = workspaceManifests();
+    REQUIRE(manifests.size() == 10);
+    const auto manifest = readManifest(manifests[7]);
+    REQUIRE(manifest["id"].toString() == "08-clearsignal-accessible");
+    Workspace workspace(processor);
+    juce::String error;
+    REQUIRE(workspace.load(manifests[7], error));
+    workspace.setSize(referenceWidth, referenceHeight);
+    workspace.addToDesktop(0);
+    workspace.setVisible(true);
+    const auto rowComponent = [&](const RouteKey &key) {
+        const auto suffix = juce::String(key.parameterId) + "." + juce::String(key.sourceId) + "." +
+                            juce::String(key.sourceScene) + "." + juce::String(key.sourceIndex);
+        return dynamic_cast<ModulationRowInteraction *>(
+            findComponent(workspace, "workspace.modulation.row." + suffix));
+    };
+    juce::Rectangle<int> inspectorBounds;
+    if (auto *panels = manifest["panels"].getArray())
+        for (const auto &panel : *panels)
+            if (panel["kind"].toString() == "inspector")
+                inspectorBounds = {static_cast<int>(panel["x"]), static_cast<int>(panel["y"]),
+                                   static_cast<int>(panel["w"]), static_cast<int>(panel["h"])};
+    REQUIRE(!inspectorBounds.isEmpty());
+    const auto firstInspector = workspace.createComponentSnapshot(inspectorBounds);
+    REQUIRE(firstInspector.isValid());
+    juce::Component::SafePointer<ModulationRowInteraction> selected(rowComponent(rowsA[1].key));
+    REQUIRE(selected != nullptr);
+    selected->mouseDown(mouseEvent(*selected.getComponent(), {5.f, 5.f}));
+    const auto selectedInspector = workspace.createComponentSnapshot(inspectorBounds);
+    REQUIRE(selectedInspector.isValid());
+    REQUIRE(changedPixels(firstInspector, selectedInspector) > 0);
+
+    const auto whileRoutingBusy = [&](const auto &check) {
+        std::promise<void> locked, release;
+        auto lockedSignal = locked.get_future();
+        auto releaseSignal = release.get_future();
+        auto holder = std::async(std::launch::async, [&] {
+            std::lock_guard<std::recursive_mutex> lock(synth.storage.modRoutingMutex);
+            locked.set_value();
+            // The handshake holds the lock through the assertions. This is only
+            // a deadlock watchdog: success requires our explicit release signal.
+            return releaseSignal.wait_for(std::chrono::seconds(10)) == std::future_status::ready;
+        });
+        lockedSignal.wait();
+        try
+        {
+            check();
+        }
+        catch (...)
+        {
+            release.set_value();
+            holder.get();
+            throw;
+        }
+        release.set_value();
+        REQUIRE(holder.get());
+    };
+    const auto checkRetainedSelection = [&] {
+        bool busyAvailable = true;
+        CHECK(modulationRows(processor, 0, &busyAvailable).empty());
+        CHECK_FALSE(busyAvailable);
+        workspace.refresh();
+        REQUIRE(selected != nullptr);
+        CHECK(rowComponent(rowsA[1].key) == selected.getComponent());
+        CHECK(selected->route().amount == rowsA[1].amount);
+        CHECK(changedPixels(selectedInspector,
+                            workspace.createComponentSnapshot(inspectorBounds)) == 0);
+    };
+    whileRoutingBusy(checkRetainedSelection);
+    workspace.refresh();
+    REQUIRE(selected != nullptr);
+    CHECK(changedPixels(selectedInspector,
+                        workspace.createComponentSnapshot(inspectorBounds)) == 0);
+
+    // An unavailable active snapshot must not turn its physical amount into
+    // zero. Begin before the other thread acquires the lock, then retain it.
+    selected->depthSlider().onDragStart();
+    whileRoutingBusy(checkRetainedSelection);
+    REQUIRE(selected != nullptr);
+    selected->depthSlider().onDragEnd();
+    workspace.refresh();
+    CHECK(changedPixels(selectedInspector,
+                        workspace.createComponentSnapshot(inspectorBounds)) == 0);
+
+    whileRoutingBusy([&] {
+        // The public bridge may be synchronized directly by a caller. A busy
+        // first refresh in B must discard A's cache, never render its routes.
+        workspace.bridge().setScene(1);
+        workspace.refresh();
+        CHECK(workspace.bridge().getScene() == 1);
+        for (const auto &row : rowsA)
+            CHECK(rowComponent(row.key) == nullptr);
+        CHECK(rowComponent(b->key) == nullptr);
+        CHECK(selected == nullptr);
+    });
+    workspace.refresh();
+    REQUIRE(rowComponent(b->key) != nullptr);
+    CHECK(rowComponent(b->key)->route().amount == b->amount);
+    CHECK(rowComponent(rowsA[1].key) == nullptr);
+    whileRoutingBusy([&] {
+        workspace.selectScene(0);
+        for (const auto &row : rowsB)
+            CHECK(rowComponent(row.key) == nullptr);
+        CHECK(rowComponent(rowsA[0].key) == nullptr);
+    });
+    workspace.refresh();
+    REQUIRE(rowComponent(rowsA[0].key) != nullptr);
+    CHECK(rowComponent(rowsA[0].key)->route().amount == rowsA[0].amount);
+
+    // An available, genuinely empty snapshot must still clear rows and inspector.
+    const auto populatedInspector = workspace.createComponentSnapshot(inspectorBounds);
+    for (const auto &row : rowsA)
+        synth.clearModulation(row.key.parameterId, static_cast<modsources>(row.key.sourceId),
+                              row.key.sourceScene, row.key.sourceIndex, false);
+    available = false;
+    CHECK(modulationRows(processor, 0, &available).empty());
+    REQUIRE(available);
+    workspace.refresh();
+    for (const auto &row : rowsA)
+        CHECK(rowComponent(row.key) == nullptr);
+    CHECK(changedPixels(populatedInspector,
+                        workspace.createComponentSnapshot(inspectorBounds)) > 0);
+    CHECK(synth.getModDepth01(b->key.parameterId, ms_lfo1, 1, 0) ==
+          Catch::Approx(b->normalizedDepth));
+    CHECK(workspace.bridge().activeGestureCount() == 0);
+    workspace.setVisible(false);
     processor.releaseResources();
 }
 

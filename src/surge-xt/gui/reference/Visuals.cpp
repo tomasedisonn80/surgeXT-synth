@@ -393,6 +393,7 @@ void Visuals::wavetable(juce::Graphics &g, juce::Rectangle<float> bounds,
     const bool terrain = view == WavetableView::spectralTerrain;
     const bool ribbons = view != WavetableView::perspective && !terrain;
     const bool miniature = bounds.getWidth() < 300 || bounds.getHeight() < 100;
+    const bool fullTerrain = terrain && !miniature;
     const bool aurora = view == WavetableView::auroraRibbons && !miniature;
     const bool luminous = ribbons && !harmonic && !miniature;
     if (!miniature && !harmonic)
@@ -404,15 +405,49 @@ void Visuals::wavetable(juce::Graphics &g, juce::Rectangle<float> bounds,
         secondary =
             secondary.withSaturation(std::min(1.f, secondary.getSaturation() * saturation));
     }
+
+    // Frame the whole terrain and its floor together. One translation retains
+    // signed sample differences and relative frame levels; one shared scale can
+    // only reduce the fixed height per sample, never enlarge silence/tiny noise.
+    // Double precision also keeps a finite +/-FLT_MAX snapshot's span finite.
+    double terrainFloor = -1.0, terrainHeightScale = 1.0;
+    constexpr double terrainTop = .06, terrainBack = .59, terrainDepth = .405;
+    constexpr double terrainHeight = .50;
+    if (fullTerrain)
+    {
+        terrainFloor = finiteSample(data.samples.front());
+        for (const auto sample : data.samples)
+            terrainFloor = std::min(terrainFloor, static_cast<double>(finiteSample(sample)));
+        for (int frame = 0; frame < data.frames; ++frame)
+        {
+            const double t = data.frames == 1 ? .5 : static_cast<double>(frame) / (data.frames - 1);
+            const double headroom = terrainBack + terrainDepth * t - terrainTop;
+            for (int phase = 0; phase < WavetablePreview::pointsPerFrame; ++phase)
+            {
+                const double elevation =
+                    static_cast<double>(finiteSample(
+                        data.samples[frame * WavetablePreview::pointsPerFrame + phase])) -
+                    terrainFloor;
+                if (elevation > 0.0)
+                    terrainHeightScale =
+                        std::min(terrainHeightScale, headroom / (terrainHeight * elevation));
+            }
+        }
+    }
+    const auto floorSample = static_cast<float>(terrainFloor);
     const auto sampleAt = [&](float frame, int phase) {
-        const float selected = juce::jlimit(0.f, 1.f, frame) * (data.frames - 1);
+        const float selected = juce::jlimit(0.f, 1.f, finiteSample(frame)) * (data.frames - 1);
         const int lo = static_cast<int>(selected), hi = std::min(data.frames - 1, lo + 1);
         const auto p = juce::jlimit(0, WavetablePreview::pointsPerFrame - 1, phase);
         const float mix = selected - lo;
-        return juce::jlimit(
-            -1.35f, 1.35f,
-            finiteSample(data.samples[lo * WavetablePreview::pointsPerFrame + p]) * (1.f - mix) +
-                finiteSample(data.samples[hi * WavetablePreview::pointsPerFrame + p]) * mix);
+        const auto lower = finiteSample(data.samples[lo * WavetablePreview::pointsPerFrame + p]);
+        const auto upper = finiteSample(data.samples[hi * WavetablePreview::pointsPerFrame + p]);
+        if (fullTerrain)
+            // Keep large finite tables intact: the global camera fits their
+            // span, instead of flattening individual samples at a fixed limit.
+            return static_cast<float>(static_cast<double>(lower) * (1.0 - mix) +
+                                      static_cast<double>(upper) * mix);
+        return juce::jlimit(-1.35f, 1.35f, lower * (1.f - mix) + upper * mix);
     };
     const auto projectSample = [&](float frame, int phase, float amplitude) -> juce::Point<float> {
         const float u = static_cast<float>(phase) / (WavetablePreview::pointsPerFrame - 1);
@@ -447,14 +482,20 @@ void Visuals::wavetable(juce::Graphics &g, juce::Rectangle<float> bounds,
                         bounds.getHeight() * (depth * .13f - amplitude * (.36f + .04f * frame))};
         }
         const float depth = 1.f - frame;
-        if (terrain && !miniature)
-            // A fixed camera for the source-frame landscape. Signed amplitudes
-            // remain heights above the same -1 sample-range plane. Its near
-            // edge reaches .995 of the supplied plot; no bounds are expanded.
+        if (fullTerrain)
+        {
+            const float t = data.frames == 1 ? .5f : juce::jlimit(0.f, 1.f, finiteSample(frame));
+            const double height = (static_cast<double>(amplitude) - terrainFloor) *
+                                  terrainHeight * terrainHeightScale;
+            // Both axes are affine between source rows, so fitting every copied
+            // row also bounds all interpolated seams and the selected trace.
+            const auto y = static_cast<float>(juce::jlimit(
+                terrainTop, terrainBack + terrainDepth,
+                terrainBack + terrainDepth * t - height));
             return {bounds.getX() +
-                        bounds.getWidth() * (.10f * depth + u * (1.f - .20f * depth)),
-                    bounds.getY() + bounds.getHeight() *
-                        (.30f + .345f * frame - amplitude * (.29f + .06f * frame))};
+                        bounds.getWidth() * (.10f * (1.f - t) + u * (.80f + .20f * t)),
+                    bounds.getY() + bounds.getHeight() * y};
+        }
         return {bounds.getX() +
                     bounds.getWidth() * (.025f + .13f * depth + u * (.95f - .26f * depth)),
                 bounds.getY() +
@@ -543,11 +584,12 @@ void Visuals::wavetable(juce::Graphics &g, juce::Rectangle<float> bounds,
             {
                 // Each real frame keeps its warm wire tint through crossings.
                 // Colour separates the rows without changing their geometry.
-                const auto wire = primary.interpolatedWith(juce::Colours::white, .50f)
-                                      .interpolatedWith(secondary.brighter(.16f), frame);
-                auto paint = juce::ColourGradient(wire.withMultipliedAlpha(alpha * .90f),
+                const auto wire = primary.interpolatedWith(juce::Colours::white, .24f)
+                                      .withBrightness(1.f)
+                                      .interpolatedWith(secondary.withBrightness(1.f), frame);
+                auto paint = juce::ColourGradient(wire.withMultipliedAlpha(alpha * .96f),
                                                   bounds.getTopLeft(),
-                                                  wire.withMultipliedAlpha(alpha * .90f),
+                                                  wire.withMultipliedAlpha(alpha * .96f),
                                                   bounds.getTopRight(), false);
                 paint.addColour(.35, wire.withMultipliedAlpha(alpha));
                 paint.addColour(.70, wire.brighter(.06f).withMultipliedAlpha(alpha));
@@ -609,26 +651,27 @@ void Visuals::wavetable(juce::Graphics &g, juce::Rectangle<float> bounds,
 
     if (!miniature && !ribbons && data.frames > 1)
     {
-        // This is the lower sample-range plane in the same phase/frame
-        // projection. It deliberately has no invented numerical scale.
+        // The terrain uses its whole-snapshot minimum; other perspective views
+        // retain their fixed lower range. Neither plane invents a numeric scale.
         g.setGradientFill(gradient(terrain ? .028f : .035f));
         juce::Path floor;
-        floor.startNewSubPath(projectSample(0.f, 0, -1.f));
-        floor.lineTo(projectSample(0.f, WavetablePreview::pointsPerFrame - 1, -1.f));
-        floor.lineTo(projectSample(1.f, WavetablePreview::pointsPerFrame - 1, -1.f));
-        floor.lineTo(projectSample(1.f, 0, -1.f));
+        floor.startNewSubPath(projectSample(0.f, 0, floorSample));
+        floor.lineTo(projectSample(0.f, WavetablePreview::pointsPerFrame - 1, floorSample));
+        floor.lineTo(projectSample(1.f, WavetablePreview::pointsPerFrame - 1, floorSample));
+        floor.lineTo(projectSample(1.f, 0, floorSample));
         floor.closeSubPath();
         g.fillPath(floor);
         g.setGradientFill(gradient(terrain ? .24f : .18f));
         for (int phase = 0; phase < WavetablePreview::pointsPerFrame; phase += terrain ? 4 : 16)
-            g.drawLine({projectSample(0.f, phase, -1.f), projectSample(1.f, phase, -1.f)},
+            g.drawLine({projectSample(0.f, phase, floorSample),
+                        projectSample(1.f, phase, floorSample)},
                        terrain ? .45f : .6f);
         const int floorRows = terrain ? 16 : 10;
         for (int row = 0; row <= floorRows; ++row)
         {
             const float frame = static_cast<float>(row) / floorRows;
-            g.drawLine({projectSample(frame, 0, -1.f),
-                        projectSample(frame, WavetablePreview::pointsPerFrame - 1, -1.f)},
+            g.drawLine({projectSample(frame, 0, floorSample),
+                        projectSample(frame, WavetablePreview::pointsPerFrame - 1, floorSample)},
                        terrain ? .45f : .6f);
         }
     }
@@ -653,14 +696,22 @@ void Visuals::wavetable(juce::Graphics &g, juce::Rectangle<float> bounds,
             return juce::PathStrokeType(width, juce::PathStrokeType::curved,
                                         juce::PathStrokeType::rounded);
         };
-        g.setGradientFill(gradient(.055f));
-        g.strokePath(haze, hazeStroke(bounds.getHeight() * .22f));
-        g.setGradientFill(gradient(.095f));
-        g.strokePath(haze, hazeStroke(bounds.getHeight() * .11f));
-        g.setGradientFill(gradient(.135f));
-        g.strokePath(haze, hazeStroke(bounds.getHeight() * .045f));
-        g.setGradientFill(gradient(.16f));
-        g.strokePath(haze, hazeStroke(2.8f));
+        // Closely spaced compound widths approximate a Gaussian falloff. Each
+        // stage adds only the opacity missing from the wider stages, removing
+        // the four visible hard bands without per-row alpha accumulation.
+        // Work is bounded at 16 strokes of <=48 x 256 vertices, <=44 px wide.
+        constexpr int haloStages = 16;
+        const float outerWidth = std::min(44.f, bounds.getHeight() * .22f);
+        float accumulated = 0.f;
+        for (int stage = haloStages; stage > 0; --stage)
+        {
+            const float radius = static_cast<float>(stage) / haloStages;
+            const float opacity = .40f * std::exp(-4.5f * radius * radius);
+            const float alpha = (opacity - accumulated) / (1.f - accumulated);
+            g.setGradientFill(gradient(alpha));
+            g.strokePath(haze, hazeStroke(outerWidth * radius));
+            accumulated = opacity;
+        }
     }
     else if (luminous)
     {
@@ -759,14 +810,14 @@ void Visuals::wavetable(juce::Graphics &g, juce::Rectangle<float> bounds,
             g.setGradientFill(gradient(miniature ? .02f : terrain ? .025f : .05f));
             g.strokePath(path, juce::PathStrokeType(miniature ? 3.f : terrain ? 5.f : 6.f));
         }
-        g.setGradientFill(gradient(harmonic ? .90f
+        g.setGradientFill(gradient(harmonic ? (miniature ? .90f : 1.f)
                                    : aurora ? .40f + .45f * t
                                    : luminous ? .55f + .40f * t
                                    : ribbons ? .37f + .45f * t
                                    : terrain ? .56f + .38f * t
                                              : .45f + .48f * t,
                                    t));
-        g.strokePath(path, juce::PathStrokeType(miniature ? .7f : harmonic ? .55f
+        g.strokePath(path, juce::PathStrokeType(miniature ? .7f : harmonic ? 1.f
                                                              : aurora ? .60f
                                                              : luminous ? .62f
                                                              : terrain ? .52f : .9f));
@@ -819,7 +870,7 @@ void Visuals::wavetable(juce::Graphics &g, juce::Rectangle<float> bounds,
         {
             const auto point = project(data.position, WavetablePreview::pointsPerFrame / 2);
             const auto foot = projectSample(data.position, WavetablePreview::pointsPerFrame / 2,
-                                             -1.f);
+                                             floorSample);
             const auto marker = primary.interpolatedWith(juce::Colours::white, .66f);
             g.setColour(marker.withAlpha(terrain ? .25f : .16f));
             g.drawLine({point, foot}, terrain ? 10.f : 7.f);

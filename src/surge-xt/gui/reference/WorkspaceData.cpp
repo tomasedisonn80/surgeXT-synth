@@ -61,9 +61,11 @@ void pushRouteUndo(SurgeSynthProcessor &processor, const RouteKey &key, Paramete
 }
 } // namespace
 
-std::vector<RouteRow> modulationRows(SurgeSynthProcessor &processor, int scene)
+std::vector<RouteRow> modulationRows(SurgeSynthProcessor &processor, int scene, bool *available)
 {
     std::vector<RouteRow> result;
+    if (available)
+        *available = false;
     if (!processor.surge)
         return result;
 
@@ -73,6 +75,8 @@ std::vector<RouteRow> modulationRows(SurgeSynthProcessor &processor, int scene)
     std::unique_lock<std::recursive_mutex> lock(storage.modRoutingMutex, std::try_to_lock);
     if (!lock.owns_lock())
         return result;
+    if (available)
+        *available = true;
 
     auto &patch = storage.getPatch();
     result.reserve(16);

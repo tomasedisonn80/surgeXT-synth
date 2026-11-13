@@ -13,9 +13,10 @@ fork, together with its factory data.
 
 Build archives whose names include `pluginsonly` omit factory data. Use a
 distribution that includes the data, or install matching factory data separately,
-including the ten skin folders. The Windows ARM64, ARM64EC and JUCE 7 variants
-produce `pluginsonly` archives and omit the full installer and portable package
-with resources.
+including the ten skin folders and `wavetables/Reference Showcases`. The
+skin-only ZIP contains neither those playable wavetables nor a binary. The
+Windows ARM64, ARM64EC and JUCE 7 variants produce `pluginsonly` archives and
+omit the full installer and portable package with resources.
 
 ## Select a workspace
 
@@ -42,8 +43,8 @@ to install a second copy. For a skin-only package:
 1. Extract the ZIP into a temporary folder.
 2. In the modified synth, choose **Settings → Skins → Install a New Skin…**.
    This opens the actual user skin directory; it is preferable to guessing a
-   platform-specific location. In developer-menu mode, use **Data Folders →
-   Open User Data Folder…**, then its `Skins` directory instead.
+   platform-specific location. In developer-menu mode, use **Settings → Data
+   Folders → Open User Data Folder…**, then its `Skins` directory instead.
 3. Copy the ten complete `.surge-skin` directories from the archive's `skins/`
    directory into that user skin directory. Keep `skin.xml` and `workspace.json`
    together. Do not rename `workspace.json` independently.
@@ -75,6 +76,8 @@ as typed entry; invalid text is rejected instead of silently converted into a
 different unit. Disabled controls correspond to parameters unavailable in the
 current algorithm or state.
 
+The eight visible FX slots use Surge’s native order: slots 1–2 are Scene A inserts, 3–4 are Scene B inserts, 5–6 are sends, and 7–8 are global effects. They are not eight inserts on the currently selected scene. The full FX editor exposes all sixteen native slots.
+
 The XY pad adjusts **Macro 1 and Macro 2**. It does not automatically create
 modulation assignments: assign those macros in the native modulation editor.
 Other macro controls display their real current assignments/names. A scene
@@ -103,13 +106,87 @@ reference layouts are alternative working surfaces, not a replacement for
 every specialized Surge editor. The original controls remain the route to
 formula/MSEG editing, complete effects editing and other detailed operations.
 
+### Space-Age global controls
+
+Space-Age's five upper brass plates group the actual scene and output controls.
+The scene A/B buttons select the editing scene; **Scene mode** chooses the
+native Single, Split, Dual or Channel Split allocation. **Voices** sets the
+patch's voice limit, and **Voice mode** and **Glide** follow the selected scene's
+native voice mode and portamento. **Pitch** edits that scene's pitch. **Width**
+edits that scene's actual stereo width and uses its native percentage readout.
+This is the explicit adaptation for the corresponding reference control; its
+label is Width, and it does not supply an additional tuning or scene-morph
+operation. Glide and Width have separate live values beside their dials, and
+Pitch is an editable numeric field.
+
+The upper **OUTPUT** rotary controls master volume. The stereo bars beside it
+and the lower **METERS** well read the actual main output; their dB graduations
+describe the meter scale. The parameter controls retain the same drag,
+typed-entry, keyboard and automation behavior as the other native controls.
+
+### Modulation rows and ClearSignal's inspector
+
+Select a real modulation route to inspect or adjust its signed depth. ClearSignal
+shows the normalized **Amount** separately from the destination's physical
+range. Changing a filter cutoff, for example, can change the physical readout
+while the route's normalized depth stays the same. Route text and ClearSignal's
+inspector refresh with the bound controls, including changes from the host and
+restored patch state. This refresh preserves the selected route and scene; it
+does not create or alter an assignment. Use **Edit routes** for the complete
+native modulation editor.
+
+## Use the playable showcase sources
+
+The factory `wavetables/Reference Showcases` folder contains ten original,
+playable source tables. For an oscillator using the **Wavetable** or **Window**
+algorithm, click its wavetable name strip and choose an installed category,
+including **Reference Showcases**. The adjacent arrows, or Left/Right while
+that strip has focus, choose the previous/next table. The strip disables when
+the selected oscillator algorithm does not use a wavetable. The full editor
+also provides the normal wavetable controls.
+
+Four sources were revised during the current fidelity pass:
+
+| Playable source | Native capture example | Source dimensions |
+| --- | --- | --- |
+| `Spectral Bloom.wt` | 03 Spectral Observatory | 256 frames × 2048 samples |
+| `Bauhaus Waves.wt` | 04 Bauhaus Modular | 48 frames × 512 samples |
+| `Aurora Waves.wt` | 07 Liquid Aurora | 48 frames × 512 samples |
+| `GlassWavetable 03.wt` | 10 Live Performance Deck | 48 frames × 512 samples |
+
+Spectral Bloom uses irregular harmonic ridges; Bauhaus Waves uses evolving
+harmonic crossings; Aurora Waves uses crossing periodic ribbons; GlassWavetable
+03 uses evolving broad folds. These descriptions refer to their actual source
+samples. The checked-in `generate_showcase_wavetables.py` reproduces all ten
+periodic tables without reference-image pixels. Spectral Bloom, Bauhaus Waves
+and Aurora Waves each use one bounded scale for the entire table, retaining
+their actual frame-to-frame amplitude variation. GlassWavetable 03 scales each
+frame to the same peak. These choices are part of the playable assets, and the
+four source revisions change the sound when those revised tables are loaded.
+
+Selecting a skin preserves the current patch; it does not automatically load a
+showcase table or demonstration patch. The native capture fixtures explicitly
+load their source tables and configure the other oscillator, filter, modulation
+and MIDI settings. The gallery's capture evidence records those reproducible
+settings and source dimensions. Install matching factory data to use the same
+sources as the captures.
+
 ## What the displays mean
 
 - Oscillator traces are generated by the actual oscillator algorithms in
   private display state. They are previews at a display pitch, not a recording
-  of every currently sounding voice. Terrain and ribbon views project copied
-  frames from the actual loaded source, preserving their sample amplitudes.
-  Their perspective and lighting are a display treatment, separate from the
+  of every currently sounding voice. Wavetable terrain and ribbon views project
+  copied frames from the actual loaded source before oscillator warping, using
+  its signed samples and relative frame levels. Where no usable table is
+  available, supported algorithms use their native waveform preview; a layered
+  fallback repeats that waveform rather than implying additional source frames.
+  Unsupported previews are labelled unavailable.
+- Spectral's large terrain frames the whole copied table, its floor and the
+  selected-position marker together. One shared vertical offset and a scale
+  that can only reduce the drawn height keep the source within the plot;
+  silence and tiny signals are not enlarged into a landscape. Bauhaus's open
+  rows and Aurora's glow follow their source paths. Camera framing, colour and
+  lighting do not change the playable samples and are separate from the
   measured live-output spectrum and meters.
 - Filter curves are base-parameter responses from independent instances of the
   selected filter/subtype. They do not show every voice's live modulation.
@@ -197,17 +274,6 @@ reference pictures. Read the evidence file for the source revision, test
 fixture, dimensions and actual results. A workflow may upload diagnostics even
 when tests fail; an artifact's existence alone is not a passing test result.
 
-The capture fixtures load original, playable tables from
-`resources/data/wavetables/Reference Showcases`. The checked-in
-`generate_showcase_wavetables.py` script reproduces their periodic source
-samples without using reference-image pixels. Spectral Bloom uses an irregular
-finite-harmonic ridge family; Aurora Waves uses crossing periodic ribbons.
-Those two tables retain their actual frame-to-frame amplitude variation under
-one bounded scale per table. The renderer uses their signed source amplitudes;
-the same assets feed the audible oscillators. Evidence records the exact table
-paths and dimensions. Capture fixtures describe reproducible demonstration
-state; selecting a skin alone does not replace the current patch.
-
 The Live capture fixture also sends real MIDI channel 1 inputs before its held
 notes: signed pitch bend +6616 (14-bit value 14808), modulation CC1 104,
 expression CC11 56 and channel pressure 85. The processor applies those inputs
@@ -216,9 +282,16 @@ values and the existing audio/headroom/reset checks remain in force.
 
 ### Committed native gallery
 
+The [current fidelity pass record](https://github.com/tomasedisonn80/surgeXT-synth/blob/main/doc/reference-workspaces/fidelity-2026-11-13/README.md)
+tracks the implemented changes, completed reviews and exact-source verification.
+The [native screenshot gallery](https://github.com/tomasedisonn80/surgeXT-synth/blob/main/doc/reference-workspaces/native-gallery/README.md)
+identifies the source revision and workflow behind its images. Compare that
+revision with the build you are using: later source corrections require their
+own passing native run and captures. Earlier delivery records remain historical.
+
 After the complete native workflow passes on the current main source, its
 publication job validates all ten baseline/edited pairs and commits them under
-[the native screenshot gallery](reference-workspaces/native-gallery/README.md).
+the native screenshot gallery.
 The gallery includes a browser comparison page, unmodified native PNGs, source
 and workflow links, SHA-256 hashes, capture evidence and the passing logs.
 Reference concepts remain separately labelled. Obsolete runs retain their
@@ -246,6 +319,10 @@ unless `--force` is explicitly supplied.
   or unconfined manifests intentionally leave the original editor available.
 - **The numbered category is missing:** use the actual user skin directory,
   keep each `.surge-skin` folder intact, and run Rescan Skins.
+- **Reference Showcases is missing from the wavetable catalog:** install the
+  matching factory data, including `wavetables/Reference Showcases`, and use
+  **Settings → Data Folders → Rescan All Data Folders**. The skin-only ZIP and
+  `pluginsonly` archives do not contain these tables.
 - **Plots or FX controls are empty:** check the patch and active algorithm,
   play MIDI through a running audio engine, and open the full editor to inspect
   the underlying state. Off/unused slots do not generate pretend content.

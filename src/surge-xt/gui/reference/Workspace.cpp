@@ -15,6 +15,7 @@
 #include <juce_audio_utils/juce_audio_utils.h>
 #include <juce_dsp/juce_dsp.h>
 #include <algorithm>
+#include <charconv>
 #include <cmath>
 
 namespace Surge::GUI::Reference
@@ -2040,8 +2041,13 @@ class EffectPowerButton : public juce::TextButton
         const auto *patch = valid ? &processor.surge->storage.getPatch() : nullptr;
         const bool assigned = patch && patch->fx[slot].type.val.i != fxt_off;
         const bool disabled = patch && (patch->fx_disable.val.i & (1 << slot)) != 0;
+        const bool powered = assigned && !disabled;
+        // JUCE ignores setToggleState while disabled. Resolve the checked state
+        // before disabling an empty slot, and re-enable a newly assigned slot.
+        if (assigned || getToggleState() != powered)
+            setEnabled(true);
+        setToggleState(powered, juce::dontSendNotification);
         setEnabled(assigned);
-        setToggleState(assigned && !disabled, juce::dontSendNotification);
         getProperties().set("reference.fx-disabled", disabled);
         const auto algorithm = patch ? juce::String(patch->fx[slot].type.get_display())
                                      : juce::String("Unavailable");
@@ -3324,6 +3330,344 @@ class PresetBrowser : public juce::Component, private juce::ListBoxModel
     bool initialized{false};
 };
 
+/** Native MIDI performance input. These lanes are controllers, not patch parameters. */
+class MidiController : public juce::Slider
+{
+    class LaneLookAndFeel : public juce::LookAndFeel_V4
+    {
+      public:
+        juce::Slider::SliderLayout getSliderLayout(juce::Slider &slider) override
+        {
+            juce::Slider::SliderLayout layout;
+            layout.sliderBounds = slider.getLocalBounds().withTrimmedTop(2).withTrimmedBottom(22);
+            return layout;
+        }
+        int getSliderThumbRadius(juce::Slider &) override { return 0; }
+    };
+
+  public:
+    MidiController(SurgeSynthProcessor &processor, Theme &theme, const juce::String &controller)
+        : processor(processor), theme(theme)
+    {
+        using M = SurgeSynthProcessor::midiR;
+        type = controller == "pitch" ? M::PITCHWHEEL
+               : controller == "mod" ? M::MODWHEEL
+               : controller == "expression" ? M::EXPRESSION : M::AFTERTOUCH;
+        spring = type == M::PITCHWHEEL || type == M::AFTERTOUCH;
+        const auto name = type == M::PITCHWHEEL ? "Pitch bend"
+                          : type == M::MODWHEEL ? "Modulation wheel (CC 1)"
+                          : type == M::EXPRESSION ? "Expression (CC 11)" : "Channel aftertouch";
+        caption = type == M::PITCHWHEEL ? "Pitch" : type == M::MODWHEEL ? "Mod"
+                  : type == M::EXPRESSION ? "Exp" : "Touch";
+        setComponentID("workspace.midi." + controller);
+        setName(name);
+        setTitle(name);
+        getProperties().set("reference.midi-controller", controller);
+        getProperties().set("reference.midi-channel", 1);
+        getProperties().set("reference.midi-spring-return", spring);
+        setLookAndFeel(&laneLookAndFeel);
+        setSliderStyle(juce::Slider::LinearVertical);
+        setTextBoxStyle(juce::Slider::NoTextBox, false, 0, 0);
+        setRange(type == M::PITCHWHEEL ? -8192 : 0, type == M::PITCHWHEEL ? 8191 : 127, 1);
+        setWantsKeyboardFocus(true);
+        setScrollWheelEnabled(!spring);
+        setMouseDragSensitivity(128);
+        setTooltip(juce::String(name) + "; MIDI channel 1. " +
+                   (spring ? "Release the pointer or arrow key to return to zero. "
+                           : "The last applied controller value is retained. ") +
+                   "Arrow keys adjust; Shift is fine. Return or right-click enters a MIDI value. "
+                   "Double-click resets to zero. Values follow the engine's applied input.");
+        setHelpText(getTooltip());
+        onDragStart = [this] { dragging = true; };
+        onValueChange = [this] {
+            if (!polling)
+                requestValue(juce::roundToInt(getValue()));
+        };
+        onDragEnd = [this] { cancelGesture(); };
+        sync();
+    }
+    ~MidiController() override
+    {
+        cancelGesture();
+        dismissEntry();
+        setLookAndFeel(nullptr);
+    }
+    void sync()
+    {
+        setEnabled(processor.surge != nullptr);
+        const int applied = appliedValue();
+        getProperties().set("reference.midi-applied", applied);
+        if (!dragging && !keyboardHeld)
+        {
+            const juce::ScopedValueSetter<bool> guard(polling, true);
+            setValue(applied, juce::dontSendNotification);
+        }
+        setDescription(getName() + ": " + juce::String(applied) + "; MIDI channel 1. " +
+                       (spring ? "Returns to zero when this control's gesture ends."
+                               : "Latched MIDI controller; changing skins does not reset it."));
+    }
+    void cancelGesture()
+    {
+        dragging = false;
+        keyboardHeld = false;
+        // A view change may end our gesture, but must not cancel a controller
+        // held by an external keyboard or reset latched Mod/Expression input.
+        if (ownsSpring)
+        {
+            ownsSpring = false;
+            processor.queueMidiController(type, 0);
+        }
+        sync();
+    }
+    void dismissEntry()
+    {
+        ++entryGeneration;
+        if (entryBox)
+            entryBox->dismiss();
+        entryBox = nullptr;
+    }
+    void mouseDown(const juce::MouseEvent &event) override
+    {
+        if (event.mods.isPopupMenu())
+            showEntry();
+        else
+            juce::Slider::mouseDown(event);
+    }
+    void mouseDrag(const juce::MouseEvent &event) override
+    {
+        if (dragging)
+            juce::Slider::mouseDrag(event);
+    }
+    void mouseDoubleClick(const juce::MouseEvent &) override
+    {
+        cancelGesture();
+        requestValue(0);
+    }
+    bool keyPressed(const juce::KeyPress &key) override
+    {
+        if (key.getKeyCode() == juce::KeyPress::returnKey)
+        {
+            showEntry();
+            return true;
+        }
+        if (key.getKeyCode() == juce::KeyPress::escapeKey)
+        {
+            cancelGesture();
+            return true;
+        }
+        const int direction = key.getKeyCode() == juce::KeyPress::upKey ||
+                                      key.getKeyCode() == juce::KeyPress::rightKey ? 1
+                              : key.getKeyCode() == juce::KeyPress::downKey ||
+                                      key.getKeyCode() == juce::KeyPress::leftKey ? -1 : 0;
+        if (direction == 0 || key.getModifiers().isCtrlDown() ||
+            key.getModifiers().isAltDown() || key.getModifiers().isCommandDown())
+            return juce::Slider::keyPressed(key);
+        keyboardHeld = true;
+        const int step = type == SurgeSynthProcessor::midiR::PITCHWHEEL
+                             ? (key.getModifiers().isShiftDown() ? 16 : 256) : 1;
+        const int next = juce::jlimit(static_cast<int>(getMinimum()),
+                                     static_cast<int>(getMaximum()),
+                                     juce::roundToInt(getValue()) + direction * step);
+        setValue(next, juce::dontSendNotification);
+        requestValue(next);
+        return true;
+    }
+    bool keyStateChanged(bool down) override
+    {
+        if (!down && keyboardHeld &&
+            !juce::KeyPress::isKeyCurrentlyDown(juce::KeyPress::upKey) &&
+            !juce::KeyPress::isKeyCurrentlyDown(juce::KeyPress::downKey) &&
+            !juce::KeyPress::isKeyCurrentlyDown(juce::KeyPress::leftKey) &&
+            !juce::KeyPress::isKeyCurrentlyDown(juce::KeyPress::rightKey))
+        {
+            cancelGesture();
+            return true;
+        }
+        return juce::Slider::keyStateChanged(down);
+    }
+    void focusLost(FocusChangeType cause) override
+    {
+        cancelGesture();
+        juce::Slider::focusLost(cause);
+    }
+    void visibilityChanged() override
+    {
+        if (!isShowing())
+        {
+            cancelGesture();
+            dismissEntry();
+        }
+    }
+    juce::String getTextFromValue(double value) override
+    {
+        return juce::String(juce::roundToInt(value));
+    }
+    double getValueFromText(const juce::String &value) override
+    {
+        int parsed{};
+        return parseValue(value, parsed) ? parsed : appliedValue();
+    }
+    std::unique_ptr<juce::AccessibilityHandler> createAccessibilityHandler() override
+    {
+        class ValueInterface final : public juce::AccessibilityValueInterface
+        {
+          public:
+            explicit ValueInterface(MidiController &control) : control(control) {}
+            bool isReadOnly() const override { return !control.isEnabled(); }
+            double getCurrentValue() const override { return control.appliedValue(); }
+            juce::String getCurrentValueAsString() const override
+            {
+                return juce::String(control.appliedValue());
+            }
+            void setValue(double value) override
+            {
+                if (control.isEnabled() && std::isfinite(value))
+                    control.requestValue(juce::roundToInt(juce::jlimit(
+                        control.getMinimum(), control.getMaximum(), value)));
+            }
+            void setValueAsString(const juce::String &value) override
+            {
+                int parsed{};
+                if (control.isEnabled() && control.parseValue(value, parsed))
+                    control.requestValue(parsed);
+            }
+            AccessibleValueRange getRange() const override
+            {
+                return {{control.getMinimum(), control.getMaximum()}, 1};
+            }
+          private:
+            MidiController &control;
+        };
+        return std::make_unique<juce::AccessibilityHandler>(
+            *this, juce::AccessibilityRole::slider, juce::AccessibilityActions{},
+            juce::AccessibilityHandler::Interfaces{std::make_unique<ValueInterface>(*this)});
+    }
+    void paint(juce::Graphics &g) override
+    {
+        const auto r = getLocalBounds().toFloat();
+        const auto track = Rect(r.getCentreX() - 10.f, 2.f, 20.f, r.getHeight() - 24.f);
+        const auto amber = juce::Colour(0xffddb083);
+        g.setGradientFill(juce::ColourGradient(juce::Colour(0xff101512), track.getTopLeft(),
+                                               juce::Colour(0xff281e17), track.getBottomRight(), false));
+        g.fillRoundedRectangle(track, 3.f);
+        g.setColour(amber.withAlpha(.34f));
+        g.drawRoundedRectangle(track.reduced(.5f), 3.f, .8f);
+        const auto y = juce::jlimit(track.getY(), track.getBottom(), getPositionOfValue(getValue()));
+        const auto zero = type == SurgeSynthProcessor::midiR::PITCHWHEEL
+                              ? getPositionOfValue(0) : track.getBottom();
+        auto active = track.reduced(1.3f, 0).withTop(std::min(y, zero))
+                          .withBottom(std::max(y, zero));
+        if (active.getHeight() > 0)
+        {
+            g.setGradientFill(juce::ColourGradient(amber.withAlpha(.75f), active.getTopLeft(),
+                                                   amber.darker(.65f).withAlpha(.35f),
+                                                   active.getBottomLeft(), false));
+            g.fillRoundedRectangle(active, 2.f);
+        }
+        g.setColour(juce::Colours::white.withAlpha(.06f));
+        g.drawVerticalLine(juce::roundToInt(track.getX() + 3), track.getY() + 3,
+                           track.getBottom() - 3);
+        g.setColour(amber.withAlpha(.9f));
+        g.drawLine(track.getX() + 2, y, track.getRight() - 2, y, 1.2f);
+        text(g, theme, caption, r.withTop(track.getBottom() + 5), 10.5f, theme.text,
+             false, juce::Justification::centred);
+        if (hasKeyboardFocus(true) || isMouseOverOrDragging())
+        {
+            g.setColour(theme.accent.withAlpha(hasKeyboardFocus(true) ? .95f : .45f));
+            g.drawRoundedRectangle(track.expanded(2, 1), 4.f, 1.f);
+        }
+    }
+
+  private:
+    int appliedValue() const
+    {
+        if (!processor.surge)
+            return 0;
+        using M = SurgeSynthProcessor::midiR;
+        const auto &synth = *processor.surge;
+        return type == M::PITCHWHEEL ? synth.pitchbendMIDIVal.load(std::memory_order_relaxed)
+               : type == M::MODWHEEL ? synth.modwheelCC.load(std::memory_order_relaxed)
+               : type == M::EXPRESSION ? synth.expressionCC.load(std::memory_order_relaxed)
+                                      : synth.channelAftertouchMIDIVal.load(std::memory_order_relaxed);
+    }
+    bool requestValue(int value)
+    {
+        value = juce::jlimit(static_cast<int>(getMinimum()), static_cast<int>(getMaximum()), value);
+        const bool accepted = processor.queueMidiController(type, value);
+        if (accepted && spring)
+            ownsSpring = value != 0;
+        getProperties().set("reference.midi-last-input-accepted", accepted);
+        if (accepted)
+            getProperties().set("reference.midi-last-request", value);
+        sync();
+        repaint();
+        return accepted;
+    }
+    bool parseValue(const juce::String &value, int &parsed) const
+    {
+        auto token = value.trim().toStdString();
+        if (!token.empty() && token.front() == '+')
+        {
+            token.erase(token.begin());
+            if (token.empty() || token.front() == '-' || token.front() == '+')
+                return false;
+        }
+        const auto result = std::from_chars(token.data(), token.data() + token.size(), parsed);
+        return !token.empty() && result.ec == std::errc{} &&
+               result.ptr == token.data() + token.size() &&
+               parsed >= getMinimum() && parsed <= getMaximum();
+    }
+    void showEntry()
+    {
+        if (!isEnabled())
+            return;
+        cancelGesture();
+        dismissEntry();
+        const auto generation = entryGeneration;
+        juce::Component::SafePointer<MidiController> safe(this);
+        auto entry = std::make_unique<ValueEntry>(
+            theme, getName(), juce::String(appliedValue()),
+            [safe, generation](const juce::String &value, juce::String &error) {
+                int parsed{};
+                if (!safe || !safe->isEnabled() || safe->entryGeneration != generation)
+                {
+                    error = "This MIDI controller is no longer available.";
+                    return false;
+                }
+                if (!safe->parseValue(value, parsed))
+                {
+                    error = "Enter a whole MIDI value from " +
+                            juce::String(static_cast<int>(safe->getMinimum())) + " to " +
+                            juce::String(static_cast<int>(safe->getMaximum())) + ".";
+                    return false;
+                }
+                if (!safe->requestValue(parsed))
+                {
+                    error = "The MIDI input queue is full. Try again after audio resumes.";
+                    return false;
+                }
+                juce::MessageManager::callAsync([safe] {
+                    if (safe && safe->isShowing())
+                        safe->grabKeyboardFocus();
+                });
+                return true;
+            });
+        auto *parent = findParentComponentOfClass<Workspace>();
+        const auto target = parent ? parent->getLocalArea(this, getLocalBounds()) : getScreenBounds();
+        auto &callout = juce::CallOutBox::launchAsynchronously(std::move(entry), target, parent);
+        callout.setDismissalMouseClicksAreAlwaysConsumed(true);
+        entryBox = &callout;
+    }
+    SurgeSynthProcessor &processor;
+    Theme &theme;
+    juce::String caption;
+    SurgeSynthProcessor::midiR::Type type{SurgeSynthProcessor::midiR::MODWHEEL};
+    bool spring{false}, dragging{false}, keyboardHeld{false}, ownsSpring{false}, polling{false};
+    LaneLookAndFeel laneLookAndFeel;
+    juce::Component::SafePointer<juce::CallOutBox> entryBox;
+    std::uint64_t entryGeneration{0};
+};
+
 class PerformanceKeyboard : public juce::MidiKeyboardComponent
 {
   public:
@@ -3905,6 +4249,11 @@ struct Workspace::Impl
             }
             else if (auto *menu = dynamic_cast<BoundMenu *>(control.get()))
                 menu->cancelPopup();
+            else if (auto *midi = dynamic_cast<MidiController *>(control.get()))
+            {
+                midi->cancelGesture();
+                midi->dismissEntry();
+            }
         if (xy)
             xy->cancelGesture();
         if (keyboard)
@@ -4040,6 +4389,22 @@ struct Workspace::Impl
                            r.removeFromTop(28)
                                .removeFromRight(r.getWidth() < 320 ? 54.f : 92.f)
                                .reduced(3));
+                if (kind == "midi")
+                    if (const auto *names = v["controllers"].getArray(); names && !names->isEmpty())
+                        for (int index = 0; index < names->size(); ++index)
+                        {
+                            auto midi = std::make_unique<MidiController>(
+                                processor, theme, names->getReference(index).toString());
+                            const int left = juce::roundToInt(r.getX() +
+                                r.getWidth() * index / names->size());
+                            const int right = juce::roundToInt(r.getX() +
+                                r.getWidth() * (index + 1) / names->size());
+                            canvas.addAndMakeVisible(*midi);
+                            placements.push_back({midi.get(),
+                                Rect(static_cast<float>(left), r.getY(),
+                                     static_cast<float>(right - left), r.getHeight())});
+                            controls.push_back(std::move(midi));
+                        }
                 if (kind == "xy")
                 {
                     xy = std::make_unique<MacroXY>(parameters, theme);
@@ -4262,6 +4627,8 @@ struct Workspace::Impl
                 s->sync();
             if (auto *s = dynamic_cast<BoundToggle *>(c.get()))
                 s->sync();
+            if (auto *midi = dynamic_cast<MidiController *>(c.get()))
+                midi->sync();
         }
         sceneA.setToggleState(parameters.getScene() == 0, juce::dontSendNotification);
         sceneB.setToggleState(parameters.getScene() == 1, juce::dontSendNotification);
@@ -5618,6 +5985,8 @@ struct Workspace::Impl
     {
         auto r = bounds(v);
         auto kind = string(v, "kind"), variant = string(v, "variant");
+        if (kind == "midi")
+            return; // Each genuine MIDI lane paints its own glass and label.
         auto fill = v.hasProperty("color") ? theme.color(string(v, "color")) : theme.panel;
         const auto panelId = string(v, "id");
         const bool connectedLivePanel = theme.style == "live" &&

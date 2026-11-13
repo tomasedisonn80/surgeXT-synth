@@ -6,6 +6,7 @@ add_executable(${PROJECT_NAME}
         XTTestLifecycle.cpp
         XTTestOSC.cpp
         XTTestReferenceWorkspaces.cpp
+        XTTestReferenceMidi.cpp
         XTTestReferenceWavetables.cpp
         XTTestReferenceManifest.cpp
         XTTestReferencePreviews.cpp

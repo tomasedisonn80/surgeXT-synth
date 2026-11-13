@@ -236,3 +236,32 @@ hidden bitmask path; that native operation has no dedicated host-automation or
 undo gesture. It is distinct from selecting a card and from global FX bypass.
 No reference waveform, meter value, keyboard zone or enabled state is painted
 in place of real processor state.
+
+### Passing wave-5 checkpoint and wave-6 recovery
+
+Workflow `43382049170` passed at
+`22b9c299e6aa74093c9e96677cb32df5f2f74e74`: 33 behavior cases / 9,988,099
+assertions and ten native baseline/edited pairs / 24,095,778 assertions. The
+normal and ThreadSanitizer audio-display gates also passed.
+
+The original shared execution environment disconnected during wave 6. The
+published checkpoint remained intact. An isolated replacement checkout restored
+the exact uncommitted source edits from the contributing agents; the old
+checkout was left intact. Source validation below is distinct from the next
+linked native run.
+
+| Assignment | Source result and verification status |
+| --- | --- |
+| 31 — Native MIDI lanes | Actual Pitch/Mod/Expression/Touch input, atomic applied state and bounded spring-release ordering; linked tests pending |
+| 32 — MIDI schema | Matching native/Python validation, measured four-lane layout, generated-ID protection and 168 shared cases; Python and strict ten-manifest checks pass |
+| 33 — FX power tests | 48 independent native switches, exact slot-mask/listener behavior and Off/reassignment regression; linked run pending |
+| 34 — Wave projection | Measured actual-source projection/material refinement in progress |
+| 35 — MIDI interaction tests | Four cases covering real engine targets, incoming MIDI, queue saturation, accessibility and spring lifecycle; linked run pending |
+| 36 | Not started |
+
+The coordinator corrected the JUCE disabled-toggle update order so an empty FX
+slot cannot remain checked. Verification branches matching `work/reference-*`
+now run the same complete native workflow before fast-forwarding the verified
+commit to main. The workflow also watches the two synthesizer source files
+that expose applied MIDI-controller telemetry. Test thresholds and audio/RNG
+invariants are unchanged.

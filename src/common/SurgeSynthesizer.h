@@ -575,6 +575,7 @@ class alignas(16) SurgeSynthesizer
     // updated in audio thread, read from UI, so have assignments be atomic
     std::atomic<int> hasUpdatedMidiCC{false};
     std::atomic<int> modwheelCC{0}, pitchbendMIDIVal{0}, sustainpedalCC{0};
+    std::atomic<int> expressionCC{0}, channelAftertouchMIDIVal{0};
     std::atomic<bool> midiSoftTakeover{false};
 
     float vu_peak[8]{};

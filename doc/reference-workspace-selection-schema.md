@@ -57,8 +57,9 @@ The example `tabsRect` must be inside the panel using it.
 | `waveform` | 1–3 | `source` |
 | `fx` | 1–16 | `fx` |
 
-No extra restriction is imposed on the owning panel's `kind`. Each selection has
-one owner, and its rectangle must remain inside that owner's bounds.
+MIDI performance panels do not accept a selection. Other panel kinds impose no
+extra selection restriction. Each selection has one owner, and its rectangle
+must remain inside that owner's bounds.
 
 The renderer fills cells from left to right and then top to bottom with a 4-pixel
 gap between adjacent columns and rows. For `n` choices and `c` effective columns,
@@ -116,6 +117,44 @@ is `workspace.wavetable.<panel-id>`. Its previous, browse, and next actions use
 the real wavetable workflow. The static schema validates its layout, not whether
 the current oscillator algorithm exposes a wavetable.
 
+## Native MIDI controller lanes
+
+A `kind: midi` panel creates native MIDI input controls rather than host parameter
+bindings. Its required `controllers` array contains 1–4 names from the following
+table. Every name may appear only once in the entire workspace so generated
+component IDs stay unique, including when lanes use separate panels. Declared
+panels and parameter controls cannot reuse those generated component IDs.
+
+| Name | Native input | Visible label | Component ID |
+| --- | --- | --- | --- |
+| `pitch` | Pitch bend, −8192…8191 | Pitch | `workspace.midi.pitch` |
+| `mod` | Modulation wheel, CC1, 0…127 | Mod | `workspace.midi.mod` |
+| `expression` | Expression, CC11, 0…127 | Exp | `workspace.midi.expression` |
+| `aftertouch` | Channel pressure, 0…127 | Touch | `workspace.midi.aftertouch` |
+
+The panel's complete rectangle is divided equally into left-to-right lanes in
+array order, with no inter-lane gap. Width must be at least 24 pixels per lane and
+height at least 64 pixels. Each lane paints its own track and caption: `title`
+must be empty and an optional `titleHeight` must be numeric zero. `index`, `plot`,
+`plot2`, `selection`, `variant` and `titleInset` are unsupported on this panel.
+The `controllers` field is invalid on other panels or ordinary parameter controls.
+
+```json
+{
+  "id": "performance-midi",
+  "kind": "midi",
+  "title": "",
+  "x": 19, "y": 831, "w": 152, "h": 128,
+  "titleHeight": 0,
+  "controllers": ["pitch", "mod", "expression", "aftertouch"]
+}
+```
+
+Pitch bend and channel pressure return to zero when their active interaction
+ends. Modulation and expression retain their native controller values. These
+lanes use the processor's existing GUI MIDI queue; they do not invent host
+parameter IDs, modulation assignments, scene morphing or independent key zones.
+
 ## Control appearance fields
 
 An omitted control `kind` means `knob`.
@@ -133,8 +172,8 @@ state while preserving the mute parameter's native toggle behavior.
 
 ## Overlap validation
 
-`validate.py --strict-overlap` checks declared controls, individual generated tab
-cells, and wavetable selector rectangles against one another. It does not treat
+`validate.py --strict-overlap` checks declared controls, generated MIDI lanes,
+individual tab cells and wavetable selector rectangles against one another. It does not treat
 the entire `tabsRect` as a control: the 4-pixel gaps and unoccupied cells remain
 available. Selection and wavetable identifiers appear in overlap errors so a
 manifest author can find the colliding element.
@@ -152,9 +191,10 @@ python3 scripts/reference-workspaces/validate.py --self-test
 python3 scripts/reference-workspaces/validate.py --strict-overlap
 ```
 
-The shared schema file contains 19 accepted and 85 rejected cases for the new
-fields. The Python self-test also checks tab cell placement, a collision with a
-tab, free gaps and unused cells, and selector/control and selector/tab collisions.
+The shared schema file contains 28 accepted and 140 rejected cases for the new
+fields. The Python self-test also checks tab and MIDI lane placement, collisions
+with tabs and lanes, free gaps and unused cells, and selector/control and
+selector/tab collisions.
 The native Catch test is named `Reference selection and widget schema matches
 shared fixtures` and carries `[reference][manifest][schema]` tags.
 

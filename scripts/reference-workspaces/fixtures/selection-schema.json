@@ -1,5 +1,5 @@
 {
-  "description": "Shared native/Python schema cases for live selections, widget layout, and wavetable selectors. Paths address the base manifest; remove deletes a field. Engine binding resolution and hit-target overlap are separate checks.",
+  "description": "Shared native/Python schema cases for live selections, widget layout, wavetable selectors and native MIDI controller lanes. Paths address the base manifest; remove deletes a field. Engine binding resolution and hit-target overlap are separate checks.",
   "base": {
     "schema": 1,
     "id": "selection-schema",
@@ -64,6 +64,22 @@
           "columns": 2,
           "fontSize": 11
         }
+      },
+      {
+        "id": "midi-lanes",
+        "kind": "midi",
+        "title": "",
+        "x": 800,
+        "y": 100,
+        "w": 141,
+        "h": 128,
+        "titleHeight": 0,
+        "controllers": [
+          "pitch",
+          "mod",
+          "expression",
+          "aftertouch"
+        ]
       }
     ],
     "controls": [
@@ -5002,6 +5018,689 @@
             200,
             "24"
           ]
+        }
+      ]
+    },
+    {
+      "name": "MIDI all four lanes at reference fractional widths",
+      "valid": true,
+      "changes": []
+    },
+    {
+      "name": "MIDI single lane at minimum dimensions",
+      "valid": true,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            1,
+            "controllers"
+          ],
+          "value": [
+            "aftertouch"
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            1,
+            "w"
+          ],
+          "value": 24
+        },
+        {
+          "path": [
+            "panels",
+            1,
+            "h"
+          ],
+          "value": 64
+        }
+      ]
+    },
+    {
+      "name": "MIDI titleHeight may be omitted",
+      "valid": true,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            1,
+            "titleHeight"
+          ],
+          "remove": true
+        }
+      ]
+    },
+    {
+      "name": "MIDI controllers reject empty",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            1,
+            "controllers"
+          ],
+          "value": []
+        }
+      ]
+    },
+    {
+      "name": "MIDI controllers reject too many",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            1,
+            "controllers"
+          ],
+          "value": [
+            "pitch",
+            "mod",
+            "expression",
+            "aftertouch",
+            "pitch"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "MIDI controllers reject duplicate",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            1,
+            "controllers"
+          ],
+          "value": [
+            "pitch",
+            "pitch"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "MIDI controllers reject unknown",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            1,
+            "controllers"
+          ],
+          "value": [
+            "sustain"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "MIDI controllers reject case sensitive",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            1,
+            "controllers"
+          ],
+          "value": [
+            "Pitch"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "MIDI controllers reject string",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            1,
+            "controllers"
+          ],
+          "value": "pitch"
+        }
+      ]
+    },
+    {
+      "name": "MIDI controllers reject object",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            1,
+            "controllers"
+          ],
+          "value": {
+            "pitch": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "MIDI controllers reject boolean",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            1,
+            "controllers"
+          ],
+          "value": true
+        }
+      ]
+    },
+    {
+      "name": "MIDI controllers reject null",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            1,
+            "controllers"
+          ],
+          "value": null
+        }
+      ]
+    },
+    {
+      "name": "MIDI controllers reject numeric member",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            1,
+            "controllers"
+          ],
+          "value": [
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "name": "MIDI controllers reject boolean member",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            1,
+            "controllers"
+          ],
+          "value": [
+            true
+          ]
+        }
+      ]
+    },
+    {
+      "name": "MIDI controllers reject null member",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            1,
+            "controllers"
+          ],
+          "value": [
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "name": "MIDI controllers reject array member",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            1,
+            "controllers"
+          ],
+          "value": [
+            [
+              "pitch"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "MIDI controllers reject object member",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            1,
+            "controllers"
+          ],
+          "value": [
+            {
+              "type": "pitch"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "MIDI controllers are required",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            1,
+            "controllers"
+          ],
+          "remove": true
+        }
+      ]
+    },
+    {
+      "name": "MIDI rejects unsupported w 95.999",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            1,
+            "w"
+          ],
+          "value": 95.999
+        }
+      ]
+    },
+    {
+      "name": "MIDI rejects unsupported h 63.999",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            1,
+            "h"
+          ],
+          "value": 63.999
+        }
+      ]
+    },
+    {
+      "name": "MIDI rejects unsupported title \"Performance\"",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            1,
+            "title"
+          ],
+          "value": "Performance"
+        }
+      ]
+    },
+    {
+      "name": "MIDI rejects unsupported title \" \"",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            1,
+            "title"
+          ],
+          "value": " "
+        }
+      ]
+    },
+    {
+      "name": "MIDI rejects unsupported titleHeight 1",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            1,
+            "titleHeight"
+          ],
+          "value": 1
+        }
+      ]
+    },
+    {
+      "name": "MIDI rejects unsupported titleHeight false",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            1,
+            "titleHeight"
+          ],
+          "value": false
+        }
+      ]
+    },
+    {
+      "name": "MIDI rejects unsupported index 1",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            1,
+            "index"
+          ],
+          "value": 1
+        }
+      ]
+    },
+    {
+      "name": "MIDI rejects unsupported plot [800, 100, 40, 40]",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            1,
+            "plot"
+          ],
+          "value": [
+            800,
+            100,
+            40,
+            40
+          ]
+        }
+      ]
+    },
+    {
+      "name": "MIDI rejects unsupported plot2 [800, 100, 40, 40]",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            1,
+            "plot2"
+          ],
+          "value": [
+            800,
+            100,
+            40,
+            40
+          ]
+        }
+      ]
+    },
+    {
+      "name": "MIDI rejects unsupported selection {\"id\": \"source\", \"kind\": \"source\", \"tabsRect\": [10, 85, 380, 30], \"default\": \"env1\", \"choices\": [{\"id\": \"env1\", \"label\": \"ENV 1\", \"source\": \"envelope\", \"index\": 1}, {\"id\": \"lfo1\", \"label\": \"LFO 1\", \"source\": \"lfo\", \"index\": 1}], \"columns\": 2, \"fontSize\": 11}",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            1,
+            "selection"
+          ],
+          "value": {
+            "id": "source",
+            "kind": "source",
+            "tabsRect": [
+              10,
+              85,
+              380,
+              30
+            ],
+            "default": "env1",
+            "choices": [
+              {
+                "id": "env1",
+                "label": "ENV 1",
+                "source": "envelope",
+                "index": 1
+              },
+              {
+                "id": "lfo1",
+                "label": "LFO 1",
+                "source": "lfo",
+                "index": 1
+              }
+            ],
+            "columns": 2,
+            "fontSize": 11
+          }
+        }
+      ]
+    },
+    {
+      "name": "MIDI rejects unsupported variant \"vertical\"",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            1,
+            "variant"
+          ],
+          "value": "vertical"
+        }
+      ]
+    },
+    {
+      "name": "MIDI rejects unsupported titleInset 0",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            1,
+            "titleInset"
+          ],
+          "value": 0
+        }
+      ]
+    },
+    {
+      "name": "MIDI controller list rejects non-MIDI panel",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "controllers"
+          ],
+          "value": [
+            "pitch"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "MIDI controller list rejects ordinary parameter control",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "controls",
+            0,
+            "controllers"
+          ],
+          "value": [
+            "pitch"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "MIDI unique controllers may be split across panels",
+      "valid": true,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0
+          ],
+          "value": {
+            "id": "first-midi",
+            "kind": "midi",
+            "title": "",
+            "x": 0,
+            "y": 80,
+            "w": 100,
+            "h": 128,
+            "controllers": [
+              "pitch",
+              "mod"
+            ]
+          }
+        },
+        {
+          "path": [
+            "panels",
+            1,
+            "controllers"
+          ],
+          "value": [
+            "expression",
+            "aftertouch"
+          ]
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "selectionGroup"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "bindings"
+          ],
+          "remove": true
+        }
+      ]
+    },
+    {
+      "name": "MIDI controller IDs must remain unique across panels",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0
+          ],
+          "value": {
+            "id": "first-midi",
+            "kind": "midi",
+            "title": "",
+            "x": 0,
+            "y": 80,
+            "w": 100,
+            "h": 128,
+            "controllers": [
+              "pitch",
+              "mod"
+            ]
+          }
+        },
+        {
+          "path": [
+            "panels",
+            1,
+            "controllers"
+          ],
+          "value": [
+            "expression",
+            "aftertouch"
+          ]
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "selectionGroup"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "controls",
+            0,
+            "bindings"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "panels",
+            1,
+            "controllers"
+          ],
+          "value": [
+            "mod",
+            "aftertouch"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "MIDI generated id rejects collision with declared control after MIDI panel",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "controls",
+            0,
+            "id"
+          ],
+          "value": "workspace.midi.pitch"
+        }
+      ]
+    },
+    {
+      "name": "MIDI generated id rejects collision with declared panel before MIDI panel",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "id"
+          ],
+          "value": "workspace.midi.pitch"
+        }
+      ]
+    },
+    {
+      "name": "MIDI generated id rejects collision with MIDI panel own identifier",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            1,
+            "id"
+          ],
+          "value": "workspace.midi.pitch"
         }
       ]
     }

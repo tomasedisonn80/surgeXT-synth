@@ -44,6 +44,7 @@
 #include "clap-juce-extensions/clap-juce-extensions.h"
 #endif
 
+#include <cstdint>
 #include <unordered_map>
 
 #if MAC
@@ -307,15 +308,21 @@ class SurgeSynthProcessor : public juce::AudioProcessor,
             MODWHEEL,
             PITCHWHEEL,
             SUSPEDAL,
+            EXPRESSION,
+            AFTERTOUCH,
         } type{NOTE};
         int ch{0}, note{0}, vel{0};
         bool on{false};
         int cval{0};
+        std::uint64_t guiSequence{0};
         midiR() {}
         midiR(int c, int n, int v, bool o) : type(NOTE), ch(c), note(n), vel(v), on(o) {}
         midiR(Type type, int cval) : type(type), cval(cval) {}
     };
     LockFreeStack<midiR, 4096> midiFromGUI;
+    // Message-thread controller input. Spring releases remain deliverable even
+    // if the shared GUI MIDI queue is full; all application stays on audio.
+    bool queueMidiController(midiR::Type type, int value);
     bool isAddingFromMidi{false};
     void handleNoteOn(juce::MidiKeyboardState *source, int midiChannel, int midiNoteNumber,
                       float velocity) override;
@@ -514,6 +521,9 @@ class SurgeSynthProcessor : public juce::AudioProcessor,
 #endif
 
   private:
+    std::atomic<std::uint64_t> guiControllerSequence{0};
+    std::array<std::atomic<std::uint64_t>, 2> guiSpringResetSequence{};
+    std::array<std::uint64_t, 2> guiSpringAppliedSequence{}; // audio-thread only
     std::vector<SurgeParamToJuceParamAdapter *> paramAdapters;
 
     std::vector<int> presetOrderToPatchList;

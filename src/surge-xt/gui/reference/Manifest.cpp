@@ -571,6 +571,7 @@ bool validateManifest(const juce::var &data, juce::String &error)
             return fail(error, "Every palette entry must be a hex colour");
 
     std::set<juce::String> ids;
+    std::set<juce::String> midiControllers;
     std::map<juce::String, SelectionDefinition> selections;
     for (const auto *collection : {"panels", "controls"})
     {
@@ -600,8 +601,38 @@ bool validateManifest(const juce::var &data, juce::String &error)
                     return false;
                 if (!oneOf(item->getProperty("kind").toString(),
                            "oscillator|filter|mixer|envelope|lfo|macros|matrix|effects|analyzer|"
-                           "waveform|browser|routing|scene|output|xy|keyboard|inspector|amp|tabs"))
+                           "waveform|browser|routing|scene|output|xy|keyboard|midi|inspector|amp|tabs"))
                     return fail(error, where + ".kind is unknown");
+                if (item->getProperty("kind").toString() == "midi")
+                {
+                    const auto *controllers = item->getProperty("controllers").getArray();
+                    if (controllers == nullptr || controllers->isEmpty() || controllers->size() > 4)
+                        return fail(error, where + ".controllers must contain 1..4 MIDI controllers");
+                    for (const auto &controller : *controllers)
+                    {
+                        if (!controller.isString() ||
+                            !oneOf(controller.toString(), "pitch|mod|expression|aftertouch") ||
+                            !midiControllers.insert(controller.toString()).second)
+                            return fail(error, where + ".controllers must name supported MIDI controllers, "
+                                                       "each used once per workspace");
+                        if (!ids.insert("workspace.midi." + controller.toString()).second)
+                            return fail(error, where + ".controllers collides with a declared component id");
+                    }
+                    if (static_cast<double>(item->getProperty("w")) < 24.0 * controllers->size() ||
+                        static_cast<double>(item->getProperty("h")) < 64)
+                        return fail(error, where + " MIDI lanes require at least 24 px each and 64 px height");
+                    for (const auto *field : {"index", "plot", "plot2", "selection", "variant",
+                                              "titleInset"})
+                        if (item->hasProperty(field))
+                            return fail(error, where + "." + field + " is not supported on a MIDI panel");
+                    if (item->getProperty("title").toString().isNotEmpty() ||
+                        (item->hasProperty("titleHeight") &&
+                         (!number(item->getProperty("titleHeight")) ||
+                          static_cast<double>(item->getProperty("titleHeight")) != 0.0)))
+                        return fail(error, where + " MIDI panels require an empty title and zero titleHeight");
+                }
+                else if (item->hasProperty("controllers"))
+                    return fail(error, where + ".controllers requires a MIDI panel");
                 if (item->hasProperty("variant") &&
                     (!item->getProperty("variant").isString() ||
                      !oneOf(item->getProperty("variant").toString(),
@@ -705,6 +736,8 @@ bool validateManifest(const juce::var &data, juce::String &error)
             }
             else
             {
+                if (item->hasProperty("controllers"))
+                    return fail(error, where + ".controllers requires a MIDI panel");
                 if (!stringField(*item, "binding", 80, where, error) ||
                     !identifier(item->getProperty("binding").toString()))
                     return fail(error, where + ".binding must be a short parameter identifier");

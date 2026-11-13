@@ -75,6 +75,15 @@ Other macro controls display their real current assignments/names. A scene
 change follows the synth's existing scene behavior; a mere skin change is not
 intended to change the sound.
 
+Live's **Pitch**, **Mod**, **Exp** and **Touch** lanes send native pitch bend,
+modulation wheel (CC1), expression (CC11) and channel pressure. Pitch and Touch
+return to zero when their interaction ends; Mod and Exp retain their current
+controller values. They are MIDI inputs, separate from the host parameter
+controls described above. Their sound depends on the current patch's native
+pitch-bend settings and modulation assignments. The keyboard range strips show
+the actual Single, Split, Dual or Channel Split allocation; they do not create
+extra scenes, independent zones or patch snapshots.
+
 Browser panels search the installed preset catalog. Use the list's keyboard
 selection or double-click to load a preset; category rows narrow the list.
 **Browse all presets** and the header preset button open the complete native

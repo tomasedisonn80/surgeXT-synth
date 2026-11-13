@@ -23,10 +23,11 @@ MAX_EXACT_INTEGER = 9007199254740991
 STYLES = set("precision ivory spectral bauhaus space tokyo aurora clear flow live".split())
 FONTS = {"sans", "serif", "mono"}
 PALETTE = set("background panel border text muted accent secondary display knob red yellow blue".split())
-PANELS = set("oscillator filter mixer envelope lfo macros matrix effects analyzer waveform browser routing scene output xy keyboard inspector amp tabs".split())
+PANELS = set("oscillator filter mixer envelope lfo macros matrix effects analyzer waveform browser routing scene output xy keyboard midi inspector amp tabs".split())
 VARIANTS = set("compact horizontal vertical large combined terrain flow faders knobs scope spectrum spectrogram".split())
 CONTROLS = {"knob", "fader", "horizontal", "menu", "toggle", "value"}
 FLOW_NODES = set("osc1 osc2 osc3 mixer filter1 filter2 amp fx output modsources modbus".split())
+MIDI_CONTROLLERS = {"pitch", "mod", "expression", "aftertouch"}
 SELECTION_SOURCES = {"envelope": 2, "lfo": 12, "lfo-envelope": 12,
                      "oscillator": 3, "waveform": 3, "fx": 16}
 IDENTIFIER = re.compile(r"[a-zA-Z0-9_.-]{1,80}\Z")
@@ -201,6 +202,7 @@ def validate_manifest(data: object) -> None:
             "every palette entry must be a hex colour")
 
     ids: set[str] = set()
+    midi_controllers: set[str] = set()
     selections: dict[str, dict] = {}
     for collection, maximum in (("panels", 80), ("controls", 256)):
         items = data.get(collection)
@@ -218,6 +220,31 @@ def validate_manifest(data: object) -> None:
                 text_field(item, "title", 160, where, empty=True)
                 text_field(item, "kind", 40, where)
                 require(item["kind"] in PANELS, f"{where}.kind is unknown")
+                if item["kind"] == "midi":
+                    controllers = item.get("controllers")
+                    require(isinstance(controllers, list) and 1 <= len(controllers) <= 4,
+                            f"{where}.controllers must contain 1..4 MIDI controllers")
+                    for controller in controllers:
+                        require(isinstance(controller, str) and controller in MIDI_CONTROLLERS and
+                                controller not in midi_controllers,
+                                f"{where}.controllers must name supported MIDI controllers, "
+                                "each used once per workspace")
+                        midi_controllers.add(controller)
+                        component_id = f"workspace.midi.{controller}"
+                        require(component_id not in ids,
+                                f"{where}.controllers collides with a declared component id")
+                        ids.add(component_id)
+                    require(item["w"] >= 24 * len(controllers) and item["h"] >= 64,
+                            f"{where} MIDI lanes require at least 24 px each and 64 px height")
+                    for field in ("index", "plot", "plot2", "selection", "variant", "titleInset"):
+                        require(field not in item,
+                                f"{where}.{field} is not supported on a MIDI panel")
+                    require(item["title"] == "" and
+                            ("titleHeight" not in item or
+                             numeric(item["titleHeight"]) and item["titleHeight"] == 0),
+                            f"{where} MIDI panels require an empty title and zero titleHeight")
+                else:
+                    require("controllers" not in item, f"{where}.controllers requires a MIDI panel")
                 if "variant" in item:
                     require(isinstance(item["variant"], str) and item["variant"] in VARIANTS,
                             f"{where}.variant is unknown")
@@ -270,6 +297,7 @@ def validate_manifest(data: object) -> None:
                 if "selection" in item:
                     validate_selection(item["selection"], item, f"{where}.selection", selections)
             else:
+                require("controllers" not in item, f"{where}.controllers requires a MIDI panel")
                 text_field(item, "binding", 80, where)
                 require(bool(IDENTIFIER.fullmatch(item["binding"])), f"{where}.binding is invalid")
                 if "kind" in item:
@@ -431,9 +459,15 @@ def overlaps(controls: list[dict]) -> list[str]:
 
 
 def interactive_bounds(data: dict) -> list[dict]:
-    """Declared controls, wavetable selectors and individual generated tab cells."""
+    """Declared controls, MIDI lanes, wavetable selectors and generated tab cells."""
     result = list(data["controls"])
     for panel in data["panels"]:
+        if panel["kind"] == "midi":
+            width = panel["w"] / len(panel["controllers"])
+            for index, controller in enumerate(panel["controllers"]):
+                result.append({"id": f"workspace.midi.{controller}",
+                               "x": panel["x"] + index * width, "y": panel["y"],
+                               "w": width, "h": panel["h"]})
         if "analyzerModesRect" in panel:
             x, y, width, height = panel["analyzerModesRect"]
             modes = panel["analyzerModes"]
@@ -570,11 +604,24 @@ def shared_schema_self_test() -> tuple[int, int]:
 
     base = fixtures["base"]
     bounds = interactive_bounds(base)
-    assert len(bounds) == len(base["controls"]) + 2
-    assert bounds[-2] == {"id": "workspace.selection.source.env1", "x": 10, "y": 85,
-                          "w": 188, "h": 30}
-    assert bounds[-1]["x"] == 202
+    assert len(bounds) == len(base["controls"]) + 6
+    tabs = [cell for cell in bounds if cell["id"].startswith("workspace.selection.")]
+    assert tabs[0] == {"id": "workspace.selection.source.env1", "x": 10, "y": 85,
+                       "w": 188, "h": 30}
+    assert tabs[1]["x"] == 202
+    midi_lanes = [cell for cell in bounds if cell["id"].startswith("workspace.midi.")]
+    assert len(midi_lanes) == 4
+    assert midi_lanes[0] == {"id": "workspace.midi.pitch", "x": 800, "y": 100,
+                             "w": 35.25, "h": 128}
+    assert midi_lanes[-1]["x"] + midi_lanes[-1]["w"] == 941
     assert not overlaps(bounds)
+    midi_collision = copy.deepcopy(base)
+    midi_collision["controls"].append({"id": "midi-collision", "binding": "osc1.pitch",
+                                        "x": 900, "y": 120, "w": 24, "h": 40})
+    assert any("workspace.midi." in warning
+               for warning in overlaps(interactive_bounds(midi_collision)))
+    midi_collision["controls"][-1]["x"] = 941
+    assert not overlaps(interactive_bounds(midi_collision))
     collision = copy.deepcopy(base)
     collision["controls"].append({"id": "collision", "binding": "osc1.pitch", "x": 20,
                                   "y": 90, "w": 16, "h": 16})
@@ -757,7 +804,7 @@ def self_test() -> None:
     print(f"PASS: valid/Unicode/duplicate-binding fixtures; {len(bad_cases)} schema rejections; "
           f"{len(malformed)} malformed JSON rejections; {paths_checked} confined-path checks; "
           f"{accepted} accepted/{rejected} rejected shared selection/widget schema cases; "
-          "declared-control, individual-tab, gap/unused-cell and wavetable overlap checks")
+          "declared-control, individual-tab, gap/unused-cell, wavetable and MIDI-lane overlap checks")
 
 
 def main() -> int:

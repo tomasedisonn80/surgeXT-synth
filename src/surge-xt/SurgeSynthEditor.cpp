@@ -222,22 +222,19 @@ SurgeSynthEditor::SurgeSynthEditor(SurgeSynthProcessor &p)
     w->unipolar = false;
     w->range = 8196;
     w->onValueChanged = [this](auto f) {
-        processor.midiFromGUI.push(
-            SurgeSynthProcessor::midiR(SurgeSynthProcessor::midiR::PITCHWHEEL, f));
+        processor.queueMidiController(SurgeSynthProcessor::midiR::PITCHWHEEL, f);
     };
     pitchwheel = std::move(w);
 
     auto m = std::make_unique<VKeyboardWheel>();
     m->onValueChanged = [this](auto f) {
-        processor.midiFromGUI.push(
-            SurgeSynthProcessor::midiR(SurgeSynthProcessor::midiR::MODWHEEL, f));
+        processor.queueMidiController(SurgeSynthProcessor::midiR::MODWHEEL, f);
     };
     modwheel = std::move(m);
 
     auto sp = std::make_unique<VKeyboardSus>();
     sp->onValueChanged = [this](auto f) {
-        processor.midiFromGUI.push(
-            SurgeSynthProcessor::midiR(SurgeSynthProcessor::midiR::SUSPEDAL, f));
+        processor.queueMidiController(SurgeSynthProcessor::midiR::SUSPEDAL, f);
     };
     suspedal = std::move(sp);
 

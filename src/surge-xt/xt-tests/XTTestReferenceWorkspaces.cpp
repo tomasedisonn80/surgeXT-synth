@@ -197,6 +197,29 @@ struct GestureProbe final : juce::AudioProcessorParameter::Listener
     float lastValue = 0.0f;
 };
 
+struct NativeParameterNotices
+{
+    struct Notice
+    {
+        std::string address;
+        int values;
+        std::array<float, 3> data;
+        std::string text;
+    };
+    explicit NativeParameterNotices(SurgeSynthProcessor &processor) : processor(processor)
+    {
+        processor.addParamChangeListener(
+            "reference-fx-power-test",
+            [this](const std::string &address, int values, float a, float b, float c,
+                   const std::string &text) {
+                notices.push_back({address, values, {a, b, c}, text});
+            });
+    }
+    ~NativeParameterNotices() { processor.deleteParamChangeListener("reference-fx-power-test"); }
+    SurgeSynthProcessor &processor;
+    std::vector<Notice> notices;
+};
+
 void edit(ParameterBridge &bridge, const juce::String &binding, float value)
 {
     bridge.begin(binding);
@@ -2586,6 +2609,274 @@ TEST_CASE("Native source and FX tabs preserve sound and rebind stable controls",
     CHECK(mappingsTested > 0);
     CHECK(slidersEdited > 0);
     processor.releaseResources();
+}
+
+TEST_CASE("FX power switches edit only their native slot and expose accessible state",
+          "[reference-workspaces][reference-effects][reference-interactions]")
+{
+    juce::ScopedJuceInitialiser_GUI gui;
+    IsolatedUserData testData;
+    SurgeSynthProcessor processor;
+    testData.attach(processor);
+    processor.setRateAndBufferSizeDetails(sampleRate, sampleBlock);
+    processor.prepareToPlay(sampleRate, sampleBlock);
+    configureShowcaseFixture(processor);
+    auto &synth = *processor.surge;
+    auto &patch = synth.storage.getPatch();
+    // Include high slots absent from these eight-card racks. A low-slot switch
+    // must preserve them as well as the other visible slot bits.
+    patch.fx_disable.val.i = 0xa55a;
+    patch.fx_bypass.val.i = fxb_no_fx;
+    NativeParameterNotices listener(processor);
+    auto *maskAdapter = processor.paramsByID.at(synth.idForParameter(&patch.fx_disable));
+    REQUIRE(maskAdapter != nullptr);
+    GestureProbe maskGesture(*maskAdapter);
+    int powerCount = 0, compactTabCount = 0, rackCount = 0;
+    for (const auto &file : workspaceManifests())
+    {
+        const auto manifest = readManifest(file);
+        const auto *panels = manifest["panels"].getArray();
+        REQUIRE(panels != nullptr);
+        bool hasFxSelection = false;
+        for (const auto &panel : *panels)
+            hasFxSelection |= panel["selection"]["kind"].toString() == "fx";
+        if (!hasFxSelection)
+            continue;
+        Workspace workspace(processor);
+        juce::String error;
+        REQUIRE(workspace.load(file, error));
+        workspace.setSize(referenceWidth, referenceHeight);
+        workspace.addToDesktop(0);
+        workspace.setVisible(true);
+        for (const auto &panel : *panels)
+        {
+            const auto selection = panel["selection"];
+            if (selection["kind"].toString() != "fx")
+                continue;
+            ++rackCount;
+            const auto group = selection["id"].toString();
+            const auto *choices = selection["choices"].getArray();
+            REQUIRE(choices != nullptr);
+            for (const auto &choice : *choices)
+            {
+                const auto choiceId = choice["id"].toString();
+                const auto id = "workspace.selection." + group + "." + choiceId;
+                const int slot = static_cast<int>(choice["index"]) - 1;
+                CAPTURE(manifest["id"].toString().toStdString(), group.toStdString(), slot);
+                REQUIRE(slot >= 0);
+                REQUIRE(slot < n_fx_slots);
+                REQUIRE(patch.fx[slot].type.val.i != fxt_off);
+                auto *card = dynamic_cast<juce::Button *>(findComponent(workspace, id));
+                REQUIRE(card != nullptr);
+                auto *power = dynamic_cast<juce::Button *>(findComponent(workspace, id + ".power"));
+                if (manifest["style"].toString() == "spectral")
+                {
+                    CHECK(power == nullptr);
+                    ++compactTabCount;
+                    continue;
+                }
+                REQUIRE(power != nullptr);
+                ++powerCount;
+                CHECK(power->getParentComponent() == card);
+                CHECK(card->getLocalBounds().contains(power->getBounds()));
+                CHECK(card->getComponentAt(power->getBounds().getCentre()) == power);
+                CHECK(power->isShowing());
+                CHECK(power->isEnabled());
+                CHECK(power->getWantsKeyboardFocus());
+                CHECK(power->getName().isNotEmpty());
+                CHECK(power->getTitle().isNotEmpty());
+                CHECK(power->getDescription().isNotEmpty());
+                CHECK(power->getTooltip().isNotEmpty());
+                CHECK(static_cast<int>(power->getProperties()["reference.fx-slot"]) == slot + 1);
+                auto *accessible = power->getAccessibilityHandler();
+                REQUIRE(accessible != nullptr);
+                CHECK(accessible->getRole() == juce::AccessibilityRole::button);
+                CHECK(accessible->getCurrentState().isCheckable());
+                CHECK(accessible->getActions().contains(juce::AccessibilityActionType::press));
+                REQUIRE(accessible->getActions().contains(juce::AccessibilityActionType::toggle));
+                const int bit = 1 << slot;
+                for (int click = 0; click < 2; ++click)
+                {
+                    const auto selected = workspace.selectedView(group);
+                    const auto before = hostParameterValues(processor);
+                    const int oldMask = patch.fx_disable.val.i;
+                    const bool willDisable = (oldMask & bit) == 0;
+                    CHECK(power->getToggleState() == willDisable);
+                    listener.notices.clear();
+                    patch.isDirty = false;
+                    synth.refresh_editor = false;
+                    synth.fx_suspend_bitmask = 0;
+                    // JUCE's accessible toggle dispatches the real button's
+                    // synchronous click callback, including checked-state sync.
+                    REQUIRE(accessible->getActions().invoke(juce::AccessibilityActionType::toggle));
+                    CHECK(patch.fx_disable.val.i == (oldMask ^ bit));
+                    CHECK(synth.fx_suspend_bitmask == bit);
+                    CHECK(patch.isDirty);
+                    CHECK(synth.refresh_editor);
+                    CHECK(patch.fx_bypass.val.i == fxb_no_fx);
+                    CHECK(workspace.selectedView(group) == selected);
+                    CHECK(findComponent(workspace, id + ".power") == power);
+                    CHECK(power->getToggleState() == !willDisable);
+                    CHECK(accessible->getCurrentState().isChecked() == !willDisable);
+                    CHECK(static_cast<bool>(power->getProperties()["reference.fx-disabled"]) ==
+                          willDisable);
+                    REQUIRE(listener.notices.size() == 1);
+                    const auto &notice = listener.notices.front();
+                    CHECK(notice.address == "/param/" + fxslot_shortoscname[slot] + "/deactivate");
+                    CHECK(notice.values == 1);
+                    CHECK(notice.data[0] == (willDisable ? 1.f : 0.f));
+                    CHECK(notice.data[1] == 0.f);
+                    CHECK(notice.data[2] == 0.f);
+                    CHECK(notice.text.empty());
+                    // ct_none's normalized host value is always zero; the real
+                    // slot mask is checked above, and every host value stays intact.
+                    checkHostParameterValues(processor, before);
+                    CHECK(workspace.bridge().activeGestureCount() == 0);
+                }
+
+                // A state update from the stock editor/OSC must repaint without
+                // issuing a second command, dirtying the patch or selecting a card.
+                const int oldMask = patch.fx_disable.val.i;
+                const auto selected = workspace.selectedView(group);
+                patch.fx_disable.val.i ^= bit;
+                listener.notices.clear();
+                patch.isDirty = false;
+                synth.fx_suspend_bitmask = 0;
+                const auto externalValues = hostParameterValues(processor);
+                workspace.refresh();
+                CHECK(power->getToggleState() == ((patch.fx_disable.val.i & bit) == 0));
+                CHECK(accessible->getCurrentState().isChecked() == power->getToggleState());
+                CHECK(listener.notices.empty());
+                CHECK_FALSE(patch.isDirty);
+                CHECK(synth.fx_suspend_bitmask == 0);
+                CHECK(workspace.selectedView(group) == selected);
+                checkHostParameterValues(processor, externalValues);
+                patch.fx_disable.val.i = oldMask;
+                workspace.refresh();
+
+                // Selecting the surrounding card is a separate, view-only action.
+                const auto beforeSelection = hostParameterValues(processor);
+                REQUIRE(static_cast<bool>(card->onClick));
+                card->onClick();
+                CHECK(workspace.selectedView(group) == choiceId);
+                CHECK(patch.fx_disable.val.i == oldMask);
+                CHECK(patch.fx_bypass.val.i == fxb_no_fx);
+                CHECK_FALSE(patch.isDirty);
+                CHECK(listener.notices.empty());
+                checkHostParameterValues(processor, beforeSelection);
+            }
+        }
+        workspace.setVisible(false);
+    }
+    CHECK(rackCount == 7);
+    CHECK(powerCount == 48);
+    CHECK(compactTabCount == 8);
+    // This native hidden-bitmask operation sends SCT_FX_DEACT notices; it does
+    // not fabricate parameter-automation gestures or host value notifications.
+    CHECK(maskGesture.starts == 0);
+    CHECK(maskGesture.ends == 0);
+    CHECK(maskGesture.changes == 0);
+    processor.releaseResources();
+}
+
+TEST_CASE("FX power state follows Off assignment and remains separate from chain bypass",
+          "[reference-workspaces][reference-effects][reference-interactions]")
+{
+    juce::ScopedJuceInitialiser_GUI gui;
+    IsolatedUserData testData;
+    SurgeSynthProcessor processor;
+    testData.attach(processor);
+    Workspace workspace(processor);
+    juce::String error;
+    REQUIRE(workspace.load(sourceRoot().getChildFile(
+        "resources/data/skins/reference-10-live.surge-skin/workspace.json"), error));
+    workspace.setSize(referenceWidth, referenceHeight);
+    workspace.addToDesktop(0);
+    workspace.setVisible(true);
+    auto &bridge = workspace.bridge();
+    auto &synth = *processor.surge;
+    auto &patch = synth.storage.getPatch();
+    const auto id = juce::String("workspace.selection.live.fx.fx1.power");
+    auto *power = dynamic_cast<juce::Button *>(findComponent(workspace, id));
+    REQUIRE(power != nullptr);
+    const auto selectAlgorithm = [&](int nativeValue) {
+        auto *parameter = bridge.parameter("fx1.type");
+        REQUIRE(parameter != nullptr);
+        const int choice = nativeValue - parameter->val_min.i;
+        REQUIRE(choice >= 0);
+        REQUIRE(choice < bridge.choices("fx1.type").size());
+        edit(bridge, "fx1.type", bridge.choiceValue("fx1.type", choice));
+        synth.processAudioThreadOpsWhenAudioEngineUnavailable();
+        REQUIRE(parameter->val.i == nativeValue);
+        workspace.refresh();
+        CHECK(findComponent(workspace, id) == power);
+    };
+    selectAlgorithm(fxt_distortion);
+    patch.fx_disable.val.i = 1 << fxslot_global4;
+    workspace.refresh();
+    REQUIRE(power->isEnabled());
+    REQUIRE(power->getToggleState());
+    NativeParameterNotices listener(processor);
+
+    // Changing an enabled, checked slot to Off must clear the check before
+    // disabling the JUCE button (disabled buttons ignore setToggleState).
+    selectAlgorithm(fxt_off);
+    CHECK_FALSE(power->isEnabled());
+    CHECK_FALSE(power->getToggleState());
+    auto *accessible = power->getAccessibilityHandler();
+    REQUIRE(accessible != nullptr);
+    CHECK_FALSE(accessible->getCurrentState().isChecked());
+    CHECK(power->getDescription().contains("No effect is assigned"));
+    listener.notices.clear();
+    patch.isDirty = false;
+    synth.fx_suspend_bitmask = 0;
+    const auto offValues = hostParameterValues(processor);
+    const int offMask = patch.fx_disable.val.i;
+    REQUIRE(accessible->getActions().invoke(juce::AccessibilityActionType::toggle));
+    REQUIRE(static_cast<bool>(power->onClick));
+    power->onClick(); // The command itself also rejects an unassigned slot.
+    CHECK(patch.fx_disable.val.i == offMask);
+    CHECK(synth.fx_suspend_bitmask == 0);
+    CHECK(listener.notices.empty());
+    CHECK_FALSE(patch.isDirty);
+    CHECK_FALSE(power->getToggleState());
+    checkHostParameterValues(processor, offValues);
+
+    // A disabled mask bit survives algorithm replacement; assignment alone
+    // does not activate the slot or overwrite any other slot's bit.
+    patch.fx_disable.val.i |= 1;
+    selectAlgorithm(fxt_chorus4);
+    CHECK(power->isEnabled());
+    CHECK_FALSE(power->getToggleState());
+    CHECK(patch.fx_disable.val.i == (offMask | 1));
+    CHECK(power->getDescription().contains("Slot disabled"));
+    patch.fx_disable.val.i &= ~1;
+    workspace.refresh();
+    CHECK(power->getToggleState());
+    CHECK(power->getDescription().contains("Slot enabled"));
+    for (const int bypass : {fxb_all_fx, fxb_no_sends, fxb_scene_fx_only, fxb_no_fx})
+    {
+        CAPTURE(bypass);
+        patch.fx_bypass.val.i = bypass;
+        listener.notices.clear();
+        patch.isDirty = false;
+        const auto before = hostParameterValues(processor);
+        workspace.refresh();
+        CHECK(power->isEnabled());
+        CHECK(power->getToggleState());
+        CHECK(power->getDescription().contains("Global FX bypass is independent"));
+        CHECK(patch.fx_disable.val.i == offMask);
+        CHECK(listener.notices.empty());
+        CHECK_FALSE(patch.isDirty);
+        checkHostParameterValues(processor, before);
+    }
+    selectAlgorithm(fxt_off);
+    CHECK_FALSE(power->isEnabled());
+    CHECK_FALSE(power->getToggleState());
+    selectAlgorithm(fxt_distortion);
+    CHECK(power->isEnabled());
+    CHECK(power->getToggleState());
+    CHECK(patch.fx_disable.val.i == offMask);
 }
 
 TEST_CASE("Segmented native menus retain real modes and balanced host gestures",

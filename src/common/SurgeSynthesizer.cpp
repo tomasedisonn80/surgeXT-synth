@@ -2062,6 +2062,7 @@ void SurgeSynthesizer::channelAftertouch(char channel, int value)
 
     if (!mpeEnabled || channel == 0)
     {
+        channelAftertouchMIDIVal.store(value, std::memory_order_relaxed);
         for (int sc = 0; sc < n_scenes; sc++)
         {
             ((ControllerModulationSource *)storage.getPatch().scene[sc].modsources[ms_aftertouch])
@@ -2217,6 +2218,7 @@ void SurgeSynthesizer::channelController(char channel, int cc, int value)
         break;
     }
     case 11:
+        expressionCC.store(value, std::memory_order_relaxed);
         for (int sc = 0; sc < n_scenes; sc++)
         {
             ((ControllerModulationSource *)storage.getPatch().scene[sc].modsources[ms_expression])

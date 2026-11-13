@@ -507,6 +507,22 @@
       "fontSize": 14.5
     },
     {
+      "id": "p.midi-performance",
+      "kind": "midi",
+      "title": "",
+      "x": 19,
+      "y": 831,
+      "w": 152,
+      "h": 128,
+      "titleHeight": 0,
+      "controllers": [
+        "pitch",
+        "mod",
+        "expression",
+        "aftertouch"
+      ]
+    },
+    {
       "id": "p.scene-settings",
       "kind": "tabs",
       "title": "Scene Controls",
@@ -1192,52 +1208,6 @@
       }
     },
     {
-      "id": "c.performance-octave",
-      "binding": "scene.octave",
-      "kind": "fader",
-      "label": "Octave",
-      "x": 25,
-      "y": 831,
-      "w": 24,
-      "h": 128,
-      "fontSize": 10.5
-    },
-    {
-      "id": "c.performance-glide",
-      "binding": "scene.portamento",
-      "kind": "fader",
-      "label": "Glide",
-      "x": 64,
-      "y": 831,
-      "w": 24,
-      "h": 128,
-      "fontSize": 10.5,
-      "accent": "secondary"
-    },
-    {
-      "id": "c.performance-width",
-      "binding": "scene.width",
-      "kind": "fader",
-      "label": "Width",
-      "x": 103,
-      "y": 831,
-      "w": 24,
-      "h": 128,
-      "fontSize": 10.5
-    },
-    {
-      "id": "c.performance-pan",
-      "binding": "scene.pan",
-      "kind": "fader",
-      "label": "Pan",
-      "x": 142,
-      "y": 831,
-      "w": 24,
-      "h": 128,
-      "fontSize": 10.5,
-      "accent": "secondary"
-    },
-    {
       "id": "c.performance-split",
       "binding": "scene.splitpoint",
       "kind": "menu",
@@ -1411,7 +1381,7 @@
     "Main OSC1/OSC2/OSC3 buttons select real owned source snapshots and never alter the sound. Wavetable displays contain actual copied source frames. Disabled wavetable strips identify the real non-wavetable algorithm rather than an invented table name.",
     "The four envelope tabs expose ENV1, ENV2 and the first two native LFO envelopes, with rebound ADSR fields. The LFO1\u20134 selector rebinds the actual shape, rate, phase and trigger controls. Additional specialized modulators remain in Full editor.",
     "Eight selectable effect cards show the current algorithms. The header algorithm menu edits the selected real FX slot; detailed parameters and all sixteen slots remain accessible through the native Effects editor.",
-    "The lower keyboard is a playable native MIDI keyboard in a 568 by 42 reference-sized area. Six patch snapshots and three independent zones are not fabricated. Four performance lanes remain explicitly Octave, Glide, Width and Pan, controlling those actual parameters rather than masquerading as pitch-wheel, expression or touch.",
+    "The lower keyboard is a playable native MIDI keyboard in a 568 by 42 reference-sized area. Its range strips follow the real Single, Split, Dual or Channel Split mode; six patch snapshots and three independent zones are not fabricated. The four performance lanes send native Pitch bend, Modulation (CC1), Expression (CC11) and channel Aftertouch. Pitch and Touch spring back to zero; Mod and Exp retain their actual controller values. They are MIDI inputs, not replacement host parameters or scene morph controls.",
     "The upper analyzer uses actual output spectrum, spectrogram history and waveform modes. The master meter uses real stereo output peaks. Inactive audio is never replaced by fabricated spectral texture.",
     "Macro side captions show their real assigned names while complete numeric values remain available to native accessibility and typed entry. The XY pad is specifically Macro1/2; it does not create modulation assignments automatically.",
     "Reference master Limiter/Soft Clip toggles are not bound to unrelated scene controls. The real master gain and stereo meters are retained; the source editor remains available for complete audio processing configuration."

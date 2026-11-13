@@ -868,12 +868,44 @@ void SurgeSynthProcessor::processBlockPlayhead()
     }
 }
 
+bool SurgeSynthProcessor::queueMidiController(midiR::Type type, int value)
+{
+    if (type != midiR::PITCHWHEEL && type != midiR::MODWHEEL && type != midiR::SUSPEDAL &&
+        type != midiR::EXPRESSION && type != midiR::AFTERTOUCH)
+        return false;
+    const bool pitch = type == midiR::PITCHWHEEL;
+    value = juce::jlimit(pitch ? -8192 : 0, pitch ? 8191 : 127, value);
+    auto record = midiR(type, value);
+    record.guiSequence = guiControllerSequence.fetch_add(1, std::memory_order_relaxed) + 1;
+    if (midiFromGUI.push(record))
+        return true;
+    if (value == 0 && (pitch || type == midiR::AFTERTOUCH))
+    {
+        // A release must survive queue saturation and editor destruction. Its
+        // ordering stamp prevents it from overriding a later accepted gesture.
+        guiSpringResetSequence[pitch ? 0 : 1].store(record.guiSequence,
+                                                   std::memory_order_release);
+        return true;
+    }
+    return false;
+}
+
 void SurgeSynthProcessor::processBlockMidiFromGUI()
 {
     midiR rec;
 
     while (midiFromGUI.pop(rec))
     {
+        const int spring = rec.type == midiR::PITCHWHEEL ? 0
+                           : rec.type == midiR::AFTERTOUCH ? 1 : -1;
+        if (spring >= 0 && rec.guiSequence != 0)
+        {
+            // A saturated-queue release may have been consumed before older
+            // queued motion. Never revive that completed spring gesture.
+            if (rec.guiSequence <= guiSpringAppliedSequence[spring])
+                continue;
+            guiSpringAppliedSequence[spring] = rec.guiSequence;
+        }
         if (rec.type == midiR::NOTE)
         {
             if (rec.on)
@@ -893,6 +925,25 @@ void SurgeSynthProcessor::processBlockMidiFromGUI()
         {
             surge->channelController(rec.ch, 64, rec.cval);
         }
+        if (rec.type == midiR::EXPRESSION)
+        {
+            surge->channelController(rec.ch, 11, rec.cval);
+        }
+        if (rec.type == midiR::AFTERTOUCH)
+        {
+            surge->channelAftertouch(rec.ch, rec.cval);
+        }
+    }
+    for (int spring = 0; spring < 2; ++spring)
+    {
+        const auto reset = guiSpringResetSequence[spring].exchange(0, std::memory_order_acquire);
+        if (reset == 0 || reset <= guiSpringAppliedSequence[spring])
+            continue;
+        guiSpringAppliedSequence[spring] = reset;
+        if (spring == 0)
+            surge->pitchBend(0, 0);
+        else
+            surge->channelAftertouch(0, 0);
     }
 }
 

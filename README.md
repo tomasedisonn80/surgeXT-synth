@@ -18,6 +18,31 @@ See the [installation and controls guide](doc/reference-workspaces-user-guide.md
 The layouts follow supplied design references, with explicit engine adaptations;
 neither pixel identity nor release certification is implied by a source checkout.
 
+## Latest native UI/UX redesign screenshots
+
+All ten layouts below are from the [latest verified native capture run](https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43504150637),
+using the actual Surge XT processor at **1586 × 992**. Click any screenshot to
+open its full-resolution PNG. Each skin also links to its real edited state and
+the original design reference. The [complete comparison gallery](doc/reference-workspaces/native-gallery/README.md)
+contains capture evidence and image hashes.
+
+| **01 · Obsidian Precision** | **02 · Ivory Atelier** |
+| :---: | :---: |
+| [![Obsidian Precision native UI](doc/reference-workspaces/native-gallery/01-obsidian-precision.png)](doc/reference-workspaces/native-gallery/01-obsidian-precision.png) | [![Ivory Atelier native UI](doc/reference-workspaces/native-gallery/02-ivory-atelier.png)](doc/reference-workspaces/native-gallery/02-ivory-atelier.png) |
+| [Edited state](doc/reference-workspaces/native-gallery/01-obsidian-precision-edited.png) · [Reference](doc/reference-workspaces/references/01_Obsidian_Precision.png) | [Edited state](doc/reference-workspaces/native-gallery/02-ivory-atelier-edited.png) · [Reference](doc/reference-workspaces/references/02_Ivory_Atelier.png) |
+| **03 · Spectral Observatory** | **04 · Bauhaus Modular** |
+| [![Spectral Observatory native UI](doc/reference-workspaces/native-gallery/03-spectral-observatory.png)](doc/reference-workspaces/native-gallery/03-spectral-observatory.png) | [![Bauhaus Modular native UI](doc/reference-workspaces/native-gallery/04-bauhaus-modular.png)](doc/reference-workspaces/native-gallery/04-bauhaus-modular.png) |
+| [Edited state](doc/reference-workspaces/native-gallery/03-spectral-observatory-edited.png) · [Reference](doc/reference-workspaces/references/03_Spectral_Observatory.png) | [Edited state](doc/reference-workspaces/native-gallery/04-bauhaus-modular-edited.png) · [Reference](doc/reference-workspaces/references/04_Bauhaus_Modular.png) |
+| **05 · Space-Age 1977** | **06 · Tokyo Industrial** |
+| [![Space-Age 1977 native UI](doc/reference-workspaces/native-gallery/05-space-age-1977.png)](doc/reference-workspaces/native-gallery/05-space-age-1977.png) | [![Tokyo Industrial native UI](doc/reference-workspaces/native-gallery/06-tokyo-industrial.png)](doc/reference-workspaces/native-gallery/06-tokyo-industrial.png) |
+| [Edited state](doc/reference-workspaces/native-gallery/05-space-age-1977-edited.png) · [Reference](doc/reference-workspaces/references/05_Space_Age_1977.png) | [Edited state](doc/reference-workspaces/native-gallery/06-tokyo-industrial-edited.png) · [Reference](doc/reference-workspaces/references/06_Tokyo_Industrial.png) |
+| **07 · Liquid Aurora** | **08 · ClearSignal Accessible** |
+| [![Liquid Aurora native UI](doc/reference-workspaces/native-gallery/07-liquid-aurora.png)](doc/reference-workspaces/native-gallery/07-liquid-aurora.png) | [![ClearSignal Accessible native UI](doc/reference-workspaces/native-gallery/08-clearsignal-accessible.png)](doc/reference-workspaces/native-gallery/08-clearsignal-accessible.png) |
+| [Edited state](doc/reference-workspaces/native-gallery/07-liquid-aurora-edited.png) · [Reference](doc/reference-workspaces/references/07_Liquid_Aurora.png) | [Edited state](doc/reference-workspaces/native-gallery/08-clearsignal-accessible-edited.png) · [Reference](doc/reference-workspaces/references/08_ClearSignal_Accessible.png) |
+| **09 · Signal-Flow Cartographer** | **10 · Live Performance Deck** |
+| [![Signal-Flow Cartographer native UI](doc/reference-workspaces/native-gallery/09-signal-flow-cartographer.png)](doc/reference-workspaces/native-gallery/09-signal-flow-cartographer.png) | [![Live Performance Deck native UI](doc/reference-workspaces/native-gallery/10-live-performance-deck.png)](doc/reference-workspaces/native-gallery/10-live-performance-deck.png) |
+| [Edited state](doc/reference-workspaces/native-gallery/09-signal-flow-cartographer-edited.png) · [Reference](doc/reference-workspaces/references/09_Signal_Flow_Cartographer.png) | [Edited state](doc/reference-workspaces/native-gallery/10-live-performance-deck-edited.png) · [Reference](doc/reference-workspaces/references/10_Live_Performance_Deck.png) |
+
 The upstream project documentation follows below.
 
 **If you are a musician looking to use Surge XT, please download the appropriate binary

@@ -376,10 +376,10 @@ TEST_CASE("Live MIDI keyboard pointer and typed entry deliver real values and re
     const auto start = juce::Point<float>(touch.getWidth() * .5f, 70.f);
     const auto down = midiMouse(touch, start);
     touch.mouseDown(down);
-    touch.mouseDrag(down.withNewPosition({start.x, 25.f}));
+    touch.mouseDrag(down.withNewPosition(juce::Point<float>{start.x, 25.f}));
     h.block();
     CHECK(h.applied(MidiRecord::AFTERTOUCH) > 0);
-    touch.mouseUp(down.withNewPosition({start.x, 25.f}));
+    touch.mouseUp(down.withNewPosition(juce::Point<float>{start.x, 25.f}));
     h.block();
     CHECK(h.applied(MidiRecord::AFTERTOUCH) == 0);
 

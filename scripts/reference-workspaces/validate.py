@@ -228,6 +228,24 @@ def validate_manifest(data: object) -> None:
                 for key in ("plot", "plot2"):
                     if key in item:
                         array_rectangle(item[key], f"{where}.{key}", item)
+                if any(key in item for key in ("analyzerModesRect", "analyzerModes", "analyzerDefault")):
+                    require(item["kind"] == "analyzer",
+                            f"{where}.analyzerModesRect requires an analyzer panel")
+                    array_rectangle(item.get("analyzerModesRect"), f"{where}.analyzerModesRect", item)
+                    modes = item.get("analyzerModes")
+                    require(isinstance(modes, list) and 2 <= len(modes) <= 4,
+                            f"{where}.analyzerModes must contain 2..4 modes")
+                    require(all(isinstance(mode, str) and mode in
+                                ("spectrum", "waterfall", "scope", "vectorscope", "meter")
+                                for mode in modes) and len(set(modes)) == len(modes),
+                            f"{where}.analyzerModes must contain unique supported modes")
+                    _, _, width, height = item["analyzerModesRect"]
+                    require((width - 4 * (len(modes) - 1)) / len(modes) >= 32 and height >= 18,
+                            f"{where}.analyzerModesRect is too small for its tabs")
+                    if "analyzerDefault" in item:
+                        require(isinstance(item["analyzerDefault"], str) and
+                                item["analyzerDefault"] in modes,
+                                f"{where}.analyzerDefault must name an analyzer mode")
                 if "wavetableRect" in item:
                     require(item["kind"] == "oscillator" and item.get("index", 1) <= 3,
                             f"{where}.wavetableRect requires oscillator index 1..3")
@@ -416,6 +434,14 @@ def interactive_bounds(data: dict) -> list[dict]:
     """Declared controls, wavetable selectors and individual generated tab cells."""
     result = list(data["controls"])
     for panel in data["panels"]:
+        if "analyzerModesRect" in panel:
+            x, y, width, height = panel["analyzerModesRect"]
+            modes = panel["analyzerModes"]
+            width = (width - 4 * (len(modes) - 1)) / len(modes)
+            for index, mode in enumerate(modes):
+                result.append({"id": f"workspace.analyzer.{panel['id']}.{mode}",
+                               "x": x + index * (width + 4), "y": y,
+                               "w": width, "h": height})
         if "wavetableRect" in panel:
             result.append({"id": f"workspace.wavetable.{panel['id']}",
                            **dict(zip(("x", "y", "w", "h"), panel["wavetableRect"]))})
@@ -555,6 +581,25 @@ def shared_schema_self_test() -> tuple[int, int]:
     validate_manifest(collision)
     assert any("workspace.selection.source.env1" in warning
                for warning in overlaps(interactive_bounds(collision)))
+
+    analyzer = copy.deepcopy(base)
+    analyzer["panels"][0].pop("envelope")
+    analyzer["panels"][0].update(kind="analyzer", analyzerModesRect=[10, 210, 200, 24],
+                                  analyzerModes=["spectrum", "waterfall", "scope"])
+    validate_manifest(analyzer)
+    analyzer_tabs = [cell for cell in interactive_bounds(analyzer)
+                     if cell["id"].startswith("workspace.analyzer.")]
+    assert len(analyzer_tabs) == 3
+    assert analyzer_tabs[0] == {"id": "workspace.analyzer.sources.spectrum",
+                                "x": 10, "y": 210, "w": 64, "h": 24}
+    assert analyzer_tabs[2]["x"] == 146
+    assert not overlaps(interactive_bounds(analyzer))
+    analyzer["controls"].append({"id": "analyzer-collision", "binding": "osc1.pitch",
+                                  "x": 20, "y": 210, "w": 16, "h": 16})
+    assert any("workspace.analyzer.sources.spectrum" in warning
+               for warning in overlaps(interactive_bounds(analyzer)))
+    analyzer["controls"][-1].update(x=74, w=4)  # Native gaps are not hit targets.
+    assert not overlaps(interactive_bounds(analyzer))
 
     # Three buttons in two columns leave the bottom-right cell free. The parent
     # tabsRect would incorrectly reject this otherwise valid live control.

@@ -257,7 +257,7 @@
     {
       "id": "panel.mixer-ring",
       "kind": "tabs",
-      "title": "RING 1×2",
+      "title": "RING 1\u00d72",
       "x": 244,
       "y": 695,
       "w": 170,
@@ -379,7 +379,7 @@
     {
       "id": "panel.fx",
       "kind": "tabs",
-      "title": "INSERT FX (1–8)",
+      "title": "INSERT FX (1\u20138)",
       "variant": "vertical",
       "x": 1,
       "y": 779,
@@ -558,7 +558,19 @@
       ],
       "fontSize": 17,
       "titleHeight": 23,
-      "titleInset": 28
+      "titleInset": 28,
+      "analyzerModesRect": [
+        1079,
+        787,
+        246,
+        27
+      ],
+      "analyzerModes": [
+        "spectrum",
+        "waterfall",
+        "meter"
+      ],
+      "analyzerDefault": "waterfall"
     },
     {
       "id": "panel.master",
@@ -1511,13 +1523,13 @@
   ],
   "adaptations": [
     "This native workspace reconstructs the supplied ClearSignal composition with real engine state; pixel identity requires comparison of current-source native captures.",
-    "OSC 1–3 chips navigate and focus the three visible native oscillator cards. Each card has a real mute power control and wavetable selector; non-wavetable algorithms show their actual algorithm summary.",
-    "Envelope tabs select the two dedicated EGs and actual LFO 1/2 envelopes. LFO 1–4 tabs rebind the live shape/rate/phase/attack/depth controls. The native envelope-model menu is unavailable for LFO envelopes rather than pretending all sources share one model.",
-    "The compact mixer edits three native oscillator levels. Surge has no independent oscillator pan binding here, so the illustrated per-row pan controls are not fabricated. Noise colour, noise mute and ring 1×2 mute/level use real native parameters.",
+    "OSC 1\u20133 chips navigate and focus the three visible native oscillator cards. Each card has a real mute power control and wavetable selector; non-wavetable algorithms show their actual algorithm summary.",
+    "Envelope tabs select the two dedicated EGs and actual LFO 1/2 envelopes. LFO 1\u20134 tabs rebind the live shape/rate/phase/attack/depth controls. The native envelope-model menu is unavailable for LFO envelopes rather than pretending all sources share one model.",
+    "The compact mixer edits three native oscillator levels. Surge has no independent oscillator pan binding here, so the illustrated per-row pan controls are not fabricated. Noise colour, noise mute and ring 1\u00d72 mute/level use real native parameters.",
     "Filter 1 exposes the shared waveshaper drive as Shaper; Filter 2 exposes its real envelope amount. These are not independent per-filter drive stages. Filter type menus remain authoritative; power/bypass is not misrepresented by toggling another parameter.",
     "The combined filter response uses both selected native filter algorithms as base-parameter previews. Dynamic cutoff values, resonance and key tracking remain real, with typed entry and keyboard access.",
-    "The modulation matrix and inspector show actual route assignments and native depth. Four assigned macros follow the reference; macros 5–8 remain in Full editor.",
-    "Eight framed effect cards expose native slots 1–8 simultaneously. Their category pictograms identify actual algorithms, while menus and both parameter captions follow real current slot state. The remaining native slots and complete parameter sets stay in Full editor.",
+    "The modulation matrix and inspector show actual route assignments and native depth. Four assigned macros follow the reference; macros 5\u20138 remain in Full editor.",
+    "Eight framed effect cards expose native slots 1\u20138 simultaneously. Their category pictograms identify actual algorithms, while menus and both parameter captions follow real current slot state. The remaining native slots and complete parameter sets stay in Full editor.",
     "The analyzer is a true output spectrogram populated from audio history, not painted reference texture. Master has the actual stereo peak meters and native gain control.",
     "The compact scene control is actual scene level, not a fabricated scene Blend. Large Scene A/B actions remain native scene selection. Header actions and Full editor provide complete navigation.",
     "The design retains readable type, native focus, accessible names, full-value tooltips and host gestures. Accessible is a visual direction, pending platform assistive-technology verification."

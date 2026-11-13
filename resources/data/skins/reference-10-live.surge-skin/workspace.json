@@ -25,108 +25,1393 @@
     "blue": "#58AF9A"
   },
   "panels": [
-    {"id":"p.scene","kind":"scene","title":"SCENE PERFORMANCE","x":8,"y":121,"w":440,"h":72},
-    {"id":"p.osc1","kind":"oscillator","title":"Oscillator 1","index":1,"variant":"terrain","x":8,"y":201,"w":440,"h":126,"plot":[21,238,220,77]},
-    {"id":"p.osc2","kind":"oscillator","title":"Oscillator 2","index":2,"variant":"terrain","x":8,"y":335,"w":440,"h":126,"plot":[21,372,220,77]},
-    {"id":"p.osc3","kind":"oscillator","title":"Oscillator 3","index":3,"variant":"terrain","x":8,"y":467,"w":440,"h":126,"plot":[21,504,220,77]},
-    {"id":"p.mixer","kind":"mixer","title":"Mixer","variant":"faders","x":8,"y":601,"w":440,"h":175},
-    {"id":"p.wave","kind":"waveform","title":"Wave / Oscillator Preview","variant":"terrain","x":458,"y":121,"w":667,"h":165,"plot":[471,158,641,114]},
-    {"id":"p.xy","kind":"xy","title":"","x":458,"y":289,"w":667,"h":305,"plot":[663,318,262,244]},
-    {"id":"p.scene-level","kind":"tabs","title":"","x":511,"y":603,"w":614,"h":48},
-    {"id":"p.filter-chain","kind":"tabs","title":"Dual Filter Chain","x":458,"y":658,"w":667,"h":118,"fontSize":13},
-    {"id":"p.filter1","kind":"filter","title":"Filter 1","index":1,"variant":"compact","x":469,"y":692,"w":316,"h":78,"plot":[478,734,179,29],"fontSize":12},
-    {"id":"p.filter2","kind":"filter","title":"Filter 2","index":2,"variant":"compact","x":804,"y":692,"w":309,"h":78,"plot":[814,734,170,29],"fontSize":12},
-    {"id":"p.analyzer","kind":"analyzer","title":"Analyzer","variant":"spectrogram","x":1135,"y":121,"w":443,"h":151,"plot":[1147,157,365,100]},
-    {"id":"p.env1","kind":"envelope","title":"Envelopes / AMP","index":1,"variant":"compact","x":1135,"y":280,"w":443,"h":106,"plot":[1147,315,317,59]},
-    {"id":"p.lfo1","kind":"lfo","title":"LFOs / 1","index":1,"variant":"compact","x":1135,"y":393,"w":443,"h":108,"plot":[1147,431,239,58]},
-    {"id":"p.matrix","kind":"matrix","title":"Modulation Matrix","x":1135,"y":510,"w":443,"h":149},
-    {"id":"p.effects","kind":"effects","title":"Insert Effects","variant":"vertical","x":1135,"y":667,"w":443,"h":109},
-    {"id":"p.performance","kind":"keyboard","title":"Performance","x":8,"y":788,"w":1280,"h":188,"plot":[430,900,575,60]},
-    {"id":"p.lfo2","kind":"lfo","title":"Modulation Preview / LFO 2","index":2,"variant":"compact","x":1016,"y":832,"w":260,"h":133,"plot":[1027,870,238,83]},
-    {"id":"p.master","kind":"output","title":"Master Output","x":1296,"y":788,"w":282,"h":188}
+    {
+      "id": "p.scene",
+      "kind": "scene",
+      "title": "",
+      "x": 8,
+      "y": 121,
+      "w": 440,
+      "h": 72,
+      "titleHeight": 0
+    },
+    {
+      "id": "p.osc1",
+      "kind": "oscillator",
+      "title": "Oscillator 1",
+      "index": 1,
+      "variant": "terrain",
+      "x": 8,
+      "y": 201,
+      "w": 440,
+      "h": 126,
+      "plot": [
+        21,
+        235,
+        220,
+        57
+      ],
+      "titleInset": 45,
+      "fontSize": 15.5,
+      "wavetableRect": [
+        21,
+        294,
+        220,
+        23
+      ]
+    },
+    {
+      "id": "p.osc2",
+      "kind": "oscillator",
+      "title": "Oscillator 2",
+      "index": 2,
+      "variant": "terrain",
+      "x": 8,
+      "y": 335,
+      "w": 440,
+      "h": 126,
+      "plot": [
+        21,
+        369,
+        220,
+        57
+      ],
+      "titleInset": 45,
+      "fontSize": 15.5,
+      "wavetableRect": [
+        21,
+        428,
+        220,
+        23
+      ]
+    },
+    {
+      "id": "p.osc3",
+      "kind": "oscillator",
+      "title": "Oscillator 3",
+      "index": 3,
+      "variant": "terrain",
+      "x": 8,
+      "y": 467,
+      "w": 440,
+      "h": 126,
+      "plot": [
+        21,
+        501,
+        220,
+        57
+      ],
+      "titleInset": 45,
+      "fontSize": 15.5,
+      "wavetableRect": [
+        21,
+        560,
+        220,
+        23
+      ]
+    },
+    {
+      "id": "p.console",
+      "kind": "tabs",
+      "title": "",
+      "titleHeight": 0,
+      "x": 458,
+      "y": 121,
+      "w": 667,
+      "h": 655
+    },
+    {
+      "id": "p.mixer",
+      "kind": "mixer",
+      "title": "Mixer",
+      "variant": "faders",
+      "x": 8,
+      "y": 601,
+      "w": 440,
+      "h": 175
+    },
+    {
+      "id": "p.wave",
+      "kind": "waveform",
+      "title": "OSCILLATOR VIEW",
+      "variant": "terrain",
+      "x": 458,
+      "y": 121,
+      "w": 667,
+      "h": 165,
+      "plot": [
+        466,
+        155,
+        654,
+        126
+      ],
+      "titleHeight": 23,
+      "fontSize": 12,
+      "selection": {
+        "id": "live.wave",
+        "kind": "source",
+        "tabsRect": [
+          807,
+          130,
+          248,
+          22
+        ],
+        "default": "osc1",
+        "choices": [
+          {
+            "id": "osc1",
+            "label": "OSC 1",
+            "source": "oscillator",
+            "index": 1
+          },
+          {
+            "id": "osc2",
+            "label": "OSC 2",
+            "source": "oscillator",
+            "index": 2
+          },
+          {
+            "id": "osc3",
+            "label": "OSC 3",
+            "source": "oscillator",
+            "index": 3
+          }
+        ],
+        "fontSize": 11.5
+      }
+    },
+    {
+      "id": "p.xy",
+      "kind": "xy",
+      "title": "",
+      "x": 458,
+      "y": 289,
+      "w": 667,
+      "h": 305,
+      "plot": [
+        663,
+        318,
+        262,
+        244
+      ],
+      "titleHeight": 0
+    },
+    {
+      "id": "p.scene-level",
+      "kind": "tabs",
+      "title": "",
+      "x": 511,
+      "y": 604,
+      "w": 565,
+      "h": 43
+    },
+    {
+      "id": "p.filter-chain",
+      "kind": "tabs",
+      "title": "Dual Filter Chain",
+      "x": 458,
+      "y": 658,
+      "w": 667,
+      "h": 118,
+      "fontSize": 14,
+      "titleHeight": 23
+    },
+    {
+      "id": "p.filter1",
+      "kind": "filter",
+      "title": "Filter 1",
+      "index": 1,
+      "variant": "compact",
+      "x": 469,
+      "y": 690,
+      "w": 309,
+      "h": 80,
+      "plot": [
+        478,
+        723,
+        180,
+        42
+      ],
+      "fontSize": 12.5,
+      "titleInset": 38,
+      "titleHeight": 23
+    },
+    {
+      "id": "p.filter2",
+      "kind": "filter",
+      "title": "Filter 2",
+      "index": 2,
+      "variant": "compact",
+      "x": 809,
+      "y": 690,
+      "w": 306,
+      "h": 80,
+      "plot": [
+        816,
+        723,
+        160,
+        42
+      ],
+      "fontSize": 12.5,
+      "titleInset": 38,
+      "titleHeight": 23
+    },
+    {
+      "id": "p.analyzer",
+      "kind": "analyzer",
+      "title": "Analyzer",
+      "variant": "spectrogram",
+      "x": 1135,
+      "y": 121,
+      "w": 443,
+      "h": 151,
+      "plot": [
+        1145,
+        154,
+        379,
+        111
+      ],
+      "titleHeight": 23,
+      "fontSize": 14.5,
+      "analyzerModesRect": [
+        1248,
+        130,
+        265,
+        20
+      ],
+      "analyzerModes": [
+        "spectrum",
+        "waterfall",
+        "scope"
+      ],
+      "analyzerDefault": "waterfall"
+    },
+    {
+      "id": "p.env1",
+      "kind": "envelope",
+      "title": "Envelopes",
+      "index": 1,
+      "variant": "compact",
+      "x": 1135,
+      "y": 280,
+      "w": 443,
+      "h": 106,
+      "plot": [
+        1148,
+        310,
+        317,
+        65
+      ],
+      "titleInset": 41,
+      "titleHeight": 23,
+      "fontSize": 14,
+      "selection": {
+        "id": "live.env",
+        "kind": "source",
+        "tabsRect": [
+          1272,
+          285,
+          248,
+          20
+        ],
+        "default": "env1",
+        "choices": [
+          {
+            "id": "env1",
+            "label": "ENV 1",
+            "source": "envelope",
+            "index": 1
+          },
+          {
+            "id": "env2",
+            "label": "ENV 2",
+            "source": "envelope",
+            "index": 2
+          },
+          {
+            "id": "lfo1env",
+            "label": "LF1 ENV",
+            "source": "lfo-envelope",
+            "index": 1
+          },
+          {
+            "id": "lfo2env",
+            "label": "LF2 ENV",
+            "source": "lfo-envelope",
+            "index": 2
+          }
+        ],
+        "fontSize": 11.5
+      }
+    },
+    {
+      "id": "p.lfo1",
+      "kind": "lfo",
+      "title": "LFOs",
+      "index": 1,
+      "variant": "compact",
+      "x": 1135,
+      "y": 391,
+      "w": 443,
+      "h": 109,
+      "plot": [
+        1148,
+        423,
+        256,
+        71
+      ],
+      "titleInset": 41,
+      "titleHeight": 23,
+      "fontSize": 14,
+      "selection": {
+        "id": "live.lfo",
+        "kind": "source",
+        "tabsRect": [
+          1272,
+          397,
+          248,
+          20
+        ],
+        "default": "lfo1",
+        "choices": [
+          {
+            "id": "lfo1",
+            "label": "LFO 1",
+            "source": "lfo",
+            "index": 1
+          },
+          {
+            "id": "lfo2",
+            "label": "LFO 2",
+            "source": "lfo",
+            "index": 2
+          },
+          {
+            "id": "lfo3",
+            "label": "LFO 3",
+            "source": "lfo",
+            "index": 3
+          },
+          {
+            "id": "lfo4",
+            "label": "LFO 4",
+            "source": "lfo",
+            "index": 4
+          }
+        ],
+        "fontSize": 11.5
+      }
+    },
+    {
+      "id": "p.matrix",
+      "kind": "matrix",
+      "title": "Modulation Matrix",
+      "x": 1135,
+      "y": 510,
+      "w": 443,
+      "h": 149,
+      "titleHeight": 23,
+      "fontSize": 14.5
+    },
+    {
+      "id": "p.effects",
+      "kind": "effects",
+      "title": "Insert Effects (8)",
+      "x": 1135,
+      "y": 667,
+      "w": 443,
+      "h": 109,
+      "titleInset": 41,
+      "titleHeight": 23,
+      "fontSize": 14.5,
+      "selection": {
+        "id": "live.fx",
+        "kind": "fx",
+        "tabsRect": [
+          1146,
+          699,
+          420,
+          62
+        ],
+        "default": "fx1",
+        "fontSize": 11,
+        "choices": [
+          {
+            "id": "fx1",
+            "label": "FX 1",
+            "source": "fx",
+            "index": 1
+          },
+          {
+            "id": "fx2",
+            "label": "FX 2",
+            "source": "fx",
+            "index": 2
+          },
+          {
+            "id": "fx3",
+            "label": "FX 3",
+            "source": "fx",
+            "index": 3
+          },
+          {
+            "id": "fx4",
+            "label": "FX 4",
+            "source": "fx",
+            "index": 4
+          },
+          {
+            "id": "fx5",
+            "label": "FX 5",
+            "source": "fx",
+            "index": 5
+          },
+          {
+            "id": "fx6",
+            "label": "FX 6",
+            "source": "fx",
+            "index": 6
+          },
+          {
+            "id": "fx7",
+            "label": "FX 7",
+            "source": "fx",
+            "index": 7
+          },
+          {
+            "id": "fx8",
+            "label": "FX 8",
+            "source": "fx",
+            "index": 8
+          }
+        ]
+      }
+    },
+    {
+      "id": "p.performance",
+      "kind": "keyboard",
+      "title": "Performance",
+      "x": 8,
+      "y": 788,
+      "w": 1280,
+      "h": 188,
+      "plot": [
+        430,
+        901,
+        568,
+        42
+      ],
+      "titleHeight": 23,
+      "fontSize": 14.5
+    },
+    {
+      "id": "p.scene-settings",
+      "kind": "tabs",
+      "title": "Scene Controls",
+      "titleHeight": 23,
+      "fontSize": 13,
+      "x": 185,
+      "y": 826,
+      "w": 226,
+      "h": 139
+    },
+    {
+      "id": "p.lfo2",
+      "kind": "lfo",
+      "title": "Modulation Overview",
+      "index": 2,
+      "variant": "compact",
+      "x": 1016,
+      "y": 825,
+      "w": 262,
+      "h": 141,
+      "plot": [
+        1024,
+        854,
+        244,
+        102
+      ],
+      "titleHeight": 23,
+      "fontSize": 12.5
+    },
+    {
+      "id": "p.master",
+      "kind": "output",
+      "title": "Master Output",
+      "x": 1296,
+      "y": 788,
+      "w": 282,
+      "h": 188,
+      "titleHeight": 23,
+      "fontSize": 14.5,
+      "plot": [
+        1495,
+        804,
+        66,
+        155
+      ]
+    }
   ],
   "controls": [
-    {"id":"c.header-voices","binding":"scene.polylimit","kind":"menu","label":"Voice limit","x":1315,"y":9,"w":77,"h":28},
-    {"id":"c.scene-mode","binding":"scene.mode","kind":"menu","label":"Scene mode","x":21,"y":155,"w":201,"h":25},
-    {"id":"c.scene-poly","binding":"scene.polymode","kind":"menu","label":"Voice mode","x":230,"y":155,"w":206,"h":25},
-    {"id":"c.osc1-type","binding":"osc1.type","kind":"menu","x":148,"y":207,"w":218,"h":24},
-    {"id":"c.osc1-mute","binding":"osc1.mute","kind":"toggle","label":"M","x":375,"y":207,"w":27,"h":24},
-    {"id":"c.osc1-solo","binding":"osc1.solo","kind":"toggle","label":"S","x":408,"y":207,"w":27,"h":24},
-    {"id":"c.osc1-pitch","binding":"osc1.pitch","label":"Tune","labelPosition":"top","x":258,"y":251,"w":57,"h":72,"fontSize":10},
-    {"id":"c.osc1-param0","binding":"osc1.param0","labelPosition":"top","x":321,"y":251,"w":57,"h":72,"fontSize":10},
-    {"id":"c.osc1-param1","binding":"osc1.param1","labelPosition":"top","x":384,"y":251,"w":57,"h":72,"fontSize":10,"accent":"secondary"},
-    {"id":"c.osc2-type","binding":"osc2.type","kind":"menu","x":148,"y":341,"w":218,"h":24},
-    {"id":"c.osc2-mute","binding":"osc2.mute","kind":"toggle","label":"M","x":375,"y":341,"w":27,"h":24},
-    {"id":"c.osc2-solo","binding":"osc2.solo","kind":"toggle","label":"S","x":408,"y":341,"w":27,"h":24},
-    {"id":"c.osc2-pitch","binding":"osc2.pitch","label":"Tune","labelPosition":"top","x":258,"y":385,"w":57,"h":72,"fontSize":10},
-    {"id":"c.osc2-param0","binding":"osc2.param0","labelPosition":"top","x":321,"y":385,"w":57,"h":72,"fontSize":10},
-    {"id":"c.osc2-param1","binding":"osc2.param1","labelPosition":"top","x":384,"y":385,"w":57,"h":72,"fontSize":10,"accent":"secondary"},
-    {"id":"c.osc3-type","binding":"osc3.type","kind":"menu","x":148,"y":473,"w":218,"h":24},
-    {"id":"c.osc3-mute","binding":"osc3.mute","kind":"toggle","label":"M","x":375,"y":473,"w":27,"h":24},
-    {"id":"c.osc3-solo","binding":"osc3.solo","kind":"toggle","label":"S","x":408,"y":473,"w":27,"h":24},
-    {"id":"c.osc3-pitch","binding":"osc3.pitch","label":"Tune","labelPosition":"top","x":258,"y":517,"w":57,"h":72,"fontSize":10},
-    {"id":"c.osc3-param0","binding":"osc3.param0","labelPosition":"top","x":321,"y":517,"w":57,"h":72,"fontSize":10},
-    {"id":"c.osc3-param1","binding":"osc3.param1","labelPosition":"top","x":384,"y":517,"w":57,"h":72,"fontSize":10,"accent":"secondary"},
-    {"id":"c.mixer-osc1","binding":"osc1.level","kind":"fader","label":"OSC 1","x":28,"y":634,"w":42,"h":130},
-    {"id":"c.mixer-osc2","binding":"osc2.level","kind":"fader","label":"OSC 2","x":98,"y":634,"w":42,"h":130},
-    {"id":"c.mixer-osc3","binding":"osc3.level","kind":"fader","label":"OSC 3","x":168,"y":634,"w":42,"h":130},
-    {"id":"c.mixer-noise","binding":"noise.level","kind":"fader","label":"Noise","x":238,"y":634,"w":42,"h":130},
-    {"id":"c.mixer-ring12","binding":"ring12.level","kind":"fader","label":"Ring 1×2","x":308,"y":634,"w":42,"h":130,"fontSize":10},
-    {"id":"c.mixer-amp","binding":"amp.level","label":"Amp Gain","x":370,"y":635,"w":70,"h":126,"accent":"secondary","labelPosition":"top"},
-    {"id":"c.macro1","binding":"macro1","label":"Macro 1 / X","labelPosition":"left","x":510,"y":303,"w":122,"h":60,"fontSize":11},
-    {"id":"c.macro2","binding":"macro2","label":"Macro 2 / Y","labelPosition":"left","x":510,"y":373,"w":122,"h":60,"fontSize":11,"accent":"secondary"},
-    {"id":"c.macro3","binding":"macro3","label":"Macro 3","labelPosition":"left","x":510,"y":443,"w":122,"h":60,"fontSize":11},
-    {"id":"c.macro4","binding":"macro4","label":"Macro 4","labelPosition":"left","x":510,"y":513,"w":122,"h":60,"fontSize":11,"accent":"secondary"},
-    {"id":"c.macro5","binding":"macro5","label":"Macro 5","labelPosition":"right","x":956,"y":303,"w":159,"h":60,"fontSize":11,"accent":"accent"},
-    {"id":"c.macro6","binding":"macro6","label":"Macro 6","labelPosition":"right","x":956,"y":373,"w":159,"h":60,"fontSize":11,"accent":"secondary"},
-    {"id":"c.macro7","binding":"macro7","label":"Macro 7","labelPosition":"right","x":956,"y":443,"w":159,"h":60,"fontSize":11,"accent":"accent"},
-    {"id":"c.macro8","binding":"macro8","label":"Macro 8","labelPosition":"right","x":956,"y":513,"w":159,"h":60,"fontSize":11,"accent":"secondary"},
-    {"id":"c.selected-scene-level","binding":"scene.volume","kind":"horizontal","label":"Selected scene level","x":522,"y":604,"w":590,"h":45,"fontSize":10},
-    {"id":"c.routing","binding":"routing","kind":"menu","label":"Filter routing","x":924,"y":665,"w":188,"h":23},
-    {"id":"c.filter1-type","binding":"filter1.type","kind":"menu","label":"Filter 1 type","x":550,"y":698,"w":109,"h":23,"fontSize":10},
-    {"id":"c.filter1-cutoff","binding":"filter1.cutoff","label":"Cutoff","x":669,"y":698,"w":48,"h":68,"fontSize":10},
-    {"id":"c.filter1-resonance","binding":"filter1.resonance","label":"Reso","x":723,"y":698,"w":48,"h":68,"fontSize":10},
-    {"id":"c.filter2-type","binding":"filter2.type","kind":"menu","label":"Filter 2 type","x":886,"y":698,"w":99,"h":23,"fontSize":10},
-    {"id":"c.filter2-cutoff","binding":"filter2.cutoff","label":"Cutoff","x":991,"y":698,"w":48,"h":68,"fontSize":10,"accent":"secondary"},
-    {"id":"c.filter2-resonance","binding":"filter2.resonance","label":"Reso","x":1046,"y":698,"w":48,"h":68,"fontSize":10,"accent":"secondary"},
-    {"id":"c.env1-attack","binding":"env1.attack","kind":"value","label":"A","x":1478,"y":311,"w":88,"h":18,"fontSize":10},
-    {"id":"c.env1-decay","binding":"env1.decay","kind":"value","label":"D","x":1478,"y":329,"w":88,"h":18,"fontSize":10},
-    {"id":"c.env1-sustain","binding":"env1.sustain","kind":"value","label":"S","x":1478,"y":347,"w":88,"h":18,"fontSize":10},
-    {"id":"c.env1-release","binding":"env1.release","kind":"value","label":"R","x":1478,"y":365,"w":88,"h":18,"fontSize":10},
-    {"id":"c.lfo1-shape","binding":"lfo1.shape","kind":"menu","label":"LFO 1 shape","x":1397,"y":409,"w":169,"h":20},
-    {"id":"c.lfo1-rate","binding":"lfo1.rate","kind":"value","label":"Rate","x":1397,"y":432,"w":169,"h":18,"fontSize":10},
-    {"id":"c.lfo1-phase","binding":"lfo1.phase","kind":"value","label":"Phase","x":1397,"y":451,"w":169,"h":18,"fontSize":10},
-    {"id":"c.lfo1-depth","binding":"lfo1.magnitude","kind":"value","label":"Depth","x":1397,"y":470,"w":169,"h":18,"fontSize":10},
-    {"id":"c.fx1-type","binding":"fx1.type","kind":"menu","label":"FX slot 1","x":1146,"y":720,"w":49,"h":24},
-    {"id":"c.fx2-type","binding":"fx2.type","kind":"menu","label":"FX slot 2","x":1199,"y":720,"w":49,"h":24},
-    {"id":"c.fx3-type","binding":"fx3.type","kind":"menu","label":"FX slot 3","x":1252,"y":720,"w":49,"h":24},
-    {"id":"c.fx4-type","binding":"fx4.type","kind":"menu","label":"FX slot 4","x":1305,"y":720,"w":49,"h":24},
-    {"id":"c.fx5-type","binding":"fx5.type","kind":"menu","label":"FX slot 5","x":1358,"y":720,"w":49,"h":24},
-    {"id":"c.fx6-type","binding":"fx6.type","kind":"menu","label":"FX slot 6","x":1411,"y":720,"w":49,"h":24},
-    {"id":"c.fx7-type","binding":"fx7.type","kind":"menu","label":"FX slot 7","x":1464,"y":720,"w":49,"h":24},
-    {"id":"c.fx8-type","binding":"fx8.type","kind":"menu","label":"FX slot 8","x":1517,"y":720,"w":49,"h":24},
-    {"id":"c.performance-octave","binding":"scene.octave","kind":"fader","label":"Octave","x":22,"y":842,"w":31,"h":116,"fontSize":9},
-    {"id":"c.performance-glide","binding":"scene.portamento","kind":"fader","label":"Glide","x":61,"y":842,"w":31,"h":116,"fontSize":9,"accent":"secondary"},
-    {"id":"c.performance-width","binding":"scene.width","kind":"fader","label":"Width","x":100,"y":842,"w":31,"h":116,"fontSize":9},
-    {"id":"c.performance-pan","binding":"scene.pan","kind":"fader","label":"Pan","x":139,"y":842,"w":31,"h":116,"fontSize":9,"accent":"secondary"},
-    {"id":"c.performance-split","binding":"scene.splitpoint","kind":"menu","label":"Native scene split point","x":195,"y":858,"w":211,"h":25},
-    {"id":"c.performance-fm","binding":"scene.fmmode","kind":"menu","label":"Native FM routing","x":195,"y":897,"w":211,"h":25},
-    {"id":"c.performance-voices","binding":"scene.polylimit","kind":"menu","label":"Voice limit","x":195,"y":936,"w":211,"h":25},
-    {"id":"c.master-volume","binding":"master.volume","label":"Master gain","x":1365,"y":829,"w":133,"h":130},
-    {"id":"c.output-pitch","binding":"scene.pitch","label":"Scene tune","x":1308,"y":842,"w":48,"h":113,"fontSize":10,"accent":"secondary"}
+    {
+      "id": "c.header-voices",
+      "binding": "scene.polylimit",
+      "kind": "menu",
+      "label": "Voice limit",
+      "x": 1315,
+      "y": 9,
+      "w": 77,
+      "h": 28
+    },
+    {
+      "id": "c.scene-mode",
+      "binding": "scene.mode",
+      "kind": "menu",
+      "label": "Scene mode",
+      "x": 195,
+      "y": 856,
+      "w": 211,
+      "h": 25
+    },
+    {
+      "id": "c.scene-poly",
+      "binding": "scene.polymode",
+      "kind": "menu",
+      "label": "Voice mode",
+      "x": 195,
+      "y": 934,
+      "w": 211,
+      "h": 25
+    },
+    {
+      "id": "c.osc1-type",
+      "binding": "osc1.type",
+      "kind": "menu",
+      "x": 154,
+      "y": 207,
+      "w": 111,
+      "h": 24,
+      "label": "Oscillator 1 algorithm",
+      "fontSize": 11
+    },
+    {
+      "id": "c.osc1-mute",
+      "binding": "osc1.mute",
+      "kind": "toggle",
+      "label": "Mute oscillator 1",
+      "x": 18,
+      "y": 206,
+      "w": 23,
+      "h": 23,
+      "glyph": "power"
+    },
+    {
+      "id": "c.osc1-solo",
+      "binding": "osc1.solo",
+      "kind": "toggle",
+      "label": "S",
+      "x": 407,
+      "y": 207,
+      "w": 27,
+      "h": 23
+    },
+    {
+      "id": "c.osc1-pitch",
+      "binding": "osc1.param6",
+      "x": 260,
+      "y": 266,
+      "w": 55,
+      "h": 57,
+      "fontSize": 10.5,
+      "faceDiameter": 35,
+      "valuePosition": "hidden"
+    },
+    {
+      "id": "c.osc1-param0",
+      "binding": "osc1.param0",
+      "x": 326,
+      "y": 266,
+      "w": 55,
+      "h": 57,
+      "fontSize": 10.5,
+      "faceDiameter": 35,
+      "valuePosition": "hidden"
+    },
+    {
+      "id": "c.osc1-param1",
+      "binding": "osc1.level",
+      "x": 391,
+      "y": 266,
+      "w": 51,
+      "h": 57,
+      "fontSize": 10.5,
+      "accent": "secondary",
+      "faceDiameter": 35,
+      "valuePosition": "hidden",
+      "label": "Level"
+    },
+    {
+      "id": "c.osc2-type",
+      "binding": "osc2.type",
+      "kind": "menu",
+      "x": 154,
+      "y": 341,
+      "w": 111,
+      "h": 24,
+      "label": "Oscillator 2 algorithm",
+      "fontSize": 11
+    },
+    {
+      "id": "c.osc2-mute",
+      "binding": "osc2.mute",
+      "kind": "toggle",
+      "label": "Mute oscillator 2",
+      "x": 18,
+      "y": 340,
+      "w": 23,
+      "h": 23,
+      "glyph": "power"
+    },
+    {
+      "id": "c.osc2-solo",
+      "binding": "osc2.solo",
+      "kind": "toggle",
+      "label": "S",
+      "x": 407,
+      "y": 341,
+      "w": 27,
+      "h": 23
+    },
+    {
+      "id": "c.osc2-pitch",
+      "binding": "osc2.param6",
+      "x": 260,
+      "y": 400,
+      "w": 55,
+      "h": 57,
+      "fontSize": 10.5,
+      "faceDiameter": 35,
+      "valuePosition": "hidden"
+    },
+    {
+      "id": "c.osc2-param0",
+      "binding": "osc2.param0",
+      "x": 326,
+      "y": 400,
+      "w": 55,
+      "h": 57,
+      "fontSize": 10.5,
+      "faceDiameter": 35,
+      "valuePosition": "hidden"
+    },
+    {
+      "id": "c.osc2-param1",
+      "binding": "osc2.level",
+      "x": 391,
+      "y": 400,
+      "w": 51,
+      "h": 57,
+      "fontSize": 10.5,
+      "accent": "secondary",
+      "faceDiameter": 35,
+      "valuePosition": "hidden",
+      "label": "Level"
+    },
+    {
+      "id": "c.osc3-type",
+      "binding": "osc3.type",
+      "kind": "menu",
+      "x": 154,
+      "y": 473,
+      "w": 111,
+      "h": 24,
+      "label": "Oscillator 3 algorithm",
+      "fontSize": 11
+    },
+    {
+      "id": "c.osc3-mute",
+      "binding": "osc3.mute",
+      "kind": "toggle",
+      "label": "Mute oscillator 3",
+      "x": 18,
+      "y": 472,
+      "w": 23,
+      "h": 23,
+      "glyph": "power"
+    },
+    {
+      "id": "c.osc3-solo",
+      "binding": "osc3.solo",
+      "kind": "toggle",
+      "label": "S",
+      "x": 407,
+      "y": 473,
+      "w": 27,
+      "h": 23
+    },
+    {
+      "id": "c.osc3-pitch",
+      "binding": "osc3.param6",
+      "x": 260,
+      "y": 532,
+      "w": 55,
+      "h": 57,
+      "fontSize": 10.5,
+      "faceDiameter": 35,
+      "valuePosition": "hidden"
+    },
+    {
+      "id": "c.osc3-param0",
+      "binding": "osc3.param0",
+      "x": 326,
+      "y": 532,
+      "w": 55,
+      "h": 57,
+      "fontSize": 10.5,
+      "faceDiameter": 35,
+      "valuePosition": "hidden"
+    },
+    {
+      "id": "c.osc3-param1",
+      "binding": "osc3.level",
+      "x": 391,
+      "y": 532,
+      "w": 51,
+      "h": 57,
+      "fontSize": 10.5,
+      "accent": "secondary",
+      "faceDiameter": 35,
+      "valuePosition": "hidden",
+      "label": "Level"
+    },
+    {
+      "id": "c.mixer-osc1",
+      "binding": "osc1.level",
+      "kind": "fader",
+      "label": "OSC 1",
+      "x": 28,
+      "y": 634,
+      "w": 42,
+      "h": 130
+    },
+    {
+      "id": "c.mixer-osc2",
+      "binding": "osc2.level",
+      "kind": "fader",
+      "label": "OSC 2",
+      "x": 98,
+      "y": 634,
+      "w": 42,
+      "h": 130
+    },
+    {
+      "id": "c.mixer-osc3",
+      "binding": "osc3.level",
+      "kind": "fader",
+      "label": "OSC 3",
+      "x": 168,
+      "y": 634,
+      "w": 42,
+      "h": 130
+    },
+    {
+      "id": "c.mixer-noise",
+      "binding": "noise.level",
+      "kind": "fader",
+      "label": "Noise",
+      "x": 238,
+      "y": 634,
+      "w": 42,
+      "h": 130
+    },
+    {
+      "id": "c.mixer-ring12",
+      "binding": "ring12.level",
+      "kind": "fader",
+      "label": "Ring 1\u00d72",
+      "x": 308,
+      "y": 634,
+      "w": 42,
+      "h": 130,
+      "fontSize": 10
+    },
+    {
+      "id": "c.mixer-amp",
+      "binding": "amp.level",
+      "label": "Amp Gain",
+      "x": 370,
+      "y": 635,
+      "w": 70,
+      "h": 126,
+      "accent": "secondary",
+      "labelPosition": "top"
+    },
+    {
+      "id": "c.macro1",
+      "binding": "macro1",
+      "label": "Macro 1",
+      "labelPosition": "left",
+      "x": 510,
+      "y": 303,
+      "w": 122,
+      "h": 60,
+      "fontSize": 12,
+      "faceDiameter": 56
+    },
+    {
+      "id": "c.macro2",
+      "binding": "macro2",
+      "label": "Macro 2",
+      "labelPosition": "left",
+      "x": 510,
+      "y": 373,
+      "w": 122,
+      "h": 60,
+      "fontSize": 12,
+      "accent": "secondary",
+      "faceDiameter": 56
+    },
+    {
+      "id": "c.macro3",
+      "binding": "macro3",
+      "label": "Macro 3",
+      "labelPosition": "left",
+      "x": 510,
+      "y": 443,
+      "w": 122,
+      "h": 60,
+      "fontSize": 12,
+      "faceDiameter": 56
+    },
+    {
+      "id": "c.macro4",
+      "binding": "macro4",
+      "label": "Macro 4",
+      "labelPosition": "left",
+      "x": 510,
+      "y": 513,
+      "w": 122,
+      "h": 60,
+      "fontSize": 12,
+      "accent": "secondary",
+      "faceDiameter": 56
+    },
+    {
+      "id": "c.macro5",
+      "binding": "macro5",
+      "label": "Macro 5",
+      "labelPosition": "right",
+      "x": 956,
+      "y": 303,
+      "w": 159,
+      "h": 60,
+      "fontSize": 12,
+      "accent": "accent",
+      "faceDiameter": 56
+    },
+    {
+      "id": "c.macro6",
+      "binding": "macro6",
+      "label": "Macro 6",
+      "labelPosition": "right",
+      "x": 956,
+      "y": 373,
+      "w": 159,
+      "h": 60,
+      "fontSize": 12,
+      "accent": "secondary",
+      "faceDiameter": 56
+    },
+    {
+      "id": "c.macro7",
+      "binding": "macro7",
+      "label": "Macro 7",
+      "labelPosition": "right",
+      "x": 956,
+      "y": 443,
+      "w": 159,
+      "h": 60,
+      "fontSize": 12,
+      "accent": "accent",
+      "faceDiameter": 56
+    },
+    {
+      "id": "c.macro8",
+      "binding": "macro8",
+      "label": "Macro 8",
+      "labelPosition": "right",
+      "x": 956,
+      "y": 513,
+      "w": 159,
+      "h": 60,
+      "fontSize": 12,
+      "accent": "secondary",
+      "faceDiameter": 56
+    },
+    {
+      "id": "c.selected-scene-level",
+      "binding": "scene.volume",
+      "kind": "horizontal",
+      "label": "Scene level",
+      "x": 522,
+      "y": 620,
+      "w": 544,
+      "h": 26,
+      "fontSize": 12,
+      "compact": true,
+      "labelWidth": 107
+    },
+    {
+      "id": "c.routing",
+      "binding": "routing",
+      "kind": "menu",
+      "label": "Filter routing",
+      "x": 926,
+      "y": 665,
+      "w": 178,
+      "h": 22
+    },
+    {
+      "id": "c.filter1-type",
+      "binding": "filter1.type",
+      "kind": "menu",
+      "label": "Filter 1 type",
+      "x": 552,
+      "y": 696,
+      "w": 111,
+      "h": 20,
+      "fontSize": 11
+    },
+    {
+      "id": "c.filter1-cutoff",
+      "binding": "filter1.cutoff",
+      "label": "Cutoff",
+      "x": 677,
+      "y": 695,
+      "w": 40,
+      "h": 67,
+      "fontSize": 10.5,
+      "faceDiameter": 34
+    },
+    {
+      "id": "c.filter1-resonance",
+      "binding": "filter1.resonance",
+      "label": "Reso",
+      "x": 728,
+      "y": 695,
+      "w": 40,
+      "h": 67,
+      "fontSize": 10.5,
+      "faceDiameter": 34
+    },
+    {
+      "id": "c.filter2-type",
+      "binding": "filter2.type",
+      "kind": "menu",
+      "label": "Filter 2 type",
+      "x": 878,
+      "y": 696,
+      "w": 100,
+      "h": 20,
+      "fontSize": 11
+    },
+    {
+      "id": "c.filter2-cutoff",
+      "binding": "filter2.cutoff",
+      "label": "Cutoff",
+      "x": 990,
+      "y": 695,
+      "w": 39,
+      "h": 67,
+      "fontSize": 10.5,
+      "accent": "secondary",
+      "faceDiameter": 34
+    },
+    {
+      "id": "c.filter2-resonance",
+      "binding": "filter2.resonance",
+      "label": "Reso",
+      "x": 1037,
+      "y": 695,
+      "w": 39,
+      "h": 67,
+      "fontSize": 10.5,
+      "accent": "secondary",
+      "faceDiameter": 34
+    },
+    {
+      "id": "c.env1-attack",
+      "binding": "env1.attack",
+      "kind": "value",
+      "label": "A",
+      "x": 1480,
+      "y": 309,
+      "w": 84,
+      "h": 18,
+      "fontSize": 11,
+      "labelWidth": 21,
+      "selectionGroup": "live.env",
+      "bindings": {
+        "env1": "env1.attack",
+        "env2": "env2.attack",
+        "lfo1env": "lfo1.attack",
+        "lfo2env": "lfo2.attack"
+      }
+    },
+    {
+      "id": "c.env1-decay",
+      "binding": "env1.decay",
+      "kind": "value",
+      "label": "D",
+      "x": 1480,
+      "y": 327,
+      "w": 84,
+      "h": 18,
+      "fontSize": 11,
+      "labelWidth": 21,
+      "selectionGroup": "live.env",
+      "bindings": {
+        "env1": "env1.decay",
+        "env2": "env2.decay",
+        "lfo1env": "lfo1.decay",
+        "lfo2env": "lfo2.decay"
+      }
+    },
+    {
+      "id": "c.env1-sustain",
+      "binding": "env1.sustain",
+      "kind": "value",
+      "label": "S",
+      "x": 1480,
+      "y": 345,
+      "w": 84,
+      "h": 18,
+      "fontSize": 11,
+      "labelWidth": 21,
+      "selectionGroup": "live.env",
+      "bindings": {
+        "env1": "env1.sustain",
+        "env2": "env2.sustain",
+        "lfo1env": "lfo1.sustain",
+        "lfo2env": "lfo2.sustain"
+      }
+    },
+    {
+      "id": "c.env1-release",
+      "binding": "env1.release",
+      "kind": "value",
+      "label": "R",
+      "x": 1480,
+      "y": 363,
+      "w": 84,
+      "h": 18,
+      "fontSize": 11,
+      "labelWidth": 21,
+      "selectionGroup": "live.env",
+      "bindings": {
+        "env1": "env1.release",
+        "env2": "env2.release",
+        "lfo1env": "lfo1.release",
+        "lfo2env": "lfo2.release"
+      }
+    },
+    {
+      "id": "c.lfo1-shape",
+      "binding": "lfo1.shape",
+      "kind": "menu",
+      "label": "Shape",
+      "x": 1472,
+      "y": 423,
+      "w": 88,
+      "h": 17,
+      "fontSize": 11,
+      "selectionGroup": "live.lfo",
+      "bindings": {
+        "lfo1": "lfo1.shape",
+        "lfo2": "lfo2.shape",
+        "lfo3": "lfo3.shape",
+        "lfo4": "lfo4.shape"
+      }
+    },
+    {
+      "id": "c.lfo1-rate",
+      "binding": "lfo1.rate",
+      "kind": "value",
+      "label": "Rate",
+      "x": 1406,
+      "y": 442,
+      "w": 154,
+      "h": 18,
+      "fontSize": 11,
+      "labelWidth": 62,
+      "selectionGroup": "live.lfo",
+      "bindings": {
+        "lfo1": "lfo1.rate",
+        "lfo2": "lfo2.rate",
+        "lfo3": "lfo3.rate",
+        "lfo4": "lfo4.rate"
+      }
+    },
+    {
+      "id": "c.lfo1-phase",
+      "binding": "lfo1.phase",
+      "kind": "value",
+      "label": "Phase",
+      "x": 1406,
+      "y": 460,
+      "w": 154,
+      "h": 18,
+      "fontSize": 11,
+      "labelWidth": 62,
+      "selectionGroup": "live.lfo",
+      "bindings": {
+        "lfo1": "lfo1.phase",
+        "lfo2": "lfo2.phase",
+        "lfo3": "lfo3.phase",
+        "lfo4": "lfo4.phase"
+      }
+    },
+    {
+      "id": "c.lfo1-depth",
+      "binding": "lfo1.trigmode",
+      "kind": "menu",
+      "label": "Trigger mode",
+      "x": 1472,
+      "y": 479,
+      "w": 88,
+      "h": 17,
+      "fontSize": 11,
+      "selectionGroup": "live.lfo",
+      "bindings": {
+        "lfo1": "lfo1.trigmode",
+        "lfo2": "lfo2.trigmode",
+        "lfo3": "lfo3.trigmode",
+        "lfo4": "lfo4.trigmode"
+      }
+    },
+    {
+      "id": "c.performance-octave",
+      "binding": "scene.octave",
+      "kind": "fader",
+      "label": "Octave",
+      "x": 25,
+      "y": 831,
+      "w": 24,
+      "h": 128,
+      "fontSize": 10.5
+    },
+    {
+      "id": "c.performance-glide",
+      "binding": "scene.portamento",
+      "kind": "fader",
+      "label": "Glide",
+      "x": 64,
+      "y": 831,
+      "w": 24,
+      "h": 128,
+      "fontSize": 10.5,
+      "accent": "secondary"
+    },
+    {
+      "id": "c.performance-width",
+      "binding": "scene.width",
+      "kind": "fader",
+      "label": "Width",
+      "x": 103,
+      "y": 831,
+      "w": 24,
+      "h": 128,
+      "fontSize": 10.5
+    },
+    {
+      "id": "c.performance-pan",
+      "binding": "scene.pan",
+      "kind": "fader",
+      "label": "Pan",
+      "x": 142,
+      "y": 831,
+      "w": 24,
+      "h": 128,
+      "fontSize": 10.5,
+      "accent": "secondary"
+    },
+    {
+      "id": "c.performance-split",
+      "binding": "scene.splitpoint",
+      "kind": "menu",
+      "label": "Native scene split point",
+      "x": 195,
+      "y": 895,
+      "w": 211,
+      "h": 25
+    },
+    {
+      "id": "c.master-volume",
+      "binding": "master.volume",
+      "label": "",
+      "x": 1384,
+      "y": 817,
+      "w": 104,
+      "h": 127,
+      "labelPosition": "top",
+      "faceDiameter": 94,
+      "fontSize": 13,
+      "accent": "secondary"
+    },
+    {
+      "id": "c.osc1-top-octave",
+      "binding": "osc1.octave",
+      "kind": "value",
+      "label": "Oct",
+      "labelWidth": 20,
+      "x": 262,
+      "y": 234,
+      "w": 51,
+      "h": 27,
+      "fontSize": 10.5
+    },
+    {
+      "id": "c.osc1-top-tune",
+      "binding": "osc1.pitch",
+      "kind": "value",
+      "label": "",
+      "labelWidth": 0,
+      "x": 328,
+      "y": 234,
+      "w": 51,
+      "h": 27,
+      "fontSize": 10.5
+    },
+    {
+      "id": "c.osc1-top-native5",
+      "binding": "osc1.param5",
+      "kind": "value",
+      "label": "",
+      "labelWidth": 0,
+      "x": 393,
+      "y": 234,
+      "w": 49,
+      "h": 27,
+      "fontSize": 10.5
+    },
+    {
+      "id": "c.osc2-top-octave",
+      "binding": "osc2.octave",
+      "kind": "value",
+      "label": "Oct",
+      "labelWidth": 20,
+      "x": 262,
+      "y": 368,
+      "w": 51,
+      "h": 27,
+      "fontSize": 10.5
+    },
+    {
+      "id": "c.osc2-top-tune",
+      "binding": "osc2.pitch",
+      "kind": "value",
+      "label": "",
+      "labelWidth": 0,
+      "x": 328,
+      "y": 368,
+      "w": 51,
+      "h": 27,
+      "fontSize": 10.5
+    },
+    {
+      "id": "c.osc2-top-native5",
+      "binding": "osc2.param5",
+      "kind": "value",
+      "label": "",
+      "labelWidth": 0,
+      "x": 393,
+      "y": 368,
+      "w": 49,
+      "h": 27,
+      "fontSize": 10.5
+    },
+    {
+      "id": "c.osc3-top-octave",
+      "binding": "osc3.octave",
+      "kind": "value",
+      "label": "Oct",
+      "labelWidth": 20,
+      "x": 262,
+      "y": 500,
+      "w": 51,
+      "h": 27,
+      "fontSize": 10.5
+    },
+    {
+      "id": "c.osc3-top-tune",
+      "binding": "osc3.pitch",
+      "kind": "value",
+      "label": "",
+      "labelWidth": 0,
+      "x": 328,
+      "y": 500,
+      "w": 51,
+      "h": 27,
+      "fontSize": 10.5
+    },
+    {
+      "id": "c.osc3-top-native5",
+      "binding": "osc3.param5",
+      "kind": "value",
+      "label": "",
+      "labelWidth": 0,
+      "x": 393,
+      "y": 500,
+      "w": 49,
+      "h": 27,
+      "fontSize": 10.5
+    },
+    {
+      "id": "c.filter2-env",
+      "binding": "filter2.envmod",
+      "label": "ENV",
+      "x": 1081,
+      "y": 695,
+      "w": 36,
+      "h": 67,
+      "faceDiameter": 32,
+      "fontSize": 10.5,
+      "accent": "secondary"
+    },
+    {
+      "id": "c.fx-selected-type",
+      "binding": "fx1.type",
+      "kind": "menu",
+      "label": "Selected effect algorithm",
+      "x": 1364,
+      "y": 672,
+      "w": 199,
+      "h": 21,
+      "fontSize": 11,
+      "selectionGroup": "live.fx",
+      "bindings": {
+        "fx1": "fx1.type",
+        "fx2": "fx2.type",
+        "fx3": "fx3.type",
+        "fx4": "fx4.type",
+        "fx5": "fx5.type",
+        "fx6": "fx6.type",
+        "fx7": "fx7.type",
+        "fx8": "fx8.type"
+      }
+    }
   ],
   "adaptations": [
-    "This is a live native adaptation of the supplied 1586 by 992 concept, not a claimed pixel-identical replica. Current parameter values and selected states are not baked into the artwork.",
-    "The XY pad controls the real Macro 1 and Macro 2 parameters. The two axes and adjacent knobs stay synchronized; this is not a general scene timbre morph engine.",
-    "The concept's Scene Morph slider is replaced by a correctly labeled selected-scene level control and the actual constrained filter-routing menu. Scene mode and voice mode use the existing native parameters.",
-    "All eight macros remain available, flanking the central XY pad. Their labels identify real macros rather than promising the concept's unassigned Drive, Color or Evolve destinations.",
-    "The three oscillator cards are independent real oscillator editors. Unsupported generic Sample labels and fictitious oscillator tuning readouts are not reproduced.",
-    "The lower keyboard is a playable native MIDI keyboard. Six performance snapshots, three independent key zones, expression and touch lanes from the concept are not falsely displayed as implemented features. The actual two-scene split point, voice limit, glide, width, pan and tuning remain available.",
-    "Four narrow performance faders follow the reference's physical lane placement but remain explicitly labeled Octave, Glide, Width and Pan, controlling those real parameters. They do not pretend to implement pitch-wheel, expression or touch lanes.",
-    "The visible envelope uses the actual amplitude envelope and the two LFO previews use their own native LFOs. The other envelope and all remaining modulators remain accessible through Full editor.",
-    "Eight visible effect-type selectors control actual slots. All sixteen effect slots and detailed effect controls are available through Full FX editor.",
-    "The upper center uses a perspective stack of the actual oscillator preview. The analyzer uses the actual output's FFT history as a spectrogram; no signal activity or spectral texture is painted from the reference. Real output meters and Open scope remain available.",
-    "The shared header retains native preset navigation, scene selection, skin selection and Full editor access. Unsupported snapshot and analyzer mode tabs are not decorative pretend buttons.",
-    "Five visible mixer faders and the separate amplifier knob now follow the reference centers; ring 2×3 remains in Full editor. The shared dual-filter shell uses measured inset plots and a functional routing selector; the long selected-scene level slider is not relabeled as scene morph."
+    "Live native reconstruction of the supplied 1586 by 992 concept. All values, selected states, signals and names come from the processor; no reference image is used as an operative editor.",
+    "The connected centre console contains a real oscillator-source preview, Macro 1/2 XY pad, eight synchronized macro controls, selected-scene level and the actual dual-filter chain. The level slider is correctly labeled Scene level, not an unsupported scene-timbre morph.",
+    "Native Scene A/B buttons select the editing scene. No fictional per-layer preset names are painted. Scene mode, split point and voice mode are available in the lower Scene Controls card.",
+    "The three oscillator cards use native algorithm menus, mute/solo state, actual wavetable catalogs and a two-tier arrangement of tuning/readout fields above algorithm/level rotaries. Algorithm-specific fields retain their real labels and may disable when inapplicable; no fictional per-oscillator Width is implied.",
+    "Main OSC1/OSC2/OSC3 buttons select real owned source snapshots and never alter the sound. Wavetable displays contain actual copied source frames. Disabled wavetable strips identify the real non-wavetable algorithm rather than an invented table name.",
+    "The four envelope tabs expose ENV1, ENV2 and the first two native LFO envelopes, with rebound ADSR fields. The LFO1\u20134 selector rebinds the actual shape, rate, phase and trigger controls. Additional specialized modulators remain in Full editor.",
+    "Eight selectable effect cards show the current algorithms. The header algorithm menu edits the selected real FX slot; detailed parameters and all sixteen slots remain accessible through the native Effects editor.",
+    "The lower keyboard is a playable native MIDI keyboard in a 568 by 42 reference-sized area. Six patch snapshots and three independent zones are not fabricated. Four performance lanes remain explicitly Octave, Glide, Width and Pan, controlling those actual parameters rather than masquerading as pitch-wheel, expression or touch.",
+    "The upper analyzer uses actual output spectrum, spectrogram history and waveform modes. The master meter uses real stereo output peaks. Inactive audio is never replaced by fabricated spectral texture.",
+    "Macro side captions show their real assigned names while complete numeric values remain available to native accessibility and typed entry. The XY pad is specifically Macro1/2; it does not create modulation assignments automatically.",
+    "Reference master Limiter/Soft Clip toggles are not bound to unrelated scene controls. The real master gain and stereo meters are retained; the source editor remains available for complete audio processing configuration."
   ]
 }

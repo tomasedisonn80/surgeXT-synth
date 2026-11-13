@@ -3755,6 +3755,1255 @@
           "value": "value"
         }
       ]
+    },
+    {
+      "name": "analyzer native modes",
+      "valid": true,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "kind"
+          ],
+          "value": "analyzer"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "envelope"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModesRect"
+          ],
+          "value": [
+            10,
+            210,
+            200,
+            24
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModes"
+          ],
+          "value": [
+            "spectrum",
+            "waterfall",
+            "scope"
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerDefault"
+          ],
+          "value": "spectrum"
+        }
+      ]
+    },
+    {
+      "name": "analyzer optional default",
+      "valid": true,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "kind"
+          ],
+          "value": "analyzer"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "envelope"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModesRect"
+          ],
+          "value": [
+            10,
+            210,
+            200,
+            24
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModes"
+          ],
+          "value": [
+            "spectrum",
+            "waterfall",
+            "scope"
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerDefault"
+          ],
+          "value": "spectrum"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerDefault"
+          ],
+          "remove": true
+        }
+      ]
+    },
+    {
+      "name": "analyzer stereo and meters",
+      "valid": true,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "kind"
+          ],
+          "value": "analyzer"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "envelope"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModesRect"
+          ],
+          "value": [
+            10,
+            210,
+            200,
+            24
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModes"
+          ],
+          "value": [
+            "spectrum",
+            "waterfall",
+            "scope"
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerDefault"
+          ],
+          "value": "spectrum"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModes"
+          ],
+          "value": [
+            "spectrum",
+            "scope",
+            "vectorscope",
+            "meter"
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModesRect"
+          ],
+          "value": [
+            10,
+            210,
+            300,
+            24
+          ]
+        }
+      ]
+    },
+    {
+      "name": "analyzer panel restriction",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "kind"
+          ],
+          "value": "analyzer"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "envelope"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModesRect"
+          ],
+          "value": [
+            10,
+            210,
+            200,
+            24
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModes"
+          ],
+          "value": [
+            "spectrum",
+            "waterfall",
+            "scope"
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerDefault"
+          ],
+          "value": "spectrum"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "kind"
+          ],
+          "value": "output"
+        }
+      ]
+    },
+    {
+      "name": "analyzer missing rectangle",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "kind"
+          ],
+          "value": "analyzer"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "envelope"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModesRect"
+          ],
+          "value": [
+            10,
+            210,
+            200,
+            24
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModes"
+          ],
+          "value": [
+            "spectrum",
+            "waterfall",
+            "scope"
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerDefault"
+          ],
+          "value": "spectrum"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModesRect"
+          ],
+          "remove": true
+        }
+      ]
+    },
+    {
+      "name": "analyzer missing modes",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "kind"
+          ],
+          "value": "analyzer"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "envelope"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModesRect"
+          ],
+          "value": [
+            10,
+            210,
+            200,
+            24
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModes"
+          ],
+          "value": [
+            "spectrum",
+            "waterfall",
+            "scope"
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerDefault"
+          ],
+          "value": "spectrum"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModes"
+          ],
+          "remove": true
+        }
+      ]
+    },
+    {
+      "name": "analyzer mode array type",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "kind"
+          ],
+          "value": "analyzer"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "envelope"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModesRect"
+          ],
+          "value": [
+            10,
+            210,
+            200,
+            24
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModes"
+          ],
+          "value": [
+            "spectrum",
+            "waterfall",
+            "scope"
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerDefault"
+          ],
+          "value": "spectrum"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModes"
+          ],
+          "value": "spectrum"
+        }
+      ]
+    },
+    {
+      "name": "analyzer minimum mode count",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "kind"
+          ],
+          "value": "analyzer"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "envelope"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModesRect"
+          ],
+          "value": [
+            10,
+            210,
+            200,
+            24
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModes"
+          ],
+          "value": [
+            "spectrum",
+            "waterfall",
+            "scope"
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerDefault"
+          ],
+          "value": "spectrum"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModes"
+          ],
+          "value": [
+            "spectrum"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "analyzer maximum mode count",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "kind"
+          ],
+          "value": "analyzer"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "envelope"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModesRect"
+          ],
+          "value": [
+            10,
+            210,
+            200,
+            24
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModes"
+          ],
+          "value": [
+            "spectrum",
+            "waterfall",
+            "scope"
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerDefault"
+          ],
+          "value": "spectrum"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModes"
+          ],
+          "value": [
+            "spectrum",
+            "waterfall",
+            "scope",
+            "vectorscope",
+            "meter"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "analyzer mode type",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "kind"
+          ],
+          "value": "analyzer"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "envelope"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModesRect"
+          ],
+          "value": [
+            10,
+            210,
+            200,
+            24
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModes"
+          ],
+          "value": [
+            "spectrum",
+            "waterfall",
+            "scope"
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerDefault"
+          ],
+          "value": "spectrum"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModes"
+          ],
+          "value": [
+            "spectrum",
+            true
+          ]
+        }
+      ]
+    },
+    {
+      "name": "analyzer unique modes",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "kind"
+          ],
+          "value": "analyzer"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "envelope"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModesRect"
+          ],
+          "value": [
+            10,
+            210,
+            200,
+            24
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModes"
+          ],
+          "value": [
+            "spectrum",
+            "waterfall",
+            "scope"
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerDefault"
+          ],
+          "value": "spectrum"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModes"
+          ],
+          "value": [
+            "spectrum",
+            "spectrum"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "analyzer supported modes",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "kind"
+          ],
+          "value": "analyzer"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "envelope"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModesRect"
+          ],
+          "value": [
+            10,
+            210,
+            200,
+            24
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModes"
+          ],
+          "value": [
+            "spectrum",
+            "waterfall",
+            "scope"
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerDefault"
+          ],
+          "value": "spectrum"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModes"
+          ],
+          "value": [
+            "spectrum",
+            "invented"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "analyzer default member",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "kind"
+          ],
+          "value": "analyzer"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "envelope"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModesRect"
+          ],
+          "value": [
+            10,
+            210,
+            200,
+            24
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModes"
+          ],
+          "value": [
+            "spectrum",
+            "waterfall",
+            "scope"
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerDefault"
+          ],
+          "value": "spectrum"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerDefault"
+          ],
+          "value": "meter"
+        }
+      ]
+    },
+    {
+      "name": "analyzer default type",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "kind"
+          ],
+          "value": "analyzer"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "envelope"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModesRect"
+          ],
+          "value": [
+            10,
+            210,
+            200,
+            24
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModes"
+          ],
+          "value": [
+            "spectrum",
+            "waterfall",
+            "scope"
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerDefault"
+          ],
+          "value": "spectrum"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerDefault"
+          ],
+          "value": false
+        }
+      ]
+    },
+    {
+      "name": "analyzer tab minimum width",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "kind"
+          ],
+          "value": "analyzer"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "envelope"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModesRect"
+          ],
+          "value": [
+            10,
+            210,
+            200,
+            24
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModes"
+          ],
+          "value": [
+            "spectrum",
+            "waterfall",
+            "scope"
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerDefault"
+          ],
+          "value": "spectrum"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModesRect"
+          ],
+          "value": [
+            10,
+            210,
+            103,
+            24
+          ]
+        }
+      ]
+    },
+    {
+      "name": "analyzer tab minimum height",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "kind"
+          ],
+          "value": "analyzer"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "envelope"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModesRect"
+          ],
+          "value": [
+            10,
+            210,
+            200,
+            24
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModes"
+          ],
+          "value": [
+            "spectrum",
+            "waterfall",
+            "scope"
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerDefault"
+          ],
+          "value": "spectrum"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModesRect"
+          ],
+          "value": [
+            10,
+            210,
+            200,
+            17
+          ]
+        }
+      ]
+    },
+    {
+      "name": "analyzer tabs panel containment",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "kind"
+          ],
+          "value": "analyzer"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "envelope"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModesRect"
+          ],
+          "value": [
+            10,
+            210,
+            200,
+            24
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModes"
+          ],
+          "value": [
+            "spectrum",
+            "waterfall",
+            "scope"
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerDefault"
+          ],
+          "value": "spectrum"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModesRect"
+          ],
+          "value": [
+            10,
+            270,
+            200,
+            24
+          ]
+        }
+      ]
+    },
+    {
+      "name": "analyzer tabs canvas containment",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "kind"
+          ],
+          "value": "analyzer"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "envelope"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModesRect"
+          ],
+          "value": [
+            10,
+            210,
+            200,
+            24
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModes"
+          ],
+          "value": [
+            "spectrum",
+            "waterfall",
+            "scope"
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerDefault"
+          ],
+          "value": "spectrum"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModesRect"
+          ],
+          "value": [
+            -1,
+            210,
+            200,
+            24
+          ]
+        }
+      ]
+    },
+    {
+      "name": "analyzer tabs rectangle type",
+      "valid": false,
+      "changes": [
+        {
+          "path": [
+            "panels",
+            0,
+            "kind"
+          ],
+          "value": "analyzer"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "envelope"
+          ],
+          "remove": true
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModesRect"
+          ],
+          "value": [
+            10,
+            210,
+            200,
+            24
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModes"
+          ],
+          "value": [
+            "spectrum",
+            "waterfall",
+            "scope"
+          ]
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerDefault"
+          ],
+          "value": "spectrum"
+        },
+        {
+          "path": [
+            "panels",
+            0,
+            "analyzerModesRect"
+          ],
+          "value": [
+            10,
+            210,
+            200,
+            "24"
+          ]
+        }
+      ]
     }
   ]
 }

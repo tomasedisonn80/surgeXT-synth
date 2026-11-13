@@ -621,6 +621,36 @@ bool validateManifest(const juce::var &data, juce::String &error)
                         (!plotRectangle(item->getProperty(key), where + "." + key, error) ||
                          !insidePanel(item->getProperty(key), *item, where + "." + key, error)))
                         return false;
+                if (item->hasProperty("analyzerModesRect") || item->hasProperty("analyzerModes") ||
+                    item->hasProperty("analyzerDefault"))
+                {
+                    if (item->getProperty("kind").toString() != "analyzer")
+                        return fail(error, where + ".analyzerModesRect requires an analyzer panel");
+                    const auto &rect = item->getProperty("analyzerModesRect");
+                    if (!plotRectangle(rect, where + ".analyzerModesRect", error) ||
+                        !insidePanel(rect, *item, where + ".analyzerModesRect", error))
+                        return false;
+                    const auto *modes = item->getProperty("analyzerModes").getArray();
+                    if (modes == nullptr || modes->size() < 2 || modes->size() > 4)
+                        return fail(error, where + ".analyzerModes must contain 2..4 modes");
+                    juce::StringArray seen;
+                    for (const auto &mode : *modes)
+                    {
+                        if (!mode.isString() ||
+                            !oneOf(mode.toString(), "spectrum|waterfall|scope|vectorscope|meter") ||
+                            seen.contains(mode.toString()))
+                            return fail(error, where + ".analyzerModes must contain unique supported modes");
+                        seen.add(mode.toString());
+                    }
+                    if ((static_cast<double>(rect[2]) - 4.0 * (modes->size() - 1)) /
+                                modes->size() < 32 ||
+                        static_cast<double>(rect[3]) < 18)
+                        return fail(error, where + ".analyzerModesRect is too small for its tabs");
+                    if (item->hasProperty("analyzerDefault") &&
+                        (!item->getProperty("analyzerDefault").isString() ||
+                         !seen.contains(item->getProperty("analyzerDefault").toString())))
+                        return fail(error, where + ".analyzerDefault must name an analyzer mode");
+                }
                 if (item->hasProperty("wavetableRect"))
                 {
                     const auto &rect = item->getProperty("wavetableRect");

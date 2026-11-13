@@ -172,18 +172,23 @@ const juce::Image &materialGrain(bool brushed)
         std::array<juce::Image, 2> result;
         for (size_t style = 0; style < result.size(); ++style)
         {
-            result[style] = juce::Image(juce::Image::ARGB, 256, 64, true);
+            result[style] = juce::Image(juce::Image::ARGB, 512, 256, true);
             juce::Image::BitmapData pixels(result[style], juce::Image::BitmapData::writeOnly);
             for (int y = 0; y < pixels.height; ++y)
                 for (int x = 0; x < pixels.width; ++x)
                 {
-                    const auto cellX = style == 1 ? x / 7 : x;
-                    auto hash = static_cast<unsigned>(cellX + 307 * y + 17);
-                    hash ^= hash >> 13;
-                    hash *= 1274126177u;
+                    // Avalanche both coordinates; the old linear seed made a
+                    // diagonal lattice visible on the otherwise smooth panels.
+                    // Longer horizontal fibres are cosmetic brushed metal.
+                    auto hash = static_cast<unsigned>((style == 1 ? x / 24 : x) + 0x9e3779b9u);
+                    hash ^= static_cast<unsigned>(y + 1) * 0x85ebca6bu;
+                    hash ^= hash >> 16;
+                    hash *= 0x7feb352du;
+                    hash ^= hash >> 15;
+                    hash *= 0x846ca68bu;
                     hash ^= hash >> 16;
                     const auto shade = hash & 1u ? juce::Colours::white : juce::Colours::black;
-                    const auto alpha = .08f + static_cast<float>((hash >> 1) & 31u) / 96.f;
+                    const auto alpha = .08f + static_cast<float>((hash >> 1) & 31u) / 160.f;
                     pixels.setPixelColour(x, y, shade.withAlpha(alpha));
                 }
         }
@@ -258,7 +263,7 @@ void bezel(juce::Graphics &g, const Theme &t, Rect r, juce::Colour fill, float r
         juce::Path clip;
         clip.addRoundedRectangle(r.reduced(2), std::max(0.f, radius - 1));
         g.reduceClipRegion(clip);
-        g.setTiledImageFill(materialGrain(metal), 0, 0, metal ? .17f : ivory ? .055f : .065f);
+        g.setTiledImageFill(materialGrain(metal), 0, 0, metal ? .12f : ivory ? .028f : .012f);
         g.fillRect(r);
         if (metal)
         {
@@ -368,7 +373,8 @@ class HeaderButton : public juce::TextButton
         navigation,
         caption,
         chevron,
-        tool
+        tool,
+        icon
     };
     HeaderButton(Theme &t, const juce::String &label = {}) : juce::TextButton(label), theme(t) {}
     void present(Presentation p, float size = 12.f, bool bold = false,
@@ -383,6 +389,9 @@ class HeaderButton : public juce::TextButton
     {
         auto r = getLocalBounds().toFloat().reduced(.7f);
         auto ink = findColour(juce::TextButton::textColourOffId);
+        if (theme.style == "bauhaus" &&
+            (presentation == caption || presentation == chevron))
+            ink = theme.display.contrasting(.9f);
         const bool selected = getToggleState();
         if (presentation == chip || presentation == tool ||
             (presentation == navigation && (selected || over || down)))
@@ -423,6 +432,43 @@ class HeaderButton : public juce::TextButton
             g.setColour(ink);
             g.strokePath(p, juce::PathStrokeType(1.8f, juce::PathStrokeType::curved,
                                                  juce::PathStrokeType::rounded));
+        }
+        else if (presentation == icon)
+        {
+            const auto c = r.getCentre();
+            const float side = std::min(21.f, std::min(r.getWidth(), r.getHeight()) - 8.f);
+            const auto box = Rect(0, 0, side, side).withCentre(c);
+            g.setColour(ink);
+            juce::Path glyph;
+            if (getComponentID().contains("save"))
+            {
+                glyph.startNewSubPath(box.getX(), box.getY());
+                glyph.lineTo(box.getRight() - 4, box.getY());
+                glyph.lineTo(box.getRight(), box.getY() + 4);
+                glyph.lineTo(box.getRight(), box.getBottom());
+                glyph.lineTo(box.getX(), box.getBottom());
+                glyph.closeSubPath();
+                glyph.addRectangle(box.getX() + 4, box.getY(), side - 9, side * .36f);
+                glyph.addRectangle(box.getX() + 4, box.getY() + side * .58f, side - 8,
+                                   side * .42f);
+            }
+            else if (getComponentID().contains("browser"))
+            {
+                glyph.startNewSubPath(box.getX(), box.getY() + 3);
+                glyph.lineTo(box.getX() + 8, box.getY() + 3);
+                glyph.lineTo(box.getX() + 11, box.getY() + 6);
+                glyph.lineTo(box.getRight(), box.getY() + 6);
+                glyph.lineTo(box.getRight(), box.getBottom() - 2);
+                glyph.lineTo(box.getX(), box.getBottom() - 2);
+                glyph.closeSubPath();
+            }
+            else
+            {
+                for (int dot = -1; dot <= 1; ++dot)
+                    g.fillEllipse(c.x - 1.7f, c.y + dot * 6.f - 1.7f, 3.4f, 3.4f);
+            }
+            g.strokePath(glyph, juce::PathStrokeType(1.6f, juce::PathStrokeType::curved,
+                                                    juce::PathStrokeType::rounded));
         }
         else
         {
@@ -676,6 +722,11 @@ class CompactSliderLookAndFeel : public juce::LookAndFeel_V4
     juce::Slider::SliderLayout getSliderLayout(juce::Slider &slider) override
     {
         juce::Slider::SliderLayout layout;
+        if (static_cast<bool>(slider.getProperties()["reference.performance-fader"]))
+        {
+            layout.sliderBounds = slider.getLocalBounds().withTrimmedBottom(22);
+            return layout;
+        }
         const auto labelWidth = static_cast<int>(slider.getProperties()["reference.compact-label-width"]);
         layout.sliderBounds = slider.getLocalBounds().withTrimmedLeft(labelWidth + 3)
                                   .withTrimmedRight(43);
@@ -696,6 +747,12 @@ class BoundSlider : public juce::Slider
         {
             getProperties().set("reference.compact-label-width",
                                 number(spec, "labelWidth", 32));
+            setLookAndFeel(&compactLookAndFeel);
+        }
+        if (theme.style == "live" && kind == "fader" &&
+            string(spec, "id").startsWith("c.performance-"))
+        {
+            getProperties().set("reference.performance-fader", true);
             setLookAndFeel(&compactLookAndFeel);
         }
         setSliderStyle(kind == "fader"        ? juce::Slider::LinearVertical
@@ -852,6 +909,13 @@ class BoundSlider : public juce::Slider
                 label = label.substring(prefix.length()).trimStart();
         }
         auto value = isEnabled() ? compactPaintValue(bridge.display(binding)) : utf8("—");
+        if (theme.style == "live" && binding.startsWith("macro"))
+        {
+            value = bridge.label(binding);
+            const auto prefix = "M" + binding.substring(5) + ":";
+            if (value.startsWithIgnoreCase(prefix))
+                value = value.substring(prefix.length()).trimStart();
+        }
         auto ink = spec.hasProperty("ink") ? theme.color(string(spec, "ink")) : theme.text;
         auto valueInk = spec.hasProperty("ink") ? ink.withAlpha(.85f) : theme.muted;
         float fs = number(spec, "fontSize", theme.style == "clear" ? 15 : 11.5f);
@@ -994,6 +1058,30 @@ class BoundSlider : public juce::Slider
                 text(g, theme, value, getLocalBounds().toFloat().removeFromBottom(lower / 2), fs,
                      theme.style == "clear" ? ink : valueInk, theme.style == "clear",
                      juce::Justification::centred);
+        }
+        else if (static_cast<bool>(getProperties()["reference.performance-fader"]))
+        {
+            text(g, theme, label, r.removeFromBottom(20), 9, ink, false,
+                 juce::Justification::centred);
+            const auto bottom = getPositionOfValue(0), top = getPositionOfValue(1);
+            const auto x = r.getCentreX();
+            const auto y = getPositionOfValue(getValue());
+            const auto track = Rect(x - 4, top, 8, std::max(1.f, bottom - top));
+            bezel(g, theme, track.expanded(4, 0), theme.display, 3);
+            g.setColour(accent.withAlpha(.18f));
+            g.fillRoundedRectangle(track, 2);
+            g.setGradientFill(juce::ColourGradient(accent.withAlpha(.8f), x, y,
+                                                  accent.withAlpha(.12f), x, bottom, false));
+            g.fillRoundedRectangle(track.withTop(y), 2);
+            const auto handle = Rect(x - 10, y - 3.5f, 20, 7);
+            g.setGradientFill(juce::ColourGradient(theme.yellow.brighter(.25f), handle.getTopLeft(),
+                                                  theme.yellow.darker(.4f), handle.getBottomLeft(), false));
+            g.fillRoundedRectangle(handle, 2);
+            if (hasKeyboardFocus(true))
+            {
+                g.setColour(accent);
+                g.drawRoundedRectangle(handle.expanded(1), 2, 1.5f);
+            }
         }
         else if (kind == "horizontal" && static_cast<bool>(spec["compact"]))
         {
@@ -1583,7 +1671,8 @@ class WavetableSelector : public juce::Component
                 g.setColour(theme.accent.withAlpha(down ? .17f : .09f));
                 g.fillRoundedRectangle(r, 2);
             }
-            const auto ink = (theme.style == "ivory" || theme.style == "space")
+            const auto ink = theme.display.getPerceivedBrightness() < .45f &&
+                                     theme.text.getPerceivedBrightness() < .45f
                                  ? theme.display.contrasting(.9f)
                                  : theme.text;
             g.setColour(isEnabled() ? ink : ink.withAlpha(.45f));
@@ -1898,6 +1987,19 @@ class MacroXY : public juce::Component
     {
         auto r = getLocalBounds().toFloat().reduced(3);
         bezel(g, theme, r, theme.display, 18);
+        if (theme.style == "live")
+        {
+            g.setColour(juce::Colour(0xff030b09));
+            g.drawRoundedRectangle(r.expanded(1), 19, 3);
+            auto brass = juce::ColourGradient(juce::Colour(0xffffe0ac), r.getTopLeft(),
+                                               juce::Colour(0xff8a5a2c), r.getBottomRight(), false);
+            brass.addColour(.32, juce::Colour(0xff6c725b));
+            brass.addColour(.63, juce::Colour(0xffdab884));
+            g.setGradientFill(brass);
+            g.drawRoundedRectangle(r, 18, 2);
+            g.setColour(juce::Colour(0xffc9e9da).withAlpha(.6f));
+            g.drawRoundedRectangle(r.reduced(2), 16, .7f);
+        }
         {
             juce::Graphics::ScopedSaveState save(g);
             juce::Path clip;
@@ -1924,7 +2026,7 @@ class MacroXY : public juce::Component
         g.setColour(theme.accent.withAlpha(.80f));
         g.drawLine(x, r.getY(), x, r.getBottom());
         g.drawLine(r.getX(), y, r.getRight(), y);
-        g.setColour(theme.secondary.withAlpha(.12f));
+        g.setColour(theme.secondary.withAlpha(theme.style == "live" ? .07f : .12f));
         g.fillEllipse(x - 23, y - 23, 46, 46);
         g.setColour(theme.secondary.withAlpha(.24f));
         g.fillEllipse(x - 16, y - 16, 32, 32);
@@ -1932,8 +2034,10 @@ class MacroXY : public juce::Component
         g.fillEllipse(x - 6, y - 6, 12, 12);
         g.setColour(juce::Colours::white);
         g.drawEllipse(x - 6, y - 6, 12, 12, 2);
-        text(g, theme, utf8("X: Macro 1  •  Y: Macro 2"), r.removeFromBottom(20), 10, theme.text,
-             false, juce::Justification::centred);
+        if (theme.style != "live")
+            text(g, theme, "X: " + bridge.label("macro1") + "  /  Y: " + bridge.label("macro2"),
+                 r.withTrimmedTop(r.getHeight() - 20), 10, theme.text, false,
+                 juce::Justification::centred);
         if (hasKeyboardFocus(true))
         {
             g.setColour(theme.accent);
@@ -2066,6 +2170,18 @@ class PresetBrowser : public juce::Component, private juce::ListBoxModel
         selectPatch(selectedPatch);
     }
     ~PresetBrowser() override { list.setModel(nullptr); }
+    void paint(juce::Graphics &g) override
+    {
+        if (theme.style == "space")
+        {
+            // The hardware's inset well surrounds the actual installed-preset
+            // list. Its contents, selection and search remain native controls.
+            auto well = list.getBounds().toFloat().expanded(1.f, 2.f);
+            bezel(g, theme, well, theme.display, 5.f);
+            g.setColour(theme.knob.withAlpha(.65f));
+            g.drawRoundedRectangle(well.expanded(.7f), 5.f, .7f);
+        }
+    }
     juce::String query() const { return search.getText(); }
     int selectedPatchId() const
     {
@@ -2238,11 +2354,17 @@ struct Workspace::Impl
     VisualData visuals;
     juce::dsp::FFT outputFFT{11};
     std::array<float, 2048> outputHistory{};
+    std::array<std::array<float, 2048>, 2> stereoHistory{};
+    std::array<std::vector<float>, 2> stereoOutput, stereoSpectrumDb;
     std::array<float, 4096> fftData{};
     size_t outputWrite{0}, outputCount{0};
+    size_t framesSinceSpectrum{0};
+    std::uint64_t capturedSamples{0};
+    double capturedSampleRate{0};
     std::uint32_t lastDroppedFrames{0};
     std::vector<float> spectrumDb;
     std::vector<std::vector<float>> spectrumHistory;
+    std::vector<double> spectrumHistoryTimes;
     std::array<PreviewCurve, 2> filterCurves;
     std::array<PreviewCurve, 12> lfoCurves;
     bool audioSubscribed{false};
@@ -2281,6 +2403,18 @@ struct Workspace::Impl
     std::vector<SelectionState> selections;
     std::vector<SelectionBinding> selectionBindings;
     std::vector<SelectionTab> selectionTabs;
+    struct AnalyzerState
+    {
+        juce::String id, selected;
+        juce::StringArray modes;
+    };
+    struct AnalyzerTab
+    {
+        juce::String panel, mode;
+        std::unique_ptr<ViewTabButton> button;
+    };
+    std::vector<AnalyzerState> analyzers;
+    std::vector<AnalyzerTab> analyzerTabs;
     struct WavetableControl
     {
         juce::var panel;
@@ -2621,6 +2755,90 @@ struct Workspace::Impl
             control.selector->sync(parameters.getScene(), oscillator);
         }
     }
+    juce::String analyzerCaption(const juce::String &mode) const
+    {
+        if (mode == "waterfall")
+            return theme.style == "clear" || theme.style == "live" ? "Spectrogram" : "Waterfall";
+        if (mode == "scope")
+            return theme.style == "live" ? "Scope" : "Oscilloscope";
+        if (mode == "vectorscope")
+            return "Vectorscope";
+        return mode == "meter" ? "Meter" : "Spectrum";
+    }
+    juce::String analyzerMode(const juce::var &panel) const
+    {
+        for (const auto &state : analyzers)
+            if (state.id == string(panel, "id"))
+                return state.selected;
+        const auto variant = string(panel, "variant");
+        return variant == "spectrogram" ? "waterfall" : variant == "scope" ? "scope" : "spectrum";
+    }
+    void selectAnalyzer(const juce::String &panel, const juce::String &mode, bool focus = false)
+    {
+        for (auto &state : analyzers)
+            if (state.id == panel && state.modes.contains(mode))
+            {
+                state.selected = mode;
+                for (auto &tab : analyzerTabs)
+                    if (tab.panel == panel)
+                    {
+                        tab.button->setToggleState(tab.mode == mode, juce::dontSendNotification);
+                        if (focus && tab.mode == mode)
+                            tab.button->grabKeyboardFocus();
+                    }
+                // This is a display selection only: never edit parameters, undo,
+                // MIDI state, or the audio consumer's capture history.
+                owner.repaint();
+                return;
+            }
+    }
+    void buildAnalyzerTabs(const juce::var &panel)
+    {
+        const auto *modes = panel["analyzerModes"].getArray();
+        const auto rectangle = arrayRect(panel["analyzerModesRect"], {});
+        if (modes == nullptr || modes->size() < 2 || rectangle.isEmpty())
+            return;
+        AnalyzerState state;
+        state.id = string(panel, "id");
+        for (const auto &mode : *modes)
+            state.modes.add(mode.toString());
+        state.selected = string(panel, "analyzerDefault", analyzerMode(panel));
+        if (!state.modes.contains(state.selected))
+            state.selected = state.modes[0];
+        const float width = (rectangle.getWidth() - 4.f * (modes->size() - 1)) / modes->size();
+        for (int i = 0; i < modes->size(); ++i)
+        {
+            const auto panelId = state.id, mode = state.modes[i];
+            auto tab = std::make_unique<ViewTabButton>(theme, theme.style == "clear" ? 12.f : 11.f,
+                                                      false);
+            const auto caption = analyzerCaption(mode);
+            tab->setButtonText(caption);
+            tab->setComponentID("workspace.analyzer." + panelId + "." + mode);
+            tab->setName("Analyzer " + caption);
+            tab->setTitle(tab->getName());
+            tab->setDescription("Display the captured stereo output as " + caption +
+                                ". Left and right arrows select adjacent analyzer views.");
+            tab->setTooltip(tab->getDescription());
+            tab->setToggleState(mode == state.selected, juce::dontSendNotification);
+            tab->onClick = [this, panelId, mode] { selectAnalyzer(panelId, mode); };
+            tab->onNavigate = [this, panelId, mode](int delta) {
+                for (const auto &current : analyzers)
+                    if (current.id == panelId)
+                    {
+                        const int count = current.modes.size();
+                        const auto nextMode = current.modes[(current.modes.indexOf(mode) + delta +
+                                                            count) % count];
+                        selectAnalyzer(panelId, nextMode, true);
+                        return;
+                    }
+            };
+            canvas.addAndMakeVisible(*tab);
+            placements.push_back({tab.get(), {rectangle.getX() + i * (width + 4.f),
+                                             rectangle.getY(), width, rectangle.getHeight()}});
+            analyzerTabs.push_back({panelId, mode, std::move(tab)});
+        }
+        analyzers.push_back(std::move(state));
+    }
     void cancelInteractions()
     {
         for (auto &control : wavetableControls)
@@ -2659,6 +2877,8 @@ struct Workspace::Impl
         selectionBindings.clear();
         selectionTabs.clear();
         selections.clear();
+        analyzerTabs.clear();
+        analyzers.clear();
         wavetableControls.clear();
         xy.reset();
         browser.reset();
@@ -2701,6 +2921,24 @@ struct Workspace::Impl
                     return number(v, "titleHeight", 28) >= 24 &&
                            (tabs.isEmpty() || !tabs.intersects(actionBounds));
                 };
+                if (theme.style == "live" && string(v, "id") == "p.scene")
+                    for (int scene = 0; scene < 2; ++scene)
+                    {
+                        auto button = std::make_unique<ThemeButton>(theme,
+                            scene == 0 ? "SCENE A" : "SCENE B");
+                        button->setComponentID(scene == 0 ? "workspace.scene-card.a"
+                                                         : "workspace.scene-card.b");
+                        button->setName(scene == 0 ? "Select Scene A" : "Select Scene B");
+                        button->setTitle(button->getName());
+                        button->setWantsKeyboardFocus(true);
+                        button->setToggleable(true);
+                        button->getProperties().set("reference.scene-target", scene);
+                        button->onClick = [this, scene] { owner.selectScene(scene); };
+                        canvas.addAndMakeVisible(*button);
+                        placements.push_back({button.get(), scene == 0 ? Rect(14, 127, 209, 31)
+                                                                      : Rect(238, 127, 203, 31)});
+                        actions.push_back(std::move(button));
+                    }
                 if (kind == "oscillator" && v.hasProperty("wavetableRect"))
                 {
                     auto selector = std::make_unique<WavetableSelector>(
@@ -2731,7 +2969,10 @@ struct Workspace::Impl
                 if (kind == "effects" && actionFits(r.withHeight(28).removeFromRight(110)))
                     button("Full FX editor", "effects",
                            r.removeFromTop(28).removeFromRight(110).reduced(3));
-                if (kind == "analyzer" &&
+                if (kind == "analyzer" && v.hasProperty("analyzerModesRect"))
+                    buildAnalyzerTabs(v);
+                else if (kind == "analyzer" && theme.style != "spectral" &&
+                    theme.style != "bauhaus" && theme.style != "flow" &&
                     actionFits(r.withHeight(28).removeFromRight(r.getWidth() < 320 ? 54.f : 92.f)))
                     button(r.getWidth() < 320 ? "Scope" : "Open scope", "analyzer",
                            r.removeFromTop(28)
@@ -2751,9 +2992,10 @@ struct Workspace::Impl
                     keyboard->setComponentID("workspace.performance-keyboard");
                     keyboard->setName("Performance MIDI keyboard");
                     keyboard->setTitle("Performance MIDI keyboard");
-                    keyboard->setAvailableRange(24, 108);
-                    keyboard->setLowestVisibleKey(36);
-                    keyboard->setKeyWidth(17);
+                    keyboard->setAvailableRange(theme.style == "live" ? 0 : 24,
+                                                theme.style == "live" ? 119 : 108);
+                    keyboard->setLowestVisibleKey(theme.style == "live" ? 0 : 36);
+                    keyboard->setKeyWidth(theme.style == "live" ? 8.2f : 17.f);
                     keyboard->setColour(juce::MidiKeyboardComponent::whiteNoteColourId,
                                         juce::Colour(0xffeeeae2));
                     keyboard->setColour(juce::MidiKeyboardComponent::blackNoteColourId,
@@ -2781,6 +3023,67 @@ struct Workspace::Impl
                                                       : theme.display.contrasting(.95f));
         owner.resized();
     }
+    void clearAnalyzerCapture()
+    {
+        visuals.output.clear();
+        visuals.left = visuals.right = 0;
+        for (auto &channel : stereoOutput)
+            channel.clear();
+        for (auto &channel : stereoSpectrumDb)
+            channel.clear();
+        spectrumDb.clear();
+        spectrumHistory.clear();
+        spectrumHistoryTimes.clear();
+        outputWrite = outputCount = framesSinceSpectrum = 0;
+        capturedSamples = 0;
+        capturedSampleRate = 0;
+    }
+    void analyzeOutputWindow(double rate)
+    {
+        const auto transform = [&](const auto &samples, auto &bins) {
+            fftData.fill(0.f);
+            for (size_t i = 0; i < outputHistory.size(); ++i)
+            {
+                const float window =
+                    .5f - .5f * std::cos(juce::MathConstants<float>::twoPi * i /
+                                         (outputHistory.size() - 1));
+                fftData[i] = samples[(outputWrite + i) % samples.size()] * window;
+            }
+            outputFFT.performFrequencyOnlyForwardTransform(fftData.data());
+            bins.resize(160);
+            const auto top = std::clamp(rate * .5, 20.0, 20000.0);
+            for (size_t i = 0; i < bins.size(); ++i)
+            {
+                const auto frequency =
+                    20.0 * std::pow(top / 20.0, static_cast<double>(i) / (bins.size() - 1));
+                const auto bin =
+                    std::clamp(frequency * outputHistory.size() / rate, 1.0, 1023.0);
+                const auto low = static_cast<size_t>(bin);
+                const auto fraction = static_cast<float>(bin - low);
+                const auto magnitude =
+                    (fftData[low] + fraction * (fftData[low + 1] - fftData[low])) *
+                    (4.f / static_cast<float>(outputHistory.size()));
+                bins[i] = juce::jlimit(
+                    -96.f, 12.f, 20.f * std::log10(std::max(1.e-8f, magnitude)));
+            }
+        };
+        transform(outputHistory, spectrumDb);
+        for (int channel = 0; channel < 2; ++channel)
+            transform(stereoHistory[channel], stereoSpectrumDb[channel]);
+        spectrumHistory.push_back(spectrumDb);
+        spectrumHistoryTimes.push_back(static_cast<double>(capturedSamples) / rate);
+        // A fixed audio hop and sample-clock timestamps make the time
+        // axis independent of UI cadence. Keep at most eight seconds
+        // and 256 analysis frames, including after a sample-rate change.
+        const auto newest = spectrumHistoryTimes.back();
+        while (spectrumHistory.size() > 256 ||
+               (!spectrumHistoryTimes.empty() &&
+                spectrumHistoryTimes.front() < newest - 8.0))
+        {
+            spectrumHistory.erase(spectrumHistory.begin());
+            spectrumHistoryTimes.erase(spectrumHistoryTimes.begin());
+        }
+    }
     void setAudioSubscription(bool active)
     {
         if (active == audioSubscribed)
@@ -2795,11 +3098,7 @@ struct Workspace::Impl
         else
         {
             processor.referenceAudio.unsubscribe();
-            visuals.output.clear();
-            visuals.left = visuals.right = 0;
-            spectrumDb.clear();
-            spectrumHistory.clear();
-            outputWrite = outputCount = 0;
+            clearAnalyzerCapture();
         }
         audioSubscribed = active;
     }
@@ -2899,6 +3198,10 @@ struct Workspace::Impl
         }
         sceneA.setToggleState(parameters.getScene() == 0, juce::dontSendNotification);
         sceneB.setToggleState(parameters.getScene() == 1, juce::dontSendNotification);
+        for (auto &button : actions)
+            if (button->getProperties().contains("reference.scene-target"))
+                button->setToggleState(static_cast<int>(button->getProperties()["reference.scene-target"]) ==
+                                           parameters.getScene(), juce::dontSendNotification);
         auto name = juce::String(processor.surge->storage.getPatch().name);
         presetButton.setButtonText(name.isEmpty() ? "Init" : name);
         presetButton.setName("Open preset browser: " + name);
@@ -2966,12 +3269,14 @@ struct Workspace::Impl
             {
                 // Never splice an audio history across lost display frames.
                 lastDroppedFrames = dropped;
-                outputWrite = outputCount = 0;
-                spectrumDb.clear();
-                spectrumHistory.clear();
-                visuals.output.clear();
-                visuals.left = visuals.right = 0;
+                clearAnalyzerCapture();
                 return;
+            }
+            const auto rate = std::max(1.0, processor.getSampleRate());
+            if (capturedSampleRate != rate)
+            {
+                clearAnalyzerCapture();
+                capturedSampleRate = rate;
             }
             visuals.left *= .8f;
             visuals.right *= .8f;
@@ -2980,56 +3285,38 @@ struct Workspace::Impl
             {
                 for (size_t i = 0; i < frames; ++i)
                 {
-                    if (std::isfinite(left[i]))
-                        visuals.left = std::max(visuals.left, std::abs(left[i]));
-                    if (std::isfinite(right[i]))
-                        visuals.right = std::max(visuals.right, std::abs(right[i]));
-                    const float sample = (left[i] + right[i]) * .5f;
-                    outputHistory[outputWrite] = std::isfinite(sample) ? sample : 0.f;
+                    const float l = std::isfinite(left[i]) ? left[i] : 0.f;
+                    const float r = std::isfinite(right[i]) ? right[i] : 0.f;
+                    visuals.left = std::max(visuals.left, std::abs(l));
+                    visuals.right = std::max(visuals.right, std::abs(r));
+                    stereoHistory[0][outputWrite] = l;
+                    stereoHistory[1][outputWrite] = r;
+                    outputHistory[outputWrite] = l * .5f + r * .5f;
                     outputWrite = (outputWrite + 1) % outputHistory.size();
                     outputCount = std::min(outputCount + 1, outputHistory.size());
+                    ++capturedSamples;
+                    if (++framesSinceSpectrum == outputHistory.size())
+                    {
+                        // Analyze every complete audio hop, including multiple
+                        // windows delivered by one refresh. The tap bounds each
+                        // update to four FFT windows, all on the UI thread.
+                        framesSinceSpectrum = 0;
+                        analyzeOutputWindow(rate);
+                    }
                 }
-                const auto count = std::min<size_t>(512, frames);
+                const auto count = std::min<size_t>(512, outputCount);
                 visuals.output.resize(count);
+                stereoOutput[0].resize(count);
+                stereoOutput[1].resize(count);
                 for (size_t i = 0; i < count; ++i)
                 {
-                    const auto at = frames - count + i;
-                    const float value = (left[at] + right[at]) * .5f;
-                    visuals.output[i] = std::isfinite(value) ? value : 0.f;
-                }
-                if (outputCount == outputHistory.size())
-                {
-                    fftData.fill(0.f);
-                    for (size_t i = 0; i < outputHistory.size(); ++i)
-                    {
-                        const float window =
-                            .5f - .5f * std::cos(juce::MathConstants<float>::twoPi * i /
-                                                 (outputHistory.size() - 1));
-                        fftData[i] =
-                            outputHistory[(outputWrite + i) % outputHistory.size()] * window;
-                    }
-                    outputFFT.performFrequencyOnlyForwardTransform(fftData.data());
-                    spectrumDb.resize(160);
-                    const auto rate = std::max(1.0, processor.getSampleRate());
-                    const auto top = std::min(20000.0, rate * .5);
-                    for (size_t i = 0; i < spectrumDb.size(); ++i)
-                    {
-                        const auto frequency =
-                            20.0 *
-                            std::pow(top / 20.0, static_cast<double>(i) / (spectrumDb.size() - 1));
-                        const auto bin =
-                            std::clamp(frequency * outputHistory.size() / rate, 1.0, 1023.0);
-                        const auto low = static_cast<size_t>(bin);
-                        const auto fraction = static_cast<float>(bin - low);
-                        const auto magnitude =
-                            (fftData[low] + fraction * (fftData[low + 1] - fftData[low])) *
-                            (4.f / static_cast<float>(outputHistory.size()));
-                        spectrumDb[i] = juce::jlimit(
-                            -96.f, 12.f, 20.f * std::log10(std::max(1.e-8f, magnitude)));
-                    }
-                    spectrumHistory.push_back(spectrumDb);
-                    if (spectrumHistory.size() > 64)
-                        spectrumHistory.erase(spectrumHistory.begin());
+                    const auto at = (outputWrite + outputHistory.size() - count + i) %
+                                    outputHistory.size();
+                    const auto l = stereoHistory[0][at];
+                    const auto r = stereoHistory[1][at];
+                    stereoOutput[0][i] = l;
+                    stereoOutput[1][i] = r;
+                    visuals.output[i] = l * .5f + r * .5f;
                 }
             }
         }
@@ -3118,9 +3405,9 @@ struct Workspace::Impl
             put(previous, 636, 33, 37, 35, H::chevron);
             put(presetButton, 681, 28, 272, 30, H::caption, 20, true);
             put(next, 955, 33, 30, 35, H::chevron);
-            put(browserButton, 996, 29, 39, 35, H::navigation, 9);
-            put(saveButton, 1041, 29, 39, 35, H::navigation, 10);
-            put(skinButton, 1084, 29, 28, 35, H::navigation, 8.5f);
+            put(browserButton, 996, 29, 39, 35, H::icon);
+            put(saveButton, 1041, 29, 39, 35, H::icon);
+            put(skinButton, 1084, 29, 28, 35, H::icon);
             put(modButton, 1319, 6, 50, 23, H::navigation, 10);
             put(fxButton, 1373, 6, 37, 23, H::navigation, 10);
             put(classicButton, 1414, 6, 82, 23, H::navigation, 11);
@@ -3241,7 +3528,8 @@ struct Workspace::Impl
         next.present(H::chevron);
         // Preset background is painted once around the arrows/caption. Give its
         // actual child buttons the appropriate ink without changing the patch.
-        const auto presetInk = style == "ivory"   ? juce::Colour(0xfffff9e8)
+        const auto presetInk = style == "ivory" || style == "bauhaus"
+                                                    ? juce::Colour(0xfffff9e8)
                                : style == "space" ? juce::Colour(0xffffb53b)
                                : style == "clear" ? theme.text
                                : style == "tokyo" ? theme.secondary
@@ -3771,66 +4059,256 @@ struct Workspace::Impl
     }
     void drawSpectrum(juce::Graphics &g, Rect r, bool history)
     {
-        r = r.reduced(6);
-        const auto captionInk = theme.display.contrasting(.8f);
-        if (spectrumDb.empty())
-        {
-            text(g, theme, "Awaiting live audio", r, 11, captionInk, false,
-                 juce::Justification::centred);
-            return;
-        }
-        auto graph = r.withTrimmedBottom(15);
+        const bool externalAxes = theme.style == "ivory" || theme.style == "clear" ||
+                                  theme.style == "live";
+        const auto axisInk = externalAxes ? theme.text : theme.display.contrasting(.8f);
+        const auto leftInset = theme.style == "spectral" ? 32.f : 28.f;
+        auto graph = externalAxes ? r.reduced(1)
+                     : Rect(r.getX() + leftInset, r.getY() + 5,
+                            std::max(1.f, r.getWidth() - leftInset -
+                                              (theme.style == "precision" ? 9.f : 1.f)),
+                            std::max(1.f, r.getHeight() - 15));
+        const auto top = std::clamp(processor.getSampleRate() * .5, 20.001, 20000.0);
+        const auto frequencyPosition = [top](float hz) {
+            return static_cast<float>(std::log(std::clamp<double>(hz, 20, top) / 20.0) /
+                                      std::log(top / 20.0));
+        };
+        const auto frequencyCaption = [](float hz) {
+            return hz >= 1000 ? juce::String(static_cast<int>(hz / 1000)) + "k"
+                              : juce::String(static_cast<int>(hz));
+        };
+        g.setColour(theme.display);
+        g.fillRect(graph);
+        const std::array<float, 10> frequencies{20, 50, 100, 200, 500, 1000, 2000, 5000,
+                                                10000, 20000};
         if (history)
         {
-            // Columns are actual captured FFT frames, oldest left. Empty time stays blank.
-            const auto columnWidth = graph.getWidth() / 64.f;
-            for (size_t frame = 0; frame < spectrumHistory.size(); ++frame)
+            if (!spectrumHistory.empty())
             {
-                const auto &bins = spectrumHistory[frame];
-                for (size_t bin = 0; bin < bins.size(); ++bin)
+                const double latest = spectrumHistoryTimes.back();
+                for (size_t frame = 0; frame < spectrumHistory.size(); ++frame)
                 {
-                    const float strength = std::clamp((bins[bin] + 90.f) / 78.f, 0.f, 1.f);
-                    auto color = theme.display.interpolatedWith(theme.secondary,
-                                                                std::min(1.f, strength * 1.6f));
-                    if (strength > .6f)
-                        color = color.interpolatedWith(theme.accent, (strength - .6f) * 2.5f);
-                    g.setColour(color);
-                    g.fillRect(Rect(graph.getX() + frame * columnWidth,
-                                    graph.getBottom() - (bin + 1) * graph.getHeight() / bins.size(),
-                                    columnWidth + .5f, graph.getHeight() / bins.size() + .5f));
+                    const auto &bins = spectrumHistory[frame];
+                    const double end = spectrumHistoryTimes[frame];
+                    const double start = frame ? spectrumHistoryTimes[frame - 1]
+                                               : end - outputHistory.size() /
+                                                           std::max(1.0, capturedSampleRate);
+                    const auto x1 = graph.getX() + graph.getWidth() *
+                        static_cast<float>(std::clamp((start - latest + 8.0) / 8.0, 0.0, 1.0));
+                    const auto x2 = graph.getX() + graph.getWidth() *
+                        static_cast<float>(std::clamp((end - latest + 8.0) / 8.0, 0.0, 1.0));
+                    for (size_t bin = 0; bin < bins.size(); ++bin)
+                    {
+                        const float strength = std::clamp((bins[bin] + 96.f) / 96.f, 0.f, 1.f);
+                        auto colour = theme.display;
+                        if (theme.style == "clear")
+                        {
+                            const std::array<juce::Colour, 6> heat{
+                                juce::Colour(0xff11122e), juce::Colour(0xff163d92),
+                                juce::Colour(0xff02adbd), juce::Colour(0xff48d868),
+                                juce::Colour(0xffffe542), juce::Colour(0xffff5734)};
+                            const auto at = std::min(4, static_cast<int>(strength * 5));
+                            colour = heat[at].interpolatedWith(heat[at + 1], strength * 5 - at);
+                        }
+                        else
+                        {
+                            colour = theme.display.interpolatedWith(theme.accent,
+                                                                    std::min(1.f, strength * 1.7f));
+                            if (strength > .48f)
+                                colour = colour.interpolatedWith(theme.secondary,
+                                                                 (strength - .48f) / .52f);
+                        }
+                        g.setColour(colour);
+                        g.fillRect(Rect(x1, graph.getBottom() - (bin + 1) * graph.getHeight() /
+                                                                       bins.size(),
+                                        std::max(.25f, x2 - x1),
+                                        graph.getHeight() / bins.size() + .15f));
+                    }
                 }
             }
+            for (const auto hz : frequencies)
+            {
+                if (hz > top || (theme.style == "live" && hz != 20 && hz != 50 && hz != 200 &&
+                                 hz != 1000 && hz != 5000 && hz != 20000))
+                    continue;
+                const auto y = graph.getBottom() - graph.getHeight() * frequencyPosition(hz);
+                g.setColour(axisInk.withAlpha(.12f));
+                g.drawLine(graph.getX(), y, graph.getRight(), y, .5f);
+                const bool right = theme.style == "live";
+                text(g, theme, frequencyCaption(hz),
+                     {right ? graph.getRight() + 7 : graph.getX() - 34, y - 6,
+                      right ? 38.f : 29.f, 12}, theme.style == "clear" ? 10.f : 9.f,
+                     axisInk, theme.style == "clear",
+                     right ? juce::Justification::centredRight : juce::Justification::centredRight);
+            }
+            if (theme.style != "live")
+                for (int second = -8; second <= 0; ++second)
+                {
+                    const auto x = graph.getX() + graph.getWidth() * (second + 8) / 8.f;
+                    text(g, theme, second ? juce::String(second) + " s" : "0",
+                         {x - 18, graph.getBottom() + 3, 36, 12},
+                         theme.style == "clear" ? 10.f : 9.f, axisInk,
+                         theme.style == "clear", juce::Justification::centred);
+                }
         }
         else
         {
-            juce::Path path;
-            for (size_t i = 0; i < spectrumDb.size(); ++i)
+            for (int db = 0; db >= -96; db -= 12)
             {
-                const auto x = graph.getX() + graph.getWidth() * i / (spectrumDb.size() - 1);
-                const auto y =
-                    graph.getBottom() -
-                    graph.getHeight() * std::clamp((spectrumDb[i] + 96.f) / 108.f, 0.f, 1.f);
+                const auto y = graph.getY() - db * graph.getHeight() / 96.f;
+                g.setColour(axisInk.withAlpha(.16f));
+                g.drawLine(graph.getX(), y, graph.getRight(), y, .5f);
+                text(g, theme, juce::String(db), {graph.getX() - 31, y - 6, 25, 12},
+                     9.5f, axisInk, false, juce::Justification::centredRight);
+            }
+            for (const auto hz : frequencies)
+            {
+                if (hz > top)
+                    continue;
+                const auto x = graph.getX() + graph.getWidth() * frequencyPosition(hz);
+                g.setColour(axisInk.withAlpha(.12f));
+                g.drawLine(x, graph.getY(), x, graph.getBottom(), .5f);
+                text(g, theme, frequencyCaption(hz), {x - 15, graph.getBottom() + 3, 30, 12},
+                     theme.style == "ivory" ? 10.f : 9.f, axisInk, false,
+                     juce::Justification::centred);
+            }
+            if (!spectrumDb.empty())
+            {
+                juce::Path path;
+                for (size_t i = 0; i < spectrumDb.size(); ++i)
+                {
+                    const auto x = graph.getX() + graph.getWidth() * i / (spectrumDb.size() - 1);
+                    const auto y = graph.getBottom() - graph.getHeight() *
+                        std::clamp((spectrumDb[i] + 96.f) / 96.f, 0.f, 1.f);
+                    if (i == 0)
+                        path.startNewSubPath(x, y);
+                    else
+                        path.lineTo(x, y);
+                }
+                auto fill = path;
+                fill.lineTo(graph.getBottomRight());
+                fill.lineTo(graph.getBottomLeft());
+                fill.closeSubPath();
+                const auto ink = theme.style == "clear" ? theme.accent : theme.secondary;
+                if (theme.style == "spectral")
+                    g.setGradientFill(juce::ColourGradient(theme.secondary.withAlpha(.65f),
+                        graph.getTopLeft(), theme.accent.withAlpha(.5f), graph.getTopRight(), false));
+                else
+                    g.setGradientFill(juce::ColourGradient(ink.withAlpha(.55f), graph.getTopLeft(),
+                        ink.withAlpha(.08f), graph.getBottomLeft(), false));
+                g.fillPath(fill);
+                if (theme.style == "spectral")
+                    g.setGradientFill(juce::ColourGradient(theme.secondary, graph.getTopLeft(),
+                        theme.accent, graph.getTopRight(), false));
+                else
+                    g.setColour(ink);
+                g.strokePath(path, juce::PathStrokeType(1.4f));
+            }
+        }
+        if (spectrumDb.empty())
+            text(g, theme, "Awaiting live audio", graph.reduced(5), 11,
+                 theme.display.contrasting(.8f), false, juce::Justification::centred);
+    }
+    void drawScope(juce::Graphics &g, Rect r, bool vectorscope)
+    {
+        r = r.reduced(8);
+        if (vectorscope)
+        {
+            const auto side = std::min(r.getWidth(), r.getHeight() - 16);
+            const auto graph = r.withSizeKeepingCentre(side, side).withY(r.getY());
+            const auto centre = graph.getCentre();
+            const auto radius = side * .46f;
+            g.setColour(theme.secondary.withAlpha(.18f));
+            g.drawEllipse(graph.reduced(side * .04f), 1);
+            g.drawLine(centre.x - radius, centre.y, centre.x + radius, centre.y);
+            g.drawLine(centre.x, centre.y - radius, centre.x, centre.y + radius);
+            const auto count = std::min(stereoOutput[0].size(), stereoOutput[1].size());
+            if (count > 1)
+            {
+                juce::Path path;
+                for (size_t i = 0; i < count; ++i)
+                {
+                    // Mid/side projection: mono rises vertically, opposite
+                    // polarity runs horizontally, with no invented rotation.
+                    const auto left = stereoOutput[0][i], right = stereoOutput[1][i];
+                    const auto x = centre.x + radius * std::clamp((right - left) * .5f, -1.f, 1.f);
+                    const auto y = centre.y - radius * std::clamp((left + right) * .5f, -1.f, 1.f);
+                    if (i == 0)
+                        path.startNewSubPath(x, y);
+                    else
+                        path.lineTo(x, y);
+                }
+                g.setColour(theme.secondary.withAlpha(.85f));
+                g.strokePath(path, juce::PathStrokeType(1.1f));
+            }
+            text(g, theme, count ? utf8("L / R  ·  mid / side") : "Awaiting live audio",
+                 r.removeFromBottom(15), 10,
+                 theme.display.contrasting(.8f), false, juce::Justification::centred);
+            return;
+        }
+        auto graph = r.withTrimmedBottom(15);
+        g.setColour(theme.secondary.withAlpha(.22f));
+        g.drawLine(graph.getX(), graph.getCentreY(), graph.getRight(), graph.getCentreY());
+        for (int channel = 0; channel < 2; ++channel)
+        {
+            const auto &samples = stereoOutput[channel];
+            if (samples.size() < 2)
+                continue;
+            juce::Path path;
+            for (size_t i = 0; i < samples.size(); ++i)
+            {
+                const auto x = graph.getX() + graph.getWidth() * i / (samples.size() - 1);
+                const auto y = graph.getCentreY() - graph.getHeight() * .47f *
+                    std::clamp(samples[i], -1.f, 1.f);
                 if (i == 0)
                     path.startNewSubPath(x, y);
                 else
                     path.lineTo(x, y);
             }
-            auto fill = path;
-            fill.lineTo(graph.getBottomRight());
-            fill.lineTo(graph.getBottomLeft());
-            fill.closeSubPath();
-            const auto ink = theme.style == "clear" ? theme.accent : theme.secondary;
-            g.setGradientFill(juce::ColourGradient(ink.withAlpha(.45f), graph.getTopLeft(),
-                                                   ink.withAlpha(.025f), graph.getBottomLeft(),
-                                                   false));
-            g.fillPath(fill);
-            g.setColour(ink);
-            g.strokePath(path, juce::PathStrokeType(1.4f));
+            g.setColour((channel ? theme.accent : theme.secondary).withAlpha(.85f));
+            g.strokePath(path, juce::PathStrokeType(1.3f));
         }
-        text(g, theme,
-             utf8(history ? "Live STFT • time → / log frequency ↑"
-                          : "20 Hz     100     1k     10k     • dBFS"),
-             r.removeFromBottom(13), 9, captionInk, false, juce::Justification::centred);
+        const auto count = std::min(stereoOutput[0].size(), stereoOutput[1].size());
+        const auto duration = count ? (count - 1) * 1000.0 / std::max(1.0, capturedSampleRate) : 0.0;
+        text(g, theme, count ? utf8("L / R  ·  ") + juce::String(duration, 1) + " ms" : "Awaiting live audio",
+             r.removeFromBottom(15), 10, theme.display.contrasting(.8f), false,
+             juce::Justification::centred);
+    }
+    void drawStereoBands(juce::Graphics &g, Rect r)
+    {
+        g.setColour(juce::Colour(0xff20201a));
+        g.fillRoundedRectangle(r, 5);
+        const auto graph = r.reduced(12, 18).withTrimmedRight(24);
+        const auto width = (graph.getWidth() - 16.f) * .5f;
+        const auto ivory = juce::Colour(0xfffff5d2), yellow = juce::Colour(0xffffd91c);
+        for (int db : {0, -6, -12, -18, -24, -36, -48})
+        {
+            const auto y = graph.getY() - db * graph.getHeight() / 48.f;
+            g.setColour(ivory.withAlpha(.28f));
+            const float dash[]{6.f, 3.f};
+            g.drawDashedLine(juce::Line<float>(graph.getX(), y, graph.getRight(), y), dash, 2, .7f);
+            text(g, theme, juce::String(db), {graph.getRight() + 6, y - 6, 24, 12}, 9,
+                 ivory, false, juce::Justification::centredRight);
+        }
+        for (int channel = 0; channel < 2; ++channel)
+        {
+            const auto &bins = stereoSpectrumDb[channel];
+            const auto x = graph.getX() + channel * (width + 16.f);
+            for (size_t band = 0; band < 8; ++band)
+            {
+                float db = -96;
+                for (size_t i = band * bins.size() / 8; i < (band + 1) * bins.size() / 8; ++i)
+                    db = std::max(db, bins[i]);
+                const auto height = graph.getHeight() * std::clamp((db + 48.f) / 48.f, 0.f, 1.f);
+                const Rect bar(x + band * width / 8.f, graph.getBottom() - height,
+                               std::max(1.f, width / 8.f - 3.f), height);
+                g.setGradientFill(juce::ColourGradient(ivory, graph.getTopLeft(), yellow,
+                                                       graph.getBottomLeft(), false));
+                g.fillRect(bar);
+            }
+            text(g, theme, channel ? "R" : "L", {x, graph.getBottom() + 3, width, 14}, 11,
+                 ivory, true, juce::Justification::centred);
+        }
     }
     void drawMeters(juce::Graphics &g, Rect r, bool horizontal = false)
     {
@@ -3864,7 +4342,13 @@ struct Workspace::Impl
             }
             return;
         }
-        const float gap = std::max(3.f, r.getWidth() * .15f);
+        if (r.getWidth() < 6 || r.getHeight() < 20)
+            return;
+        const bool continuous = theme.style == "ivory" || theme.style == "spectral" ||
+                                theme.style == "clear" || theme.style == "live";
+        const bool labelsAbove = theme.style == "clear" || theme.style == "spectral";
+        const float gap = theme.style == "ivory" ? std::min(14.f, r.getWidth() * .4f)
+                                                 : std::max(3.f, r.getWidth() * .15f);
         float w = (r.getWidth() - gap) / 2;
         for (int ch = 0; ch < 2; ++ch)
         {
@@ -3874,15 +4358,44 @@ struct Workspace::Impl
             auto peak = ch ? visuals.right : visuals.left;
             float proportion =
                 peak > 0 ? std::clamp((20.f * std::log10(peak) + 60) / 60, 0.f, 1.f) : 0;
-            for (int s = 0; s < 24; ++s)
+            if (continuous)
+            {
+                auto active = bar.reduced(theme.style == "clear" ? 2.f : 1.f);
+                active = active.removeFromBottom(active.getHeight() * proportion);
+                auto bottom = theme.style == "ivory" ? juce::Colour(0xff58c546)
+                              : theme.style == "spectral" ? theme.secondary : theme.accent;
+                auto top = theme.style == "ivory" ? juce::Colour(0xffe5e66a)
+                           : theme.style == "spectral" ? theme.accent
+                           : theme.accent.interpolatedWith(juce::Colours::white, .65f);
+                g.setGradientFill(juce::ColourGradient(top, bar.getTopLeft(), bottom,
+                                                       bar.getBottomLeft(), false));
+                g.fillRect(active);
+                g.setColour((theme.style == "clear" ? theme.accent : theme.border).withAlpha(.85f));
+                g.drawRoundedRectangle(bar, 1, theme.style == "clear" ? 2.f : .7f);
+            }
+            else for (int s = 0; s < 24; ++s)
             {
                 float y = bar.getBottom() - (s + 1) * bar.getHeight() / 24;
-                g.setColour((s > 20 ? theme.secondary : theme.accent)
+                const auto colour = theme.style == "precision"
+                                        ? (s > 16 ? theme.accent : theme.secondary)
+                                        : (s > 20 ? theme.secondary : theme.accent);
+                g.setColour(colour
                                 .withAlpha((s / 24.f < proportion) ? 1.f : .1f));
                 g.fillRect(Rect(bar.getX() + 2, y + 1, w - 4, bar.getHeight() / 24 - 2));
             }
-            text(g, theme, ch ? "R" : "L", {bar.getX(), bar.getBottom() + 2, w, 14}, 10,
-                 theme.muted, false, juce::Justification::centred);
+            if (peak >= 1.f)
+            {
+                g.setColour(theme.red);
+                g.fillRect(bar.withHeight(2));
+            }
+            const auto caption = theme.style == "ivory"
+                ? (peak > 0 ? juce::String(20.f * std::log10(peak), 1) : utf8("−∞"))
+                : juce::String(ch ? "R" : "L");
+            text(g, theme, caption,
+                 {bar.getCentreX() - std::max(w, 27.f) * .5f,
+                  labelsAbove ? bar.getY() - 16 : bar.getBottom() + 2,
+                  std::max(w, 27.f), 14}, theme.style == "ivory" ? 9.5f : 10.f,
+                 theme.text, false, juce::Justification::centred);
         }
     }
     void drawPanel(juce::Graphics &g, const juce::var &v)
@@ -3890,7 +4403,12 @@ struct Workspace::Impl
         auto r = bounds(v);
         auto kind = string(v, "kind"), variant = string(v, "variant");
         auto fill = v.hasProperty("color") ? theme.color(string(v, "color")) : theme.panel;
-        bezel(g, theme, r, fill);
+        const auto panelId = string(v, "id");
+        const bool connectedLivePanel = theme.style == "live" &&
+            (panelId == "p.wave" || panelId == "p.xy" || panelId == "p.scene-level" ||
+             panelId == "p.filter-chain");
+        if (!connectedLivePanel)
+            bezel(g, theme, r, fill);
         int index = std::max(1, static_cast<int>(number(v, "index", 1)));
         bool lfoEnvelope = static_cast<bool>(v["envelope"]);
         const auto selected = selectedPanelChoice(v);
@@ -3947,8 +4465,15 @@ struct Workspace::Impl
         else if (kind == "effects")
             titleBounds.setWidth(std::max(25.f, titleBounds.getWidth() - 110.f));
         else if (kind == "analyzer")
-            titleBounds.setWidth(
-                std::max(25.f, titleBounds.getWidth() - (r.getWidth() < 320 ? 54.f : 92.f)));
+        {
+            const auto modeTabs = arrayRect(v["analyzerModesRect"], {});
+            if (!modeTabs.isEmpty() && modeTabs.intersects(titleBounds))
+                titleBounds.setRight(std::max(titleBounds.getX(), modeTabs.getX() - 8));
+            else if (modeTabs.isEmpty() && theme.style != "spectral" &&
+                     theme.style != "bauhaus" && theme.style != "flow")
+                titleBounds.setWidth(
+                    std::max(25.f, titleBounds.getWidth() - (r.getWidth() < 320 ? 54.f : 92.f)));
+        }
         const auto tabs = arrayRect(v["selection"]["tabsRect"], {});
         const auto titleHeight = number(v, "titleHeight", 24);
         if (!tabs.isEmpty() && tabs.intersects(titleBounds) &&
@@ -4081,21 +4606,55 @@ struct Workspace::Impl
         }
         else if (kind == "analyzer")
         {
-            auto meter = content.removeFromRight(std::min(45.f, content.getWidth() * .15f));
-            drawMeters(g, meter.reduced(4));
-            pr = arrayRect(v["plot"], content.reduced(3));
-            plotBase(g, pr);
-            if (variant != "scope")
-                drawSpectrum(g, pr, variant == "spectrogram");
-            else if (!visuals.output.empty())
-                Visuals::waveform(g, pr.reduced(5), visuals.output, theme.secondary, theme.accent,
-                                  false);
+            const auto mode = analyzerMode(v);
+            pr = arrayRect(v["plot"], content.withTrimmedRight(45).reduced(3));
+            if (theme.style == "bauhaus")
+                drawStereoBands(g, pr);
             else
             {
-                g.setColour(theme.secondary.withAlpha(.5f));
-                g.drawLine(pr.getX() + 5, pr.getCentreY(), pr.getRight() - 5, pr.getCentreY());
-                text(g, theme, "Awaiting live output", pr.reduced(9).removeFromBottom(23), 10,
-                     theme.muted, false, juce::Justification::centred);
+                plotBase(g, pr);
+                if (mode == "spectrum" || mode == "waterfall")
+                    drawSpectrum(g, pr, mode == "waterfall");
+                else if (mode == "scope" || mode == "vectorscope")
+                    drawScope(g, pr, mode == "vectorscope");
+                else if (mode == "meter")
+                    drawMeters(g, pr.reduced(std::max(20.f, pr.getWidth() * .34f), 10));
+                if (theme.style == "ivory")
+                {
+                    const Rect meters(pr.getRight() + 28, pr.getY() - 3, 34,
+                                      pr.getHeight() + 16);
+                    text(g, theme, "OUT", meters.withY(meters.getY() - 30).withHeight(20),
+                         12, theme.text, false, juce::Justification::centred);
+                    drawMeters(g, meters);
+                }
+                else if (theme.style == "precision")
+                    drawMeters(g, {pr.getRight() + 9, pr.getY() - 34,
+                                   std::max(10.f, r.getRight() - pr.getRight() - 21),
+                                   pr.getHeight() + 42});
+                else if (theme.style == "spectral")
+                    drawMeters(g, {pr.getRight() + 17, pr.getY(), 30, pr.getHeight() + 9});
+                else if (theme.style != "clear" && theme.style != "live")
+                    drawMeters(g, content.removeFromRight(std::min(45.f, content.getWidth() * .15f))
+                                      .reduced(4));
+            }
+        }
+        else if (kind == "xy" && theme.style == "live")
+        {
+            // The pad's mouse hit area is unchanged. These labels sit beneath
+            // its declared plot and always describe the actual macro axes.
+            auto footer = Rect(pr.getX() - 9, pr.getBottom() + 10, pr.getWidth() + 18, 18);
+            const auto width = footer.getWidth() * .5f;
+            for (int axis = 0; axis < 2; ++axis)
+            {
+                const auto binding = axis ? "macro2" : "macro1";
+                auto cell = footer.removeFromLeft(width).reduced(3, 0);
+                auto value = cell.removeFromRight(35);
+                text(g, theme, juce::String(axis ? "Y: " : "X: ") + parameters.label(binding),
+                     cell, 9.5f, theme.text, false, juce::Justification::centredRight);
+                bezel(g, theme, value.reduced(2, 1), theme.display, 4);
+                text(g, theme, juce::String(parameters.value(binding), 2), value, 10,
+                     theme.accent.interpolatedWith(juce::Colours::white, .55f), false,
+                     juce::Justification::centred);
             }
         }
         else if (kind == "output")
@@ -4467,11 +5026,6 @@ struct Workspace::Impl
             const auto row = status.getHeight() / lines.size();
             for (const auto &line : lines)
                 text(g, theme, line, status.removeFromTop(row), 11.5f, theme.secondary);
-        }
-        else if (kind == "keyboard")
-        {
-            text(g, theme, utf8("Playable MIDI keyboard  •  native scene modes available above"),
-                 content.withHeight(23), 12, theme.muted);
         }
         if (theme.style == "ivory")
         {

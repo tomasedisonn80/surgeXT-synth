@@ -404,7 +404,19 @@
         302,
         176
       ],
-      "fontSize": 15.5
+      "fontSize": 15.5,
+      "analyzerModesRect": [
+        1210,
+        708,
+        282,
+        26
+      ],
+      "analyzerModes": [
+        "spectrum",
+        "waterfall",
+        "scope"
+      ],
+      "analyzerDefault": "spectrum"
     }
   ],
   "controls": [

@@ -9,6 +9,7 @@ add_executable(${PROJECT_NAME}
         XTTestReferenceWavetables.cpp
         XTTestReferenceManifest.cpp
         XTTestReferencePreviews.cpp
+        XTTestReferenceAnalyzer.cpp
   )
 
 # Absolute source lookup keeps native skin tests runnable from any build directory.

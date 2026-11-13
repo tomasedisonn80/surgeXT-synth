@@ -35,7 +35,7 @@ constexpr int referenceWidth = 1586;
 constexpr int referenceHeight = 992;
 constexpr int sampleBlock = 512;
 constexpr double sampleRate = 48000.0;
-constexpr int showcaseAudioBlocks = 256;
+constexpr int showcaseAudioBlocks = 768;
 
 juce::File sourceRoot() { return juce::File(juce::String(SURGE_REFERENCE_SOURCE_DIR)); }
 
@@ -314,18 +314,194 @@ void property(juce::var &object, const char *key, const juce::var &value)
     values. It makes the capture exercise active oscillators, filters, FX and
     modulation rows. Only this test-owned processor is changed; choosing a skin
     in the application never installs the fixture or changes a user's patch. */
-juce::var configureShowcaseFixture(SurgeSynthProcessor &processor)
+juce::var configureShowcaseFixture(SurgeSynthProcessor &processor,
+                                  const juce::String &skinId = {})
 {
+    // These are real demonstration patches for this isolated capture process.
+    // Their labels and plots come from the native patch and loaded audio data.
+    struct Profile
+    {
+        const char *name{"Reference Showcase"};
+        const char *wavetable{"Spectral Sweep"};
+        const char *thirdWavetable{nullptr};
+        int secondOscillator{ot_FM2};
+        int thirdOscillator{ot_classic};
+        int routing{fc_dual1};
+        int firstFilter{sst::filters::fut_lp24};
+        int secondFilter{sst::filters::fut_bp12};
+        float position{.37f}, verticalSkew{.12f};
+        float secondLevelDb{-3.f}, thirdLevelDb{-6.f};
+        bool noiseEnabled{false};
+        float noiseLevelDb{-18.f};
+        float firstCutoffHz{1420.f}, secondCutoffHz{3780.f};
+        float firstResonance{.27f}, secondResonance{.61f};
+        std::array<float, 4> ampEnvelope{.005f, .2f, .8f, .32f};
+        std::array<float, 4> filterEnvelope{.005f, .2f, .7f, .32f};
+        float lfoHz{.70710678f};
+        int lfoShape{lt_sine};
+        std::array<const char *, 8> macroNames{"Tone", "Shape", "Color", "Width",
+                                                "Motion", "FM", "Release", "Drive"};
+        std::array<float, 8> macroValues{.72f, .48f, .81f, .67f, .35f, .56f, .27f, .43f};
+        std::array<int, 8> effects{fxt_distortion, fxt_chorus4, fxt_phaser, fxt_eq,
+                                    fxt_delay, fxt_reverb2, fxt_conditioner, fxt_eq};
+    } profile;
+    const auto skinNumber = skinId.substring(0, 2).getIntValue();
+    if (skinNumber >= 1 && skinNumber <= 10)
+        profile.effects = {fxt_distortion, fxt_chorus4, fxt_phaser, fxt_delay,
+                           fxt_reverb2, fxt_eq, fxt_conditioner, fxt_eq};
+    switch (skinNumber)
+    {
+    case 1:
+        profile.name = "Init";
+        profile.routing = fc_serial1;
+        profile.macroNames = {"Tone", "Edge", "Drive", "Space", "Motion", "Width", "Env Amt", "FX Mix"};
+        break;
+    case 2:
+        profile.name = "Init";
+        profile.wavetable = "Analog Stack";
+        profile.thirdWavetable = "VocalFormant A";
+        profile.thirdOscillator = ot_wavetable;
+        profile.routing = fc_serial1;
+        profile.effects = {fxt_chorus4, fxt_delay, fxt_reverb2, fxt_distortion,
+                           fxt_eq, fxt_conditioner, fxt_phaser, fxt_eq};
+        profile.macroNames = {"Tone", "Motion", "Color", "Space", "Drive", "Width", "Attack", "Release"};
+        break;
+    case 3:
+        profile.name = "Init";
+        profile.wavetable = "Spectral Bloom";
+        profile.position = .723f;
+        profile.verticalSkew = .412f;
+        profile.firstCutoffHz = 1740.f;
+        profile.secondCutoffHz = 7400.f;
+        profile.secondFilter = sst::filters::fut_lpmoog;
+        profile.macroNames = {"Atmos", "Motion", "Color", "Space", "Drive", "FX Mix", "Width", "Release"};
+        break;
+    case 4:
+        profile.name = "Bauhaus Harmonic Lab";
+        profile.wavetable = "Bauhaus Waves";
+        profile.secondLevelDb = -4.6f;
+        profile.thirdLevelDb = -2.1f;
+        profile.macroNames = {"Harmonic", "Motion", "Texture", "Space", "Drive", "Color", "Width", "FX Mix"};
+        break;
+    case 5:
+        profile.name = "Space-Age Instrument 1977";
+        profile.wavetable = "Orbiting Saw";
+        profile.position = .347f;
+        profile.firstCutoffHz = 1800.f;
+        profile.secondCutoffHz = 720.f;
+        profile.firstResonance = .32f;
+        profile.secondResonance = .68f;
+        profile.secondLevelDb = -3.2f;
+        profile.ampEnvelope = {.002f, .18f, 1.f, .42f};
+        profile.filterEnvelope = {.005f, .48f, .72f, 1.2f};
+        profile.lfoHz = .25f;
+        profile.macroNames = {"Brightness", "Motion", "Space", "Vintage", "Color", "Width", "Attack", "Release"};
+        break;
+    case 6:
+        profile.name = "Tokyo Bass Sequence";
+        profile.wavetable = "JT Saw RM";
+        profile.position = .412f;
+        profile.secondOscillator = ot_classic;
+        profile.thirdOscillator = ot_FM2;
+        profile.routing = fc_serial1;
+        profile.firstFilter = sst::filters::fut_lpmoog;
+        profile.firstCutoffHz = 2400.f;
+        profile.secondCutoffHz = 560.f;
+        profile.firstResonance = .72f;
+        profile.secondResonance = .46f;
+        profile.secondLevelDb = -3.1f;
+        profile.ampEnvelope = {.005f, .198f, .78f, .382f};
+        profile.filterEnvelope = {.0032f, .42f, .42f, 1.2f};
+        profile.lfoShape = lt_tri;
+        profile.lfoHz = 2.f;
+        profile.effects[6] = fxt_off;
+        profile.effects[7] = fxt_off;
+        profile.macroNames = {"Macro 1", "Macro 2", "Macro 3", "Macro 4", "Macro 5", "Macro 6", "Macro 7", "Macro 8"};
+        profile.macroValues = {.64f, 0.f, .27f, .82f, .50f, 0.f, .36f, .71f};
+        break;
+    case 7:
+        profile.name = "Liquid Aurora";
+        profile.wavetable = "Aurora Waves";
+        profile.thirdWavetable = "VocalFormant A";
+        profile.secondOscillator = ot_classic;
+        profile.thirdOscillator = ot_wavetable;
+        profile.position = .38f;
+        profile.verticalSkew = .62f;
+        profile.firstFilter = sst::filters::fut_lp12;
+        profile.secondFilter = sst::filters::fut_comb_pos;
+        profile.firstCutoffHz = 4200.f;
+        profile.secondCutoffHz = 1370.f;
+        profile.firstResonance = .36f;
+        profile.secondResonance = .71f;
+        profile.secondLevelDb = -3.1f;
+        profile.thirdLevelDb = -4.6f;
+        profile.noiseEnabled = true;
+        profile.macroNames = {"Brightness", "Motion", "Color", "Space", "Grit", "Ensemble", "Attack", "Release"};
+        break;
+    case 8:
+        profile.name = "ClearSignal Pad";
+        profile.wavetable = "Glass Sweep";
+        profile.thirdWavetable = "VocalFormant A";
+        profile.thirdOscillator = ot_wavetable;
+        profile.routing = fc_serial1;
+        profile.secondFilter = sst::filters::fut_hp12;
+        profile.secondCutoffHz = 4760.f;
+        profile.firstResonance = .34f;
+        profile.secondResonance = .22f;
+        profile.secondLevelDb = -1.2f;
+        profile.thirdLevelDb = -3.f;
+        profile.noiseEnabled = true;
+        profile.noiseLevelDb = -12.f;
+        profile.ampEnvelope = {.12f, 1.2f, .76f, 2.8f};
+        profile.lfoHz = .25f;
+        profile.effects = {fxt_eq, fxt_distortion, fxt_chorus4, fxt_phaser,
+                           fxt_delay, fxt_reverb2, fxt_conditioner, fxt_eq};
+        profile.macroNames = {"Brightness", "Motion", "Texture", "Space", "Drive", "Width", "Attack", "Release"};
+        break;
+    case 9:
+        profile.name = "Evolving Glass Engine";
+        profile.wavetable = "Glass Sweep";
+        profile.thirdWavetable = "VocalFormant A";
+        profile.thirdOscillator = ot_wavetable;
+        profile.firstCutoffHz = 4200.f;
+        profile.firstResonance = .36f;
+        profile.ampEnvelope = {.012f, .476f, .68f, 1.48f};
+        profile.lfoHz = .25f;
+        profile.effects = {fxt_chorus4, fxt_delay, fxt_reverb2, fxt_distortion,
+                           fxt_eq, fxt_conditioner, fxt_phaser, fxt_off};
+        profile.macroNames = {"Motion", "Texture", "Harmonics", "Space", "Width", "Time", "Drive", "Tone"};
+        profile.macroValues = {.74f, .62f, .38f, .81f, .66f, .47f, .21f, .58f};
+        break;
+    case 10:
+        profile.name = "Evolving Horizons";
+        profile.wavetable = "GlassWavetable 03";
+        profile.thirdWavetable = "VocalFormant A";
+        profile.thirdOscillator = ot_wavetable;
+        profile.routing = fc_serial1;
+        profile.firstFilter = sst::filters::fut_lpmoog;
+        profile.firstCutoffHz = 1360.f;
+        profile.secondCutoffHz = 4780.f;
+        profile.firstResonance = .28f;
+        profile.secondResonance = .62f;
+        profile.secondLevelDb = -2.4f;
+        profile.thirdLevelDb = -1.8f;
+        profile.noiseEnabled = true;
+        profile.ampEnvelope = {.0124f, .62f, .74f, 1.52f};
+        profile.lfoHz = .28f;
+        profile.macroNames = {"Drive", "Motion", "Formant", "Space", "Color", "Width", "FX Mix", "Evolve"};
+        break;
+    default:
+        break;
+    }
     auto &synth = *processor.surge;
     REQUIRE_FALSE(synth.audio_processing_active.load());
     const auto templatePath = "resources/data/patches_factory/Templates/Init Wavetable.fxp";
-    const auto wavetablePath = "resources/data/wavetables/Generated/Formants.wt";
+    const auto wavetableDirectory = "resources/data/wavetables/Reference Showcases/";
+    const auto wavetablePath = juce::String(wavetableDirectory) + profile.wavetable + ".wt";
     const auto initialPatch = sourceRoot().getChildFile(templatePath);
-    const auto wavetable = sourceRoot().getChildFile(wavetablePath);
     REQUIRE(initialPatch.existsAsFile());
-    REQUIRE(wavetable.existsAsFile());
     REQUIRE(synth.loadPatchByPath(initialPatch.getFullPathName().toRawUTF8(), -1,
-                                  "Reference Showcase"));
+                                  profile.name));
     synth.processAudioThreadOpsWhenAudioEngineUnavailable();
     ParameterBridge bridge(processor);
     bridge.setScene(0);
@@ -369,76 +545,168 @@ juce::var configureShowcaseFixture(SurgeSynthProcessor &processor)
         REQUIRE(parameter->val.f == Catch::Approx(nativeValue).margin(.0001f));
         record(binding);
     };
+    const auto setDisplay = [&](const juce::String &binding, const juce::String &displayValue) {
+        CAPTURE(binding.toStdString(), displayValue.toStdString());
+        REQUIRE(bridge.enabled(binding));
+        juce::String error;
+        bridge.begin(binding);
+        const bool accepted = bridge.setText(binding, displayValue, error);
+        bridge.end(binding);
+        INFO(error.toStdString());
+        REQUIRE(accepted);
+        record(binding);
+    };
 
     select("osc1.type", ot_wavetable);
-    select("osc2.type", ot_FM2);
-    select("osc3.type", ot_classic);
+    select("osc2.type", profile.secondOscillator);
+    select("osc3.type", profile.thirdOscillator);
     auto &patch = synth.storage.getPatch();
     auto &scene = patch.scene[0];
-    synth.storage.load_wt(wavetable.getFullPathName().toStdString(), &scene.osc[0].wt,
-                          &scene.osc[0]);
-    REQUIRE(scene.osc[0].wt.n_tables > 1);
-    REQUIRE(scene.osc[0].wavetable_display_name == "Formants");
-    setNative("osc1.param0", .37f);
-    setNative("osc1.param1", .12f);
+    juce::Array<juce::var> wavetableSources;
+    const auto loadWavetable = [&](int oscillator, const char *name) {
+        const auto path = juce::String(wavetableDirectory) + name + ".wt";
+        const auto file = sourceRoot().getChildFile(path);
+        REQUIRE(file.existsAsFile());
+        auto &source = scene.osc[oscillator];
+        synth.storage.load_wt(file.getFullPathName().toStdString(), &source.wt, &source);
+        const bool largeTable = juce::String(name) == "Spectral Bloom";
+        REQUIRE(source.wt.SourceFrameCount() == (largeTable ? 256 : 48));
+        REQUIRE(source.wt.size == (largeTable ? 2048 : 512));
+        REQUIRE(source.wavetable_display_name == name);
+        auto metadata = object();
+        property(metadata, "oscillator", oscillator + 1);
+        property(metadata, "file", path);
+        property(metadata, "displayName", juce::String(source.wavetable_display_name));
+        property(metadata, "frames", source.wt.SourceFrameCount());
+        property(metadata, "samplesPerFrame", source.wt.size);
+        property(metadata, "fileBytes", file.getSize());
+        wavetableSources.add(metadata);
+    };
+    loadWavetable(0, profile.wavetable);
+    if (profile.thirdWavetable != nullptr)
+    {
+        loadWavetable(2, profile.thirdWavetable);
+        setNative("osc3.param0", .48f);
+    }
+    setNative("osc1.param0", profile.position);
+    setNative("osc1.param1", profile.verticalSkew);
     setNative("osc2.param0", .38f);
     for (int index = 1; index <= 3; ++index)
     {
         select("osc" + juce::String(index) + ".mute", 0);
         select("osc" + juce::String(index) + ".retrigger", 1);
     }
-    setNative("osc1.level", .68f);
-    setNative("osc2.level", .35f);
-    setNative("osc3.level", .22f);
-    select("osc3.octave", -1);
+    // Amplitude controls are not linear amplitudes: use their native dB parser.
+    setDisplay("osc1.level", "0 dB");
+    setDisplay("osc2.level", juce::String(profile.secondLevelDb) + " dB");
+    setDisplay("osc3.level", juce::String(profile.thirdLevelDb) + " dB");
+    if (profile.noiseEnabled)
+        setDisplay("noise.level", juce::String(profile.noiseLevelDb) + " dB");
+    else
+        setNative("noise.level", 0.f);
+    select("noise.mute", profile.noiseEnabled ? 0 : 1);
+    setNative("ring12.level", 0.f);
+    setNative("ring23.level", 0.f);
+    select("ring12.mute", 1);
+    select("ring23.mute", 1);
+    select("osc3.octave", skinNumber == 10 ? 1 : -1);
     setNative("scene.drift", 0.f);
-    select("routing", fc_dual1);
-    select("filter1.type", sst::filters::fut_lp24);
-    select("filter2.type", sst::filters::fut_bp12);
-    setNative("filter1.cutoff", 20.28f);
-    setNative("filter1.resonance", .27f);
-    setNative("filter2.cutoff", 37.23f);
-    setNative("filter2.resonance", .61f);
-    setNative("master.volume", -12.f);
+    select("routing", profile.routing);
+    select("filter1.type", profile.firstFilter);
+    select("filter2.type", profile.secondFilter);
+    setDisplay("filter1.cutoff", juce::String(profile.firstCutoffHz) + " Hz");
+    setNative("filter1.resonance", profile.firstResonance);
+    setDisplay("filter2.cutoff", juce::String(profile.secondCutoffHz) + " Hz");
+    setNative("filter2.resonance", profile.secondResonance);
+    setDisplay("scene.volume", "0 dB");
+    setDisplay("master.volume", "-6 dB");
     setNative("scene.width", .82f);
     for (int index = 1; index <= 2; ++index)
     {
         const auto prefix = "env" + juce::String(index) + ".";
-        setNative(prefix + "attack", std::log2(.005f));
-        setNative(prefix + "decay", std::log2(.2f));
-        setNative(prefix + "sustain", index == 1 ? .8f : .7f);
-        setNative(prefix + "release", std::log2(.32f));
+        const auto &values = index == 1 ? profile.ampEnvelope : profile.filterEnvelope;
+        setNative(prefix + "attack", std::log2(values[0]));
+        setNative(prefix + "decay", std::log2(values[1]));
+        setNative(prefix + "sustain", values[2]);
+        setNative(prefix + "release", std::log2(values[3]));
     }
-    select("lfo1.shape", lt_sine);
-    setNative("lfo1.rate", -.5f);
+    select("lfo1.shape", profile.lfoShape);
+    setNative("lfo1.rate", std::log2(profile.lfoHz));
     select("lfo1.trigmode", lm_keytrigger);
-    const std::array<int, 8> effects{fxt_distortion, fxt_chorus4, fxt_phaser,      fxt_eq,
-                                     fxt_delay,      fxt_reverb2, fxt_conditioner, fxt_eq};
-    for (size_t index = 0; index < effects.size(); ++index)
-        select("fx" + juce::String(static_cast<int>(index) + 1) + ".type", effects[index]);
+    for (size_t index = 0; index < profile.effects.size(); ++index)
+    {
+        const auto binding = "fx" + juce::String(static_cast<int>(index) + 1);
+        select(binding + ".type", profile.effects[index]);
+        if (profile.effects[index] == fxt_distortion)
+        {
+            // The initialized effect has 440 Hz pre/post high-cuts. Open both
+            // real filters so the demonstration retains audible upper partials.
+            setDisplay(binding + ".param3", "18000 Hz");
+            setDisplay(binding + ".param9", "18000 Hz");
+            setDisplay(binding + ".param4", "6 dB");
+            setDisplay(binding + ".param10", "-6 dB");
+        }
+        else if (profile.effects[index] == fxt_conditioner)
+            setDisplay(binding + ".param4", "-6 dB");
+    }
 
-    const std::array<const char *, 8> macroNames{"Tone",   "Shape", "Color",   "Width",
-                                                 "Motion", "FM",    "Release", "Drive"};
-    const std::array<const char *, 8> targets{"filter1.cutoff", "osc1.param0", "filter2.cutoff",
-                                              "scene.width",    "lfo1.rate",   "osc2.param0",
-                                              "env1.release",   "fx1.param0"};
-    const std::array<float, 8> macroValues{.72f, .48f, .81f, .67f, .35f, .56f, .27f, .43f};
+    std::array<juce::String, 8> targets{"filter1.cutoff", "osc1.param0", "filter2.cutoff",
+                                         "scene.width", "lfo1.rate", "osc2.param0",
+                                         "env1.release", "fx1.param0"};
+    const auto effectParameter = [&](int type, int parameter) {
+        const auto found = std::find(profile.effects.begin(), profile.effects.end(), type);
+        REQUIRE(found != profile.effects.end());
+        return "fx" + juce::String(static_cast<int>(found - profile.effects.begin()) + 1) +
+               ".param" + juce::String(parameter);
+    };
+    if (skinNumber >= 1 && skinNumber <= 10)
+        for (size_t index = 0; index < targets.size(); ++index)
+        {
+            // A named macro really controls the function named on its knob.
+            const juce::String label = profile.macroNames[index];
+            if (label == "Tone" || label == "Brightness")
+                targets[index] = "filter1.cutoff";
+            else if (label == "Color")
+                targets[index] = "filter2.cutoff";
+            else if (label == "Motion")
+                targets[index] = "lfo1.rate";
+            else if (label == "Drive" || label == "Grit" || label == "Edge" || label == "Vintage")
+                targets[index] = effectParameter(fxt_distortion, 4);
+            else if (label == "Space" || label == "Atmos")
+                targets[index] = effectParameter(fxt_reverb2, 9);
+            else if (label == "FX Mix")
+                targets[index] = effectParameter(fxt_chorus4, 6);
+            else if (label == "Ensemble")
+                targets[index] = effectParameter(fxt_chorus4, 2);
+            else if (label == "Width")
+                targets[index] = "scene.width";
+            else if (label == "Attack")
+                targets[index] = "env1.attack";
+            else if (label == "Release")
+                targets[index] = "env1.release";
+            else if (label == "Env Amt")
+                targets[index] = "filter1.envmod";
+            else if (label == "Time")
+                targets[index] = effectParameter(fxt_delay, 0);
+            else if (!label.startsWith("Macro "))
+                targets[index] = "osc1.param0";
+        }
     const std::array<float, 8> depths{.08f, .12f, .10f, .08f, .07f, .12f, .10f, .06f};
     juce::Array<juce::var> routes;
     for (int index = 0; index < 8; ++index)
     {
         const auto binding = "macro" + juce::String(index + 1);
-        juce::String(macroNames[index])
+        juce::String(profile.macroNames[index])
             .copyToUTF8(patch.CustomControllerLabel[index], CUSTOM_CONTROLLER_LABEL_SIZE);
-        edit(bridge, binding, macroValues[index]);
-        REQUIRE(bridge.value(binding) == Catch::Approx(macroValues[index]).margin(.0001f));
+        edit(bridge, binding, profile.macroValues[index]);
+        REQUIRE(bridge.value(binding) == Catch::Approx(profile.macroValues[index]).margin(.0001f));
         auto *target = bridge.parameter(targets[index]);
         REQUIRE(target != nullptr);
         REQUIRE(synth.setModDepth01(target->id, static_cast<modsources>(ms_ctrl1 + index), 0, 0,
                                     depths[index]));
         auto route = object();
         property(route, "macro", index + 1);
-        property(route, "label", macroNames[index]);
+        property(route, "label", profile.macroNames[index]);
         property(route, "target", targets[index]);
         property(route, "normalizedDepth", depths[index]);
         routes.add(route);
@@ -468,9 +736,13 @@ juce::var configureShowcaseFixture(SurgeSynthProcessor &processor)
     std::srand(0x71a3);
 
     auto fixture = object();
-    property(fixture, "name", "Reference Showcase");
+    property(fixture, "name", profile.name);
+    property(fixture, "skinId", skinId);
     property(fixture, "basePatch", templatePath);
     property(fixture, "wavetable", wavetablePath);
+    property(fixture, "wavetableSources", juce::var(wavetableSources));
+    property(fixture, "wavetableGenerator", "scripts/reference-workspaces/generate_showcase_wavetables.py");
+    property(fixture, "wavetableProvenance", "Original analytic periodic harmonic families; audible native oscillator sources, no reference-image samples");
     property(fixture, "settings", juce::var(settings));
     property(fixture, "modulationRoutes", juce::var(routes));
     property(fixture, "resolvedRouteRows", juce::var(resolvedRows));
@@ -661,16 +933,55 @@ TEST_CASE("Reference menu indices round trip through native integer ranges",
         const auto manifest = readManifest(path);
         for (const auto &control : *manifest["controls"].getArray())
             if (control["kind"].toString() == "menu")
+            {
                 bindings.insert(control["binding"].toString());
+                // Source/FX tabs reuse stable menus, so all of their alternate
+                // native ranges are part of menu coverage as well as defaults.
+                if (const auto *alternates = control["bindings"].getDynamicObject())
+                    for (const auto &entry : alternates->getProperties())
+                        if (entry.value.isString())
+                            bindings.insert(entry.value.toString());
+            }
     }
-    REQUIRE(bindings.size() >= 30);
+    // Require meaningful menu families instead of a layout-dependent total.
+    // Consolidating repeated controls into source tabs must not remove coverage,
+    // and adding unrelated menus must not conceal a missing algorithm range.
+    const auto requireMenu = [&bindings](const juce::String &binding) {
+        CAPTURE(binding.toStdString());
+        REQUIRE(bindings.count(binding) == 1);
+    };
+    for (int oscillator = 1; oscillator <= 3; ++oscillator)
+        requireMenu("osc" + juce::String(oscillator) + ".type");
+    for (int filter = 1; filter <= 2; ++filter)
+    {
+        requireMenu("filter" + juce::String(filter) + ".type");
+        requireMenu("filter" + juce::String(filter) + ".subtype");
+        requireMenu("env" + juce::String(filter) + ".mode");
+    }
+    for (int effect = 1; effect <= 8; ++effect)
+        requireMenu("fx" + juce::String(effect) + ".type");
+    for (int lfo = 1; lfo <= 4; ++lfo)
+    {
+        requireMenu("lfo" + juce::String(lfo) + ".shape");
+        requireMenu("lfo" + juce::String(lfo) + ".trigmode");
+    }
+    for (const auto *binding : {"routing", "scene.mode", "scene.polymode", "scene.polylimit"})
+        requireMenu(binding);
 
-    // These ranges expose bugs hidden by zero-based menus: octave is signed and
-    // polyphony starts above zero. Boolean controls use a third normalization path.
-    REQUIRE(bridge.parameter("osc1.octave")->val_min.i < 0);
+    // Exercise signed, positive-offset and boolean normalization independently
+    // of whether the current layouts render these parameters as menus or values.
+    // Merely checking octave's minimum would not test its choice conversion.
+    for (int oscillator = 1; oscillator <= 3; ++oscillator)
+    {
+        const auto prefix = "osc" + juce::String(oscillator);
+        const auto octave = prefix + ".octave";
+        REQUIRE(bridge.parameter(octave) != nullptr);
+        REQUIRE(bridge.parameter(octave)->val_min.i < 0);
+        bindings.insert(octave);
+        bindings.insert(prefix + ".keytrack");
+        bindings.insert(prefix + ".mute");
+    }
     REQUIRE(bridge.parameter("scene.polylimit")->val_min.i > 0);
-    bindings.insert("osc1.keytrack");
-    bindings.insert("osc1.mute");
 
     const auto roundTripChoices = [&bridge, &processor](const juce::String &binding) {
         CAPTURE(binding.toStdString());
@@ -1711,7 +2022,7 @@ TEST_CASE("Ten reference workspaces render native controls and export evidence",
         REQUIRE(processor.surge != nullptr);
         processor.setRateAndBufferSizeDetails(sampleRate, sampleBlock);
         processor.prepareToPlay(sampleRate, sampleBlock);
-        const auto fixture = configureShowcaseFixture(processor);
+        const auto fixture = configureShowcaseFixture(processor, id);
         Workspace workspace(processor);
         juce::String error;
         const bool loaded = workspace.load(path, error);
@@ -1739,6 +2050,8 @@ TEST_CASE("Ten reference workspaces render native controls and export evidence",
                 workspace.refresh();
         }
         CHECK(audioPeak > 0.0001f);
+        CHECK(audioPeak < 1.0f);
+        const auto baselineAudioPeak = audioPeak;
         workspace.refresh();
 
         auto &bridge = workspace.bridge();
@@ -1796,8 +2109,11 @@ TEST_CASE("Ten reference workspaces render native controls and export evidence",
         REQUIRE(cutoffSlider->getMinimum() == Catch::Approx(0.0));
         REQUIRE(cutoffSlider->getMaximum() == Catch::Approx(1.0));
         cutoffSlider->setValue(requested, juce::sendNotificationSync);
+        float editedAudioPeak = 0.f;
         for (int block = 0; block < 4; ++block)
-            processBlock(processor);
+            editedAudioPeak = std::max(editedAudioPeak, processBlock(processor));
+        CHECK(editedAudioPeak < 1.0f);
+        audioPeak = std::max(audioPeak, editedAudioPeak);
         workspace.refresh();
         const float after = bridge.value("filter1.cutoff");
         CHECK(after == Catch::Approx(requested).margin(0.001f));
@@ -1813,6 +2129,11 @@ TEST_CASE("Ten reference workspaces render native controls and export evidence",
         auto *adapter = adapterFor(processor, bridge, "filter1.cutoff");
         REQUIRE(adapter != nullptr);
         adapter->setValueNotifyingHost(0.579f);
+        float hostUpdatedAudioPeak = 0.f;
+        for (int block = 0; block < 4; ++block)
+            hostUpdatedAudioPeak = std::max(hostUpdatedAudioPeak, processBlock(processor));
+        CHECK(hostUpdatedAudioPeak < 1.0f);
+        audioPeak = std::max(audioPeak, hostUpdatedAudioPeak);
         workspace.refresh();
         CHECK(cutoffSlider->getValue() == Catch::Approx(0.579f).margin(0.001f));
 
@@ -1835,9 +2156,14 @@ TEST_CASE("Ten reference workspaces render native controls and export evidence",
         // Feed real MIDI through the existing engine. Finite silence is not enough:
         // the restored showcase patch must produce a nonzero main-output signal.
         // This remains an offline DSP check, not a device/DAW listening test.
+        // Measure this stage independently: reusing the earlier maximum would
+        // allow silence caused by a control edit or layout transition to pass.
+        float restoredAudioPeak = 0.f;
         for (int block = 0; block < 4; ++block)
-            audioPeak = std::max(audioPeak, processBlock(processor));
-        CHECK(audioPeak > 0.0001f);
+            restoredAudioPeak = std::max(restoredAudioPeak, processBlock(processor));
+        CHECK(restoredAudioPeak > 0.0001f);
+        CHECK(restoredAudioPeak < 1.0f);
+        audioPeak = std::max(audioPeak, restoredAudioPeak);
         processor.reset();
         // reset() is a host panic, not note-off: stopSound() frees all voices
         // and suspends every FX to clear its tail. Exercise that contract with
@@ -1859,12 +2185,18 @@ TEST_CASE("Ten reference workspaces render native controls and export evidence",
         property(capture, "editedImage", id + "-edited.png");
         property(capture, "width", referenceWidth);
         property(capture, "height", referenceHeight);
-        property(capture, "patch", "Reference Showcase; no reference image loaded");
+        property(capture, "patch", fixture["name"].toString() + "; no reference image loaded");
         property(capture, "patchFixture", fixture);
         property(capture, "audioFixture",
-                 "Held MIDI channel 1 notes 48, 60 and 67, velocity 0.65; 256 512-sample "
-                 "blocks at 48 kHz before baseline capture, refreshing each four blocks; "
-                 "output visuals read the real processor audio tap");
+                 "Held MIDI channel 1 notes 48, 60 and 67, velocity 0.65; " +
+                     juce::String(showcaseAudioBlocks) + " " + juce::String(sampleBlock) +
+                     "-sample blocks at " + juce::String(sampleRate) +
+                     " Hz before baseline capture, refreshing each four blocks; "
+                     "output visuals read the real processor audio tap");
+        property(capture, "audioBlockCount", showcaseAudioBlocks);
+        property(capture, "audioBlockSize", sampleBlock);
+        property(capture, "audioSampleRate", sampleRate);
+        property(capture, "audioSeconds", showcaseAudioBlocks * sampleBlock / sampleRate);
         property(capture, "scene", "A");
         property(capture, "resolvedManifestControls", resolvedControls);
         property(capture, "editedBinding", "filter1.cutoff");
@@ -1873,6 +2205,10 @@ TEST_CASE("Ten reference workspaces render native controls and export evidence",
         property(capture, "changedPixelsAfterControlEdit", differences);
         property(capture, "hostUpdateNormalized", 0.579);
         property(capture, "offlineMainOutputPeak", audioPeak);
+        property(capture, "baselineMainOutputPeak", baselineAudioPeak);
+        property(capture, "editedMainOutputPeak", editedAudioPeak);
+        property(capture, "hostUpdatedMainOutputPeak", hostUpdatedAudioPeak);
+        property(capture, "restoredMainOutputPeak", restoredAudioPeak);
         property(capture, "postResetMainOutputPeak", postResetPeak);
         property(capture, "scalesRendered", juce::var(juce::Array<juce::var>{1.0, 1.25, 1.5}));
         property(capture, "fidelityAssessment", "Requires human comparison; no pixel-exact claim");

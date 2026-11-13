@@ -220,7 +220,7 @@
     {
       "id": "ivory.ring12",
       "kind": "tabs",
-      "title": "RING 1 × 2",
+      "title": "RING 1 \u00d7 2",
       "x": 909,
       "y": 463,
       "w": 204,
@@ -231,7 +231,7 @@
     {
       "id": "ivory.ring23",
       "kind": "tabs",
-      "title": "RING 2 × 3",
+      "title": "RING 2 \u00d7 3",
       "x": 909,
       "y": 561,
       "w": 204,
@@ -445,7 +445,19 @@
       ],
       "fontSize": 17,
       "titleInset": 17,
-      "titleHeight": 23
+      "titleHeight": 23,
+      "analyzerModesRect": [
+        1194,
+        708,
+        282,
+        27
+      ],
+      "analyzerModes": [
+        "spectrum",
+        "scope",
+        "vectorscope"
+      ],
+      "analyzerDefault": "spectrum"
     }
   ],
   "controls": [
@@ -1017,7 +1029,7 @@
       "w": 26,
       "h": 26,
       "kind": "toggle",
-      "label": "Mute ring modulation 1 × 2",
+      "label": "Mute ring modulation 1 \u00d7 2",
       "glyph": "power"
     },
     {
@@ -1041,7 +1053,7 @@
       "w": 26,
       "h": 26,
       "kind": "toggle",
-      "label": "Mute ring modulation 2 × 3",
+      "label": "Mute ring modulation 2 \u00d7 3",
       "glyph": "power"
     },
     {
@@ -1460,8 +1472,8 @@
     "Native cream materials, brass rotary rims, serif headings, vector botanical engravings and measured geometry reproduce the reference composition. Current-source native captures remain the visual verification gate; no pixel-identical claim follows from schema validation.",
     "All oscillator waveforms, wavetable names, numeric readouts, macro state, effect names and modulation rows come from the actual processor. Reference-only fixed values and waveforms are not baked into the UI. The third oscillator knob edits native parameter 7 (Unison Voices for Wavetable/Classic, and the actual differently named parameter for other algorithms); its dynamic label remains authoritative.",
     "The OSCILLATORS 1/2/3 strip focuses the corresponding visible native oscillator controls. Wavetable strips browse actual installed tables; algorithms without a wavetable report that state and disable catalog operations.",
-    "The envelope strip provides the actual amp/filter envelopes, LFO 1/2 envelopes and LFO 1–4 waveform views. The two additional envelope positions are labelled LFO1 EG and LFO2 EG because Surge has two dedicated scene ADSRs. The four stage controls edit the selected native envelope; its model/shape and decay curve disable where inapplicable.",
-    "The reference Sub block is represented by the real ring-modulation 2 × 3 stage, with its own power/mute control. The engine has no independent sub oscillator matching the illustration.",
+    "The envelope strip provides the actual amp/filter envelopes, LFO 1/2 envelopes and LFO 1\u20134 waveform views. The two additional envelope positions are labelled LFO1 EG and LFO2 EG because Surge has two dedicated scene ADSRs. The four stage controls edit the selected native envelope; its model/shape and decay curve disable where inapplicable.",
+    "The reference Sub block is represented by the real ring-modulation 2 \u00d7 3 stage, with its own power/mute control. The engine has no independent sub oscillator matching the illustration.",
     "Filter 1 SHAPER is the real shared waveshaper drive, and Filter 2 ENV is its actual envelope modulation. Live plot footers show those real values rather than inventing an independent drive stage per filter.",
     "Eight native FX slot cards select a real slot and rebind a single algorithm menu plus its first four parameter controls. Their labels follow the actual algorithm; disabled unused parameters are not remapped to unrelated controls. All sixteen slots and complete editing remain available through the header FX action and Full editor.",
     "The macro faces follow the reference caption-only treatment; current values remain available through native tooltips and accessibility. Redundant keytrack/retrigger, routing-balance and extra envelope-row controls remain available in the Full editor.",

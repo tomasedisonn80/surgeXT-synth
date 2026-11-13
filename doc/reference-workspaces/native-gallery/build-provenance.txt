@@ -1,5 +1,5 @@
-Source commit: a9d0d0a838632daf178255561def4622cd208258
-Workflow run: https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43394267074
+Source commit: 4dbb414370c94932670e1b58cf6f5caecbe4c6f4
+Workflow run: https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43398309849
 Capture method: native JUCE component snapshots attached to SurgeSynthProcessor
 Reference canvas: 1586 x 992 logical pixels
 Audio device: none (processor tests render audio offline)

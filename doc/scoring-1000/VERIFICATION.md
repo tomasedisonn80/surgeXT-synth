@@ -13,9 +13,12 @@ The [research](RESEARCH.md) explains the musical design; the
 warnings, as well as exact static regeneration, native semantic serialization
 and factory staging/discovery. The exported evidence matches this catalog.
 The completed diversity review and its archive also bind this frozen catalog.
-The baseline bank's hosted native workflow also passed on the published commit
-identified below. Hosted embedded-feature verification and platform installer
-completion remain separate pending observations.
+Both the baseline and embedded-feature hosted native bank workflows passed on
+their exact published commits. The embedded-feature native UI/capture workflow
+also passed and published its gallery. All seven platform build jobs completed
+successfully and uploaded their distributions for source `83a919356`. The
+shipped Windows JUCE7 portable and plugin-only archives were byte-inspected;
+installer execution and DAW-host testing retain their separate, unverified scope.
 
 | Identity | Value |
 |---|---|
@@ -27,7 +30,10 @@ completion remain separate pending observations.
 | Recovered local feature commit | `946ed442572d5fa29e6d6467813b4fa6cb150908` |
 | Published bank/research/evidence snapshot | [`109e1b161d12733e2fdeecd1f05c09256ac04f58`](https://github.com/tomasedisonn80/surgeXT-synth/commit/109e1b161d12733e2fdeecd1f05c09256ac04f58) |
 | Baseline hosted native bank workflow | [Run 43572397153](https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43572397153): completed successfully on `109e1b161` |
-| Embedded-content feature and platform runs | Follow-up source integration; hosted results recorded separately below |
+| Published embedded-content feature | [`83a919356a106542cb9ebc6f184346714ec2adf5`](https://github.com/tomasedisonn80/surgeXT-synth/commit/83a919356a106542cb9ebc6f184346714ec2adf5), tree `bbf787ba81f6275710506745b3c34e2584560953` |
+| Embedded-feature hosted native bank workflow | [Run 43573848455](https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43573848455): completed successfully on `83a919356` |
+| Hosted native UI and gallery | [Run 43573848463](https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43573848463): successful; [gallery commit `c3d148822`](https://github.com/tomasedisonn80/surgeXT-synth/commit/c3d1488225c8c5709ca6832912cd2e642c1d88b2) preserves source `83a919356` |
+| Hosted platform builds | [Run 43573848453](https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43573848453): successful; seven platform jobs and seven artifacts on `83a919356`; macOS unsigned and unnotarized |
 | Human musical audition | Pending |
 | Composer endorsement | Not claimed |
 
@@ -58,7 +64,8 @@ The baseline hosted native bank job completed successfully in
 [run 43572397153](https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43572397153),
 at that exact published commit. It validates the bank and original factory
 staging pipeline. The later compiled-content integration is a separate source
-change and must receive its own native and platform workflow results.
+change with its own successful native and platform workflow results recorded
+below; the baseline results are not substituted for those later runs.
 
 Independent checks repeated during recovery passed exact regeneration of all
 1,000 presets and confirmed all 1,000 preset hashes in the standalone ZIP.
@@ -75,6 +82,12 @@ adds binary integration and separate native/build verification without changing
 the frozen preset definitions or retroactively relabelling the older measurements.
 
 ## Embedded-content continuation checks
+
+The complete integration was published to `main` at `83a919356` after local
+verification. The remotely observed tree exactly matches the tested local
+snapshot; the [publication record](embedded-evidence/publication.json) binds
+the local and remote identities. The remote parent is the published bank
+snapshot `109e1b161`; publication used a non-forced, expected-parent update.
 
 The [integration evidence](embedded-evidence/README.md) records a fresh native
 build and executed compiled-content regression suite. All 1,020 embedded files
@@ -93,6 +106,20 @@ on the first run was corrected without changing the native validator or weakenin
 the expected rejections; the original failure and passing rerun are both retained.
 Local execution had no display and does not claim new rendered screenshots.
 
+The subsequent [hosted native UI record](embedded-evidence/hosted-ui.json)
+establishes the separate display-capable result. On the exact published source,
+**47 live-control/processor test cases** and **two embedded-discovery cases**
+passed. The capture case produced all ten workspaces and their edited states:
+**20 verified PNGs at 1586 × 992**. Normal and ThreadSanitizer audio-display
+stress passed. Both workflow jobs succeeded, and the guarded gallery job
+published only its 21 gallery changes to `main` at `c3d148822`, with `83a919356`
+as parent. All 28 shared artifact/gallery files matched their recorded hashes.
+The [current gallery](../reference-workspaces/native-gallery/README.md) retains
+source, run, capture conditions, and separate reference/edited images. Two
+nonfatal plot/control overlap advisories remain documented; the reviewed
+selectors are legible in their actual capture. Functional and capture success
+does not establish pixel-identical reference fidelity or every DAW host.
+
 The rebuilt native renderer ran **230 fresh audio scenarios across ten presets,
 one in each category**, including the highest measured stress-peak preset.
 All passed without warnings and all 230 raw PCM hashes match their corresponding
@@ -106,6 +133,15 @@ The distribution contract checker passes nine CMake platform/configuration
 branches and finds all 1,020 required files exactly once in every Windows
 installation type. Those checks establish source routing and input selection;
 actual native platform builds and installers require their own observed results.
+
+The [hosted native bank job](embedded-evidence/hosted-native.json) subsequently
+passed on the exact published embedded-feature commit. It rebuilt the engine,
+verified the compiled resource and ordinary startup, checked all 1,000 staged
+paths, and ran ten presets through **230 primary scenarios and 20 sustained
+scenarios**, with zero failures or warnings. All ten semantic roundtrips and
+ten saved/original audio pairs passed; the pairs were bit-identical. Its renderer
+has its own recorded hash. This ordinary-push smoke run is separate from the
+retained 25,000-scenario whole-bank measurements.
 
 ## What every preset receives
 
@@ -340,12 +376,30 @@ evidence of the companion-data gaps that prompted this change.
 | Linux x64 and ARM64 portable content | Complete portable resource tree in addition to embedded binaries |
 | Plugin-only archives | Included binary prepares its own bank and ten reference skins |
 
-**Current platform-build completion is pending observation.** An earlier
-successful run is evidence that the pipeline worked before this bank; it does
-not certify new installers. The release record must name the exact feature
-commit, run IDs, job conclusions and inspected artifact payloads. An Actions
-artifact upload alone does not establish installer success. Unsigned macOS
-artifacts must retain their actual signing status.
+**All seven current-source platform build jobs completed successfully.**
+[Release run 43573848453](https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43573848453)
+completed with conclusion `success` on source
+`83a919356a106542cb9ebc6f184346714ec2adf5`. Its
+[hosted release record](embedded-evidence/hosted-release.json) preserves every
+job, artifact identity, SHA-256 digest, package listing, and signing observation.
+
+| Platform build | Successful job | Actions artifact |
+|---|---:|---|
+| Linux x64, Docker | `132384257040` | `build-docker` |
+| Linux ARM64 | `132384257116` | `build-ubuntu-arm` |
+| Windows x64 | `132384257127` | `build-Windows 64-bit` |
+| Windows x64 with JUCE7 | `132384257107` | `build-Windows MSVC JUCE 7` |
+| Windows ARM64 | `132384257151` | `build-Windows ARM64` |
+| Windows ARM64EC | `132384257122` | `build-Windows ARM64EC` |
+| macOS universal | `132384257137` | `build-macOS-unsigned` |
+
+The [download guide](BUILT_IN_CONTENT.md#build-downloads) identifies package
+choices. All seven artifact records bind the exact source commit above and
+currently expire on 12 February 2027. The macOS build is explicitly **unsigned
+and unnotarized**. Upstream-only release and nightly publication jobs were
+skipped for this fork; the successful distributions are available as Actions
+artifacts, not a newly published GitHub Release. Successful compilation and
+packaging do not establish installer execution or DAW-host compatibility.
 
 The [standalone archive](DOWNLOADS.md) provides a separate existing-installation
 route. Its [metadata](downloads/Scoring-1000.zip.metadata.json) records this
@@ -354,6 +408,30 @@ SHA-256 is `72692ee39f464c66a475af4ffffb92607d92924f8d15181f7da74a5bd5723192`.
 The [archive inspector](../../scripts/scoring/inspect_archive.py)
 can check supported ZIP/tar payloads, including nested Actions archives, without
 extracting or executing their entries.
+
+### Inspection of shipped portable and plugin-only binaries
+
+The [actual artifact inspection](embedded-evidence/artifact-inspection.json)
+passed on `build-Windows MSVC JUCE 7`, artifact `14106228742`, from the successful
+job in release run `43573848453` at source `83a919356`. The 435,746,582-byte outer
+archive matched GitHub's SHA-256. Its full portable ZIP contains exactly the
+expected **1,000 preset files and 20 files for ten reference skins**, all with
+matching hashes and no missing, extra, duplicate or mismatched expected entries.
+
+All **seven compiled binaries** in that portable output contain the complete,
+exact **190,454-byte embedded payload**. The separate plugin-only ZIP contains
+the same seven binaries and no loose bank or reference-skin files. Each binary
+contains one exact occurrence of the payload, verified by streaming its bytes;
+the report preserves binary hashes and offsets. This directly verifies binary
+embedding in a shipped Windows distribution. It is not a claim that every
+platform archive was byte-inspected or that an installer or DAW was executed.
+
+Inspection used at most **832,638,393 bytes** of owned archive storage and removed
+its temporary downloads afterward. The larger Linux ARM artifact exceeded the
+connector's 512 MiB download limit before returning any bytes; the smaller
+current-source Windows package provided the required inspection without storing
+the full Linux bundle or changing the build. Native compilation and delivery
+results retain their separate scopes.
 
 ## Evidence and reproduction
 

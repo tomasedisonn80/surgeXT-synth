@@ -91,6 +91,41 @@ installer execution, signing and host testing are separately reported in the
 [verification record](VERIFICATION.md); they are not inferred from source rules.
 The bank does not add a platform that the synthesizer itself does not support.
 
+The [shipped Windows JUCE7 archive inspection](embedded-evidence/artifact-inspection.json)
+verified all 1,000 preset hashes and all 20 skin-file hashes in its portable
+output. Every one of its seven compiled binaries contains the exact compressed
+payload. The plugin-only archive contains the same seven binaries, with their
+payloads, and no loose preset or skin files. This is direct evidence of embedded
+delivery in a produced distribution; other platform compilation and host/runtime
+testing retain their separately reported scopes.
+
+## Build downloads
+
+All seven platform build jobs for source `83a919356` completed successfully in
+[release run 43573848453](https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43573848453).
+Choose the artifact for your platform. Each artifact groups the platform's
+installer and/or portable/plugin-only packages; the embedded factory payload
+travels with the synth binaries in each applicable package.
+
+| Platform | Actions artifact | Package selection |
+|---|---|---|
+| Windows x64 | `build-Windows 64-bit` | Setup EXE, portable ZIP, or plugin-only ZIP |
+| Windows x64 with JUCE7 | `build-Windows MSVC JUCE 7` | Portable ZIP or plugin-only ZIP |
+| Windows ARM64 | `build-Windows ARM64` | Portable ZIP or plugin-only ZIP |
+| Windows ARM64EC | `build-Windows ARM64EC` | Portable ZIP or plugin-only ZIP |
+| macOS universal, Intel and Apple Silicon | `build-macOS-unsigned` | DMG containing the installer, or plugin-only ZIP; unsigned and unnotarized development build |
+| Linux x64 | `build-docker` | DEB, RPM, full tarball, portable-content, or plugin-only archive |
+| Linux ARM64 | `build-ubuntu-arm` | DEB, full tarball, portable-content, or plugin-only archive |
+
+The macOS signing state is explicit in the produced artifact and build logs.
+Build success does not imply signing or a DAW-host compatibility certification.
+The [hosted release record](embedded-evidence/hosted-release.json) binds every
+artifact to its source commit, successful build job, size, and SHA-256 digest.
+These Actions artifacts currently expire on 12 February 2027; the committed
+source and embedded payload remain reproducible after that retention period.
+Use the [verification record](VERIFICATION.md) for the exact scope of native
+testing and shipped-archive inspection.
+
 ## Reproduction and maintenance
 
 After editing original recipes or included skin files, regenerate the normal

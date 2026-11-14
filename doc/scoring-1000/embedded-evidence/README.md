@@ -17,6 +17,10 @@ ordinary startup, factory discovery, and distribution rules.
 | Windows installation selections | All 1,020 required files selected once in Full/Compact/Custom/Minimal | [Distribution contract](distribution-contract.json) |
 | Payload source binding | 1,000 presets, ten skins, 190,454 compressed bytes | [Source check](source-payload-check.json) |
 | Compiled CLAP, native skin discovery and manifest/schema tests | Five test cases; 5,911 assertions; zero failures | [Native UI summary](ui-native-summary.json) · [Executed log](ui-native-tests.log) |
+| Hosted native bank workflow on published source | Success; compiled recovery and all 1,000 staged paths; ten presets through 230 primary and 20 sustained scenarios; ten semantic/audio roundtrips | [Hosted native record](hosted-native.json) · [Log excerpt](hosted-native-excerpt.log) |
+| Hosted native UI, captures and display concurrency | Success; 47 behavior cases, two embedded discovery cases, 20 PNGs covering all ten workspaces, normal and ThreadSanitizer display stress | [Hosted UI record](hosted-ui.json) · [Published gallery](../../reference-workspaces/native-gallery/README.md) |
+| Hosted platform builds on published source | Success; seven platform jobs and seven artifacts for Linux x64/ARM64, Windows x64/JUCE7/ARM64/ARM64EC, and macOS universal; macOS unsigned and unnotarized | [Hosted release record](hosted-release.json) |
+| Shipped Windows JUCE7 portable/plugin-only archives | 1,000 preset hashes and 20 skin-file hashes match; all seven shipped binaries contain the exact embedded payload; plugin-only has no loose bank/skin files | [Artifact inspection](artifact-inspection.json) |
 
 The audio regression includes **SC07-064 Soft Pedal Pluck**, the highest-peak
 preset in the preserved whole-bank tests. These ten fresh reports belong to the

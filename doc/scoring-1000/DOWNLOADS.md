@@ -4,6 +4,8 @@ Current builds of this fork already embed all 1,000 presets and ten reference
 skins. **No separate preset archive is needed for those builds**, including
 plugin-only outputs. See [built-in content](BUILT_IN_CONTENT.md). This page
 documents the optional compatibility package for an existing installation.
+For the synth binaries themselves, use the
+[platform build downloads](BUILT_IN_CONTENT.md#build-downloads).
 
 ## Ready-to-import archive
 

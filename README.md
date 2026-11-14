@@ -17,6 +17,11 @@ factory cache from its own binary. No separate preset download, samples, or
 wavetables are required for this collection. See the
 [built-in content design and verification](doc/scoring-1000/BUILT_IN_CONTENT.md).
 
+Get this fork's synth binaries from the
+[platform build downloads](doc/scoring-1000/BUILT_IN_CONTENT.md#build-downloads).
+The guide identifies each platform artifact, package choices, and macOS signing
+status for the verified source revision.
+
 Read the [composer research](doc/scoring-1000/RESEARCH.md),
 [player and genre guide](doc/scoring-1000/USER_GUIDE.md), and
 [native QA protocol](scripts/scoring/QA_RUNNER.md).
@@ -57,7 +62,7 @@ neither pixel identity nor release certification is implied by a source checkout
 
 ## Latest native UI/UX redesign screenshots
 
-All ten layouts below are from the [latest verified native capture run](https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43504150637),
+All ten layouts below are from the [latest verified native capture run](https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43573848463),
 using the actual Surge XT processor at **1586 × 992**. Click any screenshot to
 open its full-resolution PNG. Each skin also links to its real edited state and
 the original design reference. The [complete comparison gallery](doc/reference-workspaces/native-gallery/README.md)

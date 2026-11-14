@@ -1,0 +1,518 @@
+{
+  "schema": 1,
+  "status": "pass",
+  "observed_at_utc": "2026-11-14T08:53:54Z",
+  "source_commit": "83a919356a106542cb9ebc6f184346714ec2adf5",
+  "source_tree": "bbf787ba81f6275710506745b3c34e2584560953",
+  "source_url": "https://github.com/tomasedisonn80/surgeXT-synth/commit/83a919356a106542cb9ebc6f184346714ec2adf5",
+  "workflow": {
+    "id": 43573848453,
+    "name": "Build release or nightly installer",
+    "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43573848453",
+    "path": ".github/workflows/build-release.yml",
+    "run_number": 31,
+    "attempt": 1,
+    "event": "push",
+    "branch": "main",
+    "status": "completed",
+    "conclusion": "success",
+    "created_at": "2026-11-14T08:01:58Z",
+    "run_started_at": "2026-11-14T08:01:58Z",
+    "updated_at": "2026-11-14T08:51:34Z"
+  },
+  "summary": {
+    "expected_platform_builds": 7,
+    "successful_platform_builds": 7,
+    "failed_platform_builds": 0,
+    "artifact_count": 7,
+    "all_artifacts_bound_to_exact_source": true
+  },
+  "platform_builds": [
+    {
+      "platform": "Linux x86_64",
+      "target": "x86_64",
+      "build_environment": "Ubuntu 22 / GCC 12 Docker image; workflow job retains legacy Ubuntu 20 label",
+      "job": {
+        "id": 132384257040,
+        "name": "Ubuntu 20 Docker",
+        "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43573848453/job/132384257040",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-14T08:04:17Z",
+        "completed_at": "2026-11-14T08:42:20Z",
+        "failed_steps": []
+      },
+      "build_and_upload_steps": [
+        {
+          "name": "Build in Docker",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Upload artifact",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ],
+      "artifact_id": 14107205554,
+      "products_from_completed_job_log": [
+        {
+          "name": "surge-xt-linux-NIGHTLY-2026-11-14-83a9193-pluginsonly.tar.gz",
+          "size_in_bytes": 81179424
+        },
+        {
+          "name": "surge-xt-linux-x64-NIGHTLY-2026-11-14-83a9193.deb",
+          "size_in_bytes": 321529288
+        },
+        {
+          "name": "surge-xt-linux-x86_64-NIGHTLY-2026-11-14-83a9193.tar.gz",
+          "size_in_bytes": 432801615
+        },
+        {
+          "name": "surge-xt-portable-content-NIGHTLY-2026-11-14-83a9193.tar.gz",
+          "size_in_bytes": 351660948
+        },
+        {
+          "name": "surge-xt-x86_64-NIGHTLY-2026-11-14-83a9193.rpm",
+          "size_in_bytes": 431738034
+        }
+      ]
+    },
+    {
+      "platform": "Windows x64 with JUCE 7",
+      "target": "x64",
+      "build_environment": "windows-2022, Visual Studio 17 2022, JUCE 7 compatibility configuration",
+      "job": {
+        "id": 132384257107,
+        "name": "Release - Windows MSVC JUCE 7",
+        "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43573848453/job/132384257107",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-14T08:04:17Z",
+        "completed_at": "2026-11-14T08:33:14Z",
+        "failed_steps": []
+      },
+      "build_and_upload_steps": [
+        {
+          "name": "Build release version",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Upload artifact",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ],
+      "artifact_id": 14106228742,
+      "products_from_completed_job_log": [
+        {
+          "name": "surge-xt-win64-juce7-NIGHTLY-2026-11-14-83a9193-pluginsonly.zip",
+          "size_in_bytes": 45600165
+        },
+        {
+          "name": "surge-xt-win64-juce7-NIGHTLY-2026-11-14-83a9193-portable-install.zip",
+          "size_in_bytes": 396891811
+        }
+      ]
+    },
+    {
+      "platform": "Linux ARM64",
+      "target": "arm64",
+      "build_environment": "ubuntu-24.04-arm, Ninja, SURGE_LINUX_ARM=TRUE",
+      "job": {
+        "id": 132384257116,
+        "name": "Release - ubuntu-arm",
+        "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43573848453/job/132384257116",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-14T08:04:20Z",
+        "completed_at": "2026-11-14T08:25:34Z",
+        "failed_steps": []
+      },
+      "build_and_upload_steps": [
+        {
+          "name": "Build release version",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Upload artifact",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ],
+      "artifact_id": 14106242777,
+      "products_from_completed_job_log": [
+        {
+          "name": "surge-xt-linux-arm64-NIGHTLY-2026-11-14-83a9193-pluginsonly.tar.gz",
+          "size_in_bytes": 63330930
+        },
+        {
+          "name": "surge-xt-linux-arm64-NIGHTLY-2026-11-14-83a9193.deb",
+          "size_in_bytes": 305897904
+        },
+        {
+          "name": "surge-xt-linux-arm64-NIGHTLY-2026-11-14-83a9193.tar.gz",
+          "size_in_bytes": 414725838
+        },
+        {
+          "name": "surge-xt-portable-content-arm64-NIGHTLY-2026-11-14-83a9193.tar.gz",
+          "size_in_bytes": 351666042
+        }
+      ]
+    },
+    {
+      "platform": "Windows ARM64EC",
+      "target": "arm64ec",
+      "build_environment": "windows-2022, Visual Studio 17 2022, PUC Lua",
+      "job": {
+        "id": 132384257122,
+        "name": "Release - Windows ARM64EC",
+        "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43573848453/job/132384257122",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-14T08:04:17Z",
+        "completed_at": "2026-11-14T08:51:33Z",
+        "failed_steps": []
+      },
+      "build_and_upload_steps": [
+        {
+          "name": "Build release version",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Upload artifact",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ],
+      "artifact_id": 14107371511,
+      "products_from_completed_job_log": [
+        {
+          "name": "surge-xt-win64-arm64ec-NIGHTLY-2026-11-14-83a9193-pluginsonly.zip",
+          "size_in_bytes": 47061144
+        },
+        {
+          "name": "surge-xt-win64-arm64ec-NIGHTLY-2026-11-14-83a9193-portable-install.zip",
+          "size_in_bytes": 398352790
+        }
+      ]
+    },
+    {
+      "platform": "Windows x64",
+      "target": "x64",
+      "build_environment": "windows-2022, Visual Studio 17 2022",
+      "job": {
+        "id": 132384257127,
+        "name": "Release - Windows 64-bit",
+        "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43573848453/job/132384257127",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-14T08:04:18Z",
+        "completed_at": "2026-11-14T08:40:42Z",
+        "failed_steps": []
+      },
+      "build_and_upload_steps": [
+        {
+          "name": "Build release version",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Upload artifact",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ],
+      "artifact_id": 14106469232,
+      "products_from_completed_job_log": [
+        {
+          "name": "surge-xt-win64-NIGHTLY-2026-11-14-83a9193-pluginsonly.zip",
+          "size_in_bytes": 49738953
+        },
+        {
+          "name": "surge-xt-win64-NIGHTLY-2026-11-14-83a9193-portable-install.zip",
+          "size_in_bytes": 401030599
+        },
+        {
+          "name": "surge-xt-win64-NIGHTLY-2026-11-14-83a9193-setup.exe",
+          "size_in_bytes": 210965582
+        }
+      ]
+    },
+    {
+      "platform": "macOS universal",
+      "target": "arm64;x86_64",
+      "build_environment": "macos-latest, CMAKE_OSX_ARCHITECTURES=arm64;x86_64",
+      "job": {
+        "id": 132384257137,
+        "name": "Release - macOS",
+        "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43573848453/job/132384257137",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-14T08:04:18Z",
+        "completed_at": "2026-11-14T08:33:18Z",
+        "failed_steps": []
+      },
+      "build_and_upload_steps": [
+        {
+          "name": "Resolve macOS signing mode",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Build release version",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Label unsigned macOS development artifacts",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Upload artifact",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ],
+      "artifact_id": 14105709013,
+      "products_from_completed_job_log": [
+        {
+          "name": "surge-xt-macos-NIGHTLY-2026-11-14-83a9193-pluginsonly.zip",
+          "size_in_bytes": 161766311
+        },
+        {
+          "name": "surge-xt-macOS-NIGHTLY-2026-11-14-83a9193.dmg",
+          "size_in_bytes": 488112185
+        },
+        {
+          "name": "UNSIGNED-BUILD.txt",
+          "size_in_bytes": 159
+        }
+      ]
+    },
+    {
+      "platform": "Windows ARM64",
+      "target": "arm64",
+      "build_environment": "windows-2022, Visual Studio 17 2022, PUC Lua",
+      "job": {
+        "id": 132384257151,
+        "name": "Release - Windows ARM64",
+        "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43573848453/job/132384257151",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-14T08:04:17Z",
+        "completed_at": "2026-11-14T08:32:34Z",
+        "failed_steps": []
+      },
+      "build_and_upload_steps": [
+        {
+          "name": "Build release version",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Upload artifact",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ],
+      "artifact_id": 14106680522,
+      "products_from_completed_job_log": [
+        {
+          "name": "surge-xt-win64-arm64-NIGHTLY-2026-11-14-83a9193-pluginsonly.zip",
+          "size_in_bytes": 46206695
+        },
+        {
+          "name": "surge-xt-win64-arm64-NIGHTLY-2026-11-14-83a9193-portable-install.zip",
+          "size_in_bytes": 397498341
+        }
+      ]
+    }
+  ],
+  "auxiliary_jobs": [
+    {
+      "id": 132384151479,
+      "name": "Set up Surge XT version",
+      "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43573848453/job/132384151479",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-11-14T08:03:51Z",
+      "completed_at": "2026-11-14T08:04:15Z",
+      "failed_steps": []
+    },
+    {
+      "id": 132395728683,
+      "name": "Publish Surge XT release",
+      "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43573848453/job/132395728683",
+      "status": "completed",
+      "conclusion": "skipped",
+      "started_at": "2026-11-14T08:51:34Z",
+      "completed_at": "2026-11-14T08:51:34Z",
+      "failed_steps": []
+    },
+    {
+      "id": 132395728746,
+      "name": "Publish Surge XT nightly",
+      "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43573848453/job/132395728746",
+      "status": "completed",
+      "conclusion": "skipped",
+      "started_at": "2026-11-14T08:51:34Z",
+      "completed_at": "2026-11-14T08:51:34Z",
+      "failed_steps": []
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 14107371511,
+      "name": "build-Windows ARM64EC",
+      "size_in_bytes": 438639085,
+      "digest": "sha256:5dd49ff6dae791066c4a8c98917797713fd68ce80a3e68dffa65fda2f9ee54c7",
+      "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43573848453/artifacts/14107371511",
+      "api_url": "https://api.github.com/repos/tomasedisonn80/surgeXT-synth/actions/artifacts/14107371511",
+      "created_at": "2026-11-14T08:51:19Z",
+      "expires_at": "2027-02-12T08:01:58Z",
+      "expired_at_observation": false,
+      "source_commit": "83a919356a106542cb9ebc6f184346714ec2adf5",
+      "workflow_run_id": 43573848453
+    },
+    {
+      "id": 14107205554,
+      "name": "build-docker",
+      "size_in_bytes": 1598632995,
+      "digest": "sha256:22a03baea42d429d425427b74003b5acf2bf173bbc44a9809eeed75c54f40539",
+      "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43573848453/artifacts/14107205554",
+      "api_url": "https://api.github.com/repos/tomasedisonn80/surgeXT-synth/actions/artifacts/14107205554",
+      "created_at": "2026-11-14T08:42:17Z",
+      "expires_at": "2027-02-12T08:01:58Z",
+      "expired_at_observation": false,
+      "source_commit": "83a919356a106542cb9ebc6f184346714ec2adf5",
+      "workflow_run_id": 43573848453
+    },
+    {
+      "id": 14106680522,
+      "name": "build-Windows ARM64",
+      "size_in_bytes": 436926359,
+      "digest": "sha256:61104aa527cab3eb3c8a39b94a8d2e87994c63315fdfcf48796868e0ea80f472",
+      "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43573848453/artifacts/14106680522",
+      "api_url": "https://api.github.com/repos/tomasedisonn80/surgeXT-synth/actions/artifacts/14106680522",
+      "created_at": "2026-11-14T08:32:24Z",
+      "expires_at": "2027-02-12T08:01:58Z",
+      "expired_at_observation": false,
+      "source_commit": "83a919356a106542cb9ebc6f184346714ec2adf5",
+      "workflow_run_id": 43573848453
+    },
+    {
+      "id": 14106469232,
+      "name": "build-Windows 64-bit",
+      "size_in_bytes": 654479668,
+      "digest": "sha256:6422f24317e2158814c4609b32ced898ab98f844ffc0c853e57d3c54694c803f",
+      "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43573848453/artifacts/14106469232",
+      "api_url": "https://api.github.com/repos/tomasedisonn80/surgeXT-synth/actions/artifacts/14106469232",
+      "created_at": "2026-11-14T08:40:29Z",
+      "expires_at": "2027-02-12T08:01:58Z",
+      "expired_at_observation": false,
+      "source_commit": "83a919356a106542cb9ebc6f184346714ec2adf5",
+      "workflow_run_id": 43573848453
+    },
+    {
+      "id": 14106242777,
+      "name": "build-ubuntu-arm",
+      "size_in_bytes": 1122815767,
+      "digest": "sha256:74703ca72ff411d0bf219bbdc75c2bdd0930d335812f4a0ef2a4388ed48d966a",
+      "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43573848453/artifacts/14106242777",
+      "api_url": "https://api.github.com/repos/tomasedisonn80/surgeXT-synth/actions/artifacts/14106242777",
+      "created_at": "2026-11-14T08:25:31Z",
+      "expires_at": "2027-02-12T08:01:58Z",
+      "expired_at_observation": false,
+      "source_commit": "83a919356a106542cb9ebc6f184346714ec2adf5",
+      "workflow_run_id": 43573848453
+    },
+    {
+      "id": 14106228742,
+      "name": "build-Windows MSVC JUCE 7",
+      "size_in_bytes": 435746582,
+      "digest": "sha256:c353c1e393e92180cac73c67669f6704ec02bf08760bd7b15cadd9865b97e529",
+      "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43573848453/artifacts/14106228742",
+      "api_url": "https://api.github.com/repos/tomasedisonn80/surgeXT-synth/actions/artifacts/14106228742",
+      "created_at": "2026-11-14T08:33:02Z",
+      "expires_at": "2027-02-12T08:01:58Z",
+      "expired_at_observation": false,
+      "source_commit": "83a919356a106542cb9ebc6f184346714ec2adf5",
+      "workflow_run_id": 43573848453
+    },
+    {
+      "id": 14105709013,
+      "name": "build-macOS-unsigned",
+      "size_in_bytes": 647030212,
+      "digest": "sha256:07ed3ba953650f9b29430e1f0f4cfe72613d9f52c7a70b5cd9525e1472656743",
+      "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43573848453/artifacts/14105709013",
+      "api_url": "https://api.github.com/repos/tomasedisonn80/surgeXT-synth/actions/artifacts/14105709013",
+      "created_at": "2026-11-14T08:33:07Z",
+      "expires_at": "2027-02-12T08:01:58Z",
+      "expired_at_observation": false,
+      "source_commit": "83a919356a106542cb9ebc6f184346714ec2adf5",
+      "workflow_run_id": 43573848453
+    }
+  ],
+  "artifact_digest_scope": "Artifact digests are reported by the GitHub artifact API. The linked artifact-inspection report independently verified the downloaded Windows JUCE 7 artifact digest and archive contents.",
+  "artifact_inspection": {
+    "path": "doc/scoring-1000/embedded-evidence/artifact-inspection.json",
+    "sha256": "f3f02e4af884e9dd694f29d8958c318943943df157c69bfb149a7eb4eb3535e8",
+    "status": "pass",
+    "inspected_artifact_id": 14106228742,
+    "source_commit": "83a919356a106542cb9ebc6f184346714ec2adf5",
+    "fxp_files_matched": 1000,
+    "skin_packages_matched": 10,
+    "skin_files_matched": 20,
+    "compiled_binaries_matched_in_each_archive": 7,
+    "portable_and_plugin_only_binary_hashes_match": true,
+    "exact_embedded_payload_bytes": 190454,
+    "exact_embedded_payload_sha256": "58267b4a52708a0136435eb2967a8667e951a609a30e9a1783edbf7dd6b2124a",
+    "no_loose_bank_or_skin_files_in_plugin_only_archive": true
+  },
+  "signing": {
+    "macos": {
+      "status": "unsigned_unnotarized_fork_distribution",
+      "artifact_name": "build-macOS-unsigned",
+      "job_id": 132384257137,
+      "log_evidence": [
+        "2026-11-14T08:05:52.8210730Z ##[warning]Building an unsigned, unnotarized fork distribution; no Apple signing identity is being claimed.",
+        "2026-11-14T08:31:40.7512230Z Building UNSIGNED PKG"
+      ],
+      "marker_file": "UNSIGNED-BUILD.txt",
+      "independent_signature_validation": false
+    },
+    "windows": {
+      "status": "not_independently_validated",
+      "note": "Build/package success and payload byte inspection do not verify Authenticode signatures."
+    },
+    "linux": {
+      "status": "package_signatures_not_independently_validated"
+    }
+  },
+  "storage": {
+    "binary_downloads_by_release_monitor": 0,
+    "artifact_inspector_peak_owned_bytes": 832638393,
+    "artifact_inspector_downloads_retained": false,
+    "artifact_transport_limit_bytes": 536870912,
+    "oversized_linux_arm_artifact_attempt": "Connector rejected the 1122815767-byte artifact before issuing a URL or transferring payload."
+  },
+  "limitations": [
+    "Actions build and upload success is distinct from installer, DAW-host or target-device execution.",
+    "Exact archive contents and embedded payloads were independently inspected for the Windows JUCE 7 artifact only; other platform evidence is successful build/upload metadata and package listings.",
+    "macOS outputs are explicitly unsigned and unnotarized development artifacts from this fork.",
+    "The upstream-only publication jobs are not expected to publish an official Surge XT release from this fork.",
+    "No human musical audition, Hollywood adoption, acoustic realism certification or suitability for every cue is asserted by this release report."
+  ],
+  "evidence_sources": {
+    "run_api": "https://api.github.com/repos/tomasedisonn80/surgeXT-synth/actions/runs/43573848453",
+    "jobs_api": "https://api.github.com/repos/tomasedisonn80/surgeXT-synth/actions/runs/43573848453/jobs?per_page=100",
+    "artifacts_api": "https://api.github.com/repos/tomasedisonn80/surgeXT-synth/actions/runs/43573848453/artifacts",
+    "source_workflow_url": "https://github.com/tomasedisonn80/surgeXT-synth/blob/83a919356a106542cb9ebc6f184346714ec2adf5/.github/workflows/build-release.yml",
+    "package_listings": "Completed producer-job logs fetched through the GitHub connector; only file names and byte sizes are retained here."
+  }
+}

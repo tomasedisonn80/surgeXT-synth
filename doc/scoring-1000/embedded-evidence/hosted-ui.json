@@ -1,0 +1,449 @@
+{
+  "schema": 1,
+  "status": "pass",
+  "repository": "tomasedisonn80/surgeXT-synth",
+  "tested_source": "83a919356a106542cb9ebc6f184346714ec2adf5",
+  "tested_tree": "bbf787ba81f6275710506745b3c34e2584560953",
+  "run": {
+    "id": 43573848463,
+    "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43573848463",
+    "name": "Native reference workspaces",
+    "attempt": 1,
+    "status": "completed",
+    "conclusion": "success",
+    "created_at": "2026-11-14T08:01:58Z",
+    "updated_at": "2026-11-14T08:13:13Z"
+  },
+  "jobs": [
+    {
+      "id": 132383705132,
+      "name": "Linux native UI and parameter tests",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43573848463/job/132383705132",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Check out the exact commit and dependencies",
+          "conclusion": "success"
+        },
+        {
+          "name": "Prepare native build dependencies",
+          "conclusion": "success"
+        },
+        {
+          "name": "Restore native compiler cache",
+          "conclusion": "success"
+        },
+        {
+          "name": "Record build and capture provenance",
+          "conclusion": "success"
+        },
+        {
+          "name": "Validate reference workspace packages",
+          "conclusion": "success"
+        },
+        {
+          "name": "Configure native test build",
+          "conclusion": "success"
+        },
+        {
+          "name": "Build the real synthesizer test executable",
+          "conclusion": "success"
+        },
+        {
+          "name": "Test live native controls and processor behavior",
+          "conclusion": "success"
+        },
+        {
+          "name": "Test embedded factory content in the CLAP host preset browser",
+          "conclusion": "success"
+        },
+        {
+          "name": "Capture all ten native workspaces and edited states",
+          "conclusion": "success"
+        },
+        {
+          "name": "Stress the independent audio display tap",
+          "conclusion": "success"
+        },
+        {
+          "name": "Compare retained references with actual native captures",
+          "conclusion": "success"
+        },
+        {
+          "name": "Upload reference comparison sheets",
+          "conclusion": "success"
+        },
+        {
+          "name": "Upload native screenshots and diagnostic evidence",
+          "conclusion": "success"
+        },
+        {
+          "name": "Preserve compiled dependencies for the next verification pass",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Check out the exact commit and dependencies",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 132386322922,
+      "name": "Commit verified native screenshot gallery",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43573848463/job/132386322922",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Check out the successfully tested source",
+          "conclusion": "success"
+        },
+        {
+          "name": "Require the tested source to remain current on main",
+          "conclusion": "success"
+        },
+        {
+          "name": "Download this successful run's native captures",
+          "conclusion": "success"
+        },
+        {
+          "name": "Validate source, images and evidence; generate gallery",
+          "conclusion": "success"
+        },
+        {
+          "name": "Commit only the current verified gallery",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Check out the successfully tested source",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 14106250653,
+      "name": "native-reference-comparison-83a919356a106542cb9ebc6f184346714ec2adf5",
+      "size_in_bytes": 55236792,
+      "sha256": "b7d0dd1985da37176e5f3c551353cfa2003f913b4c13bb0467bcf5e1af5d780b",
+      "expired": false,
+      "expires_at": "2026-11-28T08:12:31Z",
+      "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43573848463/artifacts/14106250653"
+    },
+    {
+      "id": 14106155829,
+      "name": "native-reference-workspaces-83a919356a106542cb9ebc6f184346714ec2adf5",
+      "size_in_bytes": 17740498,
+      "sha256": "21f32767bac941e1321a0c2f174646f6f17d3ed0037789c4bb4e338584329e67",
+      "expired": false,
+      "expires_at": "2026-11-28T08:12:34Z",
+      "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43573848463/artifacts/14106155829"
+    }
+  ],
+  "gallery": {
+    "commit": "c3d1488225c8c5709ca6832912cd2e642c1d88b2",
+    "parent": "83a919356a106542cb9ebc6f184346714ec2adf5",
+    "url": "https://github.com/tomasedisonn80/surgeXT-synth/blob/c3d1488225c8c5709ca6832912cd2e642c1d88b2/doc/reference-workspaces/native-gallery/README.md",
+    "changed_files": 21,
+    "all_changes_in_gallery": true,
+    "manifest_source": "83a919356a106542cb9ebc6f184346714ec2adf5",
+    "manifest_run_id": "43573848463",
+    "manifest_capture_count": 10
+  },
+  "limits": [
+    "Native JUCE component snapshots attached to the actual processor, not OS desktop or DAW captures.",
+    "Functional tests do not establish pixel-identical reference fidelity or certify every host/platform.",
+    "This native UI workflow is separate from the 1,000-preset audio quality measurements."
+  ],
+  "artifact_inspection": {
+    "artifact_id": 14106155829,
+    "size_in_bytes": 17740498,
+    "sha256": "21f32767bac941e1321a0c2f174646f6f17d3ed0037789c4bb4e338584329e67",
+    "github_digest_matches": true,
+    "zip_members": 31,
+    "zip_crc": "pass",
+    "published_gallery_shared_file_hashes_matched": 28,
+    "capture_evidence_sha256": "6bd6a1b90c7c25bebfe0b1fd31fc202a82ee819d7c47695cdf1ce0d5618f5a07"
+  },
+  "tests": [
+    {
+      "name": "Live native controls and processor behavior",
+      "filter": "[reference-workspaces]~[reference-render]",
+      "status": "pass",
+      "test_cases": 47,
+      "assertions": 10395101,
+      "rng_seed": 1051435533,
+      "log": "native-tests.log",
+      "log_sha256": "4c26180c5ff32fcf00e7d79e117d6b3630b395f54cea649f74d32137fa0ed3c5"
+    },
+    {
+      "name": "Embedded CLAP and native skin discovery",
+      "filter": "[embedded]",
+      "status": "pass",
+      "test_cases": 2,
+      "assertions": 109,
+      "rng_seed": 1871791798,
+      "log": "embedded-host-discovery.log",
+      "log_sha256": "cbaffcf185e3a83df008474ab4d6c007b1540912dc960d13b6224dd13c38e99a"
+    },
+    {
+      "name": "Native workspace capture",
+      "filter": "[reference-render]",
+      "status": "pass",
+      "test_cases": 1,
+      "assertions": 24101112,
+      "rng_seed": 1097124791,
+      "log": "native-capture.log",
+      "log_sha256": "2af3bc558ef21ae0d45c082cbe88bbb55981c974c16a608570dd62adc0f2145a"
+    }
+  ],
+  "audio_display_stress": {
+    "normal": {
+      "status": "pass",
+      "result": "PASS: AudioTap boundaries, wrap, stalls, stereo ordering, lifecycle, no audio allocations",
+      "log": "audio-tap.log",
+      "log_sha256": "28e9abb936d2906db5a7cd6c3654c0f6da2ae0cddd46c5b0bd378eea7df77438"
+    },
+    "thread_sanitizer": {
+      "status": "pass",
+      "result": "PASS: AudioTap boundaries, wrap, stalls, stereo ordering, lifecycle, no audio allocations",
+      "log": "audio-tap-tsan.log",
+      "log_sha256": "361f589fa13cf9f4675653cb4f9e5e543214adc0b68d874f52778b1f65fbade9"
+    }
+  },
+  "workspace_validation": {
+    "status": "pass",
+    "workspaces": 10,
+    "log_sha256": "516bacf4561ade2bfd1d7b7e7ef73515f027d7e7da78edc73f2b2cf649a7fcbf",
+    "schema_self_test": "PASS: valid/Unicode/duplicate-binding fixtures; 42 schema rejections; 24 malformed JSON rejections; 9 confined-path checks; 28 accepted/140 rejected shared selection/widget schema cases; declared-control, individual-tab, gap/unused-cell, wavetable and MIDI-lane overlap checks",
+    "schema_log_sha256": "63c16d4babb33d3d946741f4be6c95a2ab4ff9fe51fb31f1a6d1a970b504a203",
+    "nonfatal_visual_warnings": [
+      "WARNING plot/control bounds overlap: panel.envelope.plot / envelope.mode (79 x 24); inspect rendered labels",
+      "WARNING plot/control bounds overlap: panel.lfo.plot / lfo1.shape (60 x 21); inspect rendered labels"
+    ]
+  },
+  "captures": {
+    "complete": true,
+    "count": 10,
+    "native_pngs": 20,
+    "canvas": [
+      1586,
+      992
+    ],
+    "method": "JUCE Component::createComponentSnapshot",
+    "source_dirty_at_configure": false,
+    "source_revision_at_configure": "83a919356a106542cb9ebc6f184346714ec2adf5",
+    "generated_at_utc": "2026-11-14T08:12:17.293Z",
+    "scales_rendered": [
+      1.0,
+      1.25,
+      1.5
+    ],
+    "workspaces": [
+      {
+        "id": "01-obsidian-precision",
+        "name": "01 Obsidian Precision",
+        "resolvedManifestControls": 83,
+        "editedBinding": "filter1.cutoff",
+        "changedPixelsAfterControlEdit": 10993,
+        "image": {
+          "name": "01-obsidian-precision.png",
+          "sha256": "4ba39599685d7d2a7726f4128dad00d4a67f2d2eb31b7f4132cafcf83b24c61f",
+          "size_in_bytes": 747422
+        },
+        "editedImage": {
+          "name": "01-obsidian-precision-edited.png",
+          "sha256": "a2b05dc089b8ce3d440867a7f786266b2893f97c142286e8c6222cf2fed3a64a",
+          "size_in_bytes": 745248
+        }
+      },
+      {
+        "id": "02-ivory-atelier",
+        "name": "02 Ivory Atelier",
+        "resolvedManifestControls": 75,
+        "editedBinding": "filter1.cutoff",
+        "changedPixelsAfterControlEdit": 14169,
+        "image": {
+          "name": "02-ivory-atelier.png",
+          "sha256": "711952f1665bfbc8ff86d6fea77a2e546af8fcc007256cff5e02f47a7129956e",
+          "size_in_bytes": 1307141
+        },
+        "editedImage": {
+          "name": "02-ivory-atelier-edited.png",
+          "sha256": "30f241eaa8ac2348bee5e77a435100c9d20f8adf3936d3a9d143810fcf85bc27",
+          "size_in_bytes": 1303761
+        }
+      },
+      {
+        "id": "03-spectral-observatory",
+        "name": "Spectral Observatory",
+        "resolvedManifestControls": 69,
+        "editedBinding": "filter1.cutoff",
+        "changedPixelsAfterControlEdit": 10779,
+        "image": {
+          "name": "03-spectral-observatory.png",
+          "sha256": "8473ab282ea95469dadf76e0e116587d8c547c98d24935eb0f026ef92dd8dab6",
+          "size_in_bytes": 680003
+        },
+        "editedImage": {
+          "name": "03-spectral-observatory-edited.png",
+          "sha256": "6a94aef741c344d32848335fd0fd44e8d78d9d8647105539f6950cc14077b7c0",
+          "size_in_bytes": 677961
+        }
+      },
+      {
+        "id": "04-bauhaus-modular",
+        "name": "04 Bauhaus Modular",
+        "resolvedManifestControls": 79,
+        "editedBinding": "filter1.cutoff",
+        "changedPixelsAfterControlEdit": 4329,
+        "image": {
+          "name": "04-bauhaus-modular.png",
+          "sha256": "2defa70f90f29094c171edc2a685fd19a997887f091fcf9b7a68d294ab4954ec",
+          "size_in_bytes": 1161264
+        },
+        "editedImage": {
+          "name": "04-bauhaus-modular-edited.png",
+          "sha256": "0f4d0db68928d20c0ff23330ef83fb9db756a51f97b744f2c4d5da7f3fa37154",
+          "size_in_bytes": 1161361
+        }
+      },
+      {
+        "id": "05-space-age-1977",
+        "name": "05 Space-Age 1977",
+        "resolvedManifestControls": 90,
+        "editedBinding": "filter1.cutoff",
+        "changedPixelsAfterControlEdit": 3666,
+        "image": {
+          "name": "05-space-age-1977.png",
+          "sha256": "bf14e275dd4e85669251a9351d473e762596500913db34935c7bb7d1bb1ac32c",
+          "size_in_bytes": 1585523
+        },
+        "editedImage": {
+          "name": "05-space-age-1977-edited.png",
+          "sha256": "6ed1f17a67354310e46d390135cf7ca1f940499b5ff3c67a9870f873c4aac62d",
+          "size_in_bytes": 1585391
+        }
+      },
+      {
+        "id": "06-tokyo-industrial",
+        "name": "06 Tokyo Industrial",
+        "resolvedManifestControls": 92,
+        "editedBinding": "filter1.cutoff",
+        "changedPixelsAfterControlEdit": 5970,
+        "image": {
+          "name": "06-tokyo-industrial.png",
+          "sha256": "00ecdc1f279256d739675e6e353a08d783dd41619ef71fe881c64072668c418a",
+          "size_in_bytes": 745108
+        },
+        "editedImage": {
+          "name": "06-tokyo-industrial-edited.png",
+          "sha256": "9d3155edea3c03125e527b33f86d479f59086398c789602879f801532480bbcc",
+          "size_in_bytes": 744477
+        }
+      },
+      {
+        "id": "07-liquid-aurora",
+        "name": "Liquid Aurora",
+        "resolvedManifestControls": 99,
+        "editedBinding": "filter1.cutoff",
+        "changedPixelsAfterControlEdit": 4195,
+        "image": {
+          "name": "07-liquid-aurora.png",
+          "sha256": "69eb18ed3c74fee7c8388c3e086e44327653a40b62b89d4d73b8fee8a7e0abd2",
+          "size_in_bytes": 738835
+        },
+        "editedImage": {
+          "name": "07-liquid-aurora-edited.png",
+          "sha256": "cc00e7c97f4c32dba9c28d4f313822e6d8010642dca93c97f225a87e17ac515d",
+          "size_in_bytes": 738385
+        }
+      },
+      {
+        "id": "08-clearsignal-accessible",
+        "name": "08 ClearSignal Accessible",
+        "resolvedManifestControls": 77,
+        "editedBinding": "filter1.cutoff",
+        "changedPixelsAfterControlEdit": 63866,
+        "image": {
+          "name": "08-clearsignal-accessible.png",
+          "sha256": "bb1d64f0500e476af4adc117f7d5bd26ff0524ccaa8646936555208dfac30115",
+          "size_in_bytes": 509875
+        },
+        "editedImage": {
+          "name": "08-clearsignal-accessible-edited.png",
+          "sha256": "c1ce52957d8118755e8a9d072c314d2403bf925ca383510793e570c6f46a2c1d",
+          "size_in_bytes": 508141
+        }
+      },
+      {
+        "id": "09-signal-flow-cartographer",
+        "name": "09 Signal-Flow Cartographer",
+        "resolvedManifestControls": 51,
+        "editedBinding": "filter1.cutoff",
+        "changedPixelsAfterControlEdit": 28960,
+        "image": {
+          "name": "09-signal-flow-cartographer.png",
+          "sha256": "ba15d1f8867e688fbdc654277cc43be2ba586301a58d9542c33c02bbe10ad19f",
+          "size_in_bytes": 461142
+        },
+        "editedImage": {
+          "name": "09-signal-flow-cartographer-edited.png",
+          "sha256": "ed0f3d5eee1ded028e12bf142b1847690dab313716c83627f402530b92b27668",
+          "size_in_bytes": 459439
+        }
+      },
+      {
+        "id": "10-live-performance-deck",
+        "name": "Live Performance Deck",
+        "resolvedManifestControls": 64,
+        "editedBinding": "filter1.cutoff",
+        "changedPixelsAfterControlEdit": 25294,
+        "image": {
+          "name": "10-live-performance-deck.png",
+          "sha256": "6991b61350fd721d59beb56eec7a12ededcc1fd0226ddb69d9c997893a910451",
+          "size_in_bytes": 947112
+        },
+        "editedImage": {
+          "name": "10-live-performance-deck-edited.png",
+          "sha256": "f39eb2b416bb2b5c4caa4d2e6d5222cd9000065cda83a17da6fdcdb5a5276bd0",
+          "size_in_bytes": 946671
+        }
+      }
+    ]
+  },
+  "capture_review": {
+    "overview": "Viewed a contact sheet of all ten actual baseline captures; all ten native workspaces rendered.",
+    "clear_signal_warning_review": "Viewed the full-size ClearSignal Accessible capture: the envelope mode and LFO shape selectors remain legible over their plot areas. The two static plot/control overlap warnings are retained above.",
+    "scope": "Visual overview and the two reported plot/control areas only; no additional interactive or all-host certification."
+  },
+  "environment": {
+    "runner": "ubuntu-24.04",
+    "desktop": "Xvfb with Openbox",
+    "compiler": "GCC 13.3.0",
+    "cmake": "3.31.6",
+    "audio_device": "none; processor rendered offline",
+    "sample_rate_hz": 48000.0,
+    "block_samples": 512,
+    "build_provenance_sha256": "b0f834324ea10d5758941c740fadc8814936d57cb2cb6851e227cb215ee88d34"
+  },
+  "observed_at_utc": "2026-11-14T08:16:19.022551+00:00"
+}

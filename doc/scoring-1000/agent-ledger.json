@@ -344,7 +344,7 @@
         "doc/scoring-1000/reviews/w05-a26-roundtrip.md",
         "scripts/scoring/check_roundtrip.py"
       ],
-      "result": "Verified native save/load semantics for all 1,000 inputs at the report\u2019s recorded revision.",
+      "result": "Verified native save/load semantics for all 1,000 inputs at the report’s recorded revision.",
       "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
     },
     {
@@ -1140,8 +1140,13 @@
         "agent": "/root/github_publication",
         "assignment": "Publish/reconcile the completed project through GitHub and verify resulting remote state.",
         "status": "completed",
-        "result_scope": "Parent confirmed baseline bank/research/evidence publication on remote main at 109e1b161d12733e2fdeecd1f05c09256ac04f58 and successful bank workflow 43572397153. This baseline completion does not certify the later embedded-content feature or its platform builds. Subsequent publication work continues under this same task identity and adds no assignment.",
-        "artifacts": [],
+        "result_scope": "Parent confirmed baseline bank/research/evidence publication on remote main at 109e1b161d12733e2fdeecd1f05c09256ac04f58 and successful bank workflow 43572397153. This baseline completion does not certify the later embedded-content feature or its platform builds. Subsequent publication work continues under this same task identity and adds no assignment. Same-identity follow-up subsequently published embedded source 83a919356a106542cb9ebc6f184346714ec2adf5 (tree bbf787ba81f6275710506745b3c34e2584560953) on main and recorded successful current-source native bank run 43573848455 and native UI run 43573848463. The automatic gallery-only commit c3d1488225c8c5709ca6832912cd2e642c1d88b2 follows that tested source. The same follow-up subsequently observed release run 43573848453 complete successfully with all seven platform build jobs and seven source-bound artifacts; macOS is unsigned and unnotarized. This records build/package outcomes, not installer or DAW-host execution.",
+        "artifacts": [
+          "doc/scoring-1000/embedded-evidence/publication.json",
+          "doc/scoring-1000/embedded-evidence/hosted-native.json",
+          "doc/scoring-1000/embedded-evidence/hosted-ui.json",
+          "doc/scoring-1000/embedded-evidence/hosted-release.json"
+        ],
         "reviewed_paths": [],
         "spawn_observed": true,
         "spawn_observation_basis": "Current parent explicitly supplied this distinct actual task name in the continuation handoff; no opaque spawn identifier was supplied or invented.",
@@ -1155,6 +1160,28 @@
           "bank_workflow_run_id": 43572397153,
           "bank_workflow_url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43572397153",
           "bank_workflow_conclusion": "success"
+        },
+        "followup_observation": {
+          "counted_as_new_assignment": false,
+          "observation_basis": "Parent-reported embedded publication and bank success checked against publication.json and hosted-native.json; native UI and gallery results directly queried by /root/native_ui_verification and recorded in hosted-ui.json. Baseline remote_evidence above is preserved.",
+          "source_commit": "83a919356a106542cb9ebc6f184346714ec2adf5",
+          "source_tree": "bbf787ba81f6275710506745b3c34e2584560953",
+          "commit_url": "https://github.com/tomasedisonn80/surgeXT-synth/commit/83a919356a106542cb9ebc6f184346714ec2adf5",
+          "native_bank_run_id": 43573848455,
+          "native_bank_conclusion": "success",
+          "native_bank_url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43573848455",
+          "native_ui_run_id": 43573848463,
+          "native_ui_conclusion": "success",
+          "native_ui_url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43573848463",
+          "gallery_commit": "c3d1488225c8c5709ca6832912cd2e642c1d88b2",
+          "gallery_parent": "83a919356a106542cb9ebc6f184346714ec2adf5",
+          "gallery_only_changes": true,
+          "release_scope": "Direct GitHub reads by publisher and root confirmed all seven platform build/upload jobs and exact-source artifacts. The hosted release record binds package listings and digests; macOS remains unsigned/unnotarized, and installer/DAW execution is not asserted.",
+          "platform_release_run_id": 43573848453,
+          "platform_release_conclusion": "success",
+          "platform_release_url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43573848453",
+          "successful_platform_builds": 7,
+          "platform_artifacts": 7
         }
       },
       {
@@ -1178,13 +1205,14 @@
         "agent": "/root/native_ui_verification",
         "assignment": "Verify native UI and embedded preset/skin integration in the compiled test environment.",
         "status": "completed",
-        "result_scope": "Parent confirmed receipt of the final UI result. surge-xt-tests compiled and linked; the exact [embedded],[reference-manifest],[schema] filter passed five cases and 5,911 assertions with zero failures. Two initial failures came from fixture construction using JUCE numeric-string array equality; only the fixture mutator was corrected, with production validation and expected assertions unchanged. Original failures are retained. This selected metadata/discovery/schema run is not a full renderer/display test or screenshot capture.",
+        "result_scope": "Parent confirmed receipt of the final UI result. surge-xt-tests compiled and linked; the exact [embedded],[reference-manifest],[schema] filter passed five cases and 5,911 assertions with zero failures. Two initial failures came from fixture construction using JUCE numeric-string array equality; only the fixture mutator was corrected, with production validation and expected assertions unchanged. Original failures are retained. This selected metadata/discovery/schema run is not a full renderer/display test or screenshot capture. Same-identity hosted follow-up observed successful native UI workflow 43573848463 on embedded source 83a919356a106542cb9ebc6f184346714ec2adf5 (tree bbf787ba81f6275710506745b3c34e2584560953): 47 behavior cases, two embedded discovery cases, one capture case, normal and ThreadSanitizer audio-display stress, and 20 source-bound PNGs for ten workspaces. The automatic gallery-only commit c3d1488225c8c5709ca6832912cd2e642c1d88b2 was observed on main. This follow-up adds no assignment and does not assert platform release success.",
         "artifacts": [
           "doc/scoring-1000/embedded-evidence/ui-native-summary.json",
           "doc/scoring-1000/embedded-evidence/ui-native-tests.log",
           "doc/scoring-1000/embedded-evidence/ui-native-initial-failure.json",
           "doc/scoring-1000/embedded-evidence/ui-native-tests-initial.log",
-          "src/surge-xt/xt-tests/XTTestReferenceManifest.cpp"
+          "src/surge-xt/xt-tests/XTTestReferenceManifest.cpp",
+          "doc/scoring-1000/embedded-evidence/hosted-ui.json"
         ],
         "reviewed_paths": [],
         "spawn_observed": true,
@@ -1199,6 +1227,28 @@
           "failures": 0,
           "binary_sha256": "214a65f468199c6b3c8ebe2403ea09f9c89b1b242645dd06121d1fc01a079dfe",
           "summary_path": "doc/scoring-1000/embedded-evidence/ui-native-summary.json"
+        },
+        "followup_observation": {
+          "counted_as_new_assignment": false,
+          "observation_basis": "Direct GitHub connector reads of run, jobs, artifact metadata, current main and gallery manifest; downloaded capture archive verified against its digest and published gallery hashes.",
+          "source_commit": "83a919356a106542cb9ebc6f184346714ec2adf5",
+          "source_tree": "bbf787ba81f6275710506745b3c34e2584560953",
+          "run_id": 43573848463,
+          "run_url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43573848463",
+          "conclusion": "success",
+          "behavior_test_cases_passed": 47,
+          "embedded_test_cases_passed": 2,
+          "capture_test_cases_passed": 1,
+          "workspaces_captured": 10,
+          "native_pngs": 20,
+          "normal_audio_tap_stress": "pass",
+          "thread_sanitizer_audio_tap_stress": "pass",
+          "gallery_commit": "c3d1488225c8c5709ca6832912cd2e642c1d88b2",
+          "gallery_parent": "83a919356a106542cb9ebc6f184346714ec2adf5",
+          "gallery_only_changes": true,
+          "gallery_url": "https://github.com/tomasedisonn80/surgeXT-synth/blob/c3d1488225c8c5709ca6832912cd2e642c1d88b2/doc/reference-workspaces/native-gallery/README.md",
+          "summary_path": "doc/scoring-1000/embedded-evidence/hosted-ui.json",
+          "scope": "Hosted native components, controls, discovery and capture verification. The earlier local five-case verification and retained failures remain unchanged; no OS desktop/DAW or platform-release certification is inferred."
         }
       }
     ],

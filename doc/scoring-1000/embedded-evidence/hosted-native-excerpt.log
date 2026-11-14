@@ -1,0 +1,36 @@
+2026-11-14T08:03:22.1915945Z   "errors": []
+2026-11-14T08:03:22.6000299Z -- Scoring 1000: verified 1000 SHA-256 hashes, 10 categories and catalog binding in /home/runner/work/surgeXT-synth/surgeXT-synth/resources/data
+2026-11-14T08:03:32.9698028Z -- Scoring 1000: verified 1000 SHA-256 hashes, 10 categories and catalog binding in /home/runner/work/surgeXT-synth/surgeXT-synth/resources/data
+2026-11-14T08:03:42.3304194Z -- Scoring 1000: verified 1000 SHA-256 hashes, 10 categories and catalog binding in /home/runner/work/surgeXT-synth/surgeXT-synth/resources/data
+2026-11-14T08:07:05.4416607Z -- Scoring 1000: verified 1000 SHA-256 hashes, 10 categories and catalog binding in /home/runner/work/surgeXT-synth/surgeXT-synth/build-scoring/scoring-bank-stage/share/surge-xt
+2026-11-14T08:07:13.2300697Z PASS CMakeRC retrieval and source fixture identity
+2026-11-14T08:07:13.2301158Z PASS complete installed content reuse without cache writes
+2026-11-14T08:07:13.2301488Z PASS no-install fallback reproduces every preset and reference skin byte
+2026-11-14T08:07:13.2301883Z PASS partial installed content is supplemented without overwriting installation files
+2026-11-14T08:07:13.2302214Z PASS stable reuse and missing/damaged cache repair
+2026-11-14T08:07:13.2302529Z PASS cache file symlink rejected without touching user data
+2026-11-14T08:07:13.2302875Z PASS truncation, trailing data, version, path traversal, length and identifier rejection
+2026-11-14T08:07:13.2303231Z PASS four concurrent initializations share complete content
+2026-11-14T08:07:13.2303581Z PASS native factory discovery deduplicates the bank and preserves unrelated presets
+2026-11-14T08:07:13.2304121Z PASS explicit missing data root retains installer-audit semantics
+2026-11-14T08:07:13.2304482Z PASS case-variant stale bank suppression preserves legacy factory and user presets
+2026-11-14T08:07:13.3253143Z PASS ordinary implicit startup discovers 1000 factory presets and ten reference skins
+2026-11-14T08:07:16.6399748Z   "errors": []
+2026-11-14T08:07:16.7338677Z Native engine discovered all 1000 staged factory paths.
+2026-11-14T08:08:04.6483382Z   "passed": 10,
+2026-11-14T08:08:04.6483847Z   "failed": 0,
+2026-11-14T08:08:16.5728318Z   "status": "pass",
+2026-11-14T08:08:19.2375706Z 1/10 SC02-033 pass warnings=0 peak=0.719896 rendered
+2026-11-14T08:08:19.5358748Z 2/10 SC01-048 pass warnings=0 peak=0.719745 rendered
+2026-11-14T08:08:22.3063793Z 3/10 SC03-078 pass warnings=0 peak=0.719933 rendered
+2026-11-14T08:08:25.2183060Z 4/10 SC05-083 pass warnings=0 peak=0.270968 rendered
+2026-11-14T08:08:28.5719608Z 5/10 SC04-097 pass warnings=0 peak=0.289412 rendered
+2026-11-14T08:08:29.9813827Z 6/10 SC07-059 pass warnings=0 peak=0.0941241 rendered
+2026-11-14T08:08:30.5713477Z 7/10 SC06-061 pass warnings=0 peak=0.190177 rendered
+2026-11-14T08:08:31.9294147Z 8/10 SC09-085 pass warnings=0 peak=0.0824845 rendered
+2026-11-14T08:08:32.8019930Z 9/10 SC08-058 pass warnings=0 peak=0.7178 rendered
+2026-11-14T08:08:33.9890803Z 10/10 SC10-048 pass warnings=0 peak=0.128448 rendered
+2026-11-14T08:08:33.9899213Z   "passed": 10,
+2026-11-14T08:08:33.9899419Z   "failed": 0,
+2026-11-14T08:08:33.9899862Z   "warnings": 0,
+2026-11-14T08:08:33.9900073Z   "max_sample_peak": 0.7199329137802124

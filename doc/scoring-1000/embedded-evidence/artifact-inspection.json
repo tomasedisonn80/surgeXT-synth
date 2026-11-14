@@ -1,0 +1,281 @@
+{
+  "schema": 1,
+  "status": "pass",
+  "inspected_at_utc": "2026-11-14T08:36:22.969676+00:00",
+  "source_commit": "83a919356a106542cb9ebc6f184346714ec2adf5",
+  "source_url": "https://github.com/tomasedisonn80/surgeXT-synth/commit/83a919356a106542cb9ebc6f184346714ec2adf5",
+  "workflow_run_id": 43573848453,
+  "workflow_run_url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43573848453",
+  "producer_job": {
+    "id": 132384257107,
+    "name": "Release - Windows MSVC JUCE 7",
+    "status": "completed",
+    "conclusion": "success",
+    "run_id": 43573848453,
+    "steps": [
+      {
+        "name": "Build release version",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 8
+      },
+      {
+        "name": "Upload artifact",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 11
+      }
+    ]
+  },
+  "artifact": {
+    "id": 14106228742,
+    "name": "build-Windows MSVC JUCE 7",
+    "bytes": 435746582,
+    "sha256": "c353c1e393e92180cac73c67669f6704ec02bf08760bd7b15cadd9865b97e529",
+    "github_digest_matched": true,
+    "source_sha_from_artifact_metadata": "83a919356a106542cb9ebc6f184346714ec2adf5",
+    "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43573848453/artifacts/14106228742"
+  },
+  "nested_archives": {
+    "portable": {
+      "path": "surge-xt-win64-juce7-NIGHTLY-2026-11-14-83a9193-portable-install.zip",
+      "bytes": 396891811,
+      "sha256": "57affcedd2c9462cafc82891eaf2bc10aa6c30b399a6ca494ed7b8ec5dd23342"
+    },
+    "plugin_only": {
+      "path": "surge-xt-win64-juce7-NIGHTLY-2026-11-14-83a9193-pluginsonly.zip",
+      "bytes": 45600165,
+      "sha256": "09e0bf3776295d2a8cfb632c6ffd7807b473099227fee12c2ad1278048bcea53"
+    }
+  },
+  "source_bindings": {
+    "catalog_sha256": "67bd4a5dc3fbf6f3794679b24b500f1ef37af83b7a47a863d10cb964a57314a2",
+    "embedded_index_sha256": "4cbb053a080a1e86f3fed4ba3ded2e96ddb9ecdc6c19b4621617ec41e86acd67",
+    "source_entries_compared": 1020,
+    "index_read_from_exact_source_commit": true
+  },
+  "portable_content": {
+    "presets_expected": 1000,
+    "presets_found": 1000,
+    "preset_hashes_matched": 1000,
+    "skin_packages_found": 10,
+    "skin_files_found": 20,
+    "skin_file_hashes_matched": 20,
+    "missing_extra_duplicate_or_mismatched_expected_entries": 0,
+    "skin_package_manifest_hash_method": "SHA-256 of UTF-8 concatenated sorted relative-file-name + NUL + file SHA-256 + newline; each two-file package is compared independently against exact-source index.",
+    "skin_packages": [
+      {
+        "package": "reference-01-obsidian.surge-skin",
+        "files": [
+          "skin.xml",
+          "workspace.json"
+        ],
+        "source_manifest_sha256": "5820d974431e5037fca6ae495b486555de3cbc1c9ed33cb9e1811b61695a5bdf",
+        "archive_manifest_sha256": "5820d974431e5037fca6ae495b486555de3cbc1c9ed33cb9e1811b61695a5bdf"
+      },
+      {
+        "package": "reference-02-ivory.surge-skin",
+        "files": [
+          "skin.xml",
+          "workspace.json"
+        ],
+        "source_manifest_sha256": "3af1684f9ef141068f08fab7d677dd051669b7ffa7c3844e1c6df8df7cdab679",
+        "archive_manifest_sha256": "3af1684f9ef141068f08fab7d677dd051669b7ffa7c3844e1c6df8df7cdab679"
+      },
+      {
+        "package": "reference-03-spectral.surge-skin",
+        "files": [
+          "skin.xml",
+          "workspace.json"
+        ],
+        "source_manifest_sha256": "256f4b60d730c7751cc57b9f55144b5988ce1029dfa31d4a60b7c00af89509f3",
+        "archive_manifest_sha256": "256f4b60d730c7751cc57b9f55144b5988ce1029dfa31d4a60b7c00af89509f3"
+      },
+      {
+        "package": "reference-04-bauhaus.surge-skin",
+        "files": [
+          "skin.xml",
+          "workspace.json"
+        ],
+        "source_manifest_sha256": "abf07b213b290e441f3dd480b2c39abe226f1c2a2167c43fb274bd1d37075885",
+        "archive_manifest_sha256": "abf07b213b290e441f3dd480b2c39abe226f1c2a2167c43fb274bd1d37075885"
+      },
+      {
+        "package": "reference-05-space.surge-skin",
+        "files": [
+          "skin.xml",
+          "workspace.json"
+        ],
+        "source_manifest_sha256": "144b09214da07dd0084f27692dc00d707621bffcbed9ce804b3eb1a61c45f353",
+        "archive_manifest_sha256": "144b09214da07dd0084f27692dc00d707621bffcbed9ce804b3eb1a61c45f353"
+      },
+      {
+        "package": "reference-06-tokyo.surge-skin",
+        "files": [
+          "skin.xml",
+          "workspace.json"
+        ],
+        "source_manifest_sha256": "b97493afbeb4c99b2cf4d8f1d32b7d1f291ff4b94bffb3481b91f579f292733d",
+        "archive_manifest_sha256": "b97493afbeb4c99b2cf4d8f1d32b7d1f291ff4b94bffb3481b91f579f292733d"
+      },
+      {
+        "package": "reference-07-aurora.surge-skin",
+        "files": [
+          "skin.xml",
+          "workspace.json"
+        ],
+        "source_manifest_sha256": "efc91c3a16241d02df652645550d748c4234dc56bdb16cae1eaccd6d559a4a4a",
+        "archive_manifest_sha256": "efc91c3a16241d02df652645550d748c4234dc56bdb16cae1eaccd6d559a4a4a"
+      },
+      {
+        "package": "reference-08-clear.surge-skin",
+        "files": [
+          "skin.xml",
+          "workspace.json"
+        ],
+        "source_manifest_sha256": "4df51f3aa7fce274a31780e6b760effc411f1f4caafafabe4aae7d37d2276bde",
+        "archive_manifest_sha256": "4df51f3aa7fce274a31780e6b760effc411f1f4caafafabe4aae7d37d2276bde"
+      },
+      {
+        "package": "reference-09-flow.surge-skin",
+        "files": [
+          "skin.xml",
+          "workspace.json"
+        ],
+        "source_manifest_sha256": "35d06bbd4d77ae5752beffea98c552c3208d4f6b340a7ab07f33e577ace18449",
+        "archive_manifest_sha256": "35d06bbd4d77ae5752beffea98c552c3208d4f6b340a7ab07f33e577ace18449"
+      },
+      {
+        "package": "reference-10-live.surge-skin",
+        "files": [
+          "skin.xml",
+          "workspace.json"
+        ],
+        "source_manifest_sha256": "5a448e370973e2ffdd862121a1cc6e89b91f2f1b565199347e9b9ff64d0811d8",
+        "archive_manifest_sha256": "5a448e370973e2ffdd862121a1cc6e89b91f2f1b565199347e9b9ff64d0811d8"
+      }
+    ]
+  },
+  "embedded_binary_content": {
+    "payload_bytes": 190454,
+    "payload_sha256": "58267b4a52708a0136435eb2967a8667e951a609a30e9a1783edbf7dd6b2124a",
+    "method": "Stream each selected binary member and find the complete exact compressed payload byte sequence, retaining boundary overlap. Hash the full binary simultaneously.",
+    "portable_binaries_checked": 7,
+    "plugin_only_binaries_checked": 7,
+    "matching_binary_pairs": 7,
+    "one_exact_payload_occurrence_in_every_binary": true,
+    "binaries": [
+      {
+        "portable_member": "Surge Synth Team/Surge XT Effects.clap",
+        "plugin_only_member": "Surge XT Effects.clap",
+        "bytes": 9243648,
+        "sha256": "cb54418fabf8ea2b7037942c63c99c7cde62e39f6c7a64037c9c2602f9c95299",
+        "embedded_payload_occurrences_in_each_archive": 1,
+        "embedded_payload_offsets": [
+          7549408
+        ]
+      },
+      {
+        "portable_member": "Surge Synth Team/Surge XT Effects.exe",
+        "plugin_only_member": "Surge XT Effects.exe",
+        "bytes": 10526208,
+        "sha256": "d0c4994374515c5ee36af68241154176aef2f2f11473002f21dbe7efbadfdf60",
+        "embedded_payload_occurrences_in_each_archive": 1,
+        "embedded_payload_offsets": [
+          8616256
+        ]
+      },
+      {
+        "portable_member": "Surge Synth Team/Surge XT Effects.vst3/Contents/x86_64-win/Surge XT Effects.vst3",
+        "plugin_only_member": "Surge XT Effects.vst3/Contents/x86_64-win/Surge XT Effects.vst3",
+        "bytes": 9326592,
+        "sha256": "69b71309c47e1a517079100aeec50c8f4282e1c54b0f635e42a1795fee546dbf",
+        "embedded_payload_occurrences_in_each_archive": 1,
+        "embedded_payload_offsets": [
+          7576160
+        ]
+      },
+      {
+        "portable_member": "Surge Synth Team/Surge XT.clap",
+        "plugin_only_member": "Surge XT.clap",
+        "bytes": 21943296,
+        "sha256": "608ac5ee462c5cfb76deb505cd5cd62b638ec610c4a19ddaf9f37f363d111717",
+        "embedded_payload_occurrences_in_each_archive": 1,
+        "embedded_payload_offsets": [
+          12813296
+        ]
+      },
+      {
+        "portable_member": "Surge Synth Team/Surge XT.exe",
+        "plugin_only_member": "Surge XT.exe",
+        "bytes": 22231552,
+        "sha256": "2aaedcd414c5adfb5cd7017291df393aff6e770a92cb6ac302ec4e83e9537096",
+        "embedded_payload_occurrences_in_each_archive": 1,
+        "embedded_payload_offsets": [
+          12995760
+        ]
+      },
+      {
+        "portable_member": "Surge Synth Team/Surge XT.vst3/Contents/x86_64-win/Surge XT.vst3",
+        "plugin_only_member": "Surge XT.vst3/Contents/x86_64-win/Surge XT.vst3",
+        "bytes": 22028800,
+        "sha256": "e6983536385524e01c5673076bcdd5e6a116d16e79c7e7f00eaa74719e44d536",
+        "embedded_payload_occurrences_in_each_archive": 1,
+        "embedded_payload_offsets": [
+          12838208
+        ]
+      },
+      {
+        "portable_member": "Surge Synth Team/surge-xt-cli.exe",
+        "plugin_only_member": "surge-xt-cli.exe",
+        "bytes": 22218240,
+        "sha256": "7a538cc1bc3943231e019efd73f80221ddde3b79467396beb697fc7e1aa76dd6",
+        "embedded_payload_occurrences_in_each_archive": 1,
+        "embedded_payload_offsets": [
+          13029136
+        ]
+      }
+    ]
+  },
+  "plugin_only_content": {
+    "loose_scoring_presets": 0,
+    "loose_reference_skin_files": 0,
+    "result": "The archive has no loose bank or skin files; all seven compiled binary members carry the exact embedded factory payload."
+  },
+  "transport": {
+    "method": "GitHub download_workflow_artifact connector followed by a streamed authorized oaiusercontent download URL; no guessed credentials or browser session.",
+    "outer_archive_size_and_sha256_verified": true,
+    "both_nested_archive_streams_read_completely": true,
+    "prior_oversized_attempt": {
+      "artifact_id": 14106242777,
+      "name": "build-ubuntu-arm",
+      "bytes": 1122815767,
+      "error": "InvalidInputException: Artifact exceeds max size of 536870912 bytes: 1122815767 bytes.",
+      "download_url_returned": false,
+      "local_bytes_downloaded": 0,
+      "range_access_attempted": false
+    }
+  },
+  "storage": {
+    "budget_bytes": 1000000000,
+    "maximum_owned_archive_storage_bytes": 832638393,
+    "nested_archives_processed_sequentially": true,
+    "archive_members_extracted_to_paths": false,
+    "binary_execution": false,
+    "own_downloaded_intermediates_deleted": true,
+    "temporary_inspector_deleted": true
+  },
+  "inspection_implementation": {
+    "existing_archive_reader": "scripts/scoring/inspect_archive.py",
+    "existing_archive_reader_sha256": "e3003f6a7419254c3def0cea64419a612f47911671a1d2d83b91d16a58d78126",
+    "temporary_stream_inspector_sha256": "59047dc863cba1008d5b8475f9dd25d4cb68e961be96d9ca2fad1426b1494ca8",
+    "method": "Read nested ZIPs using bounded spooled streams; compare exact unique FXP path/hash sets, compare all 20 skin files and ten canonical package manifests, scan/hash binaries without executing or extracting them."
+  },
+  "limits": [
+    "One Windows x64 JUCE7 distribution from the exact-source release run was inspected; this is not byte inspection of every platform artifact.",
+    "No Windows installer execution, plugin/DAW-host execution, signing validation, musical audition or composer endorsement is asserted.",
+    "The full unrelated factory sample/wavetable library was not checked file by file; the exact requested bank/skin sets and seven binary members were checked.",
+    "A successful producer job and exact archive contents are distinct evidence scopes; the report records both without treating them as host execution."
+  ],
+  "errors": []
+}

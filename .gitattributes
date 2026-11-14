@@ -8,3 +8,8 @@ doc/scoring-1000/** -text
 # These bytes participate in the factory-bank SHA-256 verification on every OS.
 doc/scoring-1000/manifest.json text eol=lf
 doc/scoring-1000/package.sha256 text eol=lf
+resources/surge-shared/scoring-factory.sxtz -text
+resources/surge-shared/scoring-factory.json text eol=lf
+resources/surge-shared/scoring-factory.id text eol=lf
+resources/data/skins/reference-*/skin.xml text eol=lf
+resources/data/skins/reference-*/workspace.json text eol=lf

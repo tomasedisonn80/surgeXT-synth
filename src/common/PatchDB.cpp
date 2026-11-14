@@ -873,6 +873,8 @@ CREATE TABLE IF NOT EXISTS Favorites (
             int maxItForSafety{0};
             while ((pTmp != storage->userPatchesPath) &&
                    (pTmp != storage->datapath / "patches_factory") &&
+                   (storage->embeddedFactoryDataPath.empty() ||
+                    pTmp != storage->embeddedFactoryDataPath / "patches_factory") &&
                    (pTmp != storage->datapath / "patches_3rdparty") && !pTmp.empty() &&
                    (pTmp != pTmp.root_directory()) && maxItForSafety < 10)
             {

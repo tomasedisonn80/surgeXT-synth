@@ -1,5 +1,5 @@
 {
-  "schema": 4,
+  "schema": 5,
   "requested_agents": 60,
   "requested_waves": 10,
   "concurrency_limit_including_root": 4,
@@ -344,7 +344,7 @@
         "doc/scoring-1000/reviews/w05-a26-roundtrip.md",
         "scripts/scoring/check_roundtrip.py"
       ],
-      "result": "Verified native save/load semantics for all 1,000 inputs at the report’s recorded revision.",
+      "result": "Verified native save/load semantics for all 1,000 inputs at the report\u2019s recorded revision.",
       "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
     },
     {
@@ -1020,5 +1020,188 @@
   "publication_actual_agents": 3,
   "publication_completed_agents": 3,
   "confirmed_assignments_above_requested": 3,
-  "unmet_confirmed_completion_count": 0
+  "unmet_confirmed_completion_count": 0,
+  "current_continuation": {
+    "scope": "Focused continuation of the same project: reuse the completed original bank and ten-wave work, close embedded delivery gaps, refresh research, and verify publication/native integration.",
+    "snapshot_basis": "Parent updates observed on 2026-11-14. Nine distinct current identities were supplied and all nine initial final results have been received. Baseline publication and bank workflow success are recorded separately from the selected native UI checks and the ongoing same-identity publication follow-up.",
+    "included_in_top_level_recovery_counts": false,
+    "top_level_counts_scope": "Existing actual_agents=63, completed_agents=60, wave counts, historical/recovery arrays and completion_claim remain the recovered publication snapshot. The current nine assignments are separate here; preserved baseline fields do not include this continuation.",
+    "preserved_recovery_assignments": 63,
+    "preserved_recovery_completions": 60,
+    "actual_agents": 9,
+    "completed_agents": 9,
+    "running_agents": 0,
+    "wave_accounting": "No new ten-wave/sixty-agent cycle is asserted. Original ten-wave provenance is unchanged; focused tasks are additional continuation work and not relabeled as historical numbered slots.",
+    "counting_rule": "Each distinct supplied canonical task counts once. Follow-ups, resumed work, root integration, compiler/render workers, tests and ledger/tool-only placeholders add no assignments. This follow-up remains /root/w01_a01_existing_work.",
+    "publication_and_validation_scope": "Task completion is separate from successful publication, current-source CI, platform artifact/installer verification, musical audition and composer endorsement; each requires corresponding observed evidence.",
+    "artifact_link_scope": "Paths identify existing related implementation, tests, review documents or inspected evidence, not exclusive authorship of every linked line. Initial read-only audit findings were returned to the parent without inventing report files.",
+    "audit_artifact": "doc/scoring-1000/reviews/embedded-ledger-audit.md",
+    "agents": [
+      {
+        "agent": "/root/w01_a01_existing_work",
+        "assignment": "Read-only recovery audit of existing bank, research, ten-wave ledger, evidence and handoff; same-task follow-up records this continuation.",
+        "status": "completed",
+        "result_scope": "Initial final report delivered. Checked all 57 historical artifact lists, 63 unique task names, original ledger hashes and five recovered-report hashes. This follow-up adds no assignment.",
+        "artifacts": [
+          "doc/scoring-1000/AGENT_LEDGER.md",
+          "doc/scoring-1000/agent-ledger.json",
+          "doc/scoring-1000/reviews/embedded-ledger-audit.md"
+        ],
+        "reviewed_paths": [
+          "doc/scoring-1000/RESEARCH.md",
+          "doc/scoring-1000/VERIFICATION.md"
+        ],
+        "spawn_observed": true,
+        "spawn_observation_basis": "Current parent explicitly supplied this distinct actual task name in the continuation handoff; no opaque spawn identifier was supplied or invented.",
+        "counted_as_distinct_assignment": true,
+        "completion_observation_basis": "Current parent explicitly confirmed receipt of this completed final result before requesting this ledger follow-up."
+      },
+      {
+        "agent": "/root/w01_a02_audio_audit",
+        "assignment": "Audit the recovered 1,000-preset bank and existing native-audio evidence.",
+        "status": "completed",
+        "result_scope": "Parent confirmed the completed audit result. No new DSP render or listening claim is inferred from this lifecycle record.",
+        "artifacts": [],
+        "reviewed_paths": [
+          "doc/scoring-1000/evidence/native-summary.json",
+          "doc/scoring-1000/evidence/sustain-summary.json",
+          "doc/scoring-1000/evidence/roundtrip-summary.json"
+        ],
+        "spawn_observed": true,
+        "spawn_observation_basis": "Current parent explicitly supplied this distinct actual task name in the continuation handoff; no opaque spawn identifier was supplied or invented.",
+        "counted_as_distinct_assignment": true,
+        "completion_observation_basis": "Current parent explicitly confirmed receipt of this completed final result before requesting this ledger follow-up."
+      },
+      {
+        "agent": "/root/w01_a03_packaging_audit",
+        "assignment": "Audit existing factory packaging and gaps in plugin-only/platform delivery.",
+        "status": "completed",
+        "result_scope": "Parent confirmed the completed packaging audit. Existing source/package inspection does not certify later platform builds or installers.",
+        "artifacts": [],
+        "reviewed_paths": [
+          "doc/scoring-1000/reviews/publication-packaging-audit.md",
+          "doc/scoring-1000/reviews/w09-a52-installer-pipeline.md"
+        ],
+        "spawn_observed": true,
+        "spawn_observation_basis": "Current parent explicitly supplied this distinct actual task name in the continuation handoff; no opaque spawn identifier was supplied or invented.",
+        "counted_as_distinct_assignment": true,
+        "completion_observation_basis": "Current parent explicitly confirmed receipt of this completed final result before requesting this ledger follow-up."
+      },
+      {
+        "agent": "/root/embedded_runtime",
+        "assignment": "Implement compiled factory-content materialization, cache/discovery integration and native delivery tests.",
+        "status": "completed",
+        "result_scope": "Parent confirmed the completed implementation result. Source deliverables exist; final integration, native execution and platform results retain their own verification scope.",
+        "artifacts": [
+          "src/common/EmbeddedFactoryContent.cpp",
+          "src/common/EmbeddedFactoryContent.h",
+          "src/common/SurgeStorage.cpp",
+          "src/common/SurgeStorage.h",
+          "src/scoring-tools/EmbeddedContentTest.cpp",
+          "src/surge-xt/gui/SkinSupport.cpp"
+        ],
+        "reviewed_paths": [],
+        "spawn_observed": true,
+        "spawn_observation_basis": "Current parent explicitly supplied this distinct actual task name in the continuation handoff; no opaque spawn identifier was supplied or invented.",
+        "counted_as_distinct_assignment": true,
+        "completion_observation_basis": "Current parent explicitly confirmed receipt of this completed final result before requesting this ledger follow-up."
+      },
+      {
+        "agent": "/root/embedded_packaging",
+        "assignment": "Update distribution routes, Windows required-content selection and packaging contract verification.",
+        "status": "completed",
+        "result_scope": "Parent confirmed the completed packaging result. The contract checker configures source conditions and inspects file rules; it does not execute shipped platform installers.",
+        "artifacts": [
+          "src/cmake/lib.cmake",
+          "scripts/installer_win/surge64.iss",
+          "scripts/scoring/test_distribution_contract.py"
+        ],
+        "reviewed_paths": [],
+        "spawn_observed": true,
+        "spawn_observation_basis": "Current parent explicitly supplied this distinct actual task name in the continuation handoff; no opaque spawn identifier was supplied or invented.",
+        "counted_as_distinct_assignment": true,
+        "completion_observation_basis": "Current parent explicitly confirmed receipt of this completed final result before requesting this ledger follow-up."
+      },
+      {
+        "agent": "/root/research_refresh",
+        "assignment": "Independently retrieve and recheck composer-practice and technical sources for the integrated bank.",
+        "status": "completed",
+        "result_scope": "Parent confirmed the completed source review. Its report records retrieval limits and preserves separate popularity-ranking, musical-audition and endorsement status.",
+        "artifacts": [
+          "doc/scoring-1000/reviews/embedded-research-refresh.md"
+        ],
+        "reviewed_paths": [],
+        "spawn_observed": true,
+        "spawn_observation_basis": "Current parent explicitly supplied this distinct actual task name in the continuation handoff; no opaque spawn identifier was supplied or invented.",
+        "counted_as_distinct_assignment": true,
+        "completion_observation_basis": "Current parent explicitly confirmed receipt of this completed final result before requesting this ledger follow-up."
+      },
+      {
+        "agent": "/root/github_publication",
+        "assignment": "Publish/reconcile the completed project through GitHub and verify resulting remote state.",
+        "status": "completed",
+        "result_scope": "Parent confirmed baseline bank/research/evidence publication on remote main at 109e1b161d12733e2fdeecd1f05c09256ac04f58 and successful bank workflow 43572397153. This baseline completion does not certify the later embedded-content feature or its platform builds. Subsequent publication work continues under this same task identity and adds no assignment.",
+        "artifacts": [],
+        "reviewed_paths": [],
+        "spawn_observed": true,
+        "spawn_observation_basis": "Current parent explicitly supplied this distinct actual task name in the continuation handoff; no opaque spawn identifier was supplied or invented.",
+        "counted_as_distinct_assignment": true,
+        "completion_observation_basis": "Current parent explicitly confirmed the completed baseline publication result before this ledger update.",
+        "remote_evidence": {
+          "observation_basis": "Exact commit, run ID and success supplied by the parent; not independently queried by this ledger task.",
+          "scope": "Published baseline bank/research/evidence; later embedded-content integration is separate.",
+          "main_commit": "109e1b161d12733e2fdeecd1f05c09256ac04f58",
+          "commit_url": "https://github.com/tomasedisonn80/surgeXT-synth/commit/109e1b161d12733e2fdeecd1f05c09256ac04f58",
+          "bank_workflow_run_id": 43572397153,
+          "bank_workflow_url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43572397153",
+          "bank_workflow_conclusion": "success"
+        }
+      },
+      {
+        "agent": "/root/embedded_independent_review",
+        "assignment": "Review embedded integration, repair CLAP host discovery/search boundaries and exercise integrity rejection.",
+        "status": "completed",
+        "result_scope": "Parent confirmed the completed review. Its report records source corrections and CMake integrity fixtures; final native execution and platform results remain separate.",
+        "artifacts": [
+          "doc/scoring-1000/reviews/embedded-independent-review.md",
+          "src/surge-xt/SurgeCLAPPresetDiscovery.cpp",
+          "src/surge-xt/xt-tests/XTTestEmbeddedPresetDiscovery.cpp",
+          "src/common/PatchDB.cpp"
+        ],
+        "reviewed_paths": [],
+        "spawn_observed": true,
+        "spawn_observation_basis": "Current parent explicitly supplied this distinct actual task name in the continuation handoff; no opaque spawn identifier was supplied or invented.",
+        "counted_as_distinct_assignment": true,
+        "completion_observation_basis": "Current parent explicitly confirmed receipt of this completed final result before requesting this ledger follow-up."
+      },
+      {
+        "agent": "/root/native_ui_verification",
+        "assignment": "Verify native UI and embedded preset/skin integration in the compiled test environment.",
+        "status": "completed",
+        "result_scope": "Parent confirmed receipt of the final UI result. surge-xt-tests compiled and linked; the exact [embedded],[reference-manifest],[schema] filter passed five cases and 5,911 assertions with zero failures. Two initial failures came from fixture construction using JUCE numeric-string array equality; only the fixture mutator was corrected, with production validation and expected assertions unchanged. Original failures are retained. This selected metadata/discovery/schema run is not a full renderer/display test or screenshot capture.",
+        "artifacts": [
+          "doc/scoring-1000/embedded-evidence/ui-native-summary.json",
+          "doc/scoring-1000/embedded-evidence/ui-native-tests.log",
+          "doc/scoring-1000/embedded-evidence/ui-native-initial-failure.json",
+          "doc/scoring-1000/embedded-evidence/ui-native-tests-initial.log",
+          "src/surge-xt/xt-tests/XTTestReferenceManifest.cpp"
+        ],
+        "reviewed_paths": [],
+        "spawn_observed": true,
+        "spawn_observation_basis": "Current parent explicitly supplied this distinct actual task name in the continuation handoff; no opaque spawn identifier was supplied or invented.",
+        "counted_as_distinct_assignment": true,
+        "completion_observation_basis": "Current parent explicitly confirmed receiving the completed final UI result before this ledger update; the linked summary was also read and its exact counts/filter/binary hash checked.",
+        "verification": {
+          "scope": "Five selected native metadata/discovery/schema tests, not full native suite or display rendering",
+          "filter": "[embedded],[reference-manifest],[schema]",
+          "test_cases_passed": 5,
+          "assertions_passed": 5911,
+          "failures": 0,
+          "binary_sha256": "214a65f468199c6b3c8ebe2403ea09f9c89b1b242645dd06121d1fc01a079dfe",
+          "summary_path": "doc/scoring-1000/embedded-evidence/ui-native-summary.json"
+        }
+      }
+    ],
+    "running_agents_scope": "Zero tasks are awaiting an initial final result. A previously completed task may continue authorized follow-up under its same identity; that does not change the distinct assignment count."
+  }
 }

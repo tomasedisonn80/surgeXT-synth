@@ -1,0 +1,9 @@
+{
+  "schema": 1,
+  "independent_processes": 4,
+  "all_exit_codes": 0,
+  "same_cache_root": true,
+  "verified_file_hashes": 1020,
+  "temporary_files_cleaned": true,
+  "native_test_binary_sha256": "ab6b75808badfe055e599916fe371d31058aa766027a2af7d0278bed7e651878"
+}

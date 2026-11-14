@@ -20,12 +20,13 @@ including [Quayle's interview](https://composer.spitfireaudio.com/en/articles/ma
 and [Newman's BFI interview](https://www.bfi.org.uk/interviews/scoring-mr-banks-composers-life-hollywood).
 
 The [native audio previews](AUDIO_PREVIEWS.md) provide one example from each
-category. Use the [download and installation guide](DOWNLOADS.md) to add the
-standalone bank to an existing installation.
+category. Current fork builds include the bank and ten reference skins inside
+their binaries; no separate bank installation is needed. The
+[download and installation guide](DOWNLOADS.md) also covers older installations.
 
 ## Start with a short musical phrase
 
-1. Install a build that includes the factory data, then open the factory patch
+1. Install a current build of this fork, then open the factory patch
    browser and locate **Scoring 1000** and its numbered category folders.
 2. Choose a role first: a melodic instrument, sustained harmony, rhythmic layer,
    bass, or accent. Play within the suggested MIDI range in the patch description
@@ -189,10 +190,11 @@ layering several instances and set mix gain against your actual passage.
 
 The bank uses native oscillators and effects and requires no external samples
 or separately purchased wavetables. Its files live under
-`resources/data/patches_factory/Scoring 1000` in this repository. Full data-bearing
-installers include the factory resource tree. Plugin-only archives and minimal
-installations need the companion factory data; portable installations must keep
-their data folder available. An individual `.fxp` can also be loaded through
+`resources/data/patches_factory/Scoring 1000` in this repository. Current binaries
+embed the complete bank and ten reference skin packages. Full installers also
+install the resource tree; plugin-only builds prepare the included content
+automatically in a private cache. Keep portable data folders for the remaining
+factory library. An individual `.fxp` can also be loaded through
 native patch handling. Save personal edits in the user patch location so future
 factory-data updates do not replace them.
 

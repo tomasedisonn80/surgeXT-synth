@@ -1,20 +1,25 @@
 # Standalone preset-bank package
 
+Current builds of this fork already embed all 1,000 presets and ten reference
+skins. **No separate preset archive is needed for those builds**, including
+plugin-only outputs. See [built-in content](BUILT_IN_CONTENT.md). This page
+documents the optional compatibility package for an existing installation.
+
 ## Ready-to-import archive
 
 [Scoring-1000.zip](downloads/Scoring-1000.zip) contains all **1,000 presets** in
 ten category folders, with the complete catalog and installation/licensing notes.
-The archive is **4,485,374 bytes** (about 4.49 MB).
+The archive is **4,485,424 bytes** (about 4.49 MB).
 
 [ZIP checksum](downloads/Scoring-1000.zip.sha256) ·
 [Package verification metadata](downloads/Scoring-1000.zip.metadata.json)
 
-SHA-256: `b794179791cfad604b2761e3c109aefd88821831c46ac168cb4048a2c69d41c4`.
+SHA-256: `72692ee39f464c66a475af4ffffb92607d92924f8d15181f7da74a5bd5723192`.
 
-The repository's full factory-data installers include **Scoring 1000** through
-the normal factory resource tree. A plugin-only archive or minimal installation
-may omit that data. The standalone package helper provides a user-bank ZIP that
-can be installed with an existing Surge XT build.
+The repository's full factory-data installers also include **Scoring 1000** in
+the normal resource tree. The standalone package helper provides a user-bank ZIP
+for an older or upstream Surge XT installation, independently of the embedded
+content in current fork binaries.
 
 ## Generate the package
 
@@ -56,8 +61,8 @@ package and checksum; the package metadata binds its exact inputs.
 
 The native user-patch location is the `Patches` folder beneath the configured user
 data directory. The menu respects custom and portable locations. This installation
-route adds the bank to user patches; full builds install it as factory content.
-Neither route puts the preset bytes inside the plugin binary.
+route adds the bank to user patches. It does not modify an existing plugin
+binary. Current fork binaries separately carry their own embedded factory copy.
 
 The ZIP's complete `manifest.json` retains repository source paths; `PACKAGE.json`
 maps each stable preset ID to its archive path. `CONTENTS.sha256` hashes all payload

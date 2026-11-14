@@ -151,8 +151,9 @@ function(surge_make_installers)
     set(SURGE_PORTABLE_DIR ${CMAKE_BINARY_DIR}/surge-xt-portable)
     set(portsst "${SURGE_PORTABLE_DIR}/Surge Synth Team")
 
-    if (NOT DEFINED SURGE_LINUX_ARM)
-      add_custom_command(TARGET surge-xt-distribution
+    # Factory resources are architecture-independent. Keep a complete portable
+    # content archive for ARM64 as well as x64, with distinct release asset names.
+    add_custom_command(TARGET surge-xt-distribution
             POST_BUILD
             COMMAND ${CMAKE_COMMAND} -E make_directory ${SURGE_PORTABLE_DIR}
             COMMAND ${CMAKE_COMMAND} -E rm -rf "${portsst}"
@@ -163,18 +164,19 @@ function(surge_make_installers)
             COMMAND ${CMAKE_COMMAND} -E make_directory "${portsst}/SurgeXTData"
             COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_SOURCE_DIR}/resources/data" "${portsst}/SurgeXTData"
 
-            COMMAND cd "${SURGE_PORTABLE_DIR}" && tar cvzf ${SURGE_XT_DIST_OUTPUT_DIR}/surge-xt-portable-content-${SXTVER}.tar.gz .
+            COMMAND cd "${SURGE_PORTABLE_DIR}" && tar cvzf ${SURGE_XT_DIST_OUTPUT_DIR}/surge-xt-portable-content${SURGE_EXTRA_INSTALLER_NAME}-${SXTVER}.tar.gz .
       )
-    endif()
 
   elseif(WIN32)
+    string(TOLOWER "${CMAKE_GENERATOR_PLATFORM}" SURGE_WIN_ARCH)
+    set(WINARCH "")
     if (${SURGE_BITNESS} EQUAL 64)
       set(SURGE_PORTABLE_DIR ${CMAKE_BINARY_DIR}/surge-xt-portable)
       set(portsst "${SURGE_PORTABLE_DIR}/Surge Synth Team")
-      if ("${CMAKE_GENERATOR_PLATFORM}" STREQUAL "arm64ec")
+      if ("${SURGE_WIN_ARCH}" STREQUAL "arm64ec")
         set(WINARCH "-arm64ec")
       endif()
-      if ("${CMAKE_GENERATOR_PLATFORM}" STREQUAL "arm64")
+      if ("${SURGE_WIN_ARCH}" STREQUAL "arm64")
         set(WINARCH "-arm64")
       endif()
       add_custom_command(TARGET surge-xt-distribution
@@ -193,12 +195,9 @@ function(surge_make_installers)
 
             COMMAND 7z a -r ${SURGE_XT_DIST_OUTPUT_DIR}/surge-xt-win${SURGE_BITNESS}${SURGE_EXTRA_ZIP_NAME}${WINARCH}-${SXTVER}-pluginsonly.zip "${portsst}/*"
       )
-      if ("${CMAKE_GENERATOR_PLATFORM}" STREQUAL "arm64ec" OR
-              "${CMAKE_GENERATOR_PLATFORM}" STREQUAL "arm64" OR
-      (NOT "${SURGE_EXTRA_ZIP_NAME}" STREQUAL ""))
-        message(STATUS "Not making portable zip with resources for arm or win7")
-      else()
-        add_custom_command(TARGET surge-xt-distribution
+      # ARM and JUCE 7 builds use the same factory data. A native installer is
+      # optional for these targets, but a complete portable distribution is not.
+      add_custom_command(TARGET surge-xt-distribution
             POST_BUILD
 
             COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_SOURCE_DIR}/resources/surge-shared/README_Portable.txt" "${SURGE_PORTABLE_DIR}/README.txt"
@@ -208,15 +207,14 @@ function(surge_make_installers)
 
             COMMAND 7z a -r ${SURGE_XT_DIST_OUTPUT_DIR}/surge-xt-win${SURGE_BITNESS}${SURGE_EXTRA_ZIP_NAME}${WINARCH}-${SXTVER}-portable-install.zip "${SURGE_PORTABLE_DIR}/*"
             )
-        endif()
     else()
       add_custom_command(TARGET surge-xt-distribution
         POST_BUILD
         COMMAND 7z a -r ${SURGE_XT_DIST_OUTPUT_DIR}/surge-xt-win${SURGE_BITNESS}-${SXTVER}-pluginsonly.zip ${SURGE_PRODUCT_DIR}
       )
     endif()
-    if ("${CMAKE_GENERATOR_PLATFORM}" STREQUAL "arm64ec" OR
-        "${CMAKE_GENERATOR_PLATFORM}" STREQUAL "arm64" OR
+    if ("${SURGE_WIN_ARCH}" STREQUAL "arm64ec" OR
+        "${SURGE_WIN_ARCH}" STREQUAL "arm64" OR
         (NOT "${SURGE_EXTRA_ZIP_NAME}" STREQUAL ""))
       message(STATUS "Not making installer for arm or juce7")
     else()

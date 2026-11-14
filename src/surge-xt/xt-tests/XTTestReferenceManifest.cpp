@@ -46,7 +46,13 @@ void applySchemaChange(juce::var &manifest, const juce::var &change)
             object->removeProperty(field);
         }
         else
+        {
+            // NamedValueSet's equality shortcut compares array elements with var's
+            // numeric coercion, so [380] and ["380"] can compare equal. Replace the
+            // property outright to preserve the fixture's exact JSON value types.
+            object->removeProperty(field);
             object->setProperty(field, change["value"].clone());
+        }
     }
     else
     {

@@ -62,10 +62,11 @@ It contains preset data and documentation; install Surge XT separately.
    the user collection. If this bank already exists there, keep personal edits
    in a separate user folder before updating its original files.
 
-Full factory-data installers built from the source repository already include the
-bank in the factory collection. Plugin-only archives and minimal installations
-can omit factory data. This standalone archive provides an additional user-bank
-installation route; it does not embed presets into a plugin binary.
+Current fork binaries embed all 1,000 presets and the ten reference skin packages,
+including plugin-only builds. No separate bank installation is needed there.
+Full installers also include the factory data tree. This standalone archive is
+an optional user-bank route for an existing or upstream installation; importing
+it does not modify that installation's plugin binary.
 
 ## Play and adapt
 

@@ -13,8 +13,9 @@ The [research](RESEARCH.md) explains the musical design; the
 warnings, as well as exact static regeneration, native semantic serialization
 and factory staging/discovery. The exported evidence matches this catalog.
 The completed diversity review and its archive also bind this frozen catalog.
-Remote native CI and platform installer completion remain pending observed
-workflow results.
+The baseline bank's hosted native workflow also passed on the published commit
+identified below. Hosted embedded-feature verification and platform installer
+completion remain separate pending observations.
 
 | Identity | Value |
 |---|---|
@@ -24,7 +25,9 @@ workflow results.
 | Embedded native engine identifier | `1.4.main.dfdd2f94a` |
 | Engine base commit | `dfdd2f94adec9c7bee4f3cfd4f757860fb875c3e` |
 | Recovered local feature commit | `946ed442572d5fa29e6d6467813b4fa6cb150908` |
-| Published feature commit and platform runs | Awaiting remote publication and observed workflow completion |
+| Published bank/research/evidence snapshot | [`109e1b161d12733e2fdeecd1f05c09256ac04f58`](https://github.com/tomasedisonn80/surgeXT-synth/commit/109e1b161d12733e2fdeecd1f05c09256ac04f58) |
+| Baseline hosted native bank workflow | [Run 43572397153](https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43572397153): completed successfully on `109e1b161` |
+| Embedded-content feature and platform runs | Follow-up source integration; hosted results recorded separately below |
 | Human musical audition | Pending |
 | Composer endorsement | Not claimed |
 
@@ -43,6 +46,20 @@ original feature tree; subsequent documentation updates do not imply that the
 native measurements were rerun. Publication and the exact remote source tree
 must be verified separately.
 
+The bank and evidence snapshot was subsequently published by a leased
+fast-forward update to `main` at `109e1b161d12733e2fdeecd1f05c09256ac04f58`.
+The primary evidence archive was losslessly repacked to fit the connector's
+request limit: all 1,000 JSON report bodies and their index hashes are unchanged.
+Its [repack provenance](evidence/archive-repack.json) records both container
+identities. Current primary ZIP members are `SCxx-xxx.json` at archive root;
+the sustain archive retains its historical `presets/` prefix.
+
+The baseline hosted native bank job completed successfully in
+[run 43572397153](https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43572397153),
+at that exact published commit. It validates the bank and original factory
+staging pipeline. The later compiled-content integration is a separate source
+change and must receive its own native and platform workflow results.
+
 Independent checks repeated during recovery passed exact regeneration of all
 1,000 presets and confirmed all 1,000 preset hashes in the standalone ZIP.
 Reconciliation of the preserved QA evidence checked both 1,000-report archives,
@@ -52,8 +69,43 @@ scenario records, and all 5,000 passing technical-gate records. It also verified
 bindings, and all 12 members of the refreshed diversity archive against its
 recorded hashes and current catalog identity. These are artifact-integrity and
 record-consistency checks, not fresh DSP renders or human listening passes.
-The current recovery runtime has no CMake executable; its read-only source
-review does not substitute for the pending native CI or platform builds.
+Those earlier recovery reviews were read-only and did not execute a new native
+build. The subsequent [embedded-content continuation](BUILT_IN_CONTENT.md)
+adds binary integration and separate native/build verification without changing
+the frozen preset definitions or retroactively relabelling the older measurements.
+
+## Embedded-content continuation checks
+
+The [integration evidence](embedded-evidence/README.md) records a fresh native
+build and executed compiled-content regression suite. All 1,020 embedded files
+match the source. Matching installations, no-install fallback, damaged/missing
+cache repair, unsafe inputs, concurrent initialization and factory/user content
+preservation pass. A separate ordinary-startup probe discovers all 1,000 presets
+and ten reference skins without a data-root override. Four independent processes
+also publish the same complete cache successfully.
+
+The compiled native UI test target passes **five test cases and 5,911 assertions**
+covering actual CLAP preset-location callbacks, all ten skins through `SkinDB`,
+preservation of unrelated factory/user content, workspace manifests and shared
+schema fixtures. The [UI evidence](embedded-evidence/ui-native-summary.json)
+binds the executable and source hashes. A test fixture replacement bug discovered
+on the first run was corrected without changing the native validator or weakening
+the expected rejections; the original failure and passing rerun are both retained.
+Local execution had no display and does not claim new rendered screenshots.
+
+The rebuilt native renderer ran **230 fresh audio scenarios across ten presets,
+one in each category**, including the highest measured stress-peak preset.
+All passed without warnings and all 230 raw PCM hashes match their corresponding
+whole-bank records exactly. The old whole-bank renderer remains the renderer
+of record for its 25,000 scenarios; the new ten-preset run has its own executable
+hash and archived reports. Adding the delivery-test target changes the scoring
+CMake file, so the historical provenance's old CMake hash is retained as
+historical rather than silently updated to a file it never measured.
+
+The distribution contract checker passes nine CMake platform/configuration
+branches and finds all 1,020 required files exactly once in every Windows
+installation type. Those checks establish source routing and input selection;
+actual native platform builds and installers require their own observed results.
 
 ## What every preset receives
 
@@ -269,19 +321,24 @@ native measurements and false summary totals.
 
 ## Build delivery and platform status
 
-The bank is factory data installed alongside the program. It is not embedded
-as preset bytes inside a VST3, CLAP, AU or application binary. The
-[packaging audit](reviews/w09-a52-installer-pipeline.md) identifies the recursive
-resource routes and the package-specific exceptions.
+The current source embeds every preset and all ten reference skin packages in
+each common-engine binary. Its lossless zstd payload is **190,454 bytes** and
+reproduces all 1,020 included files. A complete matching installed resource tree
+is reused; otherwise ordinary initialization prepares the embedded data in a
+private per-user cache. No separate preset download is required.
+The [built-in content record](BUILT_IN_CONTENT.md) describes exact bytes,
+startup behavior, tests and maintenance. The earlier
+[packaging audit](reviews/w09-a52-installer-pipeline.md) remains historical
+evidence of the companion-data gaps that prompted this change.
 
 | Distribution | Factory-bank route |
 |---|---|
-| Windows x64 full setup or setup with Patches selected | Factory-data component |
-| Windows x64 portable install | Complete portable resource folder |
-| macOS full DMG/PKG | Required resources package |
-| Linux x64 or ARM64 full DEB/tarball; Linux x64 RPM | Installed resource tree |
-| Linux x64 portable content | Companion portable resource tree |
-| Plugin-only archives, Windows Minimal, Windows JUCE 7, Windows ARM64/ARM64EC outputs | Companion preset data is required |
+| Windows x64 full, compact, custom and minimal setup | Embedded bank plus required Data component |
+| Windows x64, ARM64, ARM64EC and JUCE7 portable install | Embedded bank plus complete portable resource folder |
+| macOS full DMG/PKG | Embedded bank plus required resources package |
+| Linux x64 or ARM64 full DEB/tarball; Linux x64 RPM | Embedded bank plus installed resource tree |
+| Linux x64 and ARM64 portable content | Complete portable resource tree in addition to embedded binaries |
+| Plugin-only archives | Included binary prepares its own bank and ten reference skins |
 
 **Current platform-build completion is pending observation.** An earlier
 successful run is evidence that the pipeline worked before this bank; it does
@@ -292,8 +349,8 @@ artifacts must retain their actual signing status.
 
 The [standalone archive](DOWNLOADS.md) provides a separate existing-installation
 route. Its [metadata](downloads/Scoring-1000.zip.metadata.json) records this
-catalog, **4,485,374 bytes**, **1,000 FXPs** and **1,006 archive entries**. Its
-SHA-256 is `b794179791cfad604b2761e3c109aefd88821831c46ac168cb4048a2c69d41c4`.
+catalog, **4,485,424 bytes**, **1,000 FXPs** and **1,006 archive entries**. Its
+SHA-256 is `72692ee39f464c66a475af4ffffb92607d92924f8d15181f7da74a5bd5723192`.
 The [archive inspector](../../scripts/scoring/inspect_archive.py)
 can check supported ZIP/tar payloads, including nested Actions archives, without
 extracting or executing their entries.

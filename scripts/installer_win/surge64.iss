@@ -100,7 +100,9 @@ Source: {#SURGE_SRC}\resources\data\skins\*; DestDir: {commonappdata}\{#MyAppNam
 Source: {#SURGE_SRC}\resources\data\tuning_library\*; DestDir: {commonappdata}\{#MyAppName}\tuning_library\; Components: Data; Flags: recursesubdirs
 Source: {#SURGE_SRC}\resources\data\patches_factory\Templates\*; DestDir: {commonappdata}\{#MyAppName}\patches_factory\Templates\; Components: Data; Flags: recursesubdirs
 Source: {#SURGE_SRC}\resources\data\patches_factory\Tutorials\*; DestDir: {commonappdata}\{#MyAppName}\patches_factory\Tutorials\; Components: Data; Flags: recursesubdirs
-Source: {#SURGE_SRC}\resources\data\patches_factory\*; DestDir: {commonappdata}\{#MyAppName}\patches_factory\; Components: Patches; Flags: recursesubdirs
+; The scoring bank is part of every installation type, including Minimal.
+Source: "{#SURGE_SRC}\resources\data\patches_factory\Scoring 1000\*"; DestDir: "{commonappdata}\{#MyAppName}\patches_factory\Scoring 1000\"; Components: Data; Flags: recursesubdirs
+Source: {#SURGE_SRC}\resources\data\patches_factory\*; DestDir: {commonappdata}\{#MyAppName}\patches_factory\; Excludes: "\Scoring 1000\*"; Components: Patches; Flags: recursesubdirs
 Source: {#SURGE_SRC}\resources\data\patches_3rdparty\*; DestDir: {commonappdata}\{#MyAppName}\patches_3rdparty\; Components: Patches; Flags: recursesubdirs
 Source: {#SURGE_SRC}\resources\data\wavetables\*; DestDir: {commonappdata}\{#MyAppName}\wavetables\; Components: Wavetables; Flags: recursesubdirs
 Source: {#SURGE_SRC}\resources\data\wavetables_3rdparty\*; DestDir: {commonappdata}\{#MyAppName}\wavetables_3rdparty\; Components: Wavetables; Flags: recursesubdirs

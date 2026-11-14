@@ -1,0 +1,12 @@
+PASS CMakeRC retrieval and source fixture identity
+PASS complete installed content reuse without cache writes
+PASS no-install fallback reproduces every preset and reference skin byte
+PASS partial installed content is supplemented without overwriting installation files
+PASS stable reuse and missing/damaged cache repair
+PASS cache file symlink rejected without touching user data
+PASS truncation, trailing data, version, path traversal, length and identifier rejection
+PASS four concurrent initializations share complete content
+PASS native factory discovery deduplicates the bank and preserves unrelated presets
+PASS explicit missing data root retains installer-audit semantics
+PASS case-variant stale bank suppression preserves legacy factory and user presets
+All embedded factory content regression checks passed.

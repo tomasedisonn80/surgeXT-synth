@@ -1,0 +1,71 @@
+{
+  "scope": "CMake command generation and Inno input selection; no native installer execution",
+  "windows_required_content": {
+    "install_types": [
+      "full",
+      "compact",
+      "custom",
+      "minimal"
+    ],
+    "presets": 1000,
+    "skin_packages": 10,
+    "required_files_per_type": 1020,
+    "duplicate_required_files": 0
+  },
+  "packaging_routes": [
+    {
+      "platform": "windows",
+      "architecture": "x64",
+      "variant": "default",
+      "packaging_commands_valid": true
+    },
+    {
+      "platform": "windows",
+      "architecture": "arm64",
+      "variant": "default",
+      "packaging_commands_valid": true
+    },
+    {
+      "platform": "windows",
+      "architecture": "arm64ec",
+      "variant": "default",
+      "packaging_commands_valid": true
+    },
+    {
+      "platform": "windows",
+      "architecture": "ARM64",
+      "variant": "default",
+      "packaging_commands_valid": true
+    },
+    {
+      "platform": "windows",
+      "architecture": "ARM64EC",
+      "variant": "default",
+      "packaging_commands_valid": true
+    },
+    {
+      "platform": "windows",
+      "architecture": "x64",
+      "variant": "-juce7",
+      "packaging_commands_valid": true
+    },
+    {
+      "platform": "linux",
+      "architecture": "x64",
+      "variant": "default",
+      "packaging_commands_valid": true
+    },
+    {
+      "platform": "linux",
+      "architecture": "arm64",
+      "variant": "default",
+      "packaging_commands_valid": true
+    },
+    {
+      "platform": "macos",
+      "architecture": "universal",
+      "variant": "default",
+      "packaging_commands_valid": true
+    }
+  ]
+}

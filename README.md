@@ -8,10 +8,14 @@ Leads, Pulses and Sequences, and Percussion and Transitions. The collection uses
 200 authored families with five functional variants each, with consistent
 Tone, Motion, Contour, Space, Color, Width, Attack and Release macros.
 
-Full data-bearing builds install the bank under **Scoring 1000** in the factory
-browser. [Download and installation guidance](doc/scoring-1000/DOWNLOADS.md)
-also covers using the standalone preset archive. Plugin-only packages need the
-companion data. The bank does not require external samples or wavetables.
+Every native engine build embeds the complete bank and all ten reference skin
+packages in a **190,454-byte compressed payload**. They appear under
+**Scoring 1000** in the factory browser and **Reference Workspaces** in the skin
+menu, including plugin-only distributions. A matching full installation is
+reused; otherwise the application automatically prepares about 35 MB of private
+factory cache from its own binary. No separate preset download, samples, or
+wavetables are required for this collection. See the
+[built-in content design and verification](doc/scoring-1000/BUILT_IN_CONTENT.md).
 
 Read the [composer research](doc/scoring-1000/RESEARCH.md),
 [player and genre guide](doc/scoring-1000/USER_GUIDE.md), and
@@ -28,8 +32,8 @@ original per-preset reports, exact input hashes and measurement limits.
 Technical measurements do not certify human musical audition, acoustic realism,
 composer endorsement, or suitability for every cue.
 
-The factory bank is checked at configure, build and packaging time for exactly
-1,000 files, ten categories and matching SHA-256 hashes. The
+The factory bank and embedded content are checked at configure, build and
+packaging time for exact counts, paths and matching SHA-256 hashes. The
 [Scoring 1000 native workflow](https://github.com/tomasedisonn80/surgeXT-synth/actions/workflows/scoring-native.yml)
 rebuilds the actual offline engine, verifies staged discovery, and supports a full-bank run.
 

@@ -1722,7 +1722,8 @@ class alignas(16) SurgeStorage
     void refreshPatchOrWTListAddDir(bool userDir, const fs::path &fromPath, std::string subdir,
                                     std::function<bool(std::string)> filterOp,
                                     std::vector<Patch> &items,
-                                    std::vector<PatchCategory> &categories);
+                                    std::vector<PatchCategory> &categories,
+                                    const std::string &excludedTopLevelDirectory = "");
 
     void perform_queued_wtloads();
 
@@ -1792,6 +1793,9 @@ class alignas(16) SurgeStorage
 
     bool datapathOverriden{false};
     fs::path datapath;
+    // Matching installed root or a private content-keyed fallback. Empty when an
+    // explicit data root is supplied, scanning is disabled, or extraction fails.
+    fs::path embeddedFactoryDataPath;
     fs::path userDefaultFilePath;
     fs::path userDataPath;
     fs::path localAppDataPath; // Path for storing app-level config like user data path override

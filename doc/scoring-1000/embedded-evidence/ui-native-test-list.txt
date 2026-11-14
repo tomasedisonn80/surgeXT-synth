@@ -1,0 +1,13 @@
+Matching test cases:
+  CLAP advertises the embedded bank and preserves unrelated preset locations
+      [embedded][preset-discovery]
+  Native skin discovery preserves ten embedded workspaces and personal skins
+      [embedded][skin-discovery]
+  All ten reference workspace manifests validate
+      [reference-manifest][reference-workspaces]
+  Reference JSON rejects ambiguous encodings before native parsing
+      [reference-manifest][reference-security][reference-workspaces]
+  Reference selection and widget schema matches shared fixtures
+      [manifest][reference][schema]
+5 matching test cases
+

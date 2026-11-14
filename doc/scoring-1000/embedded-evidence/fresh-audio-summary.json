@@ -1,0 +1,98 @@
+{
+  "schema": 1,
+  "date": "2026-11-14",
+  "scope": "Fresh native regression across one preset per category after embedded-content integration; not a new whole-bank audition",
+  "presets": 10,
+  "native_scenarios": 230,
+  "pcm_matches_original": 230,
+  "failed": 0,
+  "warnings": 0,
+  "technical_gates_passed": 50,
+  "renderer_sha256": "56862ea5d35fea4b633e951f596a424b36e8bd5188d13efdb80b954d5261259d",
+  "frozen_catalog_sha256": "67bd4a5dc3fbf6f3794679b24b500f1ef37af83b7a47a863d10cb964a57314a2",
+  "original_report_archive_sha256": "381a2dbfc431f9353fddc301a6ea1545c583e713d1210da0d5af426adcf53296",
+  "fresh_report_archive_sha256": "b83d20d3ca33709ff3d4ba666c15a01f87498e3da51d219ef1d43844df8f798b",
+  "reports": [
+    {
+      "id": "SC01-001",
+      "scenarios": 23,
+      "pcm_hashes_matching_original": 23,
+      "status": "pass",
+      "warnings": 0,
+      "report_sha256": "0c8b2a779bd5ef2b26e8e89ef66fb62145a7708fbd804cb96091a0eae137ee44"
+    },
+    {
+      "id": "SC02-033",
+      "scenarios": 23,
+      "pcm_hashes_matching_original": 23,
+      "status": "pass",
+      "warnings": 0,
+      "report_sha256": "a38a41b47fbc3bee9298c505e869f066088605a6652eee5e898880db1f8a4836"
+    },
+    {
+      "id": "SC03-078",
+      "scenarios": 23,
+      "pcm_hashes_matching_original": 23,
+      "status": "pass",
+      "warnings": 0,
+      "report_sha256": "eaba79d0a4d57664331443bbb5b3e9d4c102c16cf6529a44034ebfc34ccf2b0f"
+    },
+    {
+      "id": "SC04-097",
+      "scenarios": 23,
+      "pcm_hashes_matching_original": 23,
+      "status": "pass",
+      "warnings": 0,
+      "report_sha256": "48bee641ec53507b5408e368ed3d968d53574a5e31a4bf027bac244ab31ddb74"
+    },
+    {
+      "id": "SC05-083",
+      "scenarios": 23,
+      "pcm_hashes_matching_original": 23,
+      "status": "pass",
+      "warnings": 0,
+      "report_sha256": "9720648d9eaa48de2e03ad40d90c9532d051d671cdedc4e3f2c7be8f00d3e563"
+    },
+    {
+      "id": "SC06-061",
+      "scenarios": 23,
+      "pcm_hashes_matching_original": 23,
+      "status": "pass",
+      "warnings": 0,
+      "report_sha256": "9549d70e6558cefec4d82b3bcb70dfe07a6618e47ab09e7e6b12a47da9f7a8b3"
+    },
+    {
+      "id": "SC07-064",
+      "scenarios": 23,
+      "pcm_hashes_matching_original": 23,
+      "status": "pass",
+      "warnings": 0,
+      "report_sha256": "ce360bf4f4f0220963814c18cfc8cb80b6731a24b5951dd77523427049e69c8a"
+    },
+    {
+      "id": "SC08-058",
+      "scenarios": 23,
+      "pcm_hashes_matching_original": 23,
+      "status": "pass",
+      "warnings": 0,
+      "report_sha256": "5466978ff1b379a0cf4691442469111377f9a5d722b2cb1bbbae94fdde72c4e2"
+    },
+    {
+      "id": "SC09-085",
+      "scenarios": 23,
+      "pcm_hashes_matching_original": 23,
+      "status": "pass",
+      "warnings": 0,
+      "report_sha256": "59d41676c6c2245fd5cc181f46e08aeee9928d4fc41191d452fe37dd48e1cba8"
+    },
+    {
+      "id": "SC10-048",
+      "scenarios": 23,
+      "pcm_hashes_matching_original": 23,
+      "status": "pass",
+      "warnings": 0,
+      "report_sha256": "4c63db5087c6f6c60cf9ea26118cbe28c18bb6e8766d8126becbd721f22afaab"
+    }
+  ],
+  "human_audition": "not_claimed"
+}

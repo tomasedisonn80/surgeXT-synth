@@ -1,0 +1,11 @@
+{
+  "format": "SXTEMB01+zstd",
+  "catalog_sha256": "67bd4a5dc3fbf6f3794679b24b500f1ef37af83b7a47a863d10cb964a57314a2",
+  "preset_count": 1000,
+  "skin_count": 10,
+  "entry_count": 1020,
+  "uncompressed_bytes": 35239208,
+  "payload_sha256": "ab0c68a7ec408b85c1146c2497904332a5115d5e7e51517ec1104a85c8cd8381",
+  "compressed_bytes": 190454,
+  "compressed_sha256": "58267b4a52708a0136435eb2967a8667e951a609a30e9a1783edbf7dd6b2124a"
+}

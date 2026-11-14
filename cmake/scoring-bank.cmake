@@ -14,10 +14,19 @@ execute_process(
 if(NOT _scoring_bank_result EQUAL 0)
   message(FATAL_ERROR "Scoring 1000 factory bank verification failed")
 endif()
+execute_process(
+  COMMAND "${CMAKE_COMMAND}" "-DSURGE_SCORING_SOURCE_DIR=${SURGE_SOURCE_DIR}"
+    -P "${SURGE_SOURCE_DIR}/cmake/verify-embedded-factory.cmake"
+  RESULT_VARIABLE _embedded_factory_result)
+if(NOT _embedded_factory_result EQUAL 0)
+  message(FATAL_ERROR "Embedded factory content verification failed")
+endif()
 
 add_custom_target(check-scoring-bank ALL
   COMMAND "${CMAKE_COMMAND}" "-DSURGE_SCORING_SOURCE_DIR=${SURGE_SOURCE_DIR}"
     -P "${SURGE_SOURCE_DIR}/cmake/verify-scoring-bank.cmake"
+  COMMAND "${CMAKE_COMMAND}" "-DSURGE_SCORING_SOURCE_DIR=${SURGE_SOURCE_DIR}"
+    -P "${SURGE_SOURCE_DIR}/cmake/verify-embedded-factory.cmake"
   COMMENT "Verifying the complete Scoring 1000 factory bank"
   VERBATIM)
 
@@ -38,5 +47,20 @@ add_custom_target(stage-scoring-bank
   COMMENT "Staging and verifying all 1000 factory presets"
   VERBATIM)
 
+file(GLOB _scoring_reference_skins "${SURGE_SOURCE_DIR}/resources/data/skins/reference-*.surge-skin")
+foreach(_skin IN LISTS _scoring_reference_skins)
+  get_filename_component(_skin_name "${_skin}" NAME)
+  add_custom_command(TARGET stage-scoring-bank POST_BUILD
+    COMMAND "${CMAKE_COMMAND}" -E copy_directory "${_skin}"
+      "${SURGE_SCORING_STAGE_DATA}/skins/${_skin_name}"
+    VERBATIM)
+endforeach()
+add_custom_command(TARGET stage-scoring-bank POST_BUILD
+  COMMAND "${CMAKE_COMMAND}" "-DSURGE_SCORING_SOURCE_DIR=${SURGE_SOURCE_DIR}"
+    "-DSURGE_EMBEDDED_DATA_DIR=${SURGE_SCORING_STAGE_DATA}"
+    -P "${SURGE_SOURCE_DIR}/cmake/verify-embedded-factory.cmake"
+  VERBATIM)
+
 # cmake --install does not build targets; check source integrity there as well.
 install(SCRIPT "${SURGE_SOURCE_DIR}/cmake/verify-scoring-bank.cmake")
+install(SCRIPT "${SURGE_SOURCE_DIR}/cmake/verify-embedded-factory.cmake")

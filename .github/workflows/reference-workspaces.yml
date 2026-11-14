@@ -17,6 +17,13 @@ on:
       - 'src/surge-xt/SurgeSynthProcessor.h'
       - 'src/common/SurgeSynthesizer.cpp'
       - 'src/common/SurgeSynthesizer.h'
+      - 'src/common/EmbeddedFactoryContent.*'
+      - 'src/common/SurgeStorage.*'
+      - 'src/common/PatchDB.cpp'
+      - 'src/surge-xt/gui/SkinSupport.cpp'
+      - 'src/surge-xt/SurgeCLAPPresetDiscovery.*'
+      - 'resources/surge-shared/scoring-factory.*'
+      - 'cmake/verify-embedded-factory.cmake'
       - 'src/cmake/pluginval.cmake'
       - 'src/surge-xt/CMakeLists.txt'
       - 'src/surge-xt/xt-tests/**'
@@ -96,7 +103,7 @@ jobs:
             -DENABLE_LTO=OFF \
             -DSURGE_BUILD_TESTRUNNER=ON \
             -DSURGE_BUILD_FX=OFF \
-            -DSURGE_BUILD_CLAP=OFF \
+            -DSURGE_BUILD_CLAP=ON \
             -DSURGE_SKIP_VST3=ON \
             -DSURGE_SKIP_ALSA=ON \
             -DSURGE_SKIP_JACK=ON \
@@ -116,6 +123,14 @@ jobs:
             bash scripts/reference-workspaces/run-native-ui.sh \
             build/src/surge-xt/xt-tests/surge-xt-tests '[reference-workspaces]~[reference-render]' \
             2>&1 | tee screenshot-artifact/native-tests.log
+
+      - name: Test embedded factory content in the CLAP host preset browser
+        if: ${{ !cancelled() && steps.native_build.outcome == 'success' }}
+        run: |
+          timeout --signal=TERM --kill-after=15s 3m \
+            bash scripts/reference-workspaces/run-native-ui.sh \
+            build/src/surge-xt/xt-tests/surge-xt-tests '[embedded]' \
+            2>&1 | tee screenshot-artifact/embedded-host-discovery.log
 
       - name: Capture all ten native workspaces and edited states
         # A behavior failure must remain red, but must not erase independent

@@ -1,0 +1,82 @@
+{
+  "schema": 1,
+  "status": "fail",
+  "build_target": "surge-xt-tests",
+  "build_exit_code": 0,
+  "test_exit_code": 2,
+  "filter": "[embedded],[reference-manifest],[schema]",
+  "test_cases": {
+    "total": 5,
+    "passed": 4,
+    "failed": 1
+  },
+  "assertions": {
+    "total": 5909,
+    "passed": 5907,
+    "failed": 2
+  },
+  "rng_seed": 1731,
+  "binary_sha256": "73eb92ae255119c40ef7139c439619052138ede84c5e8d51345679eaf4fe4741",
+  "configured_source_revision": "13fdca858528106af91da420f163f78c3589bd20",
+  "configured_source_dirty": true,
+  "environment": {
+    "platform": "Linux",
+    "architecture": "x86_64",
+    "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+    "configuration": "Release; LTO disabled; CLAP enabled; ALSA/JACK disabled; PUC Lua",
+    "display": "none",
+    "data_root": "resources/data through SURGE_DATA_HOME"
+  },
+  "source_sha256": {
+    "src/surge-xt/gui/SkinSupport.cpp": "c6030c553fa3986c78d4b192c67ca574a433916c72c59964d2e1570151e3e2a0",
+    "src/surge-xt/SurgeCLAPPresetDiscovery.cpp": "c08619e4a675900c5251937f038ebb39ba164e2431cc8f42ca4fadd4eb357be2",
+    "src/common/PatchDB.cpp": "88cc1ede537b5493f257a5c4ea0d31e8eba1189175a13a5d761f7c6c5a9e9799",
+    "src/surge-xt/xt-tests/XTTestEmbeddedPresetDiscovery.cpp": "4aba0f2041fecd803246923cccb44644c58e06e19dc0a443d95f3acbe0353a49",
+    "src/surge-xt/xt-tests/CMakeLists.txt": "35d3fa31ca4edf2c9e31ce7d5efcc656be069c25bb05f9dd0658c3112254c057",
+    "src/common/EmbeddedFactoryContent.cpp": "7ce857fa3473a6763db03458457fa3545eb3cf9178effccb125cbdd8db789eb5",
+    "src/common/EmbeddedFactoryContent.h": "b889fcfc23939af8d1d0a2735b79d8655782c36f694621ee9fbc52fd8fcf59dd",
+    "src/common/SurgeStorage.cpp": "4b75eb6ca98cc1da314f84db73ec3247301070b32348fffb36ce521e0eb8a9dc",
+    "src/common/SurgeStorage.h": "6af369791d189c49a3dd6679a66fa6457510e23f7266ec4907c869c54ea2f9be",
+    "resources/surge-shared/scoring-factory.sxtz": "58267b4a52708a0136435eb2967a8667e951a609a30e9a1783edbf7dd6b2124a",
+    "resources/surge-shared/scoring-factory.id": "c51ec40b7d3863faf377dc62c86efeebda586babd2f75c2a853483fcd330cca8"
+  },
+  "evidence_sha256": {
+    "ui-native-tests-initial.log": "401c7820231239f25011c2b5211993130dd20ff4b203752f4145d112ae17140e"
+  },
+  "scope": [
+    "Actual compiled CLAP preset callbacks with plugin-only, stale installed, matching installed, and host rejection fixtures",
+    "Actual native SkinDB rescan of all ten materialized skins, stale/mixed-case duplicates, legacy/user preservation, and default reset",
+    "Ten native workspace manifests",
+    "Malformed JSON rejection and shared manifest schema fixtures"
+  ],
+  "limits": [
+    "These metadata and discovery tests do not render an editor or capture screenshots.",
+    "No local X11 display was available; visual native UI captures run in the hosted workflow.",
+    "A dirty working-tree build is bound by source hashes; its configured revision is not a release-commit attestation."
+  ],
+  "baseline_comparison": {
+    "revision": "13fdca858528106af91da420f163f78c3589bd20",
+    "files": {
+      "src/surge-xt/gui/reference/Manifest.cpp": {
+        "baseline_sha256": "5fd81c404557e09680970f1358eca78bcca9ef36939bf960011f5683245c305e",
+        "pre_fix_sha256": "5fd81c404557e09680970f1358eca78bcca9ef36939bf960011f5683245c305e",
+        "identical": true
+      },
+      "src/surge-xt/xt-tests/XTTestReferenceManifest.cpp": {
+        "baseline_sha256": "8d964801bb3e1786ac069ba61b8b0be9d44819c52a0a846ac94532179f56989f",
+        "pre_fix_sha256": "8d964801bb3e1786ac069ba61b8b0be9d44819c52a0a846ac94532179f56989f",
+        "identical": true
+      },
+      "scripts/reference-workspaces/fixtures/selection-schema.json": {
+        "baseline_sha256": "dcaf86c82bb356e54b299cf9ef7f91df44261e4c05e971e2e4599e54d3822e25",
+        "pre_fix_sha256": "dcaf86c82bb356e54b299cf9ef7f91df44261e4c05e971e2e4599e54d3822e25",
+        "identical": true
+      }
+    }
+  },
+  "observed_failures": [
+    "tabs rectangle types",
+    "analyzer tabs rectangle type"
+  ],
+  "finding": "The fixture mutator used DynamicObject::setProperty, whose equality shortcut compared nested numeric strings equal to numbers and silently retained the original valid rectangle. The native validator and shared expected rejection assertions are unchanged."
+}

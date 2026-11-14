@@ -1,0 +1,39 @@
+Filters: [embedded],[reference-manifest],[schema]
+Randomness seeded to: 1731
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+surge-xt-tests is a Catch2 v3.3.2 host application.
+Run with -? for options
+
+-------------------------------------------------------------------------------
+Reference selection and widget schema matches shared fixtures
+  tabs rectangle types
+-------------------------------------------------------------------------------
+/workspace/scratch/d84eeb072ef7/surgeXT-synth/src/surge-xt/xt-tests/XTTestReferenceManifest.cpp:81
+...............................................................................
+
+/workspace/scratch/d84eeb072ef7/surgeXT-synth/src/surge-xt/xt-tests/XTTestReferenceManifest.cpp:93: FAILED:
+  REQUIRE( valid == expected )
+with expansion:
+  true == false
+with message:
+  Schema error: 
+
+-------------------------------------------------------------------------------
+Reference selection and widget schema matches shared fixtures
+  analyzer tabs rectangle type
+-------------------------------------------------------------------------------
+/workspace/scratch/d84eeb072ef7/surgeXT-synth/src/surge-xt/xt-tests/XTTestReferenceManifest.cpp:81
+...............................................................................
+
+/workspace/scratch/d84eeb072ef7/surgeXT-synth/src/surge-xt/xt-tests/XTTestReferenceManifest.cpp:93: FAILED:
+  REQUIRE( valid == expected )
+with expansion:
+  true == false
+with message:
+  Schema error: 
+
+===============================================================================
+test cases:    5 |    4 passed | 1 failed
+assertions: 5909 | 5907 passed | 2 failed
+

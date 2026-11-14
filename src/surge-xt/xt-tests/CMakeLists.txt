@@ -4,6 +4,7 @@ project(surge-xt-tests)
 add_executable(${PROJECT_NAME}
         main.cpp
         XTTestLifecycle.cpp
+        XTTestEmbeddedPresetDiscovery.cpp
         XTTestOSC.cpp
         XTTestReferenceWorkspaces.cpp
         XTTestReferenceMidi.cpp

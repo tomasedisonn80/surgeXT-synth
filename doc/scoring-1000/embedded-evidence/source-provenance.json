@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "source_scope": "Exact integration source files used by local native/core and distribution checks; publication commit is recorded separately",
+  "bank_catalog_sha256": "67bd4a5dc3fbf6f3794679b24b500f1ef37af83b7a47a863d10cb964a57314a2",
+  "files": {
+    "src/common/EmbeddedFactoryContent.cpp": "7ce857fa3473a6763db03458457fa3545eb3cf9178effccb125cbdd8db789eb5",
+    "src/common/EmbeddedFactoryContent.h": "b889fcfc23939af8d1d0a2735b79d8655782c36f694621ee9fbc52fd8fcf59dd",
+    "src/common/SurgeStorage.cpp": "4b75eb6ca98cc1da314f84db73ec3247301070b32348fffb36ce521e0eb8a9dc",
+    "src/common/SurgeStorage.h": "6af369791d189c49a3dd6679a66fa6457510e23f7266ec4907c869c54ea2f9be",
+    "src/common/PatchDB.cpp": "88cc1ede537b5493f257a5c4ea0d31e8eba1189175a13a5d761f7c6c5a9e9799",
+    "src/common/CMakeLists.txt": "776908737538ee2ee70e392b958f14642f003c721654e5e88e983c8211ff5c2d",
+    "src/surge-xt/gui/SkinSupport.cpp": "c6030c553fa3986c78d4b192c67ca574a433916c72c59964d2e1570151e3e2a0",
+    "src/surge-xt/SurgeCLAPPresetDiscovery.cpp": "c08619e4a675900c5251937f038ebb39ba164e2431cc8f42ca4fadd4eb357be2",
+    "src/scoring-tools/EmbeddedContentTest.cpp": "8611fe9c6756d231cda1b8c6a6cf0cfdf95b2f3a88e8bbd6d438fff16287fbcb",
+    "src/scoring-tools/CMakeLists.txt": "aa7b93b6016e9a2ff2454d8c32c911ca110e6e25c925ead96e83cfa7b22d896d",
+    "cmake/scoring-bank.cmake": "f0751410a65f28fd1d8a17fac3eafbae769a8b768f7f2aeb89f64595aa855579",
+    "cmake/verify-embedded-factory.cmake": "28986e9db3981742a2ac14d1f4f83b596df7fc8f6ef989bed5583d3176fbf28f",
+    "src/cmake/lib.cmake": "fd12ec283068c774e2541f1e184231affc6594d79bf7752f7f9c3108038e71ce",
+    "scripts/installer_win/surge64.iss": "b78c449b0866fbab34d64affbaf390105e7c6126f7f50f7aa82ccde3874f4fdb",
+    "scripts/scoring/embed_factory.py": "54a5b765ce4c263e1231b42095850739309504d9f9962f63b5aeb404054c2e62",
+    "scripts/scoring/test_distribution_contract.py": "d43b5a4413e42dbbe8037b57b311efcfac6097702613593cfa63c249d308bec0",
+    "resources/surge-shared/scoring-factory.sxtz": "58267b4a52708a0136435eb2967a8667e951a609a30e9a1783edbf7dd6b2124a",
+    "resources/surge-shared/scoring-factory.id": "c51ec40b7d3863faf377dc62c86efeebda586babd2f75c2a853483fcd330cca8",
+    "resources/surge-shared/scoring-factory.json": "4cbb053a080a1e86f3fed4ba3ded2e96ddb9ecdc6c19b4621617ec41e86acd67"
+  }
+}

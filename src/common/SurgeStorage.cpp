@@ -22,6 +22,7 @@
 
 #include "DSPUtils.h"
 #include "SurgeStorage.h"
+#include "EmbeddedFactoryContent.h"
 #include <set>
 #include <numeric>
 #include <algorithm>
@@ -380,6 +381,38 @@ SurgeStorage::SurgeStorage(const SurgeStorage::SurgeStorageConfig &config) : oth
 
     canonicalizeIfPresent(datapath, isFactoryPortable);
     canonicalizeIfPresent(userDataPath, isUserPortable);
+
+    // Ordinary plugin/application builds carry the scoring bank and reference
+    // skins themselves. Reuse a matching full installation, or materialize the
+    // embedded content in a private cache before factory discovery. Explicit
+    // data roots and headless no-scan fixtures retain their existing semantics:
+    // in particular, an installer audit must not be rescued by this fallback.
+    if (loadWtAndPatch && !hasSuppliedDataPath)
+    {
+        const auto archive =
+            Surge::Storage::getSurgeCommonBinaryResource("scoring-factory.sxtz");
+        const auto identifier =
+            Surge::Storage::getSurgeCommonBinaryResource("scoring-factory.id");
+        if (archive && identifier)
+        {
+            std::string id(identifier->begin(), identifier->end());
+            while (!id.empty() && (id.back() == '\n' || id.back() == '\r'))
+                id.pop_back();
+            const auto content = Surge::Storage::materializeEmbeddedFactoryContent(
+                datapath, localAppDataPath, *archive, id);
+            embeddedFactoryDataPath = content.dataPath;
+            if (!content.error.empty())
+                reportError("Unable to prepare built-in Scoring 1000 presets and reference skins. "
+                            "Existing installed resources remain available.\n\n" + content.error,
+                            "Built-in Factory Content");
+        }
+        else
+        {
+            reportError("Built-in Scoring 1000 resources are missing from this binary. "
+                        "Existing installed resources remain available.",
+                        "Built-in Factory Content");
+        }
+    }
 
     initializeUserDataPaths();
 
@@ -972,6 +1005,13 @@ void SurgeStorage::refresh_patchlist()
     patch_list.clear();
 
     refreshPatchlistAddDir(false, "patches_factory");
+    if (!embeddedFactoryDataPath.empty() && embeddedFactoryDataPath != datapath)
+    {
+        refreshPatchOrWTListAddDir(
+            false, embeddedFactoryDataPath, "patches_factory",
+            [](std::string s) -> bool { return _stricmp(s.c_str(), ".fxp") == 0; }, patch_list,
+            patch_category);
+    }
     firstThirdPartyCategory = patch_category.size();
 
     refreshPatchlistAddDir(false, "patches_3rdparty");
@@ -1156,17 +1196,21 @@ void SurgeStorage::refresh_patchlist()
 
 void SurgeStorage::refreshPatchlistAddDir(bool userDir, string subdir)
 {
+    const bool replaceInstalledScoring = !userDir && subdir == "patches_factory" &&
+                                        !embeddedFactoryDataPath.empty() &&
+                                        embeddedFactoryDataPath != datapath;
     refreshPatchOrWTListAddDir(
         userDir, userDir ? userDataPath : datapath, subdir,
         [](std::string s) -> bool { return _stricmp(s.c_str(), ".fxp") == 0; }, patch_list,
-        patch_category);
+        patch_category, replaceInstalledScoring ? "Scoring 1000" : "");
 }
 
 void SurgeStorage::refreshPatchOrWTListAddDir(bool userDir, const fs::path &initialPatchPath,
                                               string subdir,
                                               std::function<bool(std::string)> filterOp,
                                               std::vector<Patch> &items,
-                                              std::vector<PatchCategory> &categories)
+                                              std::vector<PatchCategory> &categories,
+                                              const std::string &excludedTopLevelDirectory)
 {
     int category = categories.size();
 
@@ -1204,6 +1248,10 @@ void SurgeStorage::refreshPatchOrWTListAddDir(bool userDir, const fs::path &init
             {
                 if (fs::is_directory(d))
                 {
+                    if (top == patchpath && !excludedTopLevelDirectory.empty() &&
+                        _stricmp(path_to_string(d.path().filename()).c_str(),
+                                 excludedTopLevelDirectory.c_str()) == 0)
+                        continue;
                     alldirs.push_back(d);
                     workStack.push_back(d);
                 }

@@ -27,6 +27,7 @@
 #include <cstring>
 #include <fstream>
 #include <vector>
+#include <algorithm>
 
 #include <clap/clap.h>
 
@@ -43,6 +44,82 @@ namespace sst::surge_xt::preset_discovery
 static const clap_preset_discovery_provider_descriptor desc{
     CLAP_VERSION, "org.surge-synth-team.surge-xt.preset-indexer", "Surge XT Presets",
     "Surge Synth Team"};
+
+// Shared with the native discovery test so the tested locations are exactly
+// those advertised to CLAP hosts. A cached bank supplements the installed
+// library; the superseded installed Scoring 1000 directory is excluded.
+bool declarePresetLocations(const SurgeStorage &storage,
+                            const clap_preset_discovery_indexer &indexer)
+{
+    auto declare = [&indexer](const fs::path &path, const std::string &name, uint32_t flags) {
+        const auto location = path.u8string();
+        const auto entry = clap_preset_discovery_location{
+            flags, name.c_str(), CLAP_PRESET_DISCOVERY_LOCATION_FILE, location.c_str()};
+        return indexer.declare_location(&indexer, &entry);
+    };
+
+    const auto factoryRoot = storage.datapath / "patches_factory";
+    const bool hasEmbeddedRoot = !storage.embeddedFactoryDataPath.empty() &&
+                                 storage.embeddedFactoryDataPath != storage.datapath;
+    try
+    {
+        if (hasEmbeddedRoot &&
+            fs::is_directory(storage.embeddedFactoryDataPath / "patches_factory"))
+        {
+            if (!declare(storage.embeddedFactoryDataPath / "patches_factory",
+                         "Surge XT Scoring 1000", CLAP_PRESET_DISCOVERY_IS_FACTORY_CONTENT))
+                return false;
+        }
+
+        if (fs::is_directory(factoryRoot))
+        {
+            if (!hasEmbeddedRoot)
+            {
+                if (!declare(factoryRoot, "Surge XT Factory Presets",
+                             CLAP_PRESET_DISCOVERY_IS_FACTORY_CONTENT))
+                    return false;
+            }
+            else
+            {
+                // CLAP locations have no exclusion filter. Declare the other
+                // top-level categories separately instead of exposing a stale
+                // second copy of Scoring 1000 through the installed parent.
+                std::vector<fs::path> installedLocations;
+                for (const auto &entry : fs::directory_iterator(factoryRoot))
+                {
+                    if (_stricmp(entry.path().filename().u8string().c_str(), "Scoring 1000") == 0)
+                        continue;
+                    if (entry.is_directory() ||
+                        (entry.is_regular_file() &&
+                         _stricmp(entry.path().extension().u8string().c_str(), ".fxp") == 0))
+                        installedLocations.push_back(entry.path());
+                }
+                std::sort(installedLocations.begin(), installedLocations.end());
+                for (const auto &path : installedLocations)
+                {
+                    if (!declare(path, "Surge XT Factory Presets - " + path.filename().u8string(),
+                                 CLAP_PRESET_DISCOVERY_IS_FACTORY_CONTENT))
+                        return false;
+                }
+            }
+        }
+        if (fs::is_directory(storage.datapath / "patches_3rdparty") &&
+            !declare(storage.datapath / "patches_3rdparty", "Surge XT Third Party Presets",
+                     CLAP_PRESET_DISCOVERY_IS_FACTORY_CONTENT))
+            return false;
+        if (fs::is_directory(storage.userPatchesPath) &&
+            !declare(storage.userPatchesPath, "Surge XT User Presets",
+                     CLAP_PRESET_DISCOVERY_IS_USER_CONTENT))
+            return false;
+    }
+    catch (const fs::filesystem_error &)
+    {
+        // Preset discovery must remain noninteractive and must not throw across
+        // the C ABI into a host's background indexer.
+        return false;
+    }
+    return true;
+}
 
 struct PresetProvider
 {
@@ -82,44 +159,8 @@ struct PresetProvider
 
         storage = std::make_unique<SurgeStorage>(config);
 
-        auto res = true;
         auto fxp = clap_preset_discovery_filetype{"Surge XT Patch", "", "fxp"};
-        res = res && indexer->declare_filetype(indexer, &fxp);
-
-        // PATH_MAX is unreliably available
-        static constexpr int pathSize{8192};
-        if (fs::is_directory(storage->datapath / "patches_factory"))
-        {
-            char floc[pathSize];
-            strncpy(floc, (storage->datapath / "patches_factory").u8string().c_str(), pathSize - 1);
-            auto factory = clap_preset_discovery_location{
-                CLAP_PRESET_DISCOVERY_IS_FACTORY_CONTENT, "Surge XT Factory Presets",
-                CLAP_PRESET_DISCOVERY_LOCATION_FILE, floc};
-            res = res && indexer->declare_location(indexer, &factory);
-        }
-
-        if (fs::is_directory(storage->datapath / "patches_3rdparty"))
-        {
-            char tploc[pathSize];
-            strncpy(tploc, (storage->datapath / "patches_3rdparty").u8string().c_str(),
-                    pathSize - 1);
-            auto third_party = clap_preset_discovery_location{
-                CLAP_PRESET_DISCOVERY_IS_FACTORY_CONTENT, "Surge XT Third Party Presets",
-                CLAP_PRESET_DISCOVERY_LOCATION_FILE, tploc};
-            res = res && indexer->declare_location(indexer, &third_party);
-        }
-
-        if (fs::is_directory(storage->userPatchesPath))
-        {
-            char uloc[pathSize];
-            strncpy(uloc, storage->userPatchesPath.u8string().c_str(), pathSize - 1);
-
-            auto userpatch = clap_preset_discovery_location{
-                CLAP_PRESET_DISCOVERY_IS_USER_CONTENT, "Surge XT User Presets",
-                CLAP_PRESET_DISCOVERY_LOCATION_FILE, uloc};
-            res = res && indexer->declare_location(indexer, &userpatch);
-        }
-        return res;
+        return indexer->declare_filetype(indexer, &fxp) && declarePresetLocations(*storage, *indexer);
     }
 
     bool get_metadata(uint32_t location_kind, const char *location,
@@ -171,7 +212,7 @@ struct PresetProvider
         /*
          * This is our FXP cracker, customized for this extraction
          */
-        auto p = fs::path{location};
+        auto p = string_to_path(location);
         std::ifstream stream(p, std::ios::in | std::ios::binary);
         if (!stream.is_open())
             return bail("Unable to open file");

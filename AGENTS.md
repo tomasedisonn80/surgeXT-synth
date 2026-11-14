@@ -16,8 +16,16 @@ verification/agent records before changing the bank.
 - Preserve separate status for human musical audition. Automated measurements,
   different hashes, and composer interviews do not certify Hollywood adoption,
   perceived uniqueness, acoustic realism or suitability for every cue.
-- Full distributions install factory content from `resources/data`. Plugin-only
-  packages require companion data; do not claim preset bytes are in the plugin binary.
+- Every common engine binary embeds Scoring 1000 and the ten reference skin
+  packages in `resources/surge-shared/scoring-factory.sxtz`. Regenerate with
+  `scripts/scoring/embed_factory.py` after changing any included file; ordinary
+  builds verify the exact source/payload bindings without needing a compressor.
+  Full distributions also install factory content from `resources/data`.
+  Plugin-only builds must discover the embedded bank and skins automatically;
+  preserve explicit developer data-root overrides and their no-fallback tests.
+- Run the native `surge-embedded-content-test` and the distribution contract
+  checker after content-delivery changes. Preserve installed/user data, exact
+  factory counts, CLAP host discovery, cache repair, and bounded startup work.
 - Record actual completed agent work, evidence hashes, known limits, and exact
   published commit. Use ordinary fast-forward publication to `main`; fetch and
   reconcile concurrent changes without overwriting unrelated work.

@@ -115,17 +115,19 @@ void SkinDB::rescanForSkins(SurgeStorage *storage)
     Surge::Debug::record("SkinDB::rescanForSkins");
 #endif
     availableSkins.clear();
+    foundDefaultSkinEntry = false;
+    defaultSkinEntry = Entry();
 
-    std::array<fs::path, 2> paths = {storage->datapath, storage->userSkinsPath};
+    std::vector<std::pair<fs::path, Entry::RootType>> paths;
+    if (!storage->embeddedFactoryDataPath.empty() &&
+        storage->embeddedFactoryDataPath != storage->datapath)
+        paths.emplace_back(storage->embeddedFactoryDataPath, FACTORY);
+    paths.emplace_back(storage->datapath, FACTORY);
+    paths.emplace_back(storage->userSkinsPath, USER);
+    std::set<std::string> embeddedSkinNames;
 
-    for (auto &source : paths)
+    for (const auto &[source, rt] : paths)
     {
-        Entry::RootType rt = UNKNOWN;
-        if (source == paths[0])
-            rt = FACTORY;
-        if (source == paths[1])
-            rt = USER;
-
         std::vector<fs::path> alldirs;
         std::deque<fs::path> workStack;
         workStack.push_back(source);
@@ -179,6 +181,20 @@ void SkinDB::rescanForSkins(SurgeStorage *storage)
                 {
                     auto path = name.substr(0, sp + 1);
                     auto lo = name.substr(sp + 1);
+                    // Embedded reference workspaces take precedence over older
+                    // installed copies. User skins remain independent entries.
+                    if (rt == FACTORY)
+                    {
+                        auto nameKey = lo;
+                        for (auto &ch : nameKey)
+                            if (ch >= 'A' && ch <= 'Z')
+                                ch = static_cast<char>(ch + ('a' - 'A'));
+                        if (source == storage->embeddedFactoryDataPath &&
+                            source != storage->datapath)
+                            embeddedSkinNames.insert(nameKey);
+                        else if (embeddedSkinNames.count(nameKey) != 0)
+                            continue;
+                    }
                     Entry e;
                     e.rootType = rt;
                     e.root = path;

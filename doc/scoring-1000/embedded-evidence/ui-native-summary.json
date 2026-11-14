@@ -1,0 +1,78 @@
+{
+  "schema": 1,
+  "status": "pass",
+  "build_target": "surge-xt-tests",
+  "build_exit_code": 0,
+  "test_exit_code": 0,
+  "filter": "[embedded],[reference-manifest],[schema]",
+  "test_cases": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0
+  },
+  "assertions": {
+    "total": 5911,
+    "passed": 5911,
+    "failed": 0
+  },
+  "rng_seed": 1731,
+  "binary_sha256": "214a65f468199c6b3c8ebe2403ea09f9c89b1b242645dd06121d1fc01a079dfe",
+  "configured_source_revision": "13fdca858528106af91da420f163f78c3589bd20",
+  "configured_source_dirty": true,
+  "environment": {
+    "platform": "Linux",
+    "architecture": "x86_64",
+    "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+    "configuration": "Release; LTO disabled; CLAP enabled; ALSA/JACK disabled; PUC Lua",
+    "display": "none",
+    "data_root": "resources/data through SURGE_DATA_HOME"
+  },
+  "source_sha256": {
+    "src/surge-xt/gui/SkinSupport.cpp": "c6030c553fa3986c78d4b192c67ca574a433916c72c59964d2e1570151e3e2a0",
+    "src/surge-xt/SurgeCLAPPresetDiscovery.cpp": "c08619e4a675900c5251937f038ebb39ba164e2431cc8f42ca4fadd4eb357be2",
+    "src/common/PatchDB.cpp": "88cc1ede537b5493f257a5c4ea0d31e8eba1189175a13a5d761f7c6c5a9e9799",
+    "src/surge-xt/xt-tests/XTTestEmbeddedPresetDiscovery.cpp": "4aba0f2041fecd803246923cccb44644c58e06e19dc0a443d95f3acbe0353a49",
+    "src/surge-xt/xt-tests/CMakeLists.txt": "35d3fa31ca4edf2c9e31ce7d5efcc656be069c25bb05f9dd0658c3112254c057",
+    "src/common/EmbeddedFactoryContent.cpp": "7ce857fa3473a6763db03458457fa3545eb3cf9178effccb125cbdd8db789eb5",
+    "src/common/EmbeddedFactoryContent.h": "b889fcfc23939af8d1d0a2735b79d8655782c36f694621ee9fbc52fd8fcf59dd",
+    "src/common/SurgeStorage.cpp": "4b75eb6ca98cc1da314f84db73ec3247301070b32348fffb36ce521e0eb8a9dc",
+    "src/common/SurgeStorage.h": "6af369791d189c49a3dd6679a66fa6457510e23f7266ec4907c869c54ea2f9be",
+    "resources/surge-shared/scoring-factory.sxtz": "58267b4a52708a0136435eb2967a8667e951a609a30e9a1783edbf7dd6b2124a",
+    "resources/surge-shared/scoring-factory.id": "c51ec40b7d3863faf377dc62c86efeebda586babd2f75c2a853483fcd330cca8",
+    "src/surge-xt/gui/reference/Manifest.cpp": "5fd81c404557e09680970f1358eca78bcca9ef36939bf960011f5683245c305e",
+    "src/surge-xt/xt-tests/XTTestReferenceManifest.cpp": "cbb5d2f491c36267555932b249d06d0d2834a5d31add73b6ce47e1da4592febb",
+    "src/surge-xt/xt-tests/XTTestReferenceWorkspaces.cpp": "4dc0e2092c7dd1b95992bab6ee0ce9b176a4d424805e6065f086af13baae7fe5",
+    "scripts/reference-workspaces/fixtures/selection-schema.json": "dcaf86c82bb356e54b299cf9ef7f91df44261e4c05e971e2e4599e54d3822e25"
+  },
+  "evidence_sha256": {
+    "ui-native-test-list.txt": "a06b7df5a82fb6de00c3f48829f788e9f74bd716436ac6a7d4fe1d3be76de489",
+    "ui-native-tests.log": "402660d96792377ec1eea2317a6e74434e296c8be2b625c54e0c2aa8c413312d",
+    "ui-native-initial-failure.json": "47c8ac6ddefcf084b8f667d8f8d0b38966a52ac4aaaffc14452e4e48bcb6f2fb",
+    "ui-native-tests-initial.log": "401c7820231239f25011c2b5211993130dd20ff4b203752f4145d112ae17140e"
+  },
+  "scope": [
+    "Actual compiled CLAP preset callbacks with plugin-only, stale installed, matching installed, and host rejection fixtures",
+    "Actual native SkinDB rescan of all ten materialized skins, stale/mixed-case duplicates, legacy/user preservation, and default reset",
+    "Ten native workspace manifests",
+    "Malformed JSON rejection and shared manifest schema fixtures"
+  ],
+  "limits": [
+    "These metadata and discovery tests do not render an editor or capture screenshots.",
+    "No local X11 display was available; visual native UI captures run in the hosted workflow.",
+    "A dirty working-tree build is bound by source hashes; its configured revision is not a release-commit attestation."
+  ],
+  "executed_at_utc": "2026-11-14T07:58:53.103147+00:00",
+  "command": [
+    "surge-xt-tests",
+    "[embedded],[reference-manifest],[schema]",
+    "--rng-seed",
+    "1731"
+  ],
+  "fixture_correction": {
+    "file": "src/surge-xt/xt-tests/XTTestReferenceManifest.cpp",
+    "cause": "JUCE NamedValueSet equality shortcut treated arrays containing numeric strings as equal to arrays containing numbers; fixture replacement was skipped.",
+    "change": "Remove a property before setting its replacement, preserving all nested JSON value types. Native validator and shared expected assertions are unchanged.",
+    "initial_failure_summary": "ui-native-initial-failure.json",
+    "initial_failure_log": "ui-native-tests-initial.log"
+  }
+}

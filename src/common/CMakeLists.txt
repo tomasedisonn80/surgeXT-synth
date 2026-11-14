@@ -69,11 +69,16 @@ cmrc_add_resource_library(surge-common-binary
   ${SURGE_SOURCE_DIR}/resources/surge-shared/paramdocumentation.xml
   ${SURGE_SOURCE_DIR}/resources/surge-shared/README_UserArea.txt
   ${SURGE_SOURCE_DIR}/resources/surge-shared/windows.wt
+  ${SURGE_SOURCE_DIR}/resources/surge-shared/scoring-factory.sxtz
+  ${SURGE_SOURCE_DIR}/resources/surge-shared/scoring-factory.id
 )
+add_dependencies(surge-common-binary check-scoring-bank)
 
 add_library(${PROJECT_NAME}
   DebugHelpers.cpp
   DebugHelpers.h
+  EmbeddedFactoryContent.cpp
+  EmbeddedFactoryContent.h
   FilterConfiguration.h
   FxPresetAndClipboardManager.cpp
   FxPresetAndClipboardManager.h

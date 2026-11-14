@@ -1,0 +1,1309 @@
+{
+  "schema": 1,
+  "scope": "100 current Pads native QA records; technical review, not human audition",
+  "manifest_sha256": "f8e0f6fdd299cbc18ad7410030f123a45777bdaf70c899ee8ee1d30680581331",
+  "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+  "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+  "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+  "recipe_sha256": "994bd97aebe6e7fd34467390c30b329324abd3d15c428f69f2c1ab14903f291f",
+  "compiler_sha256": "944b6d9207bd837ffa8c62870af576d069069b58060ef8d1cf15805ddd1f8bf0",
+  "preset_count": 100,
+  "native_scenarios": 2300,
+  "passing_gates": 500,
+  "bit_identical_repeats": 100,
+  "unique_default_pcm_hashes": 100,
+  "macro_responses": 800,
+  "resolved_macros": 783,
+  "unresolved_macros": [
+    {
+      "id": "SC04-021",
+      "name": "Hollow Velvet Close",
+      "macro": "Motion",
+      "status": "not_resolved_above_repeat",
+      "waveform_delta": 0.0,
+      "feature_distance": 0.0
+    },
+    {
+      "id": "SC04-022",
+      "name": "Hollow Velvet Open",
+      "macro": "Motion",
+      "status": "not_resolved_above_repeat",
+      "waveform_delta": 0.0,
+      "feature_distance": 0.0
+    },
+    {
+      "id": "SC04-023",
+      "name": "Hollow Velvet Bloom",
+      "macro": "Motion",
+      "status": "not_resolved_above_repeat",
+      "waveform_delta": 0.0,
+      "feature_distance": 0.0
+    },
+    {
+      "id": "SC04-025",
+      "name": "Hollow Velvet Veil",
+      "macro": "Motion",
+      "status": "not_resolved_above_repeat",
+      "waveform_delta": 0.0,
+      "feature_distance": 0.0
+    },
+    {
+      "id": "SC04-046",
+      "name": "Winter Fold Close",
+      "macro": "Motion",
+      "status": "not_resolved_above_repeat",
+      "waveform_delta": 0.0,
+      "feature_distance": 0.0
+    },
+    {
+      "id": "SC04-047",
+      "name": "Winter Fold Open",
+      "macro": "Motion",
+      "status": "not_resolved_above_repeat",
+      "waveform_delta": 0.0,
+      "feature_distance": 0.0
+    },
+    {
+      "id": "SC04-048",
+      "name": "Winter Fold Bloom",
+      "macro": "Motion",
+      "status": "not_resolved_above_repeat",
+      "waveform_delta": 0.0,
+      "feature_distance": 0.0
+    },
+    {
+      "id": "SC04-049",
+      "name": "Winter Fold Drift",
+      "macro": "Motion",
+      "status": "not_resolved_above_repeat",
+      "waveform_delta": 5.075395764789766e-05,
+      "feature_distance": 1.8603605139388846e-05
+    },
+    {
+      "id": "SC04-050",
+      "name": "Winter Fold Veil",
+      "macro": "Motion",
+      "status": "not_resolved_above_repeat",
+      "waveform_delta": 0.0,
+      "feature_distance": 0.0
+    },
+    {
+      "id": "SC04-076",
+      "name": "Feather Bridge Close",
+      "macro": "Motion",
+      "status": "not_resolved_above_repeat",
+      "waveform_delta": 0.0005332862363739419,
+      "feature_distance": 0.00029362890903550067
+    },
+    {
+      "id": "SC04-077",
+      "name": "Feather Bridge Open",
+      "macro": "Motion",
+      "status": "not_resolved_above_repeat",
+      "waveform_delta": 0.0008104601993039134,
+      "feature_distance": 0.0006726625935114676
+    },
+    {
+      "id": "SC04-078",
+      "name": "Feather Bridge Bloom",
+      "macro": "Motion",
+      "status": "not_resolved_above_repeat",
+      "waveform_delta": 0.0006532133001469632,
+      "feature_distance": 0.0005387443403463654
+    },
+    {
+      "id": "SC04-080",
+      "name": "Feather Bridge Veil",
+      "macro": "Motion",
+      "status": "not_resolved_above_repeat",
+      "waveform_delta": 0.000479680913697131,
+      "feature_distance": 0.0003064464940627299
+    },
+    {
+      "id": "SC04-096",
+      "name": "Slow Orbit Close",
+      "macro": "Motion",
+      "status": "not_resolved_above_repeat",
+      "waveform_delta": 0.0,
+      "feature_distance": 0.0
+    },
+    {
+      "id": "SC04-097",
+      "name": "Slow Orbit Open",
+      "macro": "Motion",
+      "status": "not_resolved_above_repeat",
+      "waveform_delta": 0.0,
+      "feature_distance": 0.0
+    },
+    {
+      "id": "SC04-098",
+      "name": "Slow Orbit Bloom",
+      "macro": "Motion",
+      "status": "not_resolved_above_repeat",
+      "waveform_delta": 0.0,
+      "feature_distance": 0.0
+    },
+    {
+      "id": "SC04-100",
+      "name": "Slow Orbit Veil",
+      "macro": "Motion",
+      "status": "not_resolved_above_repeat",
+      "waveform_delta": 0.0,
+      "feature_distance": 0.0
+    }
+  ],
+  "weak_macro_screen": [
+    {
+      "id": "SC04-012",
+      "name": "Glacier Loom Open",
+      "macro": "Contour",
+      "status": "measurable_change",
+      "waveform_delta": 0.007889016384123673,
+      "feature_distance": 0.00011856721997331073
+    },
+    {
+      "id": "SC04-021",
+      "name": "Hollow Velvet Close",
+      "macro": "Motion",
+      "status": "not_resolved_above_repeat",
+      "waveform_delta": 0.0,
+      "feature_distance": 0.0
+    },
+    {
+      "id": "SC04-022",
+      "name": "Hollow Velvet Open",
+      "macro": "Motion",
+      "status": "not_resolved_above_repeat",
+      "waveform_delta": 0.0,
+      "feature_distance": 0.0
+    },
+    {
+      "id": "SC04-023",
+      "name": "Hollow Velvet Bloom",
+      "macro": "Motion",
+      "status": "not_resolved_above_repeat",
+      "waveform_delta": 0.0,
+      "feature_distance": 0.0
+    },
+    {
+      "id": "SC04-024",
+      "name": "Hollow Velvet Drift",
+      "macro": "Motion",
+      "status": "measurable_change",
+      "waveform_delta": 0.00312910427096272,
+      "feature_distance": 0.0017316659207816322
+    },
+    {
+      "id": "SC04-025",
+      "name": "Hollow Velvet Veil",
+      "macro": "Motion",
+      "status": "not_resolved_above_repeat",
+      "waveform_delta": 0.0,
+      "feature_distance": 0.0
+    },
+    {
+      "id": "SC04-046",
+      "name": "Winter Fold Close",
+      "macro": "Motion",
+      "status": "not_resolved_above_repeat",
+      "waveform_delta": 0.0,
+      "feature_distance": 0.0
+    },
+    {
+      "id": "SC04-047",
+      "name": "Winter Fold Open",
+      "macro": "Motion",
+      "status": "not_resolved_above_repeat",
+      "waveform_delta": 0.0,
+      "feature_distance": 0.0
+    },
+    {
+      "id": "SC04-048",
+      "name": "Winter Fold Bloom",
+      "macro": "Motion",
+      "status": "not_resolved_above_repeat",
+      "waveform_delta": 0.0,
+      "feature_distance": 0.0
+    },
+    {
+      "id": "SC04-049",
+      "name": "Winter Fold Drift",
+      "macro": "Motion",
+      "status": "not_resolved_above_repeat",
+      "waveform_delta": 5.075395764789766e-05,
+      "feature_distance": 1.8603605139388846e-05
+    },
+    {
+      "id": "SC04-050",
+      "name": "Winter Fold Veil",
+      "macro": "Motion",
+      "status": "not_resolved_above_repeat",
+      "waveform_delta": 0.0,
+      "feature_distance": 0.0
+    },
+    {
+      "id": "SC04-076",
+      "name": "Feather Bridge Close",
+      "macro": "Motion",
+      "status": "not_resolved_above_repeat",
+      "waveform_delta": 0.0005332862363739419,
+      "feature_distance": 0.00029362890903550067
+    },
+    {
+      "id": "SC04-077",
+      "name": "Feather Bridge Open",
+      "macro": "Motion",
+      "status": "not_resolved_above_repeat",
+      "waveform_delta": 0.0008104601993039134,
+      "feature_distance": 0.0006726625935114676
+    },
+    {
+      "id": "SC04-078",
+      "name": "Feather Bridge Bloom",
+      "macro": "Motion",
+      "status": "not_resolved_above_repeat",
+      "waveform_delta": 0.0006532133001469632,
+      "feature_distance": 0.0005387443403463654
+    },
+    {
+      "id": "SC04-080",
+      "name": "Feather Bridge Veil",
+      "macro": "Motion",
+      "status": "not_resolved_above_repeat",
+      "waveform_delta": 0.000479680913697131,
+      "feature_distance": 0.0003064464940627299
+    },
+    {
+      "id": "SC04-082",
+      "name": "Spectral Silk Open",
+      "macro": "Contour",
+      "status": "measurable_change",
+      "waveform_delta": 0.004964734905754306,
+      "feature_distance": 0.00013888124836436286
+    },
+    {
+      "id": "SC04-096",
+      "name": "Slow Orbit Close",
+      "macro": "Motion",
+      "status": "not_resolved_above_repeat",
+      "waveform_delta": 0.0,
+      "feature_distance": 0.0
+    },
+    {
+      "id": "SC04-097",
+      "name": "Slow Orbit Open",
+      "macro": "Motion",
+      "status": "not_resolved_above_repeat",
+      "waveform_delta": 0.0,
+      "feature_distance": 0.0
+    },
+    {
+      "id": "SC04-098",
+      "name": "Slow Orbit Bloom",
+      "macro": "Motion",
+      "status": "not_resolved_above_repeat",
+      "waveform_delta": 0.0,
+      "feature_distance": 0.0
+    },
+    {
+      "id": "SC04-099",
+      "name": "Slow Orbit Drift",
+      "macro": "Motion",
+      "status": "measurable_change",
+      "waveform_delta": 0.0030737902497932255,
+      "feature_distance": 0.0023571260233122325
+    },
+    {
+      "id": "SC04-100",
+      "name": "Slow Orbit Veil",
+      "macro": "Motion",
+      "status": "not_resolved_above_repeat",
+      "waveform_delta": 0.0,
+      "feature_distance": 0.0
+    }
+  ],
+  "warnings": [
+    {
+      "id": "SC04-021",
+      "name": "Hollow Velvet Close",
+      "fixture": "macro_1_max",
+      "warning": "Motion response not resolved above repeat/measurement threshold; targeted musical review is required"
+    },
+    {
+      "id": "SC04-022",
+      "name": "Hollow Velvet Open",
+      "fixture": "macro_1_max",
+      "warning": "Motion response not resolved above repeat/measurement threshold; targeted musical review is required"
+    },
+    {
+      "id": "SC04-023",
+      "name": "Hollow Velvet Bloom",
+      "fixture": "macro_1_max",
+      "warning": "Motion response not resolved above repeat/measurement threshold; targeted musical review is required"
+    },
+    {
+      "id": "SC04-025",
+      "name": "Hollow Velvet Veil",
+      "fixture": "macro_1_max",
+      "warning": "Motion response not resolved above repeat/measurement threshold; targeted musical review is required"
+    },
+    {
+      "id": "SC04-046",
+      "name": "Winter Fold Close",
+      "fixture": "macro_1_max",
+      "warning": "Motion response not resolved above repeat/measurement threshold; targeted musical review is required"
+    },
+    {
+      "id": "SC04-047",
+      "name": "Winter Fold Open",
+      "fixture": "macro_1_max",
+      "warning": "Motion response not resolved above repeat/measurement threshold; targeted musical review is required"
+    },
+    {
+      "id": "SC04-048",
+      "name": "Winter Fold Bloom",
+      "fixture": "macro_1_max",
+      "warning": "Motion response not resolved above repeat/measurement threshold; targeted musical review is required"
+    },
+    {
+      "id": "SC04-049",
+      "name": "Winter Fold Drift",
+      "fixture": "macro_1_max",
+      "warning": "Motion response not resolved above repeat/measurement threshold; targeted musical review is required"
+    },
+    {
+      "id": "SC04-050",
+      "name": "Winter Fold Veil",
+      "fixture": "macro_1_max",
+      "warning": "Motion response not resolved above repeat/measurement threshold; targeted musical review is required"
+    },
+    {
+      "id": "SC04-076",
+      "name": "Feather Bridge Close",
+      "fixture": "macro_1_max",
+      "warning": "Motion response not resolved above repeat/measurement threshold; targeted musical review is required"
+    },
+    {
+      "id": "SC04-077",
+      "name": "Feather Bridge Open",
+      "fixture": "macro_1_max",
+      "warning": "Motion response not resolved above repeat/measurement threshold; targeted musical review is required"
+    },
+    {
+      "id": "SC04-078",
+      "name": "Feather Bridge Bloom",
+      "fixture": "macro_1_max",
+      "warning": "Motion response not resolved above repeat/measurement threshold; targeted musical review is required"
+    },
+    {
+      "id": "SC04-080",
+      "name": "Feather Bridge Veil",
+      "fixture": "macro_1_max",
+      "warning": "Motion response not resolved above repeat/measurement threshold; targeted musical review is required"
+    },
+    {
+      "id": "SC04-096",
+      "name": "Slow Orbit Close",
+      "fixture": "macro_1_max",
+      "warning": "Motion response not resolved above repeat/measurement threshold; targeted musical review is required"
+    },
+    {
+      "id": "SC04-097",
+      "name": "Slow Orbit Open",
+      "fixture": "default",
+      "warning": "Quiet default peak; inspect intended role and gain staging"
+    },
+    {
+      "id": "SC04-097",
+      "name": "Slow Orbit Open",
+      "fixture": "macro_1_max",
+      "warning": "Motion response not resolved above repeat/measurement threshold; targeted musical review is required"
+    },
+    {
+      "id": "SC04-098",
+      "name": "Slow Orbit Bloom",
+      "fixture": "default",
+      "warning": "Quiet default peak; inspect intended role and gain staging"
+    },
+    {
+      "id": "SC04-098",
+      "name": "Slow Orbit Bloom",
+      "fixture": "macro_1_max",
+      "warning": "Motion response not resolved above repeat/measurement threshold; targeted musical review is required"
+    },
+    {
+      "id": "SC04-099",
+      "name": "Slow Orbit Drift",
+      "fixture": "default",
+      "warning": "Quiet default peak; inspect intended role and gain staging"
+    },
+    {
+      "id": "SC04-100",
+      "name": "Slow Orbit Veil",
+      "fixture": "default",
+      "warning": "Quiet default peak; inspect intended role and gain staging"
+    },
+    {
+      "id": "SC04-100",
+      "name": "Slow Orbit Veil",
+      "fixture": "macro_1_max",
+      "warning": "Motion response not resolved above repeat/measurement threshold; targeted musical review is required"
+    }
+  ],
+  "default_distributions": {
+    "peak": {
+      "min": 0.004557725507766008,
+      "q25": 0.03922200947999954,
+      "median": 0.05347488634288311,
+      "q75": 0.06514746323227882,
+      "max": 0.09454620629549026
+    },
+    "active_rms": {
+      "min": 0.0016325918873225365,
+      "q25": 0.00916102451079211,
+      "median": 0.015422684003685874,
+      "q75": 0.02063946421468251,
+      "max": 0.036006520891236724
+    },
+    "spectral_centroid_hz": {
+      "min": 214.14679958450805,
+      "q25": 318.7890472328006,
+      "median": 414.1954063030877,
+      "q75": 640.0701761486469,
+      "max": 3229.3527075875145
+    },
+    "mono_energy_ratio": {
+      "min": 0.6012851647155663,
+      "q25": 0.8055708989284986,
+      "median": 0.9464195341309696,
+      "q75": 0.990815137476893,
+      "max": 0.9999643279666227
+    },
+    "tail_to_active_db": {
+      "min": -185.92432041710475,
+      "q25": -167.84742765382254,
+      "median": -156.55234855027658,
+      "q75": -145.43003075342847,
+      "max": -115.04361628436733
+    }
+  },
+  "all_scenario_max_peak": {
+    "id": "SC04-049",
+    "name": "Winter Fold Drift",
+    "fixture": "polyphony_stress",
+    "value": 0.721878170967102
+  },
+  "all_scenario_min_mono": {
+    "id": "SC04-076",
+    "name": "Feather Bridge Close",
+    "fixture": "macros_aggressive",
+    "value": 0.20730007921712293
+  },
+  "all_scenario_max_abs_dc": 5.622710443498205e-05,
+  "default_max_tail": {
+    "id": "SC04-036",
+    "name": "Vowel Ribbon Close",
+    "fixture": "default",
+    "value": -115.04361628436733
+  },
+  "default_max_tail_rms": {
+    "id": "SC04-048",
+    "name": "Winter Fold Bloom",
+    "fixture": "default",
+    "value": 4.436311738811912e-08
+  },
+  "minimum_range_low_peak": {
+    "id": "SC04-097",
+    "name": "Slow Orbit Open",
+    "peak": 0.0021398658864200115
+  },
+  "minimum_range_high_peak": {
+    "id": "SC04-097",
+    "name": "Slow Orbit Open",
+    "peak": 0.00648633623495698
+  },
+  "attack_macro_hold_seconds": [
+    3.0,
+    21.893214
+  ],
+  "attack_macro_min_peak": {
+    "id": "SC04-097",
+    "name": "Slow Orbit Open",
+    "fixture": "macro_6_max",
+    "value": 0.0039380514062941074
+  },
+  "long_release_tail_example": {
+    "id": "SC04-100",
+    "name": "Slow Orbit Veil",
+    "tail_to_active_db": -6.747564161432279,
+    "tail_500ms_rms": 0.0019279489296917312,
+    "observed_tail_seconds": 6.0
+  },
+  "slow_orbit_gain_candidates": [
+    {
+      "id": "SC04-096",
+      "name": "Slow Orbit Close",
+      "default_peak": 0.011013694107532501,
+      "active_rms": 0.0032644339209522717,
+      "max_peak": 0.10400286316871643,
+      "max_fixture": "polyphony_stress",
+      "gain_to_003_db": 8.703764888559908,
+      "linear_predicted_max_peak": 0.28329149734852355
+    },
+    {
+      "id": "SC04-097",
+      "name": "Slow Orbit Open",
+      "default_peak": 0.004557725507766008,
+      "active_rms": 0.0016325918873225365,
+      "max_peak": 0.038338158279657364,
+      "max_fixture": "polyphony_stress",
+      "gain_to_003_db": 16.367461775585284,
+      "linear_predicted_max_peak": 0.25235059602206494
+    },
+    {
+      "id": "SC04-098",
+      "name": "Slow Orbit Bloom",
+      "default_peak": 0.005173081532120705,
+      "active_rms": 0.0022795400198935057,
+      "max_peak": 0.055790383368730545,
+      "max_fixture": "polyphony_stress",
+      "gain_to_003_db": 15.267438628198526,
+      "linear_predicted_max_peak": 0.3235424554338656
+    },
+    {
+      "id": "SC04-099",
+      "name": "Slow Orbit Drift",
+      "default_peak": 0.005288030952215195,
+      "active_rms": 0.002406945803903569,
+      "max_peak": 0.052130263298749924,
+      "max_fixture": "polyphony_stress",
+      "gain_to_003_db": 15.076545323930375,
+      "linear_predicted_max_peak": 0.2957448458782877
+    },
+    {
+      "id": "SC04-100",
+      "name": "Slow Orbit Veil",
+      "default_peak": 0.009754491038620472,
+      "active_rms": 0.004192506393483246,
+      "max_peak": 0.10244439542293549,
+      "max_fixture": "polyphony_stress",
+      "gain_to_003_db": 9.758332812781227,
+      "linear_predicted_max_peak": 0.3150683977790306
+    }
+  ],
+  "input_reports_sha256": {
+    "SC04-001": "8c1a30a29a67d1acb2f11d9e3dff02e0d94eda1e3b665767b9c4c2eeaf7ec107",
+    "SC04-002": "20392b7eed824606948adcbd89776a6d4782e21ed0875c32997c1a8cf8181f56",
+    "SC04-003": "4a719bd2a1adcaae4b1a278ea57bfae34fbc3d526f9a144f2a7facd6544aa8c0",
+    "SC04-004": "4aa9f6d07cfa4dc8fee15218a009eebcd1c272931802cd2cc3c3d9eef921c63e",
+    "SC04-005": "d0d881ad44ae4881ecd6a514147b694b2e9cee8c79ed95620e3b48dafefda3d7",
+    "SC04-006": "21fc89ea73e277b3dc8d619381ecc80d8abd247be3c659ec09d967b851b279d6",
+    "SC04-007": "e786b17a3948877b289900ff4b58400f63f1fbaa5c9c22a933e29742435d7220",
+    "SC04-008": "241a23a45469bbdb6b04757afa37b8dc1f3e6987d029c37addfc8f803fbf189b",
+    "SC04-009": "13fc263659ba10dfb12850585a90c0781c53ecedec432d4729224d88459e3d13",
+    "SC04-010": "570c7f4a646cf2e3650a1e96dc018aa4b3adf78b51fbd3b6f1fdc3b910d75c1c",
+    "SC04-011": "816a67346fd1756df6646c878e184b5a313edee9379c76491bd92bc3cff613d1",
+    "SC04-012": "1319878fef2c988680d0b7af2a601e5e4f5354a12b8063a146566d30d5b92cdb",
+    "SC04-013": "5070747a85cf25d3d61cb62ae35b684a93589d5c9fafe053b5e992bc7fa6aff5",
+    "SC04-014": "e9a05dc5a6f9faa2629581bd92227a4872501cf59df1ee2210d4646066380c28",
+    "SC04-015": "4add5507a61c528b93fd00e2da037a69dd5b079a4e6d3ef2fe1a0bcede8872f7",
+    "SC04-016": "1528e331624673340c53cd3d205e0d43eb48e57a3b50975c8ddb8fd4ea41bf31",
+    "SC04-017": "bf464b13ffc98912bb15afc4322e79a80393b0a6af88115a9c272e427fe259ce",
+    "SC04-018": "e871bf41086e62b6116608932aa3ef97d1cbde3af7481c840662b9a11d7f5de1",
+    "SC04-019": "e52a82c5fe85c873b110c00e430d7f5aa5fb49c76023467bfb12a5a45b7b00f2",
+    "SC04-020": "cfd8df55e699ef3044847f17ac6d3fa741ac4ae801cf3e6c5403f4eb2493176e",
+    "SC04-021": "06b1b56f5f8730c000d371fb41ad69cff7ece10f3fa7b8891283bac65855fc8a",
+    "SC04-022": "9d34f77636f172922a8f485eed1adb6db1e4da42611928a551b67cc9d80be556",
+    "SC04-023": "e8f2a2af3cbb153b42d9d19eb71111b39cc0bf510329e59f605ddd65e52a414c",
+    "SC04-024": "6d4255e0cd089c6929baf5f18a0e62f2cc8015281b33762c9e39f687ce7234c1",
+    "SC04-025": "d09cbda08bc7dd69488eda15c9bca92963cd4ac9d4fe1315e9f54d83ee05c9ad",
+    "SC04-026": "c744150e74b545566e100d11a7579c3339ebc93244f81b52251016b665e7482f",
+    "SC04-027": "a293d82dfbf5be65a409568a927d9fa36330a3b1e4e08faa4255047b1d2c3017",
+    "SC04-028": "20164965339dffa83ac43bf9ff65f9ea6490217248f063800a279d1ee89c4ab4",
+    "SC04-029": "f674568e8ff064b271d194af8a8217a41629d9442da0bc709baab0cf754745d2",
+    "SC04-030": "6fac42db3825cb690d207efd623cbcb455d82575eefa77ecc187dc1bea44b1ab",
+    "SC04-031": "10788adfb7ed73ba463205029c91582913c65cbac9bdad9c457e0666ad5c2148",
+    "SC04-032": "51d36e702aeadda61a839b187edf520648a6b821f14775e02d3027a4f173d018",
+    "SC04-033": "128e2b631031ee145950a27203baa653c3cc5747e8bba85bf4a56809ebd7aab7",
+    "SC04-034": "7ccd67fc5a42f124a652155bcb3082828932d6cb81a19113276489096104a71e",
+    "SC04-035": "fd8f75b46dc97e6e41b458b4d93c7cd9ce52672771fbecd807de5cfb34fbaf4a",
+    "SC04-036": "516e9217ff8dfdd20a3b4e123aefcbb94d8208f17ae24e52f1b3b8736f9bb47e",
+    "SC04-037": "02d5c081c10433f63fc82022e5ba2b1e035028048bf18d3f8772033c6282f568",
+    "SC04-038": "a16f24c0ac45102db7cdf542da32b2470cf2cb7e95a4be12248afd721b73399e",
+    "SC04-039": "143fe27128f1603473140cccd966541a95a0e64fae90ca029b3530a29227ff2a",
+    "SC04-040": "708e723cc6d0200c8b1709ec6319f259bb5125e4cb7f91993eb42f3ea27f225c",
+    "SC04-041": "3877f3e7c59d6aaf9ac23de522632da4d5b1adbb8eceb4357215e7a33059ebe4",
+    "SC04-042": "9a7ff40edf93233ec26e92661e1ac3c243e008d02f45f6c64aa44fba4863394e",
+    "SC04-043": "a9ff36cf40a302b70be3c7844a42dae673f5fadb0f92a16526550757028eb594",
+    "SC04-044": "76a5342c1e85a9777756265d9ebe914da505c67887b528cdd649610ed6999f5c",
+    "SC04-045": "bc9e7897f188e435c4eef8c90888d7ee1d4e08b1cabf2e6c9be6cc29767302af",
+    "SC04-046": "a4af62f7fe3ba204c44ea0c7a664d148750c17c6a15fce661a309cbbef1fc17a",
+    "SC04-047": "86f4d288c6827e0b09e561dfd5315b3bf0bb0ea0cdda7d16c5e50dd5eb924a5b",
+    "SC04-048": "027aa287ec522e31f553f9601e6743653fa7c06e3968c8f52d17589bd14696f3",
+    "SC04-049": "0674c9eaa1590c05b732ad41f55272bc9bbc9b27339e37d4611162e729510682",
+    "SC04-050": "4efd51496f277fef645480779bd5b3d4b847d0891dd9212a5d29b9c5b3dd1c1c",
+    "SC04-051": "c785330460ca0c9c1163570c234f4dacb8323fe09b2d34ab23e4da0c544263c6",
+    "SC04-052": "2111765c2c08c903085419f4898a47893e1c03597fe02d5060fdd85101f61037",
+    "SC04-053": "267a472d4f9c0042df4d45e43995fc8185bee0ef7bd17a1b10297da759031ef4",
+    "SC04-054": "f68a9a9cc743f5bcd68d7755aceb816c5de747b9ee9805bf9d39741151b87611",
+    "SC04-055": "31c99551f568db40a8afc19c95f4c8dcd9a8f5a7089b57673e0d98d5262147be",
+    "SC04-056": "7e3f90e98d741959aac1b8945948a709456567fdab0dbe27e1b2e6e3de88c84a",
+    "SC04-057": "6ee231d5ffb607dbda8c67f7cd78a14083acb384c397ab8a4f36f95f24f16513",
+    "SC04-058": "d284bac9918cabbd2c35ce6add7724656d1ac79a93004370f38cf7b3f660b468",
+    "SC04-059": "c77d9b54b4adb14bb2ecb275261868442d08310d3c76f18270c5229d4a087a78",
+    "SC04-060": "a20d058782c7f7c10bad5e232710ef5c1d498dd9a88ed90f0acfd1a548695824",
+    "SC04-061": "2f78b31aefba24a2bd671a45ec9fc70924af831225f71d00ffadffdfbebca1f7",
+    "SC04-062": "a6986d66414ecab1b7bd04882cf56eaac613929ff73411dbdf23ad5e73b8cb12",
+    "SC04-063": "310ee29a971a9fb86d51364b8b092ab13104f21442fa0b88cd486b572c8ee6cb",
+    "SC04-064": "5c03358d37c6389be5391683cc20ae44b7861e05e9b12100030f50f6d715282d",
+    "SC04-065": "e17aaf3e45656375133733bb8c9021493627f28d12fc2b66bc29e5703615011c",
+    "SC04-066": "2751efa2fb95fb709160163ddd4a6b303598a4c8ffefdccabf8a991efe48b167",
+    "SC04-067": "2d6d6bc048d64cc964258508980e3464b0351cf0e26765ebf7b9f35968f55374",
+    "SC04-068": "d1a621c03c3d4c1468a1f7d6bd3ad91a9a52dd6d42f23dd0997a01c59801da1f",
+    "SC04-069": "6db179ac5586e169c494f74893eb3f93920663d7f98f6860ef4f29993d1b077e",
+    "SC04-070": "e29b1f2121544da5f021f68753bee6c653bf5eff88f2ff05d8851bd10be9b4e5",
+    "SC04-071": "64d877fb4278ee4c5cfee2936aee9c32292922cdd7ef58f49628fbc3723b2423",
+    "SC04-072": "f3e44a9a4e0ca26645a0efdba2f40ad027d4751b9dcefa5ab4e9f669fc1e1d42",
+    "SC04-073": "a1825d1b40fae16520da90dee016bdf402b22d3ee2d9f5f80cc865fa8ab466af",
+    "SC04-074": "838bdc8001c1720d0d5139e3410f00c09d73d1d13377f299f6eb880cb06f6c27",
+    "SC04-075": "2538efc5d2239f5b119af3b7ff85861352edb25a173242b22365e794b6c29666",
+    "SC04-076": "f125ae5e1c2ec15a90279eec77d15d44a1c67a917be3b553deeb207a083afb23",
+    "SC04-077": "6003d19cadaa827e08e8b32f84e6c05941d9e068491ae331d213c247c5446cde",
+    "SC04-078": "4c6a5979b0cdc7b87ed00cee739179f66259fddb516a3e85ea457e74c70570f7",
+    "SC04-079": "934188f473e0319fcc4fb930cd3dc9a6841c9eea99bba98e8b7c7bc3a0026687",
+    "SC04-080": "3882b9fb5cbf77f02e23a8b54c9a7cc9ce749c191f623dc013e401e2a1763bb3",
+    "SC04-081": "26e8a5444cbe38688745cd8c679e9b58cd361a99593375b4ef94145b030cd181",
+    "SC04-082": "97453786863db2fb718d872062856c4cc595a099246ff3b9f12cf89478499782",
+    "SC04-083": "54a71de82766a7febe098d4dfb93be9f4822343df7ca0def106aeea790b88075",
+    "SC04-084": "efb7a961bc5566676b9862b33afe57f91b07dd7111096948036608519deb3f42",
+    "SC04-085": "ae2124fe19a87b1be0e3cf01e3d24672c7d0ea82644c777b591c91b89bcf1f02",
+    "SC04-086": "b3b2617a7e9409f5dcc93df923ea1bc4e4c6c0cdc88964e3a72d90d1f6e2edb9",
+    "SC04-087": "ba0a464abbcbe834dfd3e1cd0831f878500dcfb8e61cf55fc97852ecf0607852",
+    "SC04-088": "117e26b270535920134d538965f451caded372f763e669d7e27e017e3f46b52f",
+    "SC04-089": "10f2e84dbc2044a1301efa8134effc55b2de64f5ac294d439b22a7c4be737d66",
+    "SC04-090": "01123d98c7453cf52c414293e45dd0ad5d8ab62259a04512e606b5b5c8b21a87",
+    "SC04-091": "be2944c9dde945f9470351098e6fb1cc8445c6fb3bade31bbb830e1ad439ade4",
+    "SC04-092": "0d3949179294e8a1b0fb382a039f6adebe043c475f4a3a2b595008465a54a81c",
+    "SC04-093": "19c54329f074204d4e079432b854b4dfb4c703f6edc964919a0c03da5a608d09",
+    "SC04-094": "958ea14e7ac788bffb56acfa6c2cb0829ddf89f0367d3cf9d9cbaa54173f3ab1",
+    "SC04-095": "68fb1e241df0fbe5f6658af5a6dcda0ced14e91135575e681b2a95727e1d8ebe",
+    "SC04-096": "69ff76ce85a2c2dd6d7a1cf0fe6765a4eea8d79b50ef4ffdc68ecdf5f482e085",
+    "SC04-097": "8518ee1c076360e34221aa798a1a74f04074403beab2d12482b6b96715adde0d",
+    "SC04-098": "d40982ee0e8fc388024a1c8707b60ad1fc9a0f928476973d136344571474d3d9",
+    "SC04-099": "f69db8e6aab891a4503f485d60a25cd8eebc0ef9433566d8c2a1bdbc22b976d2",
+    "SC04-100": "c517cc6d1e447c7a6d7f59e95120d9bd6be38f7c09a9b19f7646932c6ff0717f"
+  },
+  "input_patch_sha256": {
+    "SC04-001": "2d09ea488f0c62808b50767c110570145bdad42453fdbdadaed824e907c01191",
+    "SC04-002": "4cf97cb65cbfe448b1a65e47ba66062b459b0960c630a709ebf0753e254ef7ec",
+    "SC04-003": "f1f2b1ed5cc4dc894ff064a29278e6071d84f25328d47f2065c77e997a7db216",
+    "SC04-004": "d315ecf126ed1e92675f9b5564c7cd77fe0ee34c630f5f69a42162ff7c631d5d",
+    "SC04-005": "5a8853fd9081b9d63ca2e588b6b2d5c6c4db1b5c2a1b839e70b4b285348cd549",
+    "SC04-006": "03c74c903a68fa53a46f53a57077ff6db4fc60903d2d5d5d226f9e5a5d4ee12b",
+    "SC04-007": "29b58b72afbc417eef1b282604016ca14538d6f82a93823369866edd7c40169c",
+    "SC04-008": "7ff18b6df7bc99c380ac544df1cb7aadf10f92c3fcedffacf39319ba0ae85069",
+    "SC04-009": "12d6633e499317aeee3429ff0a1746a3306abdf7ad8d4eab91f7eb8566bf159e",
+    "SC04-010": "4e21d08781d1548644f995578a3f9446efb8721e1bb7a9ca2e328002e14c77c2",
+    "SC04-011": "e4e35197295cfe1064c778deae901e57d1a6cdf4a2ae95abadf81f15979c4a56",
+    "SC04-012": "27e0f92e3cc2f33adfb1064d69a164799991f21eb69da74c803f11fa8d3cca28",
+    "SC04-013": "47c465ed0c6c42e9a46d956f7f2e0f2d717a7794a4293da40aa87bee93df9b0e",
+    "SC04-014": "a1fadb7d141dae713460ed92d51b594f6b35ffd11778a30d5ae7e4b10c98780b",
+    "SC04-015": "2097b97379ee8337bf217464b46579f65a056e31c800a6a23ba8960cfaacc407",
+    "SC04-016": "7fccdf8fca675311c03a7085a700209e410dc33473578deae91657877e4366ff",
+    "SC04-017": "3814b76f2bf7f0d71206abcbc90aa73703b527f1449b9d8b16f4c32997b4c1c9",
+    "SC04-018": "8f45ae7836b914f56df38f4223a6568973741bb3d840e63fc22be2e14db6b59b",
+    "SC04-019": "82d75dc1a9e907745e56ffa04e15fdad2ff6f9988d8049e715e758c2804d0167",
+    "SC04-020": "f0068993d5856c6499e169f460a26d55cef942a3d00b162c224c5f1192ce2f7d",
+    "SC04-021": "ae5ba390ec95bc37d4d818b7cdebb6f3006d999413e9cb550acf630a070be081",
+    "SC04-022": "c2f7324a19b8a6e3a8283497bb50fee2f212e22f86adc09b214ce8abff644a4f",
+    "SC04-023": "177962d7c350034e53264d4aaa6b11ac74c5d48dc8c7ba9ca4352e770c9dc1e6",
+    "SC04-024": "2ec1a7193ca54c6d4f0e19f958e799b09130c5f5ccf6397b4977d902a6a9fe8e",
+    "SC04-025": "cc213828a97faf85e534f83cc1a001a74057ea3546a24f19ed73f0e5141a015b",
+    "SC04-026": "fc2346f0fb8930f0bf464aa927ec69367ec08a1d5734a9d6bf4004f783cba97a",
+    "SC04-027": "ac8d3247046061bbe5b0fceec787625e1985e858411cbb85f6f07421413e8617",
+    "SC04-028": "2fef1392886248026c2cc28698ae7945a5448d44c5236d762ae61f3cb6b46377",
+    "SC04-029": "f2069996a660d3a0eb3393a9011b46cd4665e7ba6713425b107d0d073caa1395",
+    "SC04-030": "38ecdf44dc8585305e2e833ab5386f94051e3e26bc6626c0756f51db6c5a773e",
+    "SC04-031": "7c13d3a11c9dffaf8d857f0ac28d73e8d783c3277c753145b91cbbac5acff512",
+    "SC04-032": "ce4d77ab64c942c60f110ed20f1b5255393fa951cafca5a04d79ccc0d842ecaf",
+    "SC04-033": "ff1981d0a16af11bce7d1166a5c31d8540a8aa9805604fcaa9b581c75ae05f9b",
+    "SC04-034": "f1491993453b02e4e19bfce187b0058a667bc7b059cda01d921956f72359e576",
+    "SC04-035": "e62ff38e316a0c3c0361378ad0a900d0cb1473a4247ff8f3504d2bcef7cd8bfd",
+    "SC04-036": "e346b7604c44e4c4872a72aae7bf6e4414da976833b2e73e376d88327134d7bd",
+    "SC04-037": "e5455d3a4e400fe2b73c1e9af09a50ba770447c3808dc34148a8456319c4f86d",
+    "SC04-038": "490d7db52ba3f044bcd5a842dbc6f2fcc1dd76181e42f3ae07cfb9cdf32eabb9",
+    "SC04-039": "a503f6e6defb24d54cbc417af52f4cb40f6a96bb83b7550aef74f426bb1e12e8",
+    "SC04-040": "988589548e3c312934938d3ea0ceddb576522b1bbde1582add6903d144fdb760",
+    "SC04-041": "2ef63193669ca15f00d3a2af5f135132811264658bc2e1b703d20feeb92895c0",
+    "SC04-042": "c806a214e3e22b3cc997235bd217e163a4ac2e69f3d8914f6f0221ad73b905f2",
+    "SC04-043": "2ea53d7fd0022d89067be008e19bb3883e22218318604df70770f9599bc37645",
+    "SC04-044": "681f7483ddfab3ca41078b9eb2df0f90513c70966adbaf2ac47220d83c8ca985",
+    "SC04-045": "b3c87f93e4bc6d1acc20937033c629f2cd14dc958200719e51c8976cd58d7fe8",
+    "SC04-046": "4c1d3521e00b89777e93c87ddd1b8e9442900f25c582d3c1e8a97d962b149d56",
+    "SC04-047": "eef3557a999b4d191f2f7a10f183e3baa917834a465fd8b66425f48f194e6040",
+    "SC04-048": "df544a70811e9c2c864990f9e55fddf11a16dbdc921859aef38d1a4894f6edfa",
+    "SC04-049": "f4a250af88bda8fd25de82141e20965f7ef15005d7ce2e0bcb0bbe87db692894",
+    "SC04-050": "2fa1aaf56c53c669533c52df563d7dd699b3bebca1802067d38e45c25f275071",
+    "SC04-051": "a7fcb868cd5deb818995f874709d6745b5e25ef6516a5e5181f0cf76895a7cae",
+    "SC04-052": "382d830d3773a57500ba52ae5317a2b9821b55fca87e4dbfbaf0c6cceaedc489",
+    "SC04-053": "2b8bd3cd3f7a4c13bf7d8067c8ecfcf20ed8ae4923cb7be5dd056959983b90ef",
+    "SC04-054": "db796e8bbdf8731458b7424e011aa96a246bce7c0a9b564eeebe931394338d24",
+    "SC04-055": "d2ab24314b54da07577ba5b3f73d00a8f77cf3d1a46ab86c342e06e742538ecc",
+    "SC04-056": "98f67eee7196335344421b6eeb8ad3675f447ffc70b6deae8dd83f9e3219a41c",
+    "SC04-057": "b80a294022766e97e6487d2244a54aa91bfd319b9410b5369543d6004eb84b27",
+    "SC04-058": "dd56cfd072aeb7c810ecf0a86539f25dece6e1b2505e39de1b51adf52751fff9",
+    "SC04-059": "2ae7e65072673327b33f3375b21aa45954d496fcea53cfb31492142549cf529a",
+    "SC04-060": "bc3ee30248a8c3f89ee231c95720afeeebb91e604e38d1e264fc37e91779f1e5",
+    "SC04-061": "fc3e44807074cefbb8c4eadee1680306b0adccf3353a29e29380220fd1f36b93",
+    "SC04-062": "23a8a6034226bcd5d029ce313dae693f95b674fcb68b6ff0b7f885c5aa92f428",
+    "SC04-063": "89cd59f7785169b605154569529afd7f2e38c7eed65a48eaed829f2ef35be78e",
+    "SC04-064": "3fbe98bd32f27b118a3dd57919ac4a0de243b924a8782ccb45834921f1b869b1",
+    "SC04-065": "b4888ff1642a52f9f81ad97e27dcff600a216965b4b6eb1ba2bbb391476d88f1",
+    "SC04-066": "91326139b089827a84fafc2354538ddd3f6559cd9171101e17829f028c9fe47f",
+    "SC04-067": "4743a39aa600b39dc0473973eac718a09a75d5a8975c93dede5e773cd010a751",
+    "SC04-068": "2c32c9c559e49881c661379aad687e880d2a85e0487a8f13a331ff5d0c93c43f",
+    "SC04-069": "c8c5d13cb5e19e1734b66a92b0ac07b1e3ee4467c27a1092757153db49dfe0bd",
+    "SC04-070": "48587706cce76eb0120516571212124fb8399cfed9a6e1fd4883c5c2a045f6df",
+    "SC04-071": "e4041d9a9334681550b56dacdff822e4b39e278df345b0a914dd9e0563d413fc",
+    "SC04-072": "ac0e26e03a8f385b064a69d8365528463404f228337d4bddbe1f8b077f06b973",
+    "SC04-073": "a39159c3bae3fb29286b26e09db3e5688a761f162b40f11a43f00f88edec24cc",
+    "SC04-074": "8d4e706c5b16fdec5e8fd47afd97e9694a40089672ba240fc958fdd28ceeb323",
+    "SC04-075": "9268d8eee0faf02e92cb1b0c92c003c8ed90f056a35381afc1804cecd704d6a7",
+    "SC04-076": "6f624f3ed5f45fbcf774d3ea0e091bf729efe9b104bd790d0d337d6be1ec912d",
+    "SC04-077": "2c3b53e986b271b20c8f817e0c09b6c8a6e978736c35ff8b4150ec28fe29f32d",
+    "SC04-078": "aeb1ce0b57301972cd53b1b3b27875d1bd40be348f2db93a1febc86a20b1e052",
+    "SC04-079": "da8e78177924c2eb4521b6237fcbd4bd2602bcc28843e9ad03f564ddcfadf2ce",
+    "SC04-080": "9689e2ccca27fad1e3af783953f4015445ecda8b32b8f22a288ad15c3afebaf0",
+    "SC04-081": "a1f39c9c4e11d1a7041d6fd09668560dd69e62b5411e497a16c785b16f5921be",
+    "SC04-082": "ba09278147d31f2ccdedcb8dcb830af767d4e6ce7c3706e95ea91517c077e836",
+    "SC04-083": "e11b51c6a9e064a75f57099626be3c29fc46d3cfad971de5c1bf412653281ad3",
+    "SC04-084": "4f9937d5f1d6da4ce5eb37c6a5b9fcd290c8b0287bf2c5433771250c181f1f72",
+    "SC04-085": "74cc200079ea2b95e06b1942d8ff01752f2a7aad67f9b12fd4ade29b998f97f9",
+    "SC04-086": "6f9611022b073dd4a2cf166ba4dceeb15d12450d382999aebe88de779efa67ad",
+    "SC04-087": "e079ecb7c1b4fbefc68376197e39ea627237f8b6f4ac3a8ea96094449aba6e3b",
+    "SC04-088": "9f8ebcd099d0c6e2f16771f3542920f6a677b7eefcd0333a1530148c23fa6b65",
+    "SC04-089": "c0d0da99d0f7925046524fd3524b1518d86bb72b7a94c0a0eacfd3f72c28e035",
+    "SC04-090": "e2816d04506850e820737852d41c87fb5abbb14efb9c63f30570ba6079076d72",
+    "SC04-091": "80be7d5d73582e005c4f022b7c0cc8257aaf1438c85a519e3ef75a8b81f9411f",
+    "SC04-092": "bb5946d759fad1564bbd681c96601d84a75e32ebf3f05d8bae0acc2c395332bb",
+    "SC04-093": "7c18e5dce7520c22c3f4b5e294ea0c25ed5f11114a45730afca576786deb87f0",
+    "SC04-094": "8e5f1108d73811496961a3cfa9e9ac81146a733ef303b7f1737cf30e24d7b21b",
+    "SC04-095": "ec4de1c1a44d56672af2b70d1779093a8aaf80ff16adcf3e22f951b02f0e56c9",
+    "SC04-096": "880c0da7fa38e4a97b1ed1fc4e8e7d5dc81cb6080dbbedeac81b281a6d39e272",
+    "SC04-097": "0974ee79539db22fc1c7593b6768f9375204951936496b2023289de994bdfbb0",
+    "SC04-098": "f6be834464b6b611211b57a29dccd79a1767fb9170236fe329a78be7dca7924b",
+    "SC04-099": "e23155485e818c84bb1e48c132b49f50d05af6d450845a440752f67305590389",
+    "SC04-100": "ca6c9445f108d26c37d63e964e2dab8143ca85cbe85f102a704a66eddb929806"
+  },
+  "musical_audition": "pending",
+  "composer_endorsement": "not_claimed",
+  "input_reports_stable_after_review": true,
+  "catalog_stable_after_review": true,
+  "closest_within_family_pairs": [
+    {
+      "id_a": "SC04-049",
+      "id_b": "SC04-050",
+      "name_a": "Winter Fold Drift",
+      "name_b": "Winter Fold Veil",
+      "feature_distance": 0.0933415147790205,
+      "spectral_distance": 0.002122246310460688,
+      "envelope_distance": 0.18243853693711962,
+      "matched_active_fixture": true,
+      "same_full_fixture": false,
+      "hold_a": 3.0,
+      "hold_b": 3.0,
+      "notes_a": [
+        62
+      ],
+      "notes_b": [
+        62
+      ],
+      "exact_default_pcm_equal": false
+    },
+    {
+      "id_a": "SC04-079",
+      "id_b": "SC04-080",
+      "name_a": "Feather Bridge Drift",
+      "name_b": "Feather Bridge Veil",
+      "feature_distance": 0.10825413710855314,
+      "spectral_distance": 0.026539766711510406,
+      "envelope_distance": 0.16342874079408548,
+      "matched_active_fixture": true,
+      "same_full_fixture": false,
+      "hold_a": 3.0,
+      "hold_b": 3.0,
+      "notes_a": [
+        70
+      ],
+      "notes_b": [
+        70
+      ],
+      "exact_default_pcm_equal": false
+    },
+    {
+      "id_a": "SC04-062",
+      "id_b": "SC04-063",
+      "name_a": "Lantern Organ Open",
+      "name_b": "Lantern Organ Bloom",
+      "feature_distance": 0.11074585332335053,
+      "spectral_distance": 0.039981635768290794,
+      "envelope_distance": 0.14152843511011948,
+      "matched_active_fixture": true,
+      "same_full_fixture": false,
+      "hold_a": 3.0,
+      "hold_b": 3.0,
+      "notes_a": [
+        64
+      ],
+      "notes_b": [
+        64
+      ],
+      "exact_default_pcm_equal": false
+    },
+    {
+      "id_a": "SC04-044",
+      "id_b": "SC04-045",
+      "name_a": "Sea Glass Drift",
+      "name_b": "Sea Glass Veil",
+      "feature_distance": 0.1386937557571577,
+      "spectral_distance": 0.0071546110408552,
+      "envelope_distance": 0.263078289432605,
+      "matched_active_fixture": true,
+      "same_full_fixture": false,
+      "hold_a": 3.0,
+      "hold_b": 3.0,
+      "notes_a": [
+        73
+      ],
+      "notes_b": [
+        73
+      ],
+      "exact_default_pcm_equal": false
+    },
+    {
+      "id_a": "SC04-092",
+      "id_b": "SC04-095",
+      "name_a": "Prism Current Open",
+      "name_b": "Prism Current Veil",
+      "feature_distance": 0.14431071196857384,
+      "spectral_distance": 0.027300507521216093,
+      "envelope_distance": 0.2340204088947155,
+      "matched_active_fixture": true,
+      "same_full_fixture": false,
+      "hold_a": 3.0,
+      "hold_b": 3.0,
+      "notes_a": [
+        65
+      ],
+      "notes_b": [
+        65
+      ],
+      "exact_default_pcm_equal": false
+    }
+  ],
+  "gain_probe": {
+    "scope": "Five copy-only saved-VCA candidates, two native conditions each; original presets unchanged. No output normalization.",
+    "passed": 10,
+    "max_peak": 0.3235474228858948,
+    "default_peaks": [
+      0.029999995604157448,
+      0.029999973252415657,
+      0.029999813064932823,
+      0.030000053346157074,
+      0.03000006265938282
+    ],
+    "scenarios": [
+      {
+        "id": "SC04-096",
+        "name": "Slow Orbit Close",
+        "fixture": {
+          "key": "default",
+          "notes": [
+            62
+          ],
+          "hold": 3.0,
+          "seconds": 10.775,
+          "velocity": 96,
+          "tempo": 120,
+          "macros": "-",
+          "sample_rate": 48000,
+          "modwheel": 0,
+          "pressure": 0,
+          "expression": 127,
+          "gate": "default"
+        },
+        "source_sha256": "880c0da7fa38e4a97b1ed1fc4e8e7d5dc81cb6080dbbedeac81b281a6d39e272",
+        "copy_sha256": "27828fb901087c0893b8e498ff9850b506b5c05ce51e9333a69951360e5ba4f7",
+        "added_db": 8.703764888559908,
+        "vca_probe_db": 2.703764888559908,
+        "peak": 0.029999995604157448,
+        "active_rms": 0.00889193045983454,
+        "mono_energy_ratio": 0.9997864966157378,
+        "maximum_absolute_dc": 2.4520851123946416e-07,
+        "pcm_sha256": "63c078e662d5a8549fc175400a1c0e360c9b6aece728ecf3aef4912568e1b39c",
+        "failures": [],
+        "warnings": []
+      },
+      {
+        "id": "SC04-096",
+        "name": "Slow Orbit Close",
+        "fixture": {
+          "key": "polyphony_stress",
+          "notes": [
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67,
+            68,
+            69,
+            70
+          ],
+          "hold": 3.0,
+          "seconds": 4.0,
+          "velocity": 127,
+          "tempo": 120,
+          "macros": "-",
+          "sample_rate": 48000,
+          "modwheel": 0,
+          "pressure": 0,
+          "expression": 127,
+          "gate": "expression"
+        },
+        "source_sha256": "880c0da7fa38e4a97b1ed1fc4e8e7d5dc81cb6080dbbedeac81b281a6d39e272",
+        "copy_sha256": "27828fb901087c0893b8e498ff9850b506b5c05ce51e9333a69951360e5ba4f7",
+        "added_db": 8.703764888559908,
+        "vca_probe_db": 2.703764888559908,
+        "peak": 0.28329163789749146,
+        "active_rms": 0.050084676314041295,
+        "mono_energy_ratio": 0.9996816079642263,
+        "maximum_absolute_dc": 1.563054491292447e-07,
+        "pcm_sha256": "a05426cbda4be38ee472258f36b74ef2d55505c6ad2fb319dce12373973fd0e0",
+        "failures": [],
+        "warnings": []
+      },
+      {
+        "id": "SC04-097",
+        "name": "Slow Orbit Open",
+        "fixture": {
+          "key": "default",
+          "notes": [
+            62
+          ],
+          "hold": 3.0,
+          "seconds": 14.8175,
+          "velocity": 96,
+          "tempo": 120,
+          "macros": "-",
+          "sample_rate": 48000,
+          "modwheel": 0,
+          "pressure": 0,
+          "expression": 127,
+          "gate": "default"
+        },
+        "source_sha256": "0974ee79539db22fc1c7593b6768f9375204951936496b2023289de994bdfbb0",
+        "copy_sha256": "72a11910207e8ed0b222f3d93fb7ff3e4b305a248aad3e2d43cf2240ea256e61",
+        "added_db": 16.367461775585284,
+        "vca_probe_db": 10.367461775585284,
+        "peak": 0.029999973252415657,
+        "active_rms": 0.010746089164608567,
+        "mono_energy_ratio": 0.9989414465904728,
+        "maximum_absolute_dc": 7.094082441471694e-07,
+        "pcm_sha256": "e51978440f0b084570b3f2903b82d37b516d448e978b2f66d720a0ab4f07b49d",
+        "failures": [],
+        "warnings": []
+      },
+      {
+        "id": "SC04-097",
+        "name": "Slow Orbit Open",
+        "fixture": {
+          "key": "polyphony_stress",
+          "notes": [
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67,
+            68,
+            69,
+            70
+          ],
+          "hold": 3.0,
+          "seconds": 4.0,
+          "velocity": 127,
+          "tempo": 120,
+          "macros": "-",
+          "sample_rate": 48000,
+          "modwheel": 0,
+          "pressure": 0,
+          "expression": 127,
+          "gate": "expression"
+        },
+        "source_sha256": "0974ee79539db22fc1c7593b6768f9375204951936496b2023289de994bdfbb0",
+        "copy_sha256": "72a11910207e8ed0b222f3d93fb7ff3e4b305a248aad3e2d43cf2240ea256e61",
+        "added_db": 16.367461775585284,
+        "vca_probe_db": 10.367461775585284,
+        "peak": 0.25235071778297424,
+        "active_rms": 0.06217056115612197,
+        "mono_energy_ratio": 0.9982003768093486,
+        "maximum_absolute_dc": 7.599589282210347e-06,
+        "pcm_sha256": "e1f1318e96d4c17e406a5a278bb8e79ff8851781575ae7cd6721aaee8b68caab",
+        "failures": [],
+        "warnings": []
+      },
+      {
+        "id": "SC04-098",
+        "name": "Slow Orbit Bloom",
+        "fixture": {
+          "key": "default",
+          "notes": [
+            62
+          ],
+          "hold": 3.79,
+          "seconds": 20.79,
+          "velocity": 96,
+          "tempo": 120,
+          "macros": "-",
+          "sample_rate": 48000,
+          "modwheel": 0,
+          "pressure": 0,
+          "expression": 127,
+          "gate": "default"
+        },
+        "source_sha256": "f6be834464b6b611211b57a29dccd79a1767fb9170236fe329a78be7dca7924b",
+        "copy_sha256": "2fe9368db3c56657fff0388979df8308b934d9925307ce04b93bdacd7934a63c",
+        "added_db": 15.267438628198526,
+        "vca_probe_db": 9.267438628198526,
+        "peak": 0.029999813064932823,
+        "active_rms": 0.013219607642794196,
+        "mono_energy_ratio": 0.9982176718642419,
+        "maximum_absolute_dc": 3.563287090604648e-06,
+        "pcm_sha256": "9d36235be39e27c2cb40d0067f05f01cdd1b5b3e06260a9ace5460cc93ec31ca",
+        "failures": [],
+        "warnings": []
+      },
+      {
+        "id": "SC04-098",
+        "name": "Slow Orbit Bloom",
+        "fixture": {
+          "key": "polyphony_stress",
+          "notes": [
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67,
+            68,
+            69,
+            70
+          ],
+          "hold": 3.79,
+          "seconds": 4.79,
+          "velocity": 127,
+          "tempo": 120,
+          "macros": "-",
+          "sample_rate": 48000,
+          "modwheel": 0,
+          "pressure": 0,
+          "expression": 127,
+          "gate": "expression"
+        },
+        "source_sha256": "f6be834464b6b611211b57a29dccd79a1767fb9170236fe329a78be7dca7924b",
+        "copy_sha256": "2fe9368db3c56657fff0388979df8308b934d9925307ce04b93bdacd7934a63c",
+        "added_db": 15.267438628198526,
+        "vca_probe_db": 9.267438628198526,
+        "peak": 0.3235474228858948,
+        "active_rms": 0.07215150080440196,
+        "mono_energy_ratio": 0.9967060910774956,
+        "maximum_absolute_dc": 1.0228516161486368e-05,
+        "pcm_sha256": "7bfddc4717ba9aac46efe8da84ef0f52d00790f765a6eaa4613e48a4447e5066",
+        "failures": [],
+        "warnings": []
+      },
+      {
+        "id": "SC04-099",
+        "name": "Slow Orbit Drift",
+        "fixture": {
+          "key": "default",
+          "notes": [
+            62
+          ],
+          "hold": 3.0,
+          "seconds": 17.705,
+          "velocity": 96,
+          "tempo": 120,
+          "macros": "-",
+          "sample_rate": 48000,
+          "modwheel": 0,
+          "pressure": 0,
+          "expression": 127,
+          "gate": "default"
+        },
+        "source_sha256": "e23155485e818c84bb1e48c132b49f50d05af6d450845a440752f67305590389",
+        "copy_sha256": "4c3d2ffade19ae73ef345c740190c6983cde10272e9467690d33c765e0bfa154",
+        "added_db": 15.076545323930375,
+        "vca_probe_db": 9.076545323930375,
+        "peak": 0.030000053346157074,
+        "active_rms": 0.013655048100511668,
+        "mono_energy_ratio": 0.9991016567477463,
+        "maximum_absolute_dc": 3.79141487719596e-06,
+        "pcm_sha256": "1430f4bd1e32e2f7c879de9ca88f1edacb937c269f9e96f29de4eba471a4ff96",
+        "failures": [],
+        "warnings": []
+      },
+      {
+        "id": "SC04-099",
+        "name": "Slow Orbit Drift",
+        "fixture": {
+          "key": "polyphony_stress",
+          "notes": [
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67,
+            68,
+            69,
+            70
+          ],
+          "hold": 3.0,
+          "seconds": 4.0,
+          "velocity": 127,
+          "tempo": 120,
+          "macros": "-",
+          "sample_rate": 48000,
+          "modwheel": 0,
+          "pressure": 0,
+          "expression": 127,
+          "gate": "expression"
+        },
+        "source_sha256": "e23155485e818c84bb1e48c132b49f50d05af6d450845a440752f67305590389",
+        "copy_sha256": "4c3d2ffade19ae73ef345c740190c6983cde10272e9467690d33c765e0bfa154",
+        "added_db": 15.076545323930375,
+        "vca_probe_db": 9.076545323930375,
+        "peak": 0.29574233293533325,
+        "active_rms": 0.07299445985614213,
+        "mono_energy_ratio": 0.9982270985052424,
+        "maximum_absolute_dc": 1.1659877625544052e-05,
+        "pcm_sha256": "4c54a5a77f890420dcdade674030cbf7cf8242fcd92876bb3e5e1873faad6f59",
+        "failures": [],
+        "warnings": []
+      },
+      {
+        "id": "SC04-100",
+        "name": "Slow Orbit Veil",
+        "fixture": {
+          "key": "default",
+          "notes": [
+            62
+          ],
+          "hold": 3.0,
+          "seconds": 19.4375,
+          "velocity": 96,
+          "tempo": 120,
+          "macros": "-",
+          "sample_rate": 48000,
+          "modwheel": 0,
+          "pressure": 0,
+          "expression": 127,
+          "gate": "default"
+        },
+        "source_sha256": "ca6c9445f108d26c37d63e964e2dab8143ca85cbe85f102a704a66eddb929806",
+        "copy_sha256": "1e7dcd8bfe6d0bfd536daec5bc0d441a0a23535ecb9a0066cc01ab83597b4a08",
+        "added_db": 9.758332812781227,
+        "vca_probe_db": 3.7583328127812266,
+        "peak": 0.03000006265938282,
+        "active_rms": 0.012894071126484143,
+        "mono_energy_ratio": 0.9994039272538525,
+        "maximum_absolute_dc": 1.5004805329545803e-06,
+        "pcm_sha256": "38cff497c2765c93f9637f9ed10e6cfe82ec9991e522689c40e1ec31ebc33f3b",
+        "failures": [],
+        "warnings": []
+      },
+      {
+        "id": "SC04-100",
+        "name": "Slow Orbit Veil",
+        "fixture": {
+          "key": "polyphony_stress",
+          "notes": [
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67,
+            68,
+            69,
+            70
+          ],
+          "hold": 3.0,
+          "seconds": 4.0,
+          "velocity": 127,
+          "tempo": 120,
+          "macros": "-",
+          "sample_rate": 48000,
+          "modwheel": 0,
+          "pressure": 0,
+          "expression": 127,
+          "gate": "expression"
+        },
+        "source_sha256": "ca6c9445f108d26c37d63e964e2dab8143ca85cbe85f102a704a66eddb929806",
+        "copy_sha256": "1e7dcd8bfe6d0bfd536daec5bc0d441a0a23535ecb9a0066cc01ab83597b4a08",
+        "added_db": 9.758332812781227,
+        "vca_probe_db": 3.7583328127812266,
+        "peak": 0.3150669038295746,
+        "active_rms": 0.07297083528385895,
+        "mono_energy_ratio": 0.998960775153437,
+        "maximum_absolute_dc": 3.352614728137628e-06,
+        "pcm_sha256": "5bad69f107611bd6700f9befce780e34afc1ff733aa22843223ff4419d8c1687",
+        "failures": [],
+        "warnings": []
+      }
+    ]
+  },
+  "source_files_sha256": {
+    "src/common/dsp/SurgeVoice.cpp": "b27ecf4497d9b994ec541bccebbc09054ba4535266f67f52cc2bb4da010d5f5c",
+    "src/common/dsp/QuadFilterChain.cpp": "2be082ff81628c0155284353207e29ade6fac98eb83740e81f86fad0746d0625",
+    "src/common/dsp/modulators/LFOModulationSource.cpp": "ecbc8af269df53c5d895c948141f010a8571d4ff5338374e021b9a49c3a01ea6",
+    "src/scoring-tools/ScoringRender.cpp": "d6e7d6ed947ce6af7a2c5f476c0cedb3e52e2d92b05195d2507b6855c024366c"
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "assignment": "publication_packaging_audit",
+  "recorded_at_utc": "2026-11-14T04:19:43Z",
+  "scope": "Independent source integration, archive payload and staging-evidence binding audit; separate from original 60-assignment ledger",
+  "status": "packaging_source_and_standalone_payload_pass_current_ci_pending_at_observation",
+  "prepublication_observation": {
+    "remote_main": "dfdd2f94adec9c7bee4f3cfd4f757860fb875c3e",
+    "local_feature_commit": "946ed442572d5fa29e6d6467813b4fa6cb150908",
+    "feature_workflow_run_count": 0,
+    "remote_query": "https://api.github.com/repos/tomasedisonn80/surgeXT-synth/commits/main",
+    "run_query": "https://api.github.com/repos/tomasedisonn80/surgeXT-synth/actions/runs?head_sha=946ed442572d5fa29e6d6467813b4fa6cb150908&per_page=10",
+    "historical_observation_only": true
+  },
+  "archive": {
+    "path": "doc/scoring-1000/downloads/Scoring-1000.zip",
+    "status": "pass",
+    "preset_count": 1000,
+    "matching_hashes": 1000,
+    "errors": [],
+    "sha256": "b794179791cfad604b2761e3c109aefd88821831c46ac168cb4048a2c69d41c4",
+    "manifest_sha256": "67bd4a5dc3fbf6f3794679b24b500f1ef37af83b7a47a863d10cb964a57314a2",
+    "inspector_sha256": "e3003f6a7419254c3def0cea64419a612f47911671a1d2d83b91d16a58d78126",
+    "checked_in_original_and_isolated_checkout": true
+  },
+  "staging_evidence_bindings": {
+    "path": "doc/scoring-1000/evidence/factory-staging.json",
+    "implementation_files_checked": ["cmake/scoring-bank.cmake", "cmake/verify-scoring-bank.cmake", "scripts/scoring/validate_bank.py", "resources/CMakeLists.txt", "src/cmake/lib.cmake"],
+    "all_implementation_hashes_match": true,
+    "manifest_hash_matches": true,
+    "package_index_hash_matches": true,
+    "fresh_native_discovery_performed": false
+  },
+  "delivery": {
+    "kind": "factory_data_alongside_program",
+    "embedded_plugin_bytes": false,
+    "complete_resource_routes": ["Windows x64 setup with Patches", "Windows x64 portable", "macOS full DMG/PKG", "Linux x64 and ARM64 full DEB/tar", "Linux x64 RPM", "Linux x64 portable content"],
+    "companion_data_required": ["Plugin-only archives", "Windows Minimal", "Windows JUCE 7", "Windows ARM64", "Windows ARM64EC"],
+    "missing_installer_source_integration_found": false
+  },
+  "configured_push_ci_scope": {
+    "source_and_discovery_presets": 1000,
+    "audio_presets": 10,
+    "primary_scenarios": 230,
+    "technical_gates": 50,
+    "macro_responses": 80,
+    "semantic_roundtrips": 10,
+    "sustain_scenarios": 20
+  },
+  "limits": ["No current-feature CI run observed before publication", "No current-feature platform installer payload inspected by this assignment", "CMake unavailable on audit process PATH", "No installer execution or DAW-host test", "No human musical audition or composer endorsement"]
+}

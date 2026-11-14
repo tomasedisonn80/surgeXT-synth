@@ -1,0 +1,1213 @@
+{
+  "schema": 1,
+  "agent": 51,
+  "wave": 9,
+  "status": "complete",
+  "manifest_sha256": "67bd4a5dc3fbf6f3794679b24b500f1ef37af83b7a47a863d10cb964a57314a2",
+  "audit_script_sha256": "70ca3cf0b9e3d13009d687b85577f593033113db5ef286c3b4cf8cf9da3ef64e",
+  "measurement_bindings": {
+    "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+    "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+    "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+    "numpy_version": "2.3.5"
+  },
+  "compiler_sha256": "f04372e5711525838a003e1b0235a9513d77f52b962036918e4262388af39ae2",
+  "recipe_sha256": {
+    "scripts/scoring/recipes/01_keys.json": "c74d6ccc0a4b0d39dc477ebf8cc84300b0f3eee6e559b0b7118f1a885242cda7",
+    "scripts/scoring/recipes/02_plucks.json": "f13ad6523de80235667a0004ac52225878b7ca0b3bc32a29848e014372144bd3",
+    "scripts/scoring/recipes/03_bells_mallets.json": "41efbe72edadd17d1592261dd87ad5a39878c6b6f3a4d44bfb45ed1964bb2eb8",
+    "scripts/scoring/recipes/04_pads.json": "9a4c4be7aba9eeed6da2ba60923a0430aee287e9dbbca0f41c6bde7eee90c9d2",
+    "scripts/scoring/recipes/05_ensemble_hybrids.json": "bd3c1b58254f98545beddcda4472f5c34c4457709690bc0c9b314abbd69ffd71",
+    "scripts/scoring/recipes/06_drones_air.json": "aa1a01a0d08be6bfbc3fa1fd6057b0b9498b66d5e65990bd9b923dc30cb77652",
+    "scripts/scoring/recipes/07_bass.json": "0ec65831b28b1dc9267247d328aa007987e5feafaa9b9bdf1d20ed6f752edc65",
+    "scripts/scoring/recipes/08_leads.json": "530d93e14e1166fd2187024e79a5cc25b7a3ec41d656104ac293a1de547959c3",
+    "scripts/scoring/recipes/09_pulses_sequences.json": "2e81878d31e6c71694d1d708077c4a08930c805bdabde4f8b8a094e00794675d",
+    "scripts/scoring/recipes/10_percussion_transitions.json": "d8a04022cdea595501772287ce0be00fb88905a98935ec43bd943bc7f5ea78fe"
+  },
+  "validated_presets": 1000,
+  "complete_families": 200,
+  "within_family_pairs": 2000,
+  "within_family_matched_active_pairs": 1941,
+  "within_family_hold_mismatch_pairs": 59,
+  "within_family_played_note_mismatch_pairs": 0,
+  "cross_family_matched_neighbor_count": 949,
+  "cross_family_no_matched_neighbor_ids": [
+    "SC04-033",
+    "SC04-048",
+    "SC04-068",
+    "SC04-070",
+    "SC04-098",
+    "SC06-014",
+    "SC06-042",
+    "SC06-044",
+    "SC06-064",
+    "SC06-067",
+    "SC06-069",
+    "SC06-082",
+    "SC06-084",
+    "SC06-097",
+    "SC06-099",
+    "SC07-081",
+    "SC07-082",
+    "SC07-083",
+    "SC07-084",
+    "SC07-085",
+    "SC08-011",
+    "SC08-012",
+    "SC08-013",
+    "SC08-014",
+    "SC08-015",
+    "SC08-016",
+    "SC08-017",
+    "SC08-018",
+    "SC08-019",
+    "SC08-020",
+    "SC08-041",
+    "SC08-042",
+    "SC08-043",
+    "SC08-044",
+    "SC08-045",
+    "SC08-086",
+    "SC08-087",
+    "SC08-088",
+    "SC08-089",
+    "SC08-090",
+    "SC08-096",
+    "SC08-097",
+    "SC08-098",
+    "SC08-099",
+    "SC08-100",
+    "SC10-031",
+    "SC10-032",
+    "SC10-033",
+    "SC10-034",
+    "SC10-035",
+    "SC10-095"
+  ],
+  "unique_default_pcm_hashes": 1000,
+  "exact_default_pcm_collision_groups": [],
+  "nonidentical_default_repeat_ids": [],
+  "input_errors": [],
+  "within_family_distance_percentiles": {
+    "minimum": 0.0032366242271865994,
+    "p10": 0.08054373552283088,
+    "p25": 0.16776812153311182,
+    "median": 0.3046215789124552,
+    "p75": 0.5202220548813419,
+    "p90": 0.7952362851484132,
+    "maximum": 1.5910681091063028
+  },
+  "inactive_expanded_transform_occurrences": 364,
+  "presets_with_inactive_expanded_transform": 331,
+  "inactive_expanded_transforms_by_key": {
+    "detune_scale": 39,
+    "attack_scale": 62,
+    "fm_scale": 191,
+    "osc2_octave": 5,
+    "motion_shape": 10,
+    "attack_max": 33,
+    "fx_scale": 20,
+    "sync": 4
+  },
+  "closest_within_family_matched_pairs": [
+    {
+      "id_a": "SC10-001",
+      "id_b": "SC10-003",
+      "name_a": "Felt Drum Close",
+      "name_b": "Felt Drum Edge",
+      "family_a": "Felt Drum",
+      "family_b": "Felt Drum",
+      "category_a": "10",
+      "category_b": "10",
+      "same_family": true,
+      "feature_distance": 0.0032366242271865994,
+      "spectral_distance": 0.00020995915780931196,
+      "envelope_distance": 0.006053330138754575,
+      "matched_active_fixture": true,
+      "same_played_notes": true,
+      "same_hold_seconds": true,
+      "notes_a": [
+        54
+      ],
+      "notes_b": [
+        54
+      ],
+      "hold_a": 3.0,
+      "hold_b": 3.0,
+      "render_seconds_a": 7.0,
+      "render_seconds_b": 7.0,
+      "same_full_fixture": true,
+      "exact_default_pcm_equal": false,
+      "peak_a": 0.03561728447675705,
+      "peak_b": 0.035644643008708954,
+      "active_rms_a": 0.00209747612303728,
+      "active_rms_b": 0.0023778664905628752,
+      "active_rms_ratio_db": 1.0898088216782666,
+      "centroid_hz_a": 205.25483346463548,
+      "centroid_hz_b": 202.52516313896254,
+      "inactive_recipe_transforms_a": [
+        "attack_scale"
+      ],
+      "inactive_recipe_transforms_b": [
+        "attack_scale"
+      ],
+      "repeat_feature_distance_a": 0.0,
+      "repeat_feature_distance_b": 0.0
+    },
+    {
+      "id_a": "SC02-036",
+      "id_b": "SC02-038",
+      "name_a": "Rubber Lantern Close",
+      "name_b": "Rubber Lantern Spark",
+      "family_a": "Rubber Lantern",
+      "family_b": "Rubber Lantern",
+      "category_a": "02",
+      "category_b": "02",
+      "same_family": true,
+      "feature_distance": 0.00730530555556279,
+      "spectral_distance": 0.0021082797997002455,
+      "envelope_distance": 0.010394051511725089,
+      "matched_active_fixture": true,
+      "same_played_notes": true,
+      "same_hold_seconds": true,
+      "notes_a": [
+        57
+      ],
+      "notes_b": [
+        57
+      ],
+      "hold_a": 3.0,
+      "hold_b": 3.0,
+      "render_seconds_a": 7.0,
+      "render_seconds_b": 7.0,
+      "same_full_fixture": true,
+      "exact_default_pcm_equal": false,
+      "peak_a": 0.04373105242848396,
+      "peak_b": 0.04329986125230789,
+      "active_rms_a": 0.0027264264393629003,
+      "active_rms_b": 0.0028080151687089085,
+      "active_rms_ratio_db": 0.2561132968196336,
+      "centroid_hz_a": 224.1696001764729,
+      "centroid_hz_b": 225.69077101392975,
+      "inactive_recipe_transforms_a": [],
+      "inactive_recipe_transforms_b": [
+        "fm_scale"
+      ],
+      "repeat_feature_distance_a": 0.0,
+      "repeat_feature_distance_b": 0.0
+    },
+    {
+      "id_a": "SC02-051",
+      "id_b": "SC02-052",
+      "name_a": "Palm Circuit Close",
+      "name_b": "Palm Circuit Tender",
+      "family_a": "Palm Circuit",
+      "family_b": "Palm Circuit",
+      "category_a": "02",
+      "category_b": "02",
+      "same_family": true,
+      "feature_distance": 0.008940764233864756,
+      "spectral_distance": 0.006010541223436788,
+      "envelope_distance": 0.005860446020855938,
+      "matched_active_fixture": true,
+      "same_played_notes": true,
+      "same_hold_seconds": true,
+      "notes_a": [
+        60
+      ],
+      "notes_b": [
+        60
+      ],
+      "hold_a": 3.0,
+      "hold_b": 3.0,
+      "render_seconds_a": 7.0,
+      "render_seconds_b": 7.0,
+      "same_full_fixture": true,
+      "exact_default_pcm_equal": false,
+      "peak_a": 0.03925446793437004,
+      "peak_b": 0.034788407385349274,
+      "active_rms_a": 0.0018516358958897258,
+      "active_rms_b": 0.0021393154296695848,
+      "active_rms_ratio_db": 1.2543846411127926,
+      "centroid_hz_a": 275.3648908302028,
+      "centroid_hz_b": 270.880276734808,
+      "inactive_recipe_transforms_a": [],
+      "inactive_recipe_transforms_b": [
+        "fm_scale"
+      ],
+      "repeat_feature_distance_a": 0.0,
+      "repeat_feature_distance_b": 0.0
+    },
+    {
+      "id_a": "SC07-093",
+      "id_b": "SC07-095",
+      "name_a": "Felt Motor Edge",
+      "name_b": "Felt Motor Pulse",
+      "family_a": "Felt Motor",
+      "family_b": "Felt Motor",
+      "category_a": "07",
+      "category_b": "07",
+      "same_family": true,
+      "feature_distance": 0.00912328210876779,
+      "spectral_distance": 0.002021314261087874,
+      "envelope_distance": 0.01420393569535983,
+      "matched_active_fixture": true,
+      "same_played_notes": true,
+      "same_hold_seconds": true,
+      "notes_a": [
+        48
+      ],
+      "notes_b": [
+        48
+      ],
+      "hold_a": 3.0,
+      "hold_b": 3.0,
+      "render_seconds_a": 7.0,
+      "render_seconds_b": 7.0,
+      "same_full_fixture": true,
+      "exact_default_pcm_equal": false,
+      "peak_a": 0.0891839936375618,
+      "peak_b": 0.08612307906150818,
+      "active_rms_a": 0.007774181204258264,
+      "active_rms_b": 0.007485123668357323,
+      "active_rms_ratio_db": -0.32911358100777455,
+      "centroid_hz_a": 131.03115482299214,
+      "centroid_hz_b": 130.70620886437737,
+      "inactive_recipe_transforms_a": [],
+      "inactive_recipe_transforms_b": [
+        "fx_scale",
+        "motion_shape",
+        "sync"
+      ],
+      "repeat_feature_distance_a": 0.0,
+      "repeat_feature_distance_b": 0.0
+    },
+    {
+      "id_a": "SC05-081",
+      "id_b": "SC05-082",
+      "name_a": "Felt Pizzicato Close",
+      "name_b": "Felt Pizzicato Section",
+      "family_a": "Felt Pizzicato",
+      "family_b": "Felt Pizzicato",
+      "category_a": "05",
+      "category_b": "05",
+      "same_family": true,
+      "feature_distance": 0.009440966793295928,
+      "spectral_distance": 0.0011489962909191284,
+      "envelope_distance": 0.016583941004753598,
+      "matched_active_fixture": true,
+      "same_played_notes": true,
+      "same_hold_seconds": true,
+      "notes_a": [
+        65
+      ],
+      "notes_b": [
+        65
+      ],
+      "hold_a": 3.0,
+      "hold_b": 3.0,
+      "render_seconds_a": 7.0,
+      "render_seconds_b": 7.0,
+      "same_full_fixture": true,
+      "exact_default_pcm_equal": false,
+      "peak_a": 0.036079488694667816,
+      "peak_b": 0.041903648525476456,
+      "active_rms_a": 0.002300560993646549,
+      "active_rms_b": 0.003019796470052716,
+      "active_rms_ratio_db": 2.362878422571177,
+      "centroid_hz_a": 352.0286430395749,
+      "centroid_hz_b": 352.5953536884914,
+      "inactive_recipe_transforms_a": [],
+      "inactive_recipe_transforms_b": [],
+      "repeat_feature_distance_a": 0.0,
+      "repeat_feature_distance_b": 0.0
+    },
+    {
+      "id_a": "SC07-091",
+      "id_b": "SC07-095",
+      "name_a": "Felt Motor Tight",
+      "name_b": "Felt Motor Pulse",
+      "family_a": "Felt Motor",
+      "family_b": "Felt Motor",
+      "category_a": "07",
+      "category_b": "07",
+      "same_family": true,
+      "feature_distance": 0.01307483694850491,
+      "spectral_distance": 0.0002965566126256278,
+      "envelope_distance": 0.025556560671758564,
+      "matched_active_fixture": true,
+      "same_played_notes": true,
+      "same_hold_seconds": true,
+      "notes_a": [
+        48
+      ],
+      "notes_b": [
+        48
+      ],
+      "hold_a": 3.0,
+      "hold_b": 3.0,
+      "render_seconds_a": 7.0,
+      "render_seconds_b": 7.0,
+      "same_full_fixture": true,
+      "exact_default_pcm_equal": false,
+      "peak_a": 0.10043781995773315,
+      "peak_b": 0.08612307906150818,
+      "active_rms_a": 0.007614810817125699,
+      "active_rms_b": 0.007485123668357323,
+      "active_rms_ratio_db": -0.14920276125058388,
+      "centroid_hz_a": 130.75776086967699,
+      "centroid_hz_b": 130.70620886437737,
+      "inactive_recipe_transforms_a": [
+        "attack_max"
+      ],
+      "inactive_recipe_transforms_b": [
+        "fx_scale",
+        "motion_shape",
+        "sync"
+      ],
+      "repeat_feature_distance_a": 0.0,
+      "repeat_feature_distance_b": 0.0
+    },
+    {
+      "id_a": "SC02-076",
+      "id_b": "SC02-078",
+      "name_a": "Velvet Mandolin Close",
+      "name_b": "Velvet Mandolin Spark",
+      "family_a": "Velvet Mandolin",
+      "family_b": "Velvet Mandolin",
+      "category_a": "02",
+      "category_b": "02",
+      "same_family": true,
+      "feature_distance": 0.013215897593599042,
+      "spectral_distance": 0.001002538114133358,
+      "envelope_distance": 0.02442671895893137,
+      "matched_active_fixture": true,
+      "same_played_notes": true,
+      "same_hold_seconds": true,
+      "notes_a": [
+        69
+      ],
+      "notes_b": [
+        69
+      ],
+      "hold_a": 3.0,
+      "hold_b": 3.0,
+      "render_seconds_a": 7.0,
+      "render_seconds_b": 7.0,
+      "same_full_fixture": true,
+      "exact_default_pcm_equal": false,
+      "peak_a": 0.03897762671113014,
+      "peak_b": 0.04364994168281555,
+      "active_rms_a": 0.0013703862354091545,
+      "active_rms_b": 0.0014175807943173694,
+      "active_rms_ratio_db": 0.29409665762099135,
+      "centroid_hz_a": 446.19284254692855,
+      "centroid_hz_b": 447.8948973070506,
+      "inactive_recipe_transforms_a": [],
+      "inactive_recipe_transforms_b": [
+        "attack_scale"
+      ],
+      "repeat_feature_distance_a": 0.0,
+      "repeat_feature_distance_b": 0.0
+    },
+    {
+      "id_a": "SC10-003",
+      "id_b": "SC10-004",
+      "name_a": "Felt Drum Edge",
+      "name_b": "Felt Drum Drift",
+      "family_a": "Felt Drum",
+      "family_b": "Felt Drum",
+      "category_a": "10",
+      "category_b": "10",
+      "same_family": true,
+      "feature_distance": 0.015886251000894372,
+      "spectral_distance": 0.00015978783374831433,
+      "envelope_distance": 0.031452926334292114,
+      "matched_active_fixture": true,
+      "same_played_notes": true,
+      "same_hold_seconds": true,
+      "notes_a": [
+        54
+      ],
+      "notes_b": [
+        54
+      ],
+      "hold_a": 3.0,
+      "hold_b": 3.0,
+      "render_seconds_a": 7.0,
+      "render_seconds_b": 7.0,
+      "same_full_fixture": true,
+      "exact_default_pcm_equal": false,
+      "peak_a": 0.035644643008708954,
+      "peak_b": 0.03640570864081383,
+      "active_rms_a": 0.0023778664905628752,
+      "active_rms_b": 0.0028936824101723204,
+      "active_rms_ratio_db": 1.7052679520097391,
+      "centroid_hz_a": 202.52516313896254,
+      "centroid_hz_b": 199.54765391395009,
+      "inactive_recipe_transforms_a": [
+        "attack_scale"
+      ],
+      "inactive_recipe_transforms_b": [],
+      "repeat_feature_distance_a": 0.0,
+      "repeat_feature_distance_b": 0.0
+    },
+    {
+      "id_a": "SC02-037",
+      "id_b": "SC02-038",
+      "name_a": "Rubber Lantern Tender",
+      "name_b": "Rubber Lantern Spark",
+      "family_a": "Rubber Lantern",
+      "family_b": "Rubber Lantern",
+      "category_a": "02",
+      "category_b": "02",
+      "same_family": true,
+      "feature_distance": 0.016736066015055086,
+      "spectral_distance": 0.002623170323137838,
+      "envelope_distance": 0.0282257913838345,
+      "matched_active_fixture": true,
+      "same_played_notes": true,
+      "same_hold_seconds": true,
+      "notes_a": [
+        57
+      ],
+      "notes_b": [
+        57
+      ],
+      "hold_a": 3.0,
+      "hold_b": 3.0,
+      "render_seconds_a": 7.0,
+      "render_seconds_b": 7.0,
+      "same_full_fixture": true,
+      "exact_default_pcm_equal": false,
+      "peak_a": 0.0521974042057991,
+      "peak_b": 0.04329986125230789,
+      "active_rms_a": 0.0043031915592875985,
+      "active_rms_b": 0.0028080151687089085,
+      "active_rms_ratio_db": -3.707824598242423,
+      "centroid_hz_a": 222.7059378724667,
+      "centroid_hz_b": 225.69077101392975,
+      "inactive_recipe_transforms_a": [
+        "fm_scale"
+      ],
+      "inactive_recipe_transforms_b": [
+        "fm_scale"
+      ],
+      "repeat_feature_distance_a": 0.0,
+      "repeat_feature_distance_b": 0.0
+    },
+    {
+      "id_a": "SC10-002",
+      "id_b": "SC10-004",
+      "name_a": "Felt Drum Body",
+      "name_b": "Felt Drum Drift",
+      "family_a": "Felt Drum",
+      "family_b": "Felt Drum",
+      "category_a": "10",
+      "category_b": "10",
+      "same_family": true,
+      "feature_distance": 0.016792392270503866,
+      "spectral_distance": 0.0001388648810858901,
+      "envelope_distance": 0.03330705477883595,
+      "matched_active_fixture": true,
+      "same_played_notes": true,
+      "same_hold_seconds": true,
+      "notes_a": [
+        54
+      ],
+      "notes_b": [
+        54
+      ],
+      "hold_a": 3.0,
+      "hold_b": 3.0,
+      "render_seconds_a": 7.0,
+      "render_seconds_b": 7.0,
+      "same_full_fixture": true,
+      "exact_default_pcm_equal": false,
+      "peak_a": 0.037602026015520096,
+      "peak_b": 0.03640570864081383,
+      "active_rms_a": 0.003300658540673454,
+      "active_rms_b": 0.0028936824101723204,
+      "active_rms_ratio_db": -1.1429946744630666,
+      "centroid_hz_a": 198.31763811157583,
+      "centroid_hz_b": 199.54765391395009,
+      "inactive_recipe_transforms_a": [],
+      "inactive_recipe_transforms_b": [],
+      "repeat_feature_distance_a": 0.0,
+      "repeat_feature_distance_b": 0.0
+    }
+  ],
+  "closest_cross_family_matched_pairs": [
+    {
+      "id_a": "SC01-028",
+      "id_b": "SC02-021",
+      "name_a": "Paper Hammers Glass",
+      "name_b": "Copper Plectrum Close",
+      "family_a": "Paper Hammers",
+      "family_b": "Copper Plectrum",
+      "category_a": "01",
+      "category_b": "02",
+      "same_family": false,
+      "feature_distance": 0.01618387262986613,
+      "spectral_distance": 0.009296529906102014,
+      "envelope_distance": 0.013774685447528232,
+      "matched_active_fixture": true,
+      "same_played_notes": true,
+      "same_hold_seconds": true,
+      "notes_a": [
+        63
+      ],
+      "notes_b": [
+        63
+      ],
+      "hold_a": 3.0,
+      "hold_b": 3.0,
+      "render_seconds_a": 7.0,
+      "render_seconds_b": 7.0,
+      "same_full_fixture": true,
+      "exact_default_pcm_equal": false,
+      "peak_a": 0.032005637884140015,
+      "peak_b": 0.04505154490470886,
+      "active_rms_a": 0.002345276358796049,
+      "active_rms_b": 0.005252907217143616,
+      "active_rms_ratio_db": 7.004114082472564,
+      "centroid_hz_a": 328.33354323475123,
+      "centroid_hz_b": 315.5569606484859,
+      "inactive_recipe_transforms_a": [
+        "fm_scale"
+      ],
+      "inactive_recipe_transforms_b": [],
+      "repeat_feature_distance_a": 0.0,
+      "repeat_feature_distance_b": 0.0
+    },
+    {
+      "id_a": "SC01-020",
+      "id_b": "SC03-084",
+      "name_a": "Ivory Frame Bite",
+      "name_b": "Warm Toybox Alloy",
+      "family_a": "Ivory Frame",
+      "family_b": "Warm Toybox",
+      "category_a": "01",
+      "category_b": "03",
+      "same_family": false,
+      "feature_distance": 0.019712175047292113,
+      "spectral_distance": 0.002946143003004211,
+      "envelope_distance": 0.03353206408857581,
+      "matched_active_fixture": true,
+      "same_played_notes": true,
+      "same_hold_seconds": true,
+      "notes_a": [
+        68
+      ],
+      "notes_b": [
+        68
+      ],
+      "hold_a": 3.0,
+      "hold_b": 3.0,
+      "render_seconds_a": 7.0,
+      "render_seconds_b": 7.0,
+      "same_full_fixture": true,
+      "exact_default_pcm_equal": false,
+      "peak_a": 0.03197236359119415,
+      "peak_b": 0.05448531731963158,
+      "active_rms_a": 0.0018574502366047782,
+      "active_rms_b": 0.006854679323490087,
+      "active_rms_ratio_db": 11.341399101568543,
+      "centroid_hz_a": 420.9715665249122,
+      "centroid_hz_b": 416.0719328798588,
+      "inactive_recipe_transforms_a": [],
+      "inactive_recipe_transforms_b": [],
+      "repeat_feature_distance_a": 0.0,
+      "repeat_feature_distance_b": 0.0
+    },
+    {
+      "id_a": "SC02-079",
+      "id_b": "SC02-081",
+      "name_a": "Velvet Mandolin Cascade",
+      "name_b": "Water Threads Close",
+      "family_a": "Velvet Mandolin",
+      "family_b": "Water Threads",
+      "category_a": "02",
+      "category_b": "02",
+      "same_family": false,
+      "feature_distance": 0.021205886707940286,
+      "spectral_distance": 0.005310777639331278,
+      "envelope_distance": 0.03179021813721802,
+      "matched_active_fixture": true,
+      "same_played_notes": true,
+      "same_hold_seconds": true,
+      "notes_a": [
+        69
+      ],
+      "notes_b": [
+        69
+      ],
+      "hold_a": 3.0,
+      "hold_b": 3.0,
+      "render_seconds_a": 7.0,
+      "render_seconds_b": 7.0,
+      "same_full_fixture": true,
+      "exact_default_pcm_equal": false,
+      "peak_a": 0.04770901799201965,
+      "peak_b": 0.0483565516769886,
+      "active_rms_a": 0.0018920072544805324,
+      "active_rms_b": 0.0045148991479461945,
+      "active_rms_ratio_db": 7.554505127658027,
+      "centroid_hz_a": 444.9944714129522,
+      "centroid_hz_b": 445.3153080563681,
+      "inactive_recipe_transforms_a": [],
+      "inactive_recipe_transforms_b": [],
+      "repeat_feature_distance_a": 0.0,
+      "repeat_feature_distance_b": 0.0
+    },
+    {
+      "id_a": "SC01-005",
+      "id_b": "SC03-005",
+      "name_a": "Felt Ember Bite",
+      "name_b": "Amber Marimba Shadow",
+      "family_a": "Felt Ember",
+      "family_b": "Amber Marimba",
+      "category_a": "01",
+      "category_b": "03",
+      "same_family": false,
+      "feature_distance": 0.025817688648481954,
+      "spectral_distance": 0.010873436792602612,
+      "envelope_distance": 0.02988850371175868,
+      "matched_active_fixture": true,
+      "same_played_notes": true,
+      "same_hold_seconds": true,
+      "notes_a": [
+        64
+      ],
+      "notes_b": [
+        64
+      ],
+      "hold_a": 3.0,
+      "hold_b": 3.0,
+      "render_seconds_a": 7.0,
+      "render_seconds_b": 7.0,
+      "same_full_fixture": true,
+      "exact_default_pcm_equal": false,
+      "peak_a": 0.03814361244440079,
+      "peak_b": 0.05348571389913559,
+      "active_rms_a": 0.0044905696513830124,
+      "active_rms_b": 0.006658349734616677,
+      "active_rms_ratio_db": 3.421303322187615,
+      "centroid_hz_a": 325.4975309344271,
+      "centroid_hz_b": 326.4042418122281,
+      "inactive_recipe_transforms_a": [],
+      "inactive_recipe_transforms_b": [],
+      "repeat_feature_distance_a": 0.0,
+      "repeat_feature_distance_b": 0.0
+    },
+    {
+      "id_a": "SC03-001",
+      "id_b": "SC03-061",
+      "name_a": "Amber Marimba Close",
+      "name_b": "Ceramic Hands Close",
+      "family_a": "Amber Marimba",
+      "family_b": "Ceramic Hands",
+      "category_a": "03",
+      "category_b": "03",
+      "same_family": false,
+      "feature_distance": 0.035877276215107966,
+      "spectral_distance": 0.0032974543197442506,
+      "envelope_distance": 0.06515964379072743,
+      "matched_active_fixture": true,
+      "same_played_notes": true,
+      "same_hold_seconds": true,
+      "notes_a": [
+        64
+      ],
+      "notes_b": [
+        64
+      ],
+      "hold_a": 3.0,
+      "hold_b": 3.0,
+      "render_seconds_a": 7.0,
+      "render_seconds_b": 7.0,
+      "same_full_fixture": true,
+      "exact_default_pcm_equal": false,
+      "peak_a": 0.036490295082330704,
+      "peak_b": 0.03634003922343254,
+      "active_rms_a": 0.0033043416494888665,
+      "active_rms_b": 0.001923290040144068,
+      "active_rms_ratio_db": -4.7008032374315505,
+      "centroid_hz_a": 329.6001398963926,
+      "centroid_hz_b": 331.0423873415004,
+      "inactive_recipe_transforms_a": [],
+      "inactive_recipe_transforms_b": [],
+      "repeat_feature_distance_a": 0.0,
+      "repeat_feature_distance_b": 0.0
+    },
+    {
+      "id_a": "SC02-083",
+      "id_b": "SC03-016",
+      "name_a": "Water Threads Spark",
+      "name_b": "Rain Tines Close",
+      "family_a": "Water Threads",
+      "family_b": "Rain Tines",
+      "category_a": "02",
+      "category_b": "03",
+      "same_family": false,
+      "feature_distance": 0.037538983788138885,
+      "spectral_distance": 0.019887583619390338,
+      "envelope_distance": 0.035302800337497095,
+      "matched_active_fixture": true,
+      "same_played_notes": true,
+      "same_hold_seconds": true,
+      "notes_a": [
+        69
+      ],
+      "notes_b": [
+        69
+      ],
+      "hold_a": 3.0,
+      "hold_b": 3.0,
+      "render_seconds_a": 7.0,
+      "render_seconds_b": 7.0,
+      "same_full_fixture": true,
+      "exact_default_pcm_equal": false,
+      "peak_a": 0.04595356434583664,
+      "peak_b": 0.040182773023843765,
+      "active_rms_a": 0.0038450499252050863,
+      "active_rms_b": 0.005520338728414876,
+      "active_rms_ratio_db": 3.1412748742968,
+      "centroid_hz_a": 462.76904085514985,
+      "centroid_hz_b": 461.17400868711604,
+      "inactive_recipe_transforms_a": [],
+      "inactive_recipe_transforms_b": [],
+      "repeat_feature_distance_a": 0.0,
+      "repeat_feature_distance_b": 0.0
+    },
+    {
+      "id_a": "SC02-047",
+      "id_b": "SC05-084",
+      "name_a": "Woven Strings Tender",
+      "name_b": "Felt Pizzicato Muted",
+      "family_a": "Woven Strings",
+      "family_b": "Felt Pizzicato",
+      "category_a": "02",
+      "category_b": "05",
+      "same_family": false,
+      "feature_distance": 0.03828070801232088,
+      "spectral_distance": 0.024649287787621453,
+      "envelope_distance": 0.02726284044939884,
+      "matched_active_fixture": true,
+      "same_played_notes": true,
+      "same_hold_seconds": true,
+      "notes_a": [
+        65
+      ],
+      "notes_b": [
+        65
+      ],
+      "hold_a": 3.0,
+      "hold_b": 3.0,
+      "render_seconds_a": 7.0,
+      "render_seconds_b": 7.0,
+      "same_full_fixture": true,
+      "exact_default_pcm_equal": false,
+      "peak_a": 0.053961072117090225,
+      "peak_b": 0.03902319818735123,
+      "active_rms_a": 0.0026736117716083937,
+      "active_rms_b": 0.002603465973705402,
+      "active_rms_ratio_db": -0.23092877430048986,
+      "centroid_hz_a": 404.54668772161796,
+      "centroid_hz_b": 352.29204124877725,
+      "inactive_recipe_transforms_a": [
+        "fm_scale"
+      ],
+      "inactive_recipe_transforms_b": [],
+      "repeat_feature_distance_a": 0.0,
+      "repeat_feature_distance_b": 0.0
+    },
+    {
+      "id_a": "SC07-004",
+      "id_b": "SC07-044",
+      "name_a": "Velvet Root Pluck",
+      "name_b": "Rubber Coil Pluck",
+      "family_a": "Velvet Root",
+      "family_b": "Rubber Coil",
+      "category_a": "07",
+      "category_b": "07",
+      "same_family": false,
+      "feature_distance": 0.03900453149564703,
+      "spectral_distance": 0.005834409088991915,
+      "envelope_distance": 0.06634024481331023,
+      "matched_active_fixture": true,
+      "same_played_notes": true,
+      "same_hold_seconds": true,
+      "notes_a": [
+        46
+      ],
+      "notes_b": [
+        46
+      ],
+      "hold_a": 3.0,
+      "hold_b": 3.0,
+      "render_seconds_a": 7.0,
+      "render_seconds_b": 7.0,
+      "same_full_fixture": true,
+      "exact_default_pcm_equal": false,
+      "peak_a": 0.12496630847454071,
+      "peak_b": 0.16515228152275085,
+      "active_rms_a": 0.009797592474700726,
+      "active_rms_b": 0.012494196344357743,
+      "active_rms_ratio_db": 2.1117791054119817,
+      "centroid_hz_a": 117.72655309271167,
+      "centroid_hz_b": 117.2353201723307,
+      "inactive_recipe_transforms_a": [
+        "attack_max",
+        "fm_scale"
+      ],
+      "inactive_recipe_transforms_b": [
+        "attack_max"
+      ],
+      "repeat_feature_distance_a": 0.0,
+      "repeat_feature_distance_b": 0.0
+    },
+    {
+      "id_a": "SC01-030",
+      "id_b": "SC03-006",
+      "name_a": "Paper Hammers Bite",
+      "name_b": "Hollow Slats Close",
+      "family_a": "Paper Hammers",
+      "family_b": "Hollow Slats",
+      "category_a": "01",
+      "category_b": "03",
+      "same_family": false,
+      "feature_distance": 0.039842119801087,
+      "spectral_distance": 0.03757030672566443,
+      "envelope_distance": 0.004543626150845131,
+      "matched_active_fixture": true,
+      "same_played_notes": true,
+      "same_hold_seconds": true,
+      "notes_a": [
+        63
+      ],
+      "notes_b": [
+        63
+      ],
+      "hold_a": 3.0,
+      "hold_b": 3.0,
+      "render_seconds_a": 7.0,
+      "render_seconds_b": 7.0,
+      "same_full_fixture": true,
+      "exact_default_pcm_equal": false,
+      "peak_a": 0.028560036793351173,
+      "peak_b": 0.03268259018659592,
+      "active_rms_a": 0.0013820450720877322,
+      "active_rms_b": 0.0017535585456323834,
+      "active_rms_ratio_db": 2.0679612680187107,
+      "centroid_hz_a": 348.35407264259965,
+      "centroid_hz_b": 314.2159291644094,
+      "inactive_recipe_transforms_a": [
+        "fm_scale"
+      ],
+      "inactive_recipe_transforms_b": [
+        "attack_scale"
+      ],
+      "repeat_feature_distance_a": 0.0,
+      "repeat_feature_distance_b": 0.0
+    },
+    {
+      "id_a": "SC01-016",
+      "id_b": "SC03-082",
+      "name_a": "Ivory Frame Close",
+      "name_b": "Warm Toybox Bloom",
+      "family_a": "Ivory Frame",
+      "family_b": "Warm Toybox",
+      "category_a": "01",
+      "category_b": "03",
+      "same_family": false,
+      "feature_distance": 0.04027442184213305,
+      "spectral_distance": 0.004003917191682315,
+      "envelope_distance": 0.07254100930090146,
+      "matched_active_fixture": true,
+      "same_played_notes": true,
+      "same_hold_seconds": true,
+      "notes_a": [
+        68
+      ],
+      "notes_b": [
+        68
+      ],
+      "hold_a": 3.0,
+      "hold_b": 3.0,
+      "render_seconds_a": 7.0,
+      "render_seconds_b": 7.0,
+      "same_full_fixture": true,
+      "exact_default_pcm_equal": false,
+      "peak_a": 0.03347920626401901,
+      "peak_b": 0.06558367609977722,
+      "active_rms_a": 0.0026367811509410526,
+      "active_rms_b": 0.011272027334188838,
+      "active_rms_ratio_db": 12.618558955580886,
+      "centroid_hz_a": 420.08433311910824,
+      "centroid_hz_b": 415.76778952739096,
+      "inactive_recipe_transforms_a": [],
+      "inactive_recipe_transforms_b": [],
+      "repeat_feature_distance_a": 0.0,
+      "repeat_feature_distance_b": 0.0
+    }
+  ],
+  "targeted_dry_native_renders": 10,
+  "targeted_dry_pairs": [
+    {
+      "reason": "Felt Drum close/edge, shortest within-family ranking",
+      "id_a": "SC10-001",
+      "id_b": "SC10-003",
+      "name_a": "Felt Drum Close",
+      "name_b": "Felt Drum Edge",
+      "played_note": 54,
+      "dry_coarse_feature_distance": 0.004318146470834488,
+      "dry_raw_relative_waveform_rms_delta": 0.22334403505739642,
+      "dry_waveform_least_squares_gain_b_to_a": 0.8542126646684473,
+      "dry_waveform_gain_removed_relative_residual": 0.14621026782134897,
+      "early_600ms_envelope_gain_removed_relative_residual": 0.12584128850709092,
+      "early_1s_spectral_fraction_l2": 0.00012092962450607949,
+      "dry_active_rms_ratio_db": 1.2748321008476435,
+      "pcm_equal": false
+    },
+    {
+      "reason": "Felt Motor edge/pulse, related short bass articulations",
+      "id_a": "SC07-093",
+      "id_b": "SC07-095",
+      "name_a": "Felt Motor Edge",
+      "name_b": "Felt Motor Pulse",
+      "played_note": 48,
+      "dry_coarse_feature_distance": 0.008918026762294024,
+      "dry_raw_relative_waveform_rms_delta": 0.09205880013347449,
+      "dry_waveform_least_squares_gain_b_to_a": 1.0305263573043983,
+      "dry_waveform_gain_removed_relative_residual": 0.0872010666613514,
+      "early_600ms_envelope_gain_removed_relative_residual": 0.06445508510563006,
+      "early_1s_spectral_fraction_l2": 0.0020904242975069817,
+      "dry_active_rms_ratio_db": -0.2943321429471317,
+      "pcm_equal": false
+    },
+    {
+      "reason": "Leading matched cross-family pair",
+      "id_a": "SC01-028",
+      "id_b": "SC02-021",
+      "name_a": "Paper Hammers Glass",
+      "name_b": "Copper Plectrum Close",
+      "played_note": 63,
+      "dry_coarse_feature_distance": 0.016165347474442027,
+      "dry_raw_relative_waveform_rms_delta": 1.3870304555837043,
+      "dry_waveform_least_squares_gain_b_to_a": 0.41240581814861027,
+      "dry_waveform_gain_removed_relative_residual": 0.3210809907664957,
+      "early_600ms_envelope_gain_removed_relative_residual": 0.14834031906983933,
+      "early_1s_spectral_fraction_l2": 0.01034332177054167,
+      "dry_active_rms_ratio_db": 7.220978450389656,
+      "pcm_equal": false
+    },
+    {
+      "reason": "Second matched cross-family pair",
+      "id_a": "SC01-020",
+      "id_b": "SC03-084",
+      "name_a": "Ivory Frame Bite",
+      "name_b": "Warm Toybox Alloy",
+      "played_note": 68,
+      "dry_coarse_feature_distance": 0.02166790385189627,
+      "dry_raw_relative_waveform_rms_delta": 3.2221676973665723,
+      "dry_waveform_least_squares_gain_b_to_a": 0.16189967592579269,
+      "dry_waveform_gain_removed_relative_residual": 0.7976918201621828,
+      "early_600ms_envelope_gain_removed_relative_residual": 0.29342557488982896,
+      "early_1s_spectral_fraction_l2": 0.005338370048019077,
+      "dry_active_rms_ratio_db": 11.422367262136445,
+      "pcm_equal": false
+    },
+    {
+      "reason": "Leading confounded cross-family pair, now common played note",
+      "id_a": "SC10-005",
+      "id_b": "SC10-034",
+      "name_a": "Felt Drum Bloom",
+      "name_b": "Clay Pulse Drift",
+      "played_note": 54,
+      "dry_coarse_feature_distance": 0.0029073075903189617,
+      "dry_raw_relative_waveform_rms_delta": 0.8491787703301019,
+      "dry_waveform_least_squares_gain_b_to_a": 0.6925083236585553,
+      "dry_waveform_gain_removed_relative_residual": 0.807845504050636,
+      "early_600ms_envelope_gain_removed_relative_residual": 0.2501442664887334,
+      "early_1s_spectral_fraction_l2": 0.0005323510517151993,
+      "dry_active_rms_ratio_db": -1.4003813172633968,
+      "pcm_equal": false
+    }
+  ],
+  "targeted_dry_inputs": {
+    "SC10-001": {
+      "path": "resources/data/patches_factory/Scoring 1000/10 Percussion and Transitions/SC10-001 Felt Drum Close.fxp",
+      "sha256": "e73c2083ab4c2f76503173fbb7c7e808ed7381d629b1854e7ad1fdb07921c8fc",
+      "name": "Felt Drum Close",
+      "note": 54
+    },
+    "SC10-003": {
+      "path": "resources/data/patches_factory/Scoring 1000/10 Percussion and Transitions/SC10-003 Felt Drum Edge.fxp",
+      "sha256": "7f12ab79de71ee1108db60e9568486e145eef6b4347094bb17018ca2857b679f",
+      "name": "Felt Drum Edge",
+      "note": 54
+    },
+    "SC07-093": {
+      "path": "resources/data/patches_factory/Scoring 1000/07 Bass/SC07-093 Felt Motor Edge.fxp",
+      "sha256": "702215dc2e7a2c3b376b16c17637b45c49c77f67fd2ecc3919cd5a43f27b8de7",
+      "name": "Felt Motor Edge",
+      "note": 48
+    },
+    "SC07-095": {
+      "path": "resources/data/patches_factory/Scoring 1000/07 Bass/SC07-095 Felt Motor Pulse.fxp",
+      "sha256": "2a9092be6bd6e6105481dc238d8f268dcccc136d79b4b87dd26c6f0295bcd492",
+      "name": "Felt Motor Pulse",
+      "note": 48
+    },
+    "SC01-028": {
+      "path": "resources/data/patches_factory/Scoring 1000/01 Keys/SC01-028 Paper Hammers Glass.fxp",
+      "sha256": "fe60c1462834af9a840dd2ef9b5a08c88d90f0486db12debe06b39533bab0156",
+      "name": "Paper Hammers Glass",
+      "note": 63
+    },
+    "SC02-021": {
+      "path": "resources/data/patches_factory/Scoring 1000/02 Plucks/SC02-021 Copper Plectrum Close.fxp",
+      "sha256": "c953e8fb7af9d5817f9160a6e6ea3993202ac43b96e1c79b3a29c37aa4b374b8",
+      "name": "Copper Plectrum Close",
+      "note": 63
+    },
+    "SC01-020": {
+      "path": "resources/data/patches_factory/Scoring 1000/01 Keys/SC01-020 Ivory Frame Bite.fxp",
+      "sha256": "9313c6f3f3d42be44e4387388e320cba64ab0e963e39a09188a8c0da2890de21",
+      "name": "Ivory Frame Bite",
+      "note": 68
+    },
+    "SC03-084": {
+      "path": "resources/data/patches_factory/Scoring 1000/03 Bells and Mallets/SC03-084 Warm Toybox Alloy.fxp",
+      "sha256": "d03e58db33c243ecb91765f84508eee1dcbb75de8b5a05ebe2bddf152978c0b3",
+      "name": "Warm Toybox Alloy",
+      "note": 68
+    },
+    "SC10-005": {
+      "path": "resources/data/patches_factory/Scoring 1000/10 Percussion and Transitions/SC10-005 Felt Drum Bloom.fxp",
+      "sha256": "9d6a7354fd070c34778c32122bfcffe92ef5c337bacab3458629e3e7ff46982a",
+      "name": "Felt Drum Bloom",
+      "note": 54
+    },
+    "SC10-034": {
+      "path": "resources/data/patches_factory/Scoring 1000/10 Percussion and Transitions/SC10-034 Clay Pulse Drift.fxp",
+      "sha256": "7e449f8fe58f35acbc4f96dc48e884d0c6d8bf2503ed7626fd2a9b7a3374d242",
+      "name": "Clay Pulse Drift",
+      "note": 54
+    }
+  },
+  "targeted_dry_maximum_sample_peak": 0.09168147295713425,
+  "targeted_dry_nonfinite_samples": 0,
+  "targeted_dry_summary_sha256": "4070a80ec263a0a8bdc31fc82a0e2c01ab4b9aa828509eb02bac4066ab383f74",
+  "metadata_refresh": {
+    "previous_manifest_sha256": "ddbb4781424430cc950daf6d610ec7025c743d7c435b404747c5821e65ec9369",
+    "corrected_attack_description_ids": [
+      "SC10-003",
+      "SC10-008",
+      "SC10-018",
+      "SC10-028",
+      "SC10-053",
+      "SC10-063",
+      "SC10-068",
+      "SC10-078"
+    ],
+    "all_ten_dry_rerenders_bit_identical_to_prior_audio": true,
+    "unchanged_dry_pcm_ids": [
+      "SC10-001",
+      "SC10-003",
+      "SC07-093",
+      "SC07-095",
+      "SC01-028",
+      "SC02-021",
+      "SC01-020",
+      "SC03-084",
+      "SC10-005",
+      "SC10-034"
+    ]
+  },
+  "archive": {
+    "path": "doc/scoring-1000/reviews/w09-a51-diversity-data.zip",
+    "bytes": 1191033,
+    "sha256": "ae7985fdbcbd37e60731241a467ac337da5b228f8a0c947bf9cb2d13b4a632d5",
+    "entries": 12,
+    "members": [
+      {
+        "path": "diversity/cross_family_matched_neighbors.csv",
+        "bytes": 353230,
+        "sha256": "6ed48b9e32546b06c3e964661c463b3bd719dfbd68599906bbd841db3c0c7378"
+      },
+      {
+        "path": "diversity/nearest_neighbors.csv",
+        "bytes": 375161,
+        "sha256": "3b51638dfb1f6b139318ad72108af8b64170daedf0ff29d7290b60c9d5e76f4a"
+      },
+      {
+        "path": "diversity/preset_features.csv",
+        "bytes": 789480,
+        "sha256": "0785eb82323c3bb8d29af91d29935d042fc7541113b62f24ad98d6c2ddd8f5b2"
+      },
+      {
+        "path": "diversity/preset_features.json",
+        "bytes": 1421044,
+        "sha256": "45e2d099a10e3ffaf5d9e168186c840861a7aaa072d8f8b79cfa602d95b57c25"
+      },
+      {
+        "path": "diversity/summary.json",
+        "bytes": 80801,
+        "sha256": "906c4314d002b732a924437943fa423454ff64448f06148ab9a1ea1d914060ff"
+      },
+      {
+        "path": "diversity/within_family_pairs.csv",
+        "bytes": 742704,
+        "sha256": "72f0c162ac306f010fe4fcb6ccac162f7eaea2bed24d311e962998ce60df958d"
+      },
+      {
+        "path": "targeted-dry/summary.json",
+        "bytes": 78399,
+        "sha256": "4070a80ec263a0a8bdc31fc82a0e2c01ab4b9aa828509eb02bac4066ab383f74"
+      },
+      {
+        "path": "targeted-dry/probe.py",
+        "bytes": 6277,
+        "sha256": "efde8493d7f17509859e9230f9b3fb51a44b71b62dfba5da4eb895119f2beba8"
+      },
+      {
+        "path": "targeted-dry/native.jsonl",
+        "bytes": 6769,
+        "sha256": "1b4155ce9091a6172b9f229fecdf4720bd35837448675c4203c8ba656ffdc4ae"
+      },
+      {
+        "path": "targeted-dry/scenarios.tsv",
+        "bytes": 2307,
+        "sha256": "5e32a5a10bf9847cd9e1d6d363b679c16144e5f386bc677be04f846bbb1a8f0e"
+      },
+      {
+        "path": "targeted-dry/render.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "targeted-dry/render.stderr",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  "limits": [
+    "Spectral bands and envelope bins discard detail. Low distance is an audition priority, not proof of duplication; high distance is not proof of useful variation.",
+    "Bank-wide nearest neighbors can be affected by played-note and adaptive-hold differences; matching flags are explicit. Even equal MIDI notes can produce different oscillator registers.",
+    "Full PCM hashes include render length and release-tail length. Different hashes can arise solely from duration, gain, phase or tiny numerical differences.",
+    "Normalized features reduce overall gain sensitivity but do not remove changes in envelopes, phase, effects, velocity response or time-varying spectra.",
+    "Inactive transform annotations compare expanded recipe state, not native DSP ablation. Numerically active transformations may still be perceptually weak.",
+    "The audit validates stored metric provenance and structure; it does not independently recompute spectra from deleted PCM.",
+    "Human musical audition remains pending; no composer endorsement is claimed.",
+    "These measurements do not certify a perceptually useful difference or human musical audition.",
+    "Waveform residual is sensitive to phase and random detail; fine envelope and spectral fractions discard other detail.",
+    "Space=0 removes mapped effects mix; saved voice gain and other saved macros remain unchanged.",
+    "Gain fitting is analytical only; all native render PCM remains unnormalized.",
+    "Measurements cover one note/velocity/tempo and no complete musical phrase."
+  ],
+  "musical_audition": "pending",
+  "composer_endorsement": "not_claimed"
+}

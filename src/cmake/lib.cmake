@@ -4,11 +4,14 @@ file(MAKE_DIRECTORY ${SURGE_PRODUCT_DIR})
 
 add_custom_target(surge-xt-distribution)
 add_custom_target(surge-staged-assets)
+add_dependencies(surge-xt-distribution check-scoring-bank)
+add_dependencies(surge-staged-assets check-scoring-bank)
 
 function(surge_juce_package target product_name)
   get_target_property(output_dir ${target} RUNTIME_OUTPUT_DIRECTORY)
   set(pkg_target ${target}_Packaged)
   add_custom_target(${pkg_target} ALL)
+  add_dependencies(${pkg_target} check-scoring-bank)
   foreach(format ${SURGE_JUCE_FORMATS})
     add_dependencies(${pkg_target} ${target}_${format})
     # Hide symbols absorbed from static archives such as LuaJIT and zstd

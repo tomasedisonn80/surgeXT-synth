@@ -1,0 +1,108 @@
+{
+  "schema": 1,
+  "status": "pending_actual_ci",
+  "observed_at_utc": "2026-11-14T03:32:18.270117+00:00",
+  "assignment": "Agent 57, wave 10: independent current-source native GitHub Actions verification",
+  "manifest_sha256": "67bd4a5dc3fbf6f3794679b24b500f1ef37af83b7a47a863d10cb964a57314a2",
+  "workflow_path": ".github/workflows/scoring-native.yml",
+  "workflow_sha256": "ca6f93c99000b9ff927165a7d97c22147e0a84399ef57fac39be978cf9c9c27b",
+  "published_source_commit": null,
+  "current_workflow_run": null,
+  "local_prepublication_commit": "946ed442572d5fa29e6d6467813b4fa6cb150908",
+  "expected_smoke_presets": [
+    {
+      "id": "SC01-048",
+      "name": "Tin Toy Keys Glass",
+      "patch_sha256": "81bb5dc46133cf3e95e6f0c2fc869c5e31f68236a8638bde75337154e559ef20",
+      "category_id": "01",
+      "native_scenarios": 23
+    },
+    {
+      "id": "SC02-033",
+      "name": "Glass Filament Spark",
+      "patch_sha256": "737050939df3cc0b1aaab9b542b178da0a4313f08872dc9ccd52702545717606",
+      "category_id": "02",
+      "native_scenarios": 23
+    },
+    {
+      "id": "SC03-078",
+      "name": "Starlit Drops Glass",
+      "patch_sha256": "be13d4f5d8059f6a3de6675083613cdff8279640d0170bb0cbfaea96cf9e1f8b",
+      "category_id": "03",
+      "native_scenarios": 23
+    },
+    {
+      "id": "SC04-097",
+      "name": "Slow Orbit Open",
+      "patch_sha256": "15f7534c424f29e4371cd9b63583357542819eea27afb056c5b8d32e3b2d54f6",
+      "category_id": "04",
+      "native_scenarios": 23
+    },
+    {
+      "id": "SC05-083",
+      "name": "Felt Pizzicato Swell",
+      "patch_sha256": "e5008159b8d4177e9e2112fbab64590897923e59b7b264daa822a41db55b6fdc",
+      "category_id": "05",
+      "native_scenarios": 23
+    },
+    {
+      "id": "SC06-061",
+      "name": "Clockless Room Near",
+      "patch_sha256": "5d697721554a175816976f1f4b67ca613f608c9ef759c8a7bf088731da84182f",
+      "category_id": "06",
+      "native_scenarios": 23
+    },
+    {
+      "id": "SC07-059",
+      "name": "Ember Grit Pluck",
+      "patch_sha256": "d4defbc51b9f27eb8390f3889584c0f4dab146ac53f942dda721deacad024204",
+      "category_id": "07",
+      "native_scenarios": 23
+    },
+    {
+      "id": "SC08-058",
+      "name": "Prism Voice Clear",
+      "patch_sha256": "f443ac04fa5d5a31b471a22fc382df0e7f31a786016c98deceef1e5e413b5c57",
+      "category_id": "08",
+      "native_scenarios": 23
+    },
+    {
+      "id": "SC09-085",
+      "name": "Amber Ladder Glass",
+      "patch_sha256": "68f85561b6ba6f6df7799764f67570de91f3dc555825b6ff26ec4bcb8f89263b",
+      "category_id": "09",
+      "native_scenarios": 23
+    },
+    {
+      "id": "SC10-048",
+      "name": "Air Swish Edge",
+      "patch_sha256": "e0cb6b9960757299df01fcd8c1a06edbe9c2ce76973c56d406cdbf0388428c64",
+      "category_id": "10",
+      "native_scenarios": 23
+    }
+  ],
+  "expected_push_scope": {
+    "source_static_presets": 1000,
+    "staged_factory_paths": 1000,
+    "primary_audio_presets": 10,
+    "primary_audio_scenarios": 230,
+    "technical_gates": 50,
+    "macro_responses": 80,
+    "sustain_scenarios": 20,
+    "semantic_roundtrips": 10,
+    "original_saved_audio_pairs": 10
+  },
+  "inspection_preparation": {
+    "checker_path": "/workspace/scratch/9118c5c72ad8/a57-native-ci/inspect_native_ci.py",
+    "checker_sha256": "ff3d602b973823c247c30e59b2f2c1c8e27e2913d90dfbd2fd514c474f710634",
+    "syntax_check": "pass",
+    "actual_ci_artifact_inspected": false
+  },
+  "limits": [
+    "No current-bank native CI run is asserted by this pending record.",
+    "Expected counts describe the workflow definition, not an observed successful run.",
+    "The future fresh CI renderer will be bound independently from the local renderer used for the complete 1,000-preset audio audit."
+  ],
+  "human_musical_audition": "pending",
+  "composer_endorsement": "not_claimed"
+}

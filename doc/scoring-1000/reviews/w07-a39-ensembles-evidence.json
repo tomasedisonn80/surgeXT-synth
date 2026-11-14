@@ -1,0 +1,3196 @@
+{
+  "schema": 1,
+  "scope": "All100 Ensemble Hybrids; technical evidence review, no listening or endorsement",
+  "catalog_sha256": "f8e0f6fdd299cbc18ad7410030f123a45777bdaf70c899ee8ee1d30680581331",
+  "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+  "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+  "compiler_sha256": "944b6d9207bd837ffa8c62870af576d069069b58060ef8d1cf15805ddd1f8bf0",
+  "recipe_sha256": "2c26d769b572547f2f701c19e39528f6aa620fbcf4df57492f71baea23351161",
+  "preset_count": 100,
+  "scenarios": 2300,
+  "gate_passes": 500,
+  "resolved_macros": 796,
+  "macro_total": 800,
+  "repeat_identical": 100,
+  "default_pcm_unique": 100,
+  "failures": [],
+  "warnings": [
+    [
+      "SC05-096",
+      "Midnight Unison Close",
+      "macro_1_max",
+      "Motion response not resolved above repeat/measurement threshold; targeted musical review is required"
+    ],
+    [
+      "SC05-097",
+      "Midnight Unison Section",
+      "macro_1_max",
+      "Motion response not resolved above repeat/measurement threshold; targeted musical review is required"
+    ],
+    [
+      "SC05-098",
+      "Midnight Unison Swell",
+      "macro_1_max",
+      "Motion response not resolved above repeat/measurement threshold; targeted musical review is required"
+    ],
+    [
+      "SC05-099",
+      "Midnight Unison Muted",
+      "macro_1_max",
+      "Motion response not resolved above repeat/measurement threshold; targeted musical review is required"
+    ]
+  ],
+  "weak_candidates": [
+    {
+      "id": "SC05-016",
+      "name": "Frost Divisi Close",
+      "control": "Motion",
+      "status": "measurable_change",
+      "waveform_relative_rms_delta": 0.0017852099749355616,
+      "feature_distance": 0.0018017431643421922,
+      "waveform_threshold": 0.001,
+      "feature_threshold": 0.002,
+      "interpretation": "Measured change is not certification of useful audibility."
+    },
+    {
+      "id": "SC05-017",
+      "name": "Frost Divisi Section",
+      "control": "Motion",
+      "status": "measurable_change",
+      "waveform_relative_rms_delta": 0.0019453818957236029,
+      "feature_distance": 0.002214669329116661,
+      "waveform_threshold": 0.001,
+      "feature_threshold": 0.002,
+      "interpretation": "Measured change is not certification of useful audibility."
+    },
+    {
+      "id": "SC05-018",
+      "name": "Frost Divisi Swell",
+      "control": "Motion",
+      "status": "measurable_change",
+      "waveform_relative_rms_delta": 0.0016373818909303619,
+      "feature_distance": 0.0017881057432260954,
+      "waveform_threshold": 0.001,
+      "feature_threshold": 0.002,
+      "interpretation": "Measured change is not certification of useful audibility."
+    },
+    {
+      "id": "SC05-019",
+      "name": "Frost Divisi Muted",
+      "control": "Motion",
+      "status": "measurable_change",
+      "waveform_relative_rms_delta": 0.00130573665091601,
+      "feature_distance": 0.0010955015988181546,
+      "waveform_threshold": 0.001,
+      "feature_threshold": 0.002,
+      "interpretation": "Measured change is not certification of useful audibility."
+    },
+    {
+      "id": "SC05-096",
+      "name": "Midnight Unison Close",
+      "control": "Motion",
+      "status": "not_resolved_above_repeat",
+      "waveform_relative_rms_delta": 0.00018895838751293968,
+      "feature_distance": 1.896217207354044e-05,
+      "waveform_threshold": 0.001,
+      "feature_threshold": 0.002,
+      "interpretation": "Measured change is not certification of useful audibility."
+    },
+    {
+      "id": "SC05-097",
+      "name": "Midnight Unison Section",
+      "control": "Motion",
+      "status": "not_resolved_above_repeat",
+      "waveform_relative_rms_delta": 0.0001385036138770557,
+      "feature_distance": 2.1346500844883198e-05,
+      "waveform_threshold": 0.001,
+      "feature_threshold": 0.002,
+      "interpretation": "Measured change is not certification of useful audibility."
+    },
+    {
+      "id": "SC05-098",
+      "name": "Midnight Unison Swell",
+      "control": "Motion",
+      "status": "not_resolved_above_repeat",
+      "waveform_relative_rms_delta": 0.00020203664869056752,
+      "feature_distance": 3.0058214324412427e-05,
+      "waveform_threshold": 0.001,
+      "feature_threshold": 0.002,
+      "interpretation": "Measured change is not certification of useful audibility."
+    },
+    {
+      "id": "SC05-099",
+      "name": "Midnight Unison Muted",
+      "control": "Motion",
+      "status": "not_resolved_above_repeat",
+      "waveform_relative_rms_delta": 0.00012654890203440933,
+      "feature_distance": 7.497536342695089e-06,
+      "waveform_threshold": 0.001,
+      "feature_threshold": 0.002,
+      "interpretation": "Measured change is not certification of useful audibility."
+    }
+  ],
+  "statistics": {
+    "peak": {
+      "minimum": 0.0194846261292696,
+      "median": 0.05610561929643154,
+      "maximum": 0.08422531187534332,
+      "minimum_case": [
+        "SC05-083",
+        "Felt Pizzicato Swell"
+      ],
+      "maximum_case": [
+        "SC05-064",
+        "Chapel Pipes Muted"
+      ]
+    },
+    "rms": {
+      "minimum": 0.0013436871094590441,
+      "median": 0.006765905525200226,
+      "maximum": 0.0203385109028927,
+      "minimum_case": [
+        "SC05-047",
+        "Amber Mutes Section"
+      ],
+      "maximum_case": [
+        "SC05-061",
+        "Chapel Pipes Close"
+      ]
+    },
+    "active_rms": {
+      "minimum": 0.0020388576798727742,
+      "median": 0.010658187108686408,
+      "maximum": 0.03186628872500837,
+      "minimum_case": [
+        "SC05-047",
+        "Amber Mutes Section"
+      ],
+      "maximum_case": [
+        "SC05-061",
+        "Chapel Pipes Close"
+      ]
+    },
+    "spectral_centroid_hz": {
+      "minimum": 149.56785752475437,
+      "median": 374.95293465784846,
+      "maximum": 1919.3675019325026,
+      "minimum_case": [
+        "SC05-039",
+        "Slate Trombones Muted"
+      ],
+      "maximum_case": [
+        "SC05-047",
+        "Amber Mutes Section"
+      ]
+    },
+    "mono_energy_ratio": {
+      "minimum": 0.755922231815665,
+      "median": 0.9992366317104313,
+      "maximum": 0.9999612767554771,
+      "minimum_case": [
+        "SC05-004",
+        "Linen Bows Muted"
+      ],
+      "maximum_case": [
+        "SC05-081",
+        "Felt Pizzicato Close"
+      ]
+    },
+    "tail_500ms_rms": {
+      "minimum": 2.2176386286009707e-13,
+      "median": 2.8588842272025926e-10,
+      "maximum": 1.0102265196887659e-08,
+      "minimum_case": [
+        "SC05-084",
+        "Felt Pizzicato Muted"
+      ],
+      "maximum_case": [
+        "SC05-052",
+        "Breath Reeds Section"
+      ]
+    },
+    "tail_to_active_db": {
+      "minimum": -201.39322256203815,
+      "median": -149.92227486664086,
+      "maximum": -117.8789076407761,
+      "minimum_case": [
+        "SC05-084",
+        "Felt Pizzicato Muted"
+      ],
+      "maximum_case": [
+        "SC05-047",
+        "Amber Mutes Section"
+      ]
+    },
+    "all_peaks": {
+      "minimum": 0.005438806023448706,
+      "median": 0.05831765942275524,
+      "maximum": 0.7279916405677795,
+      "minimum_case": [
+        "SC05-083",
+        "Felt Pizzicato Swell",
+        "velocity_soft"
+      ],
+      "maximum_case": [
+        "SC05-065",
+        "Chapel Pipes Motion",
+        "polyphony_stress"
+      ]
+    },
+    "all_mono": {
+      "minimum": 0.3292995439710265,
+      "median": 0.9987150904526481,
+      "maximum": 0.9999995512791705,
+      "minimum_case": [
+        "SC05-004",
+        "Linen Bows Muted",
+        "macros_aggressive"
+      ],
+      "maximum_case": [
+        "SC05-084",
+        "Felt Pizzicato Muted",
+        "space_dry"
+      ]
+    },
+    "all_dc": {
+      "minimum": 6.570496285545177e-10,
+      "median": 9.22294057689421e-07,
+      "maximum": 0.00011648913577476459,
+      "minimum_case": [
+        "SC05-082",
+        "Felt Pizzicato Section",
+        "range_high"
+      ],
+      "maximum_case": [
+        "SC05-061",
+        "Chapel Pipes Close",
+        "polyphony_stress"
+      ]
+    },
+    "velocity_db": {
+      "minimum": 7.482243839339484,
+      "median": 12.378097826238886,
+      "maximum": 17.195357602354836,
+      "minimum_case": [
+        "SC05-062",
+        "Chapel Pipes Section"
+      ],
+      "maximum_case": [
+        "SC05-087",
+        "Walnut Marcato Section"
+      ]
+    }
+  },
+  "within_family_pair_count": 200,
+  "matched_hold_pairs": 200,
+  "closest_pairs": [
+    {
+      "family": "Felt Pizzicato",
+      "a": "SC05-081",
+      "a_name": "Felt Pizzicato Close",
+      "b": "SC05-082",
+      "b_name": "Felt Pizzicato Section",
+      "distance": 0.009440966793295928,
+      "same_notes": true,
+      "same_hold": true,
+      "same_seconds": true
+    },
+    {
+      "family": "Felt Pizzicato",
+      "a": "SC05-082",
+      "a_name": "Felt Pizzicato Section",
+      "b": "SC05-084",
+      "b_name": "Felt Pizzicato Muted",
+      "distance": 0.025445276815418496,
+      "same_notes": true,
+      "same_hold": true,
+      "same_seconds": true
+    },
+    {
+      "family": "Felt Pizzicato",
+      "a": "SC05-081",
+      "a_name": "Felt Pizzicato Close",
+      "b": "SC05-084",
+      "b_name": "Felt Pizzicato Muted",
+      "distance": 0.02846201392927648,
+      "same_notes": true,
+      "same_hold": true,
+      "same_seconds": true
+    },
+    {
+      "family": "Copper Fanfare",
+      "a": "SC05-043",
+      "a_name": "Copper Fanfare Swell",
+      "b": "SC05-045",
+      "b_name": "Copper Fanfare Motion",
+      "distance": 0.029506715864109932,
+      "same_notes": true,
+      "same_hold": true,
+      "same_seconds": false
+    },
+    {
+      "family": "Felt Pizzicato",
+      "a": "SC05-081",
+      "a_name": "Felt Pizzicato Close",
+      "b": "SC05-085",
+      "b_name": "Felt Pizzicato Motion",
+      "distance": 0.037107140752727766,
+      "same_notes": true,
+      "same_hold": true,
+      "same_seconds": true
+    },
+    {
+      "family": "Felt Pizzicato",
+      "a": "SC05-082",
+      "a_name": "Felt Pizzicato Section",
+      "b": "SC05-085",
+      "b_name": "Felt Pizzicato Motion",
+      "distance": 0.041437426047738576,
+      "same_notes": true,
+      "same_hold": true,
+      "same_seconds": true
+    },
+    {
+      "family": "Walnut Marcato",
+      "a": "SC05-088",
+      "a_name": "Walnut Marcato Swell",
+      "b": "SC05-090",
+      "b_name": "Walnut Marcato Motion",
+      "distance": 0.043597561012813986,
+      "same_notes": true,
+      "same_hold": true,
+      "same_seconds": true
+    },
+    {
+      "family": "Breath Reeds",
+      "a": "SC05-053",
+      "a_name": "Breath Reeds Swell",
+      "b": "SC05-055",
+      "b_name": "Breath Reeds Motion",
+      "distance": 0.051743087254573605,
+      "same_notes": true,
+      "same_hold": true,
+      "same_seconds": false
+    },
+    {
+      "family": "Copper Fanfare",
+      "a": "SC05-041",
+      "a_name": "Copper Fanfare Close",
+      "b": "SC05-045",
+      "b_name": "Copper Fanfare Motion",
+      "distance": 0.0538222543587923,
+      "same_notes": true,
+      "same_hold": true,
+      "same_seconds": true
+    },
+    {
+      "family": "Felt Pizzicato",
+      "a": "SC05-084",
+      "a_name": "Felt Pizzicato Muted",
+      "b": "SC05-085",
+      "b_name": "Felt Pizzicato Motion",
+      "distance": 0.0645113924608195,
+      "same_notes": true,
+      "same_hold": true,
+      "same_seconds": true
+    },
+    {
+      "family": "Slate Trombones",
+      "a": "SC05-038",
+      "a_name": "Slate Trombones Swell",
+      "b": "SC05-040",
+      "b_name": "Slate Trombones Motion",
+      "distance": 0.06594831775142197,
+      "same_notes": true,
+      "same_hold": true,
+      "same_seconds": false
+    },
+    {
+      "family": "Copper Fanfare",
+      "a": "SC05-041",
+      "a_name": "Copper Fanfare Close",
+      "b": "SC05-043",
+      "b_name": "Copper Fanfare Swell",
+      "distance": 0.06723063702260336,
+      "same_notes": true,
+      "same_hold": true,
+      "same_seconds": false
+    }
+  ],
+  "felt_pizzicato": [
+    {
+      "id": "SC05-081",
+      "name": "Felt Pizzicato Close",
+      "fixture": {
+        "key": "default",
+        "notes": [
+          65
+        ],
+        "hold": 3.0,
+        "seconds": 7.0,
+        "velocity": 96,
+        "tempo": 120,
+        "macros": "-",
+        "sample_rate": 48000,
+        "modwheel": 0,
+        "pressure": 0,
+        "expression": 127,
+        "gate": "default"
+      },
+      "metrics": {
+        "frames": 336000,
+        "nonfinite_samples": 0,
+        "peak": 0.036079488694667816,
+        "rms": 0.0015060751316688526,
+        "active_rms": 0.002300560993646549,
+        "channel_rms": [
+          0.0015064042504964385,
+          0.0015057459409040317
+        ],
+        "channel_dc": [
+          -2.1815409934772846e-13,
+          1.9928317629715412e-14
+        ],
+        "active_channel_dc": [
+          2.5393599587253404e-09,
+          2.398838585739528e-09
+        ],
+        "tail_500ms_rms": 3.551072538801549e-13,
+        "tail_to_active_db": -196.22948416274286,
+        "mono_energy_ratio": 0.9999612767554771,
+        "spectral_centroid_hz": 352.0286430395749,
+        "spectral_band_energy": [
+          7.3e-08,
+          2.8e-08,
+          2.2e-08,
+          5.106e-06,
+          0.997963603,
+          0.001790331,
+          0.000214448,
+          2.2095e-05,
+          4.265e-06,
+          2.8e-08
+        ],
+        "active_rms_envelope": [
+          0.007883244823388027,
+          0.00114091083339546,
+          0.00020713809953936047,
+          6.400530144412594e-05,
+          3.55966894038201e-05,
+          2.9696362522251457e-05,
+          3.262300360020291e-05,
+          3.932802061142647e-05,
+          4.688794776734663e-05,
+          5.329053280739074e-05,
+          5.7930912321102646e-05,
+          5.9891374848184956e-05
+        ],
+        "normalized_active_envelope": [
+          1.0,
+          0.14472604352088667,
+          0.02627574104064645,
+          0.008119156879948073,
+          0.00451548698553821,
+          0.003767022740959183,
+          0.004138271020508828,
+          0.004988811269028208,
+          0.005947797996611671,
+          0.00675997435082674,
+          0.007348612610537363,
+          0.007597299866991204
+        ],
+        "pcm_sha256": "2d337470039486df8578df1eebf5dfa80e84be888db92be574de44dd417bd4cd",
+        "coarse_fingerprint": "32e191a6e3a6c36ef7296540d9a2cd7452611e201c0c45cb7658059251b1c67e"
+      },
+      "macro_attack": {
+        "status": "measurable_change",
+        "waveform_relative_rms_delta": 0.31150021663697036,
+        "feature_distance": 0.0,
+        "waveform_threshold": 0.001,
+        "feature_threshold": 0.002,
+        "interpretation": "Measured change is not certification of useful audibility."
+      },
+      "macro_release": {
+        "status": "measurable_change",
+        "waveform_relative_rms_delta": 0.7061734830539854,
+        "feature_distance": 0.1923319229211332,
+        "waveform_threshold": 0.001,
+        "feature_threshold": 0.002,
+        "interpretation": "Measured change is not certification of useful audibility."
+      }
+    },
+    {
+      "id": "SC05-082",
+      "name": "Felt Pizzicato Section",
+      "fixture": {
+        "key": "default",
+        "notes": [
+          65
+        ],
+        "hold": 3.0,
+        "seconds": 7.0,
+        "velocity": 96,
+        "tempo": 120,
+        "macros": "-",
+        "sample_rate": 48000,
+        "modwheel": 0,
+        "pressure": 0,
+        "expression": 127,
+        "gate": "default"
+      },
+      "metrics": {
+        "frames": 336000,
+        "nonfinite_samples": 0,
+        "peak": 0.041903648525476456,
+        "rms": 0.0019769295711184773,
+        "active_rms": 0.003019796470052716,
+        "channel_rms": [
+          0.001979893209008496,
+          0.0019739614837294603
+        ],
+        "channel_dc": [
+          2.685150250722822e-13,
+          -1.0049608547468239e-13
+        ],
+        "active_channel_dc": [
+          -6.658550829424561e-09,
+          -6.53801998116679e-09
+        ],
+        "tail_500ms_rms": 2.3888683823352256e-12,
+        "tail_to_active_db": -182.03570901405305,
+        "mono_energy_ratio": 0.9998027957633625,
+        "spectral_centroid_hz": 352.5953536884914,
+        "spectral_band_energy": [
+          2.1e-08,
+          7e-09,
+          2.1e-08,
+          4.423e-06,
+          0.997057532,
+          0.002467233,
+          0.000415714,
+          4.4005e-05,
+          1.0818e-05,
+          2.27e-07
+        ],
+        "active_rms_envelope": [
+          0.01035795251198881,
+          0.0014359871779140133,
+          0.00017553217868473972,
+          4.068318865841077e-05,
+          6.32229060506474e-05,
+          9.143325567513943e-05,
+          0.00010681009050397048,
+          0.00010541930404102099,
+          8.69241159673719e-05,
+          5.634833057705111e-05,
+          2.8518405474894085e-05,
+          4.381239818742294e-05
+        ],
+        "normalized_active_envelope": [
+          1.0,
+          0.13863620018067568,
+          0.016946609716695458,
+          0.003927724964110621,
+          0.006103803428087748,
+          0.008827348413628082,
+          0.010311892276040381,
+          0.01017761994168282,
+          0.008392017231857512,
+          0.005440103197213034,
+          0.002753285984067359,
+          0.004229831922545724
+        ],
+        "pcm_sha256": "4d5f62af7a8384fc894714820fcf6ce8601624e39eac5ff0577d5c0979420073",
+        "coarse_fingerprint": "99e43ae5234e9d64f3f088f314cc4f4dd7222a2a5aa64a31ce0a355c9a375118"
+      },
+      "macro_attack": {
+        "status": "measurable_change",
+        "waveform_relative_rms_delta": 0.3222176478046972,
+        "feature_distance": 0.0,
+        "waveform_threshold": 0.001,
+        "feature_threshold": 0.002,
+        "interpretation": "Measured change is not certification of useful audibility."
+      },
+      "macro_release": {
+        "status": "measurable_change",
+        "waveform_relative_rms_delta": 0.642921792864758,
+        "feature_distance": 0.15315852990421241,
+        "waveform_threshold": 0.001,
+        "feature_threshold": 0.002,
+        "interpretation": "Measured change is not certification of useful audibility."
+      }
+    },
+    {
+      "id": "SC05-083",
+      "name": "Felt Pizzicato Swell",
+      "fixture": {
+        "key": "default",
+        "notes": [
+          65
+        ],
+        "hold": 3.0,
+        "seconds": 7.0,
+        "velocity": 96,
+        "tempo": 120,
+        "macros": "-",
+        "sample_rate": 48000,
+        "modwheel": 0,
+        "pressure": 0,
+        "expression": 127,
+        "gate": "default"
+      },
+      "metrics": {
+        "frames": 336000,
+        "nonfinite_samples": 0,
+        "peak": 0.0194846261292696,
+        "rms": 0.002141803724321042,
+        "active_rms": 0.003271627317663654,
+        "channel_rms": [
+          0.00215080336997768,
+          0.00213276610314484
+        ],
+        "channel_dc": [
+          1.1270526966115818e-13,
+          -2.5945820119898917e-13
+        ],
+        "active_channel_dc": [
+          3.784098841979086e-09,
+          3.366307524325322e-09
+        ],
+        "tail_500ms_rms": 2.074650135678981e-12,
+        "tail_to_active_db": -183.95637914111873,
+        "mono_energy_ratio": 0.9997502602343383,
+        "spectral_centroid_hz": 351.66337101873575,
+        "spectral_band_energy": [
+          0.0,
+          1e-09,
+          1.8e-08,
+          1.0161e-05,
+          0.99789403,
+          0.001748418,
+          0.000305952,
+          3.4795e-05,
+          6.551e-06,
+          7.3e-08
+        ],
+        "active_rms_envelope": [
+          0.010123416104854678,
+          0.004848361754382939,
+          0.001478785903773416,
+          0.0004599121780450689,
+          0.00013713911310861063,
+          5.541272769843868e-05,
+          4.870073428840856e-05,
+          5.723769804752391e-05,
+          6.87609744673912e-05,
+          7.895101155449206e-05,
+          8.656917287701886e-05,
+          8.983427090210226e-05
+        ],
+        "normalized_active_envelope": [
+          1.0,
+          0.4789254639111307,
+          0.14607577999923022,
+          0.04543053187594633,
+          0.0135467229330666,
+          0.005473718271035558,
+          0.004810701623244959,
+          0.005653990456845452,
+          0.006792269897353811,
+          0.007798850776926096,
+          0.008551379492887253,
+          0.008873908764752077
+        ],
+        "pcm_sha256": "b98af5ffbc969ee0bccaab116ea841c09e0d236cfd00cad936ec9d5b53c195ae",
+        "coarse_fingerprint": "a4da510985687b8108a52589026ea7b0cca366aae8a047e87a8039d3c34ed760"
+      },
+      "macro_attack": {
+        "status": "measurable_change",
+        "waveform_relative_rms_delta": 1.1088911172608984,
+        "feature_distance": 0.0,
+        "waveform_threshold": 0.001,
+        "feature_threshold": 0.002,
+        "interpretation": "Measured change is not certification of useful audibility."
+      },
+      "macro_release": {
+        "status": "measurable_change",
+        "waveform_relative_rms_delta": 0.5807164640448265,
+        "feature_distance": 0.2570644786132753,
+        "waveform_threshold": 0.001,
+        "feature_threshold": 0.002,
+        "interpretation": "Measured change is not certification of useful audibility."
+      }
+    },
+    {
+      "id": "SC05-084",
+      "name": "Felt Pizzicato Muted",
+      "fixture": {
+        "key": "default",
+        "notes": [
+          65
+        ],
+        "hold": 3.0,
+        "seconds": 7.0,
+        "velocity": 96,
+        "tempo": 120,
+        "macros": "-",
+        "sample_rate": 48000,
+        "modwheel": 0,
+        "pressure": 0,
+        "expression": 127,
+        "gate": "default"
+      },
+      "metrics": {
+        "frames": 336000,
+        "nonfinite_samples": 0,
+        "peak": 0.03902319818735123,
+        "rms": 0.0017043709889846017,
+        "active_rms": 0.002603465973705402,
+        "channel_rms": [
+          0.0017048566479163107,
+          0.00170388519162538
+        ],
+        "channel_dc": [
+          1.6997306840368243e-13,
+          4.5945027749574435e-14
+        ],
+        "active_channel_dc": [
+          2.5031679225648923e-09,
+          2.363766794010057e-09
+        ],
+        "tail_500ms_rms": 2.2176386286009707e-13,
+        "tail_to_active_db": -201.39322256203815,
+        "mono_energy_ratio": 0.9999321893547813,
+        "spectral_centroid_hz": 352.29204124877725,
+        "spectral_band_energy": [
+          2.8e-08,
+          8e-09,
+          1.9e-08,
+          8.944e-06,
+          0.997632609,
+          0.002156953,
+          0.000189326,
+          1.1025e-05,
+          1.084e-06,
+          3e-09
+        ],
+        "active_rms_envelope": [
+          0.00898019052956395,
+          0.0008194916572929317,
+          0.00010266933987699766,
+          3.801931379755392e-05,
+          2.6694344919367572e-05,
+          2.408781029814302e-05,
+          2.5943961001290022e-05,
+          2.988952611437501e-05,
+          3.444130326326184e-05,
+          3.840382674892177e-05,
+          4.135511523986823e-05,
+          4.2606845826647314e-05
+        ],
+        "normalized_active_envelope": [
+          1.0,
+          0.09125548668428125,
+          0.011432868772549634,
+          0.004233686765596945,
+          0.0029725811308219273,
+          0.0026823273090746604,
+          0.002889021220193396,
+          0.0033283844052055265,
+          0.003835253066165646,
+          0.0042765046713086315,
+          0.004605148978044713,
+          0.004744536954575747
+        ],
+        "pcm_sha256": "9649b490e7231807e7914fdebde9efbb95a42aebd0eb94e5dfdc2e70d962d476",
+        "coarse_fingerprint": "453232132a106fe139f50dce0f8a3f74ca0387f25a07dbc00745131d22300bfc"
+      },
+      "macro_attack": {
+        "status": "measurable_change",
+        "waveform_relative_rms_delta": 0.3959844220237049,
+        "feature_distance": 0.0,
+        "waveform_threshold": 0.001,
+        "feature_threshold": 0.002,
+        "interpretation": "Measured change is not certification of useful audibility."
+      },
+      "macro_release": {
+        "status": "measurable_change",
+        "waveform_relative_rms_delta": 0.7017529423646648,
+        "feature_distance": 0.17287644070882985,
+        "waveform_threshold": 0.001,
+        "feature_threshold": 0.002,
+        "interpretation": "Measured change is not certification of useful audibility."
+      }
+    },
+    {
+      "id": "SC05-085",
+      "name": "Felt Pizzicato Motion",
+      "fixture": {
+        "key": "default",
+        "notes": [
+          65
+        ],
+        "hold": 3.0,
+        "seconds": 7.0,
+        "velocity": 96,
+        "tempo": 120,
+        "macros": "-",
+        "sample_rate": 48000,
+        "modwheel": 0,
+        "pressure": 0,
+        "expression": 127,
+        "gate": "default"
+      },
+      "metrics": {
+        "frames": 336000,
+        "nonfinite_samples": 0,
+        "peak": 0.04280122369527817,
+        "rms": 0.002084412435926278,
+        "active_rms": 0.0031839741964257416,
+        "channel_rms": [
+          0.002085607713066125,
+          0.0020832164729781026
+        ],
+        "channel_dc": [
+          -2.3746673012333056e-13,
+          -3.5002411347985527e-13
+        ],
+        "active_channel_dc": [
+          3.5838766085468437e-09,
+          3.262399144170858e-09
+        ],
+        "tail_500ms_rms": 1.490244369272743e-12,
+        "tail_to_active_db": -186.59424099798497,
+        "mono_energy_ratio": 0.9998583603907367,
+        "spectral_centroid_hz": 352.4940668274152,
+        "spectral_band_energy": [
+          3.2e-08,
+          1.1e-08,
+          1.8e-08,
+          3.368e-06,
+          0.997210102,
+          0.002410495,
+          0.000328887,
+          3.8468e-05,
+          8.472e-06,
+          1.46e-07
+        ],
+        "active_rms_envelope": [
+          0.010772417318106032,
+          0.002300798531318848,
+          0.0005117280059748048,
+          0.00014153406904807552,
+          4.8796684596580303e-05,
+          2.8281551488283133e-05,
+          3.535311440058495e-05,
+          4.9574192805719276e-05,
+          6.423516389120583e-05,
+          7.624636415518654e-05,
+          8.470030972950035e-05,
+          8.804423571010478e-05
+        ],
+        "normalized_active_envelope": [
+          1.0,
+          0.21358238020093398,
+          0.04750354454934679,
+          0.01313856164949981,
+          0.004529780378500929,
+          0.0026253672368176965,
+          0.0032818181246250314,
+          0.004601956212965878,
+          0.005962929395915701,
+          0.007077925214337305,
+          0.007862702235563972,
+          0.00817311779800083
+        ],
+        "pcm_sha256": "30033fbe4fc0d487ce9714ed0ca5b39e8aa9b03ee1945c8583d2f30a805d879a",
+        "coarse_fingerprint": "5fc7fb238cd4c44b7f84130326bd2db78493014e8bec49a136e9c14097487cd1"
+      },
+      "macro_attack": {
+        "status": "measurable_change",
+        "waveform_relative_rms_delta": 0.28631474487502,
+        "feature_distance": 0.0,
+        "waveform_threshold": 0.001,
+        "feature_threshold": 0.002,
+        "interpretation": "Measured change is not certification of useful audibility."
+      },
+      "macro_release": {
+        "status": "measurable_change",
+        "waveform_relative_rms_delta": 0.7042210371369628,
+        "feature_distance": 0.2047839428445819,
+        "waveform_threshold": 0.001,
+        "feature_threshold": 0.002,
+        "interpretation": "Measured change is not certification of useful audibility."
+      }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "SC05-001",
+      "name": "Linen Bows Close",
+      "report_sha256": "8de3e46f48021eb9806a10f03e81120444e0cde24b01086649f08a7dc943f86d",
+      "patch_sha256": "435f79b88cb6d68bacae97a8a9ea2738e97f652cf6779c7b9924d33227b6fa38",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "435f79b88cb6d68bacae97a8a9ea2738e97f652cf6779c7b9924d33227b6fa38",
+        "fixture_sha256": "41b6ca40786dbb6cd58d8290c5832dc73d1e1f23b0559978143188ba42136a7d",
+        "preset_definition_sha256": "eb6ed1b3785cd93b65139b53e5f21c81e0d50dfa02ddaa09054736504e432aba"
+      }
+    },
+    {
+      "id": "SC05-002",
+      "name": "Linen Bows Section",
+      "report_sha256": "92c1a44af1894deb2f91c7d45d8c36e5e966e937ce71047fd314bb33edafc223",
+      "patch_sha256": "6861b5eb1dabba0c1d4f234f87c2cec4861d7b740a1baa2209d94783df814127",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "6861b5eb1dabba0c1d4f234f87c2cec4861d7b740a1baa2209d94783df814127",
+        "fixture_sha256": "cd94ab80cb8855cfe6e409ca6151b2d5f26d9469b61a1db321f85515581a2f18",
+        "preset_definition_sha256": "eb98c7647e2c1180582d4429eb91a400388068b9f0135110abe2055d810ed263"
+      }
+    },
+    {
+      "id": "SC05-003",
+      "name": "Linen Bows Swell",
+      "report_sha256": "76aea6b42402f221bc42023f31fc47e2fa045ae5d783e2aae3c7034ae0cff88b",
+      "patch_sha256": "e0560b377d0ea73075cba7f0c722521419601a510a3546e4e0cc43cbe9e53614",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "e0560b377d0ea73075cba7f0c722521419601a510a3546e4e0cc43cbe9e53614",
+        "fixture_sha256": "2e9ca7e941e2e291132027f11b8559eef5b64f890b59a2e8e22aa317423dcbb4",
+        "preset_definition_sha256": "e1543aab839363d24837eba50be2c541b953d76c706c1230f50fd4781394b6dd"
+      }
+    },
+    {
+      "id": "SC05-004",
+      "name": "Linen Bows Muted",
+      "report_sha256": "421027fb03a3332925317cfeed9e865793c2b9130851691a33ceff9e99d32490",
+      "patch_sha256": "1642c303985acb644b2b13019fa6bb106e988eb65775e6524e505bf8fc11fb2a",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "1642c303985acb644b2b13019fa6bb106e988eb65775e6524e505bf8fc11fb2a",
+        "fixture_sha256": "a0b14464151ce1ea350a4e1f9f231cebf3deb6bd902cb54989d741be96258583",
+        "preset_definition_sha256": "8698602c2e6b3f6f690d2bfb331602c8c9e03279ac68b564204fe6c03c2ba168"
+      }
+    },
+    {
+      "id": "SC05-005",
+      "name": "Linen Bows Motion",
+      "report_sha256": "a4ad86960e4f5ecc379a67bda1bc6827b77a550a7ecdad0f39984cddd40ed665",
+      "patch_sha256": "b3408947b16ebb99311612facc04b9811a65c182400146a52ebe35f53bd24a7b",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "b3408947b16ebb99311612facc04b9811a65c182400146a52ebe35f53bd24a7b",
+        "fixture_sha256": "ae6b4f496f6f85a1f772b3fb7d336314f6574f60259b666ae1700a71100d133f",
+        "preset_definition_sha256": "14baedd889b80ef8f41112c9247a9e057188793ed969c540e54f89a6949288f9"
+      }
+    },
+    {
+      "id": "SC05-006",
+      "name": "Cedar Section Close",
+      "report_sha256": "6d298a549005c403a6b0d9b5c14ad3ade0debfd62b1a66234d948dbf5d7575f5",
+      "patch_sha256": "34c66acb5b57832753bee8d71271ade7666c8d9c5b753724170bcde956590957",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "34c66acb5b57832753bee8d71271ade7666c8d9c5b753724170bcde956590957",
+        "fixture_sha256": "9d5a5864bd9aae853515f9eb2fb0d67086c8f00a9cadaf468c7a17503f218a82",
+        "preset_definition_sha256": "1c77e6efe4d34dc81505df7da8b1d34d2ead29d19dd528f0d29a16dd41bbffb8"
+      }
+    },
+    {
+      "id": "SC05-007",
+      "name": "Cedar Section Section",
+      "report_sha256": "ab3b5197f4986ff9e404d7145337fefb562bb66c9e3c9410409cf39875cac13a",
+      "patch_sha256": "c18cec92bf57c43466d21c5a4db1dd95bbbddb3010e7ae29848a9d4c2623bc4f",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "c18cec92bf57c43466d21c5a4db1dd95bbbddb3010e7ae29848a9d4c2623bc4f",
+        "fixture_sha256": "b5e71df034f2f898f62c7ff74e6818b15da9b64f13c6951f3af4578f0c20bad2",
+        "preset_definition_sha256": "f83f39af57da6e85fae81b32d1d3b23be6727faecf0b73e69b681caa1687bf06"
+      }
+    },
+    {
+      "id": "SC05-008",
+      "name": "Cedar Section Swell",
+      "report_sha256": "59cb2b2ddef8277780cc789619dedd1f9fdd261088ec131eeb94719d7b2dc8fb",
+      "patch_sha256": "89ce1508943ce1fa01bd1b2cfb78a879937b3ad82b0356366d56c5da8c3f022d",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "89ce1508943ce1fa01bd1b2cfb78a879937b3ad82b0356366d56c5da8c3f022d",
+        "fixture_sha256": "e58746585baaff55923b06ba82597a4879f296476c313cba8d6612db4c4717f7",
+        "preset_definition_sha256": "e559d043deb4510354c34da7dcca76e09dd8fb86af262aa6ba7806f6ceefe6a9"
+      }
+    },
+    {
+      "id": "SC05-009",
+      "name": "Cedar Section Muted",
+      "report_sha256": "9be395cfe8abe55505e5a4784084d4cbcbe3efe31c699c8299ac569e1a71b4ac",
+      "patch_sha256": "eba2a553bf0eb7d420e046d45801caf14bb539ae958dad7087cdc57f1cfbe05f",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "eba2a553bf0eb7d420e046d45801caf14bb539ae958dad7087cdc57f1cfbe05f",
+        "fixture_sha256": "96b18b586ac444eefa37c39249127263a6434470ea413e5883561327980c10c8",
+        "preset_definition_sha256": "b2b0fe4d0afaa1eb12c8ac54ed684e46f998e5201ca1c5798e4959f4e03f5c09"
+      }
+    },
+    {
+      "id": "SC05-010",
+      "name": "Cedar Section Motion",
+      "report_sha256": "9dad324e052a87d3caa78e353c32a129b591a1515a63e1c98d11c047980a7995",
+      "patch_sha256": "b6efd7ee06a061c3f502aca9d4fda0f1c6762bff5c9fd33f4619b810884067ce",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "b6efd7ee06a061c3f502aca9d4fda0f1c6762bff5c9fd33f4619b810884067ce",
+        "fixture_sha256": "5dee9b3d62f374da0db3461e4a63bcb88f4a8c9350a5666ca30ad495b363c15f",
+        "preset_definition_sha256": "9e377251b21929a04808727c6c07d8784efecd028782369816547448a05e6c87"
+      }
+    },
+    {
+      "id": "SC05-011",
+      "name": "Silk Chamber Close",
+      "report_sha256": "11a33fb6b59b297f3a30bd148489fbf42ae1408cdb5901908c4d3f63dc4124b2",
+      "patch_sha256": "6956ab8405dd480baabc9ba7751ba57f347453b62e65cfc8c228d3510e7b61fe",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "6956ab8405dd480baabc9ba7751ba57f347453b62e65cfc8c228d3510e7b61fe",
+        "fixture_sha256": "f07d289c4eca34d9cc42ff72bcdcea2a7e1c2f26be67b84fccbae16c240c6081",
+        "preset_definition_sha256": "889d868e04944a41821d21ed113dce60376bdb2b5b11ff44f17eee7fb800d8d5"
+      }
+    },
+    {
+      "id": "SC05-012",
+      "name": "Silk Chamber Section",
+      "report_sha256": "55b9ec2c5e6d3b7ac509bf33aa75f77250faa67b98d9099bfb07d35600eb5fc4",
+      "patch_sha256": "ffd2b2bf805a023888cc357bc5a117b08d9988513b638fbf474920b3ef9c3f6a",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "ffd2b2bf805a023888cc357bc5a117b08d9988513b638fbf474920b3ef9c3f6a",
+        "fixture_sha256": "0476ffcc70f926ffc4c730234810f8dd2e7cb6d7917c36b43c5db6ff999f8684",
+        "preset_definition_sha256": "b62071367c9712bf19034d32554a8585be9e9ba4b7134c30dab2056b2937428c"
+      }
+    },
+    {
+      "id": "SC05-013",
+      "name": "Silk Chamber Swell",
+      "report_sha256": "0ec76c49246d1cf8d4230cb5a310338659a3d89134e9ad3c43f4975c2e841e7c",
+      "patch_sha256": "8cea85f9f1e7047bed7d00be179d918e1d90a2681ec1f73d08c88fc8b55b61c8",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "8cea85f9f1e7047bed7d00be179d918e1d90a2681ec1f73d08c88fc8b55b61c8",
+        "fixture_sha256": "dd5a6d17effc0a513bcd37b5447f1fb0ebd7f1e90967e4a1587ec053a7612fe4",
+        "preset_definition_sha256": "bff6358142618ffaacf1a0c33c8c62e63afecadf3242162c8d3547b7f76a5931"
+      }
+    },
+    {
+      "id": "SC05-014",
+      "name": "Silk Chamber Muted",
+      "report_sha256": "58ed60344f8187f3a8e45a2ab1ed0d968381d4dd93824bbf2cb455b71ef5e9fb",
+      "patch_sha256": "748594b47c3fc753c3f1ff8435a4350d9203b1320be24c504a3125c729c4b78d",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "748594b47c3fc753c3f1ff8435a4350d9203b1320be24c504a3125c729c4b78d",
+        "fixture_sha256": "144bfdbacaa6abab48f6aafceefca9185d1d435885dee0e0c5bfe8b8634432ec",
+        "preset_definition_sha256": "68641f8ce9d07c80c48180b2505aa6b50b70287686d2a054850d607f93fd0965"
+      }
+    },
+    {
+      "id": "SC05-015",
+      "name": "Silk Chamber Motion",
+      "report_sha256": "6fc62e45487e750393925eda00d87ec5cd28e2a886ccf4764a6fa8be3e60eea4",
+      "patch_sha256": "fcde0ad6994974dac9e7e5e34fd6b5efc351749bae60db7c3e55213208d4e007",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "fcde0ad6994974dac9e7e5e34fd6b5efc351749bae60db7c3e55213208d4e007",
+        "fixture_sha256": "393798d40825980c9135ed3672160b06a837d39b75b3b682063f4f64d633a3e5",
+        "preset_definition_sha256": "e3c355b7baa14cc52fc7283c1dbc559545162645244b0100c9b6e89a979f8601"
+      }
+    },
+    {
+      "id": "SC05-016",
+      "name": "Frost Divisi Close",
+      "report_sha256": "5cdd92a337958c943dde9245280d879820e2f5f3425ded4084b6e855558fd528",
+      "patch_sha256": "acebbc5f5fa99a72f7c56e7f4880e563df5547ceac1f974bc69a6ffa2a215d1c",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "acebbc5f5fa99a72f7c56e7f4880e563df5547ceac1f974bc69a6ffa2a215d1c",
+        "fixture_sha256": "1aef3500faa66f877f548c764540876afef96a50b8965a34b2de0e8fa1920008",
+        "preset_definition_sha256": "cdfa2c60e5c11ccae1debdc484a86f59130a8edb824b8cb3b2a657b9b71f7729"
+      }
+    },
+    {
+      "id": "SC05-017",
+      "name": "Frost Divisi Section",
+      "report_sha256": "963c6cbf65e1154ce9151bbcecce0f5b691415056e1ba6d073e966909c7ca99e",
+      "patch_sha256": "532210e699e54e4a94525eaa1d99cc08a94149c48964f263d04fd0beaaed0893",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "532210e699e54e4a94525eaa1d99cc08a94149c48964f263d04fd0beaaed0893",
+        "fixture_sha256": "d4d0ee7d271a3f1239b53ed98f536c6a4e888931d19c9acd1f333066be2d8a28",
+        "preset_definition_sha256": "800714aae6083be87bb2886f8918119c1c94d634c98087b4d433617b1d9765d0"
+      }
+    },
+    {
+      "id": "SC05-018",
+      "name": "Frost Divisi Swell",
+      "report_sha256": "a4f93b5a1e3e9e1c4befb9374534646e5a14ad9fc5592726a97d44168ee890d2",
+      "patch_sha256": "5134269e5020542c6dbe036bb4658d38bb968a19f6ba966a80e457ec0363bbbf",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "5134269e5020542c6dbe036bb4658d38bb968a19f6ba966a80e457ec0363bbbf",
+        "fixture_sha256": "654f18dcf9f3543acc04296975efeb53f4e4718f8af2401faab8afd2c3f9d7ac",
+        "preset_definition_sha256": "aa78b96c79bc865b134acb3b451ece76e99a11b1818f6ba19656333a507a8b2f"
+      }
+    },
+    {
+      "id": "SC05-019",
+      "name": "Frost Divisi Muted",
+      "report_sha256": "bf01b662e6470b3e0e9fdf0ed584ab05097da97bc59ac72758cec8fa60d06900",
+      "patch_sha256": "bb484a96ed2b939880cdc4506d9004bced310eee98618c9703646fb22b8785b1",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "bb484a96ed2b939880cdc4506d9004bced310eee98618c9703646fb22b8785b1",
+        "fixture_sha256": "fd87b304e54e5580270829a794c76965df6e17d198a7e8c99ce7d160d7b2721c",
+        "preset_definition_sha256": "d534d72557c4f0f05270ee8769055a1564cf3c4b5527edcb8b63078044c236ed"
+      }
+    },
+    {
+      "id": "SC05-020",
+      "name": "Frost Divisi Motion",
+      "report_sha256": "c95f53df5d27dae21fecd63d409f5a2ee0d52504124fc486ffb0d993ca26f312",
+      "patch_sha256": "9a4d3350252683a8494eada78cfc11d62517ad33bfa2cfb5bda6672ed9804758",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "9a4d3350252683a8494eada78cfc11d62517ad33bfa2cfb5bda6672ed9804758",
+        "fixture_sha256": "69f99945e44c0a613e67d407255792bb9168d921ffaca91b350d2ef48ca5cb2c",
+        "preset_definition_sha256": "8e6f373d3c0cef5331d97f0f0be1b7d291454897c6eff68a993c08ae03c86382"
+      }
+    },
+    {
+      "id": "SC05-021",
+      "name": "Ember Violas Close",
+      "report_sha256": "bc1e3f1e896064cf9567571cde9b6e138e56e997b53cb7e4f74596aab0ba2c8e",
+      "patch_sha256": "b573f6765c3680b5aa9a059515c59d139f94c0e3314bf011ba2045fd5dc7a540",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "b573f6765c3680b5aa9a059515c59d139f94c0e3314bf011ba2045fd5dc7a540",
+        "fixture_sha256": "b82fe98a29b68480c988998bc098944c9d93ff0686afa327e7a02e47c5d794f8",
+        "preset_definition_sha256": "ca7d12667fc244d29fddf6c3a98949d644959a3d309cec4929d7ab0df8dcbb48"
+      }
+    },
+    {
+      "id": "SC05-022",
+      "name": "Ember Violas Section",
+      "report_sha256": "f630599c38b2b124cf45676c4b8c75ae0ecc2d002e3305de49fbe0f0972c0d33",
+      "patch_sha256": "104e8f9e061372e19e3c0ac98fc031301e9d969052b54b78e041185077481195",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "104e8f9e061372e19e3c0ac98fc031301e9d969052b54b78e041185077481195",
+        "fixture_sha256": "b63fc170b82dfc4951813cd90647f5ee795cbe271ec20e8aae840b71084a4a67",
+        "preset_definition_sha256": "be4e35e09f406b4abea9c89a64e33f6c0cc80fc0dc6799570e7c95ba2a265c77"
+      }
+    },
+    {
+      "id": "SC05-023",
+      "name": "Ember Violas Swell",
+      "report_sha256": "58f9e79318138d6b21c2ba706c053896fb3772159360a5f352c7b50869fcd9eb",
+      "patch_sha256": "9aa9e3bed080cd8729acd1db1aec7c961bf25f31fde22d2a89114164011ee04a",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "9aa9e3bed080cd8729acd1db1aec7c961bf25f31fde22d2a89114164011ee04a",
+        "fixture_sha256": "443f0f012ffb159320b83085eea1953bf74537a07ad7df94630d3960938c615a",
+        "preset_definition_sha256": "64357600abc734ac956c45695cf74f0b7c169bcc549d5a4a29025e875b67b935"
+      }
+    },
+    {
+      "id": "SC05-024",
+      "name": "Ember Violas Muted",
+      "report_sha256": "84ba83ba765431c403275c641d6726a57e91cb7207e45b0675283c49fb986158",
+      "patch_sha256": "a6520756905ac91284e8c5c8033d22006e53804c0f206d18902a6cd31004f9f8",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "a6520756905ac91284e8c5c8033d22006e53804c0f206d18902a6cd31004f9f8",
+        "fixture_sha256": "c574b836e284e6ef5273b465aa8419655d40af15f0f736c7fccf58f6b52eead6",
+        "preset_definition_sha256": "dee68bff9710f32337455b658c7e2f745648bb0e611a2c9b1779e635087531be"
+      }
+    },
+    {
+      "id": "SC05-025",
+      "name": "Ember Violas Motion",
+      "report_sha256": "1199a9719a2e2447a9d07a9552d0df09ff65b79c7c99fe65befecd033a9e793f",
+      "patch_sha256": "1b56e83d9060b639e6601c9fb7ce0d6d9283c6d7ab742eb231b1b46b201231a0",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "1b56e83d9060b639e6601c9fb7ce0d6d9283c6d7ab742eb231b1b46b201231a0",
+        "fixture_sha256": "480905f4675a9d48fd8075c94ed1fa342062d7b4cf413b815ad3bfc7d35a123e",
+        "preset_definition_sha256": "c92a578ffaa4b808ca0b7b43c0ed37dd623bbcc8f07c68166422a5165dbe77aa"
+      }
+    },
+    {
+      "id": "SC05-026",
+      "name": "Bronze Swell Close",
+      "report_sha256": "bfe951505143ad89447b93b3ed5a50604837ef4b15a2310cd8cf9df0adb064b8",
+      "patch_sha256": "aeb1e74b4a2d8c8ca5202945d46e7157e487f9b135d00db35abba1fc757f48da",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "aeb1e74b4a2d8c8ca5202945d46e7157e487f9b135d00db35abba1fc757f48da",
+        "fixture_sha256": "bb772849b208288611133870e7c9a1c4665428e8b2a7430661765273cf7c7194",
+        "preset_definition_sha256": "903a108f7b0b961baf0e9e03774460e1dd1fd19fa12468e7082d4a8909102e16"
+      }
+    },
+    {
+      "id": "SC05-027",
+      "name": "Bronze Swell Section",
+      "report_sha256": "6496fe041bd131a71d384f7bae401ff0a9f5822c596880cfebe5d43295f32a00",
+      "patch_sha256": "7019847e0940a321c0af8b7ab59b1d151b36aec702028d8392968cb3271480e5",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "7019847e0940a321c0af8b7ab59b1d151b36aec702028d8392968cb3271480e5",
+        "fixture_sha256": "9dea2517ff31814e7c6f3c7872e392350152ef7204decb896ed48ac9c0e53a9c",
+        "preset_definition_sha256": "9c2a259f9ef9380133d5a7603f1872b76a59497eebb2a2718fbfba93cd398dbd"
+      }
+    },
+    {
+      "id": "SC05-028",
+      "name": "Bronze Swell Swell",
+      "report_sha256": "15ea686013067dd522b420d98850b523787d9ba641879c920b545c1569b6d980",
+      "patch_sha256": "687bb049cfb500a1557358f6191b0a9a9fd8f28a8a897e856e3c5fa205c218c6",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "687bb049cfb500a1557358f6191b0a9a9fd8f28a8a897e856e3c5fa205c218c6",
+        "fixture_sha256": "253928d32e9fb7cfbd3446367a0b346b561cca743b4669ab8a2abffadd21e2ec",
+        "preset_definition_sha256": "ebc689d383ec9ffc54ec39cda61d0ddb6198e983e65e72d05945c85edd04943a"
+      }
+    },
+    {
+      "id": "SC05-029",
+      "name": "Bronze Swell Muted",
+      "report_sha256": "277be5bc725ee9a73543203aca69640a109f5f1dd1081b044b0bc4b53b80ce89",
+      "patch_sha256": "230c6e6d18181159826b651b38a77ad9261789587101d7d1c119fd9e81eb676d",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "230c6e6d18181159826b651b38a77ad9261789587101d7d1c119fd9e81eb676d",
+        "fixture_sha256": "f969b80159b59d62a112b5b79d9b74240666e589015ff374ad39dca8d021d483",
+        "preset_definition_sha256": "ae080bb65687c8b8f3bbc2d7d2c4823a2dd1d5a741c2db594b6ffdc76f2310d7"
+      }
+    },
+    {
+      "id": "SC05-030",
+      "name": "Bronze Swell Motion",
+      "report_sha256": "7d0f546b8b7b4e3e74130f9dbc9d5b359f5565eff0f1b53c84bcccce3933768c",
+      "patch_sha256": "2296e9b55b79ed8bf24a4938c9c7fa9d223874e9eb7ac29b8a4da67bcf6183ef",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "2296e9b55b79ed8bf24a4938c9c7fa9d223874e9eb7ac29b8a4da67bcf6183ef",
+        "fixture_sha256": "58482050801327dff7a15fbd779d2b51072dc0bfa1b3edd0bedcf63607075663",
+        "preset_definition_sha256": "ce2f381dfe6a6faf9aabde0bb8acfe91d4f34b44ff11bcf5de4aa74be1890813"
+      }
+    },
+    {
+      "id": "SC05-031",
+      "name": "Lantern Horns Close",
+      "report_sha256": "d94d6ac819c1d153c5fa71022c28a8e531676ec56ebbdd5233fdb3013543764a",
+      "patch_sha256": "05e539c994adc5d8b3b986eb478cc9c3edefcd25aecacc066981866047782ab5",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "05e539c994adc5d8b3b986eb478cc9c3edefcd25aecacc066981866047782ab5",
+        "fixture_sha256": "86b6aaa70c74623458e2deb8ee080a14354a90cab203816f4447b3a21da430d7",
+        "preset_definition_sha256": "d79c729305c7d181192f45c860c65cc9fc718fcae3f076aa0bba13b77113d0ff"
+      }
+    },
+    {
+      "id": "SC05-032",
+      "name": "Lantern Horns Section",
+      "report_sha256": "90d2ba76981c677d2676993924e732879468e42e15b3a4ac8d05beeaf3eeda88",
+      "patch_sha256": "0bc5a30390021ad95b9fcb820949c334865fc2ef6a5a67afb54e9d72f73d3c38",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "0bc5a30390021ad95b9fcb820949c334865fc2ef6a5a67afb54e9d72f73d3c38",
+        "fixture_sha256": "cf605446b3ee688565d61c3e2eb2fa9653bed54ba19bbc751f8a69ee0441fa47",
+        "preset_definition_sha256": "0cff5a8ccd9d724ac02857cb35efb983da5bfc4d617136d9a679df2e640443e3"
+      }
+    },
+    {
+      "id": "SC05-033",
+      "name": "Lantern Horns Swell",
+      "report_sha256": "acac4ee6af64a1a0d3789b78ec4556275fbeab1aa3a78aec205798720a948dd0",
+      "patch_sha256": "07d30f1d045b0875294375d3f25719558bb02f513a71f3b0941c71a40f3cd4da",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "07d30f1d045b0875294375d3f25719558bb02f513a71f3b0941c71a40f3cd4da",
+        "fixture_sha256": "dff8325e60f1c4f49adbf9d7eec92b285f3955662039867f5d014195c89ba60a",
+        "preset_definition_sha256": "5cea8e242d65ddc2fe2d4cf3e34a63c2e737644e22c3ff0d65048dbd9834bb9e"
+      }
+    },
+    {
+      "id": "SC05-034",
+      "name": "Lantern Horns Muted",
+      "report_sha256": "521304b6a7121d70d5049c8d3cf9bf79a60829fd4755def41820d798d89360e0",
+      "patch_sha256": "26a30e344339574dc04fa9fdf70e272aa9001f4bc3a519d9eafb4545a5a44109",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "26a30e344339574dc04fa9fdf70e272aa9001f4bc3a519d9eafb4545a5a44109",
+        "fixture_sha256": "4da5e9681eaccaaf87ac7780ed73a4fc805a0c1fb8003f2a0f21721ebde8cc68",
+        "preset_definition_sha256": "95b7f8d262661747af89eda40accd8ca9584e1efc059bfeeb38dd771ab3a212e"
+      }
+    },
+    {
+      "id": "SC05-035",
+      "name": "Lantern Horns Motion",
+      "report_sha256": "be22fbe7f96144a2c3f06b33c0d633f70f8343fb17e050706e5701189b00e3cb",
+      "patch_sha256": "3baa8801469bea836a4620437249be4e814e039c24ae0586425bef895f211cd9",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "3baa8801469bea836a4620437249be4e814e039c24ae0586425bef895f211cd9",
+        "fixture_sha256": "dc1582940c0b8fd0218526a48da97cb8c02e5c1920a3d441391c9a2b0a31dd7b",
+        "preset_definition_sha256": "69865dcee7da1439d9cd18939884c6cc4a90426478b900db3953ad3ab45c38f1"
+      }
+    },
+    {
+      "id": "SC05-036",
+      "name": "Slate Trombones Close",
+      "report_sha256": "c418d72ac0f732175a6cfaf434aed3ef684f91e8b1fbedcf0e889eeedbb5b606",
+      "patch_sha256": "bed69f37e9a1e3a7260e03e49e651de57e6a0c58e35eabd9388e12f42c6669c3",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "bed69f37e9a1e3a7260e03e49e651de57e6a0c58e35eabd9388e12f42c6669c3",
+        "fixture_sha256": "58c647448f932efd1d68cb795a4ba45799a504e4eecd59a03378a7b156453225",
+        "preset_definition_sha256": "6d547917d84f47ada624d53c4dfcd7a15ce4557f525f3b3d7463301d606e0952"
+      }
+    },
+    {
+      "id": "SC05-037",
+      "name": "Slate Trombones Section",
+      "report_sha256": "b9ff5f679041abf333bb76e938bf11ae4019e30bc45b85d76a3ac3166bff2a74",
+      "patch_sha256": "87db8ee51e65faa933a66ddc2f1afc13cfc2d30c92133495c0df8a8ad1c62ff1",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "87db8ee51e65faa933a66ddc2f1afc13cfc2d30c92133495c0df8a8ad1c62ff1",
+        "fixture_sha256": "8853ffe30cccf80e6fcb003a4925147a34b7f42947c4363b66fbdd81cbed179c",
+        "preset_definition_sha256": "3d8e38b63bccc6c6ed48ef6bd205c3a2b36ebdc102d44a6a27ec2381e4094859"
+      }
+    },
+    {
+      "id": "SC05-038",
+      "name": "Slate Trombones Swell",
+      "report_sha256": "8a4d7b8c93207f3a5d4b0532e66b8e216afa673008b8a38006d5fda000cdc47c",
+      "patch_sha256": "ac2185c5e1daea58a0e469ce947ac4c5531c9728b39f30d4e4ee5ed53139d2a9",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "ac2185c5e1daea58a0e469ce947ac4c5531c9728b39f30d4e4ee5ed53139d2a9",
+        "fixture_sha256": "2bc8fea09099da1330a9a77107117a57b179e56339b44934196c9ddb571c731b",
+        "preset_definition_sha256": "a93b72d3a9792d330278c686aa3009626bb2428075b1d2c2d5b8119e3cd7a9e7"
+      }
+    },
+    {
+      "id": "SC05-039",
+      "name": "Slate Trombones Muted",
+      "report_sha256": "5ad971028275741a355477f99263f650823c4e6a042b1df3a0017164a5e45672",
+      "patch_sha256": "e9d88ead1ecc01f6a7b6e3ad3edd2fbd5732c8c7cfea0a0af7fcc2e56c03b0e9",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "e9d88ead1ecc01f6a7b6e3ad3edd2fbd5732c8c7cfea0a0af7fcc2e56c03b0e9",
+        "fixture_sha256": "033e1168684ce5d26f8bc1cd7cb1952a5bf208c089b3f73ec1a75206a5044228",
+        "preset_definition_sha256": "503ebe045683fe7fc2e7a369abc7bd52e6e10fc4fd50892f89b00945e991cfb4"
+      }
+    },
+    {
+      "id": "SC05-040",
+      "name": "Slate Trombones Motion",
+      "report_sha256": "b1dc8411904f6fa9c79908baa318e6710c16232293f5d4d77dc5629955cf7e21",
+      "patch_sha256": "a2bb7641941dc1fab36e1253600e5eda8f4a34a1487cd31a8920fcbc47743d1b",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "a2bb7641941dc1fab36e1253600e5eda8f4a34a1487cd31a8920fcbc47743d1b",
+        "fixture_sha256": "ef9a28d49e174a3e588ce7084b0f2cda6665b3dbb38f0d623742f160b4fbd422",
+        "preset_definition_sha256": "dbda6d4c38f6fdac964f5edb9f6a0f5330c622ba2a18b69e41585825a17254af"
+      }
+    },
+    {
+      "id": "SC05-041",
+      "name": "Copper Fanfare Close",
+      "report_sha256": "970390e1f35ee46b6334dea363744ff5c68df5996d0e9fe0288694e69bb31b22",
+      "patch_sha256": "0f36b4a23f4d7d2b442d1692df96ec13bd7886d4b621503fd06ebd22eeaa4024",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "0f36b4a23f4d7d2b442d1692df96ec13bd7886d4b621503fd06ebd22eeaa4024",
+        "fixture_sha256": "64b0a59a7c13de47ddc13fa9addd8db00252491d13c3e56d1845a14699a9a95c",
+        "preset_definition_sha256": "e31559f4ae6a1675b2f8a5e202da791cd5afbcd96079260e4de826ed3358d442"
+      }
+    },
+    {
+      "id": "SC05-042",
+      "name": "Copper Fanfare Section",
+      "report_sha256": "11b29adfd6db1338ade700184f81c84bab6293b253100c973b77a56dd2205eb4",
+      "patch_sha256": "510a1566cea57981b0dc7ac989d033b7775315eefa9cadf34258c9f8d8b03f43",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "510a1566cea57981b0dc7ac989d033b7775315eefa9cadf34258c9f8d8b03f43",
+        "fixture_sha256": "e03b6365b85ee2dcaf90adee655e4c2578bdc0382122fa1e41299bc874239554",
+        "preset_definition_sha256": "1538fd5df0aceaf1703a4ba9296366ac7462e1e4322c74675a1ff78fef713a0f"
+      }
+    },
+    {
+      "id": "SC05-043",
+      "name": "Copper Fanfare Swell",
+      "report_sha256": "fce17051b9a5e40947f168cb39a84a4500cd49b5ea51966779dfb89c87c7a19c",
+      "patch_sha256": "e8678891dab129c7eae1f4ebe655f4f24919fe33f67b903869664cb6b43ddb65",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "e8678891dab129c7eae1f4ebe655f4f24919fe33f67b903869664cb6b43ddb65",
+        "fixture_sha256": "402da30cb9fee1ee395673e874de30f391e58261e74c3087434c3d28b5abe804",
+        "preset_definition_sha256": "2a71ab79a30842e815c262c7aa87574d1b3a5ceffbda114ff13eb57468d29b28"
+      }
+    },
+    {
+      "id": "SC05-044",
+      "name": "Copper Fanfare Muted",
+      "report_sha256": "61fd5ea4590f90af6e6c5a4787cba420bd1e9b1202f727688d346a63443d69f6",
+      "patch_sha256": "90e86a1553a7304c68b598048ec12d36559ef066bf1d1af52c5dac4c2cf3496a",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "90e86a1553a7304c68b598048ec12d36559ef066bf1d1af52c5dac4c2cf3496a",
+        "fixture_sha256": "dc40ec9036a00aece5d675ea273349f3ae86b44ab4e29f0a27e536ebabfdc59d",
+        "preset_definition_sha256": "3711d7c0fca592017a76890b54c15d3b289e32d201f185407454ba75ac308e47"
+      }
+    },
+    {
+      "id": "SC05-045",
+      "name": "Copper Fanfare Motion",
+      "report_sha256": "0330fb07d3c7621ac40774fb952e95a569001c114c9ac29d45b3f4e03ea5380b",
+      "patch_sha256": "56bedf22a1b2b8bc1e504299eec8ec2aa52fcebdeb99f26eb76fa082697ce5fe",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "56bedf22a1b2b8bc1e504299eec8ec2aa52fcebdeb99f26eb76fa082697ce5fe",
+        "fixture_sha256": "8518b012b849a4bb930aaea63e115c25d1fa6d93b5e2a811ba6eee71b66da182",
+        "preset_definition_sha256": "3b8a9bf4e955f2c4ff984e1c2644d32a5422762eaeb8b2b187363993349d4f17"
+      }
+    },
+    {
+      "id": "SC05-046",
+      "name": "Amber Mutes Close",
+      "report_sha256": "26aef2e46bbabea45306c4b0ab9049654946f26485601f6e9dde30e6d04202c1",
+      "patch_sha256": "ba8fda8b3a7f3554d90223ded369ade7130f7271d0509039b521232922ec2c96",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "ba8fda8b3a7f3554d90223ded369ade7130f7271d0509039b521232922ec2c96",
+        "fixture_sha256": "0abf923ef64a59d1a489f164adfa7ac777e1d460fe481081b4d57432b0445a1d",
+        "preset_definition_sha256": "dc651c66d919542d1af07647731ac5d599663eb537ad72c9383ab776baa18ecb"
+      }
+    },
+    {
+      "id": "SC05-047",
+      "name": "Amber Mutes Section",
+      "report_sha256": "9bcea957934def3a0afa0448fc83c8663bfc8be6558a6e8d8d3523f760a72b7f",
+      "patch_sha256": "55dac3dcc1575e9c5451bc0d6ac1ebacf838873a02db977e3760dd04632a8d28",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "55dac3dcc1575e9c5451bc0d6ac1ebacf838873a02db977e3760dd04632a8d28",
+        "fixture_sha256": "25aca7b205126e84865dd61884657ad19bf01ccacdc1d4576dd53855fc659275",
+        "preset_definition_sha256": "6f85dcb77d3c55fc60d7ecec5a3c0e98dfff72ca45916833ed97bc26f7ab6f7e"
+      }
+    },
+    {
+      "id": "SC05-048",
+      "name": "Amber Mutes Swell",
+      "report_sha256": "e3bdb8ec5111205dff6de9c4f7fea0bb445a68d2298a510db0a7b7ba876a1707",
+      "patch_sha256": "44ccb70cc89788974582363f67d64c98af6d2988f4301b2b663fa93e329693b7",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "44ccb70cc89788974582363f67d64c98af6d2988f4301b2b663fa93e329693b7",
+        "fixture_sha256": "5bd615aa8140dd614555fac43c0fc26d8ca9b6a7c9fea886cbb8f3a55bf8193d",
+        "preset_definition_sha256": "031a166770d6d708012b2db60c1915ffd7271ac3ba8898a78d7f91f58832b9fc"
+      }
+    },
+    {
+      "id": "SC05-049",
+      "name": "Amber Mutes Muted",
+      "report_sha256": "bf54698f0a6704f5d728c8180b7f13a279b34fd3095eae50e8b1a5417958c526",
+      "patch_sha256": "a0e27ab55770e524c43321bfa612f8ae05cf752d4c5679e6d1d1525911e96e8a",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "a0e27ab55770e524c43321bfa612f8ae05cf752d4c5679e6d1d1525911e96e8a",
+        "fixture_sha256": "cdea3bb17578e5834cb130b1f685790fc65f175d351d2054d4ead20d4ad5bcfe",
+        "preset_definition_sha256": "3b390e85809931b5e504eaf96c3c06d0890da2c909406879090c6df5b06e26e7"
+      }
+    },
+    {
+      "id": "SC05-050",
+      "name": "Amber Mutes Motion",
+      "report_sha256": "21c1c5b84f6a7ab12ee51223b94b0fb154c8c68e9ed7aed7c040548838abb18e",
+      "patch_sha256": "624f746b3196fec00ad570e277950b191fde1abb719d77163dbe28cccc3d22a0",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "624f746b3196fec00ad570e277950b191fde1abb719d77163dbe28cccc3d22a0",
+        "fixture_sha256": "5010360279f70a07b303895cc6fcce5e89eba472ad608dfbdc6ae1846b3dd1e8",
+        "preset_definition_sha256": "a65fac835b01a8aeae872472b229ae9d22eb38f53b40e15247be0f5687bab3cc"
+      }
+    },
+    {
+      "id": "SC05-051",
+      "name": "Breath Reeds Close",
+      "report_sha256": "01d0a6a671993e3d8f6af3f385e232a2408998969a710976a1d03262a3f16b41",
+      "patch_sha256": "7635c19dd0c8783472f679f66d3faedd340623a68f454c5198156b82df446289",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "7635c19dd0c8783472f679f66d3faedd340623a68f454c5198156b82df446289",
+        "fixture_sha256": "cb2ac010188f0ec8099ce9af1d5059d5ac2abf9535c074a9848a18fdcd4f6d03",
+        "preset_definition_sha256": "cbfb922612b2d321c793380d07f076cb82bf95e4da34a36b460a193c2cb9d67d"
+      }
+    },
+    {
+      "id": "SC05-052",
+      "name": "Breath Reeds Section",
+      "report_sha256": "0b51a87736e1f20f7b798c7ca1b36d8fbfc9ddbf4313a087e74579d00ca57a5b",
+      "patch_sha256": "374bfae457173de2b68a2b1b700982a3f60994cdf4cfd1d695bb396c34f8fea0",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "374bfae457173de2b68a2b1b700982a3f60994cdf4cfd1d695bb396c34f8fea0",
+        "fixture_sha256": "921c597e6f599dc0cda06b3c301b158fc750f82d94a7bc61600bbaf77e53a81b",
+        "preset_definition_sha256": "00b6bb06955ef03b6748fe1accb6ef2e7e7b686ee81366164b2ce8a8024f8297"
+      }
+    },
+    {
+      "id": "SC05-053",
+      "name": "Breath Reeds Swell",
+      "report_sha256": "81bf304e6f1013a66cd3f74254ae495b6c7d52181a52d4b0bc26e57bdc480966",
+      "patch_sha256": "ae1fc2e9013a8784141c8319a2033fcdfc6356818a06a844acc389255118e0b6",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "ae1fc2e9013a8784141c8319a2033fcdfc6356818a06a844acc389255118e0b6",
+        "fixture_sha256": "831d94d13ab0818918374e51625865c5613562a2c49f15ffa446bbce688597e6",
+        "preset_definition_sha256": "fb26883607d39ef9c779b5f67e2278cdc059a564a53a7c113c923129fc46a8dd"
+      }
+    },
+    {
+      "id": "SC05-054",
+      "name": "Breath Reeds Muted",
+      "report_sha256": "6a9ee06335e29a688e732ac0fd0261956cb91f0862de773c8f41879aed6624ee",
+      "patch_sha256": "d924ed754d2d210e91cd3dfd577f87505bc069fc482e34eb10e419e26dc11fe0",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "d924ed754d2d210e91cd3dfd577f87505bc069fc482e34eb10e419e26dc11fe0",
+        "fixture_sha256": "445db06e94afe99a022382a1196ddb5fbc8ac92194d6582dd22d049370296fbd",
+        "preset_definition_sha256": "c1f25f9eb0e0cf273144030f0774997117677426292ba166ee5d7589102997bc"
+      }
+    },
+    {
+      "id": "SC05-055",
+      "name": "Breath Reeds Motion",
+      "report_sha256": "e159fb1ad2fcc547c3d4716ebaa3dcbbe66912e6d607808010a959499027041f",
+      "patch_sha256": "51c7476c996a6a811153c1536bde56b9aa5186606a22d09a23cd93901961383a",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "51c7476c996a6a811153c1536bde56b9aa5186606a22d09a23cd93901961383a",
+        "fixture_sha256": "83a7d57647fc2169245b1bdbc0a5998f0e59ee07ded651d4926f6db7cb2e22ae",
+        "preset_definition_sha256": "a8e00ab7addb9adb9fc093a807c8df70b57b6cc48d69b7893c1e8e8995316724"
+      }
+    },
+    {
+      "id": "SC05-056",
+      "name": "Willow Reeds Close",
+      "report_sha256": "de601512559ae2f5016b7906658d61f5a64a785a4eac3aef6715cb990e5d68c3",
+      "patch_sha256": "89f044034f08f4197a429a9aa11d1792a030b871d01931916a427c6fe4d95df8",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "89f044034f08f4197a429a9aa11d1792a030b871d01931916a427c6fe4d95df8",
+        "fixture_sha256": "f2e915b4d97e3887208d6b70c5407459e136a19f6aaa3caea39ea6a89b29f793",
+        "preset_definition_sha256": "2a97940927de7e080a68b1244baf088808f751e79212e51c1a3846458b48eae0"
+      }
+    },
+    {
+      "id": "SC05-057",
+      "name": "Willow Reeds Section",
+      "report_sha256": "c39174115f878cca4ec2fb1ba1faeaf6acf593f3c823d785848de7e4c26844a1",
+      "patch_sha256": "03536d53254e070b35a4db0d890a8ef1b803739f0f04045b57527155d4237afe",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "03536d53254e070b35a4db0d890a8ef1b803739f0f04045b57527155d4237afe",
+        "fixture_sha256": "c0a96e9daa67887a257f4ba8cd922afee81d0eebbe5969a932c60db6e03085ba",
+        "preset_definition_sha256": "cce6eb8e5d3ee26b2d999856f554ce3cd2eef1a270e8b6d653118d5701d8599f"
+      }
+    },
+    {
+      "id": "SC05-058",
+      "name": "Willow Reeds Swell",
+      "report_sha256": "cca828465bd2cbe6a9a993bebfe5185264ab4f9cac6fda7339a332b4ad9f4d73",
+      "patch_sha256": "511a0d99f4b20cc5240005dd419677822379110b6c0d0ac852dceb6428111bda",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "511a0d99f4b20cc5240005dd419677822379110b6c0d0ac852dceb6428111bda",
+        "fixture_sha256": "b631c85f23d32231e583155ad67a015d2428d7b5eb7657a187cc14acdd41a992",
+        "preset_definition_sha256": "019c119829af6bc572391bc60171b99b97d9752621e30223f74abea655588080"
+      }
+    },
+    {
+      "id": "SC05-059",
+      "name": "Willow Reeds Muted",
+      "report_sha256": "771a3ca47c3bfc25a115ef966acf297ae4c5406b1c73aaed1da98f27aded9d51",
+      "patch_sha256": "e9f6e41dff74b9cbf39c4a5c3d0c82e7037db1bdbcfd290343961ed4ab4bb231",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "e9f6e41dff74b9cbf39c4a5c3d0c82e7037db1bdbcfd290343961ed4ab4bb231",
+        "fixture_sha256": "30af4f22c2849190e31a91a613937b4c0e0f31650d9771ad5c0775549904a890",
+        "preset_definition_sha256": "ff7c105b85a2e7d1a3e7adcb3442937f84726bdccddcd80a64332cfff37fa566"
+      }
+    },
+    {
+      "id": "SC05-060",
+      "name": "Willow Reeds Motion",
+      "report_sha256": "64bc93c3ad656164f7590a0e957babdb21c543e205fc6f7cdce60302f7af58b0",
+      "patch_sha256": "ffbfcbcf5495001e69af37ee1ea0e82a5ba8b429aba7ff34bcc4f2cdf02504c7",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "ffbfcbcf5495001e69af37ee1ea0e82a5ba8b429aba7ff34bcc4f2cdf02504c7",
+        "fixture_sha256": "b1bfc4cf8dc5a3aa6081d89d1552a8cedc987203d4c0956a1a904450ad0fd684",
+        "preset_definition_sha256": "cbece157a462a0ceac872367371214168d8bc0ab29dc8d96a6261c594029c4d0"
+      }
+    },
+    {
+      "id": "SC05-061",
+      "name": "Chapel Pipes Close",
+      "report_sha256": "c6c3dae8592e536709ce41de218a8f957f85542ed7058b241152beb51cb14188",
+      "patch_sha256": "9303e1ab6c955b0c0423a721aa47509fcfa35ffc8b174eb97af94cbfad560730",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "9303e1ab6c955b0c0423a721aa47509fcfa35ffc8b174eb97af94cbfad560730",
+        "fixture_sha256": "f7f77a4918ae76ee56aee0c223ae622abf048ca2e5d33770cd9c0b0cb5fbc27c",
+        "preset_definition_sha256": "28715d954aae0cb852361100b687156fc75fefa7e68429bf7e44d31167319438"
+      }
+    },
+    {
+      "id": "SC05-062",
+      "name": "Chapel Pipes Section",
+      "report_sha256": "71704d63e1dd6b2bed8c613ccfb7cd12cf0a60230344b5d2c5aed5eb5e448388",
+      "patch_sha256": "6552feb331a388c85335e0c8985bae47a8e9594907f5395e6a2f8aa2604aaffc",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "6552feb331a388c85335e0c8985bae47a8e9594907f5395e6a2f8aa2604aaffc",
+        "fixture_sha256": "e6e0c71a5ee19e297345f4789f57e039ec691c8113e8d6c44c0bfa4bd65f247a",
+        "preset_definition_sha256": "704a7e9bd2b3e29d7d9c96cf44a6e66fcf9b98cd1186e296889e0bedc1a96c76"
+      }
+    },
+    {
+      "id": "SC05-063",
+      "name": "Chapel Pipes Swell",
+      "report_sha256": "28132d0a319f4983b94661b8ad8fc25abe9b04abf0543349454945a786b4cb04",
+      "patch_sha256": "43afc43ac1fc19e5521922b4fd53c82cba73544cefbb6a553b29988c667ddea9",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "43afc43ac1fc19e5521922b4fd53c82cba73544cefbb6a553b29988c667ddea9",
+        "fixture_sha256": "1504264c4a935cd22ad8b438f31ec232522fa370a7cdca7b01b01e8041175133",
+        "preset_definition_sha256": "2c9e849e13b4e1d40781ee242caf0d5cf242cd9ce3c7c205371e7279818bbc15"
+      }
+    },
+    {
+      "id": "SC05-064",
+      "name": "Chapel Pipes Muted",
+      "report_sha256": "3f36fc4ed56276f6b6232329c029f10497336a38fbfb2187fbb619bd44f76097",
+      "patch_sha256": "8dc2227ea9dd56a32db9b14b4ad2751feccb5864ba25067a8cfc13a84307cb00",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "8dc2227ea9dd56a32db9b14b4ad2751feccb5864ba25067a8cfc13a84307cb00",
+        "fixture_sha256": "01af839535c229357651ad835892670fccd19c865577c5ab34ad11c4b1b59842",
+        "preset_definition_sha256": "2d8f18286c1609ac74ceb4931e6f8209c24aa8006128a6d8cea9b0ebe6df1208"
+      }
+    },
+    {
+      "id": "SC05-065",
+      "name": "Chapel Pipes Motion",
+      "report_sha256": "1a39c3ec57c95c364cc8cf5f0373924961e4df62b6600a4c7f1c42cf30875b2c",
+      "patch_sha256": "ce0cfb182158882a7b66f326a463234537293907f018835850346b6593189ca2",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "ce0cfb182158882a7b66f326a463234537293907f018835850346b6593189ca2",
+        "fixture_sha256": "1359d86c2e7f59586b6236b621e591f4ccf4a677806c42155b839d0055846d9d",
+        "preset_definition_sha256": "e2369ff4e0013ca34dbaa438cdb2587fe557f02cdb7658e6614af4570a9f2695"
+      }
+    },
+    {
+      "id": "SC05-066",
+      "name": "Hollow Stops Close",
+      "report_sha256": "a8e2dca4774d0c50f1aff117bdb5690064b0e706d95bb7998e69c170b6923950",
+      "patch_sha256": "1ee5b46dcddd287de244812ab503a5a1cc3e7d0a3b7e3b48eaaab037201b57b8",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "1ee5b46dcddd287de244812ab503a5a1cc3e7d0a3b7e3b48eaaab037201b57b8",
+        "fixture_sha256": "ecead92a19b77a15a304d02b9af145c321b07f0099edb2a4bf601c39c1648687",
+        "preset_definition_sha256": "4f036fa1fbfedbd503698bfefa91f3df51affeb985043298368f1fae21e12ef6"
+      }
+    },
+    {
+      "id": "SC05-067",
+      "name": "Hollow Stops Section",
+      "report_sha256": "f3d320b8c24d7cac35ac781137aca7c7bc775863ad24736b16ad85cf6021e239",
+      "patch_sha256": "1dafcfce5370dfb3c280c4f45198b2ce914c6808c741a13dcfdeaad7bc741f0a",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "1dafcfce5370dfb3c280c4f45198b2ce914c6808c741a13dcfdeaad7bc741f0a",
+        "fixture_sha256": "9775ecf4498fc8a9bd41c5c79330b5adef883ecf1d90c58912d8d5ff02f15267",
+        "preset_definition_sha256": "b6e50192383ea6e0cd74f1e35e967bab72c35e7b80d27e7dc4d6f1052699c034"
+      }
+    },
+    {
+      "id": "SC05-068",
+      "name": "Hollow Stops Swell",
+      "report_sha256": "75a29e0145dd88a7adaef4b5210d81588cfba1cc447e0619e3389af240775634",
+      "patch_sha256": "330f46bf76b84e48379749377a43baf8ca5627706addc12e1bda1f8b22207a0b",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "330f46bf76b84e48379749377a43baf8ca5627706addc12e1bda1f8b22207a0b",
+        "fixture_sha256": "e2cd01e6517afaf48a2426ecd1b332868ea2bb42522d0a7d1d459404178b63fe",
+        "preset_definition_sha256": "f752bd703189d9c3edd77724d6a9d8b39126174ed63940bfe8c1793a336bdd44"
+      }
+    },
+    {
+      "id": "SC05-069",
+      "name": "Hollow Stops Muted",
+      "report_sha256": "71d7f753a23c8cf5ae0703842b43ca9a5cd4c55a757c722b9d2d69b889580c47",
+      "patch_sha256": "70b61412e7fe4a40952696efb59aecfd653c93cf1e27cec74fb87af6e9c7e613",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "70b61412e7fe4a40952696efb59aecfd653c93cf1e27cec74fb87af6e9c7e613",
+        "fixture_sha256": "0b56f7485a3feef37d7421224868e7cf9b652ac41b4a2a310cacf479efb2da9f",
+        "preset_definition_sha256": "66fc448909e185a92663f1cae571a97bd67e85b8c8fc85aede835fea1df098b9"
+      }
+    },
+    {
+      "id": "SC05-070",
+      "name": "Hollow Stops Motion",
+      "report_sha256": "aba912f7445454d2c851f8fd5038675af86c2baa1e5dbe1c726e3de0b8bb41f1",
+      "patch_sha256": "f4a8e6669f13346c4324fba9e0ec3b9b34669b4fa0f7be868790c8cf36811d3a",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "f4a8e6669f13346c4324fba9e0ec3b9b34669b4fa0f7be868790c8cf36811d3a",
+        "fixture_sha256": "d357a480151b4a7ee7ed6d66769b99663c739eade5ba410f23e002d3fd9df232",
+        "preset_definition_sha256": "12dc44a84d129a904aae3b441cf8e2f188012df05d688fa979d62b8b75c77196"
+      }
+    },
+    {
+      "id": "SC05-071",
+      "name": "Silver Accord Close",
+      "report_sha256": "d9c27c8dccc8fb05362ee6124bceba750ea5c57b0cb71c726a89d26292412dc2",
+      "patch_sha256": "251606464c53725720fd0741e12301c692d116156587cab121cd9f964c404941",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "251606464c53725720fd0741e12301c692d116156587cab121cd9f964c404941",
+        "fixture_sha256": "68823c2f2b2a0d880dbec3d4b566d89ea938457a854a0e3a2eb2d4e79d79dd5d",
+        "preset_definition_sha256": "35d82392c381e17a5a028b553398eaa7cc79f172b2f7b3d50be9e905908e60e0"
+      }
+    },
+    {
+      "id": "SC05-072",
+      "name": "Silver Accord Section",
+      "report_sha256": "fb859f654f3adccfec2c5aa889da92a4c47834d10a170ddb5961d91f197bcc79",
+      "patch_sha256": "e07f93c5314851f866828cd0787cee46c2ccc0e30eeff86beb3a7758b8dcfa54",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "e07f93c5314851f866828cd0787cee46c2ccc0e30eeff86beb3a7758b8dcfa54",
+        "fixture_sha256": "459cf259fcb7241e516715cf3de4921a927c7b48bc9a803ec4ccf41288f4e0ae",
+        "preset_definition_sha256": "ec4477d28b65188ddab2ae85f7defac354b9d2d86d16be385cd8abb4b26c0c3c"
+      }
+    },
+    {
+      "id": "SC05-073",
+      "name": "Silver Accord Swell",
+      "report_sha256": "d70e0abcb025c03e346279de88566f486267c3a2f731a57363ebbd2a0988e636",
+      "patch_sha256": "abc1c23e78ac2929c2a0c78dd0c20ae4566ad3670fe0b769776e9a06861fad41",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "abc1c23e78ac2929c2a0c78dd0c20ae4566ad3670fe0b769776e9a06861fad41",
+        "fixture_sha256": "8f89c057f6fbd720ae709b22013b956f186a1ffeb322a3000704558511c12cc7",
+        "preset_definition_sha256": "3d5e364e713fbaea729165c3b33f035f9add64d2f1f9ba6f88ab96a17a1103ae"
+      }
+    },
+    {
+      "id": "SC05-074",
+      "name": "Silver Accord Muted",
+      "report_sha256": "45f19319ab0dc07578b01b4a1be728e3b8e5feb8cf230a43ee4be5b7ec2a1154",
+      "patch_sha256": "ea63f9cb7638aaaba6e99dca530834847013c4ab674153a5a53d38a36cbc2ba4",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "ea63f9cb7638aaaba6e99dca530834847013c4ab674153a5a53d38a36cbc2ba4",
+        "fixture_sha256": "ae82c4d612be9526190ee2e11275dd101772dae93d253d1d0fc62df40c85496f",
+        "preset_definition_sha256": "9ef759b918527d78e781c8f7db99b93d6eb1f557650235c5372b729cf755a1c2"
+      }
+    },
+    {
+      "id": "SC05-075",
+      "name": "Silver Accord Motion",
+      "report_sha256": "e1aa139cf5d4882454560410e37c45b25037c82fc3795fa0164d53af3d61cfef",
+      "patch_sha256": "c6f2d93678e74119a6a6793f8e2bf083c1029776cfcf1101a93371753b2d2c2a",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "c6f2d93678e74119a6a6793f8e2bf083c1029776cfcf1101a93371753b2d2c2a",
+        "fixture_sha256": "16e3074b2e98c9506efce8512d0b5fc50a8be6e82e94a79524b356a919564202",
+        "preset_definition_sha256": "42c073c4a1b7e7dab01a66c9f233128302d838bfa7f93b65640e5884b79d8f57"
+      }
+    },
+    {
+      "id": "SC05-076",
+      "name": "Glass Strings Close",
+      "report_sha256": "efb37c75d2ced751ff109b94315969a8b6d324a8db8d5c7e95860b153222bd06",
+      "patch_sha256": "98f3c44576b28cf4461acb96a030ec001023120e4f9f6e0ecc0292cc43517bd0",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "98f3c44576b28cf4461acb96a030ec001023120e4f9f6e0ecc0292cc43517bd0",
+        "fixture_sha256": "5cf592f0d7e5eb594543e4ffeae2eff1ea08a612064a90f560320bb935de5188",
+        "preset_definition_sha256": "5e78a1d76981ac260cc6aaaf2406ecd399cbf7c7d4a188a016023fcca5f70b70"
+      }
+    },
+    {
+      "id": "SC05-077",
+      "name": "Glass Strings Section",
+      "report_sha256": "4cf427476fbae56576c858508d8bfa9ef6b0892fcff9e7d9b054d662ffaffcbf",
+      "patch_sha256": "2222a87c84a2de67ac4c8c697ddd3ce6f194809a77df760857573806106d0fd8",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "2222a87c84a2de67ac4c8c697ddd3ce6f194809a77df760857573806106d0fd8",
+        "fixture_sha256": "bcd199cd993b097c66f67196023ae4aa4e7a1283d1ebb47e9f1a3162b89a0254",
+        "preset_definition_sha256": "3e744339af4c041931de6b1a2a0b2e1fb0f8842a09f4d75e8ef231258bc3e3f2"
+      }
+    },
+    {
+      "id": "SC05-078",
+      "name": "Glass Strings Swell",
+      "report_sha256": "c7c92bbe7f7fa2632bbe786b1b4c6fb99d184e391301530788b9923a8ea9890e",
+      "patch_sha256": "329bbf56ea31411d9a8a59d79197fad75e671b7c7eca07b1652c504d17a772e3",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "329bbf56ea31411d9a8a59d79197fad75e671b7c7eca07b1652c504d17a772e3",
+        "fixture_sha256": "858adbc1296cbdd40c45c5ce6f45bc73c8a65aba0568fc84ad77cbee5bb0cc24",
+        "preset_definition_sha256": "b6b6e8b4113e60d74243a4fe40b8c06fa1d9039eb57f9d0b1f1e4426237a8e9a"
+      }
+    },
+    {
+      "id": "SC05-079",
+      "name": "Glass Strings Muted",
+      "report_sha256": "227ee712640818efb1788ec915923840af7984bbe4b1a1b14ee040ba37e3a3f5",
+      "patch_sha256": "159cac044238409fde1505ad79224958af3dfda704fb58dd3a9164d014932bd2",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "159cac044238409fde1505ad79224958af3dfda704fb58dd3a9164d014932bd2",
+        "fixture_sha256": "4bde5c4e557b2739595294d3969605493033dd5de1019d427f1dd0fa4d0c03f9",
+        "preset_definition_sha256": "0b593a6ad32ce537c1de4b4cdc4cf8ab5e922edd2b5e69c0150576d79404ec98"
+      }
+    },
+    {
+      "id": "SC05-080",
+      "name": "Glass Strings Motion",
+      "report_sha256": "1839a7a98fb43fb0a67b87137aca81e3c2e9de8f2c967f42875d64b4e0cff31b",
+      "patch_sha256": "c3cc922a94afde40a027cf1bb22927b8a2c9d468e0107b6ba7241bb28fddcd48",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "c3cc922a94afde40a027cf1bb22927b8a2c9d468e0107b6ba7241bb28fddcd48",
+        "fixture_sha256": "d0acbd7ae4600167d2acceb1954c97e9da5067713c0d2e11f90831362c14efcb",
+        "preset_definition_sha256": "88aedb9dae6d5c08f13885d96ef9fbbf3c15c98b5557383cb7c6d0afa351bc92"
+      }
+    },
+    {
+      "id": "SC05-081",
+      "name": "Felt Pizzicato Close",
+      "report_sha256": "20ee83d8ee636adf9ae1c2125c5353c75663517ec5f5788c42bb47025c5a6a76",
+      "patch_sha256": "f32e0c51f35dad87a9dcabe2a5413e97d0550633b2bdfb2870ef505ce0885ac2",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "f32e0c51f35dad87a9dcabe2a5413e97d0550633b2bdfb2870ef505ce0885ac2",
+        "fixture_sha256": "0cd8c3ff748896228afc4de8b4245b92df093b9d3f8eef6b7c10474a959b1e57",
+        "preset_definition_sha256": "4917126bcff2a5bd927d999c5a390275b0edf33e0d966801e26fa2e451a4eaf8"
+      }
+    },
+    {
+      "id": "SC05-082",
+      "name": "Felt Pizzicato Section",
+      "report_sha256": "aace9fb96f30b81ff4e038e1634894fa08fbefbca4c42369cdc3b98443baf639",
+      "patch_sha256": "34d0b663fd543ca0c60e12ade6da17d34e8bbcf16f441b42a9ed319cd66bdb9e",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "34d0b663fd543ca0c60e12ade6da17d34e8bbcf16f441b42a9ed319cd66bdb9e",
+        "fixture_sha256": "4125bc24eb1f4480e558e5fe0c38d7bead2e8bdb3c8b8d2c865a8dfadfc65802",
+        "preset_definition_sha256": "93d193c6731e9bffa2d3fa109fc367ec8cf8b0549d3bf6544c790a6f86005983"
+      }
+    },
+    {
+      "id": "SC05-083",
+      "name": "Felt Pizzicato Swell",
+      "report_sha256": "b8b8cae97a69fd8e6f8a7b5d12ac41f3c4e3f2e3c8f149dffbe4dd76b6c57ca7",
+      "patch_sha256": "e5008159b8d4177e9e2112fbab64590897923e59b7b264daa822a41db55b6fdc",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "e5008159b8d4177e9e2112fbab64590897923e59b7b264daa822a41db55b6fdc",
+        "fixture_sha256": "30bbe4572d92c41ce1cb45803773698e8e086b52f2c4c936a44bbdcd3821f00e",
+        "preset_definition_sha256": "02238d1607d45f38a40de7c468889a15b0165ba88d6c40e2fe37b0b893a6cdca"
+      }
+    },
+    {
+      "id": "SC05-084",
+      "name": "Felt Pizzicato Muted",
+      "report_sha256": "3670953385601540ba9cef9c60a88172e1cdd721afe9f61b6decff2cc5a0aa2d",
+      "patch_sha256": "381fd87f95952f55c8145040daec7c7cdb805c54e2ede05deac7d67778892d81",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "381fd87f95952f55c8145040daec7c7cdb805c54e2ede05deac7d67778892d81",
+        "fixture_sha256": "a3aaa7c9d9084bbbfb70f9f82f3011805cbfbbf2c09ea8f84643e76f75a010f6",
+        "preset_definition_sha256": "0054d5dd33ac51b77cccf6856c8749747fd552a27788cf35384e3db1290dd2d1"
+      }
+    },
+    {
+      "id": "SC05-085",
+      "name": "Felt Pizzicato Motion",
+      "report_sha256": "9f0c17dfbd1d1b740caeb878301d5953b543f6ead184d30d83566096cd58f9ee",
+      "patch_sha256": "ea494079551179fd26187b81f194242c2b66b67e433ad766f1c9ad7043b912c1",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "ea494079551179fd26187b81f194242c2b66b67e433ad766f1c9ad7043b912c1",
+        "fixture_sha256": "b30cf522fb8102ed417aec53535097cc5f541cf1f5d34a76465ef6052c326447",
+        "preset_definition_sha256": "d802631a78a739ab1fe9a27e9988918f5fba79ef72a83608029d4b5de34671f3"
+      }
+    },
+    {
+      "id": "SC05-086",
+      "name": "Walnut Marcato Close",
+      "report_sha256": "98d02ff2d350f707f643b4ef69066b3c013d3011762c63e2cd11f613e2682759",
+      "patch_sha256": "2fcf833eaa4246d026aafbe4b0d65764cb22139b747b26206d4dbefbbf69cb3a",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "2fcf833eaa4246d026aafbe4b0d65764cb22139b747b26206d4dbefbbf69cb3a",
+        "fixture_sha256": "3b45b18a7635e68b476881c76e0f63bf391bb654509adc362e137d648f99dacb",
+        "preset_definition_sha256": "2b9c3cff94ccd333c0b8c1ff6e59d7b4053bcef7e7f8456243f5cd409f1c02f1"
+      }
+    },
+    {
+      "id": "SC05-087",
+      "name": "Walnut Marcato Section",
+      "report_sha256": "54c696bbe7756544f76066350007f3e0311a44afdd874744716ea1f37b614474",
+      "patch_sha256": "dbcb017202c093889f4298956a3781a6e8630fe9be76cf64073bafe98d94ad6d",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "dbcb017202c093889f4298956a3781a6e8630fe9be76cf64073bafe98d94ad6d",
+        "fixture_sha256": "6403d6e39e93813d1fb0da52278fed34ab0b8d9b87ca110e5871f6b14f92ee83",
+        "preset_definition_sha256": "930e2aeb4980b8aa9864d7443fdd9fdead4d33e3616aae1ce7a2a5919f04f438"
+      }
+    },
+    {
+      "id": "SC05-088",
+      "name": "Walnut Marcato Swell",
+      "report_sha256": "942c57ebddd9336196fd8451a6d0c91c480e76d736c2efbd08fb0d4c23ba6b98",
+      "patch_sha256": "e74d907b25844d48f70821a42dcdd9549558f86d5c5eea1dc1993daaee659bb9",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "e74d907b25844d48f70821a42dcdd9549558f86d5c5eea1dc1993daaee659bb9",
+        "fixture_sha256": "92d41aaa50350222c81ea3aa668f0a7a93d52b50d7327b96ceb1fbb4d1604459",
+        "preset_definition_sha256": "968dce8399fc36e501bc86d9b212a192afd929a11afad67026c6d0d1c9743824"
+      }
+    },
+    {
+      "id": "SC05-089",
+      "name": "Walnut Marcato Muted",
+      "report_sha256": "3ff18eb6b990a0db1e1a016ef0c474f8fc9eb152ac43eccbbe4439cec21c22f4",
+      "patch_sha256": "a8039621df71b24a2a45bcd356f3cee77cf30722db1ffcc8981ec17fe8cf80ef",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "a8039621df71b24a2a45bcd356f3cee77cf30722db1ffcc8981ec17fe8cf80ef",
+        "fixture_sha256": "3b45b18a7635e68b476881c76e0f63bf391bb654509adc362e137d648f99dacb",
+        "preset_definition_sha256": "17449c714216403db92ae64f00ca2fcaff460aefe8641943fd4968beef63646b"
+      }
+    },
+    {
+      "id": "SC05-090",
+      "name": "Walnut Marcato Motion",
+      "report_sha256": "cccdb5102831b311486334430eac9cbcf8036ec9243b4b14e764d18c7c6cbc58",
+      "patch_sha256": "c834f75d0775b19ff5f9a6870bc06c0983b4d5b5a5204853c202aeb6f605e366",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "c834f75d0775b19ff5f9a6870bc06c0983b4d5b5a5204853c202aeb6f605e366",
+        "fixture_sha256": "725824f5454774918f58ad59b5cc3df90bb3a805410e34bbc4cdb43f3dcaa799",
+        "preset_definition_sha256": "87207a4a1e0b503c6d8d07f276d8abc8b3160e46509e930585ed8e4ba1083002"
+      }
+    },
+    {
+      "id": "SC05-091",
+      "name": "Reed Crescendo Close",
+      "report_sha256": "0a424649d64245d26183e39fc350c7d0081cb2215ab1310d67165434bcdbde5b",
+      "patch_sha256": "299fe993cbf65bdad959db1ad8a0ffe2eda8067dce97289a0b233bf70468a7e1",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "299fe993cbf65bdad959db1ad8a0ffe2eda8067dce97289a0b233bf70468a7e1",
+        "fixture_sha256": "5462fa03b295c6a6e4a9552356d334124013db957e797813ffafec7db0a9e893",
+        "preset_definition_sha256": "b9585de040097c8903a280b2d647dd50d4d5581e9f3eb5ba9b18b087ba25505b"
+      }
+    },
+    {
+      "id": "SC05-092",
+      "name": "Reed Crescendo Section",
+      "report_sha256": "8ca3243da1a16f489e35ce0809264715e0cdd6f390254712efe2f6ec8be9f11e",
+      "patch_sha256": "d4ca6796ded4d5f5e09e3d66ca82ac998ee6a60e05c5e65841e2aca61c600bd2",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "d4ca6796ded4d5f5e09e3d66ca82ac998ee6a60e05c5e65841e2aca61c600bd2",
+        "fixture_sha256": "8b0e524206b740abd9072b52c01d6c179670339e7c8d5b96e0d8f8343a1df28b",
+        "preset_definition_sha256": "9b99d7e521e4b9a825014e537fe9821984a7255844f284f78008756c2dc452a5"
+      }
+    },
+    {
+      "id": "SC05-093",
+      "name": "Reed Crescendo Swell",
+      "report_sha256": "62d87f024ecf2defe5da1a7d2eda4667f25095da5270d04291d3c2228157c996",
+      "patch_sha256": "f5e3e74cf389b2fabf5cb7ebfac85dc8098c07dfcdf39c48ca8618d437a7b278",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "f5e3e74cf389b2fabf5cb7ebfac85dc8098c07dfcdf39c48ca8618d437a7b278",
+        "fixture_sha256": "29807664a067c5d548e08bfb26463e9af2fcaaed1139504496d6449c0e560406",
+        "preset_definition_sha256": "148a424202e136cb11de72c30f1d70e08acc017c3b3599e45d6cb976ca71be24"
+      }
+    },
+    {
+      "id": "SC05-094",
+      "name": "Reed Crescendo Muted",
+      "report_sha256": "47fc0e5005025e906b9ddfca4bf53eb57a65e0b043d9e7f5527ecdf46a36394d",
+      "patch_sha256": "91a376f01dae74e27e9e784ddf1256d6046db5050ec4192d462cdf18c174661d",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "91a376f01dae74e27e9e784ddf1256d6046db5050ec4192d462cdf18c174661d",
+        "fixture_sha256": "a8fd25caae6587929582fd956605dd80d61b597cdcd16c860361a3f594dcf8b1",
+        "preset_definition_sha256": "fa422ac4dc443ee02873c8ccc55dab257df615022d04271e63552f14222135b3"
+      }
+    },
+    {
+      "id": "SC05-095",
+      "name": "Reed Crescendo Motion",
+      "report_sha256": "a30eb297c9fd8717152c73da8c3805dafd3711e1bda41676c38ed098487a8024",
+      "patch_sha256": "8f8efb0f7b7d12298ac521c2f15b0ecf18c790aabb48b0b28773f6d1d3f2d593",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "8f8efb0f7b7d12298ac521c2f15b0ecf18c790aabb48b0b28773f6d1d3f2d593",
+        "fixture_sha256": "d10f8fa6d76327b57f88018d276687fcc69dce3d8c6c58933b6227bd93011a56",
+        "preset_definition_sha256": "e0becf3c64fd707aeffefc3733bce46514e6ae47b1abd8fc179a2f07501b3d98"
+      }
+    },
+    {
+      "id": "SC05-096",
+      "name": "Midnight Unison Close",
+      "report_sha256": "68854bbf17397334cfd18a895ead9017fa792fbb8c359fcfb7ee08b5018603e7",
+      "patch_sha256": "1ac918855927404612b942f972cd587425a76dade49f445eb1f19b1bb6d765b2",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "1ac918855927404612b942f972cd587425a76dade49f445eb1f19b1bb6d765b2",
+        "fixture_sha256": "6d11d9dad4508d1be33fbbda94678ba3874f81b91a3822ed2e3dbddbb58e7eea",
+        "preset_definition_sha256": "ad252957b941bfe5dec92e847b3a38f132bc62c8676626165c0f62bc6b749fab"
+      }
+    },
+    {
+      "id": "SC05-097",
+      "name": "Midnight Unison Section",
+      "report_sha256": "41e3f4cadae6bea7afdc20aa65a67bb3df270268644c0b9d29697c15cd41d1ec",
+      "patch_sha256": "80986aee8628d6ae13375fb855794d22ab1941500bb9323cc33a3c3183f36c72",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "80986aee8628d6ae13375fb855794d22ab1941500bb9323cc33a3c3183f36c72",
+        "fixture_sha256": "6ef51d1a9a1edca2b9095b85324bece73d5bce0d1aaaf60d87546b026753ec6e",
+        "preset_definition_sha256": "ed57ee35caccd69594b94b0c56bdf110f856f78b5649c2aa558626e0b93d53aa"
+      }
+    },
+    {
+      "id": "SC05-098",
+      "name": "Midnight Unison Swell",
+      "report_sha256": "509faece082f0ec37e4c10ecb00b95c899d879ebf6c1efdb393d5d50a0619152",
+      "patch_sha256": "628cb5e156fb6bd7563fff2a770882498508567f62e9d44327a141a0d4486dfe",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "628cb5e156fb6bd7563fff2a770882498508567f62e9d44327a141a0d4486dfe",
+        "fixture_sha256": "b406f14a6cb16a689bd0b33e4aebc944ded0e64044bd711aa1d67b8a8a30da17",
+        "preset_definition_sha256": "04b06d2d950af95e5d72103a2bb6da0c84e5d2931fd7271a6d4cf533d45b8261"
+      }
+    },
+    {
+      "id": "SC05-099",
+      "name": "Midnight Unison Muted",
+      "report_sha256": "dba245b70ec9e0fd10642b5690b71f6d0327660cf155eea79bb88493cd818451",
+      "patch_sha256": "51a6c69e8ca26f2ac2c72558e604e489acaa4bb0796de988d981b5726ed98723",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "51a6c69e8ca26f2ac2c72558e604e489acaa4bb0796de988d981b5726ed98723",
+        "fixture_sha256": "15f07ef78aaee22d26b01afad7c956a7b24c828fd6bcedc82f70045e31ae6692",
+        "preset_definition_sha256": "3b9ba44180bba43831330446df649ccfe67ddb8d23c288202af4d6d741fd6fc7"
+      }
+    },
+    {
+      "id": "SC05-100",
+      "name": "Midnight Unison Motion",
+      "report_sha256": "5098fc55fd7ef746d8e3e7b74f57dc61783d1b0b9a2c72f3cf4dc9e6c690d5ec",
+      "patch_sha256": "3326a6e2e51797243fec0daa82424a0fcc7143fac17903dc15832fe7206e1aa3",
+      "binding": {
+        "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+        "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+        "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+        "numpy_version": "2.3.5",
+        "patch_sha256": "3326a6e2e51797243fec0daa82424a0fcc7143fac17903dc15832fe7206e1aa3",
+        "fixture_sha256": "766bb06e775667665a2d7a3eef8546b54812a16fca17713a3e9c3e5b8a7e250c",
+        "preset_definition_sha256": "01cf958c016205be033e26853ce80dba7c43c40c68d2696a706579716aeca027"
+      }
+    }
+  ],
+  "supplemental_probes": {
+    "fixture": "Dry Space0, note65, velocity96, tempo120,48kHz,7s render/3s hold,seed1000,fresh engine per row",
+    "tsv_sha256": "32931d63745a21c5a2aad9bf55cc0ac72566a6a42ba1ad655bf7e5b1080a21a3",
+    "native_report_sha256": "6d9d3794fc594c141e7fe5cf699c8a7908853fbd9a615465df1919336bc8136e",
+    "probes": [
+      {
+        "id": "SC05-081",
+        "native": {
+          "ok": true,
+          "patch": "/workspace/scratch/9118c5c72ad8/surgeXT-synth/resources/data/patches_factory/Scoring 1000/05 Ensemble Hybrids/SC05-081 Felt Pizzicato Close.fxp",
+          "name": "Felt Pizzicato Close",
+          "out": "/workspace/scratch/9118c5c72ad8/a39-ensembles/SC05-081.f32",
+          "engine": "1.4.main.dfdd2f94a",
+          "git": "dfdd2f94a",
+          "frames": 336000,
+          "sample_rate": 48000,
+          "channels": 2,
+          "format": "f32le-interleaved",
+          "block_size": 32,
+          "seconds": 7,
+          "hold": 3,
+          "notes": "65",
+          "velocity": 96,
+          "tempo": 120,
+          "macros": "3=0",
+          "modwheel": 0,
+          "pressure": 0,
+          "expression": 127,
+          "seed": 1000,
+          "preroll_blocks": 128,
+          "restores_global_gain": true,
+          "nonfinite": 0,
+          "peak": 0.0379030629992,
+          "rms": 0.00158446398896,
+          "mean": -2.37532796321e-12,
+          "roundtrip": ""
+        },
+        "pcm_sha256": "682afd2ec8d986bd01e12918eb8fd4d87e9695313c8862a89a91ce2903d0c5bf",
+        "bin_seconds": 0.005,
+        "first_second_rms_envelope": [
+          0.02356465719836445,
+          0.020768736017525585,
+          0.01701558524918285,
+          0.01554041360034887,
+          0.013195468682801042,
+          0.012799958981690894,
+          0.01087685285563856,
+          0.011034200435940507,
+          0.009484501661974894,
+          0.009927037086733667,
+          0.008593727659875677,
+          0.009117001241604755,
+          0.007968860230117666,
+          0.008492303898657884,
+          0.0074474123716931195,
+          0.00793922388680558,
+          0.00699002404096181,
+          0.007438588602722032,
+          0.0065537592002625185,
+          0.006963883993575592,
+          0.006146169153273647,
+          0.006514868770523602,
+          0.005754366644328093,
+          0.0060864540838587,
+          0.005387734156638351,
+          0.005680812383726679,
+          0.00503963885753056,
+          0.005296468677429253,
+          0.004714051276375879,
+          0.004934757837042408,
+          0.004407783668695119,
+          0.004594802302827907,
+          0.004121924945062577,
+          0.004275548087300661,
+          0.0038541627962226737,
+          0.003976685504668906,
+          0.003604968002577622,
+          0.0036972380664064912,
+          0.0033719168304512407,
+          0.003435899721440202,
+          0.0031549811002627185,
+          0.0031922303137270763,
+          0.0029522820152438557,
+          0.002964915501947523,
+          0.002763070957919384,
+          0.0027530785060240668,
+          0.0025864581973247492,
+          0.0025558130073653693,
+          0.0024210757281655105,
+          0.002372208390840699,
+          0.0022662937544439604,
+          0.0022016766336134547,
+          0.0021221271512485308,
+          0.0020435617739354784,
+          0.0019869663966847885,
+          0.001896743316225584,
+          0.001860116254872388,
+          0.0017604360323585757,
+          0.001741215201141245,
+          0.0016343085672119102,
+          0.00162991976625684,
+          0.0015175842427794428,
+          0.0015254624627831022,
+          0.0014095195667085953,
+          0.0014272024941179534,
+          0.0013094791160060716,
+          0.001334927085847209,
+          0.001217054568939179,
+          0.001248315420484675,
+          0.001131691418588101,
+          0.0011669385617812927,
+          0.0010527994619577295,
+          0.0010907590079280158,
+          0.00098004390102849,
+          0.0010194949255221675,
+          0.0009130661880510572,
+          0.0009530822939243945,
+          0.0008507288403107433,
+          0.0008904326851431572,
+          0.0007931235367416666,
+          0.0008318236887352036,
+          0.0007398924266788614,
+          0.0007770444077209853,
+          0.0006906700017096135,
+          0.0007257229518635606,
+          0.0006450881499874745,
+          0.000677699144816528,
+          0.0006029507113332509,
+          0.0006328035907193812,
+          0.0005639613395935433,
+          0.0005908643722119524,
+          0.0005279222409723953,
+          0.0005517069520262553,
+          0.0004945680706652,
+          0.0005151475298406178,
+          0.0004636661454742871,
+          0.0004809533816244171,
+          0.0004349978096746741,
+          0.0004490868550818339,
+          0.0004084432851820711,
+          0.0004193494836533847,
+          0.00038378248018026474,
+          0.0003916374667515841,
+          0.00036088552249072947,
+          0.00036582047724669306,
+          0.00033962920427156866,
+          0.00034180497834770805,
+          0.0003198705072362965,
+          0.0003194560863859215,
+          0.00030145617933111335,
+          0.0002986721713790373,
+          0.00028427282828929996,
+          0.0002793641146335901,
+          0.00026823502336976903,
+          0.00026143261718962897,
+          0.00025324146279256607,
+          0.0002447898465216364,
+          0.00023922390676984115,
+          0.00022934630047441248,
+          0.000226113133689922,
+          0.00021502606224989285,
+          0.0002138737690519311,
+          0.00020178931392804135,
+          0.00020245793509183463,
+          0.0001895360298668289,
+          0.00019179026836845604,
+          0.00017820089281304566,
+          0.00018180362398040234,
+          0.00016770982589295569,
+          0.00017246010133818756,
+          0.00015802275168056844,
+          0.00016371424499317982,
+          0.00014906904876602444,
+          0.0001555073745326558,
+          0.00014078152723624745,
+          0.00014781323440529555,
+          0.0001331399886035293,
+          0.00014060328649022227,
+          0.00012608752180685113,
+          0.00013383594743698884,
+          0.00011957800924171816,
+          0.00012748921339416865,
+          0.00011358422012127867,
+          0.00012152261470096689,
+          0.0001080555709913579,
+          0.00011591973216815977,
+          0.00010296159085160521,
+          0.00011064197856094176,
+          9.82545065201433e-05,
+          0.00010566089473816476,
+          9.392405265238765e-05,
+          0.00010099029820925672,
+          8.995034702976311e-05,
+          9.658743636926772e-05,
+          8.628678651360414e-05,
+          9.243511881620501e-05,
+          8.291064992055823e-05,
+          8.851777023072541e-05,
+          7.979625777008474e-05,
+          8.48287236265691e-05,
+          7.692837895848755e-05,
+          8.13570856048337e-05,
+          7.426205589348106e-05,
+          7.80828195599485e-05,
+          7.17811645746661e-05,
+          7.499906452051701e-05,
+          6.94712127058872e-05,
+          7.209682480847122e-05,
+          6.732416316598476e-05,
+          6.937145813696826e-05,
+          6.533136248046336e-05,
+          6.680767744256202e-05,
+          6.347637770644143e-05,
+          6.439657823598313e-05,
+          6.174780019809662e-05,
+          6.212684559038534e-05,
+          6.01275357232179e-05,
+          5.9984632551938204e-05,
+          5.860598860387437e-05,
+          5.7966289441807314e-05,
+          5.717882581344147e-05,
+          5.606297410509165e-05,
+          5.583412400610555e-05,
+          5.427516451892269e-05,
+          5.457198445230891e-05,
+          5.259251797512999e-05,
+          5.337693826042227e-05,
+          5.100953922660775e-05,
+          5.2244883976002725e-05,
+          4.952601642547505e-05,
+          5.1167284111047304e-05,
+          4.81298178290679e-05,
+          5.0140210115111004e-05,
+          4.6826899417298325e-05,
+          4.916097245145844e-05,
+          4.560959782475463e-05,
+          4.821856827308439e-05,
+          4.447735123266993e-05,
+          4.731385984548646e-05,
+          4.342577942260533e-05
+        ],
+        "first_second_peak_rms_bin_start": 0.0,
+        "first_second_peak_rms": 0.02356465719836445,
+        "first_bin_above_fraction_of_first_second_peak": {
+          "0.1": 0.0,
+          "0.5": 0.0,
+          "0.9": 0.0
+        },
+        "first_20ms_rms": 0.019478629705938062,
+        "first_100ms_rms": 0.012022724894895018,
+        "active_rms": 0.0024203015319701976,
+        "active_peak": 0.037903062999248505
+      },
+      {
+        "id": "SC05-082",
+        "native": {
+          "ok": true,
+          "patch": "/workspace/scratch/9118c5c72ad8/surgeXT-synth/resources/data/patches_factory/Scoring 1000/05 Ensemble Hybrids/SC05-082 Felt Pizzicato Section.fxp",
+          "name": "Felt Pizzicato Section",
+          "out": "/workspace/scratch/9118c5c72ad8/a39-ensembles/SC05-082.f32",
+          "engine": "1.4.main.dfdd2f94a",
+          "git": "dfdd2f94a",
+          "frames": 336000,
+          "sample_rate": 48000,
+          "channels": 2,
+          "format": "f32le-interleaved",
+          "block_size": 32,
+          "seconds": 7,
+          "hold": 3,
+          "notes": "65",
+          "velocity": 96,
+          "tempo": 120,
+          "macros": "3=0",
+          "modwheel": 0,
+          "pressure": 0,
+          "expression": 127,
+          "seed": 1000,
+          "preroll_blocks": 128,
+          "restores_global_gain": true,
+          "nonfinite": 0,
+          "peak": 0.046556469053,
+          "rms": 0.00220155310882,
+          "mean": -2.8093429972e-12,
+          "roundtrip": ""
+        },
+        "pcm_sha256": "b921bea7b35b173d98f6599ae3df0f516ea46e9bf8fb0df8c7401be5f06a0acf",
+        "bin_seconds": 0.005,
+        "first_second_rms_envelope": [
+          0.027900133360856318,
+          0.02760048294213175,
+          0.02248199521560719,
+          0.021489368569898536,
+          0.01825025684457751,
+          0.018400091005819505,
+          0.015696690403813985,
+          0.01632040128610466,
+          0.014079096733696003,
+          0.014905657888666634,
+          0.01293514188883425,
+          0.013772139755343764,
+          0.012037413915127429,
+          0.012827722265796947,
+          0.011239034458081653,
+          0.011958723232944876,
+          0.010512050807017248,
+          0.011156488459954855,
+          0.00982027468155114,
+          0.010392364209971262,
+          0.009175092261391694,
+          0.009669729527717427,
+          0.008563762742933832,
+          0.008984655165320982,
+          0.007993534142269845,
+          0.008342626170501606,
+          0.00745355814723483,
+          0.0077384286775468445,
+          0.0069486416774607275,
+          0.007173027113089168,
+          0.006475707621390818,
+          0.006644763867375117,
+          0.006035021470344861,
+          0.006150318395207593,
+          0.005622742370592256,
+          0.005689625942521888,
+          0.005239612168175345,
+          0.005260700938949639,
+          0.0048815221666990115,
+          0.004860975547902253,
+          0.004548537168938402,
+          0.004489963733910531,
+          0.004237613142982365,
+          0.0041453891032882904,
+          0.003947449526920169,
+          0.0038253211552823165,
+          0.003676564120549578,
+          0.0035287293461441368,
+          0.003422810782063368,
+          0.0032539989777900244,
+          0.0031853974919787277,
+          0.0030004463178045435,
+          0.002964535939404821,
+          0.002766884711339517,
+          0.0027571670382409356,
+          0.002551267271303352,
+          0.0025621449761101017,
+          0.002352543556435232,
+          0.002379291151168884,
+          0.0021702854209149154,
+          0.0022083989056020034,
+          0.0020026681228429025,
+          0.002048756607105376,
+          0.0018479043996030122,
+          0.001899373402330442,
+          0.0017049399620923545,
+          0.0017599091145603335,
+          0.0015731341104503025,
+          0.0016298845929708884,
+          0.0014516286652104552,
+          0.00150845847032706,
+          0.0013396884970194962,
+          0.0013954414203858406,
+          0.0012370381596969737,
+          0.0012904894935721067,
+          0.0011433130696245689,
+          0.0011936212868123711,
+          0.0010563452356872989,
+          0.001102174215161803,
+          0.0009761833059948661,
+          0.0010171985386021902,
+          0.0009025391753599131,
+          0.0009383388751636272,
+          0.0008347978793455346,
+          0.0008649124118800412,
+          0.0007723393976553877,
+          0.0007967027533445416,
+          0.0007148965010491077,
+          0.0007333710936004808,
+          0.0006619784318720676,
+          0.0006747757557624788,
+          0.0006132717499681952,
+          0.0006205451921046911,
+          0.0005683791557354314,
+          0.0005704680324205548,
+          0.0005269391593012522,
+          0.0005240533942080344,
+          0.000488418496957426,
+          0.0004813322173090727,
+          0.00045285033354315867,
+          0.0004419747411087401,
+          0.00041985224918639316,
+          0.0004057405993385395,
+          0.000389286121674752,
+          0.000372400894776905,
+          0.0003610114081371765,
+          0.0003417966511765686,
+          0.0003348329151389942,
+          0.0003136697521804301,
+          0.0003104914575002897,
+          0.0002877928352378667,
+          0.00028785289837567106,
+          0.00026405184543137206,
+          0.00026683684356325343,
+          0.00024227229238637317,
+          0.0002472745768070814,
+          0.00022227468341262156,
+          0.00022904944469987493,
+          0.0002039601901441395,
+          0.000212092732727296,
+          0.00018721969645759434,
+          0.00019633868178576337,
+          0.00017202606988468076,
+          0.00018176544307576422,
+          0.0001581992180471579,
+          0.00016820227987021752,
+          0.00014563899138147902,
+          0.00015558380231351499,
+          0.00013422968237558324,
+          0.00014383945499456702,
+          0.00012390041318350139,
+          0.00013290953163072185,
+          0.00011457224552625719,
+          0.00012271323594451023,
+          0.00010607483319880238,
+          0.00011325131183242055,
+          9.836100752630394e-05,
+          0.00010455039597665226,
+          9.129508841585253e-05,
+          9.656563737981955e-05,
+          8.481803657316003e-05,
+          8.928978666266484e-05,
+          7.892965873676124e-05,
+          8.265003140148246e-05,
+          7.354779765328724e-05,
+          7.66300722164233e-05,
+          6.864984757433781e-05,
+          7.116844784356932e-05,
+          6.417116574901856e-05,
+          6.622165762466585e-05,
+          6.012624012930764e-05,
+          6.18457963074419e-05,
+          5.651202383476594e-05,
+          5.7964645149515e-05,
+          5.325542145546201e-05,
+          5.455715951114376e-05,
+          5.034765680222186e-05,
+          5.1608799859295894e-05,
+          4.7777718347271844e-05,
+          4.911022321013159e-05,
+          4.554822943528407e-05,
+          4.704692729301999e-05,
+          4.3612217931653885e-05,
+          4.5378864167343714e-05,
+          4.196846315800774e-05,
+          4.40937599099459e-05,
+          4.061419184468907e-05,
+          4.3164653880379315e-05,
+          3.953331802310375e-05,
+          4.257159632901761e-05,
+          3.8722029547649856e-05,
+          4.226924926405364e-05,
+          3.815457977651472e-05,
+          4.220762451971693e-05,
+          3.7843203795870896e-05,
+          4.2339924061058346e-05,
+          3.778095981580028e-05,
+          4.2635087326562744e-05,
+          3.796691063852666e-05,
+          4.3084911804444505e-05,
+          3.837321087474889e-05,
+          4.365862435555468e-05,
+          3.8975442532898156e-05,
+          4.4346876984621125e-05,
+          3.974000354282136e-05,
+          4.5127285872029353e-05,
+          4.0652168647679314e-05,
+          4.5997387141937974e-05,
+          4.1692008429745136e-05,
+          4.6943679271612605e-05,
+          4.283490360921021e-05,
+          4.795335822104124e-05,
+          4.4067515489505536e-05,
+          4.902335670181898e-05,
+          4.537298589704329e-05,
+          5.014085966246346e-05,
+          4.673057187010371e-05,
+          5.130132194011646e-05,
+          4.8137184855988315e-05,
+          5.249863386927326e-05
+        ],
+        "first_second_peak_rms_bin_start": 0.0,
+        "first_second_peak_rms": 0.027900133360856318,
+        "first_bin_above_fraction_of_first_second_peak": {
+          "0.1": 0.0,
+          "0.5": 0.0,
+          "0.9": 0.0
+        },
+        "first_20ms_rms": 0.025037158238306524,
+        "first_100ms_rms": 0.016564102055603207,
+        "active_rms": 0.003362913002714618,
+        "active_peak": 0.046556469053030014
+      },
+      {
+        "id": "SC05-083",
+        "native": {
+          "ok": true,
+          "patch": "/workspace/scratch/9118c5c72ad8/surgeXT-synth/resources/data/patches_factory/Scoring 1000/05 Ensemble Hybrids/SC05-083 Felt Pizzicato Swell.fxp",
+          "name": "Felt Pizzicato Swell",
+          "out": "/workspace/scratch/9118c5c72ad8/a39-ensembles/SC05-083.f32",
+          "engine": "1.4.main.dfdd2f94a",
+          "git": "dfdd2f94a",
+          "frames": 336000,
+          "sample_rate": 48000,
+          "channels": 2,
+          "format": "f32le-interleaved",
+          "block_size": 32,
+          "seconds": 7,
+          "hold": 3,
+          "notes": "65",
+          "velocity": 96,
+          "tempo": 120,
+          "macros": "3=0",
+          "modwheel": 0,
+          "pressure": 0,
+          "expression": 127,
+          "seed": 1000,
+          "preroll_blocks": 128,
+          "restores_global_gain": true,
+          "nonfinite": 0,
+          "peak": 0.0219938028604,
+          "rms": 0.00242608392437,
+          "mean": 5.58477793216e-13,
+          "roundtrip": ""
+        },
+        "pcm_sha256": "16ed1a3c557c87ec03ac5f3d544a2356e469acb6a45332a0ed49e1adb7c7d577",
+        "bin_seconds": 0.005,
+        "first_second_rms_envelope": [
+          0.0012968929962876537,
+          0.002775108695651115,
+          0.0037361574115658083,
+          0.004939635610742679,
+          0.005412995263246627,
+          0.006641423949285158,
+          0.006739973421965003,
+          0.008091709681002153,
+          0.00797032138626568,
+          0.009494571695588924,
+          0.009188555329285631,
+          0.010825953051318189,
+          0.010393691846436742,
+          0.012116722190026106,
+          0.01153416993161254,
+          0.013308402447080127,
+          0.012606021253800524,
+          0.01441349610791325,
+          0.013575124603943058,
+          0.015405252376529854,
+          0.01446211528493404,
+          0.016296332329648368,
+          0.014947967166821998,
+          0.01603047604657042,
+          0.01438401475042094,
+          0.015369168563097687,
+          0.013832877579853837,
+          0.014719112173953202,
+          0.013303953534124096,
+          0.014087645782593966,
+          0.012789787469471596,
+          0.013474070377784328,
+          0.012296563235708253,
+          0.012880804650110544,
+          0.011820638394484884,
+          0.012306587802100656,
+          0.011364524785472084,
+          0.011752995378759621,
+          0.010926056408938602,
+          0.011219437518283092,
+          0.010506087279104572,
+          0.010706322024335191,
+          0.01010229741198195,
+          0.010212808642397974,
+          0.009714782769399539,
+          0.009739145205303685,
+          0.009341670833691631,
+          0.009284689882952866,
+          0.008982641481009223,
+          0.00884929246321634,
+          0.008636456996960317,
+          0.008432621597398361,
+          0.008302933599258556,
+          0.008034526516714862,
+          0.007980652426797057,
+          0.007654302887476219,
+          0.00766884827705831,
+          0.007291749297902836,
+          0.007367039247657388,
+          0.0069466574676097835,
+          0.00707506257070134,
+          0.006618570487988799,
+          0.006791917916705094,
+          0.0063070361850345105,
+          0.006516932167060327,
+          0.006011657722909889,
+          0.006249839763536094,
+          0.005732088681249344,
+          0.005990042447122667,
+          0.005467755991667453,
+          0.005737734305287302,
+          0.005217885534264715,
+          0.005493346594864617,
+          0.004981042869627742,
+          0.005257248912619688,
+          0.004756285680365103,
+          0.005029335196749873,
+          0.004542842171957116,
+          0.0048091124923606695,
+          0.004340061247073965,
+          0.004596446108686939,
+          0.004147423446737352,
+          0.004391178701188705,
+          0.003964473853109759,
+          0.004193083264440665,
+          0.0037906154735272016,
+          0.004002067526986613,
+          0.0036255147009492438,
+          0.0038180234580385717,
+          0.0034687304328621642,
+          0.003640818927549484,
+          0.003319751282289049,
+          0.0034703333178099367,
+          0.003178145935000438,
+          0.0033063700239832476,
+          0.0030432680456415947,
+          0.0031485557174124787,
+          0.00291471250363473,
+          0.002996904396634203,
+          0.002792051582524266,
+          0.00285137244295977,
+          0.0026750717849177404,
+          0.002711896012262173,
+          0.0025632712653244657,
+          0.0025783113578285123,
+          0.0024563770957740194,
+          0.0024507078870509916,
+          0.002354101112964077,
+          0.002328817261876713,
+          0.0022559042162078233,
+          0.002212417741432063,
+          0.0021613800486181664,
+          0.0021014691633229102,
+          0.00207027303307852,
+          0.0019958473175891605,
+          0.001982293726948694,
+          0.0018953557104885125,
+          0.0018974293401035135,
+          0.0017998288062126954,
+          0.0018157385382553176,
+          0.0017090757349862888,
+          0.0017372044968312593,
+          0.001622944054915834,
+          0.0016616888625871978,
+          0.0015412976473786854,
+          0.0015892192397553382,
+          0.0014641000032187257,
+          0.0015195359463040787,
+          0.001390927501060276,
+          0.0014523805820368335,
+          0.0013216233319429407,
+          0.001387671373021616,
+          0.0012561107682215818,
+          0.0013254217993633236,
+          0.001194228316867909,
+          0.0012655230542320632,
+          0.0011358318175933514,
+          0.0012078846993884525,
+          0.0010806639068895374,
+          0.0011523282883879327,
+          0.0010285930013557445,
+          0.0010988981936284272,
+          0.000979522563563349,
+          0.0010474545464083684,
+          0.0009332345146235706,
+          0.0009979527464219883,
+          0.0008895733423395529,
+          0.0009502683400035427,
+          0.0008482859413118811,
+          0.0009043216638701745,
+          0.0008093294270947239,
+          0.0008602493310378959,
+          0.0007726448484898934,
+          0.0008179468349940847,
+          0.00073800046835554,
+          0.000777366356129664,
+          0.0007052730135984768,
+          0.0007384253050046359,
+          0.0006742663157859593,
+          0.0007011175330077549,
+          0.0006448634135884622,
+          0.0006654284360488209,
+          0.0006168091855286876,
+          0.0006312871442726205,
+          0.0005900038235843418,
+          0.0005986745222027428,
+          0.0005643564958094319,
+          0.0005676028523272401,
+          0.0005399210892714058,
+          0.0005380742786151191,
+          0.00051660811599761,
+          0.0005100018446291267,
+          0.000494369882663838,
+          0.0004833570060214517,
+          0.00047311060455012887,
+          0.00045805696091585414,
+          0.00045273917785625226,
+          0.00043401711580461446,
+          0.0004331608457225956,
+          0.0004111776230221361,
+          0.0004143711001532068,
+          0.0003895364064447447,
+          0.0003963288871399058,
+          0.0003690743988066876,
+          0.0003790328120840877,
+          0.0003497279388064123,
+          0.0003623840763334733,
+          0.00033145045434740253,
+          0.0003463723456224937,
+          0.00031422483661482087,
+          0.00033095686298883456,
+          0.0002979849633743517,
+          0.0003161147722414618,
+          0.00028271737237849234,
+          0.0003018278349982375,
+          0.00026838275152684136,
+          0.00028807989027889504,
+          0.0002549501152907473,
+          0.0002748404114553529,
+          0.00024236081043521807
+        ],
+        "first_second_peak_rms_bin_start": 0.105,
+        "first_second_peak_rms": 0.016296332329648368,
+        "first_bin_above_fraction_of_first_second_peak": {
+          "0.1": 0.005,
+          "0.5": 0.045,
+          "0.9": 0.095
+        },
+        "first_20ms_rms": 0.0034547804520480645,
+        "first_100ms_rms": 0.009850428116073463,
+        "active_rms": 0.0037058673305514667,
+        "active_peak": 0.02199380286037922
+      }
+    ],
+    "closest_pair": {
+      "a": "SC05-081",
+      "b": "SC05-082",
+      "active_rms_matched_waveform_delta": 0.1428271712053195,
+      "normalized_correlation": 0.9898001995827436,
+      "normalization_scope": "Only calculation, stored PCM unnormalized"
+    }
+  },
+  "extended_release_largest_tail_ratio": [
+    "SC05-018",
+    "Frost Divisi Swell",
+    -15.88803090767004,
+    6.0,
+    0.002578461862571923
+  ],
+  "inputs_stable_at_finalization": true,
+  "master_reference_and_analog_modes_checked": 100
+}

@@ -1,0 +1,84 @@
+{
+  "schema": 1,
+  "agent": "w05_a25_packaging",
+  "scope": "Pure-CMake source/package guard and data-only staging; no full platform installer execution",
+  "staging": {
+    "preset_count": 1000,
+    "manifest_sha256": "a5408903059ac1d15540fb5700b2d8ce40a42ebe6344a37ab4edf46dbab1b1db",
+    "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+    "native_discovery_exact_match": true,
+    "staging_scope": "Scoring 1000 factory bank only; not a complete synth installer",
+    "missing": [],
+    "extra": []
+  },
+  "static": {
+    "schema": 1,
+    "ok": true,
+    "complete_bank": true,
+    "validation_scope": "static_definition_and_resource_integrity",
+    "manifest_sha256": "a5408903059ac1d15540fb5700b2d8ce40a42ebe6344a37ab4edf46dbab1b1db",
+    "preset_count": 1000,
+    "file_count": 1000,
+    "category_counts": {
+      "01": 100,
+      "02": 100,
+      "03": 100,
+      "04": 100,
+      "05": 100,
+      "06": 100,
+      "07": 100,
+      "08": 100,
+      "09": 100,
+      "10": 100
+    },
+    "unique_active_definitions": 1000,
+    "duplicate_groups": [],
+    "regeneration_checked": false,
+    "installed_data_root_checked": "/workspace/scratch/9118c5c72ad8/build-scoring/scoring-bank-stage/share/surge-xt",
+    "limits": [
+      "Different parameter definitions do not establish perceptual uniqueness.",
+      "Native rendering, musical audition and composer endorsement are outside this check."
+    ],
+    "errors": []
+  },
+  "guard_cases": [
+    {
+      "case": "complete bank",
+      "returncode": 0,
+      "expected_success": true,
+      "seconds": 0.515
+    },
+    {
+      "case": "modified FXP bytes",
+      "returncode": 1,
+      "expected_success": false,
+      "seconds": 0.039
+    },
+    {
+      "case": "missing FXP",
+      "returncode": 1,
+      "expected_success": false,
+      "seconds": 0.035
+    },
+    {
+      "case": "extra FXP",
+      "returncode": 1,
+      "expected_success": false,
+      "seconds": 0.567
+    },
+    {
+      "case": "stale manifest binding",
+      "returncode": 1,
+      "expected_success": false,
+      "seconds": 0.039
+    },
+    {
+      "case": "restored bank",
+      "returncode": 0,
+      "expected_success": true,
+      "seconds": 0.499
+    }
+  ],
+  "workflow_yaml_parsed": true,
+  "github_workflow_executed": false
+}

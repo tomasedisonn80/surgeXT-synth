@@ -1,0 +1,82 @@
+{
+  "schema": 1,
+  "manifest_sha256": "67bd4a5dc3fbf6f3794679b24b500f1ef37af83b7a47a863d10cb964a57314a2",
+  "files": {
+    "README.md": {
+      "sha256": "7b960aab5291f0ec8db1c687e93de2e8bf18787edada7d507a71601e76033da3",
+      "bytes": 1105
+    },
+    "attack-wording-plan.json": {
+      "sha256": "9d38731ee63c8385535f0cdea1bec6066d1c6455963dd1497cbc27f4607a3165",
+      "bytes": 5315
+    },
+    "correction-plan.json": {
+      "sha256": "9a8096945e03ffe6e765c80b7c40fb461b048d493725f156ad339694fde06908",
+      "bytes": 18939
+    },
+    "factory-staging.json": {
+      "sha256": "c8a396c6c96ea4b283eca4c0c4aa93aee408cc9ff971108037d16cbb6b4057ae",
+      "bytes": 2235
+    },
+    "integrity-audit.json": {
+      "sha256": "fb62348b78aaba4c441182c7110fb95cd009a958c4a00599e856b3f9cfe26da7",
+      "bytes": 2463
+    },
+    "layer-wording-plan.json": {
+      "sha256": "513aa8b87ba7c36fd3a5e829026d0130bfbaf6100bce8c3f2676d05d65f7ddd9",
+      "bytes": 6715
+    },
+    "native-preset-reports.zip": {
+      "sha256": "381a2dbfc431f9353fddc301a6ea1545c583e713d1210da0d5af426adcf53296",
+      "bytes": 12579043
+    },
+    "native-summary.csv": {
+      "sha256": "9d3048c7ef4d915340284031b12a0031ce0e7b2fba18af5dbf346166da369310",
+      "bytes": 208791
+    },
+    "native-summary.json": {
+      "sha256": "d21b903d44ad842b0ba264eb3d4b9060799c1eed07110d29a665d45df898f781",
+      "bytes": 2275
+    },
+    "provenance.json": {
+      "sha256": "cc40a698f2b862489fb7eaceb899221b8d045b2981a6491f75512af1fad571d7",
+      "bytes": 3994
+    },
+    "report-index.json": {
+      "sha256": "9ea4eed5e6d6f11249437901613af8b53fc3cf4377c3fbc91aa7614ccc60ea5e",
+      "bytes": 217126
+    },
+    "roundtrip-summary.json": {
+      "sha256": "a603b07c0c6521c0feed9a6bdc1dab3157d3fafcdd7bc709f5f40cbba51d4290",
+      "bytes": 655411
+    },
+    "static-validation.json": {
+      "sha256": "fbb0c1c3a961bf47876f57ca0be585e50fc88dd5fe755a0b5a4dbfe66bdd995e",
+      "bytes": 301850
+    },
+    "sustain-correction-plan.json": {
+      "sha256": "7b43d701c3ade3b9fbec19fc721524e9874f9e881fdd5fe545fd9e70eae16c09",
+      "bytes": 6188
+    },
+    "sustain-preset-reports.zip": {
+      "sha256": "da7a48e47e2a51ad3d674e69b4931ce3ae560e14fa67e0002384ed042b8fba2e",
+      "bytes": 3150039
+    },
+    "sustain-report-index.json": {
+      "sha256": "04f72f467f70d247a823a39d8a1776d0a2af07bbb1763b60c8e99229c1279cdc",
+      "bytes": 217126
+    },
+    "sustain-summary.csv": {
+      "sha256": "5cb4fc7443387634e9c5fe0d8c3ed64c63005117a52e7aa041b80f40375134ca",
+      "bytes": 180703
+    },
+    "sustain-summary.json": {
+      "sha256": "dd8cd54a00e13da54b73733189eca8e87f6e3b4b0a0c25913adeaf707f5612b0",
+      "bytes": 2126
+    },
+    "archive-repack.json": {
+      "sha256": "7c919e94e249cf2296ffb1ced90115ef993b5e4fc5eff9e2816848e0d01beb61",
+      "bytes": 1743
+    }
+  }
+}

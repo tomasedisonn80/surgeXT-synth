@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "agent": "/root/w10_a58_platform_artifacts",
+  "status": "awaiting_current_platform_run",
+  "expected_source_commit": "946ed442572d5fa29e6d6467813b4fa6cb150908",
+  "manifest_sha256": "67bd4a5dc3fbf6f3794679b24b500f1ef37af83b7a47a863d10cb964a57314a2",
+  "archive_inspector_sha256": "e3003f6a7419254c3def0cea64419a612f47911671a1d2d83b91d16a58d78126",
+  "expected_build_jobs": [
+    "Release - Windows 64-bit",
+    "Release - Windows MSVC JUCE 7",
+    "Release - Windows ARM64EC",
+    "Release - Windows ARM64",
+    "Release - macOS",
+    "Release - ubuntu-arm",
+    "Ubuntu 20 Docker"
+  ],
+  "run": null,
+  "jobs": [],
+  "artifacts": [],
+  "payload_checks": [],
+  "scope": "Actual workflow conclusions and exact archive payload hashes; no installer execution or plugin-host test."
+}

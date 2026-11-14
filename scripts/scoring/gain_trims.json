@@ -1,0 +1,2759 @@
+{
+  "schema": 1,
+  "description": "Measured per-preset voice-VCA corrections. Initial 2,000 stress fixtures supplied negative trims; later complete 23-scenario unity-master evidence supplied bounded quiet-default boosts and extra headroom. A complete 2,000-fixture long-held/cycle audit supplied ten further headroom trims. No rendered audio is normalized. Every changed FXP requires fresh native QA.",
+  "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+  "trims": {
+    "Felt Ember Close": {
+      "db": -8.604599,
+      "calibration_peak": 1.93893146515,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "ebf77ffb21cd0c886a00bf642be724384b6cd97a41c73d288ad2ba087b97e6d6"
+    },
+    "Copper Tine Felt": {
+      "db": -4.737984,
+      "calibration_peak": 1.24231493473,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "95fb7479f16094cf55a7247780dd429089752401fc7ebc74466a94f51a487924"
+    },
+    "Velvet Reed Glass": {
+      "db": -3.545645,
+      "calibration_peak": 1.08296585083,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "9fd7bac469f61091874677e8857c7e7e47a346121d6a5b395f2ed6091d214c31"
+    },
+    "Glass Hammer Bite": {
+      "db": -6.077115,
+      "calibration_peak": 1.44939994812,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "4ab0fb7e9799fb40e0a9b214443a1bc6fd232f47755afbd383b5a0c01877ec00"
+    },
+    "Amber Clav Close": {
+      "db": -1.763461,
+      "calibration_peak": 0.882075071335,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "9373f36ed84bb42379bc8fd2b68810e1d5b8e0e8044e8f716e83eaf331fd5c27"
+    },
+    "Wool Electric Felt": {
+      "db": -3.928878,
+      "calibration_peak": 1.13181746006,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "94b210a5ba683111ae502986501fe9f0d946fabd5eae9969682b5f4f71afb115"
+    },
+    "Weathered Upright Glass": {
+      "db": -5.600006,
+      "calibration_peak": 1.37193262577,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "8e66aa276a8bf16a6f6f963b42dab6f572ca27dbe5d62e0cc28a9fd827087027"
+    },
+    "Tin Toy Keys Float": {
+      "db": -3.963081,
+      "calibration_peak": 1.13628304005,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "460e2287e481ee1aa77e8afd2d454d6d765d713aa0c0adc553b954559e8e0df5"
+    },
+    "Hollow Console Bite": {
+      "db": -7.882851,
+      "calibration_peak": 1.78432953358,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "4cec4a14661e187cb373f481cdd63b820a9bb174de20c61dff503a4b97165385"
+    },
+    "Pocket Reed Glass": {
+      "db": -7.354924,
+      "calibration_peak": 1.67910826206,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "8ed7bbd043da137487aa0f985f5ea8e683cc5f6b91937da2aabccce60adcdd90"
+    },
+    "Porcelain Desk Float": {
+      "db": -2.71947,
+      "calibration_peak": 0.98470467329,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "f6cd0b7c774d7e9869a95ba0a4dbc10717b1caadfa3b780da114e4fa2c4402d8"
+    },
+    "Noir Cabinet Bite": {
+      "db": -3.639038,
+      "calibration_peak": 1.09467303753,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "7cbc3bab1b7688bc2920b2d3bef8ebf55b69b8aaa7316806d6cfa36d1a252975"
+    },
+    "Cedar Thread Cascade": {
+      "db": -4.543132,
+      "calibration_peak": 1.21475613117,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "bb89f72827cf141a9b2b4d394407e8ed18f4090761a792de6f7f86565298c2d9"
+    },
+    "Copper Plectrum Close": {
+      "db": -4.092115,
+      "calibration_peak": 1.15328919888,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "d26775247fcd566e4d9f86a0125db2fd7f80f567a25bfb008b17193218851882"
+    },
+    "Glass Filament Spark": {
+      "db": -9.958548,
+      "calibration_peak": 2.26600003242,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "5c368528e4dd23a683ec8b1c280e09cf6cb93740d054b2350a086880064c0a23"
+    },
+    "Rubber Lantern Cascade": {
+      "db": -4.580966,
+      "calibration_peak": 1.220058918,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "22ac6b54016bea403ccd8a85f73b6e7d2cd1d5fc11e08bcba5d3a803f2dbd234"
+    },
+    "Palm Circuit Close": {
+      "db": -0.140281,
+      "calibration_peak": 0.731722772121,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "d81452ec902fa7acd61e269030e74a9d5a1b3917e922e450e2d04b347c6a8cb9"
+    },
+    "Tin Carousel Tender": {
+      "db": -1.122068,
+      "calibration_peak": 0.819286644459,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "f99331bd3b0c0d4cbf2c43b7bfa1616b1c5cc7a90be8945fe14196ff3b964a11"
+    },
+    "Dusk Zither Spark": {
+      "db": -5.969119,
+      "calibration_peak": 1.4314904213,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "944867d8c52514c8ca4ef6093cd47a1038381753ea874f8e614677108eeb845b"
+    },
+    "Soft Pinwheel Cascade": {
+      "db": -2.289332,
+      "calibration_peak": 0.93712836504,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "dbcc69f8b45426109664cc93b6d0a34acbe53229fe0933c8dce0cd3f392ba0a9"
+    },
+    "Iron Petal Shadow": {
+      "db": -2.87137,
+      "calibration_peak": 1.00207674503,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "04aaf507aa3b732973c2af956a1738a3372051f0a65ace85b4cb13f6fa66501f"
+    },
+    "Water Threads Close": {
+      "db": -5.831982,
+      "calibration_peak": 1.40906691551,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "330f0f4c4685cff2bf72e72dbae7f958d777496bf9c3ea082683592b6ad428c5"
+    },
+    "Cork Mechanism Tender": {
+      "db": -0.275374,
+      "calibration_peak": 0.743192255497,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "9536bc403e7341860f4e9a1c76ee75400e19ace0395dd98ef33039478479e99f"
+    },
+    "Moon Marquetry Spark": {
+      "db": -0.018566,
+      "calibration_peak": 0.721540629864,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "4ee1f065f9a055e09b0a52d2a90238fc2de225cf1049e9c3a75da67c0bcf419e"
+    },
+    "Tremor Lute Cascade": {
+      "db": -2.420554,
+      "calibration_peak": 0.951393544674,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "9646344d512ff8c6f676e487b133d94d8f29856066002a1076dfe47ebba11f69"
+    },
+    "Amber Marimba Shadow": {
+      "db": -4.955709,
+      "calibration_peak": 1.27384901047,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "426082a35f67eab5c28479cf79b2d85a2b3711dd82bb1467334c4ef6097c9077"
+    },
+    "Cedar Knocks Close": {
+      "db": -10.776383,
+      "calibration_peak": 2.48972654343,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "2ec546a1d80bcb8121b314b380e7c07e91d5f317438acbb80bb60c2484c13591"
+    },
+    "Rain Tines Bloom": {
+      "db": -3.643312,
+      "calibration_peak": 1.09521174431,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "eec7cf6b7fffd1287903399f1637225ea86b797209c80b04fd8c28ec0374000d"
+    },
+    "Violet Vibra Glass": {
+      "db": -6.222371,
+      "calibration_peak": 1.47384238243,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "e46c9e6fd6806a196a56aba7871ca60f63eba326c2340c0a53ce97b8b5601699"
+    },
+    "Frost Celeste Alloy": {
+      "db": -9.759057,
+      "calibration_peak": 2.21454930305,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "635aa9a441eace595a32783eb2ed257041d6e495f68b43f888e026f806cc32f7"
+    },
+    "Pocket Musicbox Shadow": {
+      "db": -5.379067,
+      "calibration_peak": 1.33747553825,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "177f3a388376a95e0901b5f165e2aef5db7f8eddcc0d09475b5ffe0c33141c9f"
+    },
+    "Paper Glass Close": {
+      "db": -6.28903,
+      "calibration_peak": 1.48519670963,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "d78b8d5ab4bd343589ec054e63d46960c5b5903033bfbee058314a45e040b8be"
+    },
+    "Bronze Orchard Bloom": {
+      "db": -3.464439,
+      "calibration_peak": 1.07288813591,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "d5aaa661dfaabc3c122163f616b0eb027d874f6ed92cf56e6228f71cbc5ef973"
+    },
+    "Silver Nodes Glass": {
+      "db": -8.066625,
+      "calibration_peak": 1.82248401642,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "6bf7484fdffff7f6829c0dd31b52b408006d769ec4e6d9cb1f1e3fc9ddaef0ad"
+    },
+    "Temple Signals Alloy": {
+      "db": -3.420399,
+      "calibration_peak": 1.06746208668,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "9004ce1da38bc70051b1e3b6e90d9e100352eb8665dd62bf9590eb476628638f"
+    },
+    "Ceramic Hands Shadow": {
+      "db": -4.769598,
+      "calibration_peak": 1.24684476852,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "99c5a028ca1cd346b27ba1ec3454ed7950c8e429a479f386b8c90197341fc974"
+    },
+    "Quiet Anvils Close": {
+      "db": -6.449751,
+      "calibration_peak": 1.51293420792,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "ac49a85ed6bd548e2492f91b513646b7a2d711345f96eaa6989b09e2ee2acee9"
+    },
+    "Starlit Drops Bloom": {
+      "db": -2.992022,
+      "calibration_peak": 1.0160933733,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "15c7f9275bf973bd455fa4f08f9583f4b828baf23710a4bf0727aa5d99072842"
+    },
+    "Warm Toybox Glass": {
+      "db": -4.809577,
+      "calibration_peak": 1.25259697437,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "210258577069bd9a1099c07c46b15ef80eac71c19e7bad3262fe67eba1634833"
+    },
+    "Quartz Gong Alloy": {
+      "db": -2.380532,
+      "calibration_peak": 0.94701987505,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "d2e4330475d6688eab15604ff1fee90921f520b21d5e637c664824b1d222da6f"
+    },
+    "Pulse Lantern Shadow": {
+      "db": -5.138477,
+      "calibration_peak": 1.30093729496,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "237c1c04f684dc95bdbe50ab086e5250933a0cf4b5b8c8a0ae4006f5cc48d311"
+    },
+    "Paper Lantern Open": {
+      "db": -1.320397,
+      "calibration_peak": 0.838209092617,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "978edeec0293f3cbd5767cb5b528f68302c3a028aab95d73a40c7a6db8d54c32"
+    },
+    "Winter Fold Drift": {
+      "db": -2.359533,
+      "calibration_peak": 0.944733142853,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "a8aeb91f4340f9778f534b4116a70fc4d976beb20ee08b61ed168392cb229500"
+    },
+    "Lantern Organ Close": {
+      "db": -2.070847,
+      "calibration_peak": 0.763187289238,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "a41f700169b779b153d3626b9c2acc77d9e23407c8ef3516dcf6ee896cb04912",
+      "adjustments": [
+        {
+          "input_sha256": "fc3e44807074cefbb8c4eadee1680306b0adccf3353a29e29380220fd1f36b93",
+          "sustain_report_sha256": "d9d3b5966400b9f476063acc503062ce0ddc1b4941a1c9a7de8383ef150f0b15",
+          "reference_master_db": 0,
+          "max_scenario_peak": 0.8621367812156677,
+          "target_peak": 0.72,
+          "added_db": -1.564874,
+          "reason": "Additional headroom after complete slow-cycle and prolonged dense-polyphony measurement; target 0.72 sample peak"
+        }
+      ]
+    },
+    "Chapel Pipes Swell": {
+      "db": -2.196818,
+      "calibration_peak": 0.927199959755,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "04f40c8aaabd3dc4e2320ba5614c6a477714c3db34333573aa3cd202b2fa4261"
+    },
+    "Felt Pizzicato Close": {
+      "db": -3.35519,
+      "calibration_peak": 1.05947816372,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "2b4eaa2e4a41084abe6ac45553e9cc78b46dde20e56a61eb5a5ccd0cb7ac6907"
+    },
+    "Velvet Current Near": {
+      "db": -2.609581,
+      "calibration_peak": 0.972325265408,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "ababcfadb2661f908bc2bcde4d401c58dd738050389ee3ee9dc417fdb69e4525"
+    },
+    "Porcelain Mist Open": {
+      "db": -0.891522,
+      "calibration_peak": 0.797826766968,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "125e88138a6d3cc6c079ed0bdb7b2d627839fd7d13e06fcd8b7d639cc4bda871"
+    },
+    "Orbital Dust Open": {
+      "db": -1.139329,
+      "calibration_peak": 0.820916473866,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "a89068a179d98427b1f1b7ad1178af8b88919de9ece19b29f842edaf63e4f7b1"
+    },
+    "Wood Finger Pluck": {
+      "db": -2.548635,
+      "calibration_peak": 0.965526580811,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "21c38d956abba6594512ce077bedb1834f90dbd01f33e56abdd5dbbec9e7e7a8"
+    },
+    "Soft Pedal Tight": {
+      "db": -3.832793,
+      "calibration_peak": 1.11936604977,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "62ffa2f674088d0584be8f35d8645c8f5c118464d6ec67c04f23d17d1e715da5"
+    },
+    "Muted Current Pulse": {
+      "db": -2.329851,
+      "calibration_peak": 0.9415102005,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "7e2d7a3793a2329636ec4b5a2d5585a5f5094e4c13bc6e2087d9a4a8dac97503"
+    },
+    "Glass Cantabile Clear": {
+      "db": -3.155521,
+      "calibration_peak": 1.03540086746,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "300f27a4e9bfb5446c5a9e50420bb1155d7b1575c90201114a6b342a0a5db20a"
+    },
+    "Prism Voice Warm": {
+      "db": -4.106885,
+      "calibration_peak": 1.15525197983,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "a8ad3e942b66eaa16e464cb528056b6ce60a60afb2180d043dba5fa00d3c46c6"
+    },
+    "Satin Harmonics Float": {
+      "db": -7.555277,
+      "calibration_peak": 1.71828961372,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "c8adbffced39b586302be68921461bc21cde07cc7f31bda94751a99c92eee4af"
+    },
+    "Orbit Dots Glass": {
+      "db": -6.671552,
+      "calibration_peak": 1.55206573009,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "b970a2cac6b48fa2917e40658847052380a7bbe1833e861206cf23c3af040a28"
+    },
+    "Glass Repeater Soft": {
+      "db": -6.61792,
+      "calibration_peak": 1.54251182079,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "94c9383f4c05dec2d104fd68e3fd7f76ab3814a8bdcbc53c661ef47fbd50b070"
+    },
+    "Timber Circuit Glass": {
+      "db": -3.124503,
+      "calibration_peak": 1.03171002865,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "f3f03b3ceff9c7d77abcec3c0cf9779722facb7aa59ec2e4f4759b17d345b06c"
+    },
+    "Distant Relay Drive": {
+      "db": -2.854338,
+      "calibration_peak": 1.00011372566,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "a5315e98f01b99c86874938f643a5c104afb52283d51949695051480a28971e0"
+    },
+    "Felt Drum Close": {
+      "db": -12.561247,
+      "calibration_peak": 3.05769968033,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "07ebfdd995e42eaec833dc77d6aab73210c6bff51c289b8b10d15b3a391fefbd"
+    },
+    "Low Cushion Edge": {
+      "db": -9.268874,
+      "calibration_peak": 2.09303355217,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "9912744f46c1cc8acdc181d9961761eef1a64b50b09108b6f16c2492d84e3df5"
+    },
+    "Copper Tap Drift": {
+      "db": -5.387964,
+      "calibration_peak": 1.33884620667,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "f62f3644dcfbfc20c5efb9a5b9ff8fc8b66debf2b334c96c5f7f273596387c36"
+    },
+    "Iron Footfall Body": {
+      "db": -4.681088,
+      "calibration_peak": 1.23420381546,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "da821ccc6e0b95bf1268b253ba3b4d656881bc9b23c7c0d8e37056ce75e0df6a"
+    },
+    "Tension Thud Bloom": {
+      "db": -2.720671,
+      "calibration_peak": 0.984840869904,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "377b3f5a05e8a11edb098bf3ffc7c68c8192330c7c76d9114c00080ed559b630"
+    },
+    "Drop Marker Close": {
+      "db": -9.438554,
+      "calibration_peak": 2.13432335854,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "904cdc299b7df6d9541058d7ee00a2f504c32e0237e20f5f8ecec6836f2ea99c"
+    },
+    "Gong Mist Edge": {
+      "db": -0.286514,
+      "calibration_peak": 0.744146108627,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "715d5858f18986696f958389a8e424b581655234ed2d7e076aaef3514b63433e"
+    },
+    "Felt Ember Felt": {
+      "db": -1.748108,
+      "calibration_peak": 0.880517303944,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "fb7688aef97578c14e3ebc2e32df4465df771c0e0feeee402a9677ab1eb5c441"
+    },
+    "Copper Tine Glass": {
+      "db": -10.395929,
+      "calibration_peak": 2.3830268383,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "3c1ea00753fdd40f957829c90fbba4c561ee5c67f2713fb3618cdd13cb46f34f"
+    },
+    "Velvet Reed Float": {
+      "db": -1.713573,
+      "calibration_peak": 0.877023339272,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "ec7004d4125abaeb7350a79185f9ddfe6c01960eb78f94de02128e47698c5be6"
+    },
+    "Ivory Frame Bite": {
+      "db": -5.39795,
+      "calibration_peak": 1.34038639069,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "2fd9dee6f20a458f865c007eb245ccd2f5bbd5b3cc0f0a45c782aeb141e153f3"
+    },
+    "Wool Electric Glass": {
+      "db": -6.433067,
+      "calibration_peak": 1.51003086567,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "ff43ade2b3ee53af0aa230ac0b704c3056498f254a2b7883bccdf0a5d7e55761"
+    },
+    "Tin Toy Keys Bite": {
+      "db": -4.960992,
+      "calibration_peak": 1.27462399006,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "9131df783ea6f36fc4b9b617d63987434fab388cce03116f4f44d07f676f461a"
+    },
+    "Drawbar Lantern Close": {
+      "db": -5.679432,
+      "calibration_peak": 1.38453543186,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "06e2465d587535640bf12c24c966c5f964381dfce7c2a71f34d6a9b06f9570fd"
+    },
+    "Pocket Reed Float": {
+      "db": -2.22358,
+      "calibration_peak": 0.930061101913,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "38c6abe805265e1da604e124563e5291895e741297d3fd5f3918c85aca83f41e"
+    },
+    "Porcelain Desk Bite": {
+      "db": -6.320939,
+      "calibration_peak": 1.4906629324,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "c9b583e608d4bbe1e59539e2a510e8737f8785390f9b2213c653d6266ca835ef"
+    },
+    "Silver Desk Close": {
+      "db": -8.713976,
+      "calibration_peak": 1.96350169182,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "ce91c7d21f46909887b1f9b424dc6052120fc833d7432529309b5f8530d682c2"
+    },
+    "Cedar Thread Shadow": {
+      "db": -3.176441,
+      "calibration_peak": 1.03789770603,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "88c805d21ce7059db1f8e55a47e530655d025845315cf55b4bc3f823e115cd7f"
+    },
+    "Paper Lattice Close": {
+      "db": -2.599607,
+      "calibration_peak": 0.971209347248,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "8a3f81d6ff7b05382f88ed38cf5486b6a599c790a30cffa3e8c0974827cda0c9"
+    },
+    "Glass Filament Cascade": {
+      "db": -7.724143,
+      "calibration_peak": 1.7520223856,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "4c3a40cec93dc89354cec15a064fad3188cc1e6178ae79dda517e496caf06dd2"
+    },
+    "Rubber Lantern Shadow": {
+      "db": -2.961259,
+      "calibration_peak": 1.01250100136,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "15c7988f6236fd82728c2eb691b605845763f528242c42b9a67cd3d2bfc1899e"
+    },
+    "Woven Strings Close": {
+      "db": -2.173076,
+      "calibration_peak": 0.924668967724,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "202b4a96ba9f703dc5c2a91e22fa22cd7a0298296bf1e0f7aa2d5e227f11ccbb"
+    },
+    "Tin Carousel Spark": {
+      "db": -4.785072,
+      "calibration_peak": 1.24906802177,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "39e7142496ff73399a77a2bc516650d6d414613a93536ac33f1642e2301151bc"
+    },
+    "Dusk Zither Cascade": {
+      "db": -1.16141,
+      "calibration_peak": 0.823006033897,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "eb6470271fe8cfae4c2dfc8babd95e24442f3e830903346f909e25dd491343fd"
+    },
+    "Soft Pinwheel Shadow": {
+      "db": -1.191264,
+      "calibration_peak": 0.825839579105,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "679e24f67d14184175a0ce468ee162ec6d0cb0d35cb4c1342d4a37781445c04b"
+    },
+    "Velvet Mandolin Close": {
+      "db": -6.663518,
+      "calibration_peak": 1.55063080788,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "faf7653d243071949561b48d838ba929ae8c32140db7fd03bb0e8c6f1b7b5eb7"
+    },
+    "Water Threads Tender": {
+      "db": -0.091407,
+      "calibration_peak": 0.727617025375,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "ccf5fc197a86783ce515fc1028132a990d2c69831c935d092e566423bb77063c"
+    },
+    "Cork Mechanism Spark": {
+      "db": -5.351998,
+      "calibration_peak": 1.33331382275,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "adbbfa7040c160fa7b306744f180ad4b708012dd1449a7993fff90882619ce91"
+    },
+    "Tremor Lute Shadow": {
+      "db": -2.206753,
+      "calibration_peak": 0.928261041641,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "5eef5eb3343c9274131b9ea5dc2ccaee8f7da36ce876d1530abed86b324bdf1b"
+    },
+    "Hollow Slats Close": {
+      "db": -6.513368,
+      "calibration_peak": 1.52405595779,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "3301c90e66fccaa1c6e3b1c993b5e75f01017a37e3bf2ba17c85fd4722d6afc2"
+    },
+    "Cedar Knocks Bloom": {
+      "db": -5.706078,
+      "calibration_peak": 1.38878941536,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "9bcc8ff1b953344a54bf37114976efd32eeaab75e13fcb094b15e309cf05698d"
+    },
+    "Rain Tines Glass": {
+      "db": -7.866601,
+      "calibration_peak": 1.78099441528,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "91b9f70bc87c25176c2e8e629dc6237a3af1703892525fefb9377c077f480b92"
+    },
+    "Violet Vibra Alloy": {
+      "db": -6.002667,
+      "calibration_peak": 1.43702995777,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "b9f2cf23eb02599a4e5270fcd0d01116d68deaa5970afa4af4546fdff966876d"
+    },
+    "Frost Celeste Shadow": {
+      "db": -5.81038,
+      "calibration_peak": 1.40556681156,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "67ae977f004fbb9ab380a8644a1c1bd66bc45bfa11af9b3ac8c4fa53cbda538c"
+    },
+    "Prism Chimes Close": {
+      "db": -5.021004,
+      "calibration_peak": 1.2834610939,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "fddb187d474215a183b451f80da34260202d8354dc16ee00d768d2aaa6352399"
+    },
+    "Paper Glass Bloom": {
+      "db": -0.891823,
+      "calibration_peak": 0.797854363918,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "5e8bdb1806287b80c52adbe5296025235f6e4dd3443f20511c311eea8a551611"
+    },
+    "Bronze Orchard Glass": {
+      "db": -2.781027,
+      "calibration_peak": 0.991708040237,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "69071213a5065a0f0a937aced92611523d239520018207b363b5aa4b6c3db8a9"
+    },
+    "Silver Nodes Alloy": {
+      "db": -7.306008,
+      "calibration_peak": 1.66967868805,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "9e68f8cb34fc20b8fe5d4b5e2e82f11b3d8684cd9c134753938120d94aebe569"
+    },
+    "Temple Signals Shadow": {
+      "db": -4.182498,
+      "calibration_peak": 1.16535270214,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "5cb00aaf6a883b9b912a5e803e7ac958ee85320c3ed531674a8c6888c506f693"
+    },
+    "Orbit Plates Close": {
+      "db": -4.796243,
+      "calibration_peak": 1.25067555904,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "9045b8839c9f1b079345121d1c13965e3f47f01bf6beb190a79979ea4c21277c"
+    },
+    "Quiet Anvils Bloom": {
+      "db": -2.149109,
+      "calibration_peak": 0.922121047974,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "639d2e1bc647f85f96a692ce62815c7b000233838d83a1f776c8725270ce9b1b"
+    },
+    "Starlit Drops Glass": {
+      "db": -5.819307,
+      "calibration_peak": 1.40701210499,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "144fa884e5c488089b262c8f63c5c2f34fbe6c0ac7f65fd82225e782a7ab41a1"
+    },
+    "Warm Toybox Alloy": {
+      "db": -2.786749,
+      "calibration_peak": 0.992361605167,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "b7909570fdf3b431a00077dc81fa37d99d54f5c6bf7e127c319305c6ed5fc7e8"
+    },
+    "Quartz Gong Shadow": {
+      "db": -2.802996,
+      "calibration_peak": 0.99421954155,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "21b441ef454a28b6df128f0ed14d89facfc17527e4b34234d873f48ea8ac4db9"
+    },
+    "Teal Resonator Close": {
+      "db": -3.514306,
+      "calibration_peak": 1.07906544209,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "8064580fe3b9d62a37a2f99ff2444332347cae7c2010ae4d682649e7f4cf0158"
+    },
+    "Paper Lantern Bloom": {
+      "db": -0.453652,
+      "calibration_peak": 0.758603930473,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "2e559158e7887163ccf1fd558a1b903370863cd04ea3e7169dc9f5aa13737e44"
+    },
+    "Porcelain Tide Close": {
+      "db": -0.426711,
+      "calibration_peak": 0.756254673004,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "b7a2ff2de6ae93201133e444e6ebb1e9c5e07ad0f662bfe7177d7dd34f0ae153"
+    },
+    "Winter Fold Veil": {
+      "db": -2.993626,
+      "calibration_peak": 1.01628100872,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "6c3d4b135282bad6611d4e1c31d035c1b426e5a1f1342e676804c73ba3ff4d15"
+    },
+    "Lantern Organ Open": {
+      "db": -2.916226,
+      "calibration_peak": 0.888542056084,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "e29841561e5181c15d4cf02d50fd6bc837ee7cc46298e34d4f67d26c37e73f39",
+      "adjustments": [
+        {
+          "input_sha256": "23a8a6034226bcd5d029ce313dae693f95b674fcb68b6ff0b7f885c5aa92f428",
+          "sustain_report_sha256": "e027b23ac253cf54e17ed740e57ab11ff2659db5054d5859ca86daa4f93f578b",
+          "reference_master_db": 0,
+          "max_scenario_peak": 0.816203236579895,
+          "target_peak": 0.72,
+          "added_db": -1.089316,
+          "reason": "Additional headroom after complete slow-cycle and prolonged dense-polyphony measurement; target 0.72 sample peak"
+        }
+      ]
+    },
+    "Ember Violas Section": {
+      "db": -1.006925,
+      "calibration_peak": 0.808497667313,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "92d4436aca50569f95d80151d23e6a90db052dbea08f604010b95b4fd485efe8"
+    },
+    "Glass Strings Close": {
+      "db": -0.215248,
+      "calibration_peak": 0.738065481186,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "cced81eb71630a20a5e53bc56f6ed4c8a245024dae6bbc301360d2d85d1335cd"
+    },
+    "Velvet Current Veiled": {
+      "db": -1.411481,
+      "calibration_peak": 0.847045123577,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "16530e9cb2af918c1952fb4c22cad97a73a5496c6b742415618e9d8117f6839c"
+    },
+    "Amber Cavern Open": {
+      "db": -2.481216,
+      "calibration_peak": 0.958061277866,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "354ad16fb40526421d4897d445b50de9c8d3151484032743ff7fa6afcfe946db"
+    },
+    "Metal Weather Open": {
+      "db": -0.557508,
+      "calibration_peak": 0.767728924751,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "205a167af35c829672fd34955a438330e53fe038839409e61ec2e26200cc71cd"
+    },
+    "Soft Pedal Round": {
+      "db": -6.74285,
+      "calibration_peak": 1.33397519588,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "49e1d8cc0987375a749f92fb46cc0eb60974a0059604173c2a73ec456860647a",
+      "adjustments": [
+        {
+          "input_sha256": "bf06225d3cd170757ef777e89bb6e64990ada6580dc7f69f7a3c8900fedd29ab",
+          "sustain_report_sha256": "7b2bd86fbc3f1d9bf215ff01320e4d8af120a5dd27adc34b1693d92ad0ae2669",
+          "reference_master_db": 0,
+          "max_scenario_peak": 0.8446168899536133,
+          "target_peak": 0.72,
+          "added_db": -1.386545,
+          "reason": "Additional headroom after complete slow-cycle and prolonged dense-polyphony measurement; target 0.72 sample peak"
+        }
+      ]
+    },
+    "Glass Cantabile Float": {
+      "db": -2.440044,
+      "calibration_peak": 0.953530728817,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "f55aa930521c7a3a2c021c5b706fc2eca143d4e8b4eb1abf4e7c97cbd0379953"
+    },
+    "Prism Voice Clear": {
+      "db": -2.767907,
+      "calibration_peak": 0.990211248398,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "882a72bc4650f9fb9b239811fbc5661c7c64140932ac77461261c3730e10f5a3"
+    },
+    "Satin Harmonics Phrase": {
+      "db": -3.676428,
+      "calibration_peak": 1.09939539433,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "70e3722dfb214ef6ca1b977355c35a457dee50fd08d9a6f19989bd038515caa7"
+    },
+    "Paper Clock Soft": {
+      "db": -2.443467,
+      "calibration_peak": 0.953906536102,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "2c9d30d9ca03c0bb1a38fe5059ce00b9e1bfa3e555ff0690ab545408db4188c6"
+    },
+    "Glass Repeater Drive": {
+      "db": -10.443943,
+      "calibration_peak": 2.39623641968,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "63c625cd7d9236387f6c950d3e9dfaceeedc19bc10bf2804acfbd454c0017307"
+    },
+    "Velvet Spokes Triplet": {
+      "db": -0.269904,
+      "calibration_peak": 0.74272441864,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "dc7dfd5b973fa34561425d9afe854a18ba6789371c41bad87e9f6cafccb8f6f6"
+    },
+    "Nickel Steps Soft": {
+      "db": -6.901282,
+      "calibration_peak": 1.59366333485,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "0a3b2edbb2d6787798b7fa5fbcfcef97e2170208895d7ae123a8b122ad0f0cbd"
+    },
+    "Felt Drum Body": {
+      "db": -11.170866,
+      "calibration_peak": 2.6054084301,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "ad46d6d5be809d044023e0f6d6d73d10e14773ce9661b67d9e531de890ee758f"
+    },
+    "Low Cushion Drift": {
+      "db": -5.23928,
+      "calibration_peak": 1.31612312794,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "5951eb57d32eb21c22d42def29a86ed84a7287dfc4bf4f1054f390bf6e162c63"
+    },
+    "Copper Tap Bloom": {
+      "db": -0.87536,
+      "calibration_peak": 0.796343564987,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "df1191ffe958078d0bf3be37c77d618af8868c5226d0baa2a1a587571cb67a75"
+    },
+    "Glass Tick Close": {
+      "db": -8.132565,
+      "calibration_peak": 1.83637237549,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "6b8a32e308d9fd90faaf8da18b6fcd3532893d3846b9de25c3fae8c2b50b96fa"
+    },
+    "Iron Footfall Edge": {
+      "db": -7.957674,
+      "calibration_peak": 1.79976665974,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "d9ee4822633de316bed3e542f04808df4e65bbaec08fbf13fea604a309c8ab9e"
+    },
+    "Drop Marker Body": {
+      "db": -7.322165,
+      "calibration_peak": 1.67278730869,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "571565ce07eb05140819404d4f5717c40529e19d9add91b317d3237cde1e4739"
+    },
+    "Felt Ember Glass": {
+      "db": -7.998054,
+      "calibration_peak": 1.80815315247,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "76038bcf089d472022caf2d4b62cff75685ac3a9cbbc660125702f23071f445c"
+    },
+    "Copper Tine Float": {
+      "db": -3.724577,
+      "calibration_peak": 1.10550665855,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "3f41f4748764909e060b84fbcbe2523ccfab48f010bcc7b83c73228c756c0b3b"
+    },
+    "Velvet Reed Bite": {
+      "db": -1.617199,
+      "calibration_peak": 0.86734610796,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "0ce921221c7ab82e6092477b7a4dfcaa06286f517db912449f3f96e925559e14"
+    },
+    "Glass Hammer Close": {
+      "db": -10.888869,
+      "calibration_peak": 2.52217936516,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "22af11b2259c1639d06834a13ad027c51bfe7f8793793857b1cb4a399ab247d8"
+    },
+    "Amber Clav Glass": {
+      "db": -5.790928,
+      "calibration_peak": 1.40242254734,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "0a0163611a1e57ad4d6da295645016822b1ec678e55b5af1eb9a2415554b52c2"
+    },
+    "Wool Electric Float": {
+      "db": -2.994689,
+      "calibration_peak": 1.01640534401,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "405fb679fbddbc645558aed3d36d2a4f5b75774715670bdd235327b0ac6d2a97"
+    },
+    "Weathered Upright Bite": {
+      "db": -5.765663,
+      "calibration_peak": 1.39834916592,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "212ae6af5c4196fe506519faca29d180aef8c8b9d87cb6dfeb3736e6bcf4d945"
+    },
+    "Hollow Console Close": {
+      "db": -8.641321,
+      "calibration_peak": 1.94714605808,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "5e171887a091c73a34f13f9eaa0c03b45285603d36f9c49b52a0b5c020f32758"
+    },
+    "Drawbar Lantern Felt": {
+      "db": -3.313252,
+      "calibration_peak": 1.05437493324,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "bad780f297d6e429065ca025c5a0980b8d927040e5950c60da6e935ab22b6be7"
+    },
+    "Pocket Reed Bite": {
+      "db": -6.375455,
+      "calibration_peak": 1.50004827976,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "d83cf16d81ff69ca7a380c3037a0d262cc5b03d48596b6ee8642a03f570eb6ee"
+    },
+    "Noir Cabinet Close": {
+      "db": -3.824076,
+      "calibration_peak": 1.11824321747,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "74b5d7d50dce8331329ba5dc818e78ce4a757db882f0528e0f9159e8e1196cbd"
+    },
+    "Silver Desk Felt": {
+      "db": -2.29002,
+      "calibration_peak": 0.937202572823,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "720886db3145417a7247d99ccb0eb3826c0bfb289b0d6223868ae0d67d993281"
+    },
+    "Harbor Harp Close": {
+      "db": -1.236206,
+      "calibration_peak": 0.830123662949,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "6c282b0f59bc61bb76190a28bcac1531fdb5d5cff423cc8a23de62708c747c47"
+    },
+    "Copper Plectrum Spark": {
+      "db": -2.542127,
+      "calibration_peak": 0.96480345726,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "76045a4a10fdef10218310ba6b9894069de68ee7f11309149ea2990310dc7166"
+    },
+    "Glass Filament Shadow": {
+      "db": -6.490199,
+      "calibration_peak": 1.51999592781,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "dd5b16b8f8fe29173daa39ace06376c3c1c0b58617721274911ce1b5bde55b4a"
+    },
+    "Palm Circuit Spark": {
+      "db": -0.723691,
+      "calibration_peak": 0.782558917999,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "2ee8844cfe750a677fa23414f2cd8a49786bc1171195ccb3d48849edaf7e0230"
+    },
+    "Tin Carousel Cascade": {
+      "db": -3.368627,
+      "calibration_peak": 1.06111836433,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "d804f221b8dd1f2dfdb2d0714d9615ce08bcbb002ad44b64c16567307dd3bb85"
+    },
+    "Iron Petal Close": {
+      "db": -6.959989,
+      "calibration_peak": 1.60447120667,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "e8e2a5a4e2c6e23c575e590567f9c2af94e82f1484f3c51ba5166dbb1b297d1c"
+    },
+    "Velvet Mandolin Tender": {
+      "db": -1.198988,
+      "calibration_peak": 0.826574325562,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "0c158ff8a8d30493c27f26185cddf3e07bb32a88d910a5e4ac0be388e4b772c1"
+    },
+    "Water Threads Spark": {
+      "db": -7.64245,
+      "calibration_peak": 1.73562133312,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "4f00e501d4f27332706bd9bbfbfc9f4e0d96df11f505198293ca36869acc0c24"
+    },
+    "Cork Mechanism Cascade": {
+      "db": -3.810208,
+      "calibration_peak": 1.11645925045,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "8a6e8fa3c7b02cfa8bb9934fd61154f7a2dd8476ecfa4755957c453ab83ea122"
+    },
+    "Amber Marimba Close": {
+      "db": -10.712529,
+      "calibration_peak": 2.47149062157,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "15c6642df60aa2bd23dbbd8831877462f586d41c79c8cb691a67621dae58bfab"
+    },
+    "Hollow Slats Bloom": {
+      "db": -1.339542,
+      "calibration_peak": 0.840058624744,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "9a64c340aeaabbe95451a7cd7530d455660e0f9ed7b01f4bf3a0f68aef5e494c"
+    },
+    "Cedar Knocks Glass": {
+      "db": -9.751784,
+      "calibration_peak": 2.21269583702,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "48df80d3086b49b908837dd68993d82640c8f67a3603946c836a882e5c306874"
+    },
+    "Rain Tines Alloy": {
+      "db": -5.437584,
+      "calibration_peak": 1.34651648998,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "ad09261ee52721158a20fed45df1fe636a0cab70207986331670d8a132d0662c"
+    },
+    "Violet Vibra Shadow": {
+      "db": -5.120447,
+      "calibration_peak": 1.29823958874,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "278960ddd5afde89fad10b8e17ff183456e18f1e243aa081a73a0cff0df6a13c"
+    },
+    "Pocket Musicbox Close": {
+      "db": -10.021964,
+      "calibration_peak": 2.28260469437,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "602d233835df87f99c83c24d7ed670008534a5391dafe7ea0802fd8f95f36eb3"
+    },
+    "Prism Chimes Bloom": {
+      "db": -3.579686,
+      "calibration_peak": 1.08721840382,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "83729f5cc75ece5a54d5fa32143252b644266489373e0714ffe9c279b86fb1c5"
+    },
+    "Paper Glass Glass": {
+      "db": -5.262691,
+      "calibration_peak": 1.31967520714,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "b7941423bf5007efdd5a0b83d717fc8038d773d18939ab3b025147b9294e47c0"
+    },
+    "Bronze Orchard Alloy": {
+      "db": -2.152225,
+      "calibration_peak": 0.922451913357,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "cb18cf4e0e27600e25ff10cd388e117e9e984ff64e9a854309e86ec37dadcf35"
+    },
+    "Silver Nodes Shadow": {
+      "db": -7.243168,
+      "calibration_peak": 1.65764260292,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "9a894479db9b7bea2c27434d06228a8bf40161ee2180b947c703aa113187baee"
+    },
+    "Ceramic Hands Close": {
+      "db": -7.638272,
+      "calibration_peak": 1.73478674889,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "18504de3dd3cb82ad5ed5226eb6311178dd9c78cf8b7ac3aa828701fef838c41"
+    },
+    "Orbit Plates Bloom": {
+      "db": -0.947475,
+      "calibration_peak": 0.802982807159,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "9fd5bc7cf83b8c0cffdd4ad7a8ba6816f3e498de3016f0b0297df2d379ecc53a"
+    },
+    "Quiet Anvils Glass": {
+      "db": -3.410419,
+      "calibration_peak": 1.06623625755,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "e8c13d2221ac3cb33cf8513695d7e1a8e93f5b613e6ece8f2c03977ecb3c0612"
+    },
+    "Starlit Drops Alloy": {
+      "db": -5.149569,
+      "calibration_peak": 1.3025996685,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "097f813e405c8d9843fb3172964bcf00bd4ad4e7a15e0932632b8fe0782b5b7c"
+    },
+    "Warm Toybox Shadow": {
+      "db": -0.875168,
+      "calibration_peak": 0.796325981617,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "967df9b250305744c0c125bb5dc4d6239915dbc03f5209979e4c71a011c1c550"
+    },
+    "Pulse Lantern Close": {
+      "db": -9.877596,
+      "calibration_peak": 2.24497914314,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "674bc90bde71a56e98710776d2ecc327dee5613488c1ef919bef17d951695994"
+    },
+    "Porcelain Tide Open": {
+      "db": -0.612744,
+      "calibration_peak": 0.772626698017,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "52e9132fe4a6b45ee3ae7d824430ebc1f2f91a98a066f614743171f7c8de283b"
+    },
+    "Lantern Organ Bloom": {
+      "db": -2.965739,
+      "calibration_peak": 0.890242695808,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "b606cb0a51ad0510fa91f7da5609d8fcc83536d802c1d70e76f1839089c8d344",
+      "adjustments": [
+        {
+          "input_sha256": "89cd59f7785169b605154569529afd7f2e38c7eed65a48eaed829f2ef35be78e",
+          "sustain_report_sha256": "4d3a1970205ab630d0b95d5c5b0d110dd50f279a384fcb0ec4c5ae5a17cd8dd3",
+          "reference_master_db": 0,
+          "max_scenario_peak": 0.8193011283874512,
+          "target_peak": 0.72,
+          "added_db": -1.122221,
+          "reason": "Additional headroom after complete slow-cycle and prolonged dense-polyphony measurement; target 0.72 sample peak"
+        }
+      ]
+    },
+    "Spectral Silk Close": {
+      "db": -1.943183,
+      "calibration_peak": 0.900516450405,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "f42e8dbc1fdfeaa4931e6f9380b8ddb699f9397aed5633a959c8c9e527303fd3"
+    },
+    "Chapel Pipes Motion": {
+      "db": -2.175087,
+      "calibration_peak": 0.924883127213,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "25b01e378bc29f161e297bf186fa07edb5f088f9ced0d28105eb5c85149f4b39"
+    },
+    "Glass Strings Section": {
+      "db": -0.45127,
+      "calibration_peak": 0.758395910263,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "6229b855e39384b20796ffb974bd3abe4c06777f5f368df29b16b62a9efcf051"
+    },
+    "Reed Crescendo Motion": {
+      "db": -0.874516,
+      "calibration_peak": 0.796266257763,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "92577344581eb8a97bb417c32898e9070e3648d7be471411eab6e70fcd3f5229"
+    },
+    "Velvet Current Open": {
+      "db": -1.991797,
+      "calibration_peak": 0.905570685863,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "03a6de8e3a5f207498d238078fba8e729858adee12d5765a76162581bdaabab3"
+    },
+    "Porcelain Mist Ripple": {
+      "db": -1.960502,
+      "calibration_peak": 0.902313768864,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "dd0738a278eeea14a653df639061fcec0947ef58f9f16025d834efa1fc981905"
+    },
+    "Orbital Dust Ripple": {
+      "db": -0.949782,
+      "calibration_peak": 0.803196072578,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "519cef8a0f7d2f6b77ec8ccf6082d3d8763012661a195f3f56c088ebbac09f1f"
+    },
+    "Soft Pedal Edge": {
+      "db": -3.81677,
+      "calibration_peak": 1.11730313301,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "fef21c0227abd23d90d829add64e39339e7f48c8fc839b35b59a2c96214a0545"
+    },
+    "Muted Current Tight": {
+      "db": -2.300423,
+      "calibration_peak": 0.938325762749,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "8b3ff74c8fdd6b041e9ee3e539a71e5d3251c1b6c3f03d5d77536f406ae8b42b"
+    },
+    "Glass Cantabile Phrase": {
+      "db": -1.777908,
+      "calibration_peak": 0.883543372154,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "1e0fe04ee9464cbbe6a44c3e61ce4e5c0eec820ec135a0346ad0b38a704248d7"
+    },
+    "Prism Voice Float": {
+      "db": -3.175711,
+      "calibration_peak": 1.03781044483,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "03df5822156daeec36b9a36b0559d57805e08311ea64d5ab648e6d6477a21b9c"
+    },
+    "Chalk Melody Warm": {
+      "db": -0.619648,
+      "calibration_peak": 0.773241043091,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "fc1df35403f2c4962111fc97fa10acf81d3af70b1d703347e1d0edb40f3c1dee"
+    },
+    "Paper Clock Drive": {
+      "db": -8.257032,
+      "calibration_peak": 1.86287653446,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "a08fa8c208ff582c5045325687a4a3d4dad52096e94d0b432978cfc0639168b0"
+    },
+    "Orbit Dots Soft": {
+      "db": -4.323071,
+      "calibration_peak": 1.18436634541,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "cb66cde637105b9eee6467e4e6aae35fab7c168dc9ff15802156b845ab7e9525"
+    },
+    "Glass Repeater Sparse": {
+      "db": -6.813022,
+      "calibration_peak": 1.57755172253,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "05c40df8065e11a508cf171235150c48fbf07ae78b15b32c88a621257f8a3f4f"
+    },
+    "Nickel Steps Drive": {
+      "db": -9.851035,
+      "calibration_peak": 2.23812460899,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "229a047efc1f3441511430cf4ca2a44691a98db8ba2c68ed08d0c9179cd20d94"
+    },
+    "Distant Relay Triplet": {
+      "db": -2.860873,
+      "calibration_peak": 1.00086653233,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "8915e7fd8a71d1da025d574b091b632fdc3ba4e3d4164e4b70beb47066a41c3f"
+    },
+    "Felt Drum Edge": {
+      "db": -12.258308,
+      "calibration_peak": 2.95289421082,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "15b1cfa58ac59940d42dfa26e5d4ca85763878387c673b2fa1c762e6b598ae82"
+    },
+    "Low Cushion Bloom": {
+      "db": -1.758558,
+      "calibration_peak": 0.881577312946,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "0809a37b52077ba5663d67591fb39d31b6896ac024a27bbc7395b8a303d660d2"
+    },
+    "Glass Tick Body": {
+      "db": -6.298146,
+      "calibration_peak": 1.48675632477,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "a1d166755a500886973d9b3981a591be87bf6db0837c7cc521af5e12696e4084"
+    },
+    "Iron Footfall Drift": {
+      "db": -2.921992,
+      "calibration_peak": 1.00793397427,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "8abcb87e88d7051dc1931ac763b9c0e5e31c7d0afb0962884bc8a07f4a9dfc59"
+    },
+    "Tension Thud Close": {
+      "db": -8.506952,
+      "calibration_peak": 1.91725587845,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "2ed247bdb4f962c4641252108764664b734f61dcd43d5176d19f971629d5899d"
+    },
+    "Drop Marker Edge": {
+      "db": -8.587568,
+      "calibration_peak": 1.93513333797,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "4030c9ff475b0b5f534fd23fbd54deb1cb74272dcce42ae223853dd8fef5f20c"
+    },
+    "Felt Ember Float": {
+      "db": -1.512426,
+      "calibration_peak": 0.856946647167,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "9f9ce185c6f266c8194cf1f6b692121626333b6fa36bdd09bb2cf044102aff9f"
+    },
+    "Copper Tine Bite": {
+      "db": -7.722015,
+      "calibration_peak": 1.75159323215,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "eeedabe087c7c61bc004ad5ac4ec745a5c8b364d362c20e5343a49ba4eecd61a"
+    },
+    "Ivory Frame Close": {
+      "db": -6.407273,
+      "calibration_peak": 1.50555336475,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "5eed595fdec8dc2d55815f7c5a05507209803f9999d5b0d3051cde09fa676cac"
+    },
+    "Glass Hammer Felt": {
+      "db": -5.696619,
+      "calibration_peak": 1.38727784157,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "db4e115f32f18c2bfa19e2c65ab73b8bf8d3c4a7100302b8e87de58291ba2f5a"
+    },
+    "Wool Electric Bite": {
+      "db": -6.17905,
+      "calibration_peak": 1.46650993824,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "831c9f9c448f50d3e0a68800e980757197b2028014b22e5f787c75d52eb876fa"
+    },
+    "Tin Toy Keys Close": {
+      "db": -8.564719,
+      "calibration_peak": 1.9300494194,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "61daa1fab551eb2d12ad6b3c816e00745b56f8c5812304eef08a6f30ef3795af"
+    },
+    "Hollow Console Felt": {
+      "db": -1.772487,
+      "calibration_peak": 0.882992148399,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "6263e97b635c5d723c65bf22cd5a7ed598f5f333d8554973b0835a576f554bb6"
+    },
+    "Drawbar Lantern Glass": {
+      "db": -5.931819,
+      "calibration_peak": 1.42535638809,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "4fb3ef3a4a2cfa09574b51339db2d3d17c482bebdd956ba62400243adb6d1a52"
+    },
+    "Porcelain Desk Close": {
+      "db": -9.73628,
+      "calibration_peak": 2.20874977112,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "d1805c1adb543530a77e40aacef335eb318cf60e7aeb89923c1ea1737a1df1f1"
+    },
+    "Noir Cabinet Felt": {
+      "db": -0.876047,
+      "calibration_peak": 0.796406567097,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "9ad5b0ef5682a0ad797ad96d78c24928efc25d732802ce2a3b05e18b31abdda3"
+    },
+    "Silver Desk Glass": {
+      "db": -7.899435,
+      "calibration_peak": 1.78773963451,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "9b1a6f4fa11aef76c3bc193880701e32b167d808115e7f396011ad88ccb735e2"
+    },
+    "Cedar Thread Close": {
+      "db": -6.550507,
+      "calibration_peak": 1.53058636189,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "c76b016a4bad9db8f9a4f766960f4a14434cbf0b0aec944f81514dd7cf1c92f4"
+    },
+    "Paper Lattice Spark": {
+      "db": -0.762144,
+      "calibration_peak": 0.786031067371,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "6d2452dda8ff3f0d38dbc729985029a90688b8baec9142d301a3816bc8ec2106"
+    },
+    "Rubber Lantern Close": {
+      "db": -6.873538,
+      "calibration_peak": 1.58858120441,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "d1ebb2fb4703f4dd8858f14ac041ba61e4c27211c76d0204c83ba23db8dc8191"
+    },
+    "Woven Strings Spark": {
+      "db": -1.1561,
+      "calibration_peak": 0.822502970695,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "728e603461b4a2e92c50610d3d2902b838c48032ca955499a4a40ebe2a8a92c2"
+    },
+    "Tin Carousel Shadow": {
+      "db": -2.212468,
+      "calibration_peak": 0.928872048855,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "c5f3d0d01776869406850a2be16a94a6b6bc4cd23a6b1d678045f481b90ce5a1"
+    },
+    "Soft Pinwheel Close": {
+      "db": -4.736572,
+      "calibration_peak": 1.24211299419,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "6bbec1b97d84cb13de5b36ae219d88eb90c020060de8d6e45304a145b8866fb9"
+    },
+    "Iron Petal Tender": {
+      "db": -3.043773,
+      "calibration_peak": 1.02216529846,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "3956e049e7a7de1cd599ec438b0b04f6867a00c7b7201533573586279864121e"
+    },
+    "Velvet Mandolin Spark": {
+      "db": -4.943068,
+      "calibration_peak": 1.27199649811,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "ad2a528ef612bb1692333f5f7b10a381102da236f91565a2e138be4124a5420a"
+    },
+    "Water Threads Cascade": {
+      "db": -2.986651,
+      "calibration_peak": 1.01546525955,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "008bed5abfa25c574ec1b90ac3011c0a0b44054ce7b70e793f2e08d6645afbc0"
+    },
+    "Cork Mechanism Shadow": {
+      "db": -3.532593,
+      "calibration_peak": 1.08133971691,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "54f1dc1c87a6728c481d9d9033e8168466d4d41e89b4e086a306e85eec70afba"
+    },
+    "Tremor Lute Close": {
+      "db": -3.892636,
+      "calibration_peak": 1.12710475922,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "ee2cccf19db2d3b5c21aa71237e5c33b80546b75a1e213c977f25c7fa4de9cc0"
+    },
+    "Amber Marimba Bloom": {
+      "db": -2.304209,
+      "calibration_peak": 0.938734829426,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "934c7621e411c214f0dbfb09b40c7f2c6b7ab5785fc9e5ba6bd3799df8d40c0e"
+    },
+    "Hollow Slats Glass": {
+      "db": -5.209312,
+      "calibration_peak": 1.31158995628,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "dd2ddf773b28d71dea13feb524487c704fa1780d6fae407ed241f6981a8b928c"
+    },
+    "Cedar Knocks Alloy": {
+      "db": -9.150668,
+      "calibration_peak": 2.06474256516,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "558ac2dd2e0c46ed19c5ddd5500c3169ae67facc35da3c11a80a5ccf9506a01e"
+    },
+    "Rain Tines Shadow": {
+      "db": -4.645446,
+      "calibration_peak": 1.22914981842,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "e43e3b2dacf4710ac5604ddce5745bdb20952a42a579bdf0daa6d7f344c12013"
+    },
+    "Frost Celeste Close": {
+      "db": -9.110096,
+      "calibration_peak": 2.05512046814,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "c18307de8e59090ce7b5e49fd7be23cc756d42ef44e2f82707b130f25eb400f4"
+    },
+    "Pocket Musicbox Bloom": {
+      "db": -4.089829,
+      "calibration_peak": 1.15298581123,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "4eb56e81a2eecffb6bbefb043343e8445b59e77457c124edf5b75019894e6c7d"
+    },
+    "Prism Chimes Glass": {
+      "db": -4.364263,
+      "calibration_peak": 1.18999636173,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "67ca1c661e19c0694b18b6d13f9508731896be4c429dd0765b43d06c151c82f8"
+    },
+    "Paper Glass Alloy": {
+      "db": -3.805913,
+      "calibration_peak": 1.11590743065,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "2d5b95b8065e14a1e18eea435d8fa6334e55fe35ad28427c3168056959958655"
+    },
+    "Bronze Orchard Shadow": {
+      "db": -4.290426,
+      "calibration_peak": 1.17992341518,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "ceee065020a902af70bac0c1f55d8604ccac52d42e160d8fe5e2f0ea0594f624"
+    },
+    "Temple Signals Close": {
+      "db": -3.207047,
+      "calibration_peak": 1.04156136513,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "3ce3f2bcd0b1c5533ccd03536d7155590a4b1d8a18fb50c02b60f48d1553903a"
+    },
+    "Ceramic Hands Bloom": {
+      "db": -2.125353,
+      "calibration_peak": 0.919602513313,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "df9a4e20a481d4d27e89b7480386df1854b88958011fae6379bf3c94bae24d56"
+    },
+    "Quiet Anvils Alloy": {
+      "db": -6.367597,
+      "calibration_peak": 1.49869179726,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "687563cf527d2c6dd8e9184f25afe29b20f7184400c2c5be04016f11d624b555"
+    },
+    "Starlit Drops Shadow": {
+      "db": -4.581842,
+      "calibration_peak": 1.22018194199,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "894293860f68f208bff6d00d9522e94798a756d1f719d5ee505bb8b78df35c02"
+    },
+    "Quartz Gong Close": {
+      "db": -0.296707,
+      "calibration_peak": 0.745019853115,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "91a7eb4fcff01859fd8d55c7e4c1f0b82d7a233b700faa860b8c34345a4b8bd2"
+    },
+    "Pulse Lantern Bloom": {
+      "db": -4.011886,
+      "calibration_peak": 1.14268565178,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "1d5a9303a853db3e5d007c8f7e3425c0762f28fcb36976c81e1a59a91c811a95"
+    },
+    "Teal Resonator Glass": {
+      "db": -1.73076,
+      "calibration_peak": 0.878760397434,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "23690b1ba6fe34c68eeb34bb5bb1c160978ae1393bd0a6c37825797c178b149c"
+    },
+    "Winter Fold Close": {
+      "db": -1.701892,
+      "calibration_peak": 0.787714064121,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "b1e2f0c9c7799ddbb9163eeedccdfe5bc90d85eb903dedd8b4edd44bed0debac",
+      "adjustments": [
+        {
+          "input_sha256": "5ff5abbd043644d13ec95291f2e080a27c6a0bea8965eccfb8a8a748a982988e",
+          "sustain_report_sha256": "b7b316e9e557cc2eda0e941d488ec469fa3652ef19491478bffea2e71e51ffe9",
+          "reference_master_db": 0,
+          "max_scenario_peak": 0.8005546927452087,
+          "target_peak": 0.72,
+          "added_db": -0.92117,
+          "reason": "Additional headroom after complete slow-cycle and prolonged dense-polyphony measurement; target 0.72 sample peak"
+        }
+      ]
+    },
+    "Lantern Organ Drift": {
+      "db": -2.63936,
+      "calibration_peak": 0.975664496422,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "368b5d09a01a37343df289aebb13a693ace45d772c4846a6d7cdba52c5bb1b04"
+    },
+    "Velvet Current Drift": {
+      "db": -1.627935,
+      "calibration_peak": 0.868418812752,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "09456b921dd33faf2ded9089a4aedc139b3851562cb385014cc3d775eba10312"
+    },
+    "Harbor Hum Near": {
+      "db": -3.33245,
+      "calibration_peak": 0.742883443832,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "0ffacc7acdea3988e71baf21d3fd7faf898d18101a6038fb7e9f6a7c6a5cabb0",
+      "adjustments": [
+        {
+          "input_sha256": "8e2160a5ae20c795b40fbed557eb1f0a71e971a27e9da98dd6b8b26a7f57959a",
+          "qa_report_sha256": "95364962b8c88cc4a385302d16eed946d22786da073dbf5d74f18c03bcc7e47c",
+          "reference_master_db": 0,
+          "default_peak": 0.09168889373540878,
+          "max_scenario_peak": 0.8288313746452332,
+          "added_db": -1.222674,
+          "reason": "Additional sample-peak margin: target0.72 in the worst measured scenario"
+        },
+        {
+          "input_sha256": "3fcb9b70761a582df727b89c93725b7c320d2ac319cd1bb1c50a2d1f269b8ace",
+          "sustain_report_sha256": "9acd2882f0f19bd8d95e7fa6caa1b45464f0e0896d92bd9fd00f1141b3d1b601",
+          "reference_master_db": 0,
+          "max_scenario_peak": 0.8896784782409668,
+          "target_peak": 0.72,
+          "added_db": -1.838012,
+          "reason": "Additional headroom after complete slow-cycle and prolonged dense-polyphony measurement; target 0.72 sample peak"
+        }
+      ]
+    },
+    "Amber Cavern Ripple": {
+      "db": -1.178759,
+      "calibration_peak": 0.824651479721,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "f0eac7bf60a43963821854e6e7579224e52ed0f0d79a0d7197513028e0f257ca"
+    },
+    "Soft Pedal Pluck": {
+      "db": -3.965694,
+      "calibration_peak": 1.13662493229,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "17c7773464c48cca3794a88bb2a1d3553b9b966c436b420e87ec8ef6006606d7"
+    },
+    "Muted Current Round": {
+      "db": -1.342739,
+      "calibration_peak": 0.840367853642,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "5644bec7528a0aaccd0b6ae36e5a7b97e902b2f5b53188a7de7dc5443b8c94a9"
+    },
+    "Prism Voice Phrase": {
+      "db": -2.173674,
+      "calibration_peak": 0.924732625484,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "a71bdc3ff31c5a9f647ca427882bd142e5aa3616916437544565a78000413af9"
+    },
+    "Satin Harmonics Near": {
+      "db": -6.998141,
+      "calibration_peak": 1.61153435707,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "5810691850b8297bba1f17e28dbc664cb3553ea152d77f68247d545c7020355e"
+    },
+    "Paper Clock Sparse": {
+      "db": -4.940628,
+      "calibration_peak": 1.27163922787,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "1c932d7cd31a7e2ec52bd438bd5eaca1cd30eb8684a1a5ed33eee4a5e0f61523"
+    },
+    "Orbit Dots Drive": {
+      "db": -7.965329,
+      "calibration_peak": 1.80135345459,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "edfbcc209d1a75bbf51c8177ce17f6a06f534e1cd9d07a960bcae720c6cf695b"
+    },
+    "Glass Repeater Triplet": {
+      "db": -9.260443,
+      "calibration_peak": 2.09100294113,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "0bef60cce9ab88c248d853e2e8ed313115a9af4d9e9039f60f90fe79cef1b49d"
+    },
+    "Timber Circuit Drive": {
+      "db": -4.155296,
+      "calibration_peak": 1.16170883179,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "7b15a840a816ccceb53a385d2231a2077a0a359d4c2d2d681e6b7cd4c80d587e"
+    },
+    "Nickel Steps Sparse": {
+      "db": -10.068276,
+      "calibration_peak": 2.2948076725,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "6c9c0e131a23568c7cc02d6d57bd4ac4088a6b34cc376482dda455aa0f8423fe"
+    },
+    "Distant Relay Glass": {
+      "db": -3.170429,
+      "calibration_peak": 1.03717958927,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "63c5d5285bf9c7891a5ebe4e8ccbe80c521f6b678ae190efbafd6a789700b500"
+    },
+    "Felt Drum Drift": {
+      "db": -12.248303,
+      "calibration_peak": 2.94949483871,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "d5c309bf90ddef2213fc9b1a50431cc9eeb0ae80f279a9b12e08556261fe5e14"
+    },
+    "Copper Tap Close": {
+      "db": -7.798541,
+      "calibration_peak": 1.76709365845,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "b5e8ea657e912306c9ce3702f74f92449d92751e5597abc22231f6fd5795b4b2"
+    },
+    "Glass Tick Edge": {
+      "db": -8.236756,
+      "calibration_peak": 1.85853302479,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "4dc7c6b2485eb303a5ccd95f5f1f017b7ae30bdff0787b9a7884ff5b588904b7"
+    },
+    "Tension Thud Body": {
+      "db": -5.303284,
+      "calibration_peak": 1.32585704327,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "d826fa8de389b8e58885d64e75794a0eca0b0d882f03376914f7f11faf5fcca6"
+    },
+    "Sand Rattle Edge": {
+      "db": -1.653941,
+      "calibration_peak": 0.871022880077,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "09e4133f84e3ac5a1ff1ea365b8abfdece9e319277e24eda0697ed3eaf199110"
+    },
+    "Drop Marker Drift": {
+      "db": -8.536894,
+      "calibration_peak": 1.92387652397,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "bca49e45b4d0d2f3d0c8c3c2cbc0197901210b7c365df427aacd7c74a511aac5"
+    },
+    "Felt Ember Bite": {
+      "db": -8.325802,
+      "calibration_peak": 1.87768447399,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "5cb5fea7efb46da1562e9d17c4684113bac94173242f7bddf79165607737624a"
+    },
+    "Velvet Reed Close": {
+      "db": -4.929129,
+      "calibration_peak": 1.26995682716,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "e6fdecdd44f73c1ab8ffaf2a40bd039e7415a54a78f56e317a3844f0fd08a75f"
+    },
+    "Glass Hammer Glass": {
+      "db": -8.195145,
+      "calibration_peak": 1.84965085983,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "b2fa8d0389b630946b294223a975533a7a814532222336814b6ef7475f4d2648"
+    },
+    "Weathered Upright Close": {
+      "db": -4.305817,
+      "calibration_peak": 1.18201601505,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "344f101d3c5d690899447176c95de72bfcea179f2cd5fd8529a4b558495b54f3"
+    },
+    "Tin Toy Keys Felt": {
+      "db": -4.710148,
+      "calibration_peak": 1.23834002018,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "7088f418a1d15fa89b7b4cf387e2c42e8f6c08bb8846e6f9ebb591fea2ad7d13"
+    },
+    "Hollow Console Glass": {
+      "db": -7.348064,
+      "calibration_peak": 1.67778265476,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "d733e0b0145d7c18833fd46e63b07e5ae44ade394575d808b4811f84dd0dfe1c"
+    },
+    "Drawbar Lantern Float": {
+      "db": -6.756079,
+      "calibration_peak": 1.56724345684,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "bd470dcf42602687d33a3db38432586f4724a2846e451eae3fcfdabca687840f"
+    },
+    "Pocket Reed Close": {
+      "db": -8.505716,
+      "calibration_peak": 1.9169832468,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "431ada36536487f1287cbe298ffb3a19092eb6be0361fb02090cb94d98b1478c"
+    },
+    "Porcelain Desk Felt": {
+      "db": -4.445559,
+      "calibration_peak": 1.20118653774,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "71cf2fcfe65cdc132dfb65667550d3da0bde73575218bbae9e7139d2be21f3ed"
+    },
+    "Noir Cabinet Glass": {
+      "db": -4.102281,
+      "calibration_peak": 1.15463984013,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "d25061df09c41c2a8e33e8b80a29f52634baff526c9a92ed6e78a76e6509834c"
+    },
+    "Silver Desk Float": {
+      "db": -1.420451,
+      "calibration_peak": 0.847920358181,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "26af17b516c66b27aa701faa5ee6b289b783aec05dedcc201e3f5f47866261d0"
+    },
+    "Cedar Thread Tender": {
+      "db": -2.292423,
+      "calibration_peak": 0.937461972237,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "e1524229f48d792ff8d4dbaa7479d75bd61def252a26bb3ee1f24118b523977b"
+    },
+    "Harbor Harp Spark": {
+      "db": -2.789967,
+      "calibration_peak": 0.992729306221,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "1008bf39ef721ebcc876dff2418c27ba3c17cc55bf069830582b67e1c848784b"
+    },
+    "Paper Lattice Cascade": {
+      "db": -0.566948,
+      "calibration_peak": 0.768563747406,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "b215bb3a03719692c889b33e010b5ef89ad0a6b82554d9184fa1681c1e615ed4"
+    },
+    "Glass Filament Close": {
+      "db": -10.031906,
+      "calibration_peak": 2.28521871567,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "1e004a6da7efd1cb5311d30b20f468a2aa22a39f33c26b298056a9d4e5a4c8cb"
+    },
+    "Rubber Lantern Tender": {
+      "db": -3.190388,
+      "calibration_peak": 1.0395655632,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "ae84cd84b5d67276806920a11f5a0db4ba516595c32cd74af7d39bbe82b5cda1"
+    },
+    "Dusk Zither Close": {
+      "db": -4.858502,
+      "calibration_peak": 1.25967228413,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "66dc83fe73c54183f0050cb6c63a7bd1e74d707382e59bdd65c0344d4f0a66f9"
+    },
+    "Iron Petal Spark": {
+      "db": -5.163279,
+      "calibration_peak": 1.30465734005,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "530dc7f2f8e5138dbb582c2cee334b5a73c9120b400e670358d3a76fd0e3df0f"
+    },
+    "Velvet Mandolin Cascade": {
+      "db": -3.395807,
+      "calibration_peak": 1.06444406509,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "01d0f4f25974dc85d08411065316e2cbe36f628c3dc4ea4b52a79c42abb7492d"
+    },
+    "Water Threads Shadow": {
+      "db": -2.37544,
+      "calibration_peak": 0.946464836597,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "45dd2a3955af7ded390ace9cacf354e7e67960e62efd0d4e0f042772f4e5b979"
+    },
+    "Tremor Lute Tender": {
+      "db": -0.303418,
+      "calibration_peak": 0.745595693588,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "055386551013f2e6e4fc2a56930f37fe74a98df3974695969b5d06488522ff6c"
+    },
+    "Amber Marimba Glass": {
+      "db": -9.731158,
+      "calibration_peak": 2.20744752884,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "03c3ac09b59248aa7d5d614e011451b5252b895142767505321512c1d44c93c7"
+    },
+    "Hollow Slats Alloy": {
+      "db": -5.98139,
+      "calibration_peak": 1.43351411819,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "1ea71f7ac57dcf5cdf0ee7017e11c09968397f669de24975872d99e47961628b"
+    },
+    "Cedar Knocks Shadow": {
+      "db": -7.999367,
+      "calibration_peak": 1.80842649937,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "f544b8e740dc32adf40a32266983e0419fa15df98ec44acd09e7ea4cebaa874e"
+    },
+    "Violet Vibra Close": {
+      "db": -8.357781,
+      "calibration_peak": 1.88461017609,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "f63994dfcec7048f891a550f2a7bf7eb725838f7254bafe48458ea9a3047f897"
+    },
+    "Frost Celeste Bloom": {
+      "db": -4.466817,
+      "calibration_peak": 1.20412993431,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "59f5dab3f75f65f40f555d9cdc70167d9887450928767173ae9b96b6ea9874a0"
+    },
+    "Pocket Musicbox Glass": {
+      "db": -9.36646,
+      "calibration_peak": 2.11668133736,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "c58a6e02fc7b8e8e9ffb7841bf0d25f3c77eb1588b485bcea54c934c94f8daae"
+    },
+    "Prism Chimes Alloy": {
+      "db": -2.356136,
+      "calibration_peak": 0.944363772869,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "7eb3f6ea5395f8908cc99218f9845b7b7d53dd82dfc1a5b3d11239f14369e1b3"
+    },
+    "Paper Glass Shadow": {
+      "db": -1.198711,
+      "calibration_peak": 0.826547980309,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "1306746257440e64797db45c00a83c9656c90d9fecca863d934d0e6099fe72d5"
+    },
+    "Silver Nodes Close": {
+      "db": -10.131407,
+      "calibration_peak": 2.31154751778,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "8955a6e3a7ae94a85671d145c694227ecbf128191b4105e910f820690334a295"
+    },
+    "Temple Signals Bloom": {
+      "db": -4.153746,
+      "calibration_peak": 1.16150152683,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "a1e66cf35741c3bd121985300d866bcb3b0bb55381dbcd90fe0e7c1189217a9a"
+    },
+    "Ceramic Hands Glass": {
+      "db": -5.992671,
+      "calibration_peak": 1.43537724018,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "8d608c2368e4fec792fed37b8d4e17d7359f7dfd8917a61e0cc536bedd14fb8a"
+    },
+    "Orbit Plates Alloy": {
+      "db": -0.43221,
+      "calibration_peak": 0.75673353672,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "a2fd81271d1428441682c5b271b5b4116af4a1b0f2b40eff2201c77bfe4e38f2"
+    },
+    "Quiet Anvils Shadow": {
+      "db": -6.540217,
+      "calibration_peak": 1.52877426147,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "8445e8b33078f94d0ceea996c1f4da607fd372ceb85d56076df73af6b3d69252"
+    },
+    "Warm Toybox Close": {
+      "db": -6.464625,
+      "calibration_peak": 1.51552724838,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "37f82fcc69f5b23f7f8b8f272aaa30dac20121dff25804ac2eafced60ef6cbf5"
+    },
+    "Quartz Gong Bloom": {
+      "db": -0.438827,
+      "calibration_peak": 0.757310271263,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "6dfea45d21fb82f83381bad17e73431cd1d0b747429f45ee0703631c29db2660"
+    },
+    "Pulse Lantern Glass": {
+      "db": -7.544106,
+      "calibration_peak": 1.71608102322,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "ba670674e4ffe29256dcf3b1aa4194eaf3a7aca474cba662fc25e96c0796f23d"
+    },
+    "Glacier Loom Close": {
+      "db": -0.172629,
+      "calibration_peak": 0.734452903271,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "845c55450dce1d656b124559ac5fe0394da38bacc61c933f78cd1d1f97f91da8"
+    },
+    "Porcelain Tide Drift": {
+      "db": -0.285544,
+      "calibration_peak": 0.744063019753,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "3ab66424e8090670c5b0bebb623c18294769b0eb0c620d8ed46a4ec797310c7a"
+    },
+    "Winter Fold Open": {
+      "db": -1.70572,
+      "calibration_peak": 0.876230716705,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "cfd91e705e83482812f68cafe7da531bf2c288c51841267948622540bce7d7ba"
+    },
+    "Lantern Organ Veil": {
+      "db": -3.267911,
+      "calibration_peak": 0.924139738083,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "ce85b82fdc1ad071d95e5e873a2cd10984d26b4efea69511c0f9c3a714e273fb",
+      "adjustments": [
+        {
+          "input_sha256": "b4888ff1642a52f9f81ad97e27dcff600a216965b4b6eb1ba2bbb391476d88f1",
+          "sustain_report_sha256": "8583b922cb2de3d7f93935581b2c0df0476dffab0e121fcc95fb31f3ff401ff1",
+          "reference_master_db": 0,
+          "max_scenario_peak": 0.8171896934509277,
+          "target_peak": 0.72,
+          "added_db": -1.099808,
+          "reason": "Additional headroom after complete slow-cycle and prolonged dense-polyphony measurement; target 0.72 sample peak"
+        }
+      ]
+    },
+    "Soft Circuit Close": {
+      "db": -0.628122,
+      "calibration_peak": 0.773995816708,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "459eaec5d68e9d03658c008d2d9c5c8dc4084f7a559f1fffd775859a65d517fd"
+    },
+    "Ember Violas Motion": {
+      "db": -0.955154,
+      "calibration_peak": 0.803693056107,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "9ddaeb220ec044546b3707d24a8b12c402b63a25d7c3cec2cf9c90d30f71dcbe"
+    },
+    "Chapel Pipes Close": {
+      "db": -2.84085,
+      "calibration_peak": 0.998561859131,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "cee55fa460437790af741cf3121fbd2d98a5e060c4bb7fcd6dba013458bcff55"
+    },
+    "Felt Pizzicato Motion": {
+      "db": -0.428215,
+      "calibration_peak": 0.756385564804,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "dff887c88c2fb901d819c1b151420343d63961a699a4e21fa6ace2f5ef0a94e0"
+    },
+    "Velvet Current Ripple": {
+      "db": -1.657603,
+      "calibration_peak": 0.871390163898,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "f235241073717b0cb9ae95cebceb48664681228967beccf6fd15ce5b391907ff"
+    },
+    "Porcelain Mist Near": {
+      "db": -1.830501,
+      "calibration_peak": 0.888909459114,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "404f54cd3c04b7f6f03aac291bd95c03174ad68af3849cf6c5d524e39a449579"
+    },
+    "Orbital Dust Near": {
+      "db": -1.321471,
+      "calibration_peak": 0.83831268549,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "7470e7b3d14adc086de8a645ecc3338cfe2c87fcf604336fa5694ba25fc92d4a"
+    },
+    "Soft Pedal Pulse": {
+      "db": -2.871911,
+      "calibration_peak": 1.0021392107,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "3fe1b82bd500443f28e23f937bbf4e01695432ee6f5ef4ae8fd8b20ef8ad4b1d"
+    },
+    "Muted Current Edge": {
+      "db": -1.178921,
+      "calibration_peak": 0.824666857719,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "1176bc651046f90073063955ba4e75f6eb0bd2a9d8f960ce3eeb67f6009c1161"
+    },
+    "Glass Cantabile Near": {
+      "db": -3.62773,
+      "calibration_peak": 1.09324872494,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "a7962fc59d03000aa6c30921f7aafb1ec76a3fbe5e20b658e4c9786cc31c061c"
+    },
+    "Satin Harmonics Warm": {
+      "db": -7.467222,
+      "calibration_peak": 1.70095801353,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "8f158eeb0c490452c33a56b53cfa6fd4f5a8c001589c4a0ae156334193b0002b"
+    },
+    "Chalk Melody Float": {
+      "db": -1.0314,
+      "calibration_peak": 0.810779035091,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "9bca3b44f2fe69aad265c8bafb92159dc219ec59a1abfc8be11b280f51bf57cb"
+    },
+    "Open Passage Warm": {
+      "db": -0.065417,
+      "calibration_peak": 0.725443124771,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "18e7999a250c6402966de0a71a747762b1473b29ca87dcede49d7fa14602c849"
+    },
+    "Paper Clock Triplet": {
+      "db": -5.539841,
+      "calibration_peak": 1.36246240139,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "1792fc7ada90b6a6d3826437b2dcca68014d255b00f3e6be36c66699dc663150"
+    },
+    "Orbit Dots Sparse": {
+      "db": -6.379073,
+      "calibration_peak": 1.50067329407,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "6f42ab833ea860005faeab17cccbeb498482415313b347add50e3d5f8b6d599d"
+    },
+    "Glass Repeater Glass": {
+      "db": -9.860093,
+      "calibration_peak": 2.24045968056,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "e7e76eecff407cc89f14acf62ae4c6e58b485879b7063eeaf5271bd825aef8b5"
+    },
+    "Timber Circuit Sparse": {
+      "db": -1.199164,
+      "calibration_peak": 0.826591014862,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "faa338015c7fdcf3f03baaf79376203231d872f5655ad95958af39ffcd0f28d7"
+    },
+    "Nickel Steps Triplet": {
+      "db": -7.800515,
+      "calibration_peak": 1.76749515533,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "8455eba4f471f441f2e4d85cae8cc954551828bca538cddd345448a293d18d0a"
+    },
+    "Felt Drum Bloom": {
+      "db": -8.233596,
+      "calibration_peak": 1.85785698891,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "6a09ea2c2935b18542e995ad9a5b28119029091249ed9b21ada11d799f56011b"
+    },
+    "Low Cushion Close": {
+      "db": -8.158186,
+      "calibration_peak": 1.84179711342,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "382062c58ca223a4a2b768f01e8b1bf5785402b16c8cba9080585f2ade8041d2"
+    },
+    "Copper Tap Body": {
+      "db": -4.206739,
+      "calibration_peak": 1.16860961914,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "c45bb03091c3f4008b99e3d0d74b4747fee44035d16963678bbc77c86ccca055"
+    },
+    "Glass Tick Drift": {
+      "db": -7.381816,
+      "calibration_peak": 1.68431484699,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "67fc24004b104e71691cda0564015d732dec68ebdd8b21765e3f9a8714683ecb"
+    },
+    "Tension Thud Edge": {
+      "db": -8.020155,
+      "calibration_peak": 1.81275975704,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "1659749d92fd0e47995f79e73a33279b5cee64dbff1a54231ecaac98cff6f674"
+    },
+    "Drop Marker Bloom": {
+      "db": -3.463278,
+      "calibration_peak": 1.07274472713,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "e5d367844277449ba75476bd02747b8bf620edfa5703ca10bf9898da3919dc35"
+    },
+    "Copper Tine Close": {
+      "db": -11.447459,
+      "calibration_peak": 2.68970990181,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "85759e060ac46461fcb0f2cd9db7dd915becb24339248ad14c038127a52f8ad4"
+    },
+    "Velvet Reed Felt": {
+      "db": -1.89408,
+      "calibration_peak": 0.895439982414,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "e54fcd66ee439e32dac8369279979d19a84be38464355018e930b8c788335732"
+    },
+    "Ivory Frame Glass": {
+      "db": -5.975736,
+      "calibration_peak": 1.43258142471,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "9df9c544b217b8df28f3bac15b78e9a73c354d73c889586f86fdd6fe177f43f2"
+    },
+    "Glass Hammer Float": {
+      "db": -3.608898,
+      "calibration_peak": 1.09088099003,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "0ca2eebe65a7d28f5a51193e8ebe2d5a6c7e08c2f77ecfb51183888f0bbed959"
+    },
+    "Wool Electric Close": {
+      "db": -5.968088,
+      "calibration_peak": 1.43132054806,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "071f1e677aee24655239e832ea5506126198f1f72060af1e06ef205dc1a6740c"
+    },
+    "Tin Toy Keys Glass": {
+      "db": -6.631574,
+      "calibration_peak": 1.54493844509,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "bb8512e81cb3e4113270be4f1080e54c60447e1b69816c519ff28c2e6c2e148a"
+    },
+    "Hollow Console Float": {
+      "db": -1.355486,
+      "calibration_peak": 0.841602027416,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "148c2acb663a50027366d894b06353970ca805bd1d065db4871ab8fa5f6952a4"
+    },
+    "Drawbar Lantern Bite": {
+      "db": -5.294272,
+      "calibration_peak": 1.32448208332,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "121add19c2fb855b7b9bc6ec9cba394e57ffff9c699d012448ed9d2b92843b66"
+    },
+    "Pocket Reed Felt": {
+      "db": -3.498791,
+      "calibration_peak": 1.07713973522,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "168eb46e4093268f7e904d9e5cb91c906a3d5bd022b62ff570d96b0785b9c33d"
+    },
+    "Porcelain Desk Glass": {
+      "db": -7.306381,
+      "calibration_peak": 1.66975033283,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "d71465f344a7b4ae89338e3f4a9297912e23b63fe0aff36ab8f9a37377451a03"
+    },
+    "Noir Cabinet Float": {
+      "db": -0.536458,
+      "calibration_peak": 0.765870571136,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "a34b430516a1be7d0a9448c132ac983de4d16a3426011564fc441bc8bd17e87f"
+    },
+    "Silver Desk Bite": {
+      "db": -6.96899,
+      "calibration_peak": 1.60613489151,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "8ed27ada328fef5ceec94bc7c3c40a80c67412d08f5757232b5518dce8d84d37"
+    },
+    "Resonant Marrow Close": {
+      "db": -0.753845,
+      "calibration_peak": 0.785280406475,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "dab860adccfb564d0389a4fca2584375f9c6d3dc47957cf2dc5aecff194798b5"
+    },
+    "Cedar Thread Spark": {
+      "db": -6.827143,
+      "calibration_peak": 1.58011853695,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "b24ce22e637a6fcea43424e6fc86dae80c4803f2ac075b57fbf9a0874b3ea13c"
+    },
+    "Glass Filament Tender": {
+      "db": -5.393598,
+      "calibration_peak": 1.33971488476,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "faa9799649e0a7099282e92e2c03495016213bff809c7c1f04e8780e102b0d54"
+    },
+    "Rubber Lantern Spark": {
+      "db": -6.373227,
+      "calibration_peak": 1.49966359138,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "956ed2817bad02d07e67ae0cab2c88e570c461962cadff11000c8ed59815ae17"
+    },
+    "Tin Carousel Close": {
+      "db": -5.356175,
+      "calibration_peak": 1.33395516872,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "d2e8ff5e716b14a29025b83719f8805d844f01c5e51d8a45fb50d0f5829268c2"
+    },
+    "Soft Pinwheel Spark": {
+      "db": -6.838393,
+      "calibration_peak": 1.58216643333,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "11f3b3b756cc512f2762b2054902570a65c689c4d2820c182a0d597df49d93a6"
+    },
+    "Iron Petal Cascade": {
+      "db": -3.975911,
+      "calibration_peak": 1.13796269894,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "29b70751cfd3be59dab15464ed233bbf6c5da9dee022d6f4b32ee69bf1def5ad"
+    },
+    "Velvet Mandolin Shadow": {
+      "db": -1.681846,
+      "calibration_peak": 0.873825669289,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "001a21598a164da7eb31fbe76f90f9629ba261bb0accc4e9042d9845395566b2"
+    },
+    "Cork Mechanism Close": {
+      "db": -3.608642,
+      "calibration_peak": 1.09084892273,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "b5d685a201eba0af74072934a00345a368563a2500bd524c758d8b974bf12f8b"
+    },
+    "Tremor Lute Spark": {
+      "db": -5.416276,
+      "calibration_peak": 1.34321737289,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "201df1850aa27e47d0287fc43fe67bd764d96b888ea78cafbaef8ed527abbd53"
+    },
+    "Amber Marimba Alloy": {
+      "db": -6.732655,
+      "calibration_peak": 1.56302249432,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "0ccea6d47ced77f49120863453f2d55273ef05bc7b24e42d146b117b1ddd90af"
+    },
+    "Hollow Slats Shadow": {
+      "db": -3.898656,
+      "calibration_peak": 1.12788617611,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "34bcc03f47fc07cd90178ce5c6292ebc28e7f05fb64cbad9cfd58bb704fe1bc7"
+    },
+    "Rain Tines Close": {
+      "db": -9.556452,
+      "calibration_peak": 2.16349101067,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "ec7cd5369659f181913b1d1ef9a9aa7b607803d5576896989dfc2513f614fb6c"
+    },
+    "Violet Vibra Bloom": {
+      "db": -4.481574,
+      "calibration_peak": 1.20617747307,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "ee7139aabe903528119e875d7bd537e0ac7e42df3581e338f2fd6de3e386d0f5"
+    },
+    "Frost Celeste Glass": {
+      "db": -7.211352,
+      "calibration_peak": 1.65158176422,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "9331012f0bb749ce4eb56f483f195df9216a45972c98898b2d86fd25413defed"
+    },
+    "Pocket Musicbox Alloy": {
+      "db": -7.009815,
+      "calibration_peak": 1.61370170116,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "5f4dec181e20e6201402908f75d0a9673cae5f7a8f851e8bedec4d49726c81cb"
+    },
+    "Prism Chimes Shadow": {
+      "db": -5.383166,
+      "calibration_peak": 1.33810687065,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "e065a396b908a745084a38ae3e29071856709b5b2f8fb3d0f7f8f1fe10bd073e"
+    },
+    "Bronze Orchard Close": {
+      "db": -3.858928,
+      "calibration_peak": 1.12273919582,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "ea6a6d29e6e06227164410945b2b4c1fbc48ec747a015a1d66f64d9e3b04964b"
+    },
+    "Silver Nodes Bloom": {
+      "db": -3.94139,
+      "calibration_peak": 1.13344907761,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "4f1f1ec18054583f13e618ce63a8a2f71ff24aca11f0779876dd0dfba4165719"
+    },
+    "Temple Signals Glass": {
+      "db": -1.831334,
+      "calibration_peak": 0.888994753361,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "5ccabf2d6413726cc0557839734151292d1f699cdda8e0d57f07e5d67647d5b3"
+    },
+    "Ceramic Hands Alloy": {
+      "db": -7.076041,
+      "calibration_peak": 1.62605249882,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "7485e5ca92d6a2cf16bfed2aa746a62d666b4ba6298646ab1850c22fca920186"
+    },
+    "Orbit Plates Shadow": {
+      "db": -2.093575,
+      "calibration_peak": 0.916244208813,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "62b6fcd2eb4c3b65603404f1f092fb1246d8d3049670ce7013a1010f3fc82237"
+    },
+    "Starlit Drops Close": {
+      "db": -8.063329,
+      "calibration_peak": 1.82179272175,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "2fa8ca452e469d5fe6cae6a802fa8dcd6aadba67200aabe327cbb3b8f1db76f2"
+    },
+    "Warm Toybox Bloom": {
+      "db": -0.742076,
+      "calibration_peak": 0.784217119217,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "e8ba79417bc42730895c91971747b7106ab60ea6570b649f0dadf864b9b9632d"
+    },
+    "Quartz Gong Glass": {
+      "db": -0.065896,
+      "calibration_peak": 0.725483059883,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "44b7e8f8123cf7506429994065e8a2935a22e2e22e11617dba532842cbb57748"
+    },
+    "Pulse Lantern Alloy": {
+      "db": -7.408472,
+      "calibration_peak": 1.68949186802,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "35c7b1dbeb895ef51b4aaaa6c8e7635397796dc17837bdb5c195005dbf512aa6"
+    },
+    "Porcelain Tide Veil": {
+      "db": -1.631683,
+      "calibration_peak": 0.868793666363,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "2965306f018f95fcba7d4a554e2b0c233c1f492f35e4edac420f069470e5fd5a"
+    },
+    "Winter Fold Bloom": {
+      "db": -1.721166,
+      "calibration_peak": 0.877790331841,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "ac8f4b975905176d30415fa3f95d78232c10873f36c81bd6c6434542a9b03e69"
+    },
+    "Chapel Pipes Section": {
+      "db": -3.877002,
+      "calibration_peak": 1.12507796288,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "b5d6a82851a559f7229e88188a2b180a0bada5577f7cbf8f72781a7ecb36a94f"
+    },
+    "Glass Strings Motion": {
+      "db": -0.579891,
+      "calibration_peak": 0.769709825516,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "ebbfb92558aad3f5d160427fa7f431c3aa83206edd25f2adb5734ce65ec08a50"
+    },
+    "Harbor Hum Open": {
+      "db": -3.541124,
+      "calibration_peak": 0.761743545532,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "ab57a7ea5510e13d1d4e88c339d45fb7980763728116092bcd765b00c2167f54",
+      "adjustments": [
+        {
+          "input_sha256": "5936585d5c5c51f1efc3244878be075965c786cc716c3471bd83abd3b532dbe6",
+          "qa_report_sha256": "ba989256073a3f61c8df6b0d127561c6667cd19aec795555bca0a2515211fc8b",
+          "reference_master_db": 0,
+          "default_peak": 0.09090161323547363,
+          "max_scenario_peak": 0.8438206315040588,
+          "added_db": -1.378353,
+          "reason": "Additional sample-peak margin: target0.72 in the worst measured scenario"
+        },
+        {
+          "input_sha256": "d4ea9104e0c9f65ba7c3484cd2445ab9ba9a50f20ffb141a55837367a85d1480",
+          "sustain_report_sha256": "b32dab41ca0e73a91cf2efd8620aaf973a2c2ca7115e7d1ac000d48d2fdd5575",
+          "reference_master_db": 0,
+          "max_scenario_peak": 0.8729608058929443,
+          "target_peak": 0.72,
+          "added_db": -1.673245,
+          "reason": "Additional headroom after complete slow-cycle and prolonged dense-polyphony measurement; target 0.72 sample peak"
+        }
+      ]
+    },
+    "Amber Cavern Near": {
+      "db": -1.319145,
+      "calibration_peak": 0.838088214397,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "4038b89e73d456e7a5cc4249ddf6e9cd815af8fb0f51f7e7faef69364083455b"
+    },
+    "Metal Weather Near": {
+      "db": -0.986763,
+      "calibration_peak": 0.806623101234,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "00b11cb163c6060715b8d471e118002ed68b655b8eb054d6b54d1d90bbd91048"
+    },
+    "Muted Current Pluck": {
+      "db": -4.668219,
+      "calibration_peak": 1.23237657547,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "e4f38a71715254a628506a1e57d6b1aa977a8028a0e86f9a54f15f16860490f4"
+    },
+    "Glass Cantabile Warm": {
+      "db": -2.964694,
+      "calibration_peak": 1.01290142536,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "3b192e482facc1cbccdd9019271a2e16dd83b7edf1650c331ffc572d747809a5"
+    },
+    "Prism Voice Near": {
+      "db": -3.486611,
+      "calibration_peak": 1.0756303072,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "ab55e6b6a86b7472474eb96599e607dbb8c86736e00ff490d1ed5fad8779c346"
+    },
+    "Satin Harmonics Clear": {
+      "db": -4.382016,
+      "calibration_peak": 1.19243109226,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "3d7aa5dad56af5377fa54eff51ac8e459554d2e6c486832825cad763f15918e0"
+    },
+    "Paper Clock Glass": {
+      "db": -7.236859,
+      "calibration_peak": 1.65643906593,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "2c0ca59971fe5829174a58f449ab77282ce96f26faba92774a266a599becaa55"
+    },
+    "Orbit Dots Triplet": {
+      "db": -5.415663,
+      "calibration_peak": 1.34312260151,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "e2217052b57e2574525723aa4c4f521c9f92113dedc7e15897da0ef4c4a8c6f1"
+    },
+    "Velvet Spokes Drive": {
+      "db": -0.166368,
+      "calibration_peak": 0.73392367363,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "e27dea06e503b735b7e015660789c12ec5bc0bb8dc93aff9b5b31e59ed2393ac"
+    },
+    "Timber Circuit Triplet": {
+      "db": -1.225062,
+      "calibration_peak": 0.829059302807,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "7057d7c3a6ecd8a44536c57728b0e07a014c9522b3e8151a18b45381c1bd2af9"
+    },
+    "Nickel Steps Glass": {
+      "db": -4.828756,
+      "calibration_peak": 1.25536584854,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "549b5c458af6779f69f9e51f3b34aa8b39ed5e070d79529aeaaa6feeae99e0e9"
+    },
+    "Distant Relay Soft": {
+      "db": -1.14853,
+      "calibration_peak": 0.821786463261,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "325382a1679aca29b43632ea5b194d20c9b53ff3e6dd4557701baea53ae2d37e"
+    },
+    "Timber Knock Close": {
+      "db": -0.475051,
+      "calibration_peak": 0.760475218296,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "915219ac44bcd7624d90a6e09fc2ed24d06d909578c365aca90130bea5d2ff3f"
+    },
+    "Low Cushion Body": {
+      "db": -4.240151,
+      "calibration_peak": 1.17311358452,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "7714c2c50f1bf9f793597497e719140d78445c7b4a8f2949076c3dbb6b76d6f3"
+    },
+    "Copper Tap Edge": {
+      "db": -6.33778,
+      "calibration_peak": 1.49355590343,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "8900cca1304795be84fb141a0ed05a58550cb2d99d12e4176e0fd752bb1e73e8"
+    },
+    "Glass Tick Bloom": {
+      "db": -3.035297,
+      "calibration_peak": 1.02116835117,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "b1a2c7c9be8aebb15cd2f0640a874b70f2a84181bcff296f357a8e0561fd3230"
+    },
+    "Iron Footfall Close": {
+      "db": -5.449918,
+      "calibration_peak": 1.3484300375,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "b0f41a76612d324125d41c422fbe995cdc0e940012cfe3e89eae69861309a8a7"
+    },
+    "Tension Thud Drift": {
+      "db": -6.344778,
+      "calibration_peak": 1.49475979805,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "e78bfac9d7a929b80f5f0aadbf6bd56928a2b71eac3cc34367a51827413d06c5"
+    },
+    "Hollow Block Close": {
+      "db": -0.999431,
+      "calibration_peak": 0.807800412178,
+      "fixture": "dense_polyphony_or_hard_mono",
+      "input_sha256": "dd979cf3ad2e14f4082f2528f3be18508031d8988b8fa743cb513333d1c52713"
+    },
+    "Slow Orbit Close": {
+      "db": 8.703765,
+      "adjustments": [
+        {
+          "input_sha256": "880c0da7fa38e4a97b1ed1fc4e8e7d5dc81cb6080dbbedeac81b281a6d39e272",
+          "qa_report_sha256": "69ff76ce85a2c2dd6d7a1cf0fe6765a4eea8d79b50ef4ffdc68ecdf5f482e085",
+          "reference_master_db": 0,
+          "default_peak": 0.011013694107532501,
+          "max_scenario_peak": 0.10400286316871643,
+          "added_db": 8.703765,
+          "reason": "Quiet default: target0.03 peak subject to measured stress margin and +18 dB trim ceiling"
+        }
+      ]
+    },
+    "Slow Orbit Open": {
+      "db": 16.367462,
+      "adjustments": [
+        {
+          "input_sha256": "0974ee79539db22fc1c7593b6768f9375204951936496b2023289de994bdfbb0",
+          "qa_report_sha256": "8518ee1c076360e34221aa798a1a74f04074403beab2d12482b6b96715adde0d",
+          "reference_master_db": 0,
+          "default_peak": 0.004557725507766008,
+          "max_scenario_peak": 0.038338158279657364,
+          "added_db": 16.367462,
+          "reason": "Quiet default: target0.03 peak subject to measured stress margin and +18 dB trim ceiling"
+        }
+      ]
+    },
+    "Slow Orbit Bloom": {
+      "db": 15.267439,
+      "adjustments": [
+        {
+          "input_sha256": "f6be834464b6b611211b57a29dccd79a1767fb9170236fe329a78be7dca7924b",
+          "qa_report_sha256": "d40982ee0e8fc388024a1c8707b60ad1fc9a0f928476973d136344571474d3d9",
+          "reference_master_db": 0,
+          "default_peak": 0.005173081532120705,
+          "max_scenario_peak": 0.055790383368730545,
+          "added_db": 15.267439,
+          "reason": "Quiet default: target0.03 peak subject to measured stress margin and +18 dB trim ceiling"
+        }
+      ]
+    },
+    "Slow Orbit Drift": {
+      "db": 15.076545,
+      "adjustments": [
+        {
+          "input_sha256": "e23155485e818c84bb1e48c132b49f50d05af6d450845a440752f67305590389",
+          "qa_report_sha256": "f69db8e6aab891a4503f485d60a25cd8eebc0ef9433566d8c2a1bdbc22b976d2",
+          "reference_master_db": 0,
+          "default_peak": 0.005288030952215195,
+          "max_scenario_peak": 0.052130263298749924,
+          "added_db": 15.076545,
+          "reason": "Quiet default: target0.03 peak subject to measured stress margin and +18 dB trim ceiling"
+        }
+      ]
+    },
+    "Slow Orbit Veil": {
+      "db": 9.758333,
+      "adjustments": [
+        {
+          "input_sha256": "ca6c9445f108d26c37d63e964e2dab8143ca85cbe85f102a704a66eddb929806",
+          "qa_report_sha256": "c517cc6d1e447c7a6d7f59e95120d9bd6be38f7c09a9b19f7646932c6ff0717f",
+          "reference_master_db": 0,
+          "default_peak": 0.009754491038620472,
+          "max_scenario_peak": 0.10244439542293549,
+          "added_db": 9.758333,
+          "reason": "Quiet default: target0.03 peak subject to measured stress margin and +18 dB trim ceiling"
+        }
+      ]
+    },
+    "Glass Air Open": {
+      "db": 9.883861,
+      "adjustments": [
+        {
+          "input_sha256": "19548bc552a57344d5fe881c955523bec371c9fb1e237f0001cb496381348c79",
+          "qa_report_sha256": "00ddc04edb143624891d85e2209cf9fc942b55f151f722920f10ea42bb2ce443",
+          "reference_master_db": 0,
+          "default_peak": 0.009614533744752407,
+          "max_scenario_peak": 0.20024214684963226,
+          "added_db": 9.883861,
+          "reason": "Quiet default: target0.03 peak subject to measured stress margin and +18 dB trim ceiling"
+        }
+      ]
+    },
+    "Deep Listening Open": {
+      "db": -0.932656,
+      "adjustments": [
+        {
+          "input_sha256": "043c0b36eb5f38458f2f5d45db228727898172951efa4968313d67a1361e99e4",
+          "qa_report_sha256": "6948e111e779ea79411ef838ec7bc136f45e73e2108a1a64d43f0e5b45497450",
+          "reference_master_db": 0,
+          "default_peak": 0.08806482702493668,
+          "max_scenario_peak": 0.801613986492157,
+          "added_db": -0.932656,
+          "reason": "Additional sample-peak margin: target0.72 in the worst measured scenario"
+        }
+      ]
+    },
+    "Breath Relay Soft": {
+      "db": 11.821008,
+      "adjustments": [
+        {
+          "input_sha256": "7c9dc82c8b800a41b0b1ea6feadcc7b4693f0001e171ec56983e2d71d653b1bf",
+          "qa_report_sha256": "fda9359a7b15e02bc222c95b1ff38d0e83020b408c97d3a30407b29d1462e395",
+          "reference_master_db": 0,
+          "default_peak": 0.007692559156566858,
+          "max_scenario_peak": 0.06503615528345108,
+          "added_db": 11.821008,
+          "reason": "Quiet default: target0.03 peak subject to measured stress margin and +18 dB trim ceiling"
+        }
+      ]
+    },
+    "Breath Relay Drive": {
+      "db": 16.18497,
+      "adjustments": [
+        {
+          "input_sha256": "59e9608a317826704370ddd8d5ef8e1285f0b457ab2e25d1a2f5e524097a5a31",
+          "qa_report_sha256": "73585bce425c97f6b46eec3b60e3163fa60606eeb0742c7570fcc3b1d7c88f15",
+          "reference_master_db": 0,
+          "default_peak": 0.004654496908187866,
+          "max_scenario_peak": 0.03642707318067551,
+          "added_db": 16.18497,
+          "reason": "Quiet default: target0.03 peak subject to measured stress margin and +18 dB trim ceiling"
+        }
+      ]
+    },
+    "Breath Relay Sparse": {
+      "db": 15.659744,
+      "adjustments": [
+        {
+          "input_sha256": "7fe071a26f487a4326734d194b5a98773b62e1d0d370d1fd2efb49dc06c592cd",
+          "qa_report_sha256": "33cc342b219ffa9cae3a5ebc7d45abf40334a3979f0daebed0fefab645ea4823",
+          "reference_master_db": 0,
+          "default_peak": 0.004944632761180401,
+          "max_scenario_peak": 0.03977760672569275,
+          "added_db": 15.659744,
+          "reason": "Quiet default: target0.03 peak subject to measured stress margin and +18 dB trim ceiling"
+        }
+      ]
+    },
+    "Breath Relay Triplet": {
+      "db": 12.186387,
+      "adjustments": [
+        {
+          "input_sha256": "e9363e2f6505b1bac7b0b29ba45a7c2bdd641223693b43a2a2ffc1c1cfce8b01",
+          "qa_report_sha256": "6f998a08b03879f5a78c643e36585cda41f787d61aa4938392500883e63152c9",
+          "reference_master_db": 0,
+          "default_peak": 0.007375677581876516,
+          "max_scenario_peak": 0.06237500533461571,
+          "added_db": 12.186387,
+          "reason": "Quiet default: target0.03 peak subject to measured stress margin and +18 dB trim ceiling"
+        }
+      ]
+    },
+    "Breath Relay Glass": {
+      "db": 16.718543,
+      "adjustments": [
+        {
+          "input_sha256": "053ea92f9c4c17d3594937f1da4aae133f0e553e82226c7a59f203b93fb2e2ab",
+          "qa_report_sha256": "566e6336539cc3f98706a8c2dbd30fb10da92e46c2c6cb70ced0507845da9f05",
+          "reference_master_db": 0,
+          "default_peak": 0.004377176985144615,
+          "max_scenario_peak": 0.03588585555553436,
+          "added_db": 16.718543,
+          "reason": "Quiet default: target0.03 peak subject to measured stress margin and +18 dB trim ceiling"
+        }
+      ]
+    },
+    "Paper Brush Close": {
+      "db": 15.362061,
+      "adjustments": [
+        {
+          "input_sha256": "1f9f71972ab467bab70bd9b034f90a516d972f59bcb480c03eb4aab83ab9511a",
+          "qa_report_sha256": "5a66c05bcc0cc505adfbf70c5bd8d128a15cb9b6e0c1122353164c21339a971f",
+          "reference_master_db": 0,
+          "default_peak": 0.005117032676935196,
+          "max_scenario_peak": 0.0492057278752327,
+          "added_db": 15.362061,
+          "reason": "Quiet default: target0.03 peak subject to measured stress margin and +18 dB trim ceiling"
+        }
+      ]
+    },
+    "Paper Brush Body": {
+      "db": 13.979302,
+      "adjustments": [
+        {
+          "input_sha256": "1a5e7a6c025065ba2ad1618f3ea42d4fe000b06e8bd3eb2d6bba79ce6b571441",
+          "qa_report_sha256": "91aed4eb326c64f82da105711294741081a3d0b4056529b6a1235f608e6bcca4",
+          "reference_master_db": 0,
+          "default_peak": 0.006000067573040724,
+          "max_scenario_peak": 0.04896456375718117,
+          "added_db": 13.979302,
+          "reason": "Quiet default: target0.03 peak subject to measured stress margin and +18 dB trim ceiling"
+        }
+      ]
+    },
+    "Paper Brush Edge": {
+      "db": 16.954702,
+      "adjustments": [
+        {
+          "input_sha256": "051faa877b0877b291cbaf92e6ccde6fda92eaf888df92465e6d2569b72ca482",
+          "qa_report_sha256": "32921bcd20a3d71e53f0a92a713de56fa36d54f3f5e92a627b80a6fc0e3c8bd6",
+          "reference_master_db": 0,
+          "default_peak": 0.004259769804775715,
+          "max_scenario_peak": 0.03675563633441925,
+          "added_db": 16.954702,
+          "reason": "Quiet default: target0.03 peak subject to measured stress margin and +18 dB trim ceiling"
+        }
+      ]
+    },
+    "Paper Brush Drift": {
+      "db": 16.99449,
+      "adjustments": [
+        {
+          "input_sha256": "b90e0d0f7083f6824335a0efdc874ed7a49e9ac5f49c2f1856ffe7516c550a24",
+          "qa_report_sha256": "c19e482f212aa46196ae3713077d44eee1f493b1c12f967d913cbd57662dda6a",
+          "reference_master_db": 0,
+          "default_peak": 0.004240301437675953,
+          "max_scenario_peak": 0.0321371853351593,
+          "added_db": 16.99449,
+          "reason": "Quiet default: target0.03 peak subject to measured stress margin and +18 dB trim ceiling"
+        }
+      ]
+    },
+    "Paper Brush Bloom": {
+      "db": 18.0,
+      "adjustments": [
+        {
+          "input_sha256": "97029fdc9386198e3d07b73fda37f3c02268a4e482150cd7a5a3a23bbba2fc45",
+          "qa_report_sha256": "697dd0be419ad52245edeb1cff8899542cec730528d50888e082751f52218af2",
+          "reference_master_db": 0,
+          "default_peak": 0.0037700626999139786,
+          "max_scenario_peak": 0.02782122604548931,
+          "added_db": 18.0,
+          "reason": "Quiet default: target0.03 peak subject to measured stress margin and +18 dB trim ceiling"
+        }
+      ]
+    },
+    "Clay Pulse Close": {
+      "db": 11.010314,
+      "adjustments": [
+        {
+          "input_sha256": "811830e0beaee40b23406e24ea0d1ea6d763221833453ccc032bc1955e0e9cbf",
+          "qa_report_sha256": "2cf288ae7f01b507e4b1e236576239ea4a7562ce1351c52b6d2ebfdaa5e90aa1",
+          "reference_master_db": 0,
+          "default_peak": 0.008445114828646183,
+          "max_scenario_peak": 0.1634305864572525,
+          "added_db": 11.010314,
+          "reason": "Quiet default: target0.03 peak subject to measured stress margin and +18 dB trim ceiling"
+        }
+      ]
+    },
+    "Clay Pulse Edge": {
+      "db": 16.307419,
+      "adjustments": [
+        {
+          "input_sha256": "67c6a2fbbf28c7ea2c5a188b7e7c13d806462d3c2d6fe6b5d66d71bec64ba517",
+          "qa_report_sha256": "bb419a77d3ac0c055ab94a0452750dc56d79239eb9853a2fa34dae0f59ec3e4f",
+          "reference_master_db": 0,
+          "default_peak": 0.004589340649545193,
+          "max_scenario_peak": 0.08552485704421997,
+          "added_db": 16.307419,
+          "reason": "Quiet default: target0.03 peak subject to measured stress margin and +18 dB trim ceiling"
+        }
+      ]
+    },
+    "Clay Pulse Drift": {
+      "db": 12.633751,
+      "adjustments": [
+        {
+          "input_sha256": "cd535ae1c303049441e01038ada5b8c12b1e20d7b3ae69552ed182cbff8f5612",
+          "qa_report_sha256": "c434c80a53195d2747d9ecedafe6d3887bed10ccfb726abeae64ba92c466b095",
+          "reference_master_db": 0,
+          "default_peak": 0.007005412597209215,
+          "max_scenario_peak": 0.09354094415903091,
+          "added_db": 12.633751,
+          "reason": "Quiet default: target0.03 peak subject to measured stress margin and +18 dB trim ceiling"
+        }
+      ]
+    },
+    "Clay Pulse Bloom": {
+      "db": 12.847016,
+      "adjustments": [
+        {
+          "input_sha256": "22f1d05c081df65e5287863cebf8b8b3fdfb6708663face3c36fcee01331f69e",
+          "qa_report_sha256": "2ad3787922dc07e7c6967ff0c3961dd4de9b0fff121dc0a7758d77cca696f228",
+          "reference_master_db": 0,
+          "default_peak": 0.006835502572357655,
+          "max_scenario_peak": 0.057114873081445694,
+          "added_db": 12.847016,
+          "reason": "Quiet default: target0.03 peak subject to measured stress margin and +18 dB trim ceiling"
+        }
+      ]
+    },
+    "Air Swish Close": {
+      "db": 17.318034,
+      "adjustments": [
+        {
+          "input_sha256": "4289db0dca2ec8be6656365875f2d96500ef16630f7fedaf6956f98e45d6e66d",
+          "qa_report_sha256": "1047d739fa211411260f6f4ed4529e9acb61af9ae33d73bb0883770fbbfd7616",
+          "reference_master_db": 0,
+          "default_peak": 0.0040852585807442665,
+          "max_scenario_peak": 0.0367414765059948,
+          "added_db": 17.318034,
+          "reason": "Quiet default: target0.03 peak subject to measured stress margin and +18 dB trim ceiling"
+        }
+      ]
+    },
+    "Air Swish Body": {
+      "db": 17.906077,
+      "adjustments": [
+        {
+          "input_sha256": "cb3b6165e56bf59dd60d2d094986fd0f7ceefc41527e275bf1d6fe862b33bd93",
+          "qa_report_sha256": "edbbcd6adf020534693de8611565df21e8d102b9da98aee81802a4e540ee5e62",
+          "reference_master_db": 0,
+          "default_peak": 0.0038178369868546724,
+          "max_scenario_peak": 0.027441779151558876,
+          "added_db": 17.906077,
+          "reason": "Quiet default: target0.03 peak subject to measured stress margin and +18 dB trim ceiling"
+        }
+      ]
+    },
+    "Air Swish Edge": {
+      "db": 14.84408,
+      "adjustments": [
+        {
+          "input_sha256": "7076cac91739e3f36d7f7ecd9cf6775264030b034ed9851b2ab7af97aea1f40b",
+          "qa_report_sha256": "06e5b4936fa207d24295054e48bbdbdd22100a1cb3264f2d7766d261e95cc35c",
+          "reference_master_db": 0,
+          "default_peak": 0.00543146813288331,
+          "max_scenario_peak": 0.023255381733179092,
+          "added_db": 14.84408,
+          "reason": "Quiet default: target0.03 peak subject to measured stress margin and +18 dB trim ceiling"
+        }
+      ]
+    },
+    "Air Swish Drift": {
+      "db": 18.0,
+      "adjustments": [
+        {
+          "input_sha256": "ba9b56316f6775b267b1e037cc2383fd0ff1e69db77e9b7919fc0acafc9d9131",
+          "qa_report_sha256": "08f46751e97193b13ad206aeb099ebcf3f20d4cf32a621383a79d83ba0c1179f",
+          "reference_master_db": 0,
+          "default_peak": 0.0035995864309370518,
+          "max_scenario_peak": 0.022341514006257057,
+          "added_db": 18.0,
+          "reason": "Quiet default: target0.03 peak subject to measured stress margin and +18 dB trim ceiling"
+        }
+      ]
+    },
+    "Air Swish Bloom": {
+      "db": 16.709398,
+      "adjustments": [
+        {
+          "input_sha256": "8fbf822184056b4f1a7f58fe3bdcad16d9b20a642a125c82ceca43214b3ea91a",
+          "qa_report_sha256": "aa36808705f1cf38f4b00b8a8f70b74bf3cdcda2060b976f573580d189651c05",
+          "reference_master_db": 0,
+          "default_peak": 0.004381787963211536,
+          "max_scenario_peak": 0.023388532921671867,
+          "added_db": 16.709398,
+          "reason": "Quiet default: target0.03 peak subject to measured stress margin and +18 dB trim ceiling"
+        }
+      ]
+    },
+    "Harbor Hum Drift": {
+      "db": -1.647899,
+      "adjustments": [
+        {
+          "input_sha256": "fd1a85b3a4f247a9f604b2749ce95d2e3106db034389690ae9feff7f893cbd6d",
+          "sustain_report_sha256": "b41fc686d96da7bb17d2bdbf09296b3e0e6fd55aa35ec7e18e507f66b3870f3c",
+          "reference_master_db": 0,
+          "max_scenario_peak": 0.8704171776771545,
+          "target_peak": 0.72,
+          "added_db": -1.647899,
+          "reason": "Additional headroom after complete slow-cycle and prolonged dense-polyphony measurement; target 0.72 sample peak"
+        }
+      ]
+    },
+    "Deep Listening Near": {
+      "db": -1.017725,
+      "adjustments": [
+        {
+          "input_sha256": "74496ccd022c4ceadc7834c7a06097241389f9482dd5c655254b193533043106",
+          "sustain_report_sha256": "1c4e5fde930acd5c9fe13bdc95c7e38531540afb5a717bea6bd32c7df6b75795",
+          "reference_master_db": 0,
+          "max_scenario_peak": 0.8095034956932068,
+          "target_peak": 0.72,
+          "added_db": -1.017725,
+          "reason": "Additional headroom after complete slow-cycle and prolonged dense-polyphony measurement; target 0.72 sample peak"
+        }
+      ]
+    }
+  },
+  "allowed_trim_db": [
+    -24,
+    18
+  ]
+}

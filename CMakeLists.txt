@@ -281,6 +281,8 @@ if(${SURGE_BUILD_TESTRUNNER})
   enable_testing()
 endif()
 
+include(cmake/scoring-bank.cmake)
+
 add_subdirectory(libs/sst/sst-cmake)
 add_subdirectory(resources)
 add_subdirectory(src)

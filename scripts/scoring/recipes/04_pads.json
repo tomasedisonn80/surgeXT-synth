@@ -1,0 +1,1472 @@
+{
+  "id": "04",
+  "name": "Pads",
+  "prefix": "A",
+  "description": "Twenty original sustained synthesis families with five functional performance variations each, spanning warm analog beds, restrained digital harmony, organ-like colors, gentle rhythmic motion and explicitly inharmonic tension; no acoustic realism or composer endorsement is claimed.",
+  "families": [
+    {
+      "name": "Amber Canopy",
+      "role": "A rounded analog harmonic bed for intimate drama, vocal support and patient chord changes.",
+      "range": [
+        40,
+        84
+      ],
+      "tags": [
+        "warm",
+        "analog",
+        "supportive",
+        "sustained"
+      ],
+      "oscillators": [
+        {
+          "kind": "saw",
+          "level": 0.66,
+          "detune": -0.035,
+          "unison": 2
+        },
+        {
+          "kind": "triangle",
+          "level": 0.32,
+          "detune": 0.025
+        },
+        {
+          "kind": "sine",
+          "level": 0.12,
+          "octave": -1
+        }
+      ],
+      "amp": [
+        0.38,
+        1.3,
+        0.82,
+        1.7
+      ],
+      "filter": {
+        "kind": "lp24",
+        "hz": 1650,
+        "resonance": 0.12,
+        "env": 7,
+        "keytrack": 0.45
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.11,
+        "sync": false,
+        "depth": 5,
+        "amp": 0.3,
+        "pan": 0.07
+      },
+      "filter_env": [
+        0.8,
+        1.8,
+        0.55,
+        1.2
+      ],
+      "drift": 0.035,
+      "reverb": 0.13,
+      "delay": 0.025,
+      "reverb_time": 2.4,
+      "width": 0.7,
+      "velocity": 14,
+      "highpass": 35
+    },
+    {
+      "name": "Paper Lantern",
+      "role": "A small hollow pad for sparse dialogue scenes and light acoustic arrangements.",
+      "range": [
+        48,
+        88
+      ],
+      "tags": [
+        "intimate",
+        "hollow",
+        "restrained",
+        "soft"
+      ],
+      "oscillators": [
+        {
+          "kind": "pulse",
+          "level": 0.55,
+          "shape": 0.42,
+          "detune": -0.015
+        },
+        {
+          "kind": "sine",
+          "level": 0.43,
+          "detune": 0.018,
+          "shape": 1
+        }
+      ],
+      "amp": [
+        0.19,
+        0.9,
+        0.66,
+        0.9
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 1250,
+        "resonance": 0.08,
+        "env": 4,
+        "keytrack": 0.6
+      },
+      "motion": {
+        "shape": "triangle",
+        "rate": 0.17,
+        "sync": false,
+        "depth": 3,
+        "amp": 0.2,
+        "pan": 0.03
+      },
+      "filter_env": [
+        0.25,
+        0.8,
+        0.3,
+        0.5
+      ],
+      "drift": 0.012,
+      "reverb": 0.07,
+      "delay": 0.015,
+      "reverb_time": 1.35,
+      "width": 0.4,
+      "velocity": 20,
+      "highpass": 65
+    },
+    {
+      "name": "Glacier Loom",
+      "role": "A clear harmonic FM pad for spacious science-fiction harmony and contemporary electronic ballads.",
+      "range": [
+        45,
+        88
+      ],
+      "tags": [
+        "digital",
+        "clear",
+        "harmonic",
+        "spacious"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm2",
+          "level": 0.64,
+          "fm_amount": 0.14,
+          "ratio": 3,
+          "fm_amount2": 0.035,
+          "ratio2": 2,
+          "feedback": 0.015
+        },
+        {
+          "kind": "triangle",
+          "level": 0.36,
+          "detune": 0.025,
+          "unison": 2
+        }
+      ],
+      "amp": [
+        0.7,
+        2.1,
+        0.78,
+        2.8
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 5200,
+        "resonance": 0.1,
+        "env": 10,
+        "keytrack": 0.7
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.075,
+        "sync": false,
+        "depth": 8,
+        "amp": 0.35,
+        "pan": 0.15
+      },
+      "filter_env": [
+        1.1,
+        2.4,
+        0.4,
+        1.9
+      ],
+      "drift": 0.01,
+      "reverb": 0.18,
+      "delay": 0.065,
+      "reverb_time": 3.2,
+      "width": 0.82,
+      "velocity": 12,
+      "highpass": 70,
+      "variant_changes": {
+        "Open": {
+          "contour_amp": 0.65
+        }
+      }
+    },
+    {
+      "name": "Reed Horizon",
+      "role": "A synthetic reed-colored chord layer for pastoral scenes and understated ensemble support.",
+      "range": [
+        43,
+        79
+      ],
+      "tags": [
+        "reed-like",
+        "pastoral",
+        "rounded",
+        "organic"
+      ],
+      "oscillators": [
+        {
+          "kind": "pulse",
+          "level": 0.57,
+          "shape": 0.27,
+          "detune": -0.025,
+          "unison": 2
+        },
+        {
+          "kind": "modern",
+          "level": 0.36,
+          "saw": 0.16,
+          "pulse": 0.23,
+          "tri": 0.55,
+          "detune": 0.03
+        },
+        {
+          "kind": "sine",
+          "level": 0.16,
+          "octave": -1
+        }
+      ],
+      "amp": [
+        0.48,
+        1.4,
+        0.72,
+        1.55
+      ],
+      "filter": {
+        "kind": "bp12",
+        "hz": 1050,
+        "resonance": 0.24,
+        "env": 6,
+        "keytrack": 0.68
+      },
+      "motion": {
+        "shape": "triangle",
+        "rate": 0.13,
+        "sync": false,
+        "depth": 4,
+        "amp": 0.5,
+        "pan": 0.08
+      },
+      "filter_env": [
+        0.65,
+        1.3,
+        0.55,
+        0.8
+      ],
+      "noise": 0.004,
+      "noise_color": -0.6,
+      "drift": 0.03,
+      "reverb": 0.11,
+      "delay": 0.02,
+      "reverb_time": 1.9,
+      "width": 0.62,
+      "velocity": 17,
+      "highpass": 40
+    },
+    {
+      "name": "Hollow Velvet",
+      "role": "A dark smooth sustained tone for low-key suspense and mellow instrumental songs.",
+      "range": [
+        36,
+        79
+      ],
+      "tags": [
+        "dark",
+        "smooth",
+        "hollow",
+        "mellow"
+      ],
+      "oscillators": [
+        {
+          "kind": "sine",
+          "level": 0.6,
+          "shape": 2,
+          "feedback": 0.035,
+          "detune": -0.02
+        },
+        {
+          "kind": "triangle",
+          "level": 0.46,
+          "detune": 0.027,
+          "unison": 2
+        }
+      ],
+      "amp": [
+        0.9,
+        1.8,
+        0.86,
+        2.35
+      ],
+      "filter": {
+        "kind": "lp24",
+        "hz": 980,
+        "resonance": 0.16,
+        "env": -4,
+        "keytrack": 0.5
+      },
+      "motion": {
+        "shape": "noise",
+        "rate": 0.07,
+        "sync": false,
+        "depth": 5,
+        "amp": 0.4,
+        "pan": 0.05
+      },
+      "filter_env": [
+        1.2,
+        2.5,
+        0.6,
+        1.4
+      ],
+      "drift": 0.02,
+      "reverb": 0.14,
+      "delay": 0.035,
+      "reverb_time": 2.6,
+      "width": 0.55,
+      "velocity": 13,
+      "highpass": 28
+    },
+    {
+      "name": "Porcelain Tide",
+      "role": "A soft overtone-rich wash for reflective montage and delicate upper-register harmonies.",
+      "range": [
+        52,
+        91
+      ],
+      "tags": [
+        "delicate",
+        "overtones",
+        "reflective",
+        "luminous"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm3",
+          "level": 0.6,
+          "fm_amount": 0.085,
+          "ratio": 2.0,
+          "fm_amount2": 0.045,
+          "ratio2": 5.0,
+          "feedback": 0.01
+        },
+        {
+          "kind": "sine",
+          "level": 0.3,
+          "octave": 1,
+          "detune": 0.018
+        },
+        {
+          "kind": "triangle",
+          "level": 0.24,
+          "detune": -0.015
+        }
+      ],
+      "amp": [
+        1.1,
+        2.6,
+        0.65,
+        3.15
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 6800,
+        "resonance": 0.07,
+        "env": -6,
+        "keytrack": 0.5
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.09,
+        "sync": false,
+        "depth": 6,
+        "amp": 0.25,
+        "pan": 0.2
+      },
+      "filter_env": [
+        0.35,
+        2.7,
+        0.4,
+        1.8
+      ],
+      "drift": 0.008,
+      "reverb": 0.2,
+      "delay": 0.045,
+      "reverb_time": 3.5,
+      "width": 0.9,
+      "velocity": 15,
+      "highpass": 95
+    },
+    {
+      "name": "Copper Bow",
+      "role": "A slow synthetic bowed-metal blend for weighty drama and sustained low-mid counterlines.",
+      "range": [
+        36,
+        76
+      ],
+      "tags": [
+        "bow-like",
+        "weighty",
+        "hybrid",
+        "low-mid"
+      ],
+      "oscillators": [
+        {
+          "kind": "modern",
+          "level": 0.59,
+          "saw": 0.6,
+          "pulse": 0.12,
+          "tri": 0.22,
+          "detune": -0.045,
+          "unison": 2
+        },
+        {
+          "kind": "fm2",
+          "level": 0.38,
+          "fm_amount": 0.075,
+          "ratio": 1,
+          "fm_amount2": 0.035,
+          "ratio2": 3,
+          "detune": 0.025
+        }
+      ],
+      "amp": [
+        1.4,
+        2.2,
+        0.78,
+        2.6
+      ],
+      "filter": {
+        "kind": "lp24",
+        "hz": 2200,
+        "resonance": 0.22,
+        "env": 14,
+        "keytrack": 0.7
+      },
+      "motion": {
+        "shape": "triangle",
+        "rate": 0.065,
+        "sync": false,
+        "depth": 7,
+        "amp": 0.7,
+        "pan": 0.1
+      },
+      "filter_env": [
+        1.7,
+        2.8,
+        0.6,
+        2.2
+      ],
+      "noise": 0.007,
+      "noise_color": -0.5,
+      "drift": 0.055,
+      "reverb": 0.15,
+      "delay": 0.02,
+      "reverb_time": 2.2,
+      "width": 0.67,
+      "velocity": 17,
+      "highpass": 35
+    },
+    {
+      "name": "Vowel Ribbon",
+      "role": "A clearly synthetic vowel-like pad for gentle choral shading beneath melodic instruments.",
+      "range": [
+        48,
+        84
+      ],
+      "tags": [
+        "vowel-like",
+        "synthetic",
+        "gentle",
+        "layer"
+      ],
+      "oscillators": [
+        {
+          "kind": "pulse",
+          "level": 0.56,
+          "shape": 0.19,
+          "detune": -0.03,
+          "unison": 2
+        },
+        {
+          "kind": "fm2",
+          "level": 0.31,
+          "fm_amount": 0.11,
+          "ratio": 3,
+          "fm_amount2": 0.025,
+          "ratio2": 1,
+          "detune": 0.018
+        },
+        {
+          "kind": "sine",
+          "level": 0.2,
+          "shape": 1
+        }
+      ],
+      "amp": [
+        0.85,
+        1.5,
+        0.84,
+        2.15
+      ],
+      "filter": {
+        "kind": "bp12",
+        "hz": 1350,
+        "resonance": 0.31,
+        "env": 8,
+        "keytrack": 0.35
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.18,
+        "sync": false,
+        "depth": 5,
+        "amp": 0.45,
+        "pan": 0.08
+      },
+      "filter_env": [
+        0.7,
+        1.7,
+        0.75,
+        1.2
+      ],
+      "noise": 0.003,
+      "noise_color": -0.2,
+      "drift": 0.025,
+      "reverb": 0.19,
+      "delay": 0.015,
+      "reverb_time": 2.8,
+      "width": 0.72,
+      "velocity": 12,
+      "highpass": 75
+    },
+    {
+      "name": "Sea Glass",
+      "role": "A light high-passed pad that adds sheen above bass-heavy arrangements without a deep fundamental.",
+      "range": [
+        55,
+        91
+      ],
+      "tags": [
+        "light",
+        "sheen",
+        "high-pass",
+        "airy"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm2",
+          "level": 0.6,
+          "fm_amount": 0.16,
+          "ratio": 4,
+          "fm_amount2": 0.025,
+          "ratio2": 2
+        },
+        {
+          "kind": "modern",
+          "level": 0.35,
+          "saw": 0.2,
+          "pulse": 0.1,
+          "tri": 0.55,
+          "detune": 0.035,
+          "unison": 2
+        }
+      ],
+      "amp": [
+        0.6,
+        1.9,
+        0.7,
+        2.1
+      ],
+      "filter": {
+        "kind": "hp12",
+        "hz": 320,
+        "resonance": 0.08,
+        "env": -4,
+        "keytrack": 0.4
+      },
+      "motion": {
+        "shape": "triangle",
+        "rate": 0.12,
+        "sync": false,
+        "depth": 3,
+        "amp": 0.3,
+        "pan": 0.22
+      },
+      "filter_env": [
+        0.8,
+        2.2,
+        0.45,
+        1.4
+      ],
+      "drift": 0.015,
+      "reverb": 0.16,
+      "delay": 0.055,
+      "reverb_time": 2.9,
+      "width": 0.88,
+      "velocity": 16,
+      "highpass": 100
+    },
+    {
+      "name": "Winter Fold",
+      "role": "A soft sine-derived pad with restrained feedback harmonics for calm and melancholy scenes.",
+      "range": [
+        40,
+        84
+      ],
+      "tags": [
+        "soft",
+        "folded",
+        "melancholy",
+        "minimal"
+      ],
+      "oscillators": [
+        {
+          "kind": "sine",
+          "level": 0.58,
+          "feedback": 0.095,
+          "detune": -0.024,
+          "unison": 2
+        },
+        {
+          "kind": "sine",
+          "level": 0.36,
+          "shape": 3,
+          "feedback": 0.02,
+          "detune": 0.031
+        },
+        {
+          "kind": "triangle",
+          "level": 0.16,
+          "octave": -1
+        }
+      ],
+      "amp": [
+        1.25,
+        2.4,
+        0.88,
+        3.35
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 2700,
+        "resonance": 0.11,
+        "env": 5,
+        "keytrack": 0.6
+      },
+      "motion": {
+        "shape": "noise",
+        "rate": 0.055,
+        "sync": false,
+        "depth": 4,
+        "amp": 0.3,
+        "pan": 0.11
+      },
+      "filter_env": [
+        1.5,
+        2.5,
+        0.6,
+        2.0
+      ],
+      "drift": 0.018,
+      "reverb": 0.17,
+      "delay": 0.025,
+      "reverb_time": 3.1,
+      "width": 0.7,
+      "velocity": 13,
+      "highpass": 32
+    },
+    {
+      "name": "Linen Current",
+      "role": "A breathable warm pad for documentary continuity and quiet rhythmic accompaniment.",
+      "range": [
+        43,
+        84
+      ],
+      "tags": [
+        "warm",
+        "breathing",
+        "documentary",
+        "subtle"
+      ],
+      "oscillators": [
+        {
+          "kind": "triangle",
+          "level": 0.64,
+          "detune": -0.028,
+          "unison": 2
+        },
+        {
+          "kind": "pulse",
+          "level": 0.39,
+          "shape": 0.36,
+          "detune": 0.022
+        }
+      ],
+      "amp": [
+        0.32,
+        1.3,
+        0.75,
+        1.25
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 1850,
+        "resonance": 0.14,
+        "env": 6,
+        "keytrack": 0.55
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.5,
+        "sync": true,
+        "depth": 7,
+        "amp": 1.3,
+        "pan": 0.1
+      },
+      "filter_env": [
+        0.5,
+        1.4,
+        0.45,
+        0.9
+      ],
+      "noise": 0.003,
+      "noise_color": -0.75,
+      "drift": 0.028,
+      "reverb": 0.095,
+      "delay": 0.04,
+      "reverb_time": 1.65,
+      "width": 0.62,
+      "velocity": 18,
+      "highpass": 55
+    },
+    {
+      "name": "Distant Arcade",
+      "role": "A softened retro poly-synth bed for nostalgic themes and understated pop harmony.",
+      "range": [
+        45,
+        88
+      ],
+      "tags": [
+        "retro",
+        "polyphonic",
+        "nostalgic",
+        "rounded"
+      ],
+      "oscillators": [
+        {
+          "kind": "modern",
+          "level": 0.65,
+          "saw": 0.44,
+          "pulse": 0.38,
+          "tri": 0.17,
+          "detune": -0.042,
+          "unison": 2
+        },
+        {
+          "kind": "pulse",
+          "level": 0.34,
+          "shape": 0.6,
+          "detune": 0.038
+        },
+        {
+          "kind": "sine",
+          "level": 0.12,
+          "octave": 1
+        }
+      ],
+      "amp": [
+        0.16,
+        1.1,
+        0.78,
+        1.45
+      ],
+      "filter": {
+        "kind": "lp24",
+        "hz": 2900,
+        "resonance": 0.18,
+        "env": 12,
+        "keytrack": 0.65
+      },
+      "motion": {
+        "shape": "triangle",
+        "rate": 0.23,
+        "sync": false,
+        "depth": 4,
+        "amp": 0.4,
+        "pan": 0.1
+      },
+      "filter_env": [
+        0.11,
+        1.4,
+        0.25,
+        0.7
+      ],
+      "drift": 0.05,
+      "reverb": 0.12,
+      "delay": 0.08,
+      "reverb_time": 2.0,
+      "width": 0.8,
+      "velocity": 18,
+      "highpass": 50
+    },
+    {
+      "name": "Lantern Organ",
+      "role": "A restrained additive-style organ pad for spiritual reflection and sustained song accompaniment.",
+      "range": [
+        40,
+        88
+      ],
+      "tags": [
+        "organ-like",
+        "harmonic",
+        "restrained",
+        "sustained"
+      ],
+      "oscillators": [
+        {
+          "kind": "sine",
+          "level": 0.63,
+          "shape": 1,
+          "detune": -0.009
+        },
+        {
+          "kind": "sine",
+          "level": 0.31,
+          "octave": 1,
+          "detune": 0.012
+        },
+        {
+          "kind": "triangle",
+          "level": 0.19,
+          "octave": -1
+        }
+      ],
+      "amp": [
+        0.12,
+        0.75,
+        0.94,
+        1.1
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 3600,
+        "resonance": 0.07,
+        "env": 3,
+        "keytrack": 0.65
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.32,
+        "sync": false,
+        "depth": 2,
+        "amp": 0.8,
+        "pan": 0.06
+      },
+      "filter_env": [
+        0.2,
+        1.1,
+        0.7,
+        0.65
+      ],
+      "drift": 0.009,
+      "reverb": 0.15,
+      "delay": 0.01,
+      "reverb_time": 2.35,
+      "width": 0.52,
+      "velocity": 10,
+      "highpass": 40
+    },
+    {
+      "name": "Cobalt Swell",
+      "role": "A broad dark swell for restrained dramatic entrances and cinematic electronic chord accents.",
+      "range": [
+        36,
+        79
+      ],
+      "tags": [
+        "swell",
+        "dark",
+        "broad",
+        "dramatic"
+      ],
+      "oscillators": [
+        {
+          "kind": "saw",
+          "level": 0.62,
+          "detune": -0.048,
+          "unison": 3
+        },
+        {
+          "kind": "fm3",
+          "level": 0.31,
+          "fm_amount": 0.1,
+          "ratio": 1.0,
+          "fm_amount2": 0.045,
+          "ratio2": 2.0,
+          "detune": 0.028
+        },
+        {
+          "kind": "triangle",
+          "level": 0.22,
+          "octave": -1
+        }
+      ],
+      "amp": [
+        1.7,
+        2.7,
+        0.76,
+        3.6
+      ],
+      "filter": {
+        "kind": "lp24",
+        "hz": 1450,
+        "resonance": 0.23,
+        "env": 19,
+        "keytrack": 0.55
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.06,
+        "sync": false,
+        "depth": 9,
+        "amp": 0.8,
+        "pan": 0.11
+      },
+      "filter_env": [
+        1.9,
+        2.8,
+        0.72,
+        2.4
+      ],
+      "noise": 0.006,
+      "noise_color": -0.7,
+      "drift": 0.045,
+      "reverb": 0.2,
+      "delay": 0.035,
+      "reverb_time": 3.6,
+      "width": 0.85,
+      "velocity": 15,
+      "highpass": 30
+    },
+    {
+      "name": "Soft Circuit",
+      "role": "A rounded harmonic digital pad for clean modern underscore and warm electronic arrangements.",
+      "range": [
+        45,
+        88
+      ],
+      "tags": [
+        "digital",
+        "rounded",
+        "clean",
+        "modern"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm2",
+          "level": 0.58,
+          "fm_amount": 0.055,
+          "ratio": 1,
+          "fm_amount2": 0.045,
+          "ratio2": 2,
+          "feedback": 0.045
+        },
+        {
+          "kind": "modern",
+          "level": 0.43,
+          "saw": 0.13,
+          "pulse": 0.19,
+          "tri": 0.67,
+          "detune": 0.02,
+          "unison": 2
+        }
+      ],
+      "amp": [
+        0.45,
+        1.6,
+        0.8,
+        1.85
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 4100,
+        "resonance": 0.09,
+        "env": 6,
+        "keytrack": 0.65
+      },
+      "motion": {
+        "shape": "triangle",
+        "rate": 0.14,
+        "sync": false,
+        "depth": 5,
+        "amp": 0.45,
+        "pan": 0.12
+      },
+      "filter_env": [
+        0.65,
+        1.9,
+        0.45,
+        1.15
+      ],
+      "drift": 0.012,
+      "reverb": 0.11,
+      "delay": 0.06,
+      "reverb_time": 2.2,
+      "width": 0.75,
+      "velocity": 15,
+      "highpass": 65
+    },
+    {
+      "name": "Feather Bridge",
+      "role": "A light filtered pulse blend for gentle transitions between acoustic phrases and open upper chords.",
+      "range": [
+        50,
+        91
+      ],
+      "tags": [
+        "light",
+        "breathy",
+        "transition",
+        "upper"
+      ],
+      "oscillators": [
+        {
+          "kind": "pulse",
+          "level": 0.56,
+          "shape": 0.74,
+          "detune": -0.025,
+          "unison": 2
+        },
+        {
+          "kind": "triangle",
+          "level": 0.41,
+          "detune": 0.035
+        }
+      ],
+      "amp": [
+        0.78,
+        1.5,
+        0.69,
+        2.35
+      ],
+      "filter": {
+        "kind": "hp12",
+        "hz": 240,
+        "resonance": 0.1,
+        "env": -5,
+        "keytrack": 0.3
+      },
+      "motion": {
+        "shape": "noise",
+        "rate": 0.1,
+        "sync": false,
+        "depth": 3,
+        "amp": 0.5,
+        "pan": 0.17
+      },
+      "filter_env": [
+        0.9,
+        1.7,
+        0.5,
+        1.4
+      ],
+      "noise": 0.005,
+      "noise_color": -0.1,
+      "drift": 0.02,
+      "reverb": 0.16,
+      "delay": 0.03,
+      "reverb_time": 2.65,
+      "width": 0.87,
+      "velocity": 17,
+      "highpass": 110
+    },
+    {
+      "name": "Spectral Silk",
+      "role": "A harmonic upper-partial pad for luminous fantasy harmony and measured melodic layering.",
+      "range": [
+        48,
+        88
+      ],
+      "tags": [
+        "luminous",
+        "partials",
+        "fantasy",
+        "smooth"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm3",
+          "level": 0.62,
+          "fm_amount": 0.12,
+          "ratio": 1.5,
+          "fm_amount2": 0.055,
+          "ratio2": 3.0,
+          "feedback": 0.02
+        },
+        {
+          "kind": "sine",
+          "level": 0.29,
+          "octave": 1,
+          "detune": 0.014
+        },
+        {
+          "kind": "modern",
+          "level": 0.19,
+          "saw": 0.1,
+          "pulse": 0,
+          "tri": 0.7,
+          "detune": -0.018
+        }
+      ],
+      "amp": [
+        0.95,
+        2.3,
+        0.73,
+        3.1
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 5700,
+        "resonance": 0.12,
+        "env": 9,
+        "keytrack": 0.55
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.08,
+        "sync": false,
+        "depth": 7,
+        "amp": 0.35,
+        "pan": 0.18
+      },
+      "filter_env": [
+        1.3,
+        2.6,
+        0.5,
+        1.6
+      ],
+      "drift": 0.01,
+      "reverb": 0.19,
+      "delay": 0.045,
+      "reverb_time": 3.3,
+      "width": 0.83,
+      "velocity": 14,
+      "highpass": 85,
+      "variant_changes": {
+        "Open": {
+          "contour_amp": 0.65
+        }
+      }
+    },
+    {
+      "name": "Hearth Mist",
+      "role": "A low warm interval bed for reflective scenes and supporting harmony beneath intimate vocals.",
+      "range": [
+        36,
+        76
+      ],
+      "tags": [
+        "low",
+        "warm",
+        "support",
+        "reflective"
+      ],
+      "oscillators": [
+        {
+          "kind": "triangle",
+          "level": 0.64,
+          "detune": -0.035,
+          "unison": 2
+        },
+        {
+          "kind": "saw",
+          "level": 0.28,
+          "octave": -1,
+          "detune": 0.025
+        },
+        {
+          "kind": "sine",
+          "level": 0.24,
+          "shape": 1
+        }
+      ],
+      "amp": [
+        0.65,
+        1.8,
+        0.9,
+        2.4
+      ],
+      "filter": {
+        "kind": "lp24",
+        "hz": 1150,
+        "resonance": 0.13,
+        "env": 5,
+        "keytrack": 0.72
+      },
+      "motion": {
+        "shape": "triangle",
+        "rate": 0.085,
+        "sync": false,
+        "depth": 4,
+        "amp": 0.5,
+        "pan": 0.07
+      },
+      "filter_env": [
+        0.9,
+        2.0,
+        0.65,
+        1.5
+      ],
+      "drift": 0.032,
+      "reverb": 0.13,
+      "delay": 0.02,
+      "reverb_time": 2.55,
+      "width": 0.58,
+      "velocity": 12,
+      "highpass": 25
+    },
+    {
+      "name": "Prism Current",
+      "role": "A gently patterned sustained pad for forward-moving montage and rhythm-aware pop harmony.",
+      "range": [
+        45,
+        86
+      ],
+      "tags": [
+        "patterned",
+        "gentle",
+        "rhythmic",
+        "sustained"
+      ],
+      "oscillators": [
+        {
+          "kind": "modern",
+          "level": 0.59,
+          "saw": 0.28,
+          "pulse": 0.18,
+          "tri": 0.43,
+          "detune": -0.025,
+          "unison": 2
+        },
+        {
+          "kind": "fm2",
+          "level": 0.37,
+          "fm_amount": 0.11,
+          "ratio": 2,
+          "fm_amount2": 0.03,
+          "ratio2": 4,
+          "detune": 0.018
+        }
+      ],
+      "amp": [
+        0.27,
+        1.5,
+        0.76,
+        1.6
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 3300,
+        "resonance": 0.16,
+        "env": 8,
+        "keytrack": 0.6
+      },
+      "motion": {
+        "shape": "step",
+        "rate": 1.0,
+        "sync": true,
+        "depth": 8,
+        "amp": 1.2,
+        "pan": 0.09,
+        "steps": [
+          0.55,
+          0.15,
+          0.35,
+          -0.1,
+          0.45,
+          0,
+          0.2,
+          -0.2,
+          0.55,
+          0.1,
+          0.3,
+          -0.15,
+          0.4,
+          -0.05,
+          0.15,
+          -0.25
+        ]
+      },
+      "filter_env": [
+        0.4,
+        1.6,
+        0.4,
+        1.1
+      ],
+      "drift": 0.018,
+      "reverb": 0.12,
+      "delay": 0.07,
+      "reverb_time": 2.0,
+      "width": 0.78,
+      "velocity": 16,
+      "highpass": 60
+    },
+    {
+      "name": "Slow Orbit",
+      "role": "A softly inharmonic pad for unresolved mystery and abstract electronic harmony with a stable sine anchor.",
+      "range": [
+        43,
+        81
+      ],
+      "tags": [
+        "inharmonic",
+        "mystery",
+        "soft",
+        "unresolved"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm3",
+          "level": 0.49,
+          "fm_amount": 0.065,
+          "ratio": 1.414,
+          "fm_amount2": 0.025,
+          "ratio2": 2.707,
+          "feedback": 0.018
+        },
+        {
+          "kind": "sine",
+          "level": 0.46,
+          "detune": 0.015
+        },
+        {
+          "kind": "triangle",
+          "level": 0.16,
+          "octave": -1,
+          "detune": -0.02
+        }
+      ],
+      "amp": [
+        1.55,
+        2.7,
+        0.81,
+        3.85
+      ],
+      "filter": {
+        "kind": "bp12",
+        "hz": 1450,
+        "resonance": 0.2,
+        "env": 7,
+        "keytrack": 0.55
+      },
+      "motion": {
+        "shape": "noise",
+        "rate": 0.06,
+        "sync": false,
+        "depth": 9,
+        "amp": 0.55,
+        "pan": 0.2
+      },
+      "filter_env": [
+        1.8,
+        3.0,
+        0.6,
+        2.5
+      ],
+      "drift": 0.015,
+      "reverb": 0.21,
+      "delay": 0.055,
+      "reverb_time": 3.7,
+      "width": 0.84,
+      "velocity": 14,
+      "highpass": 45
+    }
+  ],
+  "variants": [
+    {
+      "name": "Close",
+      "intent": "Shorter entry and release, a gentler upper spectrum and reduced secondary layer support close dialogue or dry arrangements.",
+      "changes": {
+        "attack_scale": 0.45,
+        "decay_scale": 0.7,
+        "release_scale": 0.5,
+        "sustain_scale": 0.88,
+        "cutoff_scale": 0.78,
+        "second_level_scale": 0.68,
+        "motion_scale": 0.55,
+        "fx_scale": 0.45,
+        "detune_scale": 0.7
+      }
+    },
+    {
+      "name": "Open",
+      "intent": "A quicker, brighter pad with a stronger secondary voice brings harmonic detail forward in sparse arrangements.",
+      "changes": {
+        "attack_scale": 0.7,
+        "decay_scale": 0.9,
+        "release_scale": 0.85,
+        "cutoff_scale": 1.55,
+        "second_level_scale": 1.2,
+        "fm_scale": 1.2,
+        "motion_scale": 0.8,
+        "resonance_add": -0.02
+      }
+    },
+    {
+      "name": "Bloom",
+      "intent": "A slower attack, longer sustain contour and broader release create overlapping chord swells for spacious transitions.",
+      "changes": {
+        "attack_scale": 1.8,
+        "decay_scale": 1.6,
+        "release_scale": 1.5,
+        "sustain_scale": 1.05,
+        "cutoff_scale": 1.15,
+        "second_level_scale": 1.28,
+        "fx_scale": 1.3,
+        "motion_scale": 0.65
+      }
+    },
+    {
+      "name": "Drift",
+      "intent": "More audible and faster timbral motion, a lighter secondary layer and slightly broader detuning animate held chords.",
+      "changes": {
+        "attack_scale": 0.85,
+        "decay_scale": 1.25,
+        "release_scale": 1.1,
+        "cutoff_scale": 1.12,
+        "motion_scale": 1.75,
+        "motion_rate_scale": 1.6,
+        "second_level_scale": 0.8,
+        "detune_scale": 1.4,
+        "fm_scale": 0.9,
+        "resonance_add": 0.04
+      }
+    },
+    {
+      "name": "Veil",
+      "intent": "A darker, slower entry with a reduced secondary layer and a soft noise trace leaves room for foreground melody.",
+      "changes": {
+        "attack_scale": 1.2,
+        "decay_scale": 0.8,
+        "release_scale": 1.25,
+        "cutoff_scale": 0.55,
+        "second_level_scale": 0.45,
+        "noise_add": 0.002,
+        "fm_scale": 0.75,
+        "motion_scale": 0.8,
+        "fx_scale": 0.8
+      }
+    }
+  ]
+}

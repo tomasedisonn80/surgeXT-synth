@@ -1,0 +1,178 @@
+{
+  "schema": 1,
+  "status": "pass",
+  "scope": "Independent local committed-tree, exact-byte delivery and reproducibility audit. Remote publication and platform execution are separately verified.",
+  "local_commit": "946ed442572d5fa29e6d6467813b4fa6cb150908",
+  "tree_sha": "2c39f27aeed1348497cffb1b3dc3f843fc823b76",
+  "base_commit": "dfdd2f94adec9c7bee4f3cfd4f757860fb875c3e",
+  "manifest_sha256": "67bd4a5dc3fbf6f3794679b24b500f1ef37af83b7a47a863d10cb964a57314a2",
+  "checkout_audit": {
+    "schema": 1,
+    "status": "pass",
+    "base_commit": "dfdd2f94adec9c7bee4f3cfd4f757860fb875c3e",
+    "feature_commit": "946ed442572d5fa29e6d6467813b4fa6cb150908",
+    "manifest_sha256": "67bd4a5dc3fbf6f3794679b24b500f1ef37af83b7a47a863d10cb964a57314a2",
+    "changed_paths": 1144,
+    "modified_existing_paths": [
+      ".gitattributes",
+      ".github/workflows/build-release.yml",
+      "AGENTS.md",
+      "CMakeLists.txt",
+      "README.md",
+      "resources/CMakeLists.txt",
+      "src/CMakeLists.txt",
+      "src/cmake/lib.cmake"
+    ],
+    "unexpected_paths": [],
+    "unchanged_trees": {
+      "src/common": "a27121e388ef5724e9fc9c1ac73bb948e0e465b2",
+      "src/surge-xt": "99fb9b3e9c047d7d8fffc35250a98a6a6dea657e",
+      "resources/data/skins": "314701475a49875e11259be17ad16c5b49c8838c",
+      "doc/reference-workspaces": "5d922ef0c75115c3615ec24b6a9cc76bb32e667b",
+      "libs": "1b25b467f87a418437cf8583deb32783782e07a4"
+    },
+    "legacy_readme_and_agent_sections_unchanged": true,
+    "autocrlf": true,
+    "eol": "crlf",
+    "checkout_is_native_windows": false,
+    "artifact_files_equal_git_blobs": 104,
+    "bank_files_equal_git_blobs": 1000,
+    "artifact_checkout_mismatches": [],
+    "provenance_source_blobs_match": 21,
+    "checksum_files_verified": {
+      "evidence": 18,
+      "audio": 12
+    },
+    "standalone_zip_sha256": "b794179791cfad604b2761e3c109aefd88821831c46ac168cb4048a2c69d41c4",
+    "standalone_zip_bytes": 4485374,
+    "newline_samples": {
+      "scripts/scoring/build_bank.py": {
+        "crlf": 428,
+        "lf": 428,
+        "sha256": "5b169989fb4917d655f941077640490520a2a1c788257804b5beb4ac636543ad"
+      },
+      "scripts/scoring/package_bank.py": {
+        "crlf": 221,
+        "lf": 221,
+        "sha256": "5ce420a3db6120e4f5067af57d5aa38204f8160aa407fad57cd8b6b7dba15eaa"
+      },
+      "doc/scoring-1000/manifest.json": {
+        "crlf": 0,
+        "lf": 44013,
+        "sha256": "67bd4a5dc3fbf6f3794679b24b500f1ef37af83b7a47a863d10cb964a57314a2"
+      },
+      "doc/scoring-1000/package.sha256": {
+        "crlf": 0,
+        "lf": 1001,
+        "sha256": "f95b5caf6b92a02d5d57b57266437b0222110f7a39df83675ab653c612c62a0e"
+      },
+      "doc/scoring-1000/evidence/native-summary.csv": {
+        "crlf": 1001,
+        "lf": 1001,
+        "sha256": "9d3048c7ef4d915340284031b12a0031ce0e7b2fba18af5dbf346166da369310"
+      },
+      "doc/scoring-1000/evidence/sustain-summary.csv": {
+        "crlf": 1001,
+        "lf": 1001,
+        "sha256": "5cb4fc7443387634e9c5fe0d8c3ed64c63005117a52e7aa041b80f40375134ca"
+      }
+    },
+    "python_syntax_passes": 13,
+    "workflow_checks": {
+      "build-release.yml": {
+        "job_count": 5,
+        "shell_steps_checked": 0
+      },
+      "scoring-native.yml": {
+        "job_count": 1,
+        "shell_steps_checked": 9
+      }
+    },
+    "isolated_checkout_clean": true,
+    "limits": [
+      "This is Git line-ending emulation on Linux, not execution on Windows.",
+      "No GUI, installer, DAW host or native DSP rebuild was performed.",
+      "Source provenance is compared to committed Git blobs; ordinary source checkout text is allowed to use CRLF."
+    ]
+  },
+  "static_validation": {
+    "ok": true,
+    "complete_bank": true,
+    "manifest_sha256": "67bd4a5dc3fbf6f3794679b24b500f1ef37af83b7a47a863d10cb964a57314a2",
+    "preset_count": 1000,
+    "file_count": 1000,
+    "category_counts": {
+      "01": 100,
+      "02": 100,
+      "03": 100,
+      "04": 100,
+      "05": 100,
+      "06": 100,
+      "07": 100,
+      "08": 100,
+      "09": 100,
+      "10": 100
+    },
+    "unique_active_definitions": 1000,
+    "duplicate_groups": [],
+    "regeneration_checked": true,
+    "errors": []
+  },
+  "cmake_guard": {
+    "exit_code": 0,
+    "log_sha256": "906b3ac0db8d2284db336799ea406cc09637e6054f2322487b8242460b9b6dca"
+  },
+  "catalog_regeneration": {
+    "byte_identical": true,
+    "sha256": "861e8a4b3b49c1a0db084511a3cedb0aaa18fcf8c5b12743578549598de74424"
+  },
+  "windows_style_package_comparison": {
+    "status": "pass",
+    "entries_identical_except_provenance": 1004,
+    "different_entries": [
+      "CONTENTS.sha256",
+      "PACKAGE.json"
+    ],
+    "different_package_fields": [
+      "generator_sha256",
+      "static_validator_sha256"
+    ],
+    "windows_checkout_zip_sha256": "6b4a520b705a100dfc9f25af49479c428aee32dd7e6b0d2138f95a1daeae3a68",
+    "published_zip_sha256": "b794179791cfad604b2761e3c109aefd88821831c46ac168cb4048a2c69d41c4",
+    "interpretation": "Ordinary Python source files are checked out as CRLF. The new archive truthfully records those changed source byte hashes; every FXP, manifest, installation and license entry remains identical."
+  },
+  "lf_package_reproduction": {
+    "status": "pass",
+    "bytes": 4485374,
+    "sha256": "b794179791cfad604b2761e3c109aefd88821831c46ac168cb4048a2c69d41c4",
+    "byte_identical": true,
+    "source_commit": "946ed442572d5fa29e6d6467813b4fa6cb150908",
+    "core_autocrlf": false
+  },
+  "both_isolated_checkouts_clean": true,
+  "runtime": {
+    "python": "3.12.14",
+    "platform": "Linux",
+    "zlib": "1.3.2",
+    "git": "git version 2.52.0"
+  },
+  "raw_evidence_sha256": {
+    "CATALOG-regenerated.md": "861e8a4b3b49c1a0db084511a3cedb0aaa18fcf8c5b12743578549598de74424",
+    "Scoring-1000-lf-checkout.zip.metadata.json": "8c38e04968f4fa427cf31c367511cb1e7c6daf6265fc6456be4361c8e81bc29a",
+    "Scoring-1000-windows-checkout.zip.metadata.json": "e81a2e688648bc15323643a57b0e717db1d41e131240dbf1c930d9a37d15df40",
+    "audit_checkout.py": "d5ac0b50b589723c37b4e708a71b19c24bec68e6e3377c72c542f888c51bc2b9",
+    "catalog.log": "408cd75defd47c14244eda63f0380474e7c883f5c099f7a5fef45152af806da4",
+    "checkout-audit.json": "0d9c9b0120b90b9abfa161e44d5c548dae04e27b7839cfa03c9c1de8c2582221",
+    "checkout-audit.log": "7926b979548250b05513328cff13a0dce728921d3a940dc5eeccb15a15d9fe5b",
+    "cmake-guard.log": "906b3ac0db8d2284db336799ea406cc09637e6054f2322487b8242460b9b6dca",
+    "lf-package-comparison.json": "64526ed7eff08e23e95ec8707281903eb72949925579c5aa0b398b53bde174f9",
+    "package-lf.log": "c736c3e10c4e0efadcde41e55db1f4e87cf7da747ed6f418960b48ec01038b10",
+    "package-windows.log": "1b694c33512e95e7907fd8b346ef35544befba07f266744542512b1494ff08cc",
+    "static-validation.json": "0a1795e8a65e6c5e7bfb1a77bf64292a94c99b645f7170ba238115958ba00e92",
+    "static-validation.log": "fa13b6a34cdd489ddd566c0005ad80cf65f6718d1876e81d10aeb19bac9a4102",
+    "windows-package-comparison.json": "c14dd51b59a3da01720893bad0bae830edad3db1caf289f6433751c1e45bcb3f"
+  },
+  "repository_mutations": "Only this review and its JSON evidence were written to the main checkout; root index and source files were untouched.",
+  "musical_audition": "pending",
+  "composer_endorsement": "not_claimed"
+}

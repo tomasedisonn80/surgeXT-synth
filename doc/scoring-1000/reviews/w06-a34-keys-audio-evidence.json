@@ -1,0 +1,640 @@
+{
+  "catalog_sha256": "f8e0f6fdd299cbc18ad7410030f123a45777bdaf70c899ee8ee1d30680581331",
+  "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+  "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+  "compiler_sha256": "944b6d9207bd837ffa8c62870af576d069069b58060ef8d1cf15805ddd1f8bf0",
+  "scoring_renderer_source_sha256": "d6e7d6ed947ce6af7a2c5f476c0cedb3e52e2d92b05195d2507b6855c024366c",
+  "records": 100,
+  "scenarios": 2300,
+  "gates": 500,
+  "passing_presets": 100,
+  "warnings": 0,
+  "errors": [],
+  "repeat_bit_identical": 100,
+  "default_unique_audio_hashes": 100,
+  "default_stats": {
+    "peak": {
+      "min": 0.023817390203475952,
+      "q25": 0.043792218901216984,
+      "median": 0.05326659604907036,
+      "q75": 0.06452695094048977,
+      "max": 0.09017038345336914
+    },
+    "rms": {
+      "min": 0.0009047608868764237,
+      "q25": 0.003149677332142572,
+      "median": 0.004972814460484324,
+      "q75": 0.0074600125369498034,
+      "max": 0.019386068581974423
+    },
+    "active_rms": {
+      "min": 0.0013820450720877322,
+      "q25": 0.00494900996683148,
+      "median": 0.007625940031407286,
+      "q75": 0.012047994860692985,
+      "max": 0.031354956715395954
+    },
+    "spectral_centroid_hz": {
+      "min": 188.3868652142962,
+      "q25": 332.300801440442,
+      "median": 438.5409241934943,
+      "q75": 588.2594921614829,
+      "max": 8842.460805471359
+    },
+    "mono_energy_ratio": {
+      "min": 0.9906828820788177,
+      "q25": 0.9990121701315411,
+      "median": 0.9996666491871893,
+      "q75": 0.9998942567673478,
+      "max": 0.9999688525386123
+    },
+    "tail_500ms_rms": {
+      "min": 7.986035323039847e-15,
+      "q25": 3.5150539833780803e-13,
+      "median": 1.8933511228169157e-12,
+      "q75": 1.3400807181994273e-11,
+      "max": 1.0152581822298635e-09
+    },
+    "tail_to_active_db": {
+      "min": -240.0,
+      "q25": -206.0302048857081,
+      "median": -190.5167991832694,
+      "q75": -173.8954889512421,
+      "max": -142.38043713265677
+    }
+  },
+  "velocity_hard_soft_db": {
+    "min": 6.729657465290007,
+    "q25": 12.521818276639129,
+    "median": 13.46931746888312,
+    "q75": 14.95352754454708,
+    "max": 16.503468882146084
+  },
+  "scenario_peak_max": [
+    0.770132303237915,
+    "SC01-058",
+    "polyphony_stress"
+  ],
+  "scenario_mono_min": [
+    0.7335972026682395,
+    "SC01-064",
+    "macros_aggressive"
+  ],
+  "max_active_dc": 2.524520621196697e-05,
+  "macro_response_counts": {
+    "measurable_change": 800
+  },
+  "input_report_hashes": {
+    "SC01-001": "e1ae13c5e8f6d784fcb5255396ec42958277a5301264a9f42dc11989c1efc119",
+    "SC01-002": "33e41d21ce60279c95712b29b76ba4d1357e5b81ec4e09e51f37f6faa89fdb56",
+    "SC01-003": "98896943d64c8bfe6608e5d47b08db9973e28713463095ab56cf8b50e0ae50c7",
+    "SC01-004": "acb46e5a7b2feb929e0795183fd18cd3740a5f5d1f0f569b7bfcae1b971bd8db",
+    "SC01-005": "0e08018fb12f5fc549bf2a82a412d36920c4e37621bb169c60b37503d1385242",
+    "SC01-006": "e4b0fe345fe911273fd45a31889ea143d975bcfbbb28d3f202fba35710223d2d",
+    "SC01-007": "f2e56870de4afe95b474c1a9dc335b17cbfdac98c887e81e6a065516f1b27a81",
+    "SC01-008": "5b3b2a7938f8c60955de7f9e2e8de42db46f50fc3b1e7bdc33c31fa8e7d3c473",
+    "SC01-009": "a3b1af2e4b5206e1f8b107c24125f10f98dfb2444981bb7578592b763ebe4471",
+    "SC01-010": "53c107dcbfbce225bb64d6d23e4b349c2618140cb568df3e81991145e4a8a25f",
+    "SC01-011": "6d753ad0febdc50bb8814be84c0f72c4ba75f8f46ae2fdd55bd385986390d0d3",
+    "SC01-012": "9523d12b12dae6eb5c916fa01cf24c51b651f084dee1e60ea62c27be99fc196b",
+    "SC01-013": "52ba8bba3d7aa70509b9f999beb6750fbebaaec852bddd510f3317f839abb281",
+    "SC01-014": "69419fbc4cbbc524ccc0fe2a329508409f984b6ecdd8d2e355a712faf974f3e0",
+    "SC01-015": "e55c3772a56d09c96515df26ad17d3335b181abec61e162262fc715dc31d1bec",
+    "SC01-016": "fc49a27ab3b68a3da8014f5fda1f7894a7c489a8ac03eb8ebca5b589fa59c3de",
+    "SC01-017": "c02c89aed711d7744aef3d71e2af0de047d022a2d6dfe17904a8bba81c878475",
+    "SC01-018": "4bf6835edec1ca2d39c8523b3ea40a187a3efde1987376c32f9f8a46135cee79",
+    "SC01-019": "320c7df519b108d07b22d629bbcb34ce8bbae53af092188c9659aeaf34200836",
+    "SC01-020": "e3e94bc795c624ef89517b024dff6c8ebdbca9ebf6f34072e998a0e2bf4667e8",
+    "SC01-021": "904ff402a19d7913b66a4a27931d28170fd2079df46cdb99e26dbe7a6f8d1bd8",
+    "SC01-022": "8f4e28b0f7f8be9c6b29802c198a196631740ed6f8c8d4ddd72507df2156b1fd",
+    "SC01-023": "f9c080da74d04623a1b3acde18a9810d497b6c694ceb3fce21d3c0137f992010",
+    "SC01-024": "11b786106a4fd08c0d2b0ba59339bcbe79f86eb57a0c9e5eeb5acb701783f82f",
+    "SC01-025": "b120fc3562f668a59e5be1ed639d688bba570a2d2fc46040369eee9f5f8cdd7d",
+    "SC01-026": "c0b4650fca309f49652590eebffbd36c7644a80170ab25303a0661905b310411",
+    "SC01-027": "e387812fe10b6c6257ce9d433ad565bb02d9c82df59ae81d244d24797d18acb6",
+    "SC01-028": "328612ab4742cbd369c9eeda5a06a6d951136baa16a12cfeca61e0c1738401d7",
+    "SC01-029": "1d76bdca70af7ac43843bfa09aeeb3d2adf581effeec6919c5b384dbabd04a67",
+    "SC01-030": "637612185fe3b00bbe2367e15822bb74c541825a75ad30ee68f5f0016085305a",
+    "SC01-031": "38bea96cfdc9f33e873de7252c838d42a6083dc1bc2e49717d23b5a199c65b0e",
+    "SC01-032": "3dc90243d5d5a8490942ea6ea463556594d0c4bda33758367bea92b100d52a0d",
+    "SC01-033": "27aae7514e4adc37d977b19da04a7b2a0fad7af84502f6c29d68ca61b7c4e3c4",
+    "SC01-034": "5eaf8c2a99f2cb6ec7f44f8475bc57b01f9e3104b4eb58db33b6c36a359eb0c7",
+    "SC01-035": "0b6e281bdd8c476f3278d0edbbc0ae16c2190f9030efbf72d639f4e77fc303bf",
+    "SC01-036": "7d51aa53d17936bc582a96dbb24879b0f309a788766d7d40b826d714d937c50d",
+    "SC01-037": "ab3af4188c84acbb606ac118b2c571e6b0bcaf47761e6f2d1064ecfdc2b3415e",
+    "SC01-038": "8429d5d0396dd3a5c4fd36f6b7b9eda1b048a0353c3380a19f7406d651252533",
+    "SC01-039": "47db5702e48775279ad1cfe6e6c86bdf68eed26ddf7bb27a93027c5350a4933a",
+    "SC01-040": "905dee08add3712cd049e02c28d5c5e52b785f4571b70d3f6d6bf1e1e69f8b0c",
+    "SC01-041": "b727e411e55820cb34145ed13b18bf4a5831f3cb6d810e48e8000c84e0afef06",
+    "SC01-042": "400c9e412d37f6975c8fbd85eeae099405dcb8afaf6d190ab90ac1ece89739e5",
+    "SC01-043": "e3c5b20b8927430655e878b92a86958b370f5c8273f9f2d72f2091832b6691d6",
+    "SC01-044": "7166efd59cf7b5de358a3c532c7f2c7c93ce6523bab853a99c0a3002cdb5331f",
+    "SC01-045": "5a18a6ff027363fdd5117c95bc21c1b417327ae8257a5cf385bb2411cb48ee74",
+    "SC01-046": "3179e4fe77eea693fa653acabc7514c53159ee22fd3260c79a27160d8fcfd9d5",
+    "SC01-047": "afcd8ec1d201243e2e4fdd747e87abe9f03ea9c0876778faffad192d5dbbccf0",
+    "SC01-048": "e3b3032564be0f51a1724f80ac6ed05f7a821ff4319cd577013c0a1b0471f456",
+    "SC01-049": "64f90b68ab51c3d614471d71e2ea126501c8259d96c7a00675ff6dee12b495b7",
+    "SC01-050": "89603bed31aef4ecabe306ce43ce4509a9b542a607c636c40423564a1185013f",
+    "SC01-051": "eefa7d4d1ac2508cdda526af068b1aba6a0dd8f161e53e1f9b2883e8574f4eae",
+    "SC01-052": "95f85e20c71004fd68773035997b20474f8639c1c2d15508fb0e416d02328499",
+    "SC01-053": "54afc23aff55d53818bfb256a8d9b2df0ba68cf9a034b8f745737bf51718945f",
+    "SC01-054": "08b8ae68e8bee64ca017c873f86b4e79b87e94b6fbcbae65ccb6b293846870e9",
+    "SC01-055": "e62c1f3a622de5d770654da4ad387dccc765c03334fd1c840d999b2e8e44fe2b",
+    "SC01-056": "da9802adf62388a8fed9da4771f9723bf810c3eb63cff456120bfae49d8145c0",
+    "SC01-057": "34c84ca7de4dc0c90b5714a7007b0b7857c12fd5263265f57b8dce90b01ff520",
+    "SC01-058": "b88dcb570d93c3ac134756165246c468525f1e75f051651209349ecf30caffd6",
+    "SC01-059": "c884efa47f13f95174e7f71f7b92ad60f0d470a8f1bf593516ae9443f173b17d",
+    "SC01-060": "4813bbda238a687966ab5d383ee9494209ab82f4618830b2395c8395db16d390",
+    "SC01-061": "1f27a58fa57b724108a11a29993038d63c853a19fe964baa13011cbb1f3bd03c",
+    "SC01-062": "8cb05e6cb25f9f27af06b0d6d6cf7cbb5a559b6618b4591a7681b787c16ceb23",
+    "SC01-063": "a67473004d73a3e7c4a47c9006957d4c2d24f663f0e9aecf81bacd67b963d546",
+    "SC01-064": "bbaafa9ec42c418cf1f37dc2277de42219f8d160d69e293143525012dff704fa",
+    "SC01-065": "e11c57238b24d1030dd73797ff2ee29c2ce4af49319dea38c69f0135cee2af7a",
+    "SC01-066": "c70180c09ed5b00b5b7c956291a2c72244d4387109b3313e8481271e732028da",
+    "SC01-067": "7f2d9d3ce27bb2c8c1b520767b9501c73447635085f14e84ade42cd4817aa696",
+    "SC01-068": "ee2bdaa8024b08a28d546807839372b9a5c0820057c498ea2dbad9bf22ba8eb8",
+    "SC01-069": "16f38bc1b86072e628594f3ae86d0ded63aba8c5f2b52e7f07f1f70cd61a70fb",
+    "SC01-070": "9b421d20ddc2c583c933bb15c8156b6d0dd0b12c0cdf12e0b5e2f5dd3d065318",
+    "SC01-071": "d0f380ba0dcabc7d4d67be044d7223b402adaf74dc48fae2bff4e86665d5848f",
+    "SC01-072": "ae3770c33311cbc926905f9c204a93624f54ecc19881e181458b86fc01288bfb",
+    "SC01-073": "f86bd053a1b516f7726f5ee2d6b2d6687ba33000b32772dfebce7d0bf97e1c37",
+    "SC01-074": "951bbf50f2fc4fd9c80e6a3686c9d615ac6f3915fd3739e1b284c6c5d75e6f9a",
+    "SC01-075": "f60f93f3069b667e852d26ca0473d1a25c471e6588c36eb6eac15473c708c640",
+    "SC01-076": "3455941dad6bfe7c3ef949bd5e193ce37358e745d5ac01cce9cd35f0b2b00f33",
+    "SC01-077": "b80f8bc4382f7ad9c3ef4621d8b5a33f133e1f46c17304d5fba9c8adbe81fe18",
+    "SC01-078": "340cc7063f2574da41e137c3f5abf13db59ab05e05a29879c731aee8353c328b",
+    "SC01-079": "5b2a10e842667d07ab425a9b606f429499afab8e5ca04ec07916aaa4dd62694c",
+    "SC01-080": "022a6eb26437800267f6eb36d71c538520b10d94393bea1580e74b369312eccf",
+    "SC01-081": "e2feb160af58f6cbed1a9944ec3fcca347bb9ef72516132d06c0fd695891c028",
+    "SC01-082": "5e98805bb11fc6c86261c846e041572c994a73051a82b424a4a65b8f083e2f38",
+    "SC01-083": "0f9ec809241764015fbde0bbd00df668c5f93ca4906bcec3772fd1306ef5bc92",
+    "SC01-084": "4e5ccacf2c56682f07ec6cb606b6fe275819e97a67c4180df61f6d8f2d01ac6e",
+    "SC01-085": "b505229ee895a529b19b1a33c44159e288c7aa88458222c373e49903266d6da5",
+    "SC01-086": "2ad9040e41ccb282f3fa73ade939b643e57a938b787379f66e83986b3184d4d4",
+    "SC01-087": "953765f7ea1203dfb2b3c18e1ab4403b8956ceadfbe2d8271268c4ca8b749677",
+    "SC01-088": "a7a3f71018ee125f4d97eab63bbb10b260d52e72dad6e5ff73506a758010dee9",
+    "SC01-089": "b25e1ffe4c98d4b2be054a2d031bb943a408caf52d2c28ea7b25f143a0fabae4",
+    "SC01-090": "3eb86d496cc71f2d7ac215ed1675175efe29fdfc3b823fba21ab71a138f8b182",
+    "SC01-091": "edca6421d4cf4d05fcf79bec49394f215243dedc1b0d9d7759471ce247a7dc4c",
+    "SC01-092": "767c6fff1368f11ccaf89f392e66da286e3d7ab4c5e59490fa3467cfa871383c",
+    "SC01-093": "2b0d480a6b5d175e285efe3c37eff62667101fc69db434001fe83e8b2ef94a60",
+    "SC01-094": "3db26f26dcc723e9933b8ea5d9514d16a36378f56203ca845d76c371406347e7",
+    "SC01-095": "fef395f41f00d4c788d37711b5cbfa0261be2edf6f055bb5da5cdb4f817e2b85",
+    "SC01-096": "4527a79ae387a6b5d3abce27dd75b53a92e742009ed083180df0fb399ac809f1",
+    "SC01-097": "60154f413c3a7a6fff34aa95191ffe06ab703b778fc2b0d9dd9ea2a12aca8bf9",
+    "SC01-098": "3fd95830029867596fa45e9601a019ab17f4a990fd668e882fbda1644749719e",
+    "SC01-099": "1032cd49a2baf6ed2ae8ad9a15e5fe7089dd665cd97b6c27645645642537b053",
+    "SC01-100": "16fe6f23d6a16bf663990b014de126479e1c833c674b28bb6230febe5d399a13"
+  },
+  "default_extrema": {
+    "peak": {
+      "min": [
+        0.023817390203475952,
+        "SC01-019",
+        "Ivory Frame Float"
+      ],
+      "max": [
+        0.09017038345336914,
+        "SC01-057",
+        "Drawbar Lantern Felt"
+      ]
+    },
+    "rms": {
+      "min": [
+        0.0009047608868764237,
+        "SC01-030",
+        "Paper Hammers Bite"
+      ],
+      "max": [
+        0.019386068581974423,
+        "SC01-059",
+        "Drawbar Lantern Float"
+      ]
+    },
+    "active_rms": {
+      "min": [
+        0.0013820450720877322,
+        "SC01-030",
+        "Paper Hammers Bite"
+      ],
+      "max": [
+        0.031354956715395954,
+        "SC01-064",
+        "Chapel Light Float"
+      ]
+    },
+    "spectral_centroid_hz": {
+      "min": [
+        188.3868652142962,
+        "SC01-082",
+        "Noir Cabinet Felt"
+      ],
+      "max": [
+        8842.460805471359,
+        "SC01-050",
+        "Tin Toy Keys Bite"
+      ]
+    },
+    "mono_energy_ratio": {
+      "min": [
+        0.9906828820788177,
+        "SC01-079",
+        "Porcelain Desk Float"
+      ],
+      "max": [
+        0.9999688525386123,
+        "SC01-026",
+        "Paper Hammers Close"
+      ]
+    },
+    "tail_500ms_rms": {
+      "min": [
+        7.986035323039847e-15,
+        "SC01-005",
+        "Felt Ember Bite"
+      ],
+      "max": [
+        1.0152581822298635e-09,
+        "SC01-059",
+        "Drawbar Lantern Float"
+      ]
+    },
+    "tail_to_active_db": {
+      "min": [
+        -240.0,
+        "SC01-004",
+        "Felt Ember Float"
+      ],
+      "max": [
+        -142.38043713265677,
+        "SC01-065",
+        "Chapel Light Bite"
+      ]
+    }
+  },
+  "tin_toy_contour": {
+    "status": "measurable_change",
+    "waveform_relative_rms_delta": 0.3558505584923792,
+    "feature_distance": 0.14090632884490273,
+    "waveform_threshold": 0.001,
+    "feature_threshold": 0.002,
+    "interpretation": "Measured change is not certification of useful audibility."
+  },
+  "macro_minimums": {
+    "Tone": [
+      0.031860408374979346,
+      "SC01-058",
+      "Drawbar Lantern Glass"
+    ],
+    "Motion": [
+      0.0025040254181528587,
+      "SC01-070",
+      "Breath Harmonium Bite"
+    ],
+    "Contour": [
+      0.001554424217423725,
+      "SC01-023",
+      "Glass Hammer Glass"
+    ],
+    "Space": [
+      0.04257378102961171,
+      "SC01-026",
+      "Paper Hammers Close"
+    ],
+    "Color": [
+      0.05726763812032944,
+      "SC01-052",
+      "Hollow Console Felt"
+    ],
+    "Width": [
+      0.13388068244618198,
+      "SC01-030",
+      "Paper Hammers Bite"
+    ],
+    "Attack": [
+      0.06539606676447665,
+      "SC01-056",
+      "Drawbar Lantern Close"
+    ],
+    "Release": [
+      0.05770964611185573,
+      "SC01-093",
+      "Motor Keys Glass"
+    ]
+  },
+  "family_pair_count": 200,
+  "matched_active_family_pairs": 200,
+  "closest_five_pairs": [
+    {
+      "ids": [
+        "SC01-031",
+        "SC01-032"
+      ],
+      "names": [
+        "Amber Clav Close",
+        "Amber Clav Felt"
+      ],
+      "spectral_l2": 0.015605202657925858,
+      "envelope_l2": 0.017703393475180237,
+      "combined": 0.02445689939551598,
+      "same_active_fixture": true,
+      "same_duration": true
+    },
+    {
+      "ids": [
+        "SC01-001",
+        "SC01-002"
+      ],
+      "names": [
+        "Felt Ember Close",
+        "Felt Ember Felt"
+      ],
+      "spectral_l2": 0.0014972261177827702,
+      "envelope_l2": 0.06497812347180093,
+      "combined": 0.03398628785368323,
+      "same_active_fixture": true,
+      "same_duration": true
+    },
+    {
+      "ids": [
+        "SC01-057",
+        "SC01-058"
+      ],
+      "names": [
+        "Drawbar Lantern Felt",
+        "Drawbar Lantern Glass"
+      ],
+      "spectral_l2": 0.015259256742912094,
+      "envelope_l2": 0.04063889758683908,
+      "combined": 0.035578705536331634,
+      "same_active_fixture": true,
+      "same_duration": true
+    },
+    {
+      "ids": [
+        "SC01-031",
+        "SC01-033"
+      ],
+      "names": [
+        "Amber Clav Close",
+        "Amber Clav Glass"
+      ],
+      "spectral_l2": 0.015035842574254594,
+      "envelope_l2": 0.04561260461670168,
+      "combined": 0.037842144882605434,
+      "same_active_fixture": true,
+      "same_duration": true
+    },
+    {
+      "ids": [
+        "SC01-032",
+        "SC01-033"
+      ],
+      "names": [
+        "Amber Clav Felt",
+        "Amber Clav Glass"
+      ],
+      "spectral_l2": 0.02668895055120631,
+      "envelope_l2": 0.02948811811389388,
+      "combined": 0.04143300960815325,
+      "same_active_fixture": true,
+      "same_duration": true
+    }
+  ],
+  "dry_probe": {
+    "scenarios": 6,
+    "conditions": {
+      "sample_rate": 48000,
+      "hold": 3,
+      "seconds": 7,
+      "velocity": 96,
+      "tempo": 120,
+      "space": 0,
+      "seed": 1000,
+      "fresh_engine": true,
+      "master_reference_db": 0
+    },
+    "pairs": [
+      {
+        "ids": [
+          "SC01-031",
+          "SC01-032"
+        ],
+        "rms_equalized_waveform_relative_delta": 0.4355618128114932,
+        "normalized_correlation": 0.9051429536101828,
+        "features": [
+          {
+            "peak": 0.05136260390281677,
+            "active_rms": 0.003173861483237675,
+            "attack_10pct_seconds_window_start": 0.0,
+            "attack_90pct_seconds_window_start": 0.0,
+            "early_500ms_peak_windowed_rms": 0.01745552697154352,
+            "power_centroid_first_1p365s_hz": 573.3239315529513,
+            "upper_energy_above_2k_fraction": 0.04298197788687995,
+            "pcm_sha256": "be630e4abfde04828c3c6e6dec92541dfb064cdbde93c6bb198c5dbf0058fcc4"
+          },
+          {
+            "peak": 0.07846911251544952,
+            "active_rms": 0.0035303874311188193,
+            "attack_10pct_seconds_window_start": 0.0,
+            "attack_90pct_seconds_window_start": 0.0,
+            "early_500ms_peak_windowed_rms": 0.025683858557092955,
+            "power_centroid_first_1p365s_hz": 506.1684581636181,
+            "upper_energy_above_2k_fraction": 0.02023442393419047,
+            "pcm_sha256": "4d184aed344e84dd776f0418eddae01f8b587d93856686bd64e76b2b01c630d2"
+          }
+        ],
+        "interpretation": "Analytical RMS equality only; no saved audio normalization. Deterministic technical distinction, not an audibility threshold."
+      },
+      {
+        "ids": [
+          "SC01-001",
+          "SC01-002"
+        ],
+        "rms_equalized_waveform_relative_delta": 0.12705090802139182,
+        "normalized_correlation": 0.9919290333854701,
+        "features": [
+          {
+            "peak": 0.04705869033932686,
+            "active_rms": 0.007010872748070599,
+            "attack_10pct_seconds_window_start": 0.0,
+            "attack_90pct_seconds_window_start": 0.0,
+            "early_500ms_peak_windowed_rms": 0.030554742100133873,
+            "power_centroid_first_1p365s_hz": 325.05633191035,
+            "upper_energy_above_2k_fraction": 5.184750678603433e-13,
+            "pcm_sha256": "293c54bdf012f8750138b7cd9ab6d8b60429a26828db20ec232db8221f17a0d6"
+          },
+          {
+            "peak": 0.09253125637769699,
+            "active_rms": 0.0134022964007341,
+            "attack_10pct_seconds_window_start": 0.0,
+            "attack_90pct_seconds_window_start": 0.005,
+            "early_500ms_peak_windowed_rms": 0.05982758622203756,
+            "power_centroid_first_1p365s_hz": 325.0343954632248,
+            "upper_energy_above_2k_fraction": 4.2364885140866653e-13,
+            "pcm_sha256": "452262b8fafcc14260e7ae77904e9e0ee86e5a276b5a666ca0da9cd0ae61408f"
+          }
+        ],
+        "interpretation": "Analytical RMS equality only; no saved audio normalization. Deterministic technical distinction, not an audibility threshold."
+      },
+      {
+        "ids": [
+          "SC01-057",
+          "SC01-058"
+        ],
+        "rms_equalized_waveform_relative_delta": 0.15563771582145874,
+        "normalized_correlation": 0.9878884507069396,
+        "features": [
+          {
+            "peak": 0.09616079926490784,
+            "active_rms": 0.02048639159316944,
+            "attack_10pct_seconds_window_start": 0.0,
+            "attack_90pct_seconds_window_start": 0.005,
+            "early_500ms_peak_windowed_rms": 0.05365430519879876,
+            "power_centroid_first_1p365s_hz": 498.56499604734256,
+            "upper_energy_above_2k_fraction": 9.633843399715664e-10,
+            "pcm_sha256": "3927dbae8c0e36c5f30ded8870943552368736f55dc08e7b67f4cb66a73b6478"
+          },
+          {
+            "peak": 0.07964273542165756,
+            "active_rms": 0.017642457718887856,
+            "attack_10pct_seconds_window_start": 0.0,
+            "attack_90pct_seconds_window_start": 0.0,
+            "early_500ms_peak_windowed_rms": 0.04483721292428526,
+            "power_centroid_first_1p365s_hz": 496.59879693516467,
+            "upper_energy_above_2k_fraction": 1.1261809333498875e-11,
+            "pcm_sha256": "07efca32d53c2d84210a804a9b5a9e5f4fc105b473e1bda956155d2ddbedd184"
+          }
+        ],
+        "interpretation": "Analytical RMS equality only; no saved audio normalization. Deterministic technical distinction, not an audibility threshold."
+      }
+    ],
+    "native_report_sha256": "4944e68ff9533aea6ae502a7b01194cd250cb72fa7cba06d933d27d64c180811",
+    "batch_sha256": "a8a32391df2ea895c13e8bf07491ca1d7b8e5ebf9bcca0b055acb759e2851ff5",
+    "analysis": "Active first3seconds; waveforms independently divided by activeRMS only in analysis. Attack uses10msRMSwindows every5ms, first500ms referencepeak; timesmarkwindowstart andarenot exactADSRparameterdurations."
+  },
+  "catalog_stable_at_end": true,
+  "review_scope": "Independent read-only category review; final-generation Keys,100presets,2300native scenarios. Six supplementary native dry probes. Not human audition.",
+  "reviewed_ids": [
+    "SC01-001",
+    "SC01-002",
+    "SC01-003",
+    "SC01-004",
+    "SC01-005",
+    "SC01-006",
+    "SC01-007",
+    "SC01-008",
+    "SC01-009",
+    "SC01-010",
+    "SC01-011",
+    "SC01-012",
+    "SC01-013",
+    "SC01-014",
+    "SC01-015",
+    "SC01-016",
+    "SC01-017",
+    "SC01-018",
+    "SC01-019",
+    "SC01-020",
+    "SC01-021",
+    "SC01-022",
+    "SC01-023",
+    "SC01-024",
+    "SC01-025",
+    "SC01-026",
+    "SC01-027",
+    "SC01-028",
+    "SC01-029",
+    "SC01-030",
+    "SC01-031",
+    "SC01-032",
+    "SC01-033",
+    "SC01-034",
+    "SC01-035",
+    "SC01-036",
+    "SC01-037",
+    "SC01-038",
+    "SC01-039",
+    "SC01-040",
+    "SC01-041",
+    "SC01-042",
+    "SC01-043",
+    "SC01-044",
+    "SC01-045",
+    "SC01-046",
+    "SC01-047",
+    "SC01-048",
+    "SC01-049",
+    "SC01-050",
+    "SC01-051",
+    "SC01-052",
+    "SC01-053",
+    "SC01-054",
+    "SC01-055",
+    "SC01-056",
+    "SC01-057",
+    "SC01-058",
+    "SC01-059",
+    "SC01-060",
+    "SC01-061",
+    "SC01-062",
+    "SC01-063",
+    "SC01-064",
+    "SC01-065",
+    "SC01-066",
+    "SC01-067",
+    "SC01-068",
+    "SC01-069",
+    "SC01-070",
+    "SC01-071",
+    "SC01-072",
+    "SC01-073",
+    "SC01-074",
+    "SC01-075",
+    "SC01-076",
+    "SC01-077",
+    "SC01-078",
+    "SC01-079",
+    "SC01-080",
+    "SC01-081",
+    "SC01-082",
+    "SC01-083",
+    "SC01-084",
+    "SC01-085",
+    "SC01-086",
+    "SC01-087",
+    "SC01-088",
+    "SC01-089",
+    "SC01-090",
+    "SC01-091",
+    "SC01-092",
+    "SC01-093",
+    "SC01-094",
+    "SC01-095",
+    "SC01-096",
+    "SC01-097",
+    "SC01-098",
+    "SC01-099",
+    "SC01-100"
+  ],
+  "weak_measured_controls": [
+    {
+      "id": "SC01-023",
+      "control": "Contour",
+      "waveform_relative_rms_delta": 0.001554424217423725,
+      "feature_distance": 5.008834476393369e-05
+    },
+    {
+      "id": "SC01-070",
+      "control": "Motion",
+      "waveform_relative_rms_delta": 0.0025040254181528587,
+      "feature_distance": 0.0013253684720461328
+    }
+  ],
+  "bright_audition_priority": {
+    "id": "SC01-050",
+    "name": "Tin Toy Keys Bite",
+    "default_spectral_centroid_hz": 8842.460805471359,
+    "reason": "Distinctly bright inharmonic FM3 variant; tonal comfort and foreground suitability require listening."
+  }
+}

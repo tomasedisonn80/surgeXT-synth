@@ -1,0 +1,1502 @@
+{
+  "id": "02",
+  "name": "Plucks",
+  "prefix": "P",
+  "description": "Original modeled-string, subtractive and FM plucks for intimate underscore, lyrical arpeggios, light rhythmic beds and adaptable music production; acoustic references describe synthetic colors.",
+  "families": [
+    {
+      "name": "Silk Plectrum",
+      "role": "A synthetic muted-string color for sparse dialogue accompaniment and gentle fingerpicked patterns.",
+      "range": [
+        45,
+        84
+      ],
+      "tags": [
+        "soft",
+        "muted",
+        "wooden",
+        "intimate"
+      ],
+      "oscillators": [
+        {
+          "kind": "string",
+          "level": 0.76,
+          "octave": 0,
+          "detune": 0,
+          "exciter": 1,
+          "decay": 0.82,
+          "stiffness": 0.02
+        },
+        {
+          "kind": "triangle",
+          "level": 0.24,
+          "octave": 0,
+          "detune": 0
+        }
+      ],
+      "amp": [
+        0.005,
+        0.43,
+        0.045,
+        0.18
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 2500,
+        "resonance": 0.12,
+        "env": 11,
+        "keytrack": 0.65
+      },
+      "filter_env": [
+        0.004,
+        0.15,
+        0.02,
+        0.12
+      ],
+      "motion": {
+        "shape": "sine",
+        "rate": 0.35,
+        "sync": false,
+        "depth": 3,
+        "amp": 0.3,
+        "pan": 0.08
+      },
+      "noise": 0,
+      "drift": 0.018,
+      "reverb": 0.065,
+      "delay": 0.02,
+      "reverb_time": 1.3,
+      "width": 0.55,
+      "velocity": 18,
+      "highpass": 35
+    },
+    {
+      "name": "Cedar Thread",
+      "role": "A rounded modeled nylon-like pluck for low-register folk-inflected motifs and relaxed arpeggios.",
+      "range": [
+        40,
+        79
+      ],
+      "tags": [
+        "round",
+        "nylon-like",
+        "warm",
+        "arpeggio"
+      ],
+      "oscillators": [
+        {
+          "kind": "string",
+          "level": 0.78,
+          "octave": 0,
+          "detune": 0,
+          "exciter": 3,
+          "decay": 0.9,
+          "stiffness": -0.06
+        },
+        {
+          "kind": "sine",
+          "level": 0.23,
+          "octave": 0,
+          "detune": 0,
+          "feedback": 0.025
+        }
+      ],
+      "amp": [
+        0.006,
+        0.76,
+        0.055,
+        0.33
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 2050,
+        "resonance": 0.08,
+        "env": 15,
+        "keytrack": 0.65
+      },
+      "filter_env": [
+        0.004,
+        0.3,
+        0.03,
+        0.23
+      ],
+      "motion": {
+        "shape": "sine",
+        "rate": 0.35,
+        "sync": false,
+        "depth": 3,
+        "amp": 0.3,
+        "pan": 0.08
+      },
+      "noise": 0,
+      "drift": 0.018,
+      "reverb": 0.08,
+      "delay": 0.04,
+      "reverb_time": 1.3,
+      "width": 0.55,
+      "velocity": 18,
+      "highpass": 28
+    },
+    {
+      "name": "Harbor Harp",
+      "role": "A synthetic harp-like blend with an octave sheen for open voicings and lyrical scene changes.",
+      "range": [
+        48,
+        91
+      ],
+      "tags": [
+        "harp-like",
+        "luminous",
+        "open",
+        "lyrical"
+      ],
+      "oscillators": [
+        {
+          "kind": "string",
+          "level": 0.73,
+          "octave": 0,
+          "detune": 0,
+          "exciter": 0,
+          "decay": 0.96,
+          "stiffness": 0.015
+        },
+        {
+          "kind": "sine",
+          "level": 0.17,
+          "octave": 1,
+          "detune": 0
+        },
+        {
+          "kind": "fm2",
+          "level": 0.12,
+          "octave": 0,
+          "detune": 0,
+          "fm_amount": 0.065,
+          "ratio": 3,
+          "fm_amount2": 0.02,
+          "ratio2": 1
+        }
+      ],
+      "amp": [
+        0.004,
+        1.75,
+        0.02,
+        0.8
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 5300,
+        "resonance": 0.06,
+        "env": 7,
+        "keytrack": 0.65
+      },
+      "filter_env": [
+        0.004,
+        0.4,
+        0,
+        0.35
+      ],
+      "motion": {
+        "shape": "sine",
+        "rate": 0.35,
+        "sync": false,
+        "depth": 3,
+        "amp": 0.3,
+        "pan": 0.08
+      },
+      "noise": 0,
+      "drift": 0.018,
+      "reverb": 0.14,
+      "delay": 0.04,
+      "reverb_time": 2.3,
+      "width": 0.7,
+      "velocity": 20,
+      "highpass": 35
+    },
+    {
+      "name": "Paper Lattice",
+      "role": "A crisp electronic plectrum for light comedy, small mechanical gestures and precise sixteenth-note patterns.",
+      "range": [
+        48,
+        84
+      ],
+      "tags": [
+        "papery",
+        "crisp",
+        "rhythmic",
+        "playful"
+      ],
+      "oscillators": [
+        {
+          "kind": "pulse",
+          "level": 0.68,
+          "octave": 0,
+          "detune": 0,
+          "shape": 0.22
+        },
+        {
+          "kind": "triangle",
+          "level": 0.25,
+          "octave": 1,
+          "detune": 0
+        }
+      ],
+      "amp": [
+        0.004,
+        0.22,
+        0,
+        0.09
+      ],
+      "filter": {
+        "kind": "lp24",
+        "hz": 1800,
+        "resonance": 0.2,
+        "env": 29,
+        "keytrack": 0.65
+      },
+      "filter_env": [
+        0.004,
+        0.09,
+        0,
+        0.08
+      ],
+      "motion": {
+        "shape": "sine",
+        "rate": 0.35,
+        "sync": false,
+        "depth": 3,
+        "amp": 0.3,
+        "pan": 0.08
+      },
+      "noise": 0.004,
+      "drift": 0.018,
+      "reverb": 0.04,
+      "delay": 0.025,
+      "reverb_time": 1.3,
+      "width": 0.55,
+      "velocity": 18,
+      "highpass": 35
+    },
+    {
+      "name": "Copper Plectrum",
+      "role": "A gently inharmonic synthetic metal-and-string pluck for uncanny motifs that retain a clear played pitch.",
+      "range": [
+        45,
+        81
+      ],
+      "tags": [
+        "copper",
+        "inharmonic",
+        "hybrid",
+        "mysterious"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm3",
+          "level": 0.62,
+          "octave": 0,
+          "detune": 0,
+          "fm_amount": 0.12,
+          "ratio": 1.5,
+          "fm_amount2": 0.055,
+          "ratio2": 3.03,
+          "feedback": 0.01
+        },
+        {
+          "kind": "string",
+          "level": 0.42,
+          "octave": 0,
+          "detune": 0,
+          "exciter": 4,
+          "decay": 0.84,
+          "stiffness": 0.08
+        }
+      ],
+      "amp": [
+        0.005,
+        0.84,
+        0.025,
+        0.42
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 4600,
+        "resonance": 0.14,
+        "env": 10,
+        "keytrack": 0.65
+      },
+      "filter_env": [
+        0.004,
+        0.24,
+        0.015,
+        0.24
+      ],
+      "motion": {
+        "shape": "sine",
+        "rate": 0.35,
+        "sync": false,
+        "depth": 3,
+        "amp": 0.3,
+        "pan": 0.08
+      },
+      "noise": 0,
+      "drift": 0.018,
+      "reverb": 0.12,
+      "delay": 0.04,
+      "reverb_time": 1.3,
+      "width": 0.62,
+      "velocity": 18,
+      "highpass": 35
+    },
+    {
+      "name": "Clockwork Reed",
+      "role": "A narrow synthetic reed pluck for dry clocks, understated investigation rhythms and syncopated pop counterlines.",
+      "range": [
+        43,
+        84
+      ],
+      "tags": [
+        "clockwork",
+        "reed-like",
+        "dry",
+        "focused"
+      ],
+      "oscillators": [
+        {
+          "kind": "pulse",
+          "level": 0.65,
+          "octave": 0,
+          "detune": 0,
+          "shape": 0.36
+        },
+        {
+          "kind": "fm2",
+          "level": 0.27,
+          "octave": 0,
+          "detune": 0,
+          "fm_amount": 0.085,
+          "ratio": 5,
+          "fm_amount2": 0.025,
+          "ratio2": 2
+        }
+      ],
+      "amp": [
+        0.004,
+        0.31,
+        0.025,
+        0.13
+      ],
+      "filter": {
+        "kind": "bp12",
+        "hz": 1500,
+        "resonance": 0.3,
+        "env": 20,
+        "keytrack": 0.8
+      },
+      "filter_env": [
+        0.004,
+        0.15,
+        0,
+        0.1
+      ],
+      "motion": {
+        "shape": "sine",
+        "rate": 0.35,
+        "sync": false,
+        "depth": 3,
+        "amp": 0.3,
+        "pan": 0.08
+      },
+      "noise": 0,
+      "drift": 0.018,
+      "reverb": 0.04,
+      "delay": 0.03,
+      "reverb_time": 1.3,
+      "width": 0.55,
+      "velocity": 18,
+      "highpass": 55
+    },
+    {
+      "name": "Glass Filament",
+      "role": "A clear FM pluck for sparkling upper-register arpeggios and delicate modern fantasy colors.",
+      "range": [
+        55,
+        96
+      ],
+      "tags": [
+        "glass",
+        "sparkling",
+        "FM",
+        "delicate"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm2",
+          "level": 0.68,
+          "octave": 0,
+          "detune": 0,
+          "fm_amount": 0.2,
+          "ratio": 2,
+          "fm_amount2": 0.1,
+          "ratio2": 7,
+          "feedback": 0.025
+        },
+        {
+          "kind": "sine",
+          "level": 0.27,
+          "octave": 0,
+          "detune": 0
+        }
+      ],
+      "amp": [
+        0.004,
+        1.18,
+        0.01,
+        0.51
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 7200,
+        "resonance": 0.06,
+        "env": 8,
+        "keytrack": 0.65
+      },
+      "filter_env": [
+        0.004,
+        0.25,
+        0,
+        0.18
+      ],
+      "motion": {
+        "shape": "sine",
+        "rate": 0.35,
+        "sync": false,
+        "depth": 3,
+        "amp": 0.3,
+        "pan": 0.08
+      },
+      "noise": 0,
+      "drift": 0.018,
+      "reverb": 0.12,
+      "delay": 0.06,
+      "reverb_time": 2.1,
+      "width": 0.65,
+      "velocity": 18,
+      "highpass": 60,
+      "variant_changes": {
+        "Spark": {
+          "contour_amp": 0.65
+        },
+        "Cascade": {
+          "contour_amp": 0.65
+        }
+      }
+    },
+    {
+      "name": "Rubber Lantern",
+      "role": "A rounded elastic synth pluck for friendly animation, bouncy bass-adjacent ostinatos and muted funk figures.",
+      "range": [
+        36,
+        79
+      ],
+      "tags": [
+        "rubbery",
+        "rounded",
+        "bouncy",
+        "friendly"
+      ],
+      "oscillators": [
+        {
+          "kind": "sine",
+          "level": 0.67,
+          "octave": 0,
+          "detune": 0,
+          "feedback": 0.1
+        },
+        {
+          "kind": "triangle",
+          "level": 0.29,
+          "octave": 0,
+          "detune": 0
+        },
+        {
+          "kind": "pulse",
+          "level": 0.1,
+          "octave": 1,
+          "detune": 0,
+          "shape": 0.58
+        }
+      ],
+      "amp": [
+        0.005,
+        0.28,
+        0.04,
+        0.12
+      ],
+      "filter": {
+        "kind": "lp24",
+        "hz": 1000,
+        "resonance": 0.32,
+        "env": 30,
+        "keytrack": 0.65
+      },
+      "filter_env": [
+        0.004,
+        0.12,
+        0,
+        0.09
+      ],
+      "motion": {
+        "shape": "sine",
+        "rate": 0.35,
+        "sync": false,
+        "depth": 3,
+        "amp": 0.3,
+        "pan": 0.08
+      },
+      "noise": 0,
+      "drift": 0.018,
+      "reverb": 0.045,
+      "delay": 0.025,
+      "reverb_time": 1.3,
+      "width": 0.55,
+      "velocity": 16,
+      "highpass": 25
+    },
+    {
+      "name": "Bone Tines",
+      "role": "A synthetic thumb-piano-like pluck with a hollow low body for earthy motifs and small ensemble layers.",
+      "range": [
+        43,
+        84
+      ],
+      "tags": [
+        "tines",
+        "hollow",
+        "earthy",
+        "minimal"
+      ],
+      "oscillators": [
+        {
+          "kind": "string",
+          "level": 0.7,
+          "octave": 0,
+          "detune": 0,
+          "exciter": 5,
+          "decay": 0.73,
+          "stiffness": 0.12
+        },
+        {
+          "kind": "sine",
+          "level": 0.25,
+          "octave": -1,
+          "detune": 0,
+          "shape": 1
+        }
+      ],
+      "amp": [
+        0.004,
+        0.47,
+        0.025,
+        0.21
+      ],
+      "filter": {
+        "kind": "bp12",
+        "hz": 3100,
+        "resonance": 0.2,
+        "env": 13,
+        "keytrack": 0.65
+      },
+      "filter_env": [
+        0.004,
+        0.18,
+        0.02,
+        0.13
+      ],
+      "motion": {
+        "shape": "sine",
+        "rate": 0.35,
+        "sync": false,
+        "depth": 3,
+        "amp": 0.3,
+        "pan": 0.08
+      },
+      "noise": 0.002,
+      "drift": 0.018,
+      "reverb": 0.075,
+      "delay": 0.04,
+      "reverb_time": 1.3,
+      "width": 0.55,
+      "velocity": 18,
+      "highpass": 40
+    },
+    {
+      "name": "Woven Strings",
+      "role": "A layered modeled-string pluck for wide chord fragments and gently animated acoustic-electronic accompaniment.",
+      "range": [
+        45,
+        86
+      ],
+      "tags": [
+        "woven",
+        "layered",
+        "strings",
+        "chordal"
+      ],
+      "oscillators": [
+        {
+          "kind": "string",
+          "level": 0.53,
+          "octave": 0,
+          "detune": -0.025,
+          "exciter": 2,
+          "decay": 0.93,
+          "stiffness": 0.025
+        },
+        {
+          "kind": "string",
+          "level": 0.45,
+          "octave": 0,
+          "detune": 0.028,
+          "exciter": 0,
+          "decay": 0.88,
+          "stiffness": -0.035
+        },
+        {
+          "kind": "modern",
+          "level": 0.12,
+          "octave": 0,
+          "detune": 0,
+          "saw": 0.12,
+          "pulse": 0.1,
+          "tri": 0.55
+        }
+      ],
+      "amp": [
+        0.008,
+        1.14,
+        0.07,
+        0.5
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 3900,
+        "resonance": 0.09,
+        "env": 10,
+        "keytrack": 0.65
+      },
+      "filter_env": [
+        0.006,
+        0.42,
+        0.04,
+        0.25
+      ],
+      "motion": {
+        "shape": "sine",
+        "rate": 0.35,
+        "sync": false,
+        "depth": 3,
+        "amp": 0.3,
+        "pan": 0.08
+      },
+      "noise": 0,
+      "drift": 0.03,
+      "reverb": 0.13,
+      "delay": 0.04,
+      "reverb_time": 1.3,
+      "width": 0.8,
+      "velocity": 18,
+      "highpass": 35
+    },
+    {
+      "name": "Palm Circuit",
+      "role": "A palm-muted synthetic guitar-like attack for tight rhythmic beds, indie arrangements and restrained action patterns.",
+      "range": [
+        40,
+        81
+      ],
+      "tags": [
+        "palm-muted",
+        "tight",
+        "guitar-like",
+        "rhythmic"
+      ],
+      "oscillators": [
+        {
+          "kind": "triangle",
+          "level": 0.7,
+          "octave": 0,
+          "detune": 0
+        },
+        {
+          "kind": "saw",
+          "level": 0.23,
+          "octave": 0,
+          "detune": 0.016
+        }
+      ],
+      "amp": [
+        0.004,
+        0.17,
+        0,
+        0.065
+      ],
+      "filter": {
+        "kind": "lp24",
+        "hz": 1350,
+        "resonance": 0.16,
+        "env": 27,
+        "keytrack": 0.65
+      },
+      "filter_env": [
+        0.004,
+        0.075,
+        0,
+        0.05
+      ],
+      "motion": {
+        "shape": "sine",
+        "rate": 0.35,
+        "sync": false,
+        "depth": 3,
+        "amp": 0.3,
+        "pan": 0.08
+      },
+      "noise": 0,
+      "drift": 0.018,
+      "reverb": 0.025,
+      "delay": 0.015,
+      "reverb_time": 1.3,
+      "width": 0.55,
+      "velocity": 22,
+      "highpass": 38
+    },
+    {
+      "name": "Tin Carousel",
+      "role": "A bright FM-and-pulse pluck for whimsical motion, toy-like musical figures and light syncopated hooks.",
+      "range": [
+        50,
+        91
+      ],
+      "tags": [
+        "tin",
+        "whimsical",
+        "toy-like",
+        "bright"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm2",
+          "level": 0.58,
+          "octave": 0,
+          "detune": 0,
+          "fm_amount": 0.18,
+          "ratio": 4,
+          "fm_amount2": 0.065,
+          "ratio2": 6,
+          "feedback": 0.015
+        },
+        {
+          "kind": "pulse",
+          "level": 0.3,
+          "octave": 0,
+          "detune": 0,
+          "shape": 0.32
+        }
+      ],
+      "amp": [
+        0.004,
+        0.57,
+        0.025,
+        0.24
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 4700,
+        "resonance": 0.18,
+        "env": 14,
+        "keytrack": 0.65
+      },
+      "filter_env": [
+        0.004,
+        0.19,
+        0,
+        0.15
+      ],
+      "motion": {
+        "shape": "sine",
+        "rate": 0.35,
+        "sync": false,
+        "depth": 3,
+        "amp": 0.3,
+        "pan": 0.08
+      },
+      "noise": 0,
+      "drift": 0.018,
+      "reverb": 0.085,
+      "delay": 0.055,
+      "reverb_time": 1.3,
+      "width": 0.55,
+      "velocity": 18,
+      "highpass": 70
+    },
+    {
+      "name": "Dusk Zither",
+      "role": "A dark modeled zither-like string with a quiet harmonic edge for nocturnal motifs and lower-register arpeggios.",
+      "range": [
+        38,
+        81
+      ],
+      "tags": [
+        "zither-like",
+        "dark",
+        "nocturnal",
+        "woody"
+      ],
+      "oscillators": [
+        {
+          "kind": "string",
+          "level": 0.77,
+          "octave": 0,
+          "detune": 0,
+          "exciter": 4,
+          "decay": 0.86,
+          "stiffness": -0.1
+        },
+        {
+          "kind": "fm2",
+          "level": 0.2,
+          "octave": 0,
+          "detune": 0,
+          "fm_amount": 0.075,
+          "ratio": 3,
+          "fm_amount2": 0.03,
+          "ratio2": 1
+        }
+      ],
+      "amp": [
+        0.006,
+        0.92,
+        0.035,
+        0.4
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 1900,
+        "resonance": 0.13,
+        "env": 12,
+        "keytrack": 0.65
+      },
+      "filter_env": [
+        0.004,
+        0.34,
+        0.04,
+        0.22
+      ],
+      "motion": {
+        "shape": "sine",
+        "rate": 0.35,
+        "sync": false,
+        "depth": 3,
+        "amp": 0.3,
+        "pan": 0.08
+      },
+      "noise": 0,
+      "drift": 0.018,
+      "reverb": 0.095,
+      "delay": 0.04,
+      "reverb_time": 1.8,
+      "width": 0.55,
+      "velocity": 18,
+      "highpass": 26
+    },
+    {
+      "name": "Soft Pinwheel",
+      "role": "A soft hollow electronic pluck for warm repeating figures that leave space for dialogue or vocals.",
+      "range": [
+        48,
+        88
+      ],
+      "tags": [
+        "hollow",
+        "soft",
+        "repeating",
+        "supportive"
+      ],
+      "oscillators": [
+        {
+          "kind": "sine",
+          "level": 0.66,
+          "octave": 0,
+          "detune": 0,
+          "shape": 2,
+          "feedback": 0.015
+        },
+        {
+          "kind": "pulse",
+          "level": 0.24,
+          "octave": 0,
+          "detune": 0.02,
+          "shape": 0.16
+        }
+      ],
+      "amp": [
+        0.009,
+        0.64,
+        0.06,
+        0.29
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 2300,
+        "resonance": 0.09,
+        "env": 9,
+        "keytrack": 0.65
+      },
+      "filter_env": [
+        0.008,
+        0.26,
+        0.03,
+        0.18
+      ],
+      "motion": {
+        "shape": "triangle",
+        "rate": 0.4,
+        "sync": false,
+        "depth": 4,
+        "amp": 0.5,
+        "pan": 0.1
+      },
+      "noise": 0,
+      "drift": 0.018,
+      "reverb": 0.09,
+      "delay": 0.045,
+      "reverb_time": 1.3,
+      "width": 0.55,
+      "velocity": 16,
+      "highpass": 35
+    },
+    {
+      "name": "Iron Petal",
+      "role": "An explicitly inharmonic FM pluck for sparse suspense punctuation and metallic experimental arpeggios.",
+      "range": [
+        48,
+        84
+      ],
+      "tags": [
+        "inharmonic",
+        "metallic",
+        "suspense",
+        "sparse"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm3",
+          "level": 0.62,
+          "octave": 0,
+          "detune": 0,
+          "fm_amount": 0.21,
+          "ratio": 2.6,
+          "fm_amount2": 0.09,
+          "ratio2": 4.15,
+          "feedback": 0.04
+        },
+        {
+          "kind": "triangle",
+          "level": 0.3,
+          "octave": 0,
+          "detune": 0
+        }
+      ],
+      "amp": [
+        0.004,
+        0.78,
+        0.015,
+        0.44
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 5300,
+        "resonance": 0.15,
+        "env": 11,
+        "keytrack": 0.65
+      },
+      "filter_env": [
+        0.004,
+        0.21,
+        0,
+        0.19
+      ],
+      "motion": {
+        "shape": "sine",
+        "rate": 0.35,
+        "sync": false,
+        "depth": 3,
+        "amp": 0.3,
+        "pan": 0.08
+      },
+      "noise": 0,
+      "drift": 0.018,
+      "reverb": 0.13,
+      "delay": 0.065,
+      "reverb_time": 1.3,
+      "width": 0.55,
+      "velocity": 18,
+      "highpass": 65
+    },
+    {
+      "name": "Velvet Mandolin",
+      "role": "A synthetic mandolin-like octave pluck for nimble lyrical figures and layered folk-pop accompaniment.",
+      "range": [
+        48,
+        91
+      ],
+      "tags": [
+        "mandolin-like",
+        "nimble",
+        "octave",
+        "lyrical"
+      ],
+      "oscillators": [
+        {
+          "kind": "string",
+          "level": 0.67,
+          "octave": 0,
+          "detune": 0,
+          "exciter": 3,
+          "decay": 0.84,
+          "stiffness": 0.03
+        },
+        {
+          "kind": "string",
+          "level": 0.22,
+          "octave": 1,
+          "detune": 0.015,
+          "exciter": 0,
+          "decay": 0.79,
+          "stiffness": 0.06
+        },
+        {
+          "kind": "fm2",
+          "level": 0.13,
+          "octave": 0,
+          "detune": 0,
+          "fm_amount": 0.08,
+          "ratio": 2,
+          "fm_amount2": 0.02,
+          "ratio2": 5
+        }
+      ],
+      "amp": [
+        0.004,
+        0.53,
+        0.015,
+        0.23
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 4500,
+        "resonance": 0.11,
+        "env": 15,
+        "keytrack": 0.65
+      },
+      "filter_env": [
+        0.004,
+        0.18,
+        0.01,
+        0.13
+      ],
+      "motion": {
+        "shape": "sine",
+        "rate": 0.35,
+        "sync": false,
+        "depth": 3,
+        "amp": 0.3,
+        "pan": 0.08
+      },
+      "noise": 0,
+      "drift": 0.018,
+      "reverb": 0.08,
+      "delay": 0.035,
+      "reverb_time": 1.3,
+      "width": 0.65,
+      "velocity": 18,
+      "highpass": 35,
+      "variant_changes": {
+        "Spark": {
+          "contour_amp": 0.65
+        }
+      }
+    },
+    {
+      "name": "Water Threads",
+      "role": "A liquid synthetic pluck with harmonic FM and a soft string body for flowing patterns and reflective scenes.",
+      "range": [
+        48,
+        91
+      ],
+      "tags": [
+        "liquid",
+        "reflective",
+        "flowing",
+        "hybrid"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm2",
+          "level": 0.61,
+          "octave": 0,
+          "detune": 0,
+          "fm_amount": 0.16,
+          "ratio": 3,
+          "fm_amount2": 0.07,
+          "ratio2": 2,
+          "feedback": 0.02
+        },
+        {
+          "kind": "string",
+          "level": 0.3,
+          "octave": 0,
+          "detune": 0,
+          "exciter": 2,
+          "decay": 0.91,
+          "stiffness": -0.04
+        }
+      ],
+      "amp": [
+        0.006,
+        1.04,
+        0.04,
+        0.46
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 3600,
+        "resonance": 0.23,
+        "env": 21,
+        "keytrack": 0.65
+      },
+      "filter_env": [
+        0.008,
+        0.37,
+        0.025,
+        0.22
+      ],
+      "motion": {
+        "shape": "sine",
+        "rate": 0.27,
+        "sync": false,
+        "depth": 5,
+        "amp": 0.3,
+        "pan": 0.15
+      },
+      "noise": 0,
+      "drift": 0.018,
+      "reverb": 0.15,
+      "delay": 0.075,
+      "reverb_time": 2.0,
+      "width": 0.55,
+      "velocity": 18,
+      "highpass": 35,
+      "variant_changes": {
+        "Spark": {
+          "contour_amp": 0.65
+        }
+      }
+    },
+    {
+      "name": "Cork Mechanism",
+      "role": "A warm compact electronic pluck for gently percussive counterpoint and precise short-note arrangements.",
+      "range": [
+        41,
+        81
+      ],
+      "tags": [
+        "cork",
+        "compact",
+        "warm",
+        "percussive"
+      ],
+      "oscillators": [
+        {
+          "kind": "modern",
+          "level": 0.68,
+          "octave": 0,
+          "detune": 0,
+          "saw": 0.13,
+          "pulse": 0.34,
+          "tri": 0.59,
+          "shape": 0.4
+        },
+        {
+          "kind": "sine",
+          "level": 0.23,
+          "octave": -1,
+          "detune": 0
+        }
+      ],
+      "amp": [
+        0.004,
+        0.24,
+        0.02,
+        0.095
+      ],
+      "filter": {
+        "kind": "lp24",
+        "hz": 1650,
+        "resonance": 0.19,
+        "env": 19,
+        "keytrack": 0.65
+      },
+      "filter_env": [
+        0.004,
+        0.11,
+        0,
+        0.08
+      ],
+      "motion": {
+        "shape": "sine",
+        "rate": 0.35,
+        "sync": false,
+        "depth": 3,
+        "amp": 0.3,
+        "pan": 0.08
+      },
+      "noise": 0.0025,
+      "drift": 0.018,
+      "reverb": 0.03,
+      "delay": 0.015,
+      "reverb_time": 1.3,
+      "width": 0.55,
+      "velocity": 18,
+      "highpass": 32
+    },
+    {
+      "name": "Moon Marquetry",
+      "role": "A layered synthetic string-and-FM pluck for sustained arpeggio outlines and soft cinematic harmonic detail.",
+      "range": [
+        45,
+        88
+      ],
+      "tags": [
+        "layered",
+        "sustained",
+        "moonlit",
+        "harmonic"
+      ],
+      "oscillators": [
+        {
+          "kind": "string",
+          "level": 0.59,
+          "octave": 0,
+          "detune": 0,
+          "exciter": 1,
+          "decay": 0.965,
+          "stiffness": 0.015
+        },
+        {
+          "kind": "fm3",
+          "level": 0.28,
+          "octave": 0,
+          "detune": 0,
+          "fm_amount": 0.115,
+          "ratio": 1.0,
+          "fm_amount2": 0.045,
+          "ratio2": 3.0,
+          "feedback": 0.012
+        },
+        {
+          "kind": "sine",
+          "level": 0.15,
+          "octave": 1,
+          "detune": 0
+        }
+      ],
+      "amp": [
+        0.009,
+        1.55,
+        0.065,
+        0.68
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 4100,
+        "resonance": 0.08,
+        "env": 12,
+        "keytrack": 0.65
+      },
+      "filter_env": [
+        0.006,
+        0.5,
+        0.05,
+        0.35
+      ],
+      "motion": {
+        "shape": "sine",
+        "rate": 0.35,
+        "sync": false,
+        "depth": 3,
+        "amp": 0.3,
+        "pan": 0.08
+      },
+      "noise": 0,
+      "drift": 0.018,
+      "reverb": 0.16,
+      "delay": 0.06,
+      "reverb_time": 2.6,
+      "width": 0.72,
+      "velocity": 18,
+      "highpass": 35
+    },
+    {
+      "name": "Tremor Lute",
+      "role": "A synthetic lute-like pluck with a restrained pulse undercurrent for tactile motifs and quiet tension beds.",
+      "range": [
+        43,
+        84
+      ],
+      "tags": [
+        "lute-like",
+        "tactile",
+        "pulsing",
+        "restrained"
+      ],
+      "oscillators": [
+        {
+          "kind": "pulse",
+          "level": 0.44,
+          "octave": 0,
+          "detune": -0.018,
+          "shape": 0.48
+        },
+        {
+          "kind": "fm3",
+          "level": 0.26,
+          "octave": 0,
+          "detune": 0,
+          "fm_amount": 0.09,
+          "ratio": 1.0,
+          "fm_amount2": 0.055,
+          "ratio2": 2.0,
+          "feedback": 0.015
+        },
+        {
+          "kind": "string",
+          "level": 0.35,
+          "octave": 0,
+          "detune": 0,
+          "exciter": 2,
+          "decay": 0.87,
+          "stiffness": -0.025
+        }
+      ],
+      "amp": [
+        0.005,
+        0.81,
+        0.055,
+        0.31
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 2750,
+        "resonance": 0.18,
+        "env": 17,
+        "keytrack": 0.65
+      },
+      "filter_env": [
+        0.004,
+        0.28,
+        0.02,
+        0.18
+      ],
+      "motion": {
+        "shape": "triangle",
+        "rate": 2.0,
+        "sync": true,
+        "depth": 5,
+        "amp": 1.6,
+        "pan": 0.1
+      },
+      "noise": 0,
+      "drift": 0.018,
+      "reverb": 0.1,
+      "delay": 0.055,
+      "reverb_time": 1.3,
+      "width": 0.65,
+      "velocity": 18,
+      "highpass": 35
+    }
+  ],
+  "variants": [
+    {
+      "name": "Close",
+      "intent": "Short, focused articulation for precise patterns and dense mixes; play lighter to tuck behind dialogue.",
+      "changes": {
+        "decay_scale": 0.72,
+        "release_scale": 0.65,
+        "cutoff_scale": 0.86,
+        "second_level_scale": 0.74,
+        "fx_scale": 0.45,
+        "motion_scale": 0.7
+      }
+    },
+    {
+      "name": "Tender",
+      "intent": "Rounded attacks and a softer body for intimate melodic fragments and spacious accompaniment.",
+      "changes": {
+        "attack_scale": 2.2,
+        "decay_scale": 1.12,
+        "release_scale": 1.18,
+        "cutoff_scale": 0.6,
+        "second_level_scale": 0.9,
+        "fm_scale": 0.72,
+        "fx_scale": 0.8
+      }
+    },
+    {
+      "name": "Spark",
+      "intent": "A brighter transient and more prominent secondary layer for articulate hooks and exposed arpeggios.",
+      "changes": {
+        "attack_scale": 0.75,
+        "decay_scale": 0.82,
+        "release_scale": 0.85,
+        "cutoff_scale": 1.55,
+        "second_level_scale": 1.45,
+        "fm_scale": 1.3,
+        "resonance_add": 0.045,
+        "fx_scale": 0.85
+      }
+    },
+    {
+      "name": "Cascade",
+      "intent": "Longer body and moving tone for flowing broken chords; reduce Space for a drier supporting part.",
+      "changes": {
+        "attack_scale": 1.3,
+        "decay_scale": 1.65,
+        "release_scale": 1.7,
+        "cutoff_scale": 1.13,
+        "second_level_scale": 1.18,
+        "motion_scale": 1.8,
+        "motion_rate_scale": 2,
+        "fx_scale": 1.45,
+        "detune_scale": 1.4
+      }
+    },
+    {
+      "name": "Shadow",
+      "intent": "A muted, hollow blend for darker counterlines and spacious low-density tension figures.",
+      "changes": {
+        "attack_scale": 1.5,
+        "decay_scale": 1.32,
+        "release_scale": 1.38,
+        "cutoff_scale": 0.71,
+        "second_level_scale": 1.65,
+        "motion_shape": "triangle",
+        "motion_scale": 1.5,
+        "motion_rate_scale": 0.65,
+        "resonance_add": 0.075,
+        "fx_scale": 1.1
+      }
+    }
+  ]
+}

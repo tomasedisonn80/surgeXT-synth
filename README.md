@@ -1,5 +1,38 @@
 # Surge XT
 
+## This fork: Scoring 1000 factory bank
+
+**Scoring 1000 adds 1,000 original, self-contained FXP presets in ten categories**:
+Keys, Plucks, Bells and Mallets, Pads, Ensemble Hybrids, Drones and Air, Bass,
+Leads, Pulses and Sequences, and Percussion and Transitions. The collection uses
+200 authored families with five functional variants each, with consistent
+Tone, Motion, Contour, Space, Color, Width, Attack and Release macros.
+
+Full data-bearing builds install the bank under **Scoring 1000** in the factory
+browser. [Download and installation guidance](doc/scoring-1000/DOWNLOADS.md)
+also covers using the standalone preset archive. Plugin-only packages need the
+companion data. The bank does not require external samples or wavetables.
+
+Read the [composer research](doc/scoring-1000/RESEARCH.md),
+[player and genre guide](doc/scoring-1000/USER_GUIDE.md), and
+[native QA protocol](scripts/scoring/QA_RUNNER.md).
+Browse the [200-family catalog](doc/scoring-1000/CATALOG.md) for every preset ID,
+musical role, suggested range and variant.
+Listen to the [native audio previews](doc/scoring-1000/AUDIO_PREVIEWS.md),
+including one example from each category and a compact overview.
+All 1,000 current presets passed 23,000 primary native-engine scenarios and five
+technical gates each, plus 2,000 prolonged held-note fixtures. All 8,000 macro
+responses are resolved, with no protocol warnings. The
+[complete technical evidence](doc/scoring-1000/evidence/README.md) includes the
+original per-preset reports, exact input hashes and measurement limits.
+Technical measurements do not certify human musical audition, acoustic realism,
+composer endorsement, or suitability for every cue.
+
+The factory bank is checked at configure, build and packaging time for exactly
+1,000 files, ten categories and matching SHA-256 hashes. The
+[Scoring 1000 native workflow](https://github.com/tomasedisonn80/surgeXT-synth/actions/workflows/scoring-native.yml)
+rebuilds the actual offline engine, verifies staged discovery, and supports a full-bank run.
+
 ## This fork: ten native reference workspaces
 
 This fork adds ten alternative, interactive Surge XT layouts selected through

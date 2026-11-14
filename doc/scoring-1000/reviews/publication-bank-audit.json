@@ -1,0 +1,98 @@
+{
+  "schema": 1,
+  "reviewer": "/root/publication_bank_audit",
+  "review_date": "2026-11-14",
+  "assignment_scope": "Additional publication recovery audit; not counted within the original sixty-agent ledger",
+  "result": "pass",
+  "manifest_sha256": "67bd4a5dc3fbf6f3794679b24b500f1ef37af83b7a47a863d10cb964a57314a2",
+  "validation_checkout": "/workspace/scratch/617e34e0c38e/surgeXT-synth",
+  "report_checkout": "/workspace/scratch/2cdb4f918ba8/surgeXT-publication",
+  "static_command": "PYTHONDONTWRITEBYTECODE=1 python scripts/scoring/validate_bank.py --check-generated",
+  "static_exit_code": 0,
+  "static": {
+    "catalog_entries": 1000,
+    "fxp_files": 1000,
+    "category_counts": {
+      "01": 100,
+      "02": 100,
+      "03": 100,
+      "04": 100,
+      "05": 100,
+      "06": 100,
+      "07": 100,
+      "08": 100,
+      "09": 100,
+      "10": 100
+    },
+    "families": 200,
+    "variants_per_family": 5,
+    "exact_regeneration": "pass",
+    "unique_active_definitions": 1000,
+    "duplicate_groups": [],
+    "errors": []
+  },
+  "archive_check": {
+    "invocation": "PYTHONDONTWRITEBYTECODE=1 python - <<'PY'",
+    "method": "Inline Python zipfile/json/hashlib assertions against both full archives, their indexes and current FXP bytes; method detailed in Markdown companion",
+    "report_hashes_verified": 2000,
+    "current_preset_hashes_verified": 1000,
+    "primary": {
+      "reports": 1000,
+      "scenarios": 23000,
+      "passing_technical_gates": 5000,
+      "measurable_macro_responses": 8000,
+      "unique_default_pcm_hashes": 1000,
+      "failed_records": 0,
+      "warnings": 0,
+      "nonfinite_samples": 0,
+      "maximum_sample_peak": 0.7811339497566223
+    },
+    "sustain": {
+      "reports": 1000,
+      "scenarios": 2000,
+      "failed_records": 0,
+      "warnings": 0,
+      "nonfinite_samples": 0,
+      "maximum_sample_peak": 0.7811339497566223
+    }
+  },
+  "macro_labels": [
+    "Tone",
+    "Motion",
+    "Contour",
+    "Space",
+    "Color",
+    "Width",
+    "Attack",
+    "Release"
+  ],
+  "input_sha256": {
+    "doc/scoring-1000/manifest.json": "67bd4a5dc3fbf6f3794679b24b500f1ef37af83b7a47a863d10cb964a57314a2",
+    "doc/scoring-1000/evidence/native-preset-reports.zip": "6e30b5f0d2ea19bf988786d7f9f0dce5c57eeb07cd16fd62f388d4356cb18eba",
+    "doc/scoring-1000/evidence/sustain-preset-reports.zip": "da7a48e47e2a51ad3d674e69b4931ce3ae560e14fa67e0002384ed042b8fba2e",
+    "doc/scoring-1000/evidence/report-index.json": "9ea4eed5e6d6f11249437901613af8b53fc3cf4377c3fbc91aa7614ccc60ea5e",
+    "doc/scoring-1000/evidence/sustain-report-index.json": "04f72f467f70d247a823a39d8a1776d0a2af07bbb1763b60c8e99229c1279cdc",
+    "scripts/scoring/validate_bank.py": "6bd51fd4e14d6dcf54cdfba31f62fe4e0754c21737e94ac2a76bf3c06f7f08fa"
+  },
+  "new_native_rendering": false,
+  "human_musical_audition": "pending",
+  "composer_endorsement": "not_claimed",
+  "remote_publication_attested": false,
+  "platform_builds_attested": false,
+  "limits": [
+    "Artifact identity and recorded-result reconciliation, not fresh DSP measurements or human listening",
+    "Five technical gates per preset are not five human quality auditions",
+    "Different active definitions or PCM hashes do not prove perceptual value or uniqueness",
+    "Sample peaks are not reconstructed true peaks and cover only the recorded fixtures",
+    "Research was read, not independently re-browsed during this audit",
+    "Hollywood adoption, acoustic realism and universal genre suitability are not certified",
+    "Remote publication and observed platform artifacts are separate publication checks"
+  ],
+  "archive_representation_update": {
+    "original_input_hashes_are_historical": true,
+    "current_primary_archive_sha256": "381a2dbfc431f9353fddc301a6ea1545c583e713d1210da0d5af426adcf53296",
+    "current_primary_archive_bytes": 12579043,
+    "verification": "All 1000 original JSON report bytes and report-index hashes match after lossless ZIP recompression and member-prefix removal. No DSP measurement changed.",
+    "provenance": "doc/scoring-1000/evidence/archive-repack.json"
+  }
+}

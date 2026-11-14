@@ -1,0 +1,235 @@
+{
+  "schema": 1,
+  "review_scope": "Documentation consistency and local links; no human musical audition, independent acoustic render, or fresh external-source retrieval performed by this reviewer.",
+  "manifest_sha256": "67bd4a5dc3fbf6f3794679b24b500f1ef37af83b7a47a863d10cb964a57314a2",
+  "edited_document_sha256": {
+    "doc/scoring-1000/RESEARCH.md": "d8108dd2d15cc60b7892471f7cce5336f0c3c4c3d26cc2041daf2a35e2d2ceec",
+    "doc/scoring-1000/USER_GUIDE.md": "c166adb2c9ac431b08ce815318e633eb7faf53324cf4e653d0e87cef37f7f46c",
+    "doc/scoring-1000/reviews/RESOLUTIONS.md": "086d04bd89b647582823e4e05982c690d62a729c54ae47411fbbf5a72e6b0e60"
+  },
+  "local_link_count": 40,
+  "local_links": [
+    {
+      "source": "doc/scoring-1000/RESEARCH.md",
+      "destination": "../../scripts/scoring/RECIPE_FORMAT.md",
+      "exists": true
+    },
+    {
+      "source": "doc/scoring-1000/RESEARCH.md",
+      "destination": "../../scripts/scoring/recipes",
+      "exists": true
+    },
+    {
+      "source": "doc/scoring-1000/RESEARCH.md",
+      "destination": "../../scripts/scoring/build_bank.py",
+      "exists": true
+    },
+    {
+      "source": "doc/scoring-1000/RESEARCH.md",
+      "destination": "manifest.json",
+      "exists": true
+    },
+    {
+      "source": "doc/scoring-1000/RESEARCH.md",
+      "destination": "../../scripts/scoring/build_bank.py",
+      "exists": true
+    },
+    {
+      "source": "doc/scoring-1000/RESEARCH.md",
+      "destination": "../../scripts/scoring/QA_RUNNER.md",
+      "exists": true
+    },
+    {
+      "source": "doc/scoring-1000/USER_GUIDE.md",
+      "destination": "RESEARCH.md",
+      "exists": true
+    },
+    {
+      "source": "doc/scoring-1000/USER_GUIDE.md",
+      "destination": "AUDIO_PREVIEWS.md",
+      "exists": true
+    },
+    {
+      "source": "doc/scoring-1000/USER_GUIDE.md",
+      "destination": "DOWNLOADS.md",
+      "exists": true
+    },
+    {
+      "source": "doc/scoring-1000/USER_GUIDE.md",
+      "destination": "CATALOG.md",
+      "exists": true
+    },
+    {
+      "source": "doc/scoring-1000/USER_GUIDE.md",
+      "destination": "manifest.json",
+      "exists": true
+    },
+    {
+      "source": "doc/scoring-1000/USER_GUIDE.md",
+      "destination": "../../scripts/scoring/build_bank.py",
+      "exists": true
+    },
+    {
+      "source": "doc/scoring-1000/USER_GUIDE.md",
+      "destination": "manifest.json",
+      "exists": true
+    },
+    {
+      "source": "doc/scoring-1000/USER_GUIDE.md",
+      "destination": "../../scripts/scoring/QA_RUNNER.md",
+      "exists": true
+    },
+    {
+      "source": "doc/scoring-1000/USER_GUIDE.md",
+      "destination": "reviews/w08-a48-sustains.md",
+      "exists": true
+    },
+    {
+      "source": "doc/scoring-1000/AUDIO_PREVIEWS.md",
+      "destination": "audio/scoring-1000-overview.mp3",
+      "exists": true
+    },
+    {
+      "source": "doc/scoring-1000/AUDIO_PREVIEWS.md",
+      "destination": "audio/01-copper-tine-felt.flac",
+      "exists": true
+    },
+    {
+      "source": "doc/scoring-1000/AUDIO_PREVIEWS.md",
+      "destination": "audio/02-harbor-harp-cascade.flac",
+      "exists": true
+    },
+    {
+      "source": "doc/scoring-1000/AUDIO_PREVIEWS.md",
+      "destination": "audio/03-violet-vibra-bloom.flac",
+      "exists": true
+    },
+    {
+      "source": "doc/scoring-1000/AUDIO_PREVIEWS.md",
+      "destination": "audio/04-amber-canopy-bloom.flac",
+      "exists": true
+    },
+    {
+      "source": "doc/scoring-1000/AUDIO_PREVIEWS.md",
+      "destination": "audio/05-ember-violas-section.flac",
+      "exists": true
+    },
+    {
+      "source": "doc/scoring-1000/AUDIO_PREVIEWS.md",
+      "destination": "audio/06-quiet-horizon-near.flac",
+      "exists": true
+    },
+    {
+      "source": "doc/scoring-1000/AUDIO_PREVIEWS.md",
+      "destination": "audio/07-transit-saw-edge.flac",
+      "exists": true
+    },
+    {
+      "source": "doc/scoring-1000/AUDIO_PREVIEWS.md",
+      "destination": "audio/08-moonlit-triangle-warm.flac",
+      "exists": true
+    },
+    {
+      "source": "doc/scoring-1000/AUDIO_PREVIEWS.md",
+      "destination": "audio/09-amber-ladder-drive.flac",
+      "exists": true
+    },
+    {
+      "source": "doc/scoring-1000/AUDIO_PREVIEWS.md",
+      "destination": "audio/10-tension-thud-body.flac",
+      "exists": true
+    },
+    {
+      "source": "doc/scoring-1000/AUDIO_PREVIEWS.md",
+      "destination": "audio/previews.json",
+      "exists": true
+    },
+    {
+      "source": "doc/scoring-1000/AUDIO_PREVIEWS.md",
+      "destination": "USER_GUIDE.md",
+      "exists": true
+    },
+    {
+      "source": "doc/scoring-1000/AUDIO_PREVIEWS.md",
+      "destination": "../../scripts/scoring/QA_RUNNER.md",
+      "exists": true
+    },
+    {
+      "source": "doc/scoring-1000/AUDIO_PREVIEWS.md",
+      "destination": "../../scripts/scoring/render_previews.py",
+      "exists": true
+    },
+    {
+      "source": "doc/scoring-1000/AUDIO_PREVIEWS.md",
+      "destination": "audio/previews.json",
+      "exists": true
+    },
+    {
+      "source": "doc/scoring-1000/AUDIO_PREVIEWS.md",
+      "destination": "audio/checksums.json",
+      "exists": true
+    },
+    {
+      "source": "doc/scoring-1000/DOWNLOADS.md",
+      "destination": "downloads/Scoring-1000.zip",
+      "exists": true
+    },
+    {
+      "source": "doc/scoring-1000/DOWNLOADS.md",
+      "destination": "downloads/Scoring-1000.zip.sha256",
+      "exists": true
+    },
+    {
+      "source": "doc/scoring-1000/DOWNLOADS.md",
+      "destination": "downloads/Scoring-1000.zip.metadata.json",
+      "exists": true
+    },
+    {
+      "source": "doc/scoring-1000/DOWNLOADS.md",
+      "destination": "USER_GUIDE.md",
+      "exists": true
+    },
+    {
+      "source": "doc/scoring-1000/DOWNLOADS.md",
+      "destination": "RESEARCH.md",
+      "exists": true
+    },
+    {
+      "source": "doc/scoring-1000/reviews/RESOLUTIONS.md",
+      "destination": "../../../scripts/scoring/gain_trims.json",
+      "exists": true
+    },
+    {
+      "source": "doc/scoring-1000/reviews/RESOLUTIONS.md",
+      "destination": "w08-a48-sustains.md",
+      "exists": true
+    },
+    {
+      "source": "doc/scoring-1000/reviews/RESOLUTIONS.md",
+      "destination": "w09-a51-final-diversity.md",
+      "exists": true
+    }
+  ],
+  "missing_local_links": [],
+  "guide_id_mentions": 27,
+  "guide_unique_ids": 23,
+  "unknown_guide_ids": [],
+  "guide_named_preset_mentions": 22,
+  "unique_named_presets": 20,
+  "guide_name_mismatches": [],
+  "triplet_families_checked": 20,
+  "triplet_3_2_rate_errors": [],
+  "musical_audition": "pending",
+  "composer_endorsement": "not_claimed",
+  "delivery_checks": {
+    "preview_catalog_matches_current": true,
+    "preview_prose_catalog_matches_current": true,
+    "preview_count": 10,
+    "package_catalog_matches_current": true,
+    "package_digest_matches_actual_zip": true,
+    "package_prose_digest_matches_actual_zip": true,
+    "package_prose_size_matches_actual_zip": true,
+    "package_bytes": 4485374,
+    "package_sha256": "b794179791cfad604b2761e3c109aefd88821831c46ac168cb4048a2c69d41c4"
+  }
+}

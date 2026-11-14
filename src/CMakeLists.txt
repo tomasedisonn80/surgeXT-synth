@@ -2,6 +2,7 @@
 option(SURGE_BUILD_XT "Build Surge XT plugin" ON)
 option(SURGE_BUILD_FX "Build Surge XT Effects plugin" ON)
 option(SURGE_BUILD_PYTHON_BINDINGS "Build Surge XT Python bindings" OFF)
+option(SURGE_BUILD_SCORING_TOOLS "Build offline scoring preset validation tools" OFF)
 option(SURGE_BUILD_RS "Build Surge XT Rust bindings" OFF)
 option(SURGE_BUILD_RS_EXAMPLES "Build examples for Rust bindings" OFF)
 option(SURGE_COPY_TO_PRODUCTS "Copy built plugins to the products directory" ON)
@@ -165,6 +166,10 @@ include(cmake/CmakeRC.cmake)
 add_subdirectory(common)
 add_subdirectory(lua)
 add_subdirectory(platform)
+
+if(SURGE_BUILD_SCORING_TOOLS)
+  add_subdirectory(scoring-tools)
+endif()
 
 if(SURGE_BUILD_TESTRUNNER AND NOT SURGE_SKIP_JUCE_FOR_RACK)
   add_subdirectory(surge-testrunner)

@@ -1,0 +1,71 @@
+{
+  "schema": 1,
+  "manifest_sha256": "67bd4a5dc3fbf6f3794679b24b500f1ef37af83b7a47a863d10cb964a57314a2",
+  "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+  "exporter_sha256": "adc66aad69880b6e6efc847620a08c5a2b787511c5ada2080e0f005b19c9c40d",
+  "status": "pass",
+  "audits": {
+    "primary": {
+      "native_scenarios": 23000,
+      "warning_count": 0,
+      "presets_with_warnings": 0,
+      "technical_gates": 5000,
+      "bit_identical_repeats": 1000,
+      "measurable_macros": 8000,
+      "macro_checks": 8000,
+      "tested_presets": 1000,
+      "max_sample_peak": 0.7811339497566223,
+      "rendered_audio_hours": 28.78145542040933,
+      "native_peak_discrepancy_max": 4.998224056862455e-13,
+      "native_rms_discrepancy_max": 5.025285743087693e-13,
+      "hold_seconds_min": 3.0,
+      "hold_seconds_max": 21.893214,
+      "native_engine_identifiers": [
+        "1.4.main.dfdd2f94a"
+      ],
+      "native_git_identifiers": [
+        "dfdd2f94a"
+      ],
+      "nonfinite_samples": 0,
+      "warning_ids": [],
+      "exact_default_audio_duplicate_groups": []
+    },
+    "sustain": {
+      "native_scenarios": 2000,
+      "warning_count": 0,
+      "presets_with_warnings": 0,
+      "tested_presets": 1000,
+      "max_sample_peak": 0.7811339497566223,
+      "rendered_audio_hours": 8.610699259259194,
+      "native_peak_discrepancy_max": 4.997668945350142e-13,
+      "native_rms_discrepancy_max": 5.108691247812658e-13,
+      "hold_seconds_min": 12.000667,
+      "hold_seconds_max": 76.191333,
+      "native_engine_identifiers": [
+        "1.4.main.dfdd2f94a"
+      ],
+      "native_git_identifiers": [
+        "dfdd2f94a"
+      ],
+      "nonfinite_samples": 0,
+      "warning_ids": []
+    },
+    "roundtrip": {
+      "semantic_passes": 1000,
+      "bit_identical_audio_pairs": 20
+    },
+    "factory_staging": {
+      "staged_hash_matches": 1000,
+      "native_unique_bank_paths": 1000
+    }
+  },
+  "musical_audition": "pending",
+  "composer_endorsement": "not_claimed",
+  "limits": [
+    "This checks evidence identity and consistency; it does not rerender audio.",
+    "Peak values are unnormalized sample peaks, not reconstructed true peaks.",
+    "Five primary gates are technical checks, not five human listening passes.",
+    "Different definitions or audio hashes do not prove perceptual uniqueness.",
+    "The sustain supplement has a two-second tail and does not test complete release settlement."
+  ]
+}

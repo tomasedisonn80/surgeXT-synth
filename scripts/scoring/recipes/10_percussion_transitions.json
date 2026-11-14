@@ -1,0 +1,1415 @@
+{
+  "id": "10",
+  "name": "Percussion and Transitions",
+  "prefix": "T",
+  "description": "Original synthetic drums, wood and metal accents, filtered-air gestures and playable transitions, balanced for restrained underscore and music production. Metal and noisy colors are identified; no acoustic sample realism or fixed-duration riser behavior is claimed.",
+  "families": [
+    {
+      "name": "Felt Drum",
+      "role": "A softly pitched synthetic drum for sparse accents beneath dialogue.",
+      "range": [
+        36,
+        72
+      ],
+      "tags": [
+        "drum",
+        "soft",
+        "pitched",
+        "underscore"
+      ],
+      "oscillators": [
+        {
+          "kind": "sine",
+          "level": 0.76
+        },
+        {
+          "kind": "fm2",
+          "level": 0.24,
+          "fm_amount": 0.15,
+          "ratio": 2,
+          "fm_amount2": 0.025,
+          "ratio2": 3
+        }
+      ],
+      "amp": [
+        0.004,
+        0.28,
+        0,
+        0.14
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 1250,
+        "resonance": 0.12,
+        "env": 15,
+        "keytrack": 0.65
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.7,
+        "sync": false,
+        "depth": 2,
+        "amp": 0.3,
+        "pan": 0.03
+      },
+      "filter_env": [
+        0.004,
+        0.12,
+        0,
+        0.12
+      ],
+      "pitch_drop": 7,
+      "noise": 0.004,
+      "noise_color": -0.7,
+      "reverb": 0.06,
+      "delay": 0.009,
+      "highpass": 25,
+      "velocity": 20,
+      "width": 0.25,
+      "variant_intents": {
+        "Edge": "A brighter and more articulated attack with stronger upper partials for rhythmic definition."
+      }
+    },
+    {
+      "name": "Timber Knock",
+      "role": "A modeled-string and sine knock with a wooden synthetic body for light rhythmic punctuation.",
+      "range": [
+        43,
+        84
+      ],
+      "tags": [
+        "wood",
+        "knock",
+        "dry",
+        "pitched"
+      ],
+      "oscillators": [
+        {
+          "kind": "string",
+          "level": 0.68,
+          "exciter": 3,
+          "decay": 0.72,
+          "stiffness": 0.18
+        },
+        {
+          "kind": "sine",
+          "level": 0.32,
+          "octave": -1
+        }
+      ],
+      "amp": [
+        0.004,
+        0.14,
+        0,
+        0.08
+      ],
+      "filter": {
+        "kind": "bp12",
+        "hz": 1900,
+        "resonance": 0.23,
+        "env": 8,
+        "keytrack": 0.85
+      },
+      "motion": {
+        "shape": "triangle",
+        "rate": 1.1,
+        "sync": false,
+        "depth": 4,
+        "amp": 0.5,
+        "pan": 0.05
+      },
+      "filter_env": [
+        0.004,
+        0.08,
+        0,
+        0.09
+      ],
+      "noise": 0.006,
+      "noise_color": -0.25,
+      "reverb": 0.045,
+      "delay": 0.012,
+      "highpass": 65,
+      "velocity": 22,
+      "width": 0.3,
+      "variant_intents": {
+        "Edge": "A brighter and more articulated attack with stronger upper partials for rhythmic definition."
+      }
+    },
+    {
+      "name": "Low Cushion",
+      "role": "A low sine-led synthetic thump that anchors restrained scene changes without a sharp transient.",
+      "range": [
+        28,
+        60
+      ],
+      "tags": [
+        "low",
+        "thump",
+        "soft",
+        "foundation"
+      ],
+      "oscillators": [
+        {
+          "kind": "sine",
+          "level": 0.82
+        },
+        {
+          "kind": "triangle",
+          "level": 0.18,
+          "octave": 1,
+          "detune": 0.012
+        }
+      ],
+      "amp": [
+        0.012,
+        0.62,
+        0,
+        0.2
+      ],
+      "filter": {
+        "kind": "lp24",
+        "hz": 450,
+        "resonance": 0.08,
+        "env": 12,
+        "keytrack": 0.7
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.35,
+        "sync": false,
+        "depth": 2,
+        "amp": 0.3,
+        "pan": 0.02
+      },
+      "filter_env": [
+        0.004,
+        0.17,
+        0,
+        0.15
+      ],
+      "pitch_drop": 11,
+      "noise": 0.003,
+      "noise_color": -0.8,
+      "reverb": 0.04,
+      "delay": 0.008,
+      "highpass": 20,
+      "velocity": 16,
+      "width": 0.2
+    },
+    {
+      "name": "Copper Tap",
+      "role": "An explicitly inharmonic synthetic metal tap for small unsettling accents and tuned-percussion layering.",
+      "range": [
+        45,
+        84
+      ],
+      "tags": [
+        "metal",
+        "inharmonic",
+        "tap",
+        "mystery"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm3",
+          "level": 0.64,
+          "fm_amount": 0.31,
+          "ratio": 2.71,
+          "fm_amount2": 0.13,
+          "ratio2": 6.13,
+          "feedback": 0.025
+        },
+        {
+          "kind": "sine",
+          "level": 0.36,
+          "octave": -1
+        }
+      ],
+      "amp": [
+        0.004,
+        0.46,
+        0,
+        0.24
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 4700,
+        "resonance": 0.13,
+        "env": 17,
+        "keytrack": 0.65
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.8,
+        "sync": false,
+        "depth": 4,
+        "amp": 0.4,
+        "pan": 0.08
+      },
+      "filter_env": [
+        0.004,
+        0.2,
+        0,
+        0.2
+      ],
+      "noise": 0.006,
+      "noise_color": 0.1,
+      "reverb": 0.105,
+      "delay": 0.025,
+      "highpass": 85,
+      "velocity": 19,
+      "width": 0.5,
+      "variant_intents": {
+        "Edge": "A brighter and more articulated attack with stronger upper partials for rhythmic definition."
+      }
+    },
+    {
+      "name": "Paper Brush",
+      "role": "A noise-edged synthetic brush accent with a gentle pitched center for documentary and acoustic hybrids.",
+      "range": [
+        42,
+        78
+      ],
+      "tags": [
+        "brush",
+        "noise",
+        "soft",
+        "hybrid"
+      ],
+      "oscillators": [
+        {
+          "kind": "triangle",
+          "level": 0.58
+        },
+        {
+          "kind": "fm2",
+          "level": 0.42,
+          "fm_amount": 0.12,
+          "ratio": 7,
+          "fm_amount2": 0.055,
+          "ratio2": 2
+        }
+      ],
+      "amp": [
+        0.018,
+        0.24,
+        0,
+        0.16
+      ],
+      "filter": {
+        "kind": "bp12",
+        "hz": 2400,
+        "resonance": 0.1,
+        "env": 7,
+        "keytrack": 0.3
+      },
+      "motion": {
+        "shape": "noise",
+        "rate": 1.7,
+        "sync": false,
+        "depth": 6,
+        "amp": 0.8,
+        "pan": 0.14
+      },
+      "filter_env": [
+        0.012,
+        0.16,
+        0,
+        0.14
+      ],
+      "noise": 0.065,
+      "noise_color": 0.35,
+      "reverb": 0.065,
+      "delay": 0.012,
+      "highpass": 100,
+      "velocity": 18,
+      "width": 0.65
+    },
+    {
+      "name": "Glass Tick",
+      "role": "A short harmonic FM tick for delicate clockwork patterns and bright melodic punctuation.",
+      "range": [
+        55,
+        96
+      ],
+      "tags": [
+        "glass",
+        "tick",
+        "harmonic",
+        "delicate"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm2",
+          "level": 0.72,
+          "fm_amount": 0.25,
+          "ratio": 5,
+          "fm_amount2": 0.065,
+          "ratio2": 9
+        },
+        {
+          "kind": "sine",
+          "level": 0.28,
+          "octave": -1
+        }
+      ],
+      "amp": [
+        0.004,
+        0.19,
+        0,
+        0.12
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 7500,
+        "resonance": 0.08,
+        "env": 10,
+        "keytrack": 0.75
+      },
+      "motion": {
+        "shape": "triangle",
+        "rate": 1.9,
+        "sync": false,
+        "depth": 3,
+        "amp": 0.5,
+        "pan": 0.07
+      },
+      "filter_env": [
+        0.004,
+        0.11,
+        0,
+        0.1
+      ],
+      "reverb": 0.08,
+      "delay": 0.018,
+      "highpass": 120,
+      "velocity": 23,
+      "width": 0.45,
+      "variant_changes": {
+        "Close": {
+          "contour_amp": 0.65
+        },
+        "Edge": {
+          "contour_amp": 0.65
+        },
+        "Drift": {
+          "contour_amp": 0.65
+        },
+        "Bloom": {
+          "contour_amp": 0.65
+        }
+      },
+      "variant_intents": {
+        "Edge": "A brighter and more articulated attack with stronger upper partials for rhythmic definition."
+      }
+    },
+    {
+      "name": "Clay Pulse",
+      "role": "A rounded synthetic hand-drum color with a hollow resonant body for understated rhythmic motifs.",
+      "range": [
+        35,
+        72
+      ],
+      "tags": [
+        "clay",
+        "drum",
+        "hollow",
+        "pitched"
+      ],
+      "oscillators": [
+        {
+          "kind": "sine",
+          "level": 0.6
+        },
+        {
+          "kind": "string",
+          "level": 0.4,
+          "exciter": 2,
+          "decay": 0.78,
+          "stiffness": -0.12
+        }
+      ],
+      "amp": [
+        0.006,
+        0.38,
+        0,
+        0.18
+      ],
+      "filter": {
+        "kind": "bp12",
+        "hz": 780,
+        "resonance": 0.26,
+        "env": 19,
+        "keytrack": 0.9
+      },
+      "motion": {
+        "shape": "triangle",
+        "rate": 0.6,
+        "sync": false,
+        "depth": 3,
+        "amp": 0.6,
+        "pan": 0.03
+      },
+      "filter_env": [
+        0.004,
+        0.15,
+        0,
+        0.14
+      ],
+      "pitch_drop": 4,
+      "noise": 0.008,
+      "noise_color": -0.6,
+      "reverb": 0.07,
+      "delay": 0.015,
+      "highpass": 30,
+      "velocity": 20,
+      "width": 0.3
+    },
+    {
+      "name": "Iron Footfall",
+      "role": "An explicitly inharmonic synthetic impact with a dark low body for mechanical suspense and sparse percussion.",
+      "range": [
+        31,
+        67
+      ],
+      "tags": [
+        "impact",
+        "metal",
+        "inharmonic",
+        "dark"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm3",
+          "level": 0.56,
+          "fm_amount": 0.4,
+          "ratio": 1.43,
+          "fm_amount2": 0.18,
+          "ratio2": 4.17,
+          "feedback": 0.06
+        },
+        {
+          "kind": "fm2",
+          "level": 0.27,
+          "octave": -1,
+          "fm_amount": 0.09,
+          "ratio": 2
+        },
+        {
+          "kind": "sine",
+          "level": 0.17,
+          "octave": -1
+        }
+      ],
+      "amp": [
+        0.006,
+        0.78,
+        0,
+        0.3
+      ],
+      "filter": {
+        "kind": "lp24",
+        "hz": 2200,
+        "resonance": 0.2,
+        "env": 21,
+        "keytrack": 0.55
+      },
+      "motion": {
+        "shape": "noise",
+        "rate": 0.95,
+        "sync": false,
+        "depth": 6,
+        "amp": 1.1,
+        "pan": 0.08
+      },
+      "filter_env": [
+        0.004,
+        0.24,
+        0,
+        0.2
+      ],
+      "pitch_drop": 9,
+      "noise": 0.02,
+      "noise_color": -0.15,
+      "reverb": 0.13,
+      "delay": 0.025,
+      "highpass": 27,
+      "velocity": 18,
+      "width": 0.55
+    },
+    {
+      "name": "Silk Shaker",
+      "role": "A light noise and harmonic shimmer accent for hand-played subdivisions and unobtrusive motion.",
+      "range": [
+        49,
+        88
+      ],
+      "tags": [
+        "shaker",
+        "air",
+        "noise",
+        "rhythm"
+      ],
+      "oscillators": [
+        {
+          "kind": "sine",
+          "level": 0.34,
+          "octave": 1,
+          "shape": 1
+        },
+        {
+          "kind": "fm2",
+          "level": 0.66,
+          "fm_amount": 0.22,
+          "ratio": 11,
+          "fm_amount2": 0.1,
+          "ratio2": 7
+        }
+      ],
+      "amp": [
+        0.009,
+        0.16,
+        0,
+        0.09
+      ],
+      "filter": {
+        "kind": "hp12",
+        "hz": 2600,
+        "resonance": 0.08,
+        "env": -8,
+        "keytrack": 0.25
+      },
+      "motion": {
+        "shape": "noise",
+        "rate": 3.1,
+        "sync": false,
+        "depth": 8,
+        "amp": 0.7,
+        "pan": 0.18
+      },
+      "filter_env": [
+        0.006,
+        0.12,
+        0,
+        0.08
+      ],
+      "noise": 0.075,
+      "noise_color": 0.7,
+      "reverb": 0.035,
+      "delay": 0.01,
+      "highpass": 145,
+      "velocity": 21,
+      "width": 0.7
+    },
+    {
+      "name": "Air Swish",
+      "role": "A synthetic filtered-air sweep with a tonal center; hold or release it to shape a restrained transition.",
+      "range": [
+        38,
+        78
+      ],
+      "tags": [
+        "air",
+        "sweep",
+        "transition",
+        "noise"
+      ],
+      "oscillators": [
+        {
+          "kind": "modern",
+          "level": 0.56,
+          "saw": 0.24,
+          "pulse": 0.08,
+          "tri": 0.55,
+          "detune": 0.03
+        },
+        {
+          "kind": "triangle",
+          "level": 0.44,
+          "octave": 1,
+          "detune": -0.025
+        }
+      ],
+      "amp": [
+        0.35,
+        0.95,
+        0.24,
+        0.55
+      ],
+      "filter": {
+        "kind": "bp12",
+        "hz": 1600,
+        "resonance": 0.18,
+        "env": 24,
+        "keytrack": 0.2
+      },
+      "motion": {
+        "shape": "noise",
+        "rate": 0.45,
+        "sync": false,
+        "depth": 12,
+        "amp": 1.4,
+        "pan": 0.22
+      },
+      "filter_env": [
+        0.65,
+        0.55,
+        0.2,
+        0.5
+      ],
+      "noise": 0.07,
+      "noise_color": 0.45,
+      "reverb": 0.15,
+      "delay": 0.05,
+      "highpass": 110,
+      "velocity": 12,
+      "width": 0.8
+    },
+    {
+      "name": "Tension Thud",
+      "role": "A pitched saw-and-sine impact with a fast descending attack for dramatic low punctuation.",
+      "range": [
+        28,
+        64
+      ],
+      "tags": [
+        "thud",
+        "pitch-drop",
+        "dark",
+        "impact"
+      ],
+      "oscillators": [
+        {
+          "kind": "sine",
+          "level": 0.67
+        },
+        {
+          "kind": "saw",
+          "level": 0.33,
+          "octave": 1,
+          "detune": 0.02
+        }
+      ],
+      "amp": [
+        0.004,
+        0.65,
+        0,
+        0.3
+      ],
+      "filter": {
+        "kind": "lp24",
+        "hz": 850,
+        "resonance": 0.22,
+        "env": 24,
+        "keytrack": 0.7
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.5,
+        "sync": false,
+        "depth": 5,
+        "amp": 0.8,
+        "pan": 0.04
+      },
+      "filter_env": [
+        0.004,
+        0.24,
+        0,
+        0.22
+      ],
+      "pitch_drop": 17,
+      "noise": 0.018,
+      "noise_color": -0.5,
+      "reverb": 0.11,
+      "delay": 0.02,
+      "highpass": 22,
+      "velocity": 17,
+      "width": 0.35,
+      "variant_intents": {
+        "Edge": "A brighter and more articulated attack with stronger upper partials for rhythmic definition."
+      }
+    },
+    {
+      "name": "Sand Rattle",
+      "role": "An explicitly inharmonic synthetic rattle combining short string resonance and noisy FM for tense details.",
+      "range": [
+        43,
+        82
+      ],
+      "tags": [
+        "rattle",
+        "inharmonic",
+        "noise",
+        "texture"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm3",
+          "level": 0.55,
+          "fm_amount": 0.29,
+          "ratio": 3.47,
+          "fm_amount2": 0.16,
+          "ratio2": 8.23,
+          "feedback": 0.04
+        },
+        {
+          "kind": "string",
+          "level": 0.45,
+          "exciter": 1,
+          "decay": 0.74,
+          "stiffness": 0.24
+        }
+      ],
+      "amp": [
+        0.012,
+        0.42,
+        0,
+        0.21
+      ],
+      "filter": {
+        "kind": "hp12",
+        "hz": 1100,
+        "resonance": 0.12,
+        "env": -7,
+        "keytrack": 0.35
+      },
+      "motion": {
+        "shape": "noise",
+        "rate": 4.3,
+        "sync": false,
+        "depth": 9,
+        "amp": 2.1,
+        "pan": 0.2
+      },
+      "filter_env": [
+        0.006,
+        0.22,
+        0,
+        0.18
+      ],
+      "noise": 0.055,
+      "noise_color": 0.35,
+      "reverb": 0.085,
+      "delay": 0.03,
+      "highpass": 120,
+      "velocity": 20,
+      "width": 0.65
+    },
+    {
+      "name": "Drop Marker",
+      "role": "A compact synthetic pitch-drop accent whose harmonic tail can mark edits without a long cinematic boom.",
+      "range": [
+        36,
+        76
+      ],
+      "tags": [
+        "drop",
+        "accent",
+        "harmonic",
+        "transition"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm2",
+          "level": 0.66,
+          "fm_amount": 0.19,
+          "ratio": 3,
+          "fm_amount2": 0.045,
+          "ratio2": 6
+        },
+        {
+          "kind": "sine",
+          "level": 0.34,
+          "octave": -1
+        }
+      ],
+      "amp": [
+        0.004,
+        0.35,
+        0,
+        0.17
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 2800,
+        "resonance": 0.16,
+        "env": 20,
+        "keytrack": 0.6
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 1.25,
+        "sync": false,
+        "depth": 4,
+        "amp": 0.5,
+        "pan": 0.06
+      },
+      "filter_env": [
+        0.004,
+        0.16,
+        0,
+        0.12
+      ],
+      "pitch_drop": 24,
+      "noise": 0.009,
+      "noise_color": -0.2,
+      "reverb": 0.09,
+      "delay": 0.018,
+      "highpass": 45,
+      "velocity": 19,
+      "width": 0.45,
+      "variant_intents": {
+        "Edge": "A brighter and more articulated attack with stronger upper partials for rhythmic definition."
+      }
+    },
+    {
+      "name": "Hollow Block",
+      "role": "A bright synthetic woodblock tap with a short modeled-string body for playful rhythmic counterpoint.",
+      "range": [
+        48,
+        87
+      ],
+      "tags": [
+        "woodblock",
+        "playful",
+        "short",
+        "pitched"
+      ],
+      "oscillators": [
+        {
+          "kind": "string",
+          "level": 0.71,
+          "exciter": 4,
+          "decay": 0.69,
+          "stiffness": 0.28
+        },
+        {
+          "kind": "sine",
+          "level": 0.29,
+          "octave": 1,
+          "shape": 1
+        }
+      ],
+      "amp": [
+        0.004,
+        0.105,
+        0,
+        0.065
+      ],
+      "filter": {
+        "kind": "bp12",
+        "hz": 2600,
+        "resonance": 0.32,
+        "env": 11,
+        "keytrack": 0.95
+      },
+      "motion": {
+        "shape": "triangle",
+        "rate": 1.45,
+        "sync": false,
+        "depth": 4,
+        "amp": 0.35,
+        "pan": 0.04
+      },
+      "filter_env": [
+        0.004,
+        0.07,
+        0,
+        0.065
+      ],
+      "noise": 0.004,
+      "noise_color": 0.15,
+      "reverb": 0.04,
+      "delay": 0.012,
+      "highpass": 100,
+      "velocity": 24,
+      "width": 0.3,
+      "variant_intents": {
+        "Edge": "A brighter and more articulated attack with stronger upper partials for rhythmic definition."
+      }
+    },
+    {
+      "name": "Gong Mist",
+      "role": "An explicitly inharmonic synthetic metal bloom for spacious suspense and slow scene transitions.",
+      "range": [
+        32,
+        72
+      ],
+      "tags": [
+        "gong-like",
+        "inharmonic",
+        "bloom",
+        "transition"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm3",
+          "level": 0.55,
+          "fm_amount": 0.43,
+          "ratio": 1.414,
+          "fm_amount2": 0.21,
+          "ratio2": 3.73,
+          "feedback": 0.025
+        },
+        {
+          "kind": "sine",
+          "level": 0.3,
+          "octave": -1
+        },
+        {
+          "kind": "triangle",
+          "level": 0.15,
+          "octave": 1,
+          "detune": 0.035
+        }
+      ],
+      "amp": [
+        0.07,
+        2.1,
+        0,
+        1.2
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 3200,
+        "resonance": 0.15,
+        "env": 8,
+        "keytrack": 0.55
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.18,
+        "sync": false,
+        "depth": 7,
+        "amp": 0.8,
+        "pan": 0.16
+      },
+      "filter_env": [
+        0.08,
+        1.4,
+        0,
+        0.7
+      ],
+      "noise": 0.014,
+      "noise_color": -0.1,
+      "reverb": 0.2,
+      "reverb_time": 2.7,
+      "delay": 0.045,
+      "highpass": 30,
+      "velocity": 17,
+      "width": 0.8
+    },
+    {
+      "name": "Circuit Clack",
+      "role": "A compact pulse and FM click with a tonal body for mechanical patterns and small electronic accents.",
+      "range": [
+        45,
+        84
+      ],
+      "tags": [
+        "clack",
+        "electronic",
+        "rhythm",
+        "dry"
+      ],
+      "oscillators": [
+        {
+          "kind": "pulse",
+          "level": 0.48,
+          "shape": 0.19
+        },
+        {
+          "kind": "fm2",
+          "level": 0.52,
+          "fm_amount": 0.24,
+          "ratio": 4,
+          "fm_amount2": 0.08,
+          "ratio2": 8,
+          "feedback": 0.035
+        }
+      ],
+      "amp": [
+        0.004,
+        0.125,
+        0,
+        0.075
+      ],
+      "filter": {
+        "kind": "bp12",
+        "hz": 3100,
+        "resonance": 0.24,
+        "env": 17,
+        "keytrack": 0.7
+      },
+      "motion": {
+        "shape": "square",
+        "rate": 2.2,
+        "sync": true,
+        "depth": 5,
+        "amp": 1.2,
+        "pan": 0.08
+      },
+      "filter_env": [
+        0.004,
+        0.065,
+        0,
+        0.06
+      ],
+      "pitch_drop": 3,
+      "noise": 0.012,
+      "noise_color": 0.4,
+      "reverb": 0.04,
+      "delay": 0.016,
+      "highpass": 110,
+      "velocity": 22,
+      "width": 0.4,
+      "variant_intents": {
+        "Edge": "A brighter and more articulated attack with stronger upper partials for rhythmic definition."
+      }
+    },
+    {
+      "name": "Dawn Sweep",
+      "role": "A held-note synthetic riser whose growing filter envelope raises pitch and brightness; release to end the gesture. The pitch envelope returns toward the played note on release; Attack changes amplitude onset, not pitch-sweep duration.",
+      "range": [
+        36,
+        76
+      ],
+      "tags": [
+        "riser",
+        "pitch-sweep",
+        "tonal",
+        "transition"
+      ],
+      "oscillators": [
+        {
+          "kind": "saw",
+          "level": 0.48,
+          "detune": 0.035,
+          "unison": 2
+        },
+        {
+          "kind": "triangle",
+          "level": 0.32,
+          "octave": -1
+        },
+        {
+          "kind": "fm2",
+          "level": 0.2,
+          "fm_amount": 0.17,
+          "ratio": 3,
+          "fm_amount2": 0.04,
+          "ratio2": 5
+        }
+      ],
+      "amp": [
+        0.72,
+        1.3,
+        0.68,
+        0.75
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 650,
+        "resonance": 0.2,
+        "env": 36,
+        "keytrack": 0.4
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.26,
+        "sync": false,
+        "depth": 9,
+        "amp": 1.1,
+        "pan": 0.16
+      },
+      "filter_env": [
+        1.7,
+        0.6,
+        1,
+        0.6
+      ],
+      "pitch_drop": 12,
+      "noise": 0.035,
+      "noise_color": 0.2,
+      "reverb": 0.18,
+      "reverb_time": 2.2,
+      "delay": 0.06,
+      "highpass": 50,
+      "velocity": 12,
+      "width": 0.75
+    },
+    {
+      "name": "Falling Arc",
+      "role": "A descending synthetic transition with a slowly growing negative pitch envelope and a soft landing. The pitch envelope returns toward the played note on release; Attack changes amplitude onset, not pitch-sweep duration.",
+      "range": [
+        38,
+        78
+      ],
+      "tags": [
+        "downward",
+        "pitch-sweep",
+        "soft",
+        "transition"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm2",
+          "level": 0.58,
+          "fm_amount": 0.23,
+          "ratio": 2,
+          "fm_amount2": 0.09,
+          "ratio2": 5
+        },
+        {
+          "kind": "triangle",
+          "level": 0.42,
+          "octave": -1,
+          "detune": -0.02
+        }
+      ],
+      "amp": [
+        0.16,
+        1.5,
+        0.2,
+        0.8
+      ],
+      "filter": {
+        "kind": "lp24",
+        "hz": 2100,
+        "resonance": 0.18,
+        "env": -18,
+        "keytrack": 0.4
+      },
+      "motion": {
+        "shape": "triangle",
+        "rate": 0.3,
+        "sync": false,
+        "depth": 6,
+        "amp": 0.6,
+        "pan": 0.1
+      },
+      "filter_env": [
+        1.2,
+        0.4,
+        1,
+        0.6
+      ],
+      "pitch_drop": -12,
+      "noise": 0.022,
+      "noise_color": -0.25,
+      "reverb": 0.16,
+      "reverb_time": 1.9,
+      "delay": 0.035,
+      "highpass": 40,
+      "velocity": 13,
+      "width": 0.6
+    },
+    {
+      "name": "Breath Lift",
+      "role": "An airy synthetic swell with softly inharmonic upper color for held transitions and suspended scene changes.",
+      "range": [
+        43,
+        82
+      ],
+      "tags": [
+        "air",
+        "swell",
+        "inharmonic",
+        "transition"
+      ],
+      "oscillators": [
+        {
+          "kind": "sine",
+          "level": 0.5
+        },
+        {
+          "kind": "fm3",
+          "level": 0.32,
+          "fm_amount": 0.13,
+          "ratio": 2.53,
+          "fm_amount2": 0.055,
+          "ratio2": 5.17
+        },
+        {
+          "kind": "triangle",
+          "level": 0.18,
+          "octave": 1,
+          "detune": 0.035
+        }
+      ],
+      "amp": [
+        1.05,
+        1.7,
+        0.52,
+        0.95
+      ],
+      "filter": {
+        "kind": "hp12",
+        "hz": 850,
+        "resonance": 0.12,
+        "env": -16,
+        "keytrack": 0.35
+      },
+      "motion": {
+        "shape": "noise",
+        "rate": 0.24,
+        "sync": false,
+        "depth": 10,
+        "amp": 0.9,
+        "pan": 0.25
+      },
+      "filter_env": [
+        1.1,
+        0.8,
+        0.65,
+        0.8
+      ],
+      "noise": 0.065,
+      "noise_color": 0.5,
+      "reverb": 0.19,
+      "reverb_time": 2.6,
+      "delay": 0.055,
+      "highpass": 90,
+      "velocity": 11,
+      "width": 0.85
+    },
+    {
+      "name": "Velvet Arrival",
+      "role": "A tuned synthetic ensemble swell that can join harmonic scenes or provide a gentle musical arrival.",
+      "range": [
+        36,
+        80
+      ],
+      "tags": [
+        "swell",
+        "harmonic",
+        "warm",
+        "transition"
+      ],
+      "oscillators": [
+        {
+          "kind": "triangle",
+          "level": 0.46,
+          "detune": 0.03,
+          "unison": 2
+        },
+        {
+          "kind": "pulse",
+          "level": 0.31,
+          "shape": 0.38,
+          "detune": -0.035
+        },
+        {
+          "kind": "sine",
+          "level": 0.23,
+          "octave": 1
+        }
+      ],
+      "amp": [
+        0.65,
+        1.5,
+        0.66,
+        1.1
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 1450,
+        "resonance": 0.09,
+        "env": 18,
+        "keytrack": 0.6
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.16,
+        "sync": false,
+        "depth": 5,
+        "amp": 0.5,
+        "pan": 0.13
+      },
+      "filter_env": [
+        0.8,
+        1.1,
+        0.45,
+        0.8
+      ],
+      "noise": 0.008,
+      "noise_color": -0.45,
+      "reverb": 0.16,
+      "reverb_time": 2.1,
+      "delay": 0.035,
+      "highpass": 40,
+      "velocity": 14,
+      "width": 0.8
+    }
+  ],
+  "variants": [
+    {
+      "name": "Close",
+      "intent": "A shorter, darker and reduced-layer version for tight edits and compact arrangements.",
+      "changes": {
+        "attack_scale": 0.8,
+        "decay_scale": 0.62,
+        "release_scale": 0.55,
+        "cutoff_scale": 0.78,
+        "motion_scale": 0.55,
+        "fx_scale": 0.35,
+        "second_level_scale": 0.72
+      }
+    },
+    {
+      "name": "Body",
+      "intent": "A darker, longer-bodied gesture with more secondary-layer weight for sparse arrangements.",
+      "changes": {
+        "attack_scale": 1.3,
+        "decay_scale": 1.4,
+        "release_scale": 1.2,
+        "cutoff_scale": 0.62,
+        "fm_scale": 0.82,
+        "second_level_scale": 1.3,
+        "resonance_add": 0.04
+      }
+    },
+    {
+      "name": "Edge",
+      "intent": "A faster, brighter and more articulated attack with stronger upper partials for rhythmic definition.",
+      "changes": {
+        "attack_scale": 0.62,
+        "decay_scale": 0.8,
+        "release_scale": 0.68,
+        "cutoff_scale": 1.8,
+        "fm_scale": 1.3,
+        "second_level_scale": 0.66,
+        "noise_add": 0.008,
+        "fx_scale": 0.7
+      }
+    },
+    {
+      "name": "Drift",
+      "intent": "A more animated tonal and spatial gesture with a stronger secondary layer and a longer trailing movement.",
+      "changes": {
+        "attack_scale": 1.1,
+        "decay_scale": 1.15,
+        "release_scale": 1.4,
+        "cutoff_scale": 1.15,
+        "motion_scale": 1.8,
+        "motion_rate_scale": 2,
+        "second_level_scale": 1.25,
+        "fx_scale": 1.25
+      }
+    },
+    {
+      "name": "Bloom",
+      "intent": "A gentler entrance and longer resonance for spacious accents, held transitions and exposed endings.",
+      "changes": {
+        "attack_scale": 2,
+        "decay_scale": 1.8,
+        "release_scale": 1.75,
+        "cutoff_scale": 1.25,
+        "fm_scale": 0.85,
+        "second_level_scale": 0.83,
+        "motion_scale": 1.25,
+        "fx_scale": 1.5
+      }
+    }
+  ]
+}

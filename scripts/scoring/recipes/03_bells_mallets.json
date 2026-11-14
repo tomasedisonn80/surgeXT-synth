@@ -1,0 +1,1489 @@
+{
+  "id": "03",
+  "name": "Bells and Mallets",
+  "prefix": "B",
+  "description": "Original synthesized wooden mallets, harmonic bells, tines, glass and explicitly inharmonic metal colors, with playable fundamentals and controlled tails. Twenty architectures have five functional variations each; acoustic instrument references describe impressions, not sampled realism.",
+  "families": [
+    {
+      "name": "Amber Marimba",
+      "role": "A rounded synthetic wooden mallet for repeating drama figures and uncluttered chord punctuation.",
+      "range": [
+        45,
+        84
+      ],
+      "tags": [
+        "wooden",
+        "rounded",
+        "harmonic",
+        "mallet"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm2",
+          "level": 0.78,
+          "fm_amount": 0.18,
+          "ratio": 1,
+          "fm_amount2": 0.025,
+          "ratio2": 3,
+          "feedback": 0.005
+        },
+        {
+          "kind": "triangle",
+          "level": 0.24,
+          "octave": -1,
+          "detune": 0.008
+        }
+      ],
+      "amp": [
+        0.005,
+        0.72,
+        0.025,
+        0.29
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 2400,
+        "resonance": 0.09,
+        "env": 20,
+        "keytrack": 0.72
+      },
+      "filter_env": [
+        0.004,
+        0.12,
+        0,
+        0.18
+      ],
+      "motion": {
+        "shape": "sine",
+        "rate": 0.17,
+        "sync": false,
+        "depth": 2,
+        "amp": 0,
+        "pan": 0.03
+      },
+      "noise": 0,
+      "drift": 0.006,
+      "reverb": 0.065,
+      "delay": 0.012,
+      "reverb_time": 1.4,
+      "width": 0.5,
+      "highpass": 35,
+      "velocity": 20
+    },
+    {
+      "name": "Hollow Slats",
+      "role": "A hollow resonant synthetic mallet for light suspense, pizzicato counterpoint and dry rhythmic cells.",
+      "range": [
+        43,
+        84
+      ],
+      "tags": [
+        "hollow",
+        "wooden",
+        "resonant",
+        "short"
+      ],
+      "oscillators": [
+        {
+          "kind": "string",
+          "level": 0.62,
+          "exciter": 3,
+          "decay": 0.81,
+          "stiffness": -0.12
+        },
+        {
+          "kind": "fm2",
+          "level": 0.32,
+          "fm_amount": 0.105,
+          "ratio": 2,
+          "fm_amount2": 0.018,
+          "ratio2": 5,
+          "feedback": 0
+        }
+      ],
+      "amp": [
+        0.004,
+        0.46,
+        0.015,
+        0.21
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 3100,
+        "resonance": 0.16,
+        "env": 15,
+        "keytrack": 0.72
+      },
+      "filter_env": [
+        0.004,
+        0.095,
+        0,
+        0.14
+      ],
+      "motion": {
+        "shape": "sine",
+        "rate": 0.17,
+        "sync": false,
+        "depth": 2,
+        "amp": 0,
+        "pan": 0.03
+      },
+      "noise": 0,
+      "drift": 0.006,
+      "reverb": 0.06,
+      "delay": 0.025,
+      "reverb_time": 1.4,
+      "width": 0.5,
+      "highpass": 45,
+      "velocity": 20
+    },
+    {
+      "name": "Cedar Knocks",
+      "role": "A compact pitched wood-block impression for playful edits, close percussion and interlocking notes.",
+      "range": [
+        40,
+        79
+      ],
+      "tags": [
+        "woody",
+        "percussive",
+        "compact",
+        "pitched"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm2",
+          "level": 0.76,
+          "fm_amount": 0.13,
+          "ratio": 3,
+          "fm_amount2": 0.04,
+          "ratio2": 2,
+          "feedback": 0.012
+        },
+        {
+          "kind": "sine",
+          "level": 0.28,
+          "shape": 0,
+          "octave": -1,
+          "detune": 0
+        }
+      ],
+      "amp": [
+        0.004,
+        0.31,
+        0,
+        0.14
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 1800,
+        "resonance": 0.13,
+        "env": 28,
+        "keytrack": 0.72
+      },
+      "filter_env": [
+        0.004,
+        0.055,
+        0,
+        0.09
+      ],
+      "motion": {
+        "shape": "sine",
+        "rate": 0.17,
+        "sync": false,
+        "depth": 2,
+        "amp": 0,
+        "pan": 0.03
+      },
+      "noise": 0,
+      "drift": 0.006,
+      "reverb": 0.045,
+      "delay": 0.008,
+      "reverb_time": 1.4,
+      "width": 0.5,
+      "highpass": 35,
+      "velocity": 23
+    },
+    {
+      "name": "Rain Tines",
+      "role": "A clear synthetic tine bell for fragile melody, romantic ostinatos and reflective electronic songs.",
+      "range": [
+        48,
+        91
+      ],
+      "tags": [
+        "tine",
+        "clear",
+        "delicate",
+        "harmonic"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm2",
+          "level": 0.71,
+          "fm_amount": 0.245,
+          "ratio": 2,
+          "fm_amount2": 0.052,
+          "ratio2": 7,
+          "feedback": 0.008
+        },
+        {
+          "kind": "sine",
+          "level": 0.19,
+          "shape": 0,
+          "octave": 1,
+          "detune": 0.014
+        }
+      ],
+      "amp": [
+        0.006,
+        1.6,
+        0.025,
+        0.66
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 6700,
+        "resonance": 0.09,
+        "env": 7,
+        "keytrack": 0.72
+      },
+      "filter_env": [
+        0.004,
+        0.62,
+        0,
+        0.48
+      ],
+      "motion": {
+        "shape": "sine",
+        "rate": 0.17,
+        "sync": false,
+        "depth": 2,
+        "amp": 0,
+        "pan": 0.03
+      },
+      "noise": 0,
+      "drift": 0.006,
+      "reverb": 0.12,
+      "delay": 0.045,
+      "reverb_time": 1.9,
+      "width": 0.5,
+      "highpass": 35,
+      "velocity": 20,
+      "variant_changes": {
+        "Glass": {
+          "contour_amp": 0.65
+        }
+      }
+    },
+    {
+      "name": "Violet Vibra",
+      "role": "A soft electronic vibraphone-like color with gentle tremolo for late-night harmony and thoughtful dialogue gaps.",
+      "range": [
+        43,
+        84
+      ],
+      "tags": [
+        "soft",
+        "tremolo",
+        "mallet",
+        "warm"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm2",
+          "level": 0.65,
+          "fm_amount": 0.12,
+          "ratio": 1,
+          "fm_amount2": 0.095,
+          "ratio2": 4,
+          "feedback": 0.004
+        },
+        {
+          "kind": "sine",
+          "level": 0.37,
+          "shape": 0,
+          "octave": 0,
+          "detune": -0.01
+        }
+      ],
+      "amp": [
+        0.01,
+        2.15,
+        0.06,
+        0.82
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 4300,
+        "resonance": 0.09,
+        "env": 11,
+        "keytrack": 0.72
+      },
+      "filter_env": [
+        0.008,
+        0.55,
+        0.04,
+        0.6
+      ],
+      "motion": {
+        "shape": "sine",
+        "rate": 4.8,
+        "sync": false,
+        "depth": 1.5,
+        "amp": 2.7,
+        "pan": 0.05
+      },
+      "noise": 0,
+      "drift": 0.006,
+      "reverb": 0.1,
+      "delay": 0.025,
+      "reverb_time": 1.7,
+      "width": 0.5,
+      "highpass": 35,
+      "velocity": 20
+    },
+    {
+      "name": "Frost Celeste",
+      "role": "A sparkling celesta-like synthetic bell for high lyrical lines and magical detail without a sampled-instrument claim.",
+      "range": [
+        55,
+        96
+      ],
+      "tags": [
+        "sparkling",
+        "delicate",
+        "high",
+        "bell"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm2",
+          "level": 0.7,
+          "fm_amount": 0.17,
+          "ratio": 3,
+          "fm_amount2": 0.032,
+          "ratio2": 5,
+          "feedback": 0
+        },
+        {
+          "kind": "sine",
+          "level": 0.25,
+          "shape": 0,
+          "octave": 1,
+          "detune": -0.012
+        }
+      ],
+      "amp": [
+        0.004,
+        1.02,
+        0.012,
+        0.46
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 8300,
+        "resonance": 0.09,
+        "env": 5,
+        "keytrack": 0.72
+      },
+      "filter_env": [
+        0.004,
+        0.38,
+        0,
+        0.35
+      ],
+      "motion": {
+        "shape": "sine",
+        "rate": 0.17,
+        "sync": false,
+        "depth": 2,
+        "amp": 0,
+        "pan": 0.03
+      },
+      "noise": 0,
+      "drift": 0.006,
+      "reverb": 0.13,
+      "delay": 0.032,
+      "reverb_time": 1.4,
+      "width": 0.5,
+      "highpass": 65,
+      "velocity": 18,
+      "variant_changes": {
+        "Close": {
+          "contour_amp": 0.65
+        },
+        "Glass": {
+          "contour_amp": 0.65
+        },
+        "Alloy": {
+          "contour_amp": 0.65
+        }
+      }
+    },
+    {
+      "name": "Pocket Musicbox",
+      "role": "A slightly imperfect synthetic music-box voice for small memories, gentle comedy and repeating motifs.",
+      "range": [
+        53,
+        94
+      ],
+      "tags": [
+        "small",
+        "imperfect",
+        "bell",
+        "nostalgic"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm3",
+          "level": 0.67,
+          "fm_amount": 0.16,
+          "ratio": 2.01,
+          "fm_amount2": 0.061,
+          "ratio2": 5.02,
+          "feedback": 0.005
+        },
+        {
+          "kind": "sine",
+          "level": 0.22,
+          "shape": 0,
+          "octave": 1,
+          "detune": 0.028
+        }
+      ],
+      "amp": [
+        0.005,
+        1.34,
+        0.008,
+        0.52
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 5200,
+        "resonance": 0.09,
+        "env": 12,
+        "keytrack": 0.72
+      },
+      "filter_env": [
+        0.004,
+        0.27,
+        0,
+        0.35
+      ],
+      "motion": {
+        "shape": "sine",
+        "rate": 0.17,
+        "sync": false,
+        "depth": 2,
+        "amp": 0,
+        "pan": 0.03
+      },
+      "noise": 0,
+      "drift": 0.015,
+      "reverb": 0.075,
+      "delay": 0.02,
+      "reverb_time": 1.4,
+      "width": 0.5,
+      "highpass": 35,
+      "velocity": 22,
+      "variant_changes": {
+        "Glass": {
+          "contour_amp": 0.65
+        }
+      }
+    },
+    {
+      "name": "Prism Chimes",
+      "role": "An intentionally inharmonic glass chime with a steady fundamental for isolated mystery notes and suspended color.",
+      "range": [
+        48,
+        84
+      ],
+      "tags": [
+        "glass",
+        "inharmonic",
+        "chime",
+        "mystery"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm3",
+          "level": 0.55,
+          "fm_amount": 0.32,
+          "ratio": 2.76,
+          "fm_amount2": 0.1,
+          "ratio2": 5.4,
+          "feedback": 0.008
+        },
+        {
+          "kind": "sine",
+          "level": 0.4,
+          "shape": 0,
+          "octave": 0,
+          "detune": -0.008
+        }
+      ],
+      "amp": [
+        0.009,
+        2.8,
+        0.03,
+        1.15
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 7200,
+        "resonance": 0.08,
+        "env": 10,
+        "keytrack": 0.72
+      },
+      "filter_env": [
+        0.005,
+        0.8,
+        0.02,
+        0.75
+      ],
+      "motion": {
+        "shape": "sine",
+        "rate": 0.17,
+        "sync": false,
+        "depth": 2,
+        "amp": 0,
+        "pan": 0.03
+      },
+      "noise": 0,
+      "drift": 0.006,
+      "reverb": 0.14,
+      "delay": 0.05,
+      "reverb_time": 2.3,
+      "width": 0.5,
+      "highpass": 35,
+      "velocity": 20
+    },
+    {
+      "name": "Paper Glass",
+      "role": "A thin intentionally inharmonic glass mallet for sparse documentary detail and delicate top-line counterpoint.",
+      "range": [
+        52,
+        89
+      ],
+      "tags": [
+        "thin",
+        "glass",
+        "inharmonic",
+        "light"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm3",
+          "level": 0.64,
+          "fm_amount": 0.14,
+          "ratio": 1.414,
+          "fm_amount2": 0.061,
+          "ratio2": 4.1,
+          "feedback": 0
+        },
+        {
+          "kind": "triangle",
+          "level": 0.2,
+          "octave": 1,
+          "detune": 0.018
+        }
+      ],
+      "amp": [
+        0.006,
+        0.88,
+        0.018,
+        0.4
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 3800,
+        "resonance": 0.12,
+        "env": 22,
+        "keytrack": 0.72
+      },
+      "filter_env": [
+        0.004,
+        0.17,
+        0,
+        0.28
+      ],
+      "motion": {
+        "shape": "sine",
+        "rate": 0.17,
+        "sync": false,
+        "depth": 2,
+        "amp": 0,
+        "pan": 0.03
+      },
+      "noise": 0,
+      "drift": 0.006,
+      "reverb": 0.075,
+      "delay": 0.025,
+      "reverb_time": 1.4,
+      "width": 0.5,
+      "highpass": 80,
+      "velocity": 20
+    },
+    {
+      "name": "Bronze Orchard",
+      "role": "A bronze-like inharmonic bell for wide-spaced ritual gestures, low suspense and measured ceremonial rhythms.",
+      "range": [
+        36,
+        76
+      ],
+      "tags": [
+        "bronze",
+        "inharmonic",
+        "ceremonial",
+        "resonant"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm3",
+          "level": 0.57,
+          "fm_amount": 0.42,
+          "ratio": 2.71,
+          "fm_amount2": 0.2,
+          "ratio2": 5.43,
+          "feedback": 0.025
+        },
+        {
+          "kind": "sine",
+          "level": 0.32,
+          "shape": 0,
+          "octave": 0,
+          "detune": 0.01
+        }
+      ],
+      "amp": [
+        0.012,
+        3.3,
+        0.04,
+        1.45
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 4600,
+        "resonance": 0.15,
+        "env": 18,
+        "keytrack": 0.72
+      },
+      "filter_env": [
+        0.006,
+        1,
+        0.03,
+        1.1
+      ],
+      "motion": {
+        "shape": "sine",
+        "rate": 0.17,
+        "sync": false,
+        "depth": 2,
+        "amp": 0,
+        "pan": 0.03
+      },
+      "noise": 0,
+      "drift": 0.006,
+      "reverb": 0.13,
+      "delay": 0.035,
+      "reverb_time": 2.7,
+      "width": 0.5,
+      "highpass": 28,
+      "velocity": 19
+    },
+    {
+      "name": "Silver Nodes",
+      "role": "A bright harmonic metal mallet with a soft lower body for science-fiction arpeggios and clear pop hooks.",
+      "range": [
+        48,
+        84
+      ],
+      "tags": [
+        "bright",
+        "harmonic",
+        "metal",
+        "arpeggio"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm2",
+          "level": 0.62,
+          "fm_amount": 0.2,
+          "ratio": 8,
+          "fm_amount2": 0.083,
+          "ratio2": 3,
+          "feedback": 0.01
+        },
+        {
+          "kind": "sine",
+          "level": 0.31,
+          "shape": 0,
+          "octave": -1,
+          "detune": -0.006
+        }
+      ],
+      "amp": [
+        0.004,
+        1.24,
+        0.024,
+        0.56
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 9800,
+        "resonance": 0.07,
+        "env": 3,
+        "keytrack": 0.72
+      },
+      "filter_env": [
+        0.004,
+        0.34,
+        0,
+        0.42
+      ],
+      "motion": {
+        "shape": "sine",
+        "rate": 0.17,
+        "sync": false,
+        "depth": 2,
+        "amp": 0,
+        "pan": 0.03
+      },
+      "noise": 0,
+      "drift": 0.006,
+      "reverb": 0.09,
+      "delay": 0.07,
+      "reverb_time": 1.4,
+      "width": 0.5,
+      "highpass": 42,
+      "velocity": 20,
+      "variant_changes": {
+        "Glass": {
+          "contour_amp": 0.65
+        }
+      }
+    },
+    {
+      "name": "Temple Signals",
+      "role": "An open-ratio synthetic bell for restrained ritual accents and slow alternating bass-and-bell figures.",
+      "range": [
+        38,
+        79
+      ],
+      "tags": [
+        "open",
+        "bell",
+        "ritual",
+        "spacious"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm3",
+          "level": 0.59,
+          "fm_amount": 0.3,
+          "ratio": 1.5,
+          "fm_amount2": 0.105,
+          "ratio2": 3.5,
+          "feedback": 0.006
+        },
+        {
+          "kind": "sine",
+          "level": 0.35,
+          "shape": 0,
+          "octave": 0,
+          "detune": 0.006
+        }
+      ],
+      "amp": [
+        0.014,
+        2.7,
+        0.035,
+        1.04
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 3200,
+        "resonance": 0.12,
+        "env": 17,
+        "keytrack": 0.72
+      },
+      "filter_env": [
+        0.008,
+        0.7,
+        0.02,
+        0.72
+      ],
+      "motion": {
+        "shape": "sine",
+        "rate": 0.17,
+        "sync": false,
+        "depth": 2,
+        "amp": 0,
+        "pan": 0.03
+      },
+      "noise": 0,
+      "drift": 0.006,
+      "reverb": 0.115,
+      "delay": 0.04,
+      "reverb_time": 2.2,
+      "width": 0.5,
+      "highpass": 30,
+      "velocity": 21
+    },
+    {
+      "name": "Ceramic Hands",
+      "role": "A rounded synthetic ceramic knock for intimate animation, acoustic-electronic percussion blends and gentle rhythmic replies.",
+      "range": [
+        45,
+        84
+      ],
+      "tags": [
+        "ceramic",
+        "rounded",
+        "knock",
+        "intimate"
+      ],
+      "oscillators": [
+        {
+          "kind": "string",
+          "level": 0.6,
+          "exciter": 2,
+          "decay": 0.83,
+          "stiffness": 0.2
+        },
+        {
+          "kind": "fm2",
+          "level": 0.34,
+          "fm_amount": 0.135,
+          "ratio": 4,
+          "fm_amount2": 0.021,
+          "ratio2": 1,
+          "feedback": 0
+        }
+      ],
+      "amp": [
+        0.007,
+        0.61,
+        0.01,
+        0.25
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 2800,
+        "resonance": 0.18,
+        "env": 19,
+        "keytrack": 0.72
+      },
+      "filter_env": [
+        0.004,
+        0.14,
+        0,
+        0.18
+      ],
+      "motion": {
+        "shape": "sine",
+        "rate": 0.17,
+        "sync": false,
+        "depth": 2,
+        "amp": 0,
+        "pan": 0.03
+      },
+      "noise": 0,
+      "drift": 0.006,
+      "reverb": 0.055,
+      "delay": 0.012,
+      "reverb_time": 1.4,
+      "width": 0.5,
+      "highpass": 35,
+      "velocity": 24,
+      "variant_changes": {
+        "Glass": {
+          "contour_amp": 0.65
+        }
+      }
+    },
+    {
+      "name": "Orbit Plates",
+      "role": "A layered inharmonic plate with a pitched core for suspended chords, orbiting motifs and unease beneath open harmony.",
+      "range": [
+        40,
+        79
+      ],
+      "tags": [
+        "plate",
+        "layered",
+        "inharmonic",
+        "suspense"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm3",
+          "level": 0.5,
+          "fm_amount": 0.22,
+          "ratio": 1.9,
+          "fm_amount2": 0.12,
+          "ratio2": 6.7,
+          "feedback": 0.02
+        },
+        {
+          "kind": "sine",
+          "level": 0.29,
+          "shape": 0,
+          "octave": 0,
+          "detune": -0.022
+        },
+        {
+          "kind": "triangle",
+          "level": 0.16,
+          "octave": -1,
+          "detune": 0.012
+        }
+      ],
+      "amp": [
+        0.018,
+        2.4,
+        0.065,
+        1.25
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 5900,
+        "resonance": 0.1,
+        "env": 9,
+        "keytrack": 0.72
+      },
+      "filter_env": [
+        0.011,
+        0.9,
+        0.05,
+        0.8
+      ],
+      "motion": {
+        "shape": "triangle",
+        "rate": 0.23,
+        "sync": false,
+        "depth": 4.5,
+        "amp": 0.6,
+        "pan": 0.13
+      },
+      "noise": 0,
+      "drift": 0.006,
+      "reverb": 0.14,
+      "delay": 0.055,
+      "reverb_time": 2.5,
+      "width": 0.5,
+      "highpass": 32,
+      "velocity": 20
+    },
+    {
+      "name": "Quiet Anvils",
+      "role": "A short deliberately inharmonic metal strike for close thriller punctuation and tuned industrial rhythm.",
+      "range": [
+        39,
+        79
+      ],
+      "tags": [
+        "metal",
+        "short",
+        "inharmonic",
+        "industrial"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm3",
+          "level": 0.58,
+          "fm_amount": 0.46,
+          "ratio": 3.17,
+          "fm_amount2": 0.16,
+          "ratio2": 6.23,
+          "feedback": 0.04
+        },
+        {
+          "kind": "sine",
+          "level": 0.38,
+          "shape": 0,
+          "octave": 0,
+          "detune": 0
+        }
+      ],
+      "amp": [
+        0.004,
+        0.58,
+        0.008,
+        0.31
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 5400,
+        "resonance": 0.16,
+        "env": 25,
+        "keytrack": 0.72
+      },
+      "filter_env": [
+        0.004,
+        0.1,
+        0,
+        0.2
+      ],
+      "motion": {
+        "shape": "sine",
+        "rate": 0.17,
+        "sync": false,
+        "depth": 2,
+        "amp": 0,
+        "pan": 0.03
+      },
+      "noise": 0.004,
+      "drift": 0.006,
+      "reverb": 0.06,
+      "delay": 0.015,
+      "reverb_time": 1.4,
+      "width": 0.5,
+      "highpass": 35,
+      "velocity": 22,
+      "noise_color": -0.55
+    },
+    {
+      "name": "Starlit Drops",
+      "role": "A clean harmonic droplet with a tiny resonant tail for family scenes, graceful ornament and gentle electronic melody.",
+      "range": [
+        55,
+        96
+      ],
+      "tags": [
+        "clean",
+        "droplet",
+        "harmonic",
+        "light"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm2",
+          "level": 0.61,
+          "fm_amount": 0.125,
+          "ratio": 4,
+          "fm_amount2": 0.03,
+          "ratio2": 9,
+          "feedback": 0
+        },
+        {
+          "kind": "sine",
+          "level": 0.3,
+          "shape": 0,
+          "octave": 1,
+          "detune": 0.009
+        },
+        {
+          "kind": "string",
+          "level": 0.11,
+          "exciter": 3,
+          "decay": 0.73,
+          "stiffness": -0.04
+        }
+      ],
+      "amp": [
+        0.005,
+        1.08,
+        0.012,
+        0.46
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 7600,
+        "resonance": 0.09,
+        "env": 14,
+        "keytrack": 0.72
+      },
+      "filter_env": [
+        0.004,
+        0.21,
+        0,
+        0.27
+      ],
+      "motion": {
+        "shape": "sine",
+        "rate": 0.17,
+        "sync": false,
+        "depth": 2,
+        "amp": 0,
+        "pan": 0.03
+      },
+      "noise": 0,
+      "drift": 0.006,
+      "reverb": 0.11,
+      "delay": 0.06,
+      "reverb_time": 1.4,
+      "width": 0.5,
+      "highpass": 65,
+      "velocity": 18,
+      "variant_changes": {
+        "Close": {
+          "contour_amp": 0.65
+        },
+        "Glass": {
+          "contour_amp": 0.65
+        },
+        "Alloy": {
+          "contour_amp": 0.65
+        }
+      }
+    },
+    {
+      "name": "Warm Toybox",
+      "role": "A soft synthetic toy mallet for friendly dialogue gaps, family themes and uncomplicated chordal hooks.",
+      "range": [
+        48,
+        89
+      ],
+      "tags": [
+        "soft",
+        "toy",
+        "warm",
+        "friendly"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm2",
+          "level": 0.62,
+          "fm_amount": 0.075,
+          "ratio": 2,
+          "fm_amount2": 0.045,
+          "ratio2": 5,
+          "feedback": 0.002
+        },
+        {
+          "kind": "triangle",
+          "level": 0.37,
+          "octave": 0,
+          "detune": -0.012
+        }
+      ],
+      "amp": [
+        0.009,
+        0.82,
+        0.03,
+        0.32
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 2700,
+        "resonance": 0.08,
+        "env": 16,
+        "keytrack": 0.72
+      },
+      "filter_env": [
+        0.006,
+        0.25,
+        0,
+        0.24
+      ],
+      "motion": {
+        "shape": "sine",
+        "rate": 0.17,
+        "sync": false,
+        "depth": 2,
+        "amp": 0,
+        "pan": 0.03
+      },
+      "noise": 0,
+      "drift": 0.009,
+      "reverb": 0.07,
+      "delay": 0.018,
+      "reverb_time": 1.4,
+      "width": 0.5,
+      "highpass": 35,
+      "velocity": 21
+    },
+    {
+      "name": "Quartz Gong",
+      "role": "A slow low-register inharmonic resonator for isolated scene turns and spacious electronic harmony, with a stable supporting octave.",
+      "range": [
+        33,
+        72
+      ],
+      "tags": [
+        "low",
+        "gong",
+        "inharmonic",
+        "slow"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm3",
+          "level": 0.51,
+          "fm_amount": 0.4,
+          "ratio": 1.414,
+          "fm_amount2": 0.3,
+          "ratio2": 2.756,
+          "feedback": 0.03
+        },
+        {
+          "kind": "sine",
+          "level": 0.29,
+          "shape": 0,
+          "octave": -1,
+          "detune": 0.006
+        }
+      ],
+      "amp": [
+        0.035,
+        4.7,
+        0.075,
+        2.1
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 3900,
+        "resonance": 0.11,
+        "env": 12,
+        "keytrack": 0.72
+      },
+      "filter_env": [
+        0.019,
+        1.7,
+        0.06,
+        1.45
+      ],
+      "motion": {
+        "shape": "sine",
+        "rate": 0.11,
+        "sync": false,
+        "depth": 4,
+        "amp": 0.5,
+        "pan": 0.08
+      },
+      "noise": 0,
+      "drift": 0.006,
+      "reverb": 0.155,
+      "delay": 0.025,
+      "reverb_time": 3.2,
+      "width": 0.5,
+      "highpass": 22,
+      "velocity": 18
+    },
+    {
+      "name": "Pulse Lantern",
+      "role": "A tempo-aware harmonic bell with patterned color for held-note pulse beds and precise single-note ostinatos.",
+      "range": [
+        45,
+        86
+      ],
+      "tags": [
+        "rhythmic",
+        "harmonic",
+        "bell",
+        "pattern"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm2",
+          "level": 0.69,
+          "fm_amount": 0.12,
+          "ratio": 3,
+          "fm_amount2": 0.035,
+          "ratio2": 6,
+          "feedback": 0.007
+        },
+        {
+          "kind": "sine",
+          "level": 0.26,
+          "shape": 0,
+          "octave": 1,
+          "detune": -0.015
+        }
+      ],
+      "amp": [
+        0.006,
+        2,
+        0.19,
+        0.65
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 3600,
+        "resonance": 0.14,
+        "env": 9,
+        "keytrack": 0.72
+      },
+      "filter_env": [
+        0.004,
+        0.44,
+        0.08,
+        0.4
+      ],
+      "motion": {
+        "shape": "step",
+        "rate": 2,
+        "sync": true,
+        "depth": 7,
+        "amp": 2.2,
+        "pan": 0.08,
+        "steps": [
+          1,
+          -0.55,
+          0.25,
+          -0.55,
+          0.75,
+          -0.55,
+          -0.1,
+          -0.55,
+          1,
+          -0.55,
+          0.25,
+          -0.55,
+          0.6,
+          -0.55,
+          0.35,
+          -0.55
+        ]
+      },
+      "noise": 0,
+      "drift": 0.006,
+      "reverb": 0.09,
+      "delay": 0.095,
+      "reverb_time": 1.4,
+      "width": 0.5,
+      "highpass": 35,
+      "velocity": 18
+    },
+    {
+      "name": "Teal Resonator",
+      "role": "A restrained string-and-metal synthetic mallet for unusual chamber-like colors, close motifs and hybrid instrumental layering.",
+      "range": [
+        43,
+        84
+      ],
+      "tags": [
+        "resonant",
+        "hybrid",
+        "restrained",
+        "mallet"
+      ],
+      "oscillators": [
+        {
+          "kind": "string",
+          "level": 0.58,
+          "exciter": 4,
+          "decay": 0.92,
+          "stiffness": 0.08
+        },
+        {
+          "kind": "fm3",
+          "level": 0.35,
+          "fm_amount": 0.12,
+          "ratio": 1.125,
+          "fm_amount2": 0.03,
+          "ratio2": 4,
+          "feedback": 0.008
+        }
+      ],
+      "amp": [
+        0.008,
+        1.55,
+        0.04,
+        0.64
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 3400,
+        "resonance": 0.14,
+        "env": 21,
+        "keytrack": 0.72
+      },
+      "filter_env": [
+        0.005,
+        0.32,
+        0.02,
+        0.45
+      ],
+      "motion": {
+        "shape": "triangle",
+        "rate": 0.31,
+        "sync": false,
+        "depth": 3.2,
+        "amp": 0.4,
+        "pan": 0.06
+      },
+      "noise": 0,
+      "drift": 0.006,
+      "reverb": 0.095,
+      "delay": 0.03,
+      "reverb_time": 1.8,
+      "width": 0.5,
+      "highpass": 35,
+      "velocity": 22
+    }
+  ],
+  "variants": [
+    {
+      "name": "Close",
+      "intent": "Short, close articulation for fast figures and clear space between notes.",
+      "changes": {
+        "attack_scale": 0.75,
+        "decay_scale": 0.6,
+        "release_scale": 0.55,
+        "cutoff_scale": 0.85,
+        "fm_scale": 0.85,
+        "second_level_scale": 0.7,
+        "fx_scale": 0.25
+      }
+    },
+    {
+      "name": "Bloom",
+      "intent": "Soft attack and extended resonance for slow melody and widely spaced harmony.",
+      "changes": {
+        "attack_scale": 2.5,
+        "decay_scale": 1.8,
+        "release_scale": 1.9,
+        "cutoff_scale": 0.8,
+        "fm_scale": 0.65,
+        "second_level_scale": 1.3,
+        "motion_scale": 2.5,
+        "fx_scale": 1.5
+      }
+    },
+    {
+      "name": "Glass",
+      "intent": "Clearer upper partials and a leaner body for a featured melody or a bright repeating figure.",
+      "changes": {
+        "attack_scale": 0.8,
+        "decay_scale": 1.3,
+        "release_scale": 1.2,
+        "cutoff_scale": 1.5,
+        "fm_scale": 1.3,
+        "second_level_scale": 0.55,
+        "resonance_add": 0.04,
+        "detune_scale": 0.8
+      }
+    },
+    {
+      "name": "Alloy",
+      "intent": "Stronger metallic sidebands and body for deliberate accents and broader electronic percussion.",
+      "changes": {
+        "decay_scale": 0.9,
+        "release_scale": 1.4,
+        "cutoff_scale": 1.15,
+        "fm_scale": 1.9,
+        "second_level_scale": 1.6,
+        "resonance_add": 0.09,
+        "fx_scale": 0.85
+      }
+    },
+    {
+      "name": "Shadow",
+      "intent": "Darker partials, a softer edge and more body for restrained underscore and lower-register figures.",
+      "changes": {
+        "attack_scale": 1.8,
+        "decay_scale": 1.2,
+        "release_scale": 0.9,
+        "cutoff_scale": 0.48,
+        "fm_scale": 0.52,
+        "second_level_scale": 1.5,
+        "detune_scale": 1.25,
+        "fx_scale": 0.8
+      }
+    }
+  ]
+}

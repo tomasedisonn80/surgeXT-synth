@@ -1,0 +1,1835 @@
+{
+  "schema": 1,
+  "scope": "Current category03 native technical evidence; not listening or endorsement",
+  "catalog_sha256": "f8e0f6fdd299cbc18ad7410030f123a45777bdaf70c899ee8ee1d30680581331",
+  "bindings": {
+    "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+    "qa_script_sha256": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+    "config_sha256": "71dd0a2c00af6a8550a4e537d87eaeb60d9758310145e92077011cf341d37476",
+    "numpy_version": "2.3.5"
+  },
+  "preset_count": 100,
+  "scenario_count": 2300,
+  "gate_count": 500,
+  "macro_count": 800,
+  "measurable_macros": 795,
+  "unresolved_macros": [
+    {
+      "id": "SC03-028",
+      "name": "Frost Celeste Glass",
+      "macro": "Contour",
+      "status": "not_resolved_above_repeat",
+      "waveform_relative_rms_delta": 0.0,
+      "feature_distance": 0.0,
+      "waveform_threshold": 0.001,
+      "feature_threshold": 0.002,
+      "interpretation": "Measured change is not certification of useful audibility."
+    },
+    {
+      "id": "SC03-029",
+      "name": "Frost Celeste Alloy",
+      "macro": "Contour",
+      "status": "not_resolved_above_repeat",
+      "waveform_relative_rms_delta": 0.0,
+      "feature_distance": 0.0,
+      "waveform_threshold": 0.001,
+      "feature_threshold": 0.002,
+      "interpretation": "Measured change is not certification of useful audibility."
+    },
+    {
+      "id": "SC03-053",
+      "name": "Silver Nodes Glass",
+      "macro": "Contour",
+      "status": "not_resolved_above_repeat",
+      "waveform_relative_rms_delta": 0.0,
+      "feature_distance": 0.0,
+      "waveform_threshold": 0.001,
+      "feature_threshold": 0.002,
+      "interpretation": "Measured change is not certification of useful audibility."
+    },
+    {
+      "id": "SC03-078",
+      "name": "Starlit Drops Glass",
+      "macro": "Contour",
+      "status": "not_resolved_above_repeat",
+      "waveform_relative_rms_delta": 0.0,
+      "feature_distance": 0.0,
+      "waveform_threshold": 0.001,
+      "feature_threshold": 0.002,
+      "interpretation": "Measured change is not certification of useful audibility."
+    },
+    {
+      "id": "SC03-079",
+      "name": "Starlit Drops Alloy",
+      "macro": "Contour",
+      "status": "not_resolved_above_repeat",
+      "waveform_relative_rms_delta": 0.0,
+      "feature_distance": 0.0,
+      "waveform_threshold": 0.001,
+      "feature_threshold": 0.002,
+      "interpretation": "Measured change is not certification of useful audibility."
+    }
+  ],
+  "weak_macro_candidates": [
+    {
+      "id": "SC03-018",
+      "name": "Rain Tines Glass",
+      "macro": "Contour",
+      "status": "measurable_change",
+      "waveform_relative_rms_delta": 0.0018180679926708657,
+      "feature_distance": 3.8985003063155876e-05,
+      "waveform_threshold": 0.001,
+      "feature_threshold": 0.002,
+      "interpretation": "Measured change is not certification of useful audibility."
+    },
+    {
+      "id": "SC03-026",
+      "name": "Frost Celeste Close",
+      "macro": "Contour",
+      "status": "measurable_change",
+      "waveform_relative_rms_delta": 0.004992488217529598,
+      "feature_distance": 1.3474790540774564e-05,
+      "waveform_threshold": 0.001,
+      "feature_threshold": 0.002,
+      "interpretation": "Measured change is not certification of useful audibility."
+    },
+    {
+      "id": "SC03-028",
+      "name": "Frost Celeste Glass",
+      "macro": "Contour",
+      "status": "not_resolved_above_repeat",
+      "waveform_relative_rms_delta": 0.0,
+      "feature_distance": 0.0,
+      "waveform_threshold": 0.001,
+      "feature_threshold": 0.002,
+      "interpretation": "Measured change is not certification of useful audibility."
+    },
+    {
+      "id": "SC03-029",
+      "name": "Frost Celeste Alloy",
+      "macro": "Contour",
+      "status": "not_resolved_above_repeat",
+      "waveform_relative_rms_delta": 0.0,
+      "feature_distance": 0.0,
+      "waveform_threshold": 0.001,
+      "feature_threshold": 0.002,
+      "interpretation": "Measured change is not certification of useful audibility."
+    },
+    {
+      "id": "SC03-033",
+      "name": "Pocket Musicbox Glass",
+      "macro": "Contour",
+      "status": "measurable_change",
+      "waveform_relative_rms_delta": 0.0092998114414222,
+      "feature_distance": 9.500294493650919e-05,
+      "waveform_threshold": 0.001,
+      "feature_threshold": 0.002,
+      "interpretation": "Measured change is not certification of useful audibility."
+    },
+    {
+      "id": "SC03-053",
+      "name": "Silver Nodes Glass",
+      "macro": "Contour",
+      "status": "not_resolved_above_repeat",
+      "waveform_relative_rms_delta": 0.0,
+      "feature_distance": 0.0,
+      "waveform_threshold": 0.001,
+      "feature_threshold": 0.002,
+      "interpretation": "Measured change is not certification of useful audibility."
+    },
+    {
+      "id": "SC03-063",
+      "name": "Ceramic Hands Glass",
+      "macro": "Contour",
+      "status": "measurable_change",
+      "waveform_relative_rms_delta": 0.009867301632639583,
+      "feature_distance": 0.00038521805797387076,
+      "waveform_threshold": 0.001,
+      "feature_threshold": 0.002,
+      "interpretation": "Measured change is not certification of useful audibility."
+    },
+    {
+      "id": "SC03-076",
+      "name": "Starlit Drops Close",
+      "macro": "Contour",
+      "status": "measurable_change",
+      "waveform_relative_rms_delta": 0.00928032658498662,
+      "feature_distance": 4.968365361405701e-05,
+      "waveform_threshold": 0.001,
+      "feature_threshold": 0.002,
+      "interpretation": "Measured change is not certification of useful audibility."
+    },
+    {
+      "id": "SC03-078",
+      "name": "Starlit Drops Glass",
+      "macro": "Contour",
+      "status": "not_resolved_above_repeat",
+      "waveform_relative_rms_delta": 0.0,
+      "feature_distance": 0.0,
+      "waveform_threshold": 0.001,
+      "feature_threshold": 0.002,
+      "interpretation": "Measured change is not certification of useful audibility."
+    },
+    {
+      "id": "SC03-079",
+      "name": "Starlit Drops Alloy",
+      "macro": "Contour",
+      "status": "not_resolved_above_repeat",
+      "waveform_relative_rms_delta": 0.0,
+      "feature_distance": 0.0,
+      "waveform_threshold": 0.001,
+      "feature_threshold": 0.002,
+      "interpretation": "Measured change is not certification of useful audibility."
+    }
+  ],
+  "warnings": [
+    {
+      "id": "SC03-028",
+      "name": "Frost Celeste Glass",
+      "key": "macro_2_max",
+      "warning": "Contour response not resolved above repeat/measurement threshold; targeted musical review is required"
+    },
+    {
+      "id": "SC03-029",
+      "name": "Frost Celeste Alloy",
+      "key": "macro_2_max",
+      "warning": "Contour response not resolved above repeat/measurement threshold; targeted musical review is required"
+    },
+    {
+      "id": "SC03-053",
+      "name": "Silver Nodes Glass",
+      "key": "macro_2_max",
+      "warning": "Contour response not resolved above repeat/measurement threshold; targeted musical review is required"
+    },
+    {
+      "id": "SC03-078",
+      "name": "Starlit Drops Glass",
+      "key": "macro_2_max",
+      "warning": "Contour response not resolved above repeat/measurement threshold; targeted musical review is required"
+    },
+    {
+      "id": "SC03-079",
+      "name": "Starlit Drops Alloy",
+      "key": "macro_2_max",
+      "warning": "Contour response not resolved above repeat/measurement threshold; targeted musical review is required"
+    }
+  ],
+  "repeat_bit_identical_count": 100,
+  "unique_full_pcm_hashes": 100,
+  "default_statistics": {
+    "peak": {
+      "min": 0.029962899163365364,
+      "median": 0.055264635011553764,
+      "max": 0.09826695173978806,
+      "min_id": "SC03-011",
+      "max_id": "SC03-039"
+    },
+    "active_rms": {
+      "min": 0.0017535585456323834,
+      "median": 0.007534407946773042,
+      "max": 0.017586039187548638,
+      "min_id": "SC03-006",
+      "max_id": "SC03-088"
+    },
+    "rms": {
+      "min": 0.0011479735410174902,
+      "median": 0.004921586800732271,
+      "max": 0.00924661794938424,
+      "min_id": "SC03-006",
+      "max_id": "SC03-060"
+    },
+    "spectral_centroid_hz": {
+      "min": 222.58933144713595,
+      "median": 443.4605397086485,
+      "max": 8079.900644119034,
+      "min_id": "SC03-015",
+      "max_id": "SC03-073"
+    },
+    "mono_energy_ratio": {
+      "min": 0.9895381202960418,
+      "median": 0.9996418448126487,
+      "max": 0.9999814898039231,
+      "min_id": "SC03-092",
+      "max_id": "SC03-015"
+    },
+    "tail_500ms_rms": {
+      "min": 1.9051735661050378e-16,
+      "median": 3.7369697438505325e-13,
+      "max": 1.0034857703657658e-09,
+      "min_id": "SC03-011",
+      "max_id": "SC03-086"
+    },
+    "tail_to_active_db": {
+      "min": -240.0,
+      "median": -204.80096401387715,
+      "max": -142.38171702697213,
+      "min_id": "SC03-001",
+      "max_id": "SC03-046"
+    }
+  },
+  "maximum_scenario_peak": {
+    "id": "SC03-071",
+    "name": "Quiet Anvils Close",
+    "scenario": "polyphony_stress",
+    "peak": 0.7199791073799133
+  },
+  "minimum_scenario_mono": {
+    "id": "SC03-087",
+    "name": "Quartz Gong Bloom",
+    "scenario": "macros_aggressive",
+    "ratio": 0.6628288474999923
+  },
+  "maximum_abs_dc": {
+    "id": "SC03-087",
+    "scenario": "macro_7_max",
+    "value": 1.0612042062252908e-05
+  },
+  "range_extremes": {
+    "range_low": {
+      "minimum_peak": 0.020503809675574303,
+      "maximum_peak": 0.09856688231229782,
+      "minimum_active_rms": 0.0008803312977897538,
+      "maximum_active_rms": 0.01699120814970226
+    },
+    "range_high": {
+      "minimum_peak": 0.03517616540193558,
+      "maximum_peak": 0.09675199538469315,
+      "minimum_active_rms": 0.0012370541514709005,
+      "maximum_active_rms": 0.019069644537236804
+    },
+    "macro_7_max": {
+      "minimum_peak": 0.033070825040340424,
+      "maximum_peak": 0.10164722800254822,
+      "minimum_active_rms": 0.002408209771114162,
+      "maximum_active_rms": 0.025982251419158622
+    }
+  },
+  "velocity_hard_to_soft_db": {
+    "min": 13.446170706629541,
+    "median": 14.9605849569891,
+    "max": 17.951201558670796
+  },
+  "within_family_pairs": 200,
+  "matched_active_pairs": 200,
+  "closest_family_pairs": [
+    {
+      "id_a": "SC03-008",
+      "id_b": "SC03-010",
+      "name_a": "Hollow Slats Glass",
+      "name_b": "Hollow Slats Shadow",
+      "family": "Hollow Slats",
+      "feature_distance": 0.026029542079836716,
+      "spectral_distance": 0.012791445550319015,
+      "envelope_distance": 0.026476193059035407,
+      "same_active_fixture": true,
+      "same_duration": true,
+      "active_rms_ratio_db": 5.016581913708835,
+      "centroids": [
+        314.61573890358653,
+        312.03195329512675
+      ]
+    },
+    {
+      "id_a": "SC03-008",
+      "id_b": "SC03-009",
+      "name_a": "Hollow Slats Glass",
+      "name_b": "Hollow Slats Alloy",
+      "family": "Hollow Slats",
+      "feature_distance": 0.030273427672339353,
+      "spectral_distance": 0.008107893619837773,
+      "envelope_distance": 0.04433106810500316,
+      "same_active_fixture": true,
+      "same_duration": true,
+      "active_rms_ratio_db": 2.968465343024839,
+      "centroids": [
+        314.61573890358653,
+        316.7578908498894
+      ]
+    },
+    {
+      "id_a": "SC03-083",
+      "id_b": "SC03-085",
+      "name_a": "Warm Toybox Glass",
+      "name_b": "Warm Toybox Shadow",
+      "family": "Warm Toybox",
+      "feature_distance": 0.032546503771151265,
+      "spectral_distance": 0.0008005782293823544,
+      "envelope_distance": 0.06349185108353782,
+      "same_active_fixture": true,
+      "same_duration": true,
+      "active_rms_ratio_db": 3.0685844209721367,
+      "centroids": [
+        415.3849910067732,
+        415.785924393373
+      ]
+    },
+    {
+      "id_a": "SC03-063",
+      "id_b": "SC03-065",
+      "name_a": "Ceramic Hands Glass",
+      "name_b": "Ceramic Hands Shadow",
+      "family": "Ceramic Hands",
+      "feature_distance": 0.046412355884960454,
+      "spectral_distance": 0.01731880919793262,
+      "envelope_distance": 0.05818709337405568,
+      "same_active_fixture": true,
+      "same_duration": true,
+      "active_rms_ratio_db": 4.788184579415973,
+      "centroids": [
+        343.44111455415907,
+        329.1017862059221
+      ]
+    },
+    {
+      "id_a": "SC03-009",
+      "id_b": "SC03-010",
+      "name_a": "Hollow Slats Alloy",
+      "name_b": "Hollow Slats Shadow",
+      "family": "Hollow Slats",
+      "feature_distance": 0.047103847079430994,
+      "spectral_distance": 0.012044387852124049,
+      "envelope_distance": 0.07011891845461389,
+      "same_active_fixture": true,
+      "same_duration": true,
+      "active_rms_ratio_db": 2.0481165706839977,
+      "centroids": [
+        316.7578908498894,
+        312.03195329512675
+      ]
+    },
+    {
+      "id_a": "SC03-003",
+      "id_b": "SC03-005",
+      "name_a": "Amber Marimba Glass",
+      "name_b": "Amber Marimba Shadow",
+      "family": "Amber Marimba",
+      "feature_distance": 0.051416609417682266,
+      "spectral_distance": 0.03433292644297334,
+      "envelope_distance": 0.03416736594941786,
+      "same_active_fixture": true,
+      "same_duration": true,
+      "active_rms_ratio_db": 2.8665158284426395,
+      "centroids": [
+        338.6778559225996,
+        326.4042418122281
+      ]
+    },
+    {
+      "id_a": "SC03-006",
+      "id_b": "SC03-009",
+      "name_a": "Hollow Slats Close",
+      "name_b": "Hollow Slats Alloy",
+      "family": "Hollow Slats",
+      "feature_distance": 0.05361618731348676,
+      "spectral_distance": 0.01918176290610135,
+      "envelope_distance": 0.06886884881477082,
+      "same_active_fixture": true,
+      "same_duration": true,
+      "active_rms_ratio_db": 4.5503920089743595,
+      "centroids": [
+        314.2159291644094,
+        316.7578908498894
+      ]
+    },
+    {
+      "id_a": "SC03-084",
+      "id_b": "SC03-085",
+      "name_a": "Warm Toybox Alloy",
+      "name_b": "Warm Toybox Shadow",
+      "family": "Warm Toybox",
+      "feature_distance": 0.05470468490779003,
+      "spectral_distance": 0.00013935802475998181,
+      "envelope_distance": 0.10913065376606008,
+      "same_active_fixture": true,
+      "same_duration": true,
+      "active_rms_ratio_db": 3.2618782614733215,
+      "centroids": [
+        416.0719328798588,
+        415.785924393373
+      ]
+    },
+    {
+      "id_a": "SC03-011",
+      "id_b": "SC03-013",
+      "name_a": "Cedar Knocks Close",
+      "name_b": "Cedar Knocks Glass",
+      "family": "Cedar Knocks",
+      "feature_distance": 0.05941311194375278,
+      "spectral_distance": 0.02346777519879354,
+      "envelope_distance": 0.07189067348991848,
+      "same_active_fixture": true,
+      "same_duration": true,
+      "active_rms_ratio_db": 3.6232566686583425,
+      "centroids": [
+        240.79727258652593,
+        246.99876283743532
+      ]
+    },
+    {
+      "id_a": "SC03-081",
+      "id_b": "SC03-084",
+      "name_a": "Warm Toybox Close",
+      "name_b": "Warm Toybox Alloy",
+      "family": "Warm Toybox",
+      "feature_distance": 0.06594810940602037,
+      "spectral_distance": 0.0008581617067761519,
+      "envelope_distance": 0.13017989539848845,
+      "same_active_fixture": true,
+      "same_duration": true,
+      "active_rms_ratio_db": 3.3902319659600733,
+      "centroids": [
+        415.3883752477606,
+        416.0719328798588
+      ]
+    },
+    {
+      "id_a": "SC03-006",
+      "id_b": "SC03-008",
+      "name_a": "Hollow Slats Close",
+      "name_b": "Hollow Slats Glass",
+      "family": "Hollow Slats",
+      "feature_distance": 0.06910836711339942,
+      "spectral_distance": 0.012991701084824838,
+      "envelope_distance": 0.11223333205714915,
+      "same_active_fixture": true,
+      "same_duration": true,
+      "active_rms_ratio_db": 1.581926665949522,
+      "centroids": [
+        314.2159291644094,
+        314.61573890358653
+      ]
+    },
+    {
+      "id_a": "SC03-007",
+      "id_b": "SC03-010",
+      "name_a": "Hollow Slats Bloom",
+      "name_b": "Hollow Slats Shadow",
+      "family": "Hollow Slats",
+      "feature_distance": 0.07263734219352666,
+      "spectral_distance": 0.0009231235004196843,
+      "envelope_distance": 0.14342843738621394,
+      "same_active_fixture": true,
+      "same_duration": true,
+      "active_rms_ratio_db": -2.457730375388025,
+      "centroids": [
+        312.16420156646603,
+        312.03195329512675
+      ]
+    }
+  ],
+  "farthest_family_pairs": [
+    {
+      "id_a": "SC03-042",
+      "id_b": "SC03-044",
+      "name_a": "Paper Glass Bloom",
+      "name_b": "Paper Glass Alloy",
+      "family": "Paper Glass",
+      "feature_distance": 1.232807251126374,
+      "spectral_distance": 1.066416028528446,
+      "envelope_distance": 0.33278244519585576,
+      "same_active_fixture": true,
+      "same_duration": false,
+      "active_rms_ratio_db": -5.379065541535533,
+      "centroids": [
+        476.7092602438076,
+        934.1683466542077
+      ]
+    },
+    {
+      "id_a": "SC03-041",
+      "id_b": "SC03-044",
+      "name_a": "Paper Glass Close",
+      "name_b": "Paper Glass Alloy",
+      "family": "Paper Glass",
+      "feature_distance": 1.1463763223429797,
+      "spectral_distance": 1.0718812377353004,
+      "envelope_distance": 0.14899016921535857,
+      "same_active_fixture": true,
+      "same_duration": true,
+      "active_rms_ratio_db": 1.6643110228286533,
+      "centroids": [
+        473.18642117798214,
+        934.1683466542077
+      ]
+    },
+    {
+      "id_a": "SC03-017",
+      "id_b": "SC03-019",
+      "name_a": "Rain Tines Bloom",
+      "name_b": "Rain Tines Alloy",
+      "family": "Rain Tines",
+      "feature_distance": 1.1391011558671957,
+      "spectral_distance": 0.8848762679289846,
+      "envelope_distance": 0.5084497758764225,
+      "same_active_fixture": true,
+      "same_duration": false,
+      "active_rms_ratio_db": -5.325163209379772,
+      "centroids": [
+        487.18240245875876,
+        1596.4788093572945
+      ]
+    },
+    {
+      "id_a": "SC03-066",
+      "id_b": "SC03-068",
+      "name_a": "Orbit Plates Close",
+      "name_b": "Orbit Plates Glass",
+      "family": "Orbit Plates",
+      "feature_distance": 1.124745354468069,
+      "spectral_distance": 0.81176024434925,
+      "envelope_distance": 0.6259702202376378,
+      "same_active_fixture": true,
+      "same_duration": false,
+      "active_rms_ratio_db": 4.798239935655794,
+      "centroids": [
+        284.26607422186305,
+        684.8691586247444
+      ]
+    },
+    {
+      "id_a": "SC03-044",
+      "id_b": "SC03-045",
+      "name_a": "Paper Glass Alloy",
+      "name_b": "Paper Glass Shadow",
+      "family": "Paper Glass",
+      "feature_distance": 1.1216840753009838,
+      "spectral_distance": 1.0605796860514378,
+      "envelope_distance": 0.12220877849909191,
+      "same_active_fixture": true,
+      "same_duration": true,
+      "active_rms_ratio_db": 4.224181016991758,
+      "centroids": [
+        934.1683466542077,
+        479.04122211757556
+      ]
+    },
+    {
+      "id_a": "SC03-068",
+      "id_b": "SC03-070",
+      "name_a": "Orbit Plates Glass",
+      "name_b": "Orbit Plates Shadow",
+      "family": "Orbit Plates",
+      "feature_distance": 1.1103814390539295,
+      "spectral_distance": 0.8936441713090347,
+      "envelope_distance": 0.4334745354897893,
+      "same_active_fixture": true,
+      "same_duration": false,
+      "active_rms_ratio_db": 0.35597927958115927,
+      "centroids": [
+        684.8691586247444,
+        254.26017212905805
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "id": "SC03-001",
+      "name": "Amber Marimba Close",
+      "patch_sha256": "d3576fb9f660a1f4fdd531e81f91b1c4a6cb7abb04ffe347290b17c03576cd37",
+      "qa_report_sha256": "5fd70559dc359e81eff5f9a305000639e033bc7f19b431a6bcebde7fdd403c70",
+      "default_peak": 0.036490295082330704,
+      "default_active_rms": 0.0033043416494888665,
+      "default_centroid_hz": 329.6001398963926,
+      "max_scenario_peak": 0.7199105024337769,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-002",
+      "name": "Amber Marimba Bloom",
+      "patch_sha256": "d29387d27b448bb488524b5372bc98687757343f55a9a5d70725221d66bd980d",
+      "qa_report_sha256": "28eaa429cc047ba76708455ccdca41187a83b0cc2fe32ece5d8c334c0a1c27c4",
+      "default_peak": 0.065717913210392,
+      "default_active_rms": 0.010002611121499999,
+      "default_centroid_hz": 327.36587930586114,
+      "max_scenario_peak": 0.719904363155365,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-003",
+      "name": "Amber Marimba Glass",
+      "patch_sha256": "65ed8d1679c32dd32c9f86e63174a8f456b55115b08736c47a3b8bca13364c37",
+      "qa_report_sha256": "fe47d3e84bfdf7c22cbca67f1a111ffb2336e604ac0b9c96c2cd48b3b7241d3f",
+      "default_peak": 0.037090178579092026,
+      "default_active_rms": 0.004786750723811384,
+      "default_centroid_hz": 338.6778559225996,
+      "max_scenario_peak": 0.7199146151542664,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-004",
+      "name": "Amber Marimba Alloy",
+      "patch_sha256": "8501caedd837ced6e1ed123914951162959749875fc24c13faaf0bcb423cd755",
+      "qa_report_sha256": "4de5057b1a5c26a4dbb8991d34047a0bee759b30b8ec18817536e9a4ee29a972",
+      "default_peak": 0.04351364076137543,
+      "default_active_rms": 0.0036440651154715713,
+      "default_centroid_hz": 447.039443918465,
+      "max_scenario_peak": 0.7199263572692871,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-005",
+      "name": "Amber Marimba Shadow",
+      "patch_sha256": "e41989ad0e909fe77e8ae82bee6d1cba832bf823de17e3e688859ce1982f5944",
+      "qa_report_sha256": "29ddd4ea756fb17a5bd459eb76f582793969500fff39a3c2bd12f8e7059a00aa",
+      "default_peak": 0.05348571389913559,
+      "default_active_rms": 0.006658349734616677,
+      "default_centroid_hz": 326.4042418122281,
+      "max_scenario_peak": 0.7199044227600098,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-006",
+      "name": "Hollow Slats Close",
+      "patch_sha256": "56dc1884543d56af48845d2ad78241c67442f3dd6e33c8214b1857d930f0a1fe",
+      "qa_report_sha256": "aec07d0c516a6001c0aa17e86b40a5a0a3a4734d000af6ca110d5a27a42af2f8",
+      "default_peak": 0.03268259018659592,
+      "default_active_rms": 0.0017535585456323834,
+      "default_centroid_hz": 314.2159291644094,
+      "max_scenario_peak": 0.7199513912200928,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-007",
+      "name": "Hollow Slats Bloom",
+      "patch_sha256": "300a12aa1152663bb35e8fc904349758ce2cdf19bf00dbfb49dfe9569f932904",
+      "qa_report_sha256": "086fd99764d47cfa7c7ba93ee7483902bbe261503af278f02c6aa18f5af71f7c",
+      "default_peak": 0.05051612854003906,
+      "default_active_rms": 0.004974302793283411,
+      "default_centroid_hz": 312.16420156646603,
+      "max_scenario_peak": 0.7198843359947205,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-008",
+      "name": "Hollow Slats Glass",
+      "patch_sha256": "32081eac5f4250a685746cb982b639255a487b82ee323c07de005304e3a49a73",
+      "qa_report_sha256": "0187049973d92a3627c8d703614e51bc5812cb072088a11bb9a50c0bdd1ffcce",
+      "default_peak": 0.03365973383188248,
+      "default_active_rms": 0.0021038588705129635,
+      "default_centroid_hz": 314.61573890358653,
+      "max_scenario_peak": 0.7199528813362122,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-009",
+      "name": "Hollow Slats Alloy",
+      "patch_sha256": "10f0e0e8cb51e60e8fb46a2e3f31b1f2e27989eb55bc3a1059efea4862f2d0ab",
+      "qa_report_sha256": "02ce510989cdfa2f6412a1c8ae80fa3f284bf37ad3607fb5e88fbc45acd3361e",
+      "default_peak": 0.038888752460479736,
+      "default_active_rms": 0.002961009976069339,
+      "default_centroid_hz": 316.7578908498894,
+      "max_scenario_peak": 0.719889223575592,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-010",
+      "name": "Hollow Slats Shadow",
+      "patch_sha256": "bfa11fb3760b639ad88929fd015b791ee1be1b21db6f371433fbd07cca608364",
+      "qa_report_sha256": "db859bed562a39eaef41b36443658455078191d79fc7f0d82a449e7a09d54bfe",
+      "default_peak": 0.045049089938402176,
+      "default_active_rms": 0.0037483980141741766,
+      "default_centroid_hz": 312.03195329512675,
+      "max_scenario_peak": 0.7198822498321533,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-011",
+      "name": "Cedar Knocks Close",
+      "patch_sha256": "0b7cedd48639b29fa94044dd7113bc63a703168cd65139e3ec8a8f18d1e9b481",
+      "qa_report_sha256": "56feefc2ae5883addf748bcb296999e0bbfe21407e7342cfbbdbe88f0e6c05ea",
+      "default_peak": 0.029962899163365364,
+      "default_active_rms": 0.0018634680797633284,
+      "default_centroid_hz": 240.79727258652593,
+      "max_scenario_peak": 0.7198958992958069,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-012",
+      "name": "Cedar Knocks Bloom",
+      "patch_sha256": "252e2ce58a80604db633e710cdbf6430be2f3693636c4bc0a9cbcbdd454259d3",
+      "qa_report_sha256": "4a1289334caa5d2a24f372bc5ec46876be38eb9be3863e687c4ee717f2d993ab",
+      "default_peak": 0.04828377813100815,
+      "default_active_rms": 0.00419082749818631,
+      "default_centroid_hz": 227.73730035483516,
+      "max_scenario_peak": 0.7198814749717712,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-013",
+      "name": "Cedar Knocks Glass",
+      "patch_sha256": "7791cd9f6341a9aa9857fbfc1055ddd4157f1acc2bac2d7b2bdfbf2959420033",
+      "qa_report_sha256": "1dedf40b231d40802a833e603735e05cde8a276ebd934a1097584cfc65126f52",
+      "default_peak": 0.03222741559147835,
+      "default_active_rms": 0.002828035073746883,
+      "default_centroid_hz": 246.99876283743532,
+      "max_scenario_peak": 0.7198958992958069,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-014",
+      "name": "Cedar Knocks Alloy",
+      "patch_sha256": "b34e79383e522bac2c5526f81b57a284a6286b2588309fd64fab128db29e8cf3",
+      "qa_report_sha256": "5b8b63fe4db3eeb93e474bf94f6a00512c3e659b405e849f27fb8fc300b3c256",
+      "default_peak": 0.03515871241688728,
+      "default_active_rms": 0.002228917734307729,
+      "default_centroid_hz": 251.64514856520933,
+      "max_scenario_peak": 0.7198942303657532,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-015",
+      "name": "Cedar Knocks Shadow",
+      "patch_sha256": "92a3a4b67faa2efeeb9ecdd116cd676e62ad14b8990d2b2dfa4572d4318729be",
+      "qa_report_sha256": "94a48e09d8c0e6a118ea11ee1a5ad2ed2bf0b041fdd6e093f3cc3c2a9ac6d690",
+      "default_peak": 0.03987932950258255,
+      "default_active_rms": 0.002862465152549969,
+      "default_centroid_hz": 222.58933144713595,
+      "max_scenario_peak": 0.7198837995529175,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-016",
+      "name": "Rain Tines Close",
+      "patch_sha256": "6f8f34c12d8eebcbd194d2239bdd74499de2deaf652b39eb5e7e28263f0f6d98",
+      "qa_report_sha256": "af09e188d2e9497a6610279b5f875672851412c15967e35dfe7ad5df75488b0b",
+      "default_peak": 0.040182773023843765,
+      "default_active_rms": 0.005520338728414876,
+      "default_centroid_hz": 461.17400868711604,
+      "max_scenario_peak": 0.7199263572692871,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-017",
+      "name": "Rain Tines Bloom",
+      "patch_sha256": "ecebd6b876a94c74ad50106f399332fb4a558d11113b3629dea2b3203dc0a117",
+      "qa_report_sha256": "bb2a859438c8575263e74775c319d0f1d6de2a2e425dbeed0111f4c0089069e0",
+      "default_peak": 0.05594388395547867,
+      "default_active_rms": 0.01204111368410501,
+      "default_centroid_hz": 487.18240245875876,
+      "max_scenario_peak": 0.7165631055831909,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-018",
+      "name": "Rain Tines Glass",
+      "patch_sha256": "d2fb4d57fb4cd885ef638e3d73fc0821b5fa3e92887bacc8cb5a444a596a5c3e",
+      "qa_report_sha256": "b23d0b88ffa7ea7322faf6763f9f3734b57d95c2bddd4645106619419ac011f5",
+      "default_peak": 0.04416538402438164,
+      "default_active_rms": 0.009137250623039543,
+      "default_centroid_hz": 505.39486861012693,
+      "max_scenario_peak": 0.7199337482452393,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-019",
+      "name": "Rain Tines Alloy",
+      "patch_sha256": "bb92b563c5699bb065ad542740126179ac7eca54180313830f084a9597f69b62",
+      "qa_report_sha256": "3a5da60d594651f1f7840bcd31b157c258e31dfaddfb24fcbcfafa76120e0c51",
+      "default_peak": 0.05222655087709427,
+      "default_active_rms": 0.0065224160238103075,
+      "default_centroid_hz": 1596.4788093572945,
+      "max_scenario_peak": 0.7199476361274719,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-020",
+      "name": "Rain Tines Shadow",
+      "patch_sha256": "a2d032f84165f1fe39e5006b9f83e0d280bd38e7a7cbdb37917611d5fa811c4e",
+      "qa_report_sha256": "9d6b8709ad859af21ba2d27994d21cf80f089886bc62e7fa761809cb2621706b",
+      "default_peak": 0.058240532875061035,
+      "default_active_rms": 0.010011115222780705,
+      "default_centroid_hz": 501.0347304673728,
+      "max_scenario_peak": 0.7165634036064148,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-021",
+      "name": "Violet Vibra Close",
+      "patch_sha256": "770e0c4cc6e49655c7923b3e602060f32a9a55fecb364e718adfbc2edfa84098",
+      "qa_report_sha256": "2889662d3231213b50a88850b9fec2cafaead23f8027eab70d05571f123d27a9",
+      "default_peak": 0.04672690108418465,
+      "default_active_rms": 0.00759369728722481,
+      "default_centroid_hz": 311.21125460586404,
+      "max_scenario_peak": 0.7190285921096802,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-022",
+      "name": "Violet Vibra Bloom",
+      "patch_sha256": "8dc194ae1d4235748c56fae1de6e6a1234aef8091e458ed3828377b407356b8d",
+      "qa_report_sha256": "1984997e4d09b64a01584f88422ca9e0630d7066a790486c0099df113b5d0df7",
+      "default_peak": 0.060937393456697464,
+      "default_active_rms": 0.015688463791886847,
+      "default_centroid_hz": 311.1098918781816,
+      "max_scenario_peak": 0.709269106388092,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-023",
+      "name": "Violet Vibra Glass",
+      "patch_sha256": "fbf9e1754148dd8e0eea2e378880f3cdf7f21e2d3a869137306acef16de8334d",
+      "qa_report_sha256": "25ea7f67ee0533897725775fb13be15c5aafdda3194e17ca0f2d0d28c8e2446d",
+      "default_peak": 0.04856046661734581,
+      "default_active_rms": 0.011076024277020117,
+      "default_centroid_hz": 311.7057639788325,
+      "max_scenario_peak": 0.7190341949462891,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-024",
+      "name": "Violet Vibra Alloy",
+      "patch_sha256": "3210b4729469b5b7d0e343b1ed49901d3a4c439f0bf09b33a54a5485e7e53810",
+      "qa_report_sha256": "e0d8ec85b709c25ea3c65e7aad29291bde467ce2d2fae37066d4d05157b55a01",
+      "default_peak": 0.05457407236099243,
+      "default_active_rms": 0.010393370441672187,
+      "default_centroid_hz": 313.27549939021367,
+      "max_scenario_peak": 0.7190118432044983,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-025",
+      "name": "Violet Vibra Shadow",
+      "patch_sha256": "932ac800ba4a356f9ddb081ccda4b06369900157c6797f9915a2c3c5e468d836",
+      "qa_report_sha256": "6a8fc4d2e84bec2fd1bce8eca220b1827c87ec74865d77b8a2807379bc65a249",
+      "default_peak": 0.062146421521902084,
+      "default_active_rms": 0.013431083923885855,
+      "default_centroid_hz": 311.0499156333924,
+      "max_scenario_peak": 0.7092798352241516,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-026",
+      "name": "Frost Celeste Close",
+      "patch_sha256": "c07c64135221e9f8b5507b7d3e73d252147e035e78c6876d9a0dd438db25afb7",
+      "qa_report_sha256": "af792e90ca64193eb1aa018980a0860472767dd7cd6c73fb73d1789adfa10a8f",
+      "default_peak": 0.044901032000780106,
+      "default_active_rms": 0.004602076940819184,
+      "default_centroid_hz": 672.5016476059559,
+      "max_scenario_peak": 0.7199355363845825,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-027",
+      "name": "Frost Celeste Bloom",
+      "patch_sha256": "800723c1985f9731e45893c2ec3261fc24bc12c354a080799bcae732fb3f1327",
+      "qa_report_sha256": "e523c54fa04a1c5f793775b64b38fe3e0aa01d1810636febe8aff319b0d00da0",
+      "default_peak": 0.057924047112464905,
+      "default_active_rms": 0.009331327630352165,
+      "default_centroid_hz": 741.1002966633519,
+      "max_scenario_peak": 0.7175511717796326,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-028",
+      "name": "Frost Celeste Glass",
+      "patch_sha256": "e0d065fab7821149ae4a0903b8b424060f352e0bc17321116a73ddcaae25e6aa",
+      "qa_report_sha256": "0398f2c420d3c5278f15b98352f25af668a7cacd121dfb4f608442635ff64cc1",
+      "default_peak": 0.046704843640327454,
+      "default_active_rms": 0.0070402226761048445,
+      "default_centroid_hz": 716.1008438724933,
+      "max_scenario_peak": 0.7199362516403198,
+      "warnings": 1
+    },
+    {
+      "id": "SC03-029",
+      "name": "Frost Celeste Alloy",
+      "patch_sha256": "d33d69bf8ad6442dabf34108b6da84c947b08c120146a6a491af2ce8251b2721",
+      "qa_report_sha256": "fbcbf7075cac9852b60fc6ee3be718d87a4dc1778c61becec965e28d8c387e6f",
+      "default_peak": 0.04509876295924187,
+      "default_active_rms": 0.004773871107642552,
+      "default_centroid_hz": 1132.448711379573,
+      "max_scenario_peak": 0.7199426293373108,
+      "warnings": 1
+    },
+    {
+      "id": "SC03-030",
+      "name": "Frost Celeste Shadow",
+      "patch_sha256": "38a37e1c76333852e3a34485f2f4bf54ed78d4d5a6bcc7716a683c096a3b1dc9",
+      "qa_report_sha256": "99dde6682bed9d6ab3f7c364a3c8134abc85429d3d5f88f8dfacbe7949c8215d",
+      "default_peak": 0.06028174236416817,
+      "default_active_rms": 0.007743430075639532,
+      "default_centroid_hz": 766.5106076363912,
+      "max_scenario_peak": 0.7175494432449341,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-031",
+      "name": "Pocket Musicbox Close",
+      "patch_sha256": "fa2c36b816d5cbd3516f68464b73d29067a506be8bf8f0c75cdb11c540e23186",
+      "qa_report_sha256": "ea7d54766b461ed92563febfffeaa5ea15b4650a1532b9fa8224028533894944",
+      "default_peak": 0.03636263683438301,
+      "default_active_rms": 0.00414307819406233,
+      "default_centroid_hz": 610.0102697271587,
+      "max_scenario_peak": 0.7199322581291199,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-032",
+      "name": "Pocket Musicbox Bloom",
+      "patch_sha256": "b940a6d64d83f1d01604022a7b443571311aded86da8f4f25f608659d037db9b",
+      "qa_report_sha256": "5c8fb43283ad11755a93bc0f57ca31f8f9c26f3c1159925f97b8391070eaa34c",
+      "default_peak": 0.05655580386519432,
+      "default_active_rms": 0.010515116565678667,
+      "default_centroid_hz": 650.5727494221564,
+      "max_scenario_peak": 0.7172625064849854,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-033",
+      "name": "Pocket Musicbox Glass",
+      "patch_sha256": "75a52701cc167b5f260aafa800387a912f28f3dc188d9659dad7810f437bb67a",
+      "qa_report_sha256": "fe470fac1eec83b48e6eaddc329870ae4c47ac6b890f781ccb0f8dfdf2cf0782",
+      "default_peak": 0.03772548958659172,
+      "default_active_rms": 0.005769528211238876,
+      "default_centroid_hz": 1012.6550730516283,
+      "max_scenario_peak": 0.7199404239654541,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-034",
+      "name": "Pocket Musicbox Alloy",
+      "patch_sha256": "b9b0ecb983b4cff7833c06815b93a57556b23f7ae3abcdde410934c8dce16696",
+      "qa_report_sha256": "763968ef6d13156bcea484ced27bf3314feb2fa07cf24308dd8663d8b1f14c0c",
+      "default_peak": 0.04418804123997688,
+      "default_active_rms": 0.006112772461313254,
+      "default_centroid_hz": 1654.2097722882863,
+      "max_scenario_peak": 0.7199511528015137,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-035",
+      "name": "Pocket Musicbox Shadow",
+      "patch_sha256": "4b652bd41cdc8449e4edda4fecac9b0b7110662c073e3394a3877330cc347afb",
+      "qa_report_sha256": "c9a460ca8c9554d7485319f100c3dc71e8135e0ccb4a22610d812ef23179d6bd",
+      "default_peak": 0.05768837407231331,
+      "default_active_rms": 0.008842684088318594,
+      "default_centroid_hz": 668.8847752002148,
+      "max_scenario_peak": 0.7172603011131287,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-036",
+      "name": "Prism Chimes Close",
+      "patch_sha256": "34cd5213f9f5f6dd551ac29bcdd5ce2d05d7255871464d0fac283636be638fbe",
+      "qa_report_sha256": "b038915c313dafd018fc9b75a22d10539db02d265363df99a31dfb23ed0e6552",
+      "default_peak": 0.06716275215148926,
+      "default_active_rms": 0.009650415729150767,
+      "default_centroid_hz": 1036.1267292239393,
+      "max_scenario_peak": 0.7178073525428772,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-037",
+      "name": "Prism Chimes Bloom",
+      "patch_sha256": "a051a5622231c358a75fbccfe208b5bc244f582fc0e9ac037e7af73fd6b02bfe",
+      "qa_report_sha256": "d1e4138b852262b920de0f86acdd89a9a9fff338138ff27572724f3b89ddd748",
+      "default_peak": 0.0593651682138443,
+      "default_active_rms": 0.01602487132362623,
+      "default_centroid_hz": 454.0524219297525,
+      "max_scenario_peak": 0.7155886292457581,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-038",
+      "name": "Prism Chimes Glass",
+      "patch_sha256": "89dda89ee95752890b2f48c36a8d9f39e510cec5940521fda8d232380b2716ea",
+      "qa_report_sha256": "1cce50916a4edc50ef30aaeb149ff51d353f9e53492f84fdf4dca61b8c1b5b44",
+      "default_peak": 0.05232911929488182,
+      "default_active_rms": 0.011669475269895356,
+      "default_centroid_hz": 3571.160898754203,
+      "max_scenario_peak": 0.7162068486213684,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-039",
+      "name": "Prism Chimes Alloy",
+      "patch_sha256": "267cb4b2f226ca6e06d3cf7f6edcb8ffa187d6973baa0a0b5f186feda359f286",
+      "qa_report_sha256": "c926be6999401cdffe8c21309ebd0dd07e9e948e6292ce4031da7d7c6cf52da5",
+      "default_peak": 0.09826695173978806,
+      "default_active_rms": 0.011121331166400123,
+      "default_centroid_hz": 6828.746308537306,
+      "max_scenario_peak": 0.7161428928375244,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-040",
+      "name": "Prism Chimes Shadow",
+      "patch_sha256": "920c34f653b2bc1e9c437dc799fa2e9f4eeab2b9e113de2e1809e344a87afdb9",
+      "qa_report_sha256": "bdc40cbd26837555fa213beb08e1c31b5d18f2033923dc58ae9adfb8a4e65afe",
+      "default_peak": 0.05926698446273804,
+      "default_active_rms": 0.014047392955906804,
+      "default_centroid_hz": 389.23831713869697,
+      "max_scenario_peak": 0.7129688262939453,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-041",
+      "name": "Paper Glass Close",
+      "patch_sha256": "027a4adc028219ae3ec155845334584834508d2757c40484ff7bd3e78f31cc13",
+      "qa_report_sha256": "a78f4f1822c1040f002d750d513da8a3c2008ce5a6d25a5089221e3fe2843762",
+      "default_peak": 0.04920344427227974,
+      "default_active_rms": 0.004475228223348446,
+      "default_centroid_hz": 473.18642117798214,
+      "max_scenario_peak": 0.7199269533157349,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-042",
+      "name": "Paper Glass Bloom",
+      "patch_sha256": "89d10a75817c88a45e5e29cb6036826ba6aa0ad0ec4c9c14b635ed9ee46cda37",
+      "qa_report_sha256": "4951be64776b889b6e275989645218f1aa5d1a96d85dcee1bdf6bfb98a03ef16",
+      "default_peak": 0.06676756590604782,
+      "default_active_rms": 0.010068946102763505,
+      "default_centroid_hz": 476.7092602438076,
+      "max_scenario_peak": 0.7167565226554871,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-043",
+      "name": "Paper Glass Glass",
+      "patch_sha256": "fdcffd16f31ec4c719031f7da2970f844f42fed85502a8a4591915009a8d7146",
+      "qa_report_sha256": "6ca4ef00874e673f4fdb8bc1a629c2604e035f9b7e45b403da4537d3da12e5d9",
+      "default_peak": 0.05707221105694771,
+      "default_active_rms": 0.006288535355242836,
+      "default_centroid_hz": 518.9219076457279,
+      "max_scenario_peak": 0.7199333906173706,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-044",
+      "name": "Paper Glass Alloy",
+      "patch_sha256": "5a3c411b298261678957dc1dcdab9c84beadb063af142305484b0203a063dda7",
+      "qa_report_sha256": "00e81d6e4ca9c12efe822f6e3bcf0f9bfd9951aa5d76ea12f5cbac06dc8c2cfe",
+      "default_peak": 0.07259003818035126,
+      "default_active_rms": 0.00542039254237188,
+      "default_centroid_hz": 934.1683466542077,
+      "max_scenario_peak": 0.7199423313140869,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-045",
+      "name": "Paper Glass Shadow",
+      "patch_sha256": "78832f3dd071f4140c514eb23f685b356f28a46a31f4abd2485b31e752a3e06c",
+      "qa_report_sha256": "ffc19b1d873c715c430b2510ebcd0c22b4949ec15d4c0c757a815a3cbeb7c1f8",
+      "default_peak": 0.06990740448236465,
+      "default_active_rms": 0.008815354667753093,
+      "default_centroid_hz": 479.04122211757556,
+      "max_scenario_peak": 0.7167565226554871,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-046",
+      "name": "Bronze Orchard Close",
+      "patch_sha256": "2362f5d9e1172c85c64e99986fb77943903212ab50617c8c68fc3f200da6975f",
+      "qa_report_sha256": "90712ed5a4d5845889b8bd944b000664b2b8249d1fe06a8b8687da2f517b1466",
+      "default_peak": 0.061909083276987076,
+      "default_active_rms": 0.009275125120397167,
+      "default_centroid_hz": 1754.6430885640277,
+      "max_scenario_peak": 0.719217836856842,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-047",
+      "name": "Bronze Orchard Bloom",
+      "patch_sha256": "a5c9666148378e39d2e0e29b9536c2d6c1873071ee0304fa5f91063589c68a41",
+      "qa_report_sha256": "232ec2f23583b69b4d861d4050fd86e374b0369c5d92eb860120db56bc8b1734",
+      "default_peak": 0.05733203515410423,
+      "default_active_rms": 0.014717535823134844,
+      "default_centroid_hz": 575.3254590296353,
+      "max_scenario_peak": 0.7050589919090271,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-048",
+      "name": "Bronze Orchard Glass",
+      "patch_sha256": "4fc3d0feeeb840261b67e5cbf05d4eeb5a7fa814f53abf03ffcddb24ac5d066f",
+      "qa_report_sha256": "1a4daa7b545e08d755a452aec27d63b1e9a4d5b7b4fba45f44a7a313a93c5586",
+      "default_peak": 0.05627527832984924,
+      "default_active_rms": 0.012623496442219983,
+      "default_centroid_hz": 5713.496933344723,
+      "max_scenario_peak": 0.716537356376648,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-049",
+      "name": "Bronze Orchard Alloy",
+      "patch_sha256": "a7e2be588e154581f4ca32510a0615decb29a2be2f672485c897526188e8a282",
+      "qa_report_sha256": "5450840a944453c39619e4591b35c5600981cb2fb3bc267796fd7ff81282c0a4",
+      "default_peak": 0.08846884965896606,
+      "default_active_rms": 0.011174574990051468,
+      "default_centroid_hz": 6310.91006140569,
+      "max_scenario_peak": 0.7164579629898071,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-050",
+      "name": "Bronze Orchard Shadow",
+      "patch_sha256": "c03dcc569aff4fc4dbdf39f8441a329d0edf79a0b03ca9525a579d29d12f43f0",
+      "qa_report_sha256": "7400fab1b712dbddb55c8a1bd26b5aa0c53ae4c92b3c3b1e6b49ae9f096d2b54",
+      "default_peak": 0.06409110873937607,
+      "default_active_rms": 0.015168237251737809,
+      "default_centroid_hz": 363.3413909949965,
+      "max_scenario_peak": 0.7144362330436707,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-051",
+      "name": "Silver Nodes Close",
+      "patch_sha256": "b967b9b34b228ee7900219108a9783cc37922cc94a1d35fdaa81b5b95cd955bf",
+      "qa_report_sha256": "ccf239df13561b98083d629de834219c06f7606dffa4ee1337d6fd0c0d88c7d7",
+      "default_peak": 0.037563715130090714,
+      "default_active_rms": 0.003902737124043491,
+      "default_centroid_hz": 370.8953020398004,
+      "max_scenario_peak": 0.7199103236198425,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-052",
+      "name": "Silver Nodes Bloom",
+      "patch_sha256": "d6ecba59ce717beb4e25601eb0884661cd26f875ec7f07c4672573f84d46a4b5",
+      "qa_report_sha256": "57f91694985d48373064f881469ec4368c443826d9e29fdc6e812de23b21facc",
+      "default_peak": 0.06061599403619766,
+      "default_active_rms": 0.009696612400861653,
+      "default_centroid_hz": 322.81048626748844,
+      "max_scenario_peak": 0.7199074625968933,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-053",
+      "name": "Silver Nodes Glass",
+      "patch_sha256": "8ec10b2549cec710d0a6f2505da206ca75b3a7675bbfbb1bf6b8ccd44ab4fe55",
+      "qa_report_sha256": "00d9817d019f7122198ff29081af3ad0f4a10939c9aa07425d8ff6df2c4b518d",
+      "default_peak": 0.04137544706463814,
+      "default_active_rms": 0.005866054313900961,
+      "default_centroid_hz": 603.0150285060694,
+      "max_scenario_peak": 0.7199133038520813,
+      "warnings": 1
+    },
+    {
+      "id": "SC03-054",
+      "name": "Silver Nodes Alloy",
+      "patch_sha256": "17717f64bbf8299bd87b5ad507ebe176a3df215c315694cf0bb8cbe019289abf",
+      "qa_report_sha256": "2fd10d782787a4c570bc290081992d8e5f441325e79a6abccc5fa10160c37b8a",
+      "default_peak": 0.05458538606762886,
+      "default_active_rms": 0.005735872915998004,
+      "default_centroid_hz": 1632.084294542895,
+      "max_scenario_peak": 0.7199090123176575,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-055",
+      "name": "Silver Nodes Shadow",
+      "patch_sha256": "0ce17485f3ef50a2a5b3a5231c3756fdefdb312a3b0f99fcbb4885cedde8aaa7",
+      "qa_report_sha256": "c0f457e761ef7d1fae117ce908b3c6f3c1dc4c77f60d0612b8e426e8ba6f596a",
+      "default_peak": 0.04969603195786476,
+      "default_active_rms": 0.006525119713243506,
+      "default_centroid_hz": 310.00716625115587,
+      "max_scenario_peak": 0.7199075818061829,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-056",
+      "name": "Temple Signals Close",
+      "patch_sha256": "d88dd29d4edda395a6f433a99272da16493e524b527fc835f7b5ed3378bd5907",
+      "qa_report_sha256": "5b56efe6021afe4db55289112e7fbfd4db9e1b9defca8c4de6ada699420d2e65",
+      "default_peak": 0.07992935180664062,
+      "default_active_rms": 0.010374878593478744,
+      "default_centroid_hz": 350.7228783651334,
+      "max_scenario_peak": 0.7198377847671509,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-057",
+      "name": "Temple Signals Bloom",
+      "patch_sha256": "ac2cfc35acc8b75a94dca39d0bd95eb973c05b6100c702d58f31ea4014f4ae3f",
+      "qa_report_sha256": "219bcdbcce821f1a7242516afac39a66948740325a789bbadc0c1c3035695d1c",
+      "default_peak": 0.05714980885386467,
+      "default_active_rms": 0.015554215177436758,
+      "default_centroid_hz": 250.23349452901593,
+      "max_scenario_peak": 0.7097680568695068,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-058",
+      "name": "Temple Signals Glass",
+      "patch_sha256": "9a99ac4d61a29b83016372155cacaa7bc7efc4f930eefedeb2de81f47f4cb3b9",
+      "qa_report_sha256": "10caa0ab96b4b65893072c631c5d75d3862367373215e338012dc5fcba7eebc3",
+      "default_peak": 0.07026710361242294,
+      "default_active_rms": 0.014120757227967818,
+      "default_centroid_hz": 1210.9184255540129,
+      "max_scenario_peak": 0.7138524055480957,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-059",
+      "name": "Temple Signals Alloy",
+      "patch_sha256": "588e56c67d1ba4ffdce5730e88e7a0d590dff9844748acac566e6af7f56caf8a",
+      "qa_report_sha256": "317ee563fc8f86cf6e07533a1c45841a24ef4a79c486ec4058c84e959e06776f",
+      "default_peak": 0.06639672815799713,
+      "default_active_rms": 0.010453706360321701,
+      "default_centroid_hz": 2319.291348071601,
+      "max_scenario_peak": 0.7197912931442261,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-060",
+      "name": "Temple Signals Shadow",
+      "patch_sha256": "1a7c2ff16ea6323aee67aa4bc76b103f3b257464ed84e73197f596d72293c527",
+      "qa_report_sha256": "8db5876d14d9b4ab87cb47114475001f36c2ac9e574666b08ee479b31a8f73b6",
+      "default_peak": 0.06144169718027115,
+      "default_active_rms": 0.014917022063492272,
+      "default_centroid_hz": 239.16992011795406,
+      "max_scenario_peak": 0.7073351740837097,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-061",
+      "name": "Ceramic Hands Close",
+      "patch_sha256": "d070f302aba4b8c56fe629a6ebc9c9954ef1a1e5e7b0b2889fd9b5c096c292d3",
+      "qa_report_sha256": "e517cf349d0e4ad73d5452359e14ba8e02d71d6ce6bdc81a05a99139f42b263f",
+      "default_peak": 0.03634003922343254,
+      "default_active_rms": 0.001923290040144068,
+      "default_centroid_hz": 331.0423873415004,
+      "max_scenario_peak": 0.7199139595031738,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-062",
+      "name": "Ceramic Hands Bloom",
+      "patch_sha256": "febbd83e4049166a4d35c71501c013ee3ecbf170baf8c2130ea61cee4c88baea",
+      "qa_report_sha256": "2557918f65e9e222a485e59786fe6d1e0f9526a8243fa1840d52922ae57e4a28",
+      "default_peak": 0.05894695594906807,
+      "default_active_rms": 0.005126037653075367,
+      "default_centroid_hz": 329.3821226635671,
+      "max_scenario_peak": 0.7198497653007507,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-063",
+      "name": "Ceramic Hands Glass",
+      "patch_sha256": "ea59d2821f11633d1ad8ea374cb34b8c630bf54b9449c51284040d10d2562887",
+      "qa_report_sha256": "b7e98f9e3d8cad7b03c0365b7875b57f498ab7d1a51620fd2be61b24dca1258a",
+      "default_peak": 0.03625199571251869,
+      "default_active_rms": 0.0021769657351016635,
+      "default_centroid_hz": 343.44111455415907,
+      "max_scenario_peak": 0.7198578119277954,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-064",
+      "name": "Ceramic Hands Alloy",
+      "patch_sha256": "15060ae48f13d9c54507e520cf7b64f8d2bbc8c34cb76998a95af96473c9ffac",
+      "qa_report_sha256": "22c552091769bcc06a1766c1da36e70944d53cb6ee6db8a36d7766b6bfd22cc7",
+      "default_peak": 0.03831707313656807,
+      "default_active_rms": 0.0027471847411041465,
+      "default_centroid_hz": 439.88163549883205,
+      "max_scenario_peak": 0.7198556661605835,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-065",
+      "name": "Ceramic Hands Shadow",
+      "patch_sha256": "c29fa90bfff079dab5f3ec8eaec727d18ad7ea1c6bd0764eacc75677131b6c63",
+      "qa_report_sha256": "d3ac6a16f7325b729f852608da7046b4d9e34dd0b9b55bb2a3fa7172fba854b3",
+      "default_peak": 0.04795778915286064,
+      "default_active_rms": 0.0037779901594541163,
+      "default_centroid_hz": 329.1017862059221,
+      "max_scenario_peak": 0.7198488116264343,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-066",
+      "name": "Orbit Plates Close",
+      "patch_sha256": "d9db45396ada4c209bc13c8b0e3e0229e666e726205b710ee356c3b2107845b1",
+      "qa_report_sha256": "5008e7ec25c04b0592165c2da7bcf287c9bbe8dba70245a28b620ce5a8015672",
+      "default_peak": 0.05308862403035164,
+      "default_active_rms": 0.007475118606321273,
+      "default_centroid_hz": 284.26607422186305,
+      "max_scenario_peak": 0.719932496547699,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-067",
+      "name": "Orbit Plates Bloom",
+      "patch_sha256": "4ae6949b8227c2277da610e01e52882642339c72c76921d685a423cc40aceaef",
+      "qa_report_sha256": "f6448a6101b412126b057de29745e8d90aefd9d7571b38be58dec83e4d1e3837",
+      "default_peak": 0.06474459171295166,
+      "default_active_rms": 0.014753329374390615,
+      "default_centroid_hz": 259.1744853171816,
+      "max_scenario_peak": 0.7176457643508911,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-068",
+      "name": "Orbit Plates Glass",
+      "patch_sha256": "589cf3e9e965855064ec57f260f95833d8ccf9cd5e77547880b3d2eaff4ff628",
+      "qa_report_sha256": "fc3bd02e4e4e45c8329aaf81ea597c21e77417535840f85d0d2724ccecc837ab",
+      "default_peak": 0.0728929340839386,
+      "default_active_rms": 0.012987635294276738,
+      "default_centroid_hz": 684.8691586247444,
+      "max_scenario_peak": 0.6469326615333557,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-069",
+      "name": "Orbit Plates Alloy",
+      "patch_sha256": "d92d1d6f3f6c31aaa804aedbc2d5282f56c37d33ca3db08ffdc8618fa9e1a98f",
+      "qa_report_sha256": "a06e929a0a57d6027910e9fc7406873f5a3a1e486c9fd8b7ac39c46815a0dc87",
+      "default_peak": 0.07680734992027283,
+      "default_active_rms": 0.011994466606894244,
+      "default_centroid_hz": 1117.004455621145,
+      "max_scenario_peak": 0.7175983190536499,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-070",
+      "name": "Orbit Plates Shadow",
+      "patch_sha256": "6a17601e582a27cc73330bf1b071eacf3ad26a16874e91b5674f019718903aaa",
+      "qa_report_sha256": "9e301fc9eb07e98ddbc3a6f198b9c96867e0f31556587b498614da423e2cbffe",
+      "default_peak": 0.06710083782672882,
+      "default_active_rms": 0.01353097366176036,
+      "default_centroid_hz": 254.26017212905805,
+      "max_scenario_peak": 0.7176451086997986,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-071",
+      "name": "Quiet Anvils Close",
+      "patch_sha256": "911a166130f877d4ac2e2961d2cce766cd9d7f634c3ceb9893755e4207bedcaa",
+      "qa_report_sha256": "787496cefda73a4204c9834a0eeefe7af1fd402e30f30451f80770e14c2b9d68",
+      "default_peak": 0.05161728709936142,
+      "default_active_rms": 0.0037018641766443203,
+      "default_centroid_hz": 2354.118873618511,
+      "max_scenario_peak": 0.7199791073799133,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-072",
+      "name": "Quiet Anvils Bloom",
+      "patch_sha256": "8c6a9d79fc281a6d82083d924060e4359dad78c264366f5dab0c54288af401f3",
+      "qa_report_sha256": "b41c7dd2624c7904eca5f73ca3c1dcb1a6b02781a4684dbeff5079f517241cd2",
+      "default_peak": 0.07901004701852798,
+      "default_active_rms": 0.007672694969524159,
+      "default_centroid_hz": 1044.715864302749,
+      "max_scenario_peak": 0.7178124189376831,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-073",
+      "name": "Quiet Anvils Glass",
+      "patch_sha256": "756dd971cecefd1f5eb3c205aa198246776e7086966bfd7711ff768de378e0bc",
+      "qa_report_sha256": "30f89fae3083bc33a85fe3222ca7c079650ad8a5559de5c9834a8679aa81d3b1",
+      "default_peak": 0.07212668657302856,
+      "default_active_rms": 0.005777723483681339,
+      "default_centroid_hz": 8079.900644119034,
+      "max_scenario_peak": 0.7195876836776733,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-074",
+      "name": "Quiet Anvils Alloy",
+      "patch_sha256": "445bccce3b711f11e9927a4275a2f418b123e248e75d6e1c5b946d37d8a0cd24",
+      "qa_report_sha256": "b1161b10b6fa4b1fdee6e41a66e769ecae5e6081d0eb4535958adcb0b9059fd5",
+      "default_peak": 0.06876683235168457,
+      "default_active_rms": 0.0033723366002992253,
+      "default_centroid_hz": 2545.6077680478975,
+      "max_scenario_peak": 0.7198841571807861,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-075",
+      "name": "Quiet Anvils Shadow",
+      "patch_sha256": "305b12966baf6b756515c93033cb7ad98bc6394ffc8f15f07ddf72f3d7443d41",
+      "qa_report_sha256": "a9956b0df99d7f17e3d1b88b86396092f68b521d40944300259eb3fc4e5adb0b",
+      "default_peak": 0.05759568139910698,
+      "default_active_rms": 0.0055856086333172525,
+      "default_centroid_hz": 426.0718113524897,
+      "max_scenario_peak": 0.7199329733848572,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-076",
+      "name": "Starlit Drops Close",
+      "patch_sha256": "5fe974e00f8fca6f0e567b825132125e45c7332cc7422ad61bbb7599f6df908e",
+      "qa_report_sha256": "35ac1143ec5f2947b6a5fc4749b9c0a66766b20b1ee6ec39c078735a8058713a",
+      "default_peak": 0.046961136162281036,
+      "default_active_rms": 0.004742986242891197,
+      "default_centroid_hz": 690.7560622352822,
+      "max_scenario_peak": 0.7199352979660034,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-077",
+      "name": "Starlit Drops Bloom",
+      "patch_sha256": "a9695691ec1f63e4ad3abb7b8465fc8f58f7015a8f2d62bbbb5520e415d36774",
+      "qa_report_sha256": "e4f932c9dfd78b2e8570ff542e18c1d93589a1ce5864f654facd01fa35ccce9a",
+      "default_peak": 0.060426805168390274,
+      "default_active_rms": 0.00930231581590365,
+      "default_centroid_hz": 807.122834226953,
+      "max_scenario_peak": 0.7175540328025818,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-078",
+      "name": "Starlit Drops Glass",
+      "patch_sha256": "19a0bfa663c80e822e7200f153d769f2d27e88ffff3c2940b35a1ca768e7b0b4",
+      "qa_report_sha256": "b2c79067656d778ff077b2d383f0b1f7b5d4a30f510ff3842b622a0cdffaf475",
+      "default_peak": 0.047783445566892624,
+      "default_active_rms": 0.007303508248043541,
+      "default_centroid_hz": 676.377504889976,
+      "max_scenario_peak": 0.7199329137802124,
+      "warnings": 1
+    },
+    {
+      "id": "SC03-079",
+      "name": "Starlit Drops Alloy",
+      "patch_sha256": "c6cd3c28c61f8bd035227fa825e37b5e13e398bbe61f3e7e4167d56c02808554",
+      "qa_report_sha256": "4c93817994a52d9276e46b8c0c6400cd7222d473d5588a9ce54b9be3d71b252b",
+      "default_peak": 0.05709405988454819,
+      "default_active_rms": 0.00614094264068966,
+      "default_centroid_hz": 930.6645333400509,
+      "max_scenario_peak": 0.719939112663269,
+      "warnings": 1
+    },
+    {
+      "id": "SC03-080",
+      "name": "Starlit Drops Shadow",
+      "patch_sha256": "9a384525e1e716efac48d96d242971e2429f0340a017e67d3d920269becddc5c",
+      "qa_report_sha256": "2704eb166fc75788bd0bfda0a5e2cb1d0833a709e7997818295d32b030845074",
+      "default_peak": 0.062379803508520126,
+      "default_active_rms": 0.007818058833745012,
+      "default_centroid_hz": 845.2982918656634,
+      "max_scenario_peak": 0.7175559401512146,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-081",
+      "name": "Warm Toybox Close",
+      "patch_sha256": "edbe51b613e0fb5397f34d1078fa60d775923d06793a4d237634ef9ed5624af2",
+      "qa_report_sha256": "ff555a6e814f2edfbdc85ee1063015f834e81d079a05ca15c92676ab88e1c363",
+      "default_peak": 0.04793700575828552,
+      "default_active_rms": 0.00463954663108468,
+      "default_centroid_hz": 415.3883752477606,
+      "max_scenario_peak": 0.7199161052703857,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-082",
+      "name": "Warm Toybox Bloom",
+      "patch_sha256": "d2668c281391da93f61f4bbde0d044a712758f99925135659e78144d94fdb251",
+      "qa_report_sha256": "e2c1c749600e715010ad6e005800149f06fdb7989d3d7441afb6a32536287fc9",
+      "default_peak": 0.06558367609977722,
+      "default_active_rms": 0.011272027334188838,
+      "default_centroid_hz": 415.76778952739096,
+      "max_scenario_peak": 0.7163515090942383,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-083",
+      "name": "Warm Toybox Glass",
+      "patch_sha256": "ccf04d8f7bd766e24a5105c019c64cbd357c3c9c9fd43a22d28f17e448f27bc5",
+      "qa_report_sha256": "6d36584e4153be110f6706051acaa58a5f4a3102c3cd253154ea44530ca4f2a2",
+      "default_peak": 0.04886654391884804,
+      "default_active_rms": 0.007008931804472378,
+      "default_centroid_hz": 415.3849910067732,
+      "max_scenario_peak": 0.7199171185493469,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-084",
+      "name": "Warm Toybox Alloy",
+      "patch_sha256": "d03e58db33c243ecb91765f84508eee1dcbb75de8b5a05ebe2bddf152978c0b3",
+      "qa_report_sha256": "d34c42c1f46bd6e2abf8c91d5d934b06524ed73c0e73b2104271d17b0757c1d7",
+      "default_peak": 0.05448531731963158,
+      "default_active_rms": 0.006854679323490087,
+      "default_centroid_hz": 416.0719328798588,
+      "max_scenario_peak": 0.7199161648750305,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-085",
+      "name": "Warm Toybox Shadow",
+      "patch_sha256": "bf0d0d4d57b6d2985f05c5f5b98f896bbfdf498513a9521b75be7d3bf15b4aef",
+      "qa_report_sha256": "3fe72189b6c9111514f20b63758c12383194effc7708c327d37e486c73da8986",
+      "default_peak": 0.07086022198200226,
+      "default_active_rms": 0.009978862890243162,
+      "default_centroid_hz": 415.785924393373,
+      "max_scenario_peak": 0.7163494229316711,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-086",
+      "name": "Quartz Gong Close",
+      "patch_sha256": "4cabb4f64cb6b2607f44148f4293559ce238e119006ee69dc18477560824d3d9",
+      "qa_report_sha256": "80916bfd5b478a5548fc205a1a10a6f64926cf00ae528f1d571a08103aae8e91",
+      "default_peak": 0.0919339582324028,
+      "default_active_rms": 0.014905770919853671,
+      "default_centroid_hz": 811.5799794254845,
+      "max_scenario_peak": 0.7121602296829224,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-087",
+      "name": "Quartz Gong Bloom",
+      "patch_sha256": "89df6dc7dd26c6cb3e7fb888348c0ec59f946a23d3dc18a6a4d0265c2cce7d4a",
+      "qa_report_sha256": "3643b14fba2264ed3d9ad823c6d988ec8cba8a141ea6e3dd03a3e88967a8d476",
+      "default_peak": 0.07949599623680115,
+      "default_active_rms": 0.017525857244706074,
+      "default_centroid_hz": 609.1885604869333,
+      "max_scenario_peak": 0.7132875919342041,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-088",
+      "name": "Quartz Gong Glass",
+      "patch_sha256": "decee27f5515b0a44dec9d22997f14e0cdfe19dc2302049f44698b0d7f8f10ec",
+      "qa_report_sha256": "999c93167901ff30c48500d49119ce5db095ecb2d39031d3d550e5aeacafa32f",
+      "default_peak": 0.06803256273269653,
+      "default_active_rms": 0.017586039187548638,
+      "default_centroid_hz": 2049.1593899718214,
+      "max_scenario_peak": 0.7166942358016968,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-089",
+      "name": "Quartz Gong Alloy",
+      "patch_sha256": "3c27d173f86c76017cbfac98bb6663fc983c5dc6795407d641bf7451a5f7a811",
+      "qa_report_sha256": "2b2583c81c12185eb01ccffe317f6476c2865ac237d38d402129336405d503bc",
+      "default_peak": 0.0661497488617897,
+      "default_active_rms": 0.0128936083982757,
+      "default_centroid_hz": 2967.0378344159553,
+      "max_scenario_peak": 0.719793975353241,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-090",
+      "name": "Quartz Gong Shadow",
+      "patch_sha256": "08d427d56c44baafa3328c4739cd15acd8b3088d77fdccc68031557eafb11607",
+      "qa_report_sha256": "048224e2af4c5f8671e30e386f627ab1f07546c70fea81c94a1e6b5c77a7b359",
+      "default_peak": 0.0702444538474083,
+      "default_active_rms": 0.01601947889164046,
+      "default_centroid_hz": 544.002145570347,
+      "max_scenario_peak": 0.7143480181694031,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-091",
+      "name": "Pulse Lantern Close",
+      "patch_sha256": "cc684cfdb95cd2c54ea300be9f58e18dd8f055d00e80e081d65da31f3d1ea45d",
+      "qa_report_sha256": "a9a77f669d5bace99cbcc40845667ce532b28b53332442b35ed49ecb6d7a5977",
+      "default_peak": 0.04117472842335701,
+      "default_active_rms": 0.005888042872449799,
+      "default_centroid_hz": 375.3698471117741,
+      "max_scenario_peak": 0.7123786807060242,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-092",
+      "name": "Pulse Lantern Bloom",
+      "patch_sha256": "212e5ffed066a8763e7e78da629b8a7780a41751453b32f89a1cac548310b1bd",
+      "qa_report_sha256": "982f9f4b772435b3f650ce741dcc8ae47ccd8a61b9de74dea457bf306e7ba6ce",
+      "default_peak": 0.0585433728992939,
+      "default_active_rms": 0.01285315529330528,
+      "default_centroid_hz": 417.3940654506699,
+      "max_scenario_peak": 0.712377667427063,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-093",
+      "name": "Pulse Lantern Glass",
+      "patch_sha256": "554cb9cac5afb86bbb74ff04bfe68d3975d8fec81dba2f1cd7caf72944f491e7",
+      "qa_report_sha256": "661ea99a0c8084671c56be6319beda3bc579fe80e9cef652b2612344db59969c",
+      "default_peak": 0.04224233701825142,
+      "default_active_rms": 0.008985659830165242,
+      "default_centroid_hz": 372.8039024565789,
+      "max_scenario_peak": 0.7123771905899048,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-094",
+      "name": "Pulse Lantern Alloy",
+      "patch_sha256": "2bef10245dde82661b784e8bebe8278e959972c806b01319db4ab195aeeb170b",
+      "qa_report_sha256": "14cd0dce0d805198663b4085ff05415293ffcf955da70efaff45a945588ba771",
+      "default_peak": 0.04811391606926918,
+      "default_active_rms": 0.007253418392532985,
+      "default_centroid_hz": 492.2069834397921,
+      "max_scenario_peak": 0.7123765349388123,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-095",
+      "name": "Pulse Lantern Shadow",
+      "patch_sha256": "a4a4c548b2e9ba6d1c8f531b62d8e772611a25bc521c28ca5cd76469797ec93d",
+      "qa_report_sha256": "0a610ab411ce9047cfcfea5fe43456f9692affcc631e1c7c3b51c61fbde9e791",
+      "default_peak": 0.060296885669231415,
+      "default_active_rms": 0.010688862320477669,
+      "default_centroid_hz": 436.4172278629842,
+      "max_scenario_peak": 0.7123795747756958,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-096",
+      "name": "Teal Resonator Close",
+      "patch_sha256": "89a541e9600c65481784a96bababf73617ab68aeea8d4c4bf13d2df07c8f82b5",
+      "qa_report_sha256": "d154838ace1ae873404b799ded749a53293658bbd53c0d70a222365c8567d1a1",
+      "default_peak": 0.044282037764787674,
+      "default_active_rms": 0.0024908167021509466,
+      "default_centroid_hz": 343.20390945235386,
+      "max_scenario_peak": 0.7199589014053345,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-097",
+      "name": "Teal Resonator Bloom",
+      "patch_sha256": "b53a9453c8e8a6c9793f3c64d830831a31924181e19a415c6fa6c6592db7d884",
+      "qa_report_sha256": "ced0ab5db0d659ce6692c09f9043513933a8eb779868169b44c0a22d719d810f",
+      "default_peak": 0.03677646443247795,
+      "default_active_rms": 0.008991080869315783,
+      "default_centroid_hz": 318.6326620622439,
+      "max_scenario_peak": 0.45888257026672363,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-098",
+      "name": "Teal Resonator Glass",
+      "patch_sha256": "49c8ab46ec14777cf76e4e273983745b45c49e30fb1c4a8c3b4588c8fc00815b",
+      "qa_report_sha256": "23c2371a704f96f589b85616e062ed11c12a324b5b8056353f363f70feaaf75f",
+      "default_peak": 0.05028686299920082,
+      "default_active_rms": 0.0035116403351945647,
+      "default_centroid_hz": 364.95711511185914,
+      "max_scenario_peak": 0.7199588418006897,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-099",
+      "name": "Teal Resonator Alloy",
+      "patch_sha256": "9fa6ad4cafc527f4ec49b1dda8a1849ff8d792e02b7bea31098870e3f1e789c3",
+      "qa_report_sha256": "680acb9c8d052a0fbffceef34a13e82ebc359c416631b6d80aa9964c48fede5a",
+      "default_peak": 0.060466401278972626,
+      "default_active_rms": 0.0069493948899084735,
+      "default_centroid_hz": 438.95401413930745,
+      "max_scenario_peak": 0.5313090682029724,
+      "warnings": 0
+    },
+    {
+      "id": "SC03-100",
+      "name": "Teal Resonator Shadow",
+      "patch_sha256": "b30da2064bc26e91f43f6dca5e7379d042bff4b31820ad84d37f3898bf4267ff",
+      "qa_report_sha256": "ca9c3b5c07ef14870f5c055f91af956a102b9c50d099b1716e238b2b9890d7df",
+      "default_peak": 0.042884524911642075,
+      "default_active_rms": 0.008997929076329174,
+      "default_centroid_hz": 316.73348366164305,
+      "max_scenario_peak": 0.5418090224266052,
+      "warnings": 0
+    }
+  ],
+  "dry_pair_probe": {
+    "scope": "Four raw dry renders; gain matching is analysis-only and not a technical headroom correction or perceptual score",
+    "results": [
+      {
+        "id_a": "SC03-008",
+        "id_b": "SC03-010",
+        "names": [
+          "Hollow Slats Glass",
+          "Hollow Slats Shadow"
+        ],
+        "patch_sha256": [
+          "32081eac5f4250a685746cb982b639255a487b82ee323c07de005304e3a49a73",
+          "bfa11fb3760b639ad88929fd015b791ee1be1b21db6f371433fbd07cca608364"
+        ],
+        "fixture": {
+          "key": "dry_pair",
+          "notes": [
+            63
+          ],
+          "hold": 3.0,
+          "seconds": 4.0,
+          "velocity": 96,
+          "tempo": 120,
+          "macros": "3=0",
+          "sample_rate": 48000,
+          "modwheel": 0,
+          "pressure": 0,
+          "expression": 127,
+          "gate": "expression"
+        },
+        "raw_peak": [
+          0.03665727749466896,
+          0.048213258385658264
+        ],
+        "raw_active_rms": [
+          0.0022908061725962657,
+          0.0040095349010323255
+        ],
+        "comparison_only_gain_b": 0.5713396264505535,
+        "matched_active_relative_waveform_delta": 0.42872942524101926,
+        "normalized_feature_distance": 0.027732371411384734,
+        "centroid_hz": [
+          314.5967626620454,
+          312.0329905718633
+        ],
+        "raw_pcm_sha256": [
+          "c35e595bdbf17f4e8d5ccdac17e66f44eab8042201d683e4e0114db81285ede9",
+          "40b084dfb9e67d6bbc3d55124c60e9c3583b6717405b4fdd02c57d717ff2a2d4"
+        ]
+      },
+      {
+        "id_a": "SC03-083",
+        "id_b": "SC03-085",
+        "names": [
+          "Warm Toybox Glass",
+          "Warm Toybox Shadow"
+        ],
+        "patch_sha256": [
+          "ccf04d8f7bd766e24a5105c019c64cbd357c3c9c9fd43a22d28f17e448f27bc5",
+          "bf0d0d4d57b6d2985f05c5f5b98f896bbfdf498513a9521b75be7d3bf15b4aef"
+        ],
+        "fixture": {
+          "key": "dry_pair",
+          "notes": [
+            68
+          ],
+          "hold": 3.0,
+          "seconds": 4.0,
+          "velocity": 96,
+          "tempo": 120,
+          "macros": "3=0",
+          "sample_rate": 48000,
+          "modwheel": 0,
+          "pressure": 0,
+          "expression": 127,
+          "gate": "expression"
+        },
+        "raw_peak": [
+          0.05340242385864258,
+          0.07604528218507767
+        ],
+        "raw_active_rms": [
+          0.0076500415129052805,
+          0.010704890638244577
+        ],
+        "comparison_only_gain_b": 0.7146305152875209,
+        "matched_active_relative_waveform_delta": 0.2190707055917912,
+        "normalized_feature_distance": 0.0319075898092031,
+        "centroid_hz": [
+          415.3838203108119,
+          415.7852141133784
+        ],
+        "raw_pcm_sha256": [
+          "62d711d8c9c74f465b01f370011e55f67bee38113c2e57166f73097fb6d4a6a7",
+          "c799a21605d6546c4dd111f0e677822c4b89244fd6b5c52c1c3711d4c058ec67"
+        ]
+      }
+    ]
+  },
+  "audit_analysis_sha256": "f74484cd76a2f69ff6d08d69be6f04559ca57f99e91eeab9223149d758f59048",
+  "probe_script_sha256": "1ce02d417b1c77f520b1a2b44a974fd4216e87329820872ac175f8ad7fbe5451",
+  "limitations": [
+    "Technical metrics are not musical listening or composer endorsement.",
+    "Cross-family centroids use each family declared middle note and are not matched-pitch timbre rankings.",
+    "Exact full PCM hashes may differ because release fixture duration differs.",
+    "The max-Release fixture caps observed tail at six seconds and does not establish complete extended-tail settlement.",
+    "The 0.01 weak-response screen is a prioritization heuristic, not a perceptual audibility standard.",
+    "Future preset or measurement changes require hash-bound revalidation."
+  ]
+}

@@ -1,0 +1,253 @@
+{
+  "schema": 1,
+  "review": "wave9-agent52-installer-pipeline",
+  "current_bank_installer_run": "pending_publication",
+  "baseline": {
+    "id": 43514380041,
+    "status": "completed",
+    "conclusion": "success",
+    "head_sha": "dfdd2f94adec9c7bee4f3cfd4f757860fb875c3e",
+    "created_at": "2026-11-13T21:51:34Z",
+    "updated_at": "2026-11-13T22:37:40Z",
+    "html_url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43514380041",
+    "jobs": [
+      {
+        "id": 132192435759,
+        "name": "Set up Surge XT version",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-13T21:51:36Z",
+        "completed_at": "2026-11-13T21:51:56Z",
+        "html_url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43514380041/job/132192435759"
+      },
+      {
+        "id": 132192610513,
+        "name": "Release - Windows MSVC JUCE 7",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-13T21:51:59Z",
+        "completed_at": "2026-11-13T22:15:22Z",
+        "html_url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43514380041/job/132192610513"
+      },
+      {
+        "id": 132192610575,
+        "name": "Ubuntu 20 Docker",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-13T21:51:59Z",
+        "completed_at": "2026-11-13T22:29:33Z",
+        "html_url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43514380041/job/132192610575"
+      },
+      {
+        "id": 132192610611,
+        "name": "Release - Windows 64-bit",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-13T21:51:58Z",
+        "completed_at": "2026-11-13T22:19:38Z",
+        "html_url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43514380041/job/132192610611"
+      },
+      {
+        "id": 132192610617,
+        "name": "Release - Windows ARM64",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-13T21:51:58Z",
+        "completed_at": "2026-11-13T22:25:48Z",
+        "html_url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43514380041/job/132192610617"
+      },
+      {
+        "id": 132192610624,
+        "name": "Release - Windows ARM64EC",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-13T21:51:59Z",
+        "completed_at": "2026-11-13T22:30:29Z",
+        "html_url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43514380041/job/132192610624"
+      },
+      {
+        "id": 132192610639,
+        "name": "Release - macOS",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-13T22:01:51Z",
+        "completed_at": "2026-11-13T22:37:40Z",
+        "html_url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43514380041/job/132192610639"
+      },
+      {
+        "id": 132192610651,
+        "name": "Release - ubuntu-arm",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-13T21:52:01Z",
+        "completed_at": "2026-11-13T22:14:05Z",
+        "html_url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43514380041/job/132192610651"
+      },
+      {
+        "id": 132214302471,
+        "name": "Publish Surge XT nightly",
+        "status": "completed",
+        "conclusion": "skipped",
+        "started_at": "2026-11-13T22:37:40Z",
+        "completed_at": "2026-11-13T22:37:40Z",
+        "html_url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43514380041/job/132214302471"
+      },
+      {
+        "id": 132214303058,
+        "name": "Publish Surge XT release",
+        "status": "completed",
+        "conclusion": "skipped",
+        "started_at": "2026-11-13T22:37:40Z",
+        "completed_at": "2026-11-13T22:37:40Z",
+        "html_url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43514380041/job/132214303058"
+      }
+    ],
+    "artifacts": [
+      {
+        "id": 14082253656,
+        "name": "build-macOS-unsigned",
+        "size_in_bytes": 635677966,
+        "expired": false,
+        "created_at": "2026-11-13T22:37:30Z"
+      },
+      {
+        "id": 14082202386,
+        "name": "build-Windows ARM64EC",
+        "size_in_bytes": 45027775,
+        "expired": false,
+        "created_at": "2026-11-13T22:30:17Z"
+      },
+      {
+        "id": 14082102045,
+        "name": "build-Windows ARM64",
+        "size_in_bytes": 44181806,
+        "expired": false,
+        "created_at": "2026-11-13T22:25:37Z"
+      },
+      {
+        "id": 14081377231,
+        "name": "build-Windows 64-bit",
+        "size_in_bytes": 647514235,
+        "expired": false,
+        "created_at": "2026-11-13T22:19:27Z"
+      },
+      {
+        "id": 14081288938,
+        "name": "build-docker",
+        "size_in_bytes": 1580285186,
+        "expired": false,
+        "created_at": "2026-11-13T22:29:28Z"
+      },
+      {
+        "id": 14080993526,
+        "name": "build-Windows MSVC JUCE 7",
+        "size_in_bytes": 43598360,
+        "expired": false,
+        "created_at": "2026-11-13T22:15:11Z"
+      },
+      {
+        "id": 14080279764,
+        "name": "build-ubuntu-arm",
+        "size_in_bytes": 767924381,
+        "expired": false,
+        "created_at": "2026-11-13T22:14:02Z"
+      }
+    ]
+  },
+  "scope": "The baseline predates Scoring 1000. It verifies prior pipeline operation, not the current bank's platform installers. Current packaging inclusion is source-reviewed; downloaded current package payloads remain to be inspected.",
+  "reviewed_source_sha256": {
+    ".github/workflows/build-release.yml": "489d43929ea197952e2bbc41110b8dff8185413b9811ec67df5b71cb84d8c1d7",
+    "src/cmake/lib.cmake": "4005535abecc4b11d45afb5eda665d0e14d3ef9478f0fef56a12890d47099290",
+    "resources/CMakeLists.txt": "c28e67262d45026ab8c52237ca0f5d26fde50457116b2fd52e68b62eef99ed69",
+    "cmake/scoring-bank.cmake": "6ccc7da73133f0999efed0fbd79a1c3c8f9e33292479c8471c4830ffc8824ed3",
+    "cmake/verify-scoring-bank.cmake": "c92efa7c0f6a59c28b6f9e24f18e7081ff0d99336e4a72ede218b52ea108437d",
+    ".gitattributes": "8e22e4f5b779dbf55d68416c024032e7893aa934278d667136ac7248cb394457",
+    "scripts/installer_win/surge64.iss": "b44298a7249af7cdcbdf611038444c0942c8ea2fdbf8bc2027228662e66ea4c2",
+    "scripts/installer_mac/make_installer.sh": "dd69e4599868e8a13caa924993435272d8e88d1457a4f9d2f9d748b34a463ab6",
+    "scripts/installer_mac/ResourcesPackageScript/postinstall": "2e36258f51a802cdb18da8359a03b36d10be401130382501abb2bc197d423f7b",
+    "scripts/installer_linux/make_deb.sh": "f91b98cb0d1af439500d24e9da874adcf246453f899b287d0a3ab9ba39f737b1",
+    "scripts/installer_linux/make_deb_aarch64.sh": "d6362c596c52a628cf7c022361878b74a52324dbe39a6b4e94bbcb41e66581ef",
+    "scripts/installer_linux/make_rpm.sh": "bf12b989afe2836fea50e45307847435644dc51bcf4986955f0acab30bab7f2e",
+    "scripts/scoring/inspect_archive.py": "e3003f6a7419254c3def0cea64419a612f47911671a1d2d83b91d16a58d78126"
+  },
+  "archive_inspector_checks": {
+    "schema": 1,
+    "manifest_sha256": "1ac91c8196f5d920e3d142ee6117c4c53ab22768dd446890e56ba62e3eab2ab4",
+    "source_archive_sha256": "35353cfe305accad385901f0d2ece7f720f239decdf180d75256c13ff43cc28e",
+    "helper_sha256": "e3003f6a7419254c3def0cea64419a612f47911671a1d2d83b91d16a58d78126",
+    "checks": [
+      {
+        "case": "direct_zip",
+        "expected": "pass",
+        "observed": "pass",
+        "presets": 1000,
+        "matching_hashes": 1000,
+        "error_count": 0
+      },
+      {
+        "case": "nested_zip",
+        "expected": "pass",
+        "observed": "pass",
+        "presets": 1000,
+        "matching_hashes": 1000,
+        "error_count": 0
+      },
+      {
+        "case": "nested_tar",
+        "expected": "pass",
+        "observed": "pass",
+        "presets": 1000,
+        "matching_hashes": 1000,
+        "error_count": 0
+      },
+      {
+        "case": "modified",
+        "expected": "fail",
+        "observed": "fail",
+        "presets": 1000,
+        "matching_hashes": 999,
+        "error_count": 1
+      },
+      {
+        "case": "missing",
+        "expected": "fail",
+        "observed": "fail",
+        "presets": 999,
+        "matching_hashes": 999,
+        "error_count": 1
+      },
+      {
+        "case": "duplicate",
+        "expected": "fail",
+        "observed": "fail",
+        "presets": 1000,
+        "matching_hashes": 1000,
+        "error_count": 1
+      },
+      {
+        "case": "explicit_absence",
+        "expected": "pass",
+        "observed": "pass",
+        "presets": 0,
+        "matching_hashes": 0,
+        "error_count": 0
+      },
+      {
+        "case": "absence_rejects_present",
+        "expected": "fail",
+        "observed": "fail",
+        "presets": 1000,
+        "matching_hashes": 1000,
+        "error_count": 1
+      },
+      {
+        "case": "presence_rejects_empty",
+        "expected": "fail",
+        "observed": "fail",
+        "presets": 0,
+        "matching_hashes": 0,
+        "error_count": 1000
+      }
+    ]
+  }
+}

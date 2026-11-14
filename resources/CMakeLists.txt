@@ -1,6 +1,7 @@
 # vi:set sw=2 et:
 function(surge_install_resources scope dst)
   add_custom_target(install-resources-${scope})
+  add_dependencies(install-resources-${scope} check-scoring-bank)
   add_custom_command(
     TARGET install-resources-${scope}
     POST_BUILD

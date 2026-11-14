@@ -1,0 +1,88 @@
+{
+  "schema": 1,
+  "agent": "/root/w10_a60_final_acceptance",
+  "manifest_sha256": "67bd4a5dc3fbf6f3794679b24b500f1ef37af83b7a47a863d10cb964a57314a2",
+  "local_commit": "946ed442572d5fa29e6d6467813b4fa6cb150908",
+  "local_tree": "2c39f27aeed1348497cffb1b3dc3f843fc823b76",
+  "scope": "Independent read-only acceptance reconciliation of every current FXP and exported report; no new native rendering or human listening.",
+  "local_technical_acceptance": "pass",
+  "category_counts": {
+    "01": 100,
+    "02": 100,
+    "03": 100,
+    "04": 100,
+    "05": 100,
+    "06": 100,
+    "07": 100,
+    "08": 100,
+    "09": 100,
+    "10": 100
+  },
+  "families": 200,
+  "preset_hashes_checked": 1000,
+  "macro_labels_checked": 8000,
+  "nonzero_macro_sources_checked": 8000,
+  "native_containers_checked": 1000,
+  "native_audits": {
+    "primary": {
+      "scenarios": 23000,
+      "technical_gates": 5000,
+      "macro_responses": 8000,
+      "identical_repeats": 1000,
+      "presets": 1000,
+      "warnings": 0,
+      "maximum_sample_peak": 0.7811339497566223
+    },
+    "sustain": {
+      "scenarios": 2000,
+      "presets": 1000,
+      "warnings": 0,
+      "maximum_sample_peak": 0.7811339497566223
+    }
+  },
+  "unique_default_pcm_hashes": 1000,
+  "semantic_roundtrips": 1000,
+  "bit_identical_saved_audio_pairs": 20,
+  "factory_staged_hashes": 1000,
+  "factory_unique_discovered_paths": 1000,
+  "standalone_package": {
+    "sha256": "b794179791cfad604b2761e3c109aefd88821831c46ac168cb4048a2c69d41c4",
+    "bytes": 4485374,
+    "entries": 1006,
+    "matching_fxps": 1000,
+    "internal_checksums": 1005,
+    "crc": "pass"
+  },
+  "evidence_export_checksums": 18,
+  "audio_checksums": 12,
+  "preview_categories": 10,
+  "family_catalog_rows": 200,
+  "family_catalog_ids": 1000,
+  "guide_contexts": 11,
+  "guide_id_mentions": 27,
+  "guide_distinct_ids": 23,
+  "research_primary_evidence_rows": 16,
+  "human_musical_audition": "pending",
+  "composer_endorsement": "not_claimed",
+  "industry_popularity_rank": "not_established",
+  "universal_genre_suitability": "not_certified",
+  "pending_at_review": [
+    "Authenticated remote publication and source-tree identity",
+    "Observed native CI and platform installer/artifact results",
+    "Final diversity archive catalog binding",
+    "Final ledger reconciliation of 60 actual tasks and completed statuses"
+  ],
+  "errors": [],
+  "input_sha256": {
+    "doc/scoring-1000/manifest.json": "67bd4a5dc3fbf6f3794679b24b500f1ef37af83b7a47a863d10cb964a57314a2",
+    "doc/scoring-1000/evidence/integrity-audit.json": "fb62348b78aaba4c441182c7110fb95cd009a958c4a00599e856b3f9cfe26da7",
+    "doc/scoring-1000/evidence/checksums.json": "09ca2f0447ee135a60b36d1771d95d4faf5562f5fa9974dd21a099a27573df0e",
+    "doc/scoring-1000/audio/checksums.json": "9cd4d6bc4a4096e233ddc2722bbb4dc6459c692e819c1d8c09745b5f0f6890b6",
+    "doc/scoring-1000/RESEARCH.md": "d8108dd2d15cc60b7892471f7cce5336f0c3c4c3d26cc2041daf2a35e2d2ceec",
+    "doc/scoring-1000/USER_GUIDE.md": "c166adb2c9ac431b08ce815318e633eb7faf53324cf4e653d0e87cef37f7f46c",
+    "doc/scoring-1000/CATALOG.md": "861e8a4b3b49c1a0db084511a3cedb0aaa18fcf8c5b12743578549598de74424",
+    "doc/scoring-1000/VERIFICATION.md": "049d07501015e20b0278572ab24f35e818e67df9267514880802a5b3eda1e585",
+    "cmake/scoring-bank.cmake": "6ccc7da73133f0999efed0fbd79a1c3c8f9e33292479c8471c4830ffc8824ed3",
+    "cmake/verify-scoring-bank.cmake": "c92efa7c0f6a59c28b6f9e24f18e7081ff0d99336e4a72ede218b52ea108437d"
+  }
+}

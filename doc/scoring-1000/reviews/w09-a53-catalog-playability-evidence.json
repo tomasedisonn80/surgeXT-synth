@@ -1,0 +1,349 @@
+{
+  "schema": 1,
+  "manifest_sha256": "67bd4a5dc3fbf6f3794679b24b500f1ef37af83b7a47a863d10cb964a57314a2",
+  "scope": "Catalog and musician-facing metadata consistency; no human listening or composer endorsement",
+  "preset_entries_checked": 1000,
+  "family_rows": 200,
+  "category_headings": 10,
+  "family_id_ranges_expand_to_exactly_1000": true,
+  "native_mode_counts": {
+    "poly": 820,
+    "mono": 180
+  },
+  "guide_id_mentions": 27,
+  "guide_unique_ids": 23,
+  "guide_named_mentions": 22,
+  "guide_named_unique_ids": 20,
+  "guide_references": [
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC01-002",
+      "name": "Felt Ember Felt"
+    },
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC01-002",
+      "name": "Felt Ember Felt"
+    },
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC04-005",
+      "name": "Amber Canopy Veil"
+    },
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC01-007",
+      "name": "Copper Tine Felt"
+    },
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC08-092",
+      "name": "Moonlit Triangle Warm"
+    },
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC03-081",
+      "name": "Warm Toybox Close"
+    },
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC08-041",
+      "name": "Harbor Whistle Near"
+    },
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC07-031",
+      "name": "Transit Saw Tight"
+    },
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC09-012",
+      "name": "Copper Transit Drive"
+    },
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC06-097",
+      "name": "Deep Listening Veiled"
+    },
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC03-071",
+      "name": "Quiet Anvils Close"
+    },
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC06-076",
+      "name": "Metal Weather Near"
+    },
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC09-096",
+      "name": "Prism Arcs Soft"
+    },
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC03-076",
+      "name": "Starlit Drops Close"
+    },
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC05-028",
+      "name": "Bronze Swell Swell"
+    },
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC09-001",
+      "name": "Quiet Engine Soft"
+    },
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC06-031",
+      "name": "Distant Choir Near"
+    },
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC07-006",
+      "name": "Anchor Sub Tight"
+    },
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC08-048",
+      "name": "Soft Voltage Clear"
+    },
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC01-007",
+      "name": "Copper Tine Felt"
+    },
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC04-005",
+      "name": "Amber Canopy Veil"
+    },
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC06-065",
+      "name": "Clockless Room Ripple"
+    },
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC05-083",
+      "name": "Felt Pizzicato Swell"
+    },
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC09-081",
+      "name": "Amber Ladder Soft"
+    },
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC09-086",
+      "name": "Night Thirds Soft"
+    },
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC09-091",
+      "name": "Open Fifths Soft"
+    },
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC09-096",
+      "name": "Prism Arcs Soft"
+    }
+  ],
+  "named_guide_references": [
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC01-002",
+      "name": "Felt Ember Felt"
+    },
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC04-005",
+      "name": "Amber Canopy Veil"
+    },
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC01-007",
+      "name": "Copper Tine Felt"
+    },
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC08-092",
+      "name": "Moonlit Triangle Warm"
+    },
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC03-081",
+      "name": "Warm Toybox Close"
+    },
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC08-041",
+      "name": "Harbor Whistle Near"
+    },
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC07-031",
+      "name": "Transit Saw Tight"
+    },
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC09-012",
+      "name": "Copper Transit Drive"
+    },
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC06-097",
+      "name": "Deep Listening Veiled"
+    },
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC03-071",
+      "name": "Quiet Anvils Close"
+    },
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC06-076",
+      "name": "Metal Weather Near"
+    },
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC09-096",
+      "name": "Prism Arcs Soft"
+    },
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC03-076",
+      "name": "Starlit Drops Close"
+    },
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC05-028",
+      "name": "Bronze Swell Swell"
+    },
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC09-001",
+      "name": "Quiet Engine Soft"
+    },
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC06-031",
+      "name": "Distant Choir Near"
+    },
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC07-006",
+      "name": "Anchor Sub Tight"
+    },
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC08-048",
+      "name": "Soft Voltage Clear"
+    },
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC01-007",
+      "name": "Copper Tine Felt"
+    },
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC04-005",
+      "name": "Amber Canopy Veil"
+    },
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC06-065",
+      "name": "Clockless Room Ripple"
+    },
+    {
+      "file": "USER_GUIDE.md",
+      "id": "SC05-083",
+      "name": "Felt Pizzicato Swell"
+    }
+  ],
+  "corrected_layer_records": [
+    {
+      "id": "SC05-006",
+      "name": "Cedar Section Close",
+      "secondary_oscillator_octave": -1,
+      "intent": "Tighter ensemble articulation and reduced secondary-layer blend for dialogue and dense arrangements."
+    },
+    {
+      "id": "SC08-006",
+      "name": "Reed Lantern Near",
+      "secondary_oscillator_octave": -1,
+      "intent": "Tight phrasing, compact decay and reduced secondary-layer weight for exposed lines or busy mixes."
+    },
+    {
+      "id": "SC08-046",
+      "name": "Soft Voltage Near",
+      "secondary_oscillator_octave": -1,
+      "intent": "Tight phrasing, compact decay and reduced secondary-layer weight for exposed lines or busy mixes."
+    },
+    {
+      "id": "SC08-091",
+      "name": "Moonlit Triangle Near",
+      "secondary_oscillator_octave": -1,
+      "intent": "Tight phrasing, compact decay and reduced secondary-layer weight for exposed lines or busy mixes."
+    },
+    {
+      "id": "SC09-031",
+      "name": "Orbit Dots Soft",
+      "secondary_oscillator_octave": -1,
+      "intent": "Darker filter accents, gentler entrances and a reduced secondary layer suit dialogue and delicate accompaniment."
+    },
+    {
+      "id": "SC09-035",
+      "name": "Orbit Dots Glass",
+      "secondary_oscillator_octave": -1,
+      "intent": "A brighter, stronger secondary layer and longer decay make the pattern useful as an exposed melodic or harmonic feature."
+    },
+    {
+      "id": "SC09-071",
+      "name": "Hollow Dispatch Soft",
+      "secondary_oscillator_octave": -1,
+      "intent": "Darker filter accents, gentler entrances and a reduced secondary layer suit dialogue and delicate accompaniment."
+    },
+    {
+      "id": "SC09-075",
+      "name": "Hollow Dispatch Glass",
+      "secondary_oscillator_octave": -1,
+      "intent": "A brighter, stronger secondary layer and longer decay make the pattern useful as an exposed melodic or harmonic feature."
+    },
+    {
+      "id": "SC09-081",
+      "name": "Amber Ladder Soft",
+      "secondary_oscillator_octave": -1,
+      "intent": "Darker filter accents, gentler entrances and a reduced secondary layer suit dialogue and delicate accompaniment."
+    },
+    {
+      "id": "SC09-085",
+      "name": "Amber Ladder Glass",
+      "secondary_oscillator_octave": -1,
+      "intent": "A brighter, stronger secondary layer and longer decay make the pattern useful as an exposed melodic or harmonic feature."
+    }
+  ],
+  "recipe_sha256": {
+    "scripts/scoring/recipes/01_keys.json": "c74d6ccc0a4b0d39dc477ebf8cc84300b0f3eee6e559b0b7118f1a885242cda7",
+    "scripts/scoring/recipes/02_plucks.json": "f13ad6523de80235667a0004ac52225878b7ca0b3bc32a29848e014372144bd3",
+    "scripts/scoring/recipes/03_bells_mallets.json": "41efbe72edadd17d1592261dd87ad5a39878c6b6f3a4d44bfb45ed1964bb2eb8",
+    "scripts/scoring/recipes/04_pads.json": "9a4c4be7aba9eeed6da2ba60923a0430aee287e9dbbca0f41c6bde7eee90c9d2",
+    "scripts/scoring/recipes/05_ensemble_hybrids.json": "bd3c1b58254f98545beddcda4472f5c34c4457709690bc0c9b314abbd69ffd71",
+    "scripts/scoring/recipes/06_drones_air.json": "aa1a01a0d08be6bfbc3fa1fd6057b0b9498b66d5e65990bd9b923dc30cb77652",
+    "scripts/scoring/recipes/07_bass.json": "0ec65831b28b1dc9267247d328aa007987e5feafaa9b9bdf1d20ed6f752edc65",
+    "scripts/scoring/recipes/08_leads.json": "530d93e14e1166fd2187024e79a5cc25b7a3ec41d656104ac293a1de547959c3",
+    "scripts/scoring/recipes/09_pulses_sequences.json": "2e81878d31e6c71694d1d708077c4a08930c805bdabde4f8b8a094e00794675d",
+    "scripts/scoring/recipes/10_percussion_transitions.json": "d8a04022cdea595501772287ce0be00fb88905a98935ec43bd943bc7f5ea78fe"
+  },
+  "reviewed_doc_snapshot_sha256": {
+    "doc/scoring-1000/USER_GUIDE.md": "4447cf1fea86aeac82e2b4252e055931cece08ba6707941d309137d9c12cca31",
+    "doc/scoring-1000/RESEARCH.md": "d8108dd2d15cc60b7892471f7cce5336f0c3c4c3d26cc2041daf2a35e2d2ceec"
+  },
+  "catalog_document_sha256": "861e8a4b3b49c1a0db084511a3cedb0aaa18fcf8c5b12743578549598de74424",
+  "catalog_generator_sha256": "def4c94853b4b82fec426e4d133b4dc853ba4c00dcf8e40a7cb7c2747e9f2909",
+  "errors": [],
+  "musical_audition": "pending",
+  "composer_endorsement": "not_claimed"
+}

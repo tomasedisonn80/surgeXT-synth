@@ -1,0 +1,1428 @@
+{
+  "id": "01",
+  "name": "Keys",
+  "prefix": "K",
+  "description": "Playable synthetic electric, hammer, organ and reed keyboard colors for intimate underscore, melodic writing and genre-flexible accompaniment.",
+  "families": [
+    {
+      "name": "Felt Ember",
+      "role": "Synthetic muted hammer keys for intimate broken chords beneath dialogue.",
+      "range": [
+        45,
+        84
+      ],
+      "tags": [
+        "soft",
+        "hammered",
+        "intimate",
+        "tonal"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm2",
+          "level": 0.66,
+          "fm_amount": 0.075,
+          "ratio": 1,
+          "fm_amount2": 0.025,
+          "ratio2": 4
+        },
+        {
+          "kind": "string",
+          "level": 0.24,
+          "exciter": 2,
+          "decay": 0.84,
+          "stiffness": -0.08
+        },
+        {
+          "kind": "sine",
+          "level": 0.12,
+          "octave": -1
+        }
+      ],
+      "amp": [
+        0.009,
+        1.7,
+        0.12,
+        0.65
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 1900,
+        "resonance": 0.07,
+        "env": 8,
+        "keytrack": 0.7
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.24,
+        "sync": false,
+        "depth": 2.2,
+        "amp": 0.2,
+        "pan": 0.04
+      },
+      "filter_env": [
+        0.005,
+        0.42,
+        0.06,
+        0.35
+      ],
+      "reverb": 0.075,
+      "delay": 0.015,
+      "velocity": 20,
+      "highpass": 35,
+      "width": 0.45
+    },
+    {
+      "name": "Copper Tine",
+      "role": "Synthetic tine electric keys for lyrical melody and warm extended chords.",
+      "range": [
+        40,
+        88
+      ],
+      "tags": [
+        "electric",
+        "tine",
+        "warm",
+        "chords"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm2",
+          "level": 0.68,
+          "fm_amount": 0.24,
+          "ratio": 3,
+          "fm_amount2": 0.06,
+          "ratio2": 1,
+          "feedback": 0.01
+        },
+        {
+          "kind": "sine",
+          "level": 0.32
+        },
+        {
+          "kind": "triangle",
+          "level": 0.1,
+          "octave": 1
+        }
+      ],
+      "amp": [
+        0.005,
+        2.3,
+        0.16,
+        0.8
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 4300,
+        "resonance": 0.08,
+        "env": 14,
+        "keytrack": 0.65
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.24,
+        "sync": false,
+        "depth": 2.2,
+        "amp": 0.2,
+        "pan": 0.04
+      },
+      "filter_env": [
+        0.004,
+        0.7,
+        0.06,
+        0.4
+      ],
+      "reverb": 0.11,
+      "delay": 0.025,
+      "velocity": 18,
+      "width": 0.58
+    },
+    {
+      "name": "Velvet Reed",
+      "role": "Synthetic reed electric keys with restrained tremolo for reflective harmony.",
+      "range": [
+        43,
+        84
+      ],
+      "tags": [
+        "reed",
+        "electric",
+        "tremolo",
+        "rounded"
+      ],
+      "oscillators": [
+        {
+          "kind": "pulse",
+          "level": 0.43,
+          "shape": 0.32,
+          "detune": -0.012
+        },
+        {
+          "kind": "fm2",
+          "level": 0.52,
+          "fm_amount": 0.085,
+          "ratio": 2,
+          "fm_amount2": 0.035,
+          "ratio2": 3
+        },
+        {
+          "kind": "sine",
+          "level": 0.12,
+          "octave": -1
+        }
+      ],
+      "amp": [
+        0.006,
+        1.1,
+        0.24,
+        0.42
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 2300,
+        "resonance": 0.13,
+        "env": 11,
+        "keytrack": 0.65
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 4.2,
+        "sync": false,
+        "depth": 1.4,
+        "amp": 2.4,
+        "pan": 0.12
+      },
+      "filter_env": [
+        0.004,
+        0.35,
+        0.05,
+        0.25
+      ],
+      "reverb": 0.06,
+      "delay": 0.02,
+      "velocity": 17,
+      "width": 0.62
+    },
+    {
+      "name": "Ivory Frame",
+      "role": "Synthetic wooden hammer resonance for sparse chamber-style keyboard phrases.",
+      "range": [
+        48,
+        88
+      ],
+      "tags": [
+        "wooden",
+        "resonant",
+        "hammered",
+        "sparse"
+      ],
+      "oscillators": [
+        {
+          "kind": "string",
+          "level": 0.62,
+          "exciter": 3,
+          "decay": 0.86,
+          "stiffness": 0.055
+        },
+        {
+          "kind": "triangle",
+          "level": 0.28
+        },
+        {
+          "kind": "fm2",
+          "level": 0.12,
+          "fm_amount": 0.08,
+          "ratio": 4
+        }
+      ],
+      "amp": [
+        0.005,
+        1.45,
+        0.08,
+        0.52
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 3600,
+        "resonance": 0.09,
+        "env": 8,
+        "keytrack": 0.8
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.24,
+        "sync": false,
+        "depth": 2.2,
+        "amp": 0.2,
+        "pan": 0.04
+      },
+      "filter_env": [
+        0.004,
+        0.28,
+        0.02,
+        0.23
+      ],
+      "reverb": 0.09,
+      "delay": 0.012,
+      "velocity": 21,
+      "highpass": 48,
+      "width": 0.44
+    },
+    {
+      "name": "Glass Hammer",
+      "role": "Synthetic glassy struck keys with a faint inharmonic edge for fragile themes.",
+      "range": [
+        48,
+        88
+      ],
+      "tags": [
+        "glassy",
+        "struck",
+        "fragile",
+        "inharmonic"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm3",
+          "level": 0.62,
+          "fm_amount": 0.17,
+          "ratio": 2.015,
+          "fm_amount2": 0.065,
+          "ratio2": 5.03
+        },
+        {
+          "kind": "sine",
+          "level": 0.38
+        },
+        {
+          "kind": "triangle",
+          "level": 0.08,
+          "octave": 1
+        }
+      ],
+      "amp": [
+        0.004,
+        2.6,
+        0.05,
+        1.05
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 6500,
+        "resonance": 0.055,
+        "env": 7,
+        "keytrack": 0.55
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.24,
+        "sync": false,
+        "depth": 2.2,
+        "amp": 0.2,
+        "pan": 0.04
+      },
+      "filter_env": [
+        0.004,
+        0.8,
+        0.04,
+        0.6
+      ],
+      "reverb": 0.13,
+      "delay": 0.045,
+      "velocity": 19,
+      "highpass": 60,
+      "width": 0.64,
+      "variant_changes": {
+        "Glass": {
+          "contour_amp": 0.65
+        }
+      }
+    },
+    {
+      "name": "Paper Hammers",
+      "role": "Synthetic damped keyboard taps for understated rhythmic accompaniment.",
+      "range": [
+        45,
+        81
+      ],
+      "tags": [
+        "damped",
+        "paper",
+        "dry",
+        "rhythmic"
+      ],
+      "oscillators": [
+        {
+          "kind": "modern",
+          "level": 0.45,
+          "saw": 0.1,
+          "pulse": 0.05,
+          "tri": 0.8
+        },
+        {
+          "kind": "string",
+          "level": 0.5,
+          "exciter": 1,
+          "decay": 0.72,
+          "stiffness": -0.18
+        }
+      ],
+      "amp": [
+        0.007,
+        0.48,
+        0.035,
+        0.18
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 1700,
+        "resonance": 0.12,
+        "env": 17,
+        "keytrack": 0.8
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.24,
+        "sync": false,
+        "depth": 2.2,
+        "amp": 0.2,
+        "pan": 0.04
+      },
+      "filter_env": [
+        0.004,
+        0.13,
+        0,
+        0.12
+      ],
+      "noise": 0.004,
+      "noise_color": -0.8,
+      "reverb": 0.035,
+      "delay": 0.008,
+      "velocity": 22,
+      "highpass": 45,
+      "width": 0.28
+    },
+    {
+      "name": "Amber Clav",
+      "role": "Synthetic clav-like keyboard stabs for interlocking funk and light chase patterns.",
+      "range": [
+        43,
+        84
+      ],
+      "tags": [
+        "clav",
+        "staccato",
+        "bright",
+        "rhythmic"
+      ],
+      "oscillators": [
+        {
+          "kind": "pulse",
+          "level": 0.48,
+          "shape": 0.19
+        },
+        {
+          "kind": "string",
+          "level": 0.48,
+          "exciter": 5,
+          "decay": 0.75,
+          "stiffness": 0.09
+        },
+        {
+          "kind": "sine",
+          "level": 0.09
+        }
+      ],
+      "amp": [
+        0.004,
+        0.42,
+        0.07,
+        0.13
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 3100,
+        "resonance": 0.24,
+        "env": 21,
+        "keytrack": 0.9
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.24,
+        "sync": false,
+        "depth": 2.2,
+        "amp": 0.2,
+        "pan": 0.04
+      },
+      "filter_env": [
+        0.004,
+        0.18,
+        0,
+        0.12
+      ],
+      "reverb": 0.04,
+      "delay": 0.035,
+      "velocity": 20,
+      "highpass": 75,
+      "width": 0.36
+    },
+    {
+      "name": "Wool Electric",
+      "role": "Synthetic dark electric keys for spacious voicings and gentle vocal support.",
+      "range": [
+        40,
+        83
+      ],
+      "tags": [
+        "electric",
+        "dark",
+        "soft",
+        "tonal"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm2",
+          "level": 0.7,
+          "fm_amount": 0.125,
+          "ratio": 1,
+          "fm_amount2": 0.055,
+          "ratio2": 2
+        },
+        {
+          "kind": "sine",
+          "level": 0.24,
+          "octave": 1
+        },
+        {
+          "kind": "triangle",
+          "level": 0.12,
+          "detune": 0.008
+        }
+      ],
+      "amp": [
+        0.012,
+        2.8,
+        0.2,
+        1.1
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 1600,
+        "resonance": 0.065,
+        "env": 6,
+        "keytrack": 0.65
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.24,
+        "sync": false,
+        "depth": 2.2,
+        "amp": 0.2,
+        "pan": 0.04
+      },
+      "filter_env": [
+        0.009,
+        1.2,
+        0.14,
+        0.65
+      ],
+      "reverb": 0.12,
+      "delay": 0.025,
+      "velocity": 19,
+      "highpass": 30,
+      "width": 0.5
+    },
+    {
+      "name": "Weathered Upright",
+      "role": "Synthetic uneven hammer color for plaintive motifs without acoustic-piano realism.",
+      "range": [
+        45,
+        86
+      ],
+      "tags": [
+        "hammered",
+        "worn",
+        "character",
+        "inharmonic"
+      ],
+      "oscillators": [
+        {
+          "kind": "string",
+          "level": 0.58,
+          "exciter": 4,
+          "decay": 0.88,
+          "stiffness": 0.12
+        },
+        {
+          "kind": "fm3",
+          "level": 0.25,
+          "fm_amount": 0.11,
+          "ratio": 2.025,
+          "fm_amount2": 0.05,
+          "ratio2": 3.015
+        },
+        {
+          "kind": "triangle",
+          "level": 0.18,
+          "detune": -0.018
+        }
+      ],
+      "amp": [
+        0.006,
+        1.8,
+        0.09,
+        0.7
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 2900,
+        "resonance": 0.13,
+        "env": 11,
+        "keytrack": 0.85
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.24,
+        "sync": false,
+        "depth": 2.2,
+        "amp": 0.2,
+        "pan": 0.04
+      },
+      "filter_env": [
+        0.004,
+        0.5,
+        0.03,
+        0.32
+      ],
+      "drift": 0.045,
+      "noise": 0.002,
+      "reverb": 0.075,
+      "delay": 0.015,
+      "velocity": 21,
+      "highpass": 50,
+      "width": 0.48
+    },
+    {
+      "name": "Tin Toy Keys",
+      "role": "Synthetic toy-keyboard sparkle for playful motifs and delicate upper-register doubles.",
+      "range": [
+        57,
+        93
+      ],
+      "tags": [
+        "toy",
+        "bright",
+        "small",
+        "inharmonic"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm3",
+          "level": 0.62,
+          "fm_amount": 0.19,
+          "ratio": 5.015,
+          "fm_amount2": 0.045,
+          "ratio2": 2.01
+        },
+        {
+          "kind": "sine",
+          "level": 0.26
+        },
+        {
+          "kind": "triangle",
+          "level": 0.1,
+          "octave": 1
+        }
+      ],
+      "amp": [
+        0.004,
+        0.95,
+        0.045,
+        0.4
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 7200,
+        "resonance": 0.075,
+        "env": 4,
+        "keytrack": 0.4
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.24,
+        "sync": false,
+        "depth": 2.2,
+        "amp": 0.2,
+        "pan": 0.04
+      },
+      "filter_env": [
+        0.004,
+        0.25,
+        0.02,
+        0.18
+      ],
+      "reverb": 0.08,
+      "delay": 0.02,
+      "velocity": 18,
+      "highpass": 110,
+      "width": 0.55,
+      "variant_changes": {
+        "Glass": {
+          "contour_amp": 0.65
+        }
+      }
+    },
+    {
+      "name": "Hollow Console",
+      "role": "Synthetic hollow electric console keys for restrained harmonic punctuation.",
+      "range": [
+        40,
+        84
+      ],
+      "tags": [
+        "hollow",
+        "electric",
+        "rounded",
+        "compact"
+      ],
+      "oscillators": [
+        {
+          "kind": "sine",
+          "level": 0.48,
+          "shape": 2,
+          "feedback": 0.025
+        },
+        {
+          "kind": "fm2",
+          "level": 0.37,
+          "fm_amount": 0.14,
+          "ratio": 2,
+          "fm_amount2": 0.03,
+          "ratio2": 4
+        },
+        {
+          "kind": "sine",
+          "level": 0.15,
+          "octave": -1
+        }
+      ],
+      "amp": [
+        0.008,
+        1.2,
+        0.3,
+        0.38
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 2700,
+        "resonance": 0.18,
+        "env": 12,
+        "keytrack": 0.75
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.24,
+        "sync": false,
+        "depth": 2.2,
+        "amp": 0.2,
+        "pan": 0.04
+      },
+      "filter_env": [
+        0.005,
+        0.4,
+        0.1,
+        0.24
+      ],
+      "reverb": 0.055,
+      "delay": 0.015,
+      "velocity": 16,
+      "width": 0.4
+    },
+    {
+      "name": "Drawbar Lantern",
+      "role": "Synthetic three-partial organ keys for sustained soulful harmony and melodic fills.",
+      "range": [
+        43,
+        91
+      ],
+      "tags": [
+        "organ",
+        "sustained",
+        "pure",
+        "tonal"
+      ],
+      "oscillators": [
+        {
+          "kind": "sine",
+          "level": 0.64
+        },
+        {
+          "kind": "sine",
+          "level": 0.25,
+          "octave": 1
+        },
+        {
+          "kind": "sine",
+          "level": 0.11,
+          "octave": 2
+        }
+      ],
+      "amp": [
+        0.009,
+        0.3,
+        0.88,
+        0.19
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 5100,
+        "resonance": 0.055,
+        "env": 3,
+        "keytrack": 0.3
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 5.4,
+        "sync": false,
+        "depth": 1.2,
+        "amp": 1.8,
+        "pan": 0.16
+      },
+      "filter_env": [
+        0.004,
+        0.18,
+        0.5,
+        0.1
+      ],
+      "reverb": 0.08,
+      "delay": 0.01,
+      "velocity": 9,
+      "highpass": 45,
+      "width": 0.56,
+      "variant_changes": {
+        "Glass": {
+          "second_level_scale": 1.25
+        }
+      }
+    },
+    {
+      "name": "Chapel Light",
+      "role": "Synthetic soft organ ensemble for calm sustained chords and ceremonial themes.",
+      "range": [
+        43,
+        86
+      ],
+      "tags": [
+        "organ",
+        "ensemble",
+        "gentle",
+        "sustained"
+      ],
+      "oscillators": [
+        {
+          "kind": "pulse",
+          "level": 0.31,
+          "shape": 0.48,
+          "detune": -0.018
+        },
+        {
+          "kind": "sine",
+          "level": 0.43,
+          "octave": 1
+        },
+        {
+          "kind": "triangle",
+          "level": 0.36,
+          "detune": 0.018
+        }
+      ],
+      "amp": [
+        0.04,
+        0.65,
+        0.82,
+        0.85
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 3200,
+        "resonance": 0.09,
+        "env": 5,
+        "keytrack": 0.5
+      },
+      "motion": {
+        "shape": "triangle",
+        "rate": 0.18,
+        "sync": false,
+        "depth": 3.8,
+        "amp": 0.4,
+        "pan": 0.1
+      },
+      "filter_env": [
+        0.04,
+        0.75,
+        0.35,
+        0.65
+      ],
+      "reverb": 0.17,
+      "delay": 0.02,
+      "velocity": 10,
+      "highpass": 40,
+      "width": 0.75,
+      "drift": 0.035
+    },
+    {
+      "name": "Breath Harmonium",
+      "role": "Synthetic reed-organ color with soft air for folk-leaning harmonic support.",
+      "range": [
+        43,
+        83
+      ],
+      "tags": [
+        "reed",
+        "organ",
+        "airy",
+        "sustained"
+      ],
+      "oscillators": [
+        {
+          "kind": "modern",
+          "level": 0.57,
+          "saw": 0.16,
+          "pulse": 0.22,
+          "tri": 0.62
+        },
+        {
+          "kind": "saw",
+          "level": 0.21,
+          "detune": -0.035
+        },
+        {
+          "kind": "sine",
+          "level": 0.18,
+          "octave": 1
+        }
+      ],
+      "amp": [
+        0.055,
+        0.8,
+        0.76,
+        0.5
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 1850,
+        "resonance": 0.19,
+        "env": 8,
+        "keytrack": 0.65
+      },
+      "motion": {
+        "shape": "noise",
+        "rate": 0.16,
+        "sync": false,
+        "depth": 3.2,
+        "amp": 0.65,
+        "pan": 0.035
+      },
+      "filter_env": [
+        0.06,
+        0.6,
+        0.4,
+        0.4
+      ],
+      "noise": 0.005,
+      "noise_color": -0.75,
+      "reverb": 0.08,
+      "delay": 0.012,
+      "velocity": 12,
+      "highpass": 48,
+      "width": 0.48,
+      "drift": 0.06
+    },
+    {
+      "name": "Pocket Reed",
+      "role": "Synthetic biting electric reed keys for syncopated riffs and energetic accompaniment.",
+      "range": [
+        40,
+        84
+      ],
+      "tags": [
+        "electric",
+        "reed",
+        "bite",
+        "syncopated"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm2",
+          "level": 0.62,
+          "fm_amount": 0.26,
+          "ratio": 2,
+          "fm_amount2": 0.065,
+          "ratio2": 3,
+          "feedback": 0.045
+        },
+        {
+          "kind": "triangle",
+          "level": 0.31
+        },
+        {
+          "kind": "pulse",
+          "level": 0.12,
+          "shape": 0.41
+        }
+      ],
+      "amp": [
+        0.004,
+        0.9,
+        0.16,
+        0.3
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 3400,
+        "resonance": 0.2,
+        "env": 18,
+        "keytrack": 0.7
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 4.6,
+        "sync": false,
+        "depth": 2.1,
+        "amp": 2.1,
+        "pan": 0.08
+      },
+      "filter_env": [
+        0.004,
+        0.3,
+        0.05,
+        0.2
+      ],
+      "reverb": 0.045,
+      "delay": 0.025,
+      "velocity": 20,
+      "highpass": 60,
+      "width": 0.42
+    },
+    {
+      "name": "Porcelain Desk",
+      "role": "Synthetic porcelain keyboard chimes for clear melodic statements above a small arrangement.",
+      "range": [
+        52,
+        91
+      ],
+      "tags": [
+        "porcelain",
+        "clear",
+        "melodic",
+        "tonal"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm2",
+          "level": 0.57,
+          "fm_amount": 0.18,
+          "ratio": 4,
+          "fm_amount2": 0.095,
+          "ratio2": 2
+        },
+        {
+          "kind": "sine",
+          "level": 0.35
+        },
+        {
+          "kind": "string",
+          "level": 0.1,
+          "exciter": 2,
+          "decay": 0.8,
+          "stiffness": 0.025
+        }
+      ],
+      "amp": [
+        0.005,
+        1.75,
+        0.11,
+        0.75
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 5600,
+        "resonance": 0.07,
+        "env": 9,
+        "keytrack": 0.6
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.24,
+        "sync": false,
+        "depth": 2.2,
+        "amp": 0.2,
+        "pan": 0.04
+      },
+      "filter_env": [
+        0.004,
+        0.6,
+        0.07,
+        0.45
+      ],
+      "reverb": 0.14,
+      "delay": 0.04,
+      "velocity": 17,
+      "highpass": 70,
+      "width": 0.6,
+      "variant_changes": {
+        "Glass": {
+          "contour_amp": 0.65
+        }
+      }
+    },
+    {
+      "name": "Noir Cabinet",
+      "role": "Synthetic low-register electric keys for spacious minor voicings and restrained suspense.",
+      "range": [
+        36,
+        76
+      ],
+      "tags": [
+        "dark",
+        "low",
+        "electric",
+        "suspense"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm2",
+          "level": 0.58,
+          "fm_amount": 0.16,
+          "ratio": 2,
+          "fm_amount2": 0.035,
+          "ratio2": 1
+        },
+        {
+          "kind": "sine",
+          "level": 0.26,
+          "octave": -1
+        },
+        {
+          "kind": "pulse",
+          "level": 0.12,
+          "shape": 0.36,
+          "detune": 0.015
+        }
+      ],
+      "amp": [
+        0.014,
+        2.1,
+        0.21,
+        0.9
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 1200,
+        "resonance": 0.16,
+        "env": 10,
+        "keytrack": 0.75
+      },
+      "motion": {
+        "shape": "triangle",
+        "rate": 0.13,
+        "sync": false,
+        "depth": 5.2,
+        "amp": 0.5,
+        "pan": 0.045
+      },
+      "filter_env": [
+        0.012,
+        0.85,
+        0.2,
+        0.6
+      ],
+      "reverb": 0.11,
+      "delay": 0.055,
+      "velocity": 18,
+      "highpass": 27,
+      "width": 0.45
+    },
+    {
+      "name": "Silver Desk",
+      "role": "Synthetic bright electric keyboard for open pop voicings and optimistic montage themes.",
+      "range": [
+        45,
+        88
+      ],
+      "tags": [
+        "electric",
+        "bright",
+        "open",
+        "tonal"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm2",
+          "level": 0.61,
+          "fm_amount": 0.22,
+          "ratio": 1,
+          "fm_amount2": 0.15,
+          "ratio2": 4
+        },
+        {
+          "kind": "triangle",
+          "level": 0.27,
+          "octave": 1
+        },
+        {
+          "kind": "sine",
+          "level": 0.14
+        }
+      ],
+      "amp": [
+        0.005,
+        1.55,
+        0.25,
+        0.65
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 6100,
+        "resonance": 0.1,
+        "env": 15,
+        "keytrack": 0.55
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.31,
+        "sync": false,
+        "depth": 2.8,
+        "amp": 0.7,
+        "pan": 0.07
+      },
+      "filter_env": [
+        0.004,
+        0.45,
+        0.15,
+        0.3
+      ],
+      "reverb": 0.095,
+      "delay": 0.05,
+      "velocity": 17,
+      "highpass": 48,
+      "width": 0.68,
+      "variant_changes": {
+        "Glass": {
+          "contour_amp": 0.65
+        },
+        "Bite": {
+          "contour_amp": 0.65
+        }
+      }
+    },
+    {
+      "name": "Motor Keys",
+      "role": "Synthetic animated combo keys for rolling grooves and retro keyboard ostinatos.",
+      "range": [
+        43,
+        86
+      ],
+      "tags": [
+        "combo",
+        "animated",
+        "groove",
+        "retro"
+      ],
+      "oscillators": [
+        {
+          "kind": "modern",
+          "level": 0.5,
+          "saw": 0.22,
+          "pulse": 0.36,
+          "tri": 0.42,
+          "detune": -0.01
+        },
+        {
+          "kind": "sine",
+          "level": 0.33,
+          "octave": 1
+        },
+        {
+          "kind": "pulse",
+          "level": 0.12,
+          "shape": 0.24,
+          "detune": 0.018
+        }
+      ],
+      "amp": [
+        0.007,
+        0.7,
+        0.44,
+        0.28
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 2800,
+        "resonance": 0.18,
+        "env": 13,
+        "keytrack": 0.65
+      },
+      "motion": {
+        "shape": "triangle",
+        "rate": 5.3,
+        "sync": false,
+        "depth": 2.8,
+        "amp": 3.1,
+        "pan": 0.18
+      },
+      "filter_env": [
+        0.006,
+        0.25,
+        0.2,
+        0.18
+      ],
+      "reverb": 0.055,
+      "delay": 0.06,
+      "velocity": 14,
+      "highpass": 65,
+      "width": 0.7
+    },
+    {
+      "name": "Resonant Marrow",
+      "role": "Synthetic soft resonant keys for patient chord changes and sustained pedal-point harmony.",
+      "range": [
+        40,
+        84
+      ],
+      "tags": [
+        "resonant",
+        "soft",
+        "wooden",
+        "sustained"
+      ],
+      "oscillators": [
+        {
+          "kind": "string",
+          "level": 0.51,
+          "exciter": 2,
+          "decay": 0.94,
+          "stiffness": -0.045
+        },
+        {
+          "kind": "fm2",
+          "level": 0.31,
+          "fm_amount": 0.065,
+          "ratio": 1,
+          "fm_amount2": 0.04,
+          "ratio2": 3
+        },
+        {
+          "kind": "sine",
+          "level": 0.17,
+          "octave": 1
+        }
+      ],
+      "amp": [
+        0.02,
+        3.6,
+        0.16,
+        1.4
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 2450,
+        "resonance": 0.12,
+        "env": 6,
+        "keytrack": 0.75
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.11,
+        "sync": false,
+        "depth": 4.5,
+        "amp": 0.3,
+        "pan": 0.08
+      },
+      "filter_env": [
+        0.018,
+        1.3,
+        0.2,
+        0.85
+      ],
+      "reverb": 0.16,
+      "delay": 0.03,
+      "velocity": 19,
+      "highpass": 38,
+      "width": 0.6
+    }
+  ],
+  "variants": [
+    {
+      "name": "Close",
+      "intent": "Compact attacks and shorter tails leave room for dialogue and dense arrangements.",
+      "changes": {
+        "attack_scale": 0.8,
+        "release_scale": 0.6,
+        "cutoff_scale": 0.85,
+        "second_level_scale": 0.75,
+        "fx_scale": 0.45,
+        "sustain_scale": 0.9
+      }
+    },
+    {
+      "name": "Felt",
+      "intent": "Softer attacks and darker harmonics support intimate phrases and quieter voicings.",
+      "changes": {
+        "attack_scale": 2.4,
+        "decay_scale": 1.15,
+        "sustain_scale": 0.7,
+        "release_scale": 0.9,
+        "cutoff_scale": 0.52,
+        "fm_scale": 0.58,
+        "second_level_scale": 1.3,
+        "fx_scale": 0.7
+      }
+    },
+    {
+      "name": "Glass",
+      "intent": "A brighter upper layer and longer decay make exposed melodic lines and spacious chords shine.",
+      "changes": {
+        "attack_scale": 0.65,
+        "decay_scale": 1.3,
+        "sustain_scale": 0.75,
+        "release_scale": 1.25,
+        "cutoff_scale": 1.8,
+        "fm_scale": 1.6,
+        "second_level_scale": 0.6,
+        "osc2_octave": 1,
+        "fx_scale": 1.1
+      }
+    },
+    {
+      "name": "Float",
+      "intent": "Gentler onset, sustained decay and moving texture bridge keyboard phrases into atmospheric harmony.",
+      "changes": {
+        "attack_scale": 6,
+        "decay_scale": 1.8,
+        "release_scale": 2.8,
+        "sustain_scale": 1.2,
+        "cutoff_scale": 0.9,
+        "motion_scale": 2.2,
+        "detune_scale": 1.8,
+        "second_level_scale": 1.25,
+        "fx_scale": 1.5
+      }
+    },
+    {
+      "name": "Bite",
+      "intent": "Shorter decay with brighter resonant attacks makes syncopated figures more assertive.",
+      "changes": {
+        "attack_scale": 0.6,
+        "decay_scale": 0.55,
+        "sustain_scale": 0.5,
+        "release_scale": 0.55,
+        "cutoff_scale": 1.4,
+        "resonance_add": 0.12,
+        "fm_scale": 1.8,
+        "second_level_scale": 0.45,
+        "fx_scale": 0.65
+      }
+    }
+  ]
+}

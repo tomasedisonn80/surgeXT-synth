@@ -1,0 +1,57 @@
+{
+  "schema": 2,
+  "manifest_sha256": "67bd4a5dc3fbf6f3794679b24b500f1ef37af83b7a47a863d10cb964a57314a2",
+  "engine_base_commit": "dfdd2f94adec9c7bee4f3cfd4f757860fb875c3e",
+  "native_engine_identifier": "1.4.main.dfdd2f94a",
+  "scope": "Actual common DSP through the offline native renderer. The embedded engine base identifier is not the later feature commit; executable and source hashes bind this evidence.",
+  "renderer_sha256": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+  "source_sha256": {
+    "scripts/scoring/export_evidence.py": "adc66aad69880b6e6efc847620a08c5a2b787511c5ada2080e0f005b19c9c40d",
+    "scripts/scoring/qa_bank.py": "203c1af4bf533755ee68b94f622762684a4e50f25119513ca515d76fb4392681",
+    "scripts/scoring/check_sustains.py": "d473c76bfe5208e65bcc97f6935c169e0878cb008324a731420e524ac96d90cd",
+    "scripts/scoring/build_bank.py": "f04372e5711525838a003e1b0235a9513d77f52b962036918e4262388af39ae2",
+    "scripts/scoring/gain_trims.json": "5ecafe951aae2081898e78cffaedf724f6a29c2adae79d9cfb20d16221d348d5",
+    "scripts/scoring/validate_bank.py": "6bd51fd4e14d6dcf54cdfba31f62fe4e0754c21737e94ac2a76bf3c06f7f08fa",
+    "scripts/scoring/check_roundtrip.py": "d178eeaf6827082ad8d2789e5b47430a89944115fe13c5aaa796d16734fe2fb9",
+    "src/scoring-tools/ScoringRender.cpp": "d6e7d6ed947ce6af7a2c5f476c0cedb3e52e2d92b05195d2507b6855c024366c",
+    "src/scoring-tools/CMakeLists.txt": "7d3e4d0b35f92d0ec309c5b6a470e8eff010c62d447e66a096d47b686c9309ff",
+    "doc/scoring-1000/package.sha256": "f95b5caf6b92a02d5d57b57266437b0222110f7a39df83675ab653c612c62a0e",
+    "doc/scoring-1000/manifest.json": "67bd4a5dc3fbf6f3794679b24b500f1ef37af83b7a47a863d10cb964a57314a2",
+    "scripts/scoring/recipes/01_keys.json": "c74d6ccc0a4b0d39dc477ebf8cc84300b0f3eee6e559b0b7118f1a885242cda7",
+    "scripts/scoring/recipes/02_plucks.json": "f13ad6523de80235667a0004ac52225878b7ca0b3bc32a29848e014372144bd3",
+    "scripts/scoring/recipes/03_bells_mallets.json": "41efbe72edadd17d1592261dd87ad5a39878c6b6f3a4d44bfb45ed1964bb2eb8",
+    "scripts/scoring/recipes/04_pads.json": "9a4c4be7aba9eeed6da2ba60923a0430aee287e9dbbca0f41c6bde7eee90c9d2",
+    "scripts/scoring/recipes/05_ensemble_hybrids.json": "bd3c1b58254f98545beddcda4472f5c34c4457709690bc0c9b314abbd69ffd71",
+    "scripts/scoring/recipes/06_drones_air.json": "aa1a01a0d08be6bfbc3fa1fd6057b0b9498b66d5e65990bd9b923dc30cb77652",
+    "scripts/scoring/recipes/07_bass.json": "0ec65831b28b1dc9267247d328aa007987e5feafaa9b9bdf1d20ed6f752edc65",
+    "scripts/scoring/recipes/08_leads.json": "530d93e14e1166fd2187024e79a5cc25b7a3ec41d656104ac293a1de547959c3",
+    "scripts/scoring/recipes/09_pulses_sequences.json": "2e81878d31e6c71694d1d708077c4a08930c805bdabde4f8b8a094e00794675d",
+    "scripts/scoring/recipes/10_percussion_transitions.json": "d8a04022cdea595501772287ce0be00fb88905a98935ec43bd943bc7f5ea78fe"
+  },
+  "master_reference_db": 0,
+  "normalization": "none",
+  "human_musical_audition": "pending",
+  "composer_endorsement": "not_claimed",
+  "supplementary_source_evidence": [
+    {
+      "file": "correction-plan.json",
+      "sha256": "9a8096945e03ffe6e765c80b7c40fb461b048d493725f156ad339694fde06908",
+      "scope": "Supplementary source evidence; historical claims are not relabeled current."
+    },
+    {
+      "file": "sustain-correction-plan.json",
+      "sha256": "7b43d701c3ade3b9fbec19fc721524e9874f9e881fdd5fe545fd9e70eae16c09",
+      "scope": "Supplementary source evidence; historical claims are not relabeled current."
+    },
+    {
+      "file": "attack-wording-plan.json",
+      "sha256": "9d38731ee63c8385535f0cdea1bec6066d1c6455963dd1497cbc27f4607a3165",
+      "scope": "Supplementary source evidence; historical claims are not relabeled current."
+    },
+    {
+      "file": "layer-wording-plan.json",
+      "sha256": "513aa8b87ba7c36fd3a5e829026d0130bfbaf6100bce8c3f2676d05d65f7ddd9",
+      "scope": "Supplementary source evidence; historical claims are not relabeled current."
+    }
+  ]
+}

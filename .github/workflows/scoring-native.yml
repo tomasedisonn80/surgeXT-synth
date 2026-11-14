@@ -1,0 +1,202 @@
+name: Scoring 1000 native bank
+
+on:
+  push:
+    branches: [main, 'work/scoring-*']
+    paths:
+      - '.gitattributes'
+      - '.github/workflows/scoring-native.yml'
+      - 'CMakeLists.txt'
+      - 'cmake/*scoring*.cmake'
+      - 'resources/CMakeLists.txt'
+      - 'resources/data/patches_factory/Scoring 1000/**'
+      - 'scripts/scoring/**'
+      - 'doc/scoring-1000/manifest.json'
+      - 'doc/scoring-1000/package.sha256'
+      - 'src/CMakeLists.txt'
+      - 'src/cmake/lib.cmake'
+      - 'src/scoring-tools/**'
+      - 'src/common/**'
+      - 'src/platform/**'
+      - 'src/lua/**'
+      - 'libs/**'
+  pull_request:
+    paths:
+      - '.gitattributes'
+      - '.github/workflows/scoring-native.yml'
+      - 'CMakeLists.txt'
+      - 'cmake/*scoring*.cmake'
+      - 'resources/CMakeLists.txt'
+      - 'resources/data/patches_factory/Scoring 1000/**'
+      - 'scripts/scoring/**'
+      - 'doc/scoring-1000/manifest.json'
+      - 'doc/scoring-1000/package.sha256'
+      - 'src/CMakeLists.txt'
+      - 'src/cmake/lib.cmake'
+      - 'src/scoring-tools/**'
+      - 'src/common/**'
+      - 'src/platform/**'
+      - 'src/lua/**'
+      - 'libs/**'
+  workflow_dispatch:
+    inputs:
+      full_bank:
+        description: Audit all 1000 presets through short and sustained native fixtures (otherwise category smoke)
+        type: boolean
+        required: false
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: scoring-native-${{ github.ref }}
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  native-bank:
+    name: Native DSP, definitions and staged factory discovery
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    env:
+      SCORING_SMOKE_IDS: SC01-048,SC02-033,SC03-078,SC04-097,SC05-083,SC06-061,SC07-059,SC08-058,SC09-085,SC10-048
+    steps:
+      - name: Check out source and exact submodule revisions
+        uses: actions/checkout@v6
+        with:
+          submodules: recursive
+          persist-credentials: false
+
+      - name: Install headless build and measurement dependencies
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends --yes \
+            build-essential cmake ninja-build pkg-config python3-numpy
+
+      - name: Record source and measurement provenance
+        run: |
+          set -euo pipefail
+          mkdir -p scoring-artifact
+          {
+            echo "Source commit: $GITHUB_SHA"
+            echo "Workflow run: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+            echo "Native offline surge-common DSP; raw stereo float32; no normalization"
+            echo "Technical measurements do not establish human audition or composer endorsement"
+            cmake --version
+            c++ --version
+            python3 --version
+            python3 -c 'import numpy; print("NumPy:", numpy.__version__)'
+          } > scoring-artifact/provenance.txt
+
+      - name: Validate every source definition and exact regeneration
+        run: |
+          set -euo pipefail
+          python3 scripts/scoring/validate_bank.py --check-generated \
+            --output scoring-artifact/source-static.json
+          cmake -P cmake/verify-scoring-bank.cmake
+
+      - name: Configure actual native DSP renderer
+        run: |
+          set -euo pipefail
+          cmake -S . -B build-scoring -GNinja \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
+            -DENABLE_LTO=OFF \
+            -DSURGE_SKIP_JUCE_FOR_RACK=ON \
+            -DSURGE_BUILD_CLAP=OFF \
+            -DSURGE_BUILD_XT=OFF \
+            -DSURGE_BUILD_FX=OFF \
+            -DSURGE_BUILD_TESTRUNNER=OFF \
+            -DSURGE_LUA_IMPL=puc \
+            -DSURGE_BUILD_SCORING_TOOLS=ON \
+            2>&1 | tee scoring-artifact/configure.log
+
+      - name: Build native renderer and verified factory stage
+        id: native_build
+        run: |
+          set -euo pipefail
+          cmake --build build-scoring --target surge-scoring-render stage-scoring-bank --parallel 2 \
+            2>&1 | tee scoring-artifact/build.log
+          sha256sum build-scoring/src/scoring-tools/surge-scoring-render \
+            > scoring-artifact/renderer.sha256
+
+      - name: Verify all installed paths and native factory discovery
+        if: ${{ !cancelled() && steps.native_build.outcome == 'success' }}
+        run: |
+          set -euo pipefail
+          python3 scripts/scoring/validate_bank.py \
+            --data-root build-scoring/scoring-bank-stage/share/surge-xt \
+            --output scoring-artifact/staged-static.json
+          build-scoring/src/scoring-tools/surge-scoring-render \
+            --data "$GITHUB_WORKSPACE/build-scoring/scoring-bank-stage/share/surge-xt" \
+            --discover scoring-artifact/native-discovery.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          root = Path.cwd()
+          data = root / 'build-scoring/scoring-bank-stage/share/surge-xt'
+          manifest = json.loads((root / 'doc/scoring-1000/manifest.json').read_text())
+          expected = {str(data / Path(p['path']).relative_to('resources/data'))
+                      for p in manifest['presets']}
+          found = json.loads((root / 'scoring-artifact/native-discovery.json').read_text())
+          actual = {p['path'] for p in found if '/patches_factory/Scoring 1000/' in p['path']}
+          assert len(expected) == 1000, len(expected)
+          assert actual == expected, {'missing': sorted(expected-actual), 'extra': sorted(actual-expected)}
+          print('Native engine discovered all 1000 staged factory paths.')
+          PY
+
+      - name: Measure native audio and all eight macro responses
+        if: ${{ !cancelled() && steps.native_build.outcome == 'success' }}
+        env:
+          FULL_BANK: ${{ inputs.full_bank }}
+        run: |
+          set -euo pipefail
+          scope=()
+          if [[ "$FULL_BANK" != "true" ]]; then
+            scope=(--ids "$SCORING_SMOKE_IDS")
+          fi
+          python3 scripts/scoring/qa_bank.py \
+            --renderer build-scoring/src/scoring-tools/surge-scoring-render \
+            --output scoring-artifact/audio --workers 2 "${scope[@]}"
+
+      - name: Verify native semantic save and reload
+        if: ${{ !cancelled() && steps.native_build.outcome == 'success' }}
+        env:
+          FULL_BANK: ${{ inputs.full_bank }}
+        run: |
+          set -euo pipefail
+          scope=()
+          if [[ "$FULL_BANK" != "true" ]]; then
+            scope=(--ids "$SCORING_SMOKE_IDS")
+          fi
+          python3 scripts/scoring/check_roundtrip.py \
+            --renderer build-scoring/src/scoring-tools/surge-scoring-render \
+            --output scoring-artifact/roundtrip "${scope[@]}"
+
+      - name: Exercise complete slow cycles and sustained polyphony
+        if: ${{ !cancelled() && steps.native_build.outcome == 'success' }}
+        env:
+          FULL_BANK: ${{ inputs.full_bank }}
+        run: |
+          set -euo pipefail
+          scope=()
+          if [[ "$FULL_BANK" != "true" ]]; then
+            scope=(--ids "$SCORING_SMOKE_IDS")
+          fi
+          python3 scripts/scoring/check_sustains.py \
+            --renderer build-scoring/src/scoring-tools/surge-scoring-render \
+            --output scoring-artifact/sustains --workers 2 "${scope[@]}"
+
+      - name: Upload measured evidence, including failures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: scoring-native-evidence-${{ github.sha }}
+          path: scoring-artifact/
+          if-no-files-found: warn
+          retention-days: 30

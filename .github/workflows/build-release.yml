@@ -16,6 +16,14 @@ on:
       - 'doc/reference-workspaces-continuation.md'
       - 'doc/reference-workspaces-user-guide.md'
       - 'doc/reference-workspaces-engineering-log.md'
+      # Bank content lives under resources/data. Documentation and offline
+      # authoring/QA helpers do not change ordinary plugin builds. The scoring
+      # workflow separately watches its tools, manifest and checksum index.
+      - 'doc/scoring-1000/**'
+      - 'scripts/scoring/**'
+      - 'src/scoring-tools/**'
+      - 'README.md'
+      - 'AGENTS.md'
 
 concurrency:
   group: release-build-${{ github.workflow }}-${{ github.ref }}

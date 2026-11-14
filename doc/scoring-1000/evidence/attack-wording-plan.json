@@ -1,0 +1,82 @@
+{
+  "schema": 1,
+  "reason": "The 4 ms minimum attack clamp prevents these Edge variants having a shorter nominal attack than their authored base. Preserve sound and remove the unsupported speed comparison.",
+  "before_manifest_sha256": "ddbb4781424430cc950daf6d610ec7025c743d7c435b404747c5821e65ec9369",
+  "changed_count": 8,
+  "changes": [
+    {
+      "id": "SC10-003",
+      "name": "Felt Drum Edge",
+      "before_patch_sha256": "b6ee5504de927513066750b7261a36fc0ffabe662f7ffa4a273907cad380e94a",
+      "sound_state_sha256": "164d8065dc36fe7f7f70e5056f3fec7de5116e492ac975438ac6db5dd4dcdb8a",
+      "before_intent": "A faster, brighter and more articulated attack with stronger upper partials for rhythmic definition.",
+      "after_intent": "A brighter and more articulated attack with stronger upper partials for rhythmic definition.",
+      "after_patch_sha256": "7f12ab79de71ee1108db60e9568486e145eef6b4347094bb17018ca2857b679f"
+    },
+    {
+      "id": "SC10-008",
+      "name": "Timber Knock Edge",
+      "before_patch_sha256": "3f348fe2584239d5608f6e04a97cad20fe98bcbaf4edf609c6646eaba85e7798",
+      "sound_state_sha256": "61ff45edf0017a8bc576bc243e37978c04d9d503c999e90aec4bd5e52260b821",
+      "before_intent": "A faster, brighter and more articulated attack with stronger upper partials for rhythmic definition.",
+      "after_intent": "A brighter and more articulated attack with stronger upper partials for rhythmic definition.",
+      "after_patch_sha256": "a12702e0ad3c65dff8a6045ad378307eb91d50b24b746a2dcce31a2b1f567240"
+    },
+    {
+      "id": "SC10-018",
+      "name": "Copper Tap Edge",
+      "before_patch_sha256": "6a94d0d4d76d5b7f183060a80bd26c3a1d063fbba8de5f07d7f94b5e22c369b0",
+      "sound_state_sha256": "be7e1a3e4c3d6b5b201ad6448462e4009e5d1b2476696f3a83743ab80cb6e6d4",
+      "before_intent": "A faster, brighter and more articulated attack with stronger upper partials for rhythmic definition.",
+      "after_intent": "A brighter and more articulated attack with stronger upper partials for rhythmic definition.",
+      "after_patch_sha256": "e6b1a04b087a805103dc0cf3a7e141878db54b76272769c2330f8c40d953180a"
+    },
+    {
+      "id": "SC10-028",
+      "name": "Glass Tick Edge",
+      "before_patch_sha256": "7cc242f46cb445d229436a55f7f6b7d4dcf844f7a625aef5fcdd380c947215e9",
+      "sound_state_sha256": "3eca1496eddf9574e373cfd4dc91c2f552c4b014e24f7f5bd9a19aa8fb34ba3a",
+      "before_intent": "A faster, brighter and more articulated attack with stronger upper partials for rhythmic definition.",
+      "after_intent": "A brighter and more articulated attack with stronger upper partials for rhythmic definition.",
+      "after_patch_sha256": "2a7cdffd38173dcc47d1adf5e2e7d4e01f711dc603a26dd09acfa6680c869e22"
+    },
+    {
+      "id": "SC10-053",
+      "name": "Tension Thud Edge",
+      "before_patch_sha256": "035dce5eecbf52317ad48a109f57ead33ddaba77abb58bb774466a6efebbb96d",
+      "sound_state_sha256": "113ff20573ef40f0fb43fb51aca969e76277303a52780d751cb5b6da3d1629b4",
+      "before_intent": "A faster, brighter and more articulated attack with stronger upper partials for rhythmic definition.",
+      "after_intent": "A brighter and more articulated attack with stronger upper partials for rhythmic definition.",
+      "after_patch_sha256": "b41c395343abc8bb874595c946d5c5cb921435b30fd610eb90c8afdddd746a31"
+    },
+    {
+      "id": "SC10-063",
+      "name": "Drop Marker Edge",
+      "before_patch_sha256": "3bdd547a0905edf6d2f2f0958027699bd29a870ab26ab4490a79cb09763a7901",
+      "sound_state_sha256": "f96b7519e3b41e09b590a515818d6a6ca74b87ba01f5b074f598f67b5cb84d7a",
+      "before_intent": "A faster, brighter and more articulated attack with stronger upper partials for rhythmic definition.",
+      "after_intent": "A brighter and more articulated attack with stronger upper partials for rhythmic definition.",
+      "after_patch_sha256": "dabafb0963bd333fa3c555e53f287f6c987a5f0a9e3b860848d30720cfecf982"
+    },
+    {
+      "id": "SC10-068",
+      "name": "Hollow Block Edge",
+      "before_patch_sha256": "c96bfc50a6ad92f555fa9b4e8c1401bb8397f4f574ffb42fae4c9b9e539e20a5",
+      "sound_state_sha256": "5024d1e6b2e3607279723dd246649cda0030125d49e8c42206e2e73fc0d8a760",
+      "before_intent": "A faster, brighter and more articulated attack with stronger upper partials for rhythmic definition.",
+      "after_intent": "A brighter and more articulated attack with stronger upper partials for rhythmic definition.",
+      "after_patch_sha256": "11b5e63800ebfe1bce9354007f559aef516e6f3fdbb70a269dacf5b75ffeb355"
+    },
+    {
+      "id": "SC10-078",
+      "name": "Circuit Clack Edge",
+      "before_patch_sha256": "2f25fb98050c4bdfde3963d175ee56bf59457fb7f98d400cd0218faf573c8e3b",
+      "sound_state_sha256": "6d6b0e0f9bd200a5bcb24147aab39314a3114e0929df3a69eacbede718dbf45c",
+      "before_intent": "A faster, brighter and more articulated attack with stronger upper partials for rhythmic definition.",
+      "after_intent": "A brighter and more articulated attack with stronger upper partials for rhythmic definition.",
+      "after_patch_sha256": "06252f85ab1f0c99338a4e910b6819c893ff7fe87128343d711f103654b0c15f"
+    }
+  ],
+  "after_manifest_sha256": "1ac91c8196f5d920e3d142ee6117c4c53ab22768dd446890e56ba62e3eab2ab4",
+  "native_sound_state_unchanged": true
+}

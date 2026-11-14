@@ -1,0 +1,1024 @@
+{
+  "schema": 4,
+  "requested_agents": 60,
+  "requested_waves": 10,
+  "concurrency_limit_including_root": 4,
+  "counting_rule": "Distinct actual spawned subagent tasks only. Follow-ups, resumed turns, parent work and planned assignments do not increment the count. The requested plan was ten waves of six; the final wave has six completed recovery assignments plus three historical assignments whose completions remain unconfirmed, making 63 observed assignments and 60 observed completions. Work executes in bounded batches under the four-agent concurrency limit.",
+  "agents": [
+    {
+      "number": 1,
+      "wave": 1,
+      "agent": "/root/w01_a01_industry",
+      "assignment": "Primary composer research",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "doc/scoring-1000/reviews/w01-a01-research-note.md"
+      ],
+      "result": "Primary composer interviews established recurring musical roles without a usage ranking or endorsement claim.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 2,
+      "wave": 1,
+      "agent": "/root/w01_a02_musical",
+      "assignment": "Musical taxonomy and genre research",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "doc/scoring-1000/reviews/w01-a02-research-note.md"
+      ],
+      "result": "Mapped scoring and music contexts to playable synthetic colors and performance controls.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 3,
+      "wave": 1,
+      "agent": "/root/w01_a03_audioqa",
+      "assignment": "Five-gate audio QA design",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "doc/scoring-1000/reviews/w01-a03-research-note.md"
+      ],
+      "result": "Designed native rendering and five technical gates; this initial note was inspection, not a listening pass.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 4,
+      "wave": 1,
+      "agent": "/root/w01_a04_format",
+      "assignment": "Native FXP format and parameter research",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "doc/scoring-1000/reviews/w01-a04-research-note.md"
+      ],
+      "result": "Documented FXP headers, native parameter types and modulation units.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 5,
+      "wave": 1,
+      "agent": "/root/w01_a05_packaging",
+      "assignment": "Cross-platform packaging research",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "doc/scoring-1000/reviews/w01-a05-research-note.md"
+      ],
+      "result": "Traced factory-resource installation and plugin-only omissions.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 6,
+      "wave": 1,
+      "agent": "/root/w01_a06_renderer",
+      "assignment": "Native DSP renderer implementation",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "src/scoring-tools/ScoringRender.cpp",
+        "src/scoring-tools/README.md"
+      ],
+      "result": "Implemented the offline renderer against the actual native synthesis engine.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 7,
+      "wave": 2,
+      "agent": "/root/w02_a07_keys",
+      "assignment": "Keys: 20 families and 5 variants",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "scripts/scoring/recipes/01_keys.json"
+      ],
+      "result": "Authored 20 synthesis families with five variants each; later reviews and compiler refinements are recorded separately.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 8,
+      "wave": 2,
+      "agent": "/root/w02_a08_plucks",
+      "assignment": "Plucks: 20 families and 5 variants",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "scripts/scoring/recipes/02_plucks.json"
+      ],
+      "result": "Authored 20 synthesis families with five variants each; later reviews and compiler refinements are recorded separately.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 9,
+      "wave": 2,
+      "agent": "/root/w02_a09_bells",
+      "assignment": "Bells and Mallets: 20 families and 5 variants",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "scripts/scoring/recipes/03_bells_mallets.json"
+      ],
+      "result": "Authored 20 synthesis families with five variants each; later reviews and compiler refinements are recorded separately.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 10,
+      "wave": 2,
+      "agent": "/root/w02_a10_pads",
+      "assignment": "Pads: 20 families and 5 variants",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "scripts/scoring/recipes/04_pads.json"
+      ],
+      "result": "Authored 20 synthesis families with five variants each; later reviews and compiler refinements are recorded separately.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 11,
+      "wave": 2,
+      "agent": "/root/w02_a11_ensembles",
+      "assignment": "Ensemble Hybrids: 20 families and 5 variants",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "scripts/scoring/recipes/05_ensemble_hybrids.json"
+      ],
+      "result": "Authored 20 synthesis families with five variants each; later reviews and compiler refinements are recorded separately.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 12,
+      "wave": 2,
+      "agent": "/root/w02_a12_drones",
+      "assignment": "Drones and Air: 20 families and 5 variants",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "scripts/scoring/recipes/06_drones_air.json"
+      ],
+      "result": "Authored 20 synthesis families with five variants each; later reviews and compiler refinements are recorded separately.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 13,
+      "wave": 3,
+      "agent": "/root/w03_a13_bass",
+      "assignment": "Bass: 20 families and 5 variants",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "scripts/scoring/recipes/07_bass.json"
+      ],
+      "result": "Authored 20 synthesis families with five variants each; later reviews and compiler refinements are recorded separately.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 14,
+      "wave": 3,
+      "agent": "/root/w03_a14_leads",
+      "assignment": "Leads: 20 families and 5 variants",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "scripts/scoring/recipes/08_leads.json"
+      ],
+      "result": "Authored 20 synthesis families with five variants each; later reviews and compiler refinements are recorded separately.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 15,
+      "wave": 3,
+      "agent": "/root/w03_a15_pulses",
+      "assignment": "Pulses and Sequences: 20 families and 5 variants",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "scripts/scoring/recipes/09_pulses_sequences.json"
+      ],
+      "result": "Authored 20 synthesis families with five variants each; later reviews and compiler refinements are recorded separately.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 16,
+      "wave": 3,
+      "agent": "/root/w03_a16_percussion",
+      "assignment": "Percussion and Transitions: 20 families and 5 variants",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "scripts/scoring/recipes/10_percussion_transitions.json"
+      ],
+      "result": "Authored 20 synthesis families with five variants each; later reviews and compiler refinements are recorded separately.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 17,
+      "wave": 3,
+      "agent": "/root/w03_a17_qa",
+      "assignment": "Native QA runner implementation",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "scripts/scoring/qa_bank.py",
+        "scripts/scoring/QA_RUNNER.md"
+      ],
+      "result": "Implemented the 23-scenario measurement protocol, fingerprints and resumable per-preset evidence.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 18,
+      "wave": 3,
+      "agent": "/root/w03_a18_static",
+      "assignment": "Independent static validator and negative fixtures",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "scripts/scoring/validate_bank.py"
+      ],
+      "result": "Implemented independent definition, hash, count and regeneration checks with negative fixtures.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 19,
+      "wave": 4,
+      "agent": "/root/w04_a19_renderer_audit",
+      "assignment": "Renderer audit and edge cases",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "doc/scoring-1000/reviews/w04-a19-renderer.md"
+      ],
+      "result": "Reviewed engine isolation, random state, argument handling and zero-frame edge cases.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 20,
+      "wave": 4,
+      "agent": "/root/w04_a20_qa_audit",
+      "assignment": "QA measurement audit",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "doc/scoring-1000/reviews/w04-a20-qa.md"
+      ],
+      "result": "Audited audio measurements and detected common-window and active-DC requirements.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 21,
+      "wave": 4,
+      "agent": "/root/w04_a21_research",
+      "assignment": "Research synthesis with 16 primary sources",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "doc/scoring-1000/RESEARCH.md"
+      ],
+      "result": "Synthesized 16 primary sources and separated documented practice from bank-design inference.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 22,
+      "wave": 4,
+      "agent": "/root/w04_a22_keys_review",
+      "assignment": "All 300 Keys/Plucks/Bells design review",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "doc/scoring-1000/reviews/w04-a22-keys-plucks-bells.md"
+      ],
+      "result": "Reviewed all 300 Keys, Plucks, and Bells/Mallets definitions; identified role and layer corrections.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 23,
+      "wave": 4,
+      "agent": "/root/w04_a23_pads_review",
+      "assignment": "All 300 Pads/Ensembles/Drones design review",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "doc/scoring-1000/reviews/w04-a23-pads-ensembles-air.md"
+      ],
+      "result": "Reviewed all 300 Pads, Ensemble Hybrids, and Drones/Air definitions and their musical descriptions.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 24,
+      "wave": 4,
+      "agent": "/root/w04_a24_rhythm_review",
+      "assignment": "All 400 Bass/Leads/Pulses/Percussion design review",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "doc/scoring-1000/reviews/w04-a24-bass-leads-rhythm.md"
+      ],
+      "result": "Reviewed all 400 Bass, Leads, Pulses, and Percussion/Transitions definitions.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 25,
+      "wave": 5,
+      "agent": "/root/w05_a25_packaging",
+      "assignment": "Build guard, staging and CI integration",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "doc/scoring-1000/reviews/w05-a25-packaging.md",
+        "cmake/scoring-bank.cmake"
+      ],
+      "result": "Added integrity guards, factory staging and native CI integration.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 26,
+      "wave": 5,
+      "agent": "/root/w05_a26_roundtrip",
+      "assignment": "All 1000 native semantic roundtrips",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "doc/scoring-1000/reviews/w05-a26-roundtrip.md",
+        "scripts/scoring/check_roundtrip.py"
+      ],
+      "result": "Verified native save/load semantics for all 1,000 inputs at the report’s recorded revision.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 27,
+      "wave": 5,
+      "agent": "/root/w05_a27_playerguide",
+      "assignment": "Player and genre adaptation guide",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "doc/scoring-1000/USER_GUIDE.md"
+      ],
+      "result": "Wrote performance, macro, genre, register and installation guidance.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 28,
+      "wave": 5,
+      "agent": "/root/w05_a28_pitchtempo",
+      "assignment": "All 100 sequence definitions and native timing probe",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "doc/scoring-1000/reviews/w05-a28-pitch-tempo.md",
+        "scripts/scoring/check_sequences.py"
+      ],
+      "result": "Inspected all 100 sequence definitions and measured selected pitch and tempo behavior.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 29,
+      "wave": 5,
+      "agent": "/root/w05_a29_compiler_contract",
+      "assignment": "All 1000 compiler-to-DSP mapping audit",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "doc/scoring-1000/reviews/w05-a29-compiler-contract.md"
+      ],
+      "result": "Checked compiler-to-native parameter meaning across all 1,000 definitions.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 30,
+      "wave": 5,
+      "agent": "/root/w05_a30_audio_diversity",
+      "assignment": "Independent audio diversity analyzer",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "doc/scoring-1000/reviews/w05-a30-diversity-method.md",
+        "scripts/scoring/analyze_diversity.py"
+      ],
+      "result": "Implemented complete-bank acoustic comparisons with fixture-confounding and interpretation limits.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 31,
+      "wave": 6,
+      "agent": "/root/w06_a31_gain_review",
+      "assignment": "Calibration and unity-reference gain audit",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "doc/scoring-1000/reviews/w06-a31-gain.md"
+      ],
+      "result": "Reviewed saved gain, calibration evidence and the unity-master reference.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 32,
+      "wave": 6,
+      "agent": "/root/w06_a32_macro_review",
+      "assignment": "All 1000 macro and expression contracts",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "doc/scoring-1000/reviews/w06-a32-macros.md"
+      ],
+      "result": "Checked all 1,000 macro/expression routing contracts against native definitions.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 33,
+      "wave": 6,
+      "agent": "/root/w06_a33_release_artifacts",
+      "assignment": "Reproducible bank download packaging",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "scripts/scoring/package_bank.py",
+        "doc/scoring-1000/DOWNLOADS.md"
+      ],
+      "result": "Implemented deterministic standalone ZIP generation and exact archive verification.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 34,
+      "wave": 6,
+      "agent": "/root/w06_a34_keys_audio",
+      "assignment": "All 100 Keys native evidence and closest-pair review",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "doc/scoring-1000/reviews/w06-a34-keys-audio.md"
+      ],
+      "result": "Reviewed all 100 Keys native reports and targeted close variants.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 35,
+      "wave": 6,
+      "agent": "/root/w06_a35_plucks_audio",
+      "assignment": "All 100 Plucks native evidence and dry pair audit",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "doc/scoring-1000/reviews/w06-a35-plucks-audio.md"
+      ],
+      "result": "Reviewed all 100 Plucks native reports and controlled dry comparisons.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 36,
+      "wave": 6,
+      "agent": "/root/w06_a36_bells_audio",
+      "assignment": "All 100 Bells/Mallets native evidence and dry pair audit",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "doc/scoring-1000/reviews/w06-a36-bells-audio.md"
+      ],
+      "result": "Reviewed all 100 Bells/Mallets native reports and controlled dry comparisons.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 37,
+      "wave": 7,
+      "agent": "/root/w07_a37_motion_diagnosis",
+      "assignment": "Noise-LFO startup diagnosis with 24 native probes",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "doc/scoring-1000/reviews/w07-a37-motion-diagnosis.md"
+      ],
+      "result": "Used 24 native probes to diagnose delayed Noise-LFO companion response.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 38,
+      "wave": 7,
+      "agent": "/root/w07_a38_pads_audio",
+      "assignment": "All 100 Pads evidence and measured quiet-pad gain probes",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "doc/scoring-1000/reviews/w07-a38-pads-audio.md"
+      ],
+      "result": "Reviewed all 100 Pads reports and measured quiet-default gain candidates.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 39,
+      "wave": 7,
+      "agent": "/root/w07_a39_ensembles_audio",
+      "assignment": "All 100 Ensembles evidence and actual swell-entry probes",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "doc/scoring-1000/reviews/w07-a39-ensembles-audio.md"
+      ],
+      "result": "Reviewed all 100 Ensemble reports and measured the actual Pizzicato swell entrance.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 40,
+      "wave": 7,
+      "agent": "/root/w07_a40_drones_audio",
+      "assignment": "All 100 Drones evidence and low-register review",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "doc/scoring-1000/reviews/w07-a40-drones-audio.md"
+      ],
+      "result": "Reviewed all 100 Drones/Air reports and low-register behavior.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 41,
+      "wave": 7,
+      "agent": "/root/w07_a41_bass_audio",
+      "assignment": "All 100 Bass native evidence and range review",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "doc/scoring-1000/reviews/w07-a41-bass-audio.md"
+      ],
+      "result": "Reviewed all 100 Bass reports, modes, ranges and expression evidence.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 42,
+      "wave": 7,
+      "agent": "/root/w07_a42_leads_audio",
+      "assignment": "All 100 Leads native evidence and expression review",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "doc/scoring-1000/reviews/w07-a42-leads-audio.md"
+      ],
+      "result": "Reviewed all 100 Leads reports and expression/play-mode descriptions.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 43,
+      "wave": 8,
+      "agent": "/root/w08_a43_pulses_audio",
+      "assignment": "All 100 Pulses native evidence and sequencer-role review",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "doc/scoring-1000/reviews/w08-a43-pulses-audio.md"
+      ],
+      "result": "Reviewed all 100 Pulses reports and sequence-role evidence.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 44,
+      "wave": 8,
+      "agent": "/root/w08_a44_percussion_audio",
+      "assignment": "All 100 Percussion/Transitions native evidence and pitch-envelope review",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "doc/scoring-1000/reviews/w08-a44-percussion-audio.md"
+      ],
+      "result": "Reviewed all 100 Percussion/Transitions reports and pitch-envelope behavior.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 45,
+      "wave": 8,
+      "agent": "/root/w08_a45_build_guard_review",
+      "assignment": "Cross-platform packaging guard, LF, embedded paths and CI negative tests",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "doc/scoring-1000/reviews/w08-a45-build-guard.md"
+      ],
+      "result": "Tested package corruption rejection, line endings, embedded-project paths and workflow behavior.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 46,
+      "wave": 8,
+      "agent": "/root/w08_a46_research_verification",
+      "assignment": "Independent verification of all 16 primary research sources",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "doc/scoring-1000/reviews/w08-a46-research-verification.md"
+      ],
+      "result": "Independently checked all 16 research evidence rows against original publishers.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 47,
+      "wave": 8,
+      "agent": "/root/w08_a47_native_previews",
+      "assignment": "Ten native category audition previews and reproducible rendering",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "doc/scoring-1000/AUDIO_PREVIEWS.md",
+        "scripts/scoring/render_previews.py"
+      ],
+      "result": "Rendered ten native category excerpts and the 94-second overview with disclosed common playback gain.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 48,
+      "wave": 8,
+      "agent": "/root/w08_a48_sustain_cycles",
+      "assignment": "All 1000 extended hold/complete-cycle native stress audit",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "doc/scoring-1000/reviews/w08-a48-sustains.md",
+        "scripts/scoring/check_sustains.py"
+      ],
+      "result": "Audited 2,000 prolonged native fixtures; ten measured gain corrections removed the initial warnings.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 49,
+      "wave": 9,
+      "agent": "/root/w09_a49_final_roundtrip_stage",
+      "assignment": "Final 1000 native semantic roundtrips and staged factory discovery",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "doc/scoring-1000/reviews/w09-a49-final-native.md"
+      ],
+      "result": "Verified 1,000 semantic roundtrips, 20 equal audio pairs and 1,000 staged native paths at the recorded revision.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 50,
+      "wave": 9,
+      "agent": "/root/w09_a50_evidence_integrity",
+      "assignment": "Independent evidence integrity and reproducible export helper",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "doc/scoring-1000/reviews/w09-a50-evidence-integrity.md",
+        "scripts/scoring/export_evidence.py"
+      ],
+      "result": "Cross-checked raw measurements and bindings and implemented a fail-closed evidence exporter.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 51,
+      "wave": 9,
+      "agent": "/root/w09_a51_final_diversity",
+      "assignment": "Full-bank acoustic diversity and closest-case analysis",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "doc/scoring-1000/reviews/w09-a51-final-diversity.md"
+      ],
+      "result": "Reviewed 2,000 within-family comparisons, matched cross-family neighbors and ten controlled dry renders.",
+      "followup_scope": "Refresh comparison evidence for the frozen final catalog; this is the same agent task, not an additional agent.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 52,
+      "wave": 9,
+      "agent": "/root/w09_a52_installer_pipeline",
+      "assignment": "Cross-platform installer pipeline and archive inspection",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "doc/scoring-1000/reviews/w09-a52-installer-pipeline.md",
+        "scripts/scoring/inspect_archive.py"
+      ],
+      "result": "Traced seven platform builds and data omissions; supplied exact nested archive inspection.",
+      "followup_scope": "Current installer artifacts require later observed CI evidence; baseline workflow success is labeled as historical.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 53,
+      "wave": 9,
+      "agent": "/root/w09_a53_catalog_playability",
+      "assignment": "All 1000 musician-facing metadata audit and family catalog",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "doc/scoring-1000/reviews/w09-a53-catalog-playability.md",
+        "doc/scoring-1000/CATALOG.md"
+      ],
+      "result": "Checked all 1,000 catalog entries, corrected register descriptions and generated the 200-family catalog.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 54,
+      "wave": 9,
+      "agent": "/root/w09_a54_documentation_delivery",
+      "assignment": "Research, player guide and delivery documentation review",
+      "spawn_observed": true,
+      "status": "completed",
+      "artifacts": [
+        "doc/scoring-1000/reviews/w09-a54-documentation-delivery.md"
+      ],
+      "result": "Checked player/research/delivery prose, exact examples and links; clarified historical versus current evidence.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery."
+    },
+    {
+      "number": 55,
+      "wave": 10,
+      "agent": "/root/w10_a55_verification_report",
+      "assignment": "Final technical verification report",
+      "spawn_observed": true,
+      "status": "completion_unconfirmed",
+      "artifacts": [
+        "doc/scoring-1000/VERIFICATION.md"
+      ],
+      "result": "A current-catalog verification document exists. Historical task completion is unconfirmed; remote workflow results remain a separate evidence scope.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery.",
+      "status_at_original_snapshot": "running",
+      "completion_observation": "No later completion message was recovered; existing output alone is not treated as task completion."
+    },
+    {
+      "number": 56,
+      "wave": 10,
+      "agent": "/root/w10_a56_agent_ledger",
+      "assignment": "Actual subagent ledger and evidence audit",
+      "spawn_observed": true,
+      "status": "completion_unconfirmed",
+      "artifacts": [
+        "doc/scoring-1000/AGENT_LEDGER.md",
+        "doc/scoring-1000/reviews/w10-a56-ledger-audit.md"
+      ],
+      "result": "The original partial ledger audit exists. Supplementary recovery reconciles its recorded counts without claiming completion of the original 60-task request.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery.",
+      "status_at_original_snapshot": "running",
+      "completion_observation": "No later completion message was recovered; existing output alone is not treated as task completion."
+    },
+    {
+      "number": 57,
+      "wave": 10,
+      "agent": "/root/w10_a57_native_ci",
+      "assignment": "Independent native GitHub Actions build and evidence verification",
+      "spawn_observed": true,
+      "status": "completion_unconfirmed",
+      "artifacts": [
+        "doc/scoring-1000/reviews/w10-a57-native-ci.md",
+        "doc/scoring-1000/reviews/w10-a57-native-ci-evidence.json"
+      ],
+      "result": "Recovered native-CI preparation report explicitly awaits an actual current-source workflow run; no remote success is recorded by that report.",
+      "spawn_observation_basis": "Parent-recorded historical snapshot; collaboration events were not replayed during recovery.",
+      "status_at_original_snapshot": "running",
+      "completion_observation": "No later completion message was recovered; existing output alone is not treated as task completion."
+    }
+  ],
+  "audit_basis": "The recovered parent-recorded ledger and hash-bound original audit preserve 57 historical spawn observations and 54 completion observations. An earlier recovery parent confirmed three distinct supplementary recovery spawns and their final results. The current publication parent explicitly confirmed three additional distinct publication-audit spawns by exact canonical name and receipt of all three final results. Recovered reports numbered 58-60 do not independently establish additional spawns or completed assignments.",
+  "actual_agents": 63,
+  "completed_agents": 60,
+  "wave_counts": {
+    "1": 6,
+    "2": 6,
+    "3": 6,
+    "4": 6,
+    "5": 6,
+    "6": 6,
+    "7": 6,
+    "8": 6,
+    "9": 6,
+    "10": 9
+  },
+  "completion_claim": "60_completed_assignments_among_63_observed_assignments_3_historical_completions_unconfirmed",
+  "record_scope": "57 historical development-session assignments, 3 separately identified supplementary recovery assignments, and 3 additional publication-audit assignments toward the same user request.",
+  "counts_scope": "63 distinct observed assignments toward the same request: 57 historical records, 3 earlier recovery tasks and 3 current publication audits. There are 60 recorded completion observations: 54 historical, 3 earlier recovery and 3 current publication results. Historical assignments 55-57 remain completion-unconfirmed. This exceeds the requested assignment count; it does not assert 60 original historical completions or 60 freshly spawned tasks in the publication turn.",
+  "historical_snapshot": {
+    "local_commit": "946ed442572d5fa29e6d6467813b4fa6cb150908",
+    "ledger_sha256": "e958d037e45639668f8dae38731a90eeba3a8351d4b5b26b0831a3307418a3c5",
+    "readable_ledger_sha256": "e4efed90e9eaa043e82af6ccdd4385b6392e14ceeeaaf86b881ccf8aca4f1b39",
+    "audit_report_sha256": "8392f37973d5d5f0a5a22c894fb54c213bbaea1937b32f3a37d14444208bcc6e",
+    "evidence_path": "doc/scoring-1000/reviews/w10-a56-ledger-evidence.json",
+    "recorded_spawn_observations": 57,
+    "recorded_completion_observations": 54,
+    "recorded_running_assignments": [
+      55,
+      56,
+      57
+    ],
+    "recorded_unspawned_slots": 3,
+    "interpretation": "The unspawned/running fields describe that historical snapshot only. They do not establish current activity or prove that later tasks were never spawned."
+  },
+  "recovered_reports_not_counted_as_spawn_records": [
+    {
+      "reported_number": 58,
+      "reported_wave": 10,
+      "reported_agent": "/root/w10_a58_platform_artifacts",
+      "assignment": "Current platform artifact verification",
+      "reported_scope_result": "awaiting_current_platform_run",
+      "historical_spawn_event_recovered": false,
+      "historical_completion_message_recovered": false,
+      "counted_as_confirmed_agent": false,
+      "counted_as_completed": false,
+      "artifacts": [
+        {
+          "path": "doc/scoring-1000/reviews/w10-a58-platform-artifacts.md",
+          "sha256": "175c1887f014bc9d80c06e2b3c7187750c4303821ad1a3b4844efb396b5105df"
+        },
+        {
+          "path": "doc/scoring-1000/reviews/w10-a58-platform-artifacts-evidence.json",
+          "sha256": "4cb864f8f1bbb8e383be0fe398e0be1d624d17ceb08fcb88bedb8430e8cf7500"
+        }
+      ]
+    },
+    {
+      "reported_number": 59,
+      "reported_wave": 10,
+      "reported_agent": null,
+      "assignment": "Committed-tree and delivery integrity",
+      "reported_scope_result": "local_committed_tree_audit_reported_pass",
+      "historical_spawn_event_recovered": false,
+      "historical_completion_message_recovered": false,
+      "counted_as_confirmed_agent": false,
+      "counted_as_completed": false,
+      "artifacts": [
+        {
+          "path": "doc/scoring-1000/reviews/w10-a59-repository-integrity.md",
+          "sha256": "863ee18fb39bc11d335a2939b3047fdaa93f5477250d91002eef5194c6a74693"
+        },
+        {
+          "path": "doc/scoring-1000/reviews/w10-a59-repository-integrity.json",
+          "sha256": "1ce6366d9310570307609f58652ab5c7f427e52c4bbd6bd196253e4b40ab2588"
+        }
+      ]
+    },
+    {
+      "reported_number": 60,
+      "reported_wave": 10,
+      "reported_agent": "/root/w10_a60_final_acceptance",
+      "assignment": "Independent final local acceptance",
+      "reported_scope_result": "local_technical_acceptance_reported_pass",
+      "historical_spawn_event_recovered": false,
+      "historical_completion_message_recovered": false,
+      "counted_as_confirmed_agent": false,
+      "counted_as_completed": false,
+      "artifacts": [
+        {
+          "path": "doc/scoring-1000/reviews/w10-a60-final-acceptance.json",
+          "sha256": "6b719bd45aacb07ca850d770dac64abd085f7e3690a29c4cd9a8739ba583f619"
+        }
+      ]
+    }
+  ],
+  "supplementary_recovery": {
+    "excluded_from_historical_counts": true,
+    "included_in_request_assignment_count": true,
+    "parent_confirmation": "Exact task identities and scopes were explicitly supplied by the parent, who subsequently confirmed receiving completed final results for all three recovery assignments.",
+    "scope": "Supplementary work toward the same goal, continued under the original recovery task identities. Research and follow-up verification are one task per identity, not separate agents.",
+    "agents": [
+      {
+        "recovery_id": "R1",
+        "agent": "/root/w01_a01_research_scoring",
+        "initial_assignment": "Primary-source scoring sound-role research",
+        "current_assignment": "Build and archive verification during publication recovery",
+        "spawn_observed": true,
+        "spawn_observation_basis": "The parent explicitly confirmed this distinct actual spawn and exact canonical name in the current recovery turn.",
+        "status": "completed",
+        "status_scope": "The parent observed the completed final result for this supplementary recovery assignment; completion does not establish remote native/platform results or a missing historical lifecycle event.",
+        "request_accounting_wave": 10,
+        "historical_number": null,
+        "counted_as_distinct_assignment": true,
+        "completion_observation_basis": "Explicit parent confirmation of completed final results for all three recovery tasks in the current recovery turn.",
+        "result": "Completed primary-source research and local build/standalone-ZIP verification; refreshed VERIFICATION.md. The parent observed the final result."
+      },
+      {
+        "recovery_id": "R2",
+        "agent": "/root/w01_a02_research_expression",
+        "initial_assignment": "Primary-source expressive controls and cross-genre sound design research",
+        "current_assignment": "Historical agent ledger and recovered-report reconciliation",
+        "spawn_observed": true,
+        "spawn_observation_basis": "The parent explicitly confirmed this distinct actual spawn and exact canonical name in the current recovery turn.",
+        "status": "completed",
+        "status_scope": "The parent observed the completed final result for this supplementary recovery assignment; completion does not establish remote native/platform results or a missing historical lifecycle event.",
+        "request_accounting_wave": 10,
+        "historical_number": null,
+        "counted_as_distinct_assignment": true,
+        "completion_observation_basis": "Explicit parent confirmation of completed final results for all three recovery tasks in the current recovery turn.",
+        "result": "Completed historical ledger and recovered-report reconciliation, preserving actual counts, missing lifecycle evidence and separate technical scopes. The parent observed the final result."
+      },
+      {
+        "recovery_id": "R3",
+        "agent": "/root/w01_a03_quality_architecture",
+        "initial_assignment": "Preset quality and validation architecture review",
+        "current_assignment": "Recovered native evidence integrity review",
+        "spawn_observed": true,
+        "spawn_observation_basis": "The parent explicitly confirmed this distinct actual spawn and exact canonical name in the current recovery turn.",
+        "status": "completed",
+        "status_scope": "The parent observed the completed final result for this supplementary recovery assignment; completion does not establish remote native/platform results or a missing historical lifecycle event.",
+        "request_accounting_wave": 10,
+        "historical_number": null,
+        "counted_as_distinct_assignment": true,
+        "completion_observation_basis": "Explicit parent confirmation of completed final results for all three recovery tasks in the current recovery turn.",
+        "result": "Completed independent reconciliation of all 1,000 FXPs with evidence, indexes and provenance, reconstructing the 25,000 primary and sustained scenarios. The parent observed the final result."
+      }
+    ]
+  },
+  "recovery_checks": {
+    "historical_ledger_hashes_match_original_evidence": true,
+    "recorded_task_numbers_contiguous": true,
+    "recorded_task_names_unique": true,
+    "recorded_completed_tasks_have_existing_artifacts": true,
+    "missing_completed_artifacts": [],
+    "recovered_report_artifacts_hashed": 5,
+    "historical_plus_supplementary_names_unique": true,
+    "confirmed_total_distinct_assignments": 63,
+    "confirmed_total_completion_observations": 60,
+    "historical_plus_all_recovery_names_unique": true,
+    "current_publication_finals_confirmed_by_parent": 3
+  },
+  "historical_actual_agents": 57,
+  "supplementary_actual_agents": 3,
+  "unreconciled_historical_numbered_slots": [
+    58,
+    59,
+    60
+  ],
+  "unmet_confirmed_spawn_count": 0,
+  "historical_wave_counts": {
+    "1": 6,
+    "2": 6,
+    "3": 6,
+    "4": 6,
+    "5": 6,
+    "6": 6,
+    "7": 6,
+    "8": 6,
+    "9": 6,
+    "10": 3
+  },
+  "wave_counting_scope": "Waves 1-9 retain six historical completed assignments each. Final verification wave 10 contains historical assignments 55-57 (completion unconfirmed), the three completed earlier supplementary recovery assignments, and the three completed publication audits. Thus observed assignment wave counts are 6 for waves 1-9 and 9 for wave 10, totaling 63; observed completion wave counts are 6 in each wave, totaling 60. Recovery names remain exactly as spawned and are not relabeled as historical 58-60. This is request-level continuation accounting, not a claim of an original exactly-60-spawn execution.",
+  "historical_completed_agents": 54,
+  "supplementary_completed_agents": 3,
+  "historical_completion_unconfirmed_agents": 3,
+  "completed_wave_counts": {
+    "1": 6,
+    "2": 6,
+    "3": 6,
+    "4": 6,
+    "5": 6,
+    "6": 6,
+    "7": 6,
+    "8": 6,
+    "9": 6,
+    "10": 6
+  },
+  "publication_recovery": {
+    "excluded_from_historical_counts": true,
+    "included_in_request_assignment_count": true,
+    "parent_confirmation": "The current parent explicitly reported receiving the completed final results of all three publication auditors, supplied the exact canonical names below, and authorized this ledger follow-up. The follow-up is part of the existing ledger-audit assignment and adds no agent.",
+    "scope": "Additional final-wave recovery and publication verification; separate from the three earlier supplementary recovery tasks and from the original numbered assignments.",
+    "summary_artifact": "doc/scoring-1000/reviews/publication-ledger-audit.md",
+    "agents": [
+      {
+        "recovery_id": "P1",
+        "agent": "/root/publication_bank_audit",
+        "assignment": "Independent publication audit of the current preset bank and technical audio evidence",
+        "spawn_observed": true,
+        "spawn_observation_basis": "Exact distinct canonical task supplied and actual spawn confirmed by the current publication parent.",
+        "status": "completed",
+        "completion_observation_basis": "Current publication parent explicitly confirmed receiving completed final results for all three publication auditors before requesting this ledger update.",
+        "request_accounting_wave": 10,
+        "historical_number": null,
+        "counted_as_distinct_assignment": true,
+        "status_scope": "Completion of the publication audit only; no missing historical lifecycle event, fresh native render, remote workflow result or human audition is inferred.",
+        "result": "The parent confirmed a final result validating all 1,000 current presets and hashes and reconciling the 25,000 recorded scenarios, 5,000 technical gates and 8,000 macro responses; no new full-bank listening claim."
+      },
+      {
+        "recovery_id": "P2",
+        "agent": "/root/publication_ledger_audit",
+        "assignment": "Independent historical ledger, completion accounting and unpublished-record audit",
+        "spawn_observed": true,
+        "spawn_observation_basis": "Exact distinct canonical task supplied and actual spawn confirmed by the current publication parent.",
+        "status": "completed",
+        "completion_observation_basis": "Current publication parent explicitly confirmed receiving completed final results for all three publication auditors before requesting this ledger update.",
+        "request_accounting_wave": 10,
+        "historical_number": null,
+        "counted_as_distinct_assignment": true,
+        "status_scope": "Completion of the publication audit only; no missing historical lifecycle event, fresh native render, remote workflow result or human audition is inferred.",
+        "result": "Verified 57 historical entries, all deliverable paths, both original ledger hashes and all five recovered-report hashes; identified the 60-assignment/57-completion state before the three publication results. Parent confirmed the final result, then requested this same-task ledger update."
+      },
+      {
+        "recovery_id": "P3",
+        "agent": "/root/publication_packaging_audit",
+        "assignment": "Independent publication audit of factory build integration and standalone packaging",
+        "spawn_observed": true,
+        "spawn_observation_basis": "Exact distinct canonical task supplied and actual spawn confirmed by the current publication parent.",
+        "status": "completed",
+        "completion_observation_basis": "Current publication parent explicitly confirmed receiving completed final results for all three publication auditors before requesting this ledger update.",
+        "request_accounting_wave": 10,
+        "historical_number": null,
+        "counted_as_distinct_assignment": true,
+        "status_scope": "Completion of the publication audit only; no missing historical lifecycle event, fresh native render, remote workflow result or human audition is inferred.",
+        "result": "The parent confirmed a final result validating the standalone ZIP with all 1,000 expected FXPs and matching hashes. Factory-data inclusion is distinct from preset bytes embedded in plugin binaries or current installer execution."
+      }
+    ]
+  },
+  "publication_actual_agents": 3,
+  "publication_completed_agents": 3,
+  "confirmed_assignments_above_requested": 3,
+  "unmet_confirmed_completion_count": 0
+}

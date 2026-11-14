@@ -1,0 +1,320 @@
+{
+  "agent": 49,
+  "audio_pairs": [
+    {
+      "bit_identical": true,
+      "frames": 384000,
+      "hold_seconds": 4,
+      "id": "SC01-001",
+      "sample_rate": 48000,
+      "saved_audio_sha256": "7fb596b2a16ec3e43e472b7d4d8a99d3e03ac9b04169ce71119ee6c8cdbc879d",
+      "seconds": 8,
+      "seed": 1000,
+      "source_audio_sha256": "7fb596b2a16ec3e43e472b7d4d8a99d3e03ac9b04169ce71119ee6c8cdbc879d"
+    },
+    {
+      "bit_identical": true,
+      "frames": 384000,
+      "hold_seconds": 4,
+      "id": "SC01-100",
+      "sample_rate": 48000,
+      "saved_audio_sha256": "0e17a9e65c168496c0863ed3beb124d25c68c0e79ccb9bc2a67cb43ba470a699",
+      "seconds": 8,
+      "seed": 1000,
+      "source_audio_sha256": "0e17a9e65c168496c0863ed3beb124d25c68c0e79ccb9bc2a67cb43ba470a699"
+    },
+    {
+      "bit_identical": true,
+      "frames": 384000,
+      "hold_seconds": 4,
+      "id": "SC02-001",
+      "sample_rate": 48000,
+      "saved_audio_sha256": "ee2b7e4c16ab6555d28383609427beb76a73b601a4a48731db4785821dcb4754",
+      "seconds": 8,
+      "seed": 1000,
+      "source_audio_sha256": "ee2b7e4c16ab6555d28383609427beb76a73b601a4a48731db4785821dcb4754"
+    },
+    {
+      "bit_identical": true,
+      "frames": 384000,
+      "hold_seconds": 4,
+      "id": "SC02-100",
+      "sample_rate": 48000,
+      "saved_audio_sha256": "0fbc1b2508660865cfaeac8a160cf3eae46a62be5ea4f2b23c37161760872470",
+      "seconds": 8,
+      "seed": 1000,
+      "source_audio_sha256": "0fbc1b2508660865cfaeac8a160cf3eae46a62be5ea4f2b23c37161760872470"
+    },
+    {
+      "bit_identical": true,
+      "frames": 384000,
+      "hold_seconds": 4,
+      "id": "SC03-001",
+      "sample_rate": 48000,
+      "saved_audio_sha256": "5287fb1aef1cab8018512e454ada2dcb1bbeb4c267c8eea36d4a71e3e7aa301d",
+      "seconds": 8,
+      "seed": 1000,
+      "source_audio_sha256": "5287fb1aef1cab8018512e454ada2dcb1bbeb4c267c8eea36d4a71e3e7aa301d"
+    },
+    {
+      "bit_identical": true,
+      "frames": 384000,
+      "hold_seconds": 4,
+      "id": "SC03-100",
+      "sample_rate": 48000,
+      "saved_audio_sha256": "65b9eea72156c814b44d77145c974330b191e650e792288f7fd3b350a103753b",
+      "seconds": 8,
+      "seed": 1000,
+      "source_audio_sha256": "65b9eea72156c814b44d77145c974330b191e650e792288f7fd3b350a103753b"
+    },
+    {
+      "bit_identical": true,
+      "frames": 384000,
+      "hold_seconds": 4,
+      "id": "SC04-001",
+      "sample_rate": 48000,
+      "saved_audio_sha256": "de6641f806da37c76cb29bf24924f9ee72c01c36dee842d0a742e29c2c1c799d",
+      "seconds": 8,
+      "seed": 1000,
+      "source_audio_sha256": "de6641f806da37c76cb29bf24924f9ee72c01c36dee842d0a742e29c2c1c799d"
+    },
+    {
+      "bit_identical": true,
+      "frames": 384000,
+      "hold_seconds": 4,
+      "id": "SC04-100",
+      "sample_rate": 48000,
+      "saved_audio_sha256": "fb4d61f8116d34773d1f9c71c96f26681fd7b1f9ce56d0ffd173859dfc54935b",
+      "seconds": 8,
+      "seed": 1000,
+      "source_audio_sha256": "fb4d61f8116d34773d1f9c71c96f26681fd7b1f9ce56d0ffd173859dfc54935b"
+    },
+    {
+      "bit_identical": true,
+      "frames": 384000,
+      "hold_seconds": 4,
+      "id": "SC05-001",
+      "sample_rate": 48000,
+      "saved_audio_sha256": "04f2909a651b7906bacd0e3e0fdb547a916a98eac54b913bcae0865c5bb0cbed",
+      "seconds": 8,
+      "seed": 1000,
+      "source_audio_sha256": "04f2909a651b7906bacd0e3e0fdb547a916a98eac54b913bcae0865c5bb0cbed"
+    },
+    {
+      "bit_identical": true,
+      "frames": 384000,
+      "hold_seconds": 4,
+      "id": "SC05-100",
+      "sample_rate": 48000,
+      "saved_audio_sha256": "07e412cf0c01ca08ce1a9fd6924ce60b39912884e5baaf228df0d9c0706e0ac6",
+      "seconds": 8,
+      "seed": 1000,
+      "source_audio_sha256": "07e412cf0c01ca08ce1a9fd6924ce60b39912884e5baaf228df0d9c0706e0ac6"
+    },
+    {
+      "bit_identical": true,
+      "frames": 384000,
+      "hold_seconds": 4,
+      "id": "SC06-001",
+      "sample_rate": 48000,
+      "saved_audio_sha256": "c768ef24a6e987ca501dbb7fe7ac38cd74beab2679f8024f738ae53dd1452441",
+      "seconds": 8,
+      "seed": 1000,
+      "source_audio_sha256": "c768ef24a6e987ca501dbb7fe7ac38cd74beab2679f8024f738ae53dd1452441"
+    },
+    {
+      "bit_identical": true,
+      "frames": 384000,
+      "hold_seconds": 4,
+      "id": "SC06-100",
+      "sample_rate": 48000,
+      "saved_audio_sha256": "ba9ee9061aedf992b27f88de8d3cc895a239c29091e8c42ce3af297c6a6998b5",
+      "seconds": 8,
+      "seed": 1000,
+      "source_audio_sha256": "ba9ee9061aedf992b27f88de8d3cc895a239c29091e8c42ce3af297c6a6998b5"
+    },
+    {
+      "bit_identical": true,
+      "frames": 384000,
+      "hold_seconds": 4,
+      "id": "SC07-001",
+      "sample_rate": 48000,
+      "saved_audio_sha256": "c719f69e5a45404665dcf3756502df6106a4124eae7be11bad349fbc54a84a01",
+      "seconds": 8,
+      "seed": 1000,
+      "source_audio_sha256": "c719f69e5a45404665dcf3756502df6106a4124eae7be11bad349fbc54a84a01"
+    },
+    {
+      "bit_identical": true,
+      "frames": 384000,
+      "hold_seconds": 4,
+      "id": "SC07-100",
+      "sample_rate": 48000,
+      "saved_audio_sha256": "57012a7521491961ba410dd7c9c22c3436f55a670f84f33cf6ac01ea32f20f96",
+      "seconds": 8,
+      "seed": 1000,
+      "source_audio_sha256": "57012a7521491961ba410dd7c9c22c3436f55a670f84f33cf6ac01ea32f20f96"
+    },
+    {
+      "bit_identical": true,
+      "frames": 384000,
+      "hold_seconds": 4,
+      "id": "SC08-001",
+      "sample_rate": 48000,
+      "saved_audio_sha256": "8829ce172754b479af5abcae042a51fedb61c626a3291898d00d4e6d2506a596",
+      "seconds": 8,
+      "seed": 1000,
+      "source_audio_sha256": "8829ce172754b479af5abcae042a51fedb61c626a3291898d00d4e6d2506a596"
+    },
+    {
+      "bit_identical": true,
+      "frames": 384000,
+      "hold_seconds": 4,
+      "id": "SC08-100",
+      "sample_rate": 48000,
+      "saved_audio_sha256": "1ce68c137bb1d704e63fc5e6f73ffb73085e719b95b12c293c283668a11213b2",
+      "seconds": 8,
+      "seed": 1000,
+      "source_audio_sha256": "1ce68c137bb1d704e63fc5e6f73ffb73085e719b95b12c293c283668a11213b2"
+    },
+    {
+      "bit_identical": true,
+      "frames": 384000,
+      "hold_seconds": 4,
+      "id": "SC09-001",
+      "sample_rate": 48000,
+      "saved_audio_sha256": "e3364ba1b4ecba5761f0cc69b6bcf2e80bc186ac03c30685542c077c137782b6",
+      "seconds": 8,
+      "seed": 1000,
+      "source_audio_sha256": "e3364ba1b4ecba5761f0cc69b6bcf2e80bc186ac03c30685542c077c137782b6"
+    },
+    {
+      "bit_identical": true,
+      "frames": 384000,
+      "hold_seconds": 4,
+      "id": "SC09-100",
+      "sample_rate": 48000,
+      "saved_audio_sha256": "f408df98a92622a7a23d1b51bc3ab88355060043f6ca7c8626fa15d0a4126a0c",
+      "seconds": 8,
+      "seed": 1000,
+      "source_audio_sha256": "f408df98a92622a7a23d1b51bc3ab88355060043f6ca7c8626fa15d0a4126a0c"
+    },
+    {
+      "bit_identical": true,
+      "frames": 384000,
+      "hold_seconds": 4,
+      "id": "SC10-001",
+      "sample_rate": 48000,
+      "saved_audio_sha256": "e69f9f51a9c307e5da7ccb78318e8382406835804fa5c3180aa6c844952055e0",
+      "seconds": 8,
+      "seed": 1000,
+      "source_audio_sha256": "e69f9f51a9c307e5da7ccb78318e8382406835804fa5c3180aa6c844952055e0"
+    },
+    {
+      "bit_identical": true,
+      "frames": 384000,
+      "hold_seconds": 4,
+      "id": "SC10-100",
+      "sample_rate": 48000,
+      "saved_audio_sha256": "915d35d6657c3ca9a16bc90a192034cc6575c198115d2881f05e376c1bba2987",
+      "seconds": 8,
+      "seed": 1000,
+      "source_audio_sha256": "915d35d6657c3ca9a16bc90a192034cc6575c198115d2881f05e376c1bba2987"
+    }
+  ],
+  "catalog_sha256": "8396df6694b92e644f027e90014be629e3c3f542c9d9403c69cb72a0b5b6bee1",
+  "implementation_sha256": {
+    "cmake/scoring-bank.cmake": "6ccc7da73133f0999efed0fbd79a1c3c8f9e33292479c8471c4830ffc8824ed3",
+    "cmake/verify-scoring-bank.cmake": "c92efa7c0f6a59c28b6f9e24f18e7081ff0d99336e4a72ede218b52ea108437d",
+    "scripts/scoring/check_roundtrip.py": "d178eeaf6827082ad8d2789e5b47430a89944115fe13c5aaa796d16734fe2fb9",
+    "scripts/scoring/validate_bank.py": "6bd51fd4e14d6dcf54cdfba31f62fe4e0754c21737e94ac2a76bf3c06f7f08fa"
+  },
+  "limits": [
+    "All 1000 presets received semantic serialization checks; original/saved PCM equality was measured for 20 selected presets.",
+    "This task did not execute a platform installer or load the plugin in a DAW host.",
+    "Human musical audition, perceptual uniqueness, and composer endorsement are not established by these checks."
+  ],
+  "native_discovery": {
+    "bank_records": 1000,
+    "expected_bank_paths": 1000,
+    "missing": 0,
+    "relative_path_set_sha256": "fca0b0d7c869a4ad6cee8874ede69f082c4a492d50198fa810cbb7299c9110db",
+    "total_records": 1000,
+    "unexpected": 0,
+    "unique_bank_paths": 1000
+  },
+  "package_index_sha256": "93432d2ce636edda3c0609dd7556a3bbf5afb134d9210ff505b96080c2824a78",
+  "raw_evidence": [
+    {
+      "scratch_path": "/workspace/scratch/9118c5c72ad8/a49-roundtrip-final/summary.json",
+      "sha256": "34aa828bff03d84244d7ee46af99d23b2776ce423fe83d9bb835775681840d8e"
+    },
+    {
+      "scratch_path": "/workspace/scratch/9118c5c72ad8/a49-staged-static.json",
+      "sha256": "ae85c0a980600a0d3ff614a17731ad592369d2170e26755337dd984ae1291689"
+    },
+    {
+      "scratch_path": "/workspace/scratch/9118c5c72ad8/a49-native-discovery.json",
+      "sha256": "7907a3ce27f14ecfd3bc6b8e58a8023e019fbfdcf6ca0c836f54a2b4feade188"
+    },
+    {
+      "scratch_path": "/workspace/scratch/9118c5c72ad8/a49-stage-build.log",
+      "sha256": "d7fedf24964748fa7020a75134ba4af544161dc66c236bc46835bf3ad42233ea"
+    }
+  ],
+  "recorded_at_utc": "2026-11-14T03:03:27.424479+00:00",
+  "renderer": {
+    "embedded_engine": "1.4.main.dfdd2f94a",
+    "embedded_git": "dfdd2f94a",
+    "rebuilt_by_this_audit": false,
+    "sha256_after": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+    "sha256_before": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+    "unchanged": true
+  },
+  "roundtrip": {
+    "audio_bit_identical": 20,
+    "audio_pairs": 20,
+    "audit_script_sha256": "d178eeaf6827082ad8d2789e5b47430a89944115fe13c5aaa796d16734fe2fb9",
+    "elapsed_seconds": 217.394,
+    "expected_serialization_changes": {
+      "default_attached_sustain_pedal_materialized": 1000,
+      "default_save_tempo_materialized": 1000,
+      "omitted_disabled_fx_parameter": 14000,
+      "unused_reverb2_parameter_materialized": 2000,
+      "zero_default_flag_materialized_or_omitted": 46838
+    },
+    "inputs_stable_through_run": true,
+    "presets_checked": 1000,
+    "scope": "all-1000",
+    "semantic_passes": 1000,
+    "status": "pass"
+  },
+  "schema": 1,
+  "staging": {
+    "build_exit_code": 0,
+    "category_counts": {
+      "01": 100,
+      "02": 100,
+      "03": 100,
+      "04": 100,
+      "05": 100,
+      "06": 100,
+      "07": 100,
+      "08": 100,
+      "09": 100,
+      "10": 100
+    },
+    "cmake_version": "4.4.4",
+    "complete_bank": true,
+    "duplicate_definition_groups": 0,
+    "errors": [],
+    "file_count": 1000,
+    "preset_count": 1000,
+    "staged_hash_matches": 1000,
+    "static_validation_ok": true,
+    "target": "stage-scoring-bank",
+    "unique_active_definitions": 1000
+  },
+  "status": "pass",
+  "wave": 9
+}

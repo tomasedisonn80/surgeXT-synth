@@ -1,0 +1,1490 @@
+{
+  "id": "08",
+  "name": "Leads",
+  "prefix": "L",
+  "description": "Original expressive synth solos, harmonic digital voices and synthetic reed, flute and whistle impressions for melodic film, television and music writing. These are synthesis colors, not sampled acoustic instruments.",
+  "families": [
+    {
+      "name": "Amber Ribbon",
+      "role": "Rounded analog solo for lyrical themes over strings or understated electronic harmony.",
+      "range": [
+        48,
+        88
+      ],
+      "tags": [
+        "analog",
+        "lyrical",
+        "warm",
+        "mono"
+      ],
+      "oscillators": [
+        {
+          "kind": "saw",
+          "level": 0.64,
+          "detune": -0.018
+        },
+        {
+          "kind": "triangle",
+          "level": 0.36,
+          "detune": 0.012
+        }
+      ],
+      "amp": [
+        0.025,
+        0.75,
+        0.78,
+        0.28
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 2250,
+        "resonance": 0.1,
+        "env": 9,
+        "keytrack": 0.65
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.22,
+        "sync": false,
+        "depth": 2.8,
+        "amp": 0.15,
+        "pan": 0.025,
+        "pitch": 0
+      },
+      "filter_env": [
+        0.018,
+        0.65,
+        0.35,
+        0.35
+      ],
+      "mono": true,
+      "portamento": 0.045,
+      "reverb": 0.1,
+      "delay": 0.025,
+      "reverb_time": 1.35,
+      "width": 0.38,
+      "velocity": 14,
+      "highpass": 45,
+      "drift": 0.012
+    },
+    {
+      "name": "Reed Lantern",
+      "role": "Synthetic reed solo with a hollow upper register for intimate character melodies.",
+      "range": [
+        53,
+        89
+      ],
+      "tags": [
+        "reed",
+        "hollow",
+        "intimate",
+        "mono"
+      ],
+      "oscillators": [
+        {
+          "kind": "pulse",
+          "level": 0.64,
+          "shape": 0.31
+        },
+        {
+          "kind": "sine",
+          "level": 0.27,
+          "octave": -1
+        },
+        {
+          "kind": "fm2",
+          "level": 0.09,
+          "fm_amount": 0.08,
+          "ratio": 3,
+          "fm_amount2": 0.02,
+          "ratio2": 1
+        }
+      ],
+      "amp": [
+        0.042,
+        0.5,
+        0.86,
+        0.22
+      ],
+      "filter": {
+        "kind": "lp24",
+        "hz": 2050,
+        "resonance": 0.17,
+        "env": 7,
+        "keytrack": 0.75
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.22,
+        "sync": false,
+        "depth": 1.6,
+        "amp": 0.15,
+        "pan": 0.025,
+        "pitch": 0
+      },
+      "filter_env": [
+        0.018,
+        0.65,
+        0.35,
+        0.35
+      ],
+      "mono": true,
+      "portamento": 0.018,
+      "reverb": 0.1,
+      "delay": 0.025,
+      "reverb_time": 1.35,
+      "width": 0.38,
+      "velocity": 14,
+      "highpass": 45,
+      "drift": 0.012,
+      "noise": 0.003,
+      "noise_color": -0.55,
+      "variant_intents": {
+        "Near": "Tight phrasing, compact decay and reduced secondary-layer weight for exposed lines or busy mixes."
+      }
+    },
+    {
+      "name": "Willow Breath",
+      "role": "Breathy synthetic flute impression for spacious high melodies and soft call-and-response.",
+      "range": [
+        60,
+        96
+      ],
+      "tags": [
+        "flute",
+        "air",
+        "gentle",
+        "tonal"
+      ],
+      "oscillators": [
+        {
+          "kind": "sine",
+          "level": 0.68
+        },
+        {
+          "kind": "triangle",
+          "level": 0.22,
+          "octave": 1
+        },
+        {
+          "kind": "fm2",
+          "level": 0.1,
+          "fm_amount": 0.055,
+          "ratio": 2,
+          "fm_amount2": 0.015,
+          "ratio2": 3
+        }
+      ],
+      "amp": [
+        0.075,
+        0.8,
+        0.82,
+        0.38
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 3000,
+        "resonance": 0.08,
+        "env": 5,
+        "keytrack": 0.65
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.15,
+        "sync": false,
+        "depth": 1.2,
+        "amp": 0.15,
+        "pan": 0.025,
+        "pitch": 0
+      },
+      "filter_env": [
+        0.018,
+        0.65,
+        0.35,
+        0.35
+      ],
+      "mono": true,
+      "portamento": 0.012,
+      "reverb": 0.1,
+      "delay": 0.025,
+      "reverb_time": 1.35,
+      "width": 0.38,
+      "velocity": 17,
+      "highpass": 45,
+      "drift": 0.012,
+      "noise": 0.014,
+      "noise_color": -0.75
+    },
+    {
+      "name": "Silver Thread",
+      "role": "Harmonic FM solo with a clear tine edge for exposed motifs above dense accompaniment.",
+      "range": [
+        55,
+        93
+      ],
+      "tags": [
+        "fm",
+        "clear",
+        "tine",
+        "melody"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm2",
+          "level": 0.73,
+          "fm_amount": 0.21,
+          "ratio": 3,
+          "fm_amount2": 0.035,
+          "ratio2": 2,
+          "feedback": 0.01
+        },
+        {
+          "kind": "sine",
+          "level": 0.27
+        }
+      ],
+      "amp": [
+        0.013,
+        1.05,
+        0.63,
+        0.47
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 4400,
+        "resonance": 0.09,
+        "env": 12,
+        "keytrack": 0.65
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.22,
+        "sync": false,
+        "depth": 2.0,
+        "amp": 0.15,
+        "pan": 0.025,
+        "pitch": 0
+      },
+      "filter_env": [
+        0.018,
+        0.65,
+        0.35,
+        0.35
+      ],
+      "mono": true,
+      "portamento": 0.016,
+      "reverb": 0.1,
+      "delay": 0.055,
+      "reverb_time": 1.35,
+      "width": 0.38,
+      "velocity": 14,
+      "highpass": 45,
+      "drift": 0.012
+    },
+    {
+      "name": "Velvet Needle",
+      "role": "Soft narrow-pulse voice for restrained melodic writing under conversation.",
+      "range": [
+        48,
+        84
+      ],
+      "tags": [
+        "pulse",
+        "muted",
+        "dialogue",
+        "mono"
+      ],
+      "oscillators": [
+        {
+          "kind": "pulse",
+          "level": 0.58,
+          "shape": 0.22,
+          "detune": -0.012
+        },
+        {
+          "kind": "triangle",
+          "level": 0.42,
+          "detune": 0.012
+        }
+      ],
+      "amp": [
+        0.038,
+        0.65,
+        0.77,
+        0.24
+      ],
+      "filter": {
+        "kind": "lp24",
+        "hz": 1450,
+        "resonance": 0.11,
+        "env": 5,
+        "keytrack": 0.65
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.22,
+        "sync": false,
+        "depth": 1.5,
+        "amp": 0.15,
+        "pan": 0.025,
+        "pitch": 0
+      },
+      "filter_env": [
+        0.018,
+        0.65,
+        0.35,
+        0.35
+      ],
+      "mono": true,
+      "portamento": 0.032,
+      "reverb": 0.1,
+      "delay": 0.025,
+      "reverb_time": 1.35,
+      "width": 0.38,
+      "velocity": 16,
+      "highpass": 45,
+      "drift": 0.012,
+      "noise": 0.002,
+      "noise_color": -0.55
+    },
+    {
+      "name": "Hollow Compass",
+      "role": "Focused synthetic wind color for wandering folk-like lines without acoustic realism claims.",
+      "range": [
+        50,
+        86
+      ],
+      "tags": [
+        "wind",
+        "hollow",
+        "focused",
+        "tonal"
+      ],
+      "oscillators": [
+        {
+          "kind": "pulse",
+          "level": 0.52,
+          "shape": 0.49
+        },
+        {
+          "kind": "fm2",
+          "level": 0.3,
+          "fm_amount": 0.12,
+          "ratio": 3,
+          "fm_amount2": 0.025,
+          "ratio2": 5
+        },
+        {
+          "kind": "sine",
+          "level": 0.18
+        }
+      ],
+      "amp": [
+        0.055,
+        0.55,
+        0.81,
+        0.33
+      ],
+      "filter": {
+        "kind": "bp12",
+        "hz": 1380,
+        "resonance": 0.25,
+        "env": 10,
+        "keytrack": 0.85
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.18,
+        "sync": false,
+        "depth": 1.7,
+        "amp": 0.15,
+        "pan": 0.025,
+        "pitch": 0
+      },
+      "filter_env": [
+        0.018,
+        0.65,
+        0.35,
+        0.35
+      ],
+      "mono": true,
+      "portamento": 0.02,
+      "reverb": 0.1,
+      "delay": 0.025,
+      "reverb_time": 1.35,
+      "width": 0.38,
+      "velocity": 14,
+      "highpass": 45,
+      "drift": 0.012,
+      "noise": 0.005,
+      "noise_color": -0.55
+    },
+    {
+      "name": "Glass Cantabile",
+      "role": "Smooth harmonic digital lead for long vocal-shaped phrases and transparent layered melodies.",
+      "range": [
+        55,
+        91
+      ],
+      "tags": [
+        "digital",
+        "glass",
+        "sustained",
+        "lyrical"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm3",
+          "level": 0.67,
+          "fm_amount": 0.14,
+          "ratio": 2,
+          "fm_amount2": 0.05,
+          "ratio2": 4,
+          "feedback": 0.008
+        },
+        {
+          "kind": "triangle",
+          "level": 0.33
+        }
+      ],
+      "amp": [
+        0.09,
+        0.95,
+        0.73,
+        0.68
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 3700,
+        "resonance": 0.06,
+        "env": 8,
+        "keytrack": 0.65
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.12,
+        "sync": false,
+        "depth": 3.0,
+        "amp": 0.15,
+        "pan": 0.025,
+        "pitch": 0
+      },
+      "filter_env": [
+        0.018,
+        0.65,
+        0.35,
+        0.35
+      ],
+      "mono": false,
+      "portamento": 0.004,
+      "reverb": 0.14,
+      "delay": 0.06,
+      "reverb_time": 1.35,
+      "width": 0.52,
+      "velocity": 14,
+      "highpass": 45,
+      "drift": 0.012
+    },
+    {
+      "name": "Copper Call",
+      "role": "Compact synthetic horn-like lead for small fanfare gestures and confident themes.",
+      "range": [
+        45,
+        81
+      ],
+      "tags": [
+        "brass",
+        "synthetic",
+        "bold",
+        "articulate"
+      ],
+      "oscillators": [
+        {
+          "kind": "modern",
+          "level": 0.61,
+          "saw": 0.65,
+          "pulse": 0.16,
+          "tri": 0.14,
+          "detune": -0.012
+        },
+        {
+          "kind": "saw",
+          "level": 0.25,
+          "detune": 0.022
+        },
+        {
+          "kind": "triangle",
+          "level": 0.14,
+          "octave": -1
+        }
+      ],
+      "amp": [
+        0.035,
+        0.52,
+        0.72,
+        0.25
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 1650,
+        "resonance": 0.19,
+        "env": 22,
+        "keytrack": 0.65
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.24,
+        "sync": false,
+        "depth": 2.2,
+        "amp": 0.15,
+        "pan": 0.025,
+        "pitch": 0
+      },
+      "filter_env": [
+        0.055,
+        0.48,
+        0.32,
+        0.25
+      ],
+      "mono": true,
+      "portamento": 0.022,
+      "reverb": 0.1,
+      "delay": 0.025,
+      "reverb_time": 1.35,
+      "width": 0.38,
+      "velocity": 19,
+      "highpass": 45,
+      "drift": 0.012
+    },
+    {
+      "name": "Harbor Whistle",
+      "role": "Pure whistle-like synth melody for small-scale wonder and clean upper-register counterpoint.",
+      "range": [
+        62,
+        98
+      ],
+      "tags": [
+        "whistle",
+        "pure",
+        "light",
+        "melody"
+      ],
+      "oscillators": [
+        {
+          "kind": "sine",
+          "level": 0.84
+        },
+        {
+          "kind": "fm2",
+          "level": 0.16,
+          "fm_amount": 0.045,
+          "ratio": 2,
+          "fm_amount2": 0.01,
+          "ratio2": 1
+        }
+      ],
+      "amp": [
+        0.035,
+        0.45,
+        0.91,
+        0.21
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 2400,
+        "resonance": 0.05,
+        "env": 4,
+        "keytrack": 0.65
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.1,
+        "sync": false,
+        "depth": 1.1,
+        "amp": 0.15,
+        "pan": 0.025,
+        "pitch": 0
+      },
+      "filter_env": [
+        0.018,
+        0.65,
+        0.35,
+        0.35
+      ],
+      "mono": true,
+      "portamento": 0.055,
+      "reverb": 0.1,
+      "delay": 0.02,
+      "reverb_time": 1.35,
+      "width": 0.38,
+      "velocity": 12,
+      "highpass": 100,
+      "drift": 0.012,
+      "noise": 0.003,
+      "noise_color": -0.55
+    },
+    {
+      "name": "Soft Voltage",
+      "role": "Warm rounded modern lead for pop melodies, optimistic montages and restrained synth solos.",
+      "range": [
+        48,
+        88
+      ],
+      "tags": [
+        "modern",
+        "rounded",
+        "optimistic",
+        "mono"
+      ],
+      "oscillators": [
+        {
+          "kind": "modern",
+          "level": 0.68,
+          "saw": 0.26,
+          "pulse": 0.22,
+          "tri": 0.55,
+          "shape": 0.44
+        },
+        {
+          "kind": "sine",
+          "level": 0.32,
+          "octave": -1
+        }
+      ],
+      "amp": [
+        0.015,
+        0.72,
+        0.76,
+        0.29
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 2700,
+        "resonance": 0.13,
+        "env": 11,
+        "keytrack": 0.65
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.3,
+        "sync": false,
+        "depth": 2.8,
+        "amp": 0.15,
+        "pan": 0.025,
+        "pitch": 0
+      },
+      "filter_env": [
+        0.018,
+        0.65,
+        0.35,
+        0.35
+      ],
+      "mono": true,
+      "portamento": 0.04,
+      "reverb": 0.1,
+      "delay": 0.045,
+      "reverb_time": 1.35,
+      "width": 0.38,
+      "velocity": 14,
+      "highpass": 45,
+      "drift": 0.012,
+      "variant_intents": {
+        "Near": "Tight phrasing, compact decay and reduced secondary-layer weight for exposed lines or busy mixes."
+      }
+    },
+    {
+      "name": "Cedar Solo",
+      "role": "Synthetic resonant reed and string blend for short expressive phrases with a woody attack.",
+      "range": [
+        48,
+        84
+      ],
+      "tags": [
+        "wood",
+        "resonant",
+        "hybrid",
+        "articulate"
+      ],
+      "oscillators": [
+        {
+          "kind": "pulse",
+          "level": 0.48,
+          "shape": 0.37
+        },
+        {
+          "kind": "string",
+          "level": 0.32,
+          "exciter": 3,
+          "decay": 0.83,
+          "stiffness": 0.035
+        },
+        {
+          "kind": "triangle",
+          "level": 0.2
+        }
+      ],
+      "amp": [
+        0.018,
+        0.85,
+        0.64,
+        0.32
+      ],
+      "filter": {
+        "kind": "lp24",
+        "hz": 2100,
+        "resonance": 0.16,
+        "env": 13,
+        "keytrack": 0.65
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.22,
+        "sync": false,
+        "depth": 2.4,
+        "amp": 0.15,
+        "pan": 0.025,
+        "pitch": 0
+      },
+      "filter_env": [
+        0.012,
+        0.42,
+        0.15,
+        0.25
+      ],
+      "mono": true,
+      "portamento": 0.012,
+      "reverb": 0.1,
+      "delay": 0.025,
+      "reverb_time": 1.35,
+      "width": 0.38,
+      "velocity": 18,
+      "highpass": 45,
+      "drift": 0.012,
+      "noise": 0.002,
+      "noise_color": -0.55
+    },
+    {
+      "name": "Prism Voice",
+      "role": "Harmonic FM soprano color for luminous melodic hooks and lightly doubled lines.",
+      "range": [
+        57,
+        93
+      ],
+      "tags": [
+        "fm",
+        "luminous",
+        "soprano",
+        "tonal"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm2",
+          "level": 0.61,
+          "fm_amount": 0.19,
+          "ratio": 4,
+          "fm_amount2": 0.045,
+          "ratio2": 2
+        },
+        {
+          "kind": "sine",
+          "level": 0.27
+        },
+        {
+          "kind": "triangle",
+          "level": 0.12,
+          "octave": 1
+        }
+      ],
+      "amp": [
+        0.027,
+        0.9,
+        0.7,
+        0.43
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 5100,
+        "resonance": 0.08,
+        "env": 9,
+        "keytrack": 0.65
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.17,
+        "sync": false,
+        "depth": 2.0,
+        "amp": 0.15,
+        "pan": 0.025,
+        "pitch": 0
+      },
+      "filter_env": [
+        0.018,
+        0.65,
+        0.35,
+        0.35
+      ],
+      "mono": false,
+      "portamento": 0.004,
+      "reverb": 0.13,
+      "delay": 0.055,
+      "reverb_time": 1.35,
+      "width": 0.56,
+      "velocity": 14,
+      "highpass": 45,
+      "drift": 0.012,
+      "variant_changes": {
+        "Clear": {
+          "contour_amp": 0.65
+        }
+      }
+    },
+    {
+      "name": "Woven Reed",
+      "role": "Soft dual-pulse synthetic reed lead for mellow mid-register themes and plaintive solos.",
+      "range": [
+        46,
+        82
+      ],
+      "tags": [
+        "reed",
+        "mellow",
+        "dual-pulse",
+        "mono"
+      ],
+      "oscillators": [
+        {
+          "kind": "pulse",
+          "level": 0.55,
+          "shape": 0.27,
+          "detune": -0.022
+        },
+        {
+          "kind": "pulse",
+          "level": 0.3,
+          "shape": 0.63,
+          "detune": 0.022
+        },
+        {
+          "kind": "sine",
+          "level": 0.15,
+          "octave": -1
+        }
+      ],
+      "amp": [
+        0.065,
+        0.7,
+        0.84,
+        0.4
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 1850,
+        "resonance": 0.15,
+        "env": 6,
+        "keytrack": 0.65
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.13,
+        "sync": false,
+        "depth": 1.9,
+        "amp": 0.15,
+        "pan": 0.025,
+        "pitch": 0
+      },
+      "filter_env": [
+        0.018,
+        0.65,
+        0.35,
+        0.35
+      ],
+      "mono": true,
+      "portamento": 0.038,
+      "reverb": 0.1,
+      "delay": 0.025,
+      "reverb_time": 1.35,
+      "width": 0.38,
+      "velocity": 15,
+      "highpass": 45,
+      "drift": 0.012,
+      "noise": 0.004,
+      "noise_color": -0.55
+    },
+    {
+      "name": "Satin Harmonics",
+      "role": "A gentle organ-like lead for connected melodic writing and rounded contrapuntal lines.",
+      "range": [
+        48,
+        88
+      ],
+      "tags": [
+        "organ",
+        "harmonic",
+        "gentle",
+        "poly"
+      ],
+      "oscillators": [
+        {
+          "kind": "sine",
+          "level": 0.6
+        },
+        {
+          "kind": "sine",
+          "level": 0.27,
+          "octave": 1
+        },
+        {
+          "kind": "fm2",
+          "level": 0.13,
+          "fm_amount": 0.075,
+          "ratio": 3,
+          "fm_amount2": 0.01,
+          "ratio2": 1
+        }
+      ],
+      "amp": [
+        0.025,
+        0.55,
+        0.96,
+        0.18
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 3600,
+        "resonance": 0.07,
+        "env": 3,
+        "keytrack": 0.65
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.21,
+        "sync": false,
+        "depth": 1.3,
+        "amp": 0.15,
+        "pan": 0.025,
+        "pitch": 0
+      },
+      "filter_env": [
+        0.018,
+        0.65,
+        0.35,
+        0.35
+      ],
+      "mono": false,
+      "portamento": 0.004,
+      "reverb": 0.075,
+      "delay": 0.018,
+      "reverb_time": 1.35,
+      "width": 0.44,
+      "velocity": 10,
+      "highpass": 45,
+      "drift": 0.012
+    },
+    {
+      "name": "Narrow Horizon",
+      "role": "Focused bright pulse lead for rhythmic thematic figures that stay clear of low orchestral layers.",
+      "range": [
+        52,
+        88
+      ],
+      "tags": [
+        "pulse",
+        "focused",
+        "rhythmic",
+        "mono"
+      ],
+      "oscillators": [
+        {
+          "kind": "pulse",
+          "level": 0.68,
+          "shape": 0.18
+        },
+        {
+          "kind": "fm2",
+          "level": 0.22,
+          "fm_amount": 0.11,
+          "ratio": 2,
+          "fm_amount2": 0.025,
+          "ratio2": 4
+        },
+        {
+          "kind": "sine",
+          "level": 0.1
+        }
+      ],
+      "amp": [
+        0.008,
+        0.32,
+        0.57,
+        0.14
+      ],
+      "filter": {
+        "kind": "lp24",
+        "hz": 3400,
+        "resonance": 0.2,
+        "env": 17,
+        "keytrack": 0.65
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.4,
+        "sync": false,
+        "depth": 2.2,
+        "amp": 0.15,
+        "pan": 0.025,
+        "pitch": 0
+      },
+      "filter_env": [
+        0.006,
+        0.24,
+        0.16,
+        0.16
+      ],
+      "mono": true,
+      "portamento": 0.008,
+      "reverb": 0.1,
+      "delay": 0.035,
+      "reverb_time": 1.35,
+      "width": 0.38,
+      "velocity": 18,
+      "highpass": 45,
+      "drift": 0.012
+    },
+    {
+      "name": "Chalk Melody",
+      "role": "Dry soft triangle and FM lead for close melodic sketching in drama or acoustic arrangements.",
+      "range": [
+        50,
+        90
+      ],
+      "tags": [
+        "soft",
+        "dry",
+        "triangle",
+        "intimate"
+      ],
+      "oscillators": [
+        {
+          "kind": "triangle",
+          "level": 0.66
+        },
+        {
+          "kind": "fm2",
+          "level": 0.34,
+          "fm_amount": 0.1,
+          "ratio": 3,
+          "fm_amount2": 0.02,
+          "ratio2": 1
+        }
+      ],
+      "amp": [
+        0.022,
+        0.58,
+        0.72,
+        0.2
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 1750,
+        "resonance": 0.08,
+        "env": 7,
+        "keytrack": 0.65
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.2,
+        "sync": false,
+        "depth": 1.4,
+        "amp": 0.15,
+        "pan": 0.025,
+        "pitch": 0
+      },
+      "filter_env": [
+        0.018,
+        0.65,
+        0.35,
+        0.35
+      ],
+      "mono": false,
+      "portamento": 0.004,
+      "reverb": 0.05,
+      "delay": 0.012,
+      "reverb_time": 1.35,
+      "width": 0.3,
+      "velocity": 19,
+      "highpass": 45,
+      "drift": 0.012
+    },
+    {
+      "name": "Gold Arc",
+      "role": "Broad but controlled analog solo for rising phrases and warm sustained melodic statements.",
+      "range": [
+        48,
+        84
+      ],
+      "tags": [
+        "analog",
+        "broad",
+        "warm",
+        "sustained"
+      ],
+      "oscillators": [
+        {
+          "kind": "saw",
+          "level": 0.56,
+          "unison": 2,
+          "detune": -0.025
+        },
+        {
+          "kind": "modern",
+          "level": 0.3,
+          "saw": 0.3,
+          "pulse": 0.15,
+          "tri": 0.45,
+          "detune": 0.025
+        },
+        {
+          "kind": "sine",
+          "level": 0.14,
+          "octave": -1
+        }
+      ],
+      "amp": [
+        0.055,
+        0.8,
+        0.83,
+        0.48
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 2900,
+        "resonance": 0.12,
+        "env": 14,
+        "keytrack": 0.65
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.14,
+        "sync": false,
+        "depth": 2.6,
+        "amp": 0.15,
+        "pan": 0.025,
+        "pitch": 0
+      },
+      "filter_env": [
+        0.018,
+        0.65,
+        0.35,
+        0.35
+      ],
+      "mono": true,
+      "portamento": 0.065,
+      "reverb": 0.12,
+      "delay": 0.05,
+      "reverb_time": 1.35,
+      "width": 0.65,
+      "velocity": 13,
+      "highpass": 45,
+      "drift": 0.012
+    },
+    {
+      "name": "Porcelain Line",
+      "role": "Clean harmonic FM and sine lead for delicate high melodies with a restrained ceramic edge.",
+      "range": [
+        58,
+        94
+      ],
+      "tags": [
+        "ceramic",
+        "fm",
+        "delicate",
+        "tonal"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm3",
+          "level": 0.54,
+          "fm_amount": 0.12,
+          "ratio": 5,
+          "fm_amount2": 0.028,
+          "ratio2": 2,
+          "feedback": 0.005
+        },
+        {
+          "kind": "sine",
+          "level": 0.36
+        },
+        {
+          "kind": "triangle",
+          "level": 0.1,
+          "octave": -1
+        }
+      ],
+      "amp": [
+        0.018,
+        1.1,
+        0.56,
+        0.52
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 4800,
+        "resonance": 0.1,
+        "env": 11,
+        "keytrack": 0.65
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.26,
+        "sync": false,
+        "depth": 2.1,
+        "amp": 0.15,
+        "pan": 0.025,
+        "pitch": 0
+      },
+      "filter_env": [
+        0.018,
+        0.65,
+        0.35,
+        0.35
+      ],
+      "mono": true,
+      "portamento": 0.018,
+      "reverb": 0.13,
+      "delay": 0.07,
+      "reverb_time": 1.35,
+      "width": 0.38,
+      "velocity": 17,
+      "highpass": 45,
+      "drift": 0.012,
+      "variant_changes": {
+        "Clear": {
+          "contour_amp": 0.65
+        }
+      }
+    },
+    {
+      "name": "Moonlit Triangle",
+      "role": "Dark triangle-led solo for quiet nocturnal melodies and understated emotional phrases.",
+      "range": [
+        45,
+        81
+      ],
+      "tags": [
+        "triangle",
+        "dark",
+        "nocturnal",
+        "lyrical"
+      ],
+      "oscillators": [
+        {
+          "kind": "triangle",
+          "level": 0.7
+        },
+        {
+          "kind": "sine",
+          "level": 0.22,
+          "octave": -1
+        },
+        {
+          "kind": "pulse",
+          "level": 0.08,
+          "shape": 0.42
+        }
+      ],
+      "amp": [
+        0.07,
+        0.95,
+        0.81,
+        0.58
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 1250,
+        "resonance": 0.09,
+        "env": 5,
+        "keytrack": 0.65
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.09,
+        "sync": false,
+        "depth": 1.5,
+        "amp": 0.15,
+        "pan": 0.025,
+        "pitch": 0
+      },
+      "filter_env": [
+        0.018,
+        0.65,
+        0.35,
+        0.35
+      ],
+      "mono": true,
+      "portamento": 0.07,
+      "reverb": 0.12,
+      "delay": 0.035,
+      "reverb_time": 1.35,
+      "width": 0.38,
+      "velocity": 15,
+      "highpass": 45,
+      "drift": 0.012,
+      "noise": 0.002,
+      "noise_color": -0.55,
+      "variant_intents": {
+        "Near": "Tight phrasing, compact decay and reduced secondary-layer weight for exposed lines or busy mixes."
+      }
+    },
+    {
+      "name": "Open Passage",
+      "role": "Airy modern and harmonic FM lead for hopeful themes, spacious counterpoint and gentle layered melodies.",
+      "range": [
+        52,
+        92
+      ],
+      "tags": [
+        "airy",
+        "modern",
+        "hopeful",
+        "poly"
+      ],
+      "oscillators": [
+        {
+          "kind": "modern",
+          "level": 0.5,
+          "saw": 0.18,
+          "pulse": 0.15,
+          "tri": 0.65
+        },
+        {
+          "kind": "fm2",
+          "level": 0.31,
+          "fm_amount": 0.13,
+          "ratio": 2,
+          "fm_amount2": 0.035,
+          "ratio2": 3
+        },
+        {
+          "kind": "sine",
+          "level": 0.19,
+          "octave": 1
+        }
+      ],
+      "amp": [
+        0.11,
+        0.85,
+        0.76,
+        0.62
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 3300,
+        "resonance": 0.09,
+        "env": 8,
+        "keytrack": 0.65
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.16,
+        "sync": false,
+        "depth": 2.5,
+        "amp": 0.15,
+        "pan": 0.025,
+        "pitch": 0
+      },
+      "filter_env": [
+        0.018,
+        0.65,
+        0.35,
+        0.35
+      ],
+      "mono": false,
+      "portamento": 0.004,
+      "reverb": 0.14,
+      "delay": 0.055,
+      "reverb_time": 1.35,
+      "width": 0.6,
+      "velocity": 16,
+      "highpass": 45,
+      "drift": 0.012,
+      "noise": 0.009,
+      "noise_color": -0.55
+    }
+  ],
+  "variants": [
+    {
+      "name": "Near",
+      "intent": "Tight phrasing, compact decay and reduced upper-layer weight for exposed lines or busy mixes.",
+      "changes": {
+        "attack_scale": 0.72,
+        "decay_scale": 0.78,
+        "release_scale": 0.62,
+        "cutoff_scale": 0.88,
+        "second_level_scale": 0.72,
+        "motion_scale": 0.68,
+        "fx_scale": 0.5
+      }
+    },
+    {
+      "name": "Warm",
+      "intent": "Softer consonants and darker sustained tone for intimate lyrical phrasing.",
+      "changes": {
+        "attack_scale": 1.55,
+        "decay_scale": 1.18,
+        "release_scale": 1.18,
+        "cutoff_scale": 0.62,
+        "second_level_scale": 1.25,
+        "fm_scale": 0.7,
+        "motion_scale": 0.8,
+        "fx_scale": 0.8
+      }
+    },
+    {
+      "name": "Clear",
+      "intent": "A quick, open and more articulated voice for melodic hooks that must stay present in an arrangement.",
+      "changes": {
+        "attack_scale": 0.62,
+        "decay_scale": 0.72,
+        "sustain_scale": 0.88,
+        "release_scale": 0.76,
+        "cutoff_scale": 1.55,
+        "second_level_scale": 0.78,
+        "fm_scale": 1.22,
+        "resonance_add": 0.035,
+        "motion_scale": 0.85,
+        "fx_scale": 0.7
+      }
+    },
+    {
+      "name": "Float",
+      "intent": "Longer entrances and tails with stronger companion partials for spaciously phrased themes; mono voices retrigger each note.",
+      "changes": {
+        "attack_scale": 2.8,
+        "decay_scale": 1.55,
+        "release_scale": 2.15,
+        "sustain_scale": 1.04,
+        "cutoff_scale": 0.9,
+        "second_level_scale": 1.42,
+        "motion_scale": 1.45,
+        "motion_rate_scale": 0.7,
+        "fx_scale": 1.4
+      }
+    },
+    {
+      "name": "Phrase",
+      "intent": "Shorter, brighter breath-shaped notes with gently quicker timbral motion for active melodic figures.",
+      "changes": {
+        "attack_scale": 0.85,
+        "decay_scale": 0.55,
+        "release_scale": 0.52,
+        "sustain_scale": 0.78,
+        "cutoff_scale": 1.22,
+        "second_level_scale": 1.18,
+        "motion_scale": 2.0,
+        "motion_rate_scale": 1.8,
+        "resonance_add": 0.02,
+        "fx_scale": 0.85
+      }
+    }
+  ]
+}

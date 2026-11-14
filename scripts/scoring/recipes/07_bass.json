@@ -1,0 +1,1484 @@
+{
+  "id": "07",
+  "name": "Bass",
+  "prefix": "S",
+  "description": "Tuned low foundations, plucked lines, warm analog and harmonic FM bass, synthetic string colors and restrained rhythmic movement for film and music.",
+  "families": [
+    {
+      "name": "Velvet Root",
+      "role": "Rounded sine and triangle bass for sustained low foundations beneath dialogue and acoustic arrangements.",
+      "range": [
+        28,
+        64
+      ],
+      "tags": [
+        "round",
+        "foundation",
+        "tonal",
+        "soft"
+      ],
+      "oscillators": [
+        {
+          "kind": "sine",
+          "level": 0.72
+        },
+        {
+          "kind": "triangle",
+          "level": 0.32
+        }
+      ],
+      "amp": [
+        0.025,
+        0.65,
+        0.83,
+        0.24
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 420,
+        "resonance": 0.09,
+        "env": 3,
+        "keytrack": 0.65
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.5,
+        "sync": false,
+        "depth": 2.5,
+        "amp": 0.8,
+        "pan": 0
+      },
+      "filter_env": [
+        0.012,
+        0.8,
+        0.35,
+        0.22
+      ],
+      "drift": 0.008,
+      "reverb": 0.025,
+      "delay": 0.012,
+      "reverb_time": 0.7,
+      "width": 0.16,
+      "mono": true,
+      "portamento": 0.035,
+      "highpass": 22,
+      "velocity": 10
+    },
+    {
+      "name": "Anchor Sub",
+      "role": "Focused fundamental bass with a restrained harmonic layer for cinematic low support and electronic music.",
+      "range": [
+        28,
+        60
+      ],
+      "tags": [
+        "sub",
+        "clean",
+        "tonal",
+        "focused"
+      ],
+      "oscillators": [
+        {
+          "kind": "sine",
+          "level": 0.82
+        },
+        {
+          "kind": "fm2",
+          "level": 0.2,
+          "fm_amount": 0.08,
+          "ratio": 2,
+          "fm_amount2": 0.012,
+          "ratio2": 3
+        }
+      ],
+      "amp": [
+        0.012,
+        0.8,
+        0.92,
+        0.19
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 310,
+        "resonance": 0.09,
+        "env": 2,
+        "keytrack": 0.8
+      },
+      "motion": {
+        "shape": "triangle",
+        "rate": 0.35,
+        "sync": false,
+        "depth": 2,
+        "amp": 0.5,
+        "pan": 0
+      },
+      "filter_env": [
+        0.005,
+        0.35,
+        0.15,
+        0.18
+      ],
+      "drift": 0.008,
+      "reverb": 0.012,
+      "delay": 0.008,
+      "reverb_time": 0.7,
+      "width": 0.16,
+      "mono": true,
+      "portamento": 0.018,
+      "highpass": 20,
+      "velocity": 8
+    },
+    {
+      "name": "Copper Pick",
+      "role": "Synthetic picked electric bass color for precise melodic bass lines and compact groove accompaniment.",
+      "range": [
+        32,
+        68
+      ],
+      "tags": [
+        "picked",
+        "electric",
+        "plucked",
+        "tonal"
+      ],
+      "oscillators": [
+        {
+          "kind": "string",
+          "level": 0.62,
+          "exciter": 4,
+          "decay": 0.86,
+          "stiffness": 0.035
+        },
+        {
+          "kind": "fm2",
+          "level": 0.3,
+          "fm_amount": 0.18,
+          "ratio": 2,
+          "fm_amount2": 0.028,
+          "ratio2": 5
+        },
+        {
+          "kind": "sine",
+          "level": 0.2
+        }
+      ],
+      "amp": [
+        0.004,
+        0.85,
+        0.18,
+        0.13
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 2100,
+        "resonance": 0.08,
+        "env": 12,
+        "keytrack": 0.65
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.5,
+        "sync": false,
+        "depth": 2.5,
+        "amp": 0.8,
+        "pan": 0
+      },
+      "filter_env": [
+        0.004,
+        0.22,
+        0.08,
+        0.13
+      ],
+      "drift": 0.008,
+      "reverb": 0.025,
+      "delay": 0.012,
+      "reverb_time": 0.7,
+      "width": 0.16,
+      "mono": true,
+      "portamento": 0.006,
+      "highpass": 25,
+      "velocity": 21
+    },
+    {
+      "name": "Wood Finger",
+      "role": "Synthetic woody fingered-bass impression for gentle grooves and intimate chamber-style underscore.",
+      "range": [
+        31,
+        67
+      ],
+      "tags": [
+        "woody",
+        "fingered",
+        "organic",
+        "tonal"
+      ],
+      "oscillators": [
+        {
+          "kind": "string",
+          "level": 0.7,
+          "exciter": 1,
+          "decay": 0.91,
+          "stiffness": -0.06
+        },
+        {
+          "kind": "sine",
+          "level": 0.27
+        },
+        {
+          "kind": "triangle",
+          "level": 0.12,
+          "octave": 1
+        }
+      ],
+      "amp": [
+        0.009,
+        1.15,
+        0.13,
+        0.22
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 1180,
+        "resonance": 0.06,
+        "env": 7,
+        "keytrack": 0.65
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.5,
+        "sync": false,
+        "depth": 2.5,
+        "amp": 0.8,
+        "pan": 0
+      },
+      "filter_env": [
+        0.006,
+        0.34,
+        0.05,
+        0.2
+      ],
+      "drift": 0.008,
+      "reverb": 0.025,
+      "delay": 0.012,
+      "reverb_time": 0.7,
+      "width": 0.16,
+      "mono": false,
+      "portamento": 0.004,
+      "highpass": 24,
+      "velocity": 23,
+      "noise": 0.002,
+      "noise_color": -0.65
+    },
+    {
+      "name": "Quiet Bow",
+      "role": "Synthetic bowed low ensemble color for long lyrical bass phrases and quiet layered harmony.",
+      "range": [
+        33,
+        69
+      ],
+      "tags": [
+        "bowed",
+        "ensemble",
+        "sustained",
+        "synthetic"
+      ],
+      "oscillators": [
+        {
+          "kind": "saw",
+          "level": 0.53,
+          "detune": -0.018
+        },
+        {
+          "kind": "triangle",
+          "level": 0.35,
+          "detune": 0.016
+        },
+        {
+          "kind": "fm2",
+          "level": 0.15,
+          "fm_amount": 0.065,
+          "ratio": 3,
+          "fm_amount2": 0.018,
+          "ratio2": 1
+        }
+      ],
+      "amp": [
+        0.24,
+        1.45,
+        0.76,
+        0.65
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 880,
+        "resonance": 0.11,
+        "env": 5,
+        "keytrack": 0.65
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.42,
+        "sync": false,
+        "depth": 3.8,
+        "amp": 1.2,
+        "pan": 0.015
+      },
+      "filter_env": [
+        0.18,
+        1.8,
+        0.55,
+        0.55
+      ],
+      "drift": 0.012,
+      "reverb": 0.06,
+      "delay": 0.012,
+      "reverb_time": 1.25,
+      "width": 0.25,
+      "mono": false,
+      "portamento": 0.022,
+      "highpass": 22,
+      "velocity": 13
+    },
+    {
+      "name": "Reed Floor",
+      "role": "Hollow pulse bass with a soft core for restrained drama, downtempo grooves and warm counterpoint.",
+      "range": [
+        28,
+        64
+      ],
+      "tags": [
+        "hollow",
+        "pulse",
+        "warm",
+        "tonal"
+      ],
+      "oscillators": [
+        {
+          "kind": "pulse",
+          "level": 0.58,
+          "shape": 0.44
+        },
+        {
+          "kind": "sine",
+          "level": 0.4
+        },
+        {
+          "kind": "triangle",
+          "level": 0.12,
+          "octave": 1
+        }
+      ],
+      "amp": [
+        0.016,
+        0.52,
+        0.67,
+        0.2
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 720,
+        "resonance": 0.14,
+        "env": 10,
+        "keytrack": 0.65
+      },
+      "motion": {
+        "shape": "triangle",
+        "rate": 0.6,
+        "sync": false,
+        "depth": 3.2,
+        "amp": 0.7,
+        "pan": 0
+      },
+      "filter_env": [
+        0.008,
+        0.28,
+        0.2,
+        0.16
+      ],
+      "drift": 0.008,
+      "reverb": 0.025,
+      "delay": 0.012,
+      "reverb_time": 0.7,
+      "width": 0.16,
+      "mono": true,
+      "portamento": 0.022,
+      "highpass": 22,
+      "velocity": 16
+    },
+    {
+      "name": "Transit Saw",
+      "role": "Compact saw and sub-tone bass for action ostinatos and modern pop or electronic bass lines.",
+      "range": [
+        28,
+        64
+      ],
+      "tags": [
+        "analog",
+        "driving",
+        "tight",
+        "tonal"
+      ],
+      "oscillators": [
+        {
+          "kind": "modern",
+          "level": 0.68,
+          "saw": 0.72,
+          "pulse": 0.12,
+          "tri": 0.2
+        },
+        {
+          "kind": "sine",
+          "level": 0.34
+        }
+      ],
+      "amp": [
+        0.005,
+        0.32,
+        0.48,
+        0.11
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 1050,
+        "resonance": 0.18,
+        "env": 18,
+        "keytrack": 0.65
+      },
+      "motion": {
+        "shape": "saw",
+        "rate": 1,
+        "sync": true,
+        "depth": 4.2,
+        "amp": 1.4,
+        "pan": 0
+      },
+      "filter_env": [
+        0.004,
+        0.18,
+        0.06,
+        0.1
+      ],
+      "drift": 0.008,
+      "reverb": 0.018,
+      "delay": 0.012,
+      "reverb_time": 0.7,
+      "width": 0.16,
+      "mono": true,
+      "portamento": 0.012,
+      "highpass": 22,
+      "velocity": 17
+    },
+    {
+      "name": "Hollow Step",
+      "role": "Narrow-pulse bass with rounded harmonic detail for spacious syncopation and investigative underscore.",
+      "range": [
+        28,
+        64
+      ],
+      "tags": [
+        "narrow",
+        "hollow",
+        "syncopated",
+        "tonal"
+      ],
+      "oscillators": [
+        {
+          "kind": "pulse",
+          "level": 0.6,
+          "shape": 0.23
+        },
+        {
+          "kind": "triangle",
+          "level": 0.3
+        },
+        {
+          "kind": "fm2",
+          "level": 0.13,
+          "fm_amount": 0.11,
+          "ratio": 3,
+          "fm_amount2": 0.02,
+          "ratio2": 2
+        }
+      ],
+      "amp": [
+        0.008,
+        0.56,
+        0.35,
+        0.16
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 980,
+        "resonance": 0.21,
+        "env": 14,
+        "keytrack": 0.65
+      },
+      "motion": {
+        "shape": "step",
+        "rate": 2,
+        "sync": true,
+        "depth": 5,
+        "amp": 2.8,
+        "pan": 0,
+        "steps": [
+          1,
+          -0.65,
+          -0.25,
+          -0.65,
+          0.4,
+          -0.65,
+          -0.1,
+          -0.65,
+          0.7,
+          -0.65,
+          -0.25,
+          -0.65,
+          0.2,
+          -0.65,
+          -0.1,
+          -0.65
+        ]
+      },
+      "filter_env": [
+        0.005,
+        0.26,
+        0.08,
+        0.15
+      ],
+      "drift": 0.008,
+      "reverb": 0.025,
+      "delay": 0.025,
+      "reverb_time": 0.7,
+      "width": 0.16,
+      "mono": true,
+      "portamento": 0.022,
+      "highpass": 22,
+      "velocity": 18
+    },
+    {
+      "name": "Rubber Coil",
+      "role": "Supple harmonic FM bass for rounded plucked hooks and nimble bass counter-melodies.",
+      "range": [
+        28,
+        64
+      ],
+      "tags": [
+        "FM",
+        "rubber",
+        "plucked",
+        "harmonic"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm2",
+          "level": 0.73,
+          "fm_amount": 0.145,
+          "ratio": 2,
+          "fm_amount2": 0.038,
+          "ratio2": 1,
+          "feedback": 0.012
+        },
+        {
+          "kind": "sine",
+          "level": 0.3
+        }
+      ],
+      "amp": [
+        0.006,
+        0.7,
+        0.2,
+        0.17
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 1700,
+        "resonance": 0.1,
+        "env": 11,
+        "keytrack": 0.65
+      },
+      "motion": {
+        "shape": "triangle",
+        "rate": 0.75,
+        "sync": false,
+        "depth": 2.8,
+        "amp": 0.65,
+        "pan": 0
+      },
+      "filter_env": [
+        0.005,
+        0.31,
+        0.05,
+        0.14
+      ],
+      "drift": 0.008,
+      "reverb": 0.025,
+      "delay": 0.012,
+      "reverb_time": 0.7,
+      "width": 0.16,
+      "mono": true,
+      "portamento": 0.028,
+      "highpass": 22,
+      "velocity": 20
+    },
+    {
+      "name": "Glass Kernel",
+      "role": "Bright harmonic FM bass that adds a small glassy edge to sparse electronic and suspense arrangements.",
+      "range": [
+        33,
+        69
+      ],
+      "tags": [
+        "FM",
+        "glassy",
+        "defined",
+        "harmonic"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm3",
+          "level": 0.65,
+          "fm_amount": 0.28,
+          "ratio": 2,
+          "fm_amount2": 0.095,
+          "ratio2": 4,
+          "feedback": 0.02
+        },
+        {
+          "kind": "triangle",
+          "level": 0.34
+        },
+        {
+          "kind": "sine",
+          "level": 0.15
+        }
+      ],
+      "amp": [
+        0.004,
+        0.48,
+        0.26,
+        0.16
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 2900,
+        "resonance": 0.08,
+        "env": 9,
+        "keytrack": 0.65
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.65,
+        "sync": false,
+        "depth": 3.5,
+        "amp": 0.9,
+        "pan": 0
+      },
+      "filter_env": [
+        0.004,
+        0.2,
+        0.04,
+        0.12
+      ],
+      "drift": 0.008,
+      "reverb": 0.025,
+      "delay": 0.02,
+      "reverb_time": 0.7,
+      "width": 0.16,
+      "mono": true,
+      "portamento": 0.022,
+      "highpass": 22,
+      "velocity": 19
+    },
+    {
+      "name": "Brushed Wire",
+      "role": "Synthetic wire-string bass with a brushed edge for organic hybrid grooves and exposed low motifs.",
+      "range": [
+        31,
+        67
+      ],
+      "tags": [
+        "wire",
+        "textured",
+        "organic",
+        "synthetic"
+      ],
+      "oscillators": [
+        {
+          "kind": "string",
+          "level": 0.64,
+          "exciter": 1,
+          "decay": 0.83,
+          "stiffness": 0.12
+        },
+        {
+          "kind": "modern",
+          "level": 0.24,
+          "saw": 0.25,
+          "pulse": 0.1,
+          "tri": 0.65
+        },
+        {
+          "kind": "sine",
+          "level": 0.24
+        }
+      ],
+      "amp": [
+        0.007,
+        0.82,
+        0.18,
+        0.2
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 1550,
+        "resonance": 0.13,
+        "env": 8,
+        "keytrack": 0.65
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.5,
+        "sync": false,
+        "depth": 2.5,
+        "amp": 0.8,
+        "pan": 0
+      },
+      "filter_env": [
+        0.004,
+        0.3,
+        0.08,
+        0.17
+      ],
+      "drift": 0.008,
+      "reverb": 0.025,
+      "delay": 0.012,
+      "reverb_time": 0.7,
+      "width": 0.16,
+      "mono": true,
+      "portamento": 0.022,
+      "highpass": 24,
+      "velocity": 22,
+      "noise": 0.003,
+      "noise_color": -0.7
+    },
+    {
+      "name": "Ember Grit",
+      "role": "Warm harmonically dense bass for rock-linked hybrid cues and controlled aggressive electronic foundations.",
+      "range": [
+        28,
+        64
+      ],
+      "tags": [
+        "dense",
+        "gritty",
+        "warm",
+        "tonal"
+      ],
+      "oscillators": [
+        {
+          "kind": "modern",
+          "level": 0.58,
+          "saw": 0.75,
+          "pulse": 0.28,
+          "tri": 0.18
+        },
+        {
+          "kind": "fm2",
+          "level": 0.27,
+          "fm_amount": 0.3,
+          "ratio": 1,
+          "fm_amount2": 0.075,
+          "ratio2": 3,
+          "feedback": 0.065
+        },
+        {
+          "kind": "sine",
+          "level": 0.25
+        }
+      ],
+      "amp": [
+        0.012,
+        0.42,
+        0.72,
+        0.23
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 1350,
+        "resonance": 0.24,
+        "env": 13,
+        "keytrack": 0.65
+      },
+      "motion": {
+        "shape": "noise",
+        "rate": 0.55,
+        "sync": false,
+        "depth": 4.5,
+        "amp": 1.6,
+        "pan": 0
+      },
+      "filter_env": [
+        0.008,
+        0.36,
+        0.32,
+        0.18
+      ],
+      "drift": 0.014,
+      "reverb": 0.03,
+      "delay": 0.012,
+      "reverb_time": 0.7,
+      "width": 0.16,
+      "mono": true,
+      "portamento": 0.04,
+      "highpass": 22,
+      "velocity": 14
+    },
+    {
+      "name": "Soft Pedal",
+      "role": "Synthetic organ-like pedal bass for sustained low harmony, gentle sacred colors and clean song accompaniment.",
+      "range": [
+        28,
+        64
+      ],
+      "tags": [
+        "organ",
+        "pedal",
+        "sustained",
+        "clean"
+      ],
+      "oscillators": [
+        {
+          "kind": "sine",
+          "level": 0.68
+        },
+        {
+          "kind": "sine",
+          "level": 0.19,
+          "octave": 1,
+          "shape": 1
+        },
+        {
+          "kind": "triangle",
+          "level": 0.22
+        }
+      ],
+      "amp": [
+        0.035,
+        1.2,
+        0.95,
+        0.35
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 840,
+        "resonance": 0.045,
+        "env": 0,
+        "keytrack": 0.65
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.3,
+        "sync": false,
+        "depth": 2.4,
+        "amp": 0.5,
+        "pan": 0
+      },
+      "filter_env": [
+        0.02,
+        0.9,
+        0.75,
+        0.3
+      ],
+      "drift": 0.008,
+      "reverb": 0.04,
+      "delay": 0.012,
+      "reverb_time": 1.1,
+      "width": 0.18,
+      "mono": false,
+      "portamento": 0.004,
+      "highpass": 22,
+      "velocity": 9
+    },
+    {
+      "name": "Cello Shadow",
+      "role": "Synthetic low bowed-string shadow for expressive melodic bass lines layered beneath acoustic instruments.",
+      "range": [
+        33,
+        69
+      ],
+      "tags": [
+        "bowed",
+        "hybrid",
+        "expressive",
+        "synthetic"
+      ],
+      "oscillators": [
+        {
+          "kind": "saw",
+          "level": 0.58,
+          "detune": -0.012
+        },
+        {
+          "kind": "string",
+          "level": 0.24,
+          "exciter": 3,
+          "decay": 0.93,
+          "stiffness": -0.035
+        },
+        {
+          "kind": "triangle",
+          "level": 0.3,
+          "detune": 0.014
+        }
+      ],
+      "amp": [
+        0.13,
+        1.1,
+        0.7,
+        0.48
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 1400,
+        "resonance": 0.14,
+        "env": 7,
+        "keytrack": 0.65
+      },
+      "motion": {
+        "shape": "triangle",
+        "rate": 0.7,
+        "sync": false,
+        "depth": 3.6,
+        "amp": 0.9,
+        "pan": 0.01
+      },
+      "filter_env": [
+        0.1,
+        0.9,
+        0.48,
+        0.38
+      ],
+      "drift": 0.01,
+      "reverb": 0.055,
+      "delay": 0.012,
+      "reverb_time": 1.3,
+      "width": 0.23,
+      "mono": true,
+      "portamento": 0.065,
+      "highpass": 22,
+      "velocity": 15
+    },
+    {
+      "name": "Pulse Engine",
+      "role": "Tonal sequenced-filter bass for forward movement beneath dialogue and tightly paced action cues.",
+      "range": [
+        28,
+        64
+      ],
+      "tags": [
+        "pulse",
+        "rhythmic",
+        "analog",
+        "tonal"
+      ],
+      "oscillators": [
+        {
+          "kind": "saw",
+          "level": 0.58
+        },
+        {
+          "kind": "pulse",
+          "level": 0.29,
+          "shape": 0.38,
+          "detune": 0.009
+        },
+        {
+          "kind": "sine",
+          "level": 0.24
+        }
+      ],
+      "amp": [
+        0.008,
+        0.4,
+        0.78,
+        0.14
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 670,
+        "resonance": 0.25,
+        "env": 12,
+        "keytrack": 0.65
+      },
+      "motion": {
+        "shape": "step",
+        "rate": 2,
+        "sync": true,
+        "depth": 8,
+        "amp": 4.2,
+        "pan": 0,
+        "steps": [
+          1,
+          -0.8,
+          0.35,
+          -0.8,
+          0.65,
+          -0.8,
+          0.1,
+          -0.8,
+          1,
+          -0.8,
+          0.35,
+          -0.8,
+          0.45,
+          -0.8,
+          0.1,
+          -0.8
+        ]
+      },
+      "filter_env": [
+        0.005,
+        0.22,
+        0.28,
+        0.12
+      ],
+      "drift": 0.008,
+      "reverb": 0.018,
+      "delay": 0.04,
+      "reverb_time": 0.7,
+      "width": 0.16,
+      "mono": true,
+      "portamento": 0.009,
+      "highpass": 22,
+      "velocity": 13
+    },
+    {
+      "name": "Bronze Growl",
+      "role": "Low harmonic FM growl for restrained tension, melodic electronic bass and dense hybrid accents.",
+      "range": [
+        30,
+        66
+      ],
+      "tags": [
+        "FM",
+        "growl",
+        "low",
+        "harmonic"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm3",
+          "level": 0.61,
+          "fm_amount": 0.37,
+          "ratio": 3,
+          "fm_amount2": 0.16,
+          "ratio2": 2,
+          "feedback": 0.05
+        },
+        {
+          "kind": "sine",
+          "level": 0.33
+        },
+        {
+          "kind": "pulse",
+          "level": 0.16,
+          "shape": 0.52
+        }
+      ],
+      "amp": [
+        0.022,
+        0.76,
+        0.62,
+        0.31
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 1750,
+        "resonance": 0.23,
+        "env": 15,
+        "keytrack": 0.65
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.8,
+        "sync": false,
+        "depth": 5.2,
+        "amp": 1.5,
+        "pan": 0
+      },
+      "filter_env": [
+        0.018,
+        0.7,
+        0.27,
+        0.25
+      ],
+      "drift": 0.006,
+      "reverb": 0.025,
+      "delay": 0.012,
+      "reverb_time": 0.7,
+      "width": 0.16,
+      "mono": true,
+      "portamento": 0.05,
+      "highpass": 22,
+      "velocity": 16
+    },
+    {
+      "name": "Muted Current",
+      "role": "Soft triangle and restrained FM bass for gentle repeating lines, jazz-influenced harmony and sparse underscore.",
+      "range": [
+        29,
+        65
+      ],
+      "tags": [
+        "muted",
+        "soft",
+        "warm",
+        "tonal"
+      ],
+      "oscillators": [
+        {
+          "kind": "triangle",
+          "level": 0.68
+        },
+        {
+          "kind": "fm2",
+          "level": 0.32,
+          "fm_amount": 0.095,
+          "ratio": 1,
+          "fm_amount2": 0.028,
+          "ratio2": 3
+        }
+      ],
+      "amp": [
+        0.018,
+        0.68,
+        0.43,
+        0.26
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 580,
+        "resonance": 0.07,
+        "env": 6,
+        "keytrack": 0.65
+      },
+      "motion": {
+        "shape": "triangle",
+        "rate": 0.4,
+        "sync": false,
+        "depth": 2.5,
+        "amp": 0.6,
+        "pan": 0
+      },
+      "filter_env": [
+        0.012,
+        0.4,
+        0.12,
+        0.2
+      ],
+      "drift": 0.008,
+      "reverb": 0.025,
+      "delay": 0.012,
+      "reverb_time": 0.7,
+      "width": 0.16,
+      "mono": false,
+      "portamento": 0.004,
+      "highpass": 21,
+      "velocity": 18
+    },
+    {
+      "name": "Low Lantern",
+      "role": "Warm resonant low hybrid for spacious bass harmony and patient dramatic phrases.",
+      "range": [
+        32,
+        68
+      ],
+      "tags": [
+        "resonant",
+        "warm",
+        "hybrid",
+        "harmonic"
+      ],
+      "oscillators": [
+        {
+          "kind": "modern",
+          "level": 0.61,
+          "saw": 0.18,
+          "pulse": 0.05,
+          "tri": 0.78
+        },
+        {
+          "kind": "string",
+          "level": 0.27,
+          "exciter": 2,
+          "decay": 0.95,
+          "stiffness": -0.025
+        },
+        {
+          "kind": "sine",
+          "level": 0.17,
+          "octave": 1
+        }
+      ],
+      "amp": [
+        0.12,
+        1.6,
+        0.62,
+        0.61
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 1120,
+        "resonance": 0.16,
+        "env": 4,
+        "keytrack": 0.65
+      },
+      "motion": {
+        "shape": "sine",
+        "rate": 0.28,
+        "sync": false,
+        "depth": 3.8,
+        "amp": 0.7,
+        "pan": 0.012
+      },
+      "filter_env": [
+        0.09,
+        1.25,
+        0.4,
+        0.52
+      ],
+      "drift": 0.008,
+      "reverb": 0.065,
+      "delay": 0.012,
+      "reverb_time": 1.5,
+      "width": 0.28,
+      "mono": false,
+      "portamento": 0.004,
+      "highpass": 22,
+      "velocity": 14
+    },
+    {
+      "name": "Felt Motor",
+      "role": "Compact low FM and triangle voice for soft percussive movement without a sharp transient.",
+      "range": [
+        30,
+        66
+      ],
+      "tags": [
+        "felt",
+        "compact",
+        "percussive",
+        "tonal"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm2",
+          "level": 0.53,
+          "fm_amount": 0.11,
+          "ratio": 1,
+          "fm_amount2": 0.05,
+          "ratio2": 2
+        },
+        {
+          "kind": "triangle",
+          "level": 0.35
+        },
+        {
+          "kind": "sine",
+          "level": 0.22
+        }
+      ],
+      "amp": [
+        0.015,
+        0.38,
+        0.18,
+        0.12
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 920,
+        "resonance": 0.12,
+        "env": 12,
+        "keytrack": 0.65
+      },
+      "motion": {
+        "shape": "square",
+        "rate": 1.5,
+        "sync": true,
+        "depth": 3.3,
+        "amp": 1.3,
+        "pan": 0
+      },
+      "filter_env": [
+        0.008,
+        0.17,
+        0.03,
+        0.1
+      ],
+      "drift": 0.008,
+      "reverb": 0.018,
+      "delay": 0.012,
+      "reverb_time": 0.7,
+      "width": 0.16,
+      "mono": true,
+      "portamento": 0.009,
+      "highpass": 23,
+      "velocity": 22,
+      "noise": 0.0015,
+      "noise_color": -0.8
+    },
+    {
+      "name": "Open Circuit",
+      "role": "Defined pulse and harmonic FM bass for melodic hooks, electronic counterpoint and energetic hybrid cues.",
+      "range": [
+        31,
+        67
+      ],
+      "tags": [
+        "pulse",
+        "defined",
+        "electronic",
+        "harmonic"
+      ],
+      "oscillators": [
+        {
+          "kind": "pulse",
+          "level": 0.57,
+          "shape": 0.31
+        },
+        {
+          "kind": "fm3",
+          "level": 0.28,
+          "fm_amount": 0.2,
+          "ratio": 4,
+          "fm_amount2": 0.055,
+          "ratio2": 1
+        },
+        {
+          "kind": "sine",
+          "level": 0.27
+        }
+      ],
+      "amp": [
+        0.007,
+        0.57,
+        0.58,
+        0.2
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 2300,
+        "resonance": 0.19,
+        "env": 16,
+        "keytrack": 0.65
+      },
+      "motion": {
+        "shape": "saw",
+        "rate": 0.9,
+        "sync": false,
+        "depth": 4.3,
+        "amp": 1.1,
+        "pan": 0
+      },
+      "filter_env": [
+        0.005,
+        0.24,
+        0.2,
+        0.16
+      ],
+      "drift": 0.009,
+      "reverb": 0.025,
+      "delay": 0.025,
+      "reverb_time": 0.7,
+      "width": 0.16,
+      "mono": true,
+      "portamento": 0.032,
+      "highpass": 22,
+      "velocity": 18
+    }
+  ],
+  "variants": [
+    {
+      "name": "Tight",
+      "intent": "Short, defined articulation and restrained upper-layer blend for fast lines and dense mixes.",
+      "changes": {
+        "attack_scale": 0.8,
+        "decay_scale": 0.65,
+        "sustain_scale": 0.82,
+        "release_scale": 0.58,
+        "cutoff_scale": 1.08,
+        "second_level_scale": 0.72,
+        "motion_scale": 0.7,
+        "fx_scale": 0.35,
+        "attack_max": 0.035
+      }
+    },
+    {
+      "name": "Round",
+      "intent": "Softer onset, darker harmonics and a fuller supporting layer for sustained low foundations.",
+      "changes": {
+        "attack_scale": 1.65,
+        "decay_scale": 1.35,
+        "sustain_scale": 1.12,
+        "release_scale": 1.5,
+        "cutoff_scale": 0.66,
+        "second_level_scale": 1.3,
+        "fm_scale": 0.62,
+        "resonance_add": -0.025,
+        "motion_scale": 0.6,
+        "fx_scale": 0.65
+      }
+    },
+    {
+      "name": "Edge",
+      "intent": "More exposed upper partials and filter contour for lines that must remain audible through a busy arrangement.",
+      "changes": {
+        "attack_scale": 0.7,
+        "decay_scale": 0.86,
+        "sustain_scale": 0.92,
+        "release_scale": 0.8,
+        "cutoff_scale": 1.8,
+        "second_level_scale": 0.62,
+        "fm_scale": 1.55,
+        "resonance_add": 0.08,
+        "motion_scale": 1.35,
+        "fx_scale": 0.55
+      }
+    },
+    {
+      "name": "Pluck",
+      "intent": "Reduced sustain and fast decay for detached bass ostinatos, syncopation and percussive melodic figures.",
+      "changes": {
+        "attack_scale": 0.65,
+        "decay_scale": 0.43,
+        "sustain_scale": 0.12,
+        "release_scale": 0.46,
+        "cutoff_scale": 1.28,
+        "second_level_scale": 1.2,
+        "fm_scale": 1.15,
+        "motion_scale": 0.7,
+        "resonance_add": 0.025,
+        "fx_scale": 0.4,
+        "attack_max": 0.02
+      }
+    },
+    {
+      "name": "Pulse",
+      "intent": "Tempo-synchronized square-wave timbral movement adds rhythmic urgency while preserving the played pitch.",
+      "changes": {
+        "attack_scale": 1.12,
+        "decay_scale": 0.82,
+        "sustain_scale": 0.88,
+        "release_scale": 0.8,
+        "cutoff_scale": 1.15,
+        "second_level_scale": 0.88,
+        "motion_scale": 3.0,
+        "motion_rate_scale": 4.0,
+        "motion_shape": "square",
+        "sync": true,
+        "resonance_add": 0.045,
+        "fx_scale": 1.0
+      }
+    }
+  ]
+}

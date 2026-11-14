@@ -1,3 +1,27 @@
+# Current continuation: Scoring 1000
+
+The current user goal adds a researched, original 1,000-preset factory bank in ten
+categories, using 60 actual subagents in ten waves and five distinct technical QA
+gates per preset. Preserve the existing ten reference workspaces described below.
+Read `doc/scoring-1000/RESEARCH.md`, `doc/scoring-1000/USER_GUIDE.md`, and the scoring
+verification/agent records before changing the bank.
+
+- Edit the original recipes or deterministic compiler, then regenerate the FXPs,
+  catalog and package index. Do not hand-edit generated presets or invent QA results.
+- Run `scripts/scoring/validate_bank.py --check-generated`; use the compiled native
+  `surge-scoring-render` and `qa_bank.py` for sound evidence. Cache reuse requires
+  identical preset, fixture, renderer and QA-script hashes.
+- Keep all eight performance macros connected and correctly described. Check
+  held and released notes, velocity, register, dense polyphony, controls and tempo.
+- Preserve separate status for human musical audition. Automated measurements,
+  different hashes, and composer interviews do not certify Hollywood adoption,
+  perceived uniqueness, acoustic realism or suitability for every cue.
+- Full distributions install factory content from `resources/data`. Plugin-only
+  packages require companion data; do not claim preset bytes are in the plugin binary.
+- Record actual completed agent work, evidence hashes, known limits, and exact
+  published commit. Use ordinary fast-forward publication to `main`; fetch and
+  reconcile concurrent changes without overwriting unrelated work.
+
 # Working on the ten reference workspaces
 
 The active user goal is ten working native Surge XT skins matching the supplied

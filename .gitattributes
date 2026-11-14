@@ -1,2 +1,10 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Audit exports and media metadata are hashed as delivered; preserve exact bytes,
+# including the original CSV line endings, on every checkout.
+doc/scoring-1000/** -text
+
+# These bytes participate in the factory-bank SHA-256 verification on every OS.
+doc/scoring-1000/manifest.json text eol=lf
+doc/scoring-1000/package.sha256 text eol=lf

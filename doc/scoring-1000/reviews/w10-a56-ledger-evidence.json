@@ -1,0 +1,124 @@
+{
+  "schema": 1,
+  "status": "pass_for_current_partial_assignment_record",
+  "actual_agents": 57,
+  "completed_agents": 54,
+  "active_agents": 3,
+  "remaining_unspawned": 3,
+  "requested_agents": 60,
+  "wave_counts": {
+    "1": 6,
+    "2": 6,
+    "3": 6,
+    "4": 6,
+    "5": 6,
+    "6": 6,
+    "7": 6,
+    "8": 6,
+    "9": 6,
+    "10": 3
+  },
+  "contiguous_numbers": true,
+  "unique_canonical_names": true,
+  "name_number_wave_consistency": true,
+  "completed_tasks_have_existing_artifacts": true,
+  "local_ledger_links_checked": 74,
+  "missing_local_links": [],
+  "recipe_authoring": [
+    {
+      "path": "scripts/scoring/recipes/01_keys.json",
+      "families": 20,
+      "variants": 5,
+      "expanded_presets": 100
+    },
+    {
+      "path": "scripts/scoring/recipes/02_plucks.json",
+      "families": 20,
+      "variants": 5,
+      "expanded_presets": 100
+    },
+    {
+      "path": "scripts/scoring/recipes/03_bells_mallets.json",
+      "families": 20,
+      "variants": 5,
+      "expanded_presets": 100
+    },
+    {
+      "path": "scripts/scoring/recipes/04_pads.json",
+      "families": 20,
+      "variants": 5,
+      "expanded_presets": 100
+    },
+    {
+      "path": "scripts/scoring/recipes/05_ensemble_hybrids.json",
+      "families": 20,
+      "variants": 5,
+      "expanded_presets": 100
+    },
+    {
+      "path": "scripts/scoring/recipes/06_drones_air.json",
+      "families": 20,
+      "variants": 5,
+      "expanded_presets": 100
+    },
+    {
+      "path": "scripts/scoring/recipes/07_bass.json",
+      "families": 20,
+      "variants": 5,
+      "expanded_presets": 100
+    },
+    {
+      "path": "scripts/scoring/recipes/08_leads.json",
+      "families": 20,
+      "variants": 5,
+      "expanded_presets": 100
+    },
+    {
+      "path": "scripts/scoring/recipes/09_pulses_sequences.json",
+      "families": 20,
+      "variants": 5,
+      "expanded_presets": 100
+    },
+    {
+      "path": "scripts/scoring/recipes/10_percussion_transitions.json",
+      "families": 20,
+      "variants": 5,
+      "expanded_presets": 100
+    }
+  ],
+  "preserved_research_notes": [
+    {
+      "agent_number": 1,
+      "copied_path": "doc/scoring-1000/reviews/w01-a01-research-note.md",
+      "sha256": "d803cd6394317b0e5aed8a25fde9c0683ba28c5296662cdece7d0ded6e94a2c3",
+      "byte_identical_to_original": true
+    },
+    {
+      "agent_number": 2,
+      "copied_path": "doc/scoring-1000/reviews/w01-a02-research-note.md",
+      "sha256": "a3131a8b057b1180ed751ed61042b677305780a1e786998eb6fd0863cc928f18",
+      "byte_identical_to_original": true
+    },
+    {
+      "agent_number": 3,
+      "copied_path": "doc/scoring-1000/reviews/w01-a03-research-note.md",
+      "sha256": "0c7978011315f158a8e2d4786c3df6301d12a1c28cc67b3bfa002f93ab8ae48b",
+      "byte_identical_to_original": true
+    },
+    {
+      "agent_number": 4,
+      "copied_path": "doc/scoring-1000/reviews/w01-a04-research-note.md",
+      "sha256": "e541c0d737b658d0ab98f6e3b892c09a7edc3a84002915196249f45caec061c8",
+      "byte_identical_to_original": true
+    },
+    {
+      "agent_number": 5,
+      "copied_path": "doc/scoring-1000/reviews/w01-a05-research-note.md",
+      "sha256": "9c12f3887f0fda4c9d574600c375ee4c7fcb90fb09b15c622c894b29f5ff5298",
+      "byte_identical_to_original": true
+    }
+  ],
+  "ledger_sha256": "e958d037e45639668f8dae38731a90eeba3a8351d4b5b26b0831a3307418a3c5",
+  "readable_ledger_sha256": "e4efed90e9eaa043e82af6ccdd4385b6392e14ceeeaaf86b881ccf8aca4f1b39",
+  "scope": "Parent-observed actual task events and completion records, corroborated by deliverables; no unspawned agent or follow-up turn is counted. Historical collaboration events were not independently replayed."
+}

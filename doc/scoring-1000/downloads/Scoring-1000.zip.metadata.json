@@ -1,0 +1,16 @@
+{
+  "archive": "Scoring-1000.zip",
+  "archive_byte_verification": "pass",
+  "bytes": 4485374,
+  "composer_endorsement": "not_claimed",
+  "entries": 1006,
+  "generator_sha256": "9ba78b69fb97574425cedadbbb9b5c3fa83e396e4312a2c4974ab999d5e4a3bb",
+  "manifest_sha256": "67bd4a5dc3fbf6f3794679b24b500f1ef37af83b7a47a863d10cb964a57314a2",
+  "musical_audition": "unchanged_from_catalog",
+  "preset_count": 1000,
+  "regeneration_validation": "pass",
+  "reproducibility": "Identical input bytes, Python zip implementation and zlib version produce identical ZIP bytes; no clock or filesystem mtimes are recorded.",
+  "schema": 1,
+  "sha256": "b794179791cfad604b2761e3c109aefd88821831c46ac168cb4048a2c69d41c4",
+  "static_validation": "pass"
+}

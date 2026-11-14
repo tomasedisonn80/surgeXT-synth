@@ -1,0 +1,1759 @@
+{
+  "id": "09",
+  "name": "Pulses and Sequences",
+  "prefix": "Q",
+  "description": "Tempo-synchronized timbral pulses and explicitly named pitch-modulation figures for restrained scoring, rhythmic storytelling and music production. These are sustained synthesizer modulation patterns, not a MIDI arpeggiator or recorded loops.",
+  "families": [
+    {
+      "name": "Quiet Engine",
+      "role": "Rounded, sustained filter pulses for understated dialogue beds and patient rhythm.",
+      "range": [
+        36,
+        72
+      ],
+      "tags": [
+        "pulse",
+        "rounded",
+        "underscore",
+        "tonal"
+      ],
+      "oscillators": [
+        {
+          "kind": "triangle",
+          "level": 0.68
+        },
+        {
+          "kind": "saw",
+          "level": 0.26,
+          "detune": 0.025
+        }
+      ],
+      "amp": [
+        0.025,
+        0.45,
+        0.82,
+        0.22
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 1050,
+        "resonance": 0.13,
+        "env": 6,
+        "keytrack": 0.6
+      },
+      "filter_env": [
+        0.008,
+        0.32,
+        0.12,
+        0.18
+      ],
+      "motion": {
+        "shape": "step",
+        "rate": 2,
+        "sync": true,
+        "depth": 13,
+        "amp": 8,
+        "pan": 0.04,
+        "steps": [
+          1,
+          -0.8,
+          0.4,
+          -0.8,
+          0.7,
+          -0.8,
+          0.2,
+          -0.8,
+          1,
+          -0.8,
+          0.4,
+          -0.8,
+          0.6,
+          -0.8,
+          0.1,
+          -0.8
+        ],
+        "pitch": 0
+      },
+      "drift": 0.012,
+      "velocity": 14,
+      "highpass": 28,
+      "reverb": 0.06,
+      "delay": 0.045,
+      "width": 0.5
+    },
+    {
+      "name": "Paper Clock",
+      "role": "Narrow synthetic ticks over a pitched body for investigative scenes and precise pop rhythm.",
+      "range": [
+        45,
+        81
+      ],
+      "tags": [
+        "clock",
+        "pulse",
+        "precise",
+        "thin"
+      ],
+      "oscillators": [
+        {
+          "kind": "pulse",
+          "level": 0.61,
+          "shape": 0.24
+        },
+        {
+          "kind": "fm2",
+          "level": 0.3,
+          "fm_amount": 0.12,
+          "ratio": 3,
+          "fm_amount2": 0.025,
+          "ratio2": 1
+        }
+      ],
+      "amp": [
+        0.006,
+        0.19,
+        0.58,
+        0.11
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 1650,
+        "resonance": 0.25,
+        "env": 14,
+        "keytrack": 0.6
+      },
+      "filter_env": [
+        0.008,
+        0.32,
+        0.12,
+        0.18
+      ],
+      "motion": {
+        "shape": "step",
+        "rate": 4,
+        "sync": true,
+        "depth": 16,
+        "amp": 8,
+        "pan": 0.04,
+        "steps": [
+          1,
+          -1,
+          -0.4,
+          -1,
+          0.6,
+          -1,
+          -0.7,
+          -1,
+          1,
+          -1,
+          -0.2,
+          -1,
+          0.45,
+          -1,
+          -0.8,
+          -1
+        ],
+        "pitch": 0
+      },
+      "drift": 0.012,
+      "velocity": 14,
+      "highpass": 65,
+      "reverb": 0.035,
+      "delay": 0.045,
+      "width": 0.5
+    },
+    {
+      "name": "Copper Transit",
+      "role": "A three-three-two accent cycle gives harmonic FM bass a forward, syncopated motion.",
+      "range": [
+        32,
+        68
+      ],
+      "tags": [
+        "bass",
+        "syncopated",
+        "FM",
+        "pulse"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm2",
+          "level": 0.65,
+          "fm_amount": 0.24,
+          "ratio": 2,
+          "fm_amount2": 0.05,
+          "ratio2": 3,
+          "feedback": 0.015
+        },
+        {
+          "kind": "modern",
+          "level": 0.28,
+          "saw": 0.3,
+          "pulse": 0.1,
+          "tri": 0.55
+        }
+      ],
+      "amp": [
+        0.012,
+        0.3,
+        0.76,
+        0.17
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 780,
+        "resonance": 0.19,
+        "env": 10,
+        "keytrack": 0.6
+      },
+      "filter_env": [
+        0.008,
+        0.32,
+        0.12,
+        0.18
+      ],
+      "motion": {
+        "shape": "step",
+        "rate": 4,
+        "sync": true,
+        "depth": 15,
+        "amp": 8,
+        "pan": 0.04,
+        "steps": [
+          1,
+          -0.8,
+          -0.8,
+          0.7,
+          -0.8,
+          -0.8,
+          0.9,
+          -0.8,
+          1,
+          -0.8,
+          -0.8,
+          0.7,
+          -0.8,
+          -0.8,
+          0.9,
+          -0.8
+        ],
+        "pitch": 0
+      },
+      "drift": 0.012,
+      "velocity": 14,
+      "highpass": 28,
+      "reverb": 0.06,
+      "delay": 0.045,
+      "width": 0.5,
+      "mono": true,
+      "variant_roles": {
+        "Sparse": "Two widely spaced accents give harmonic FM bass a restrained pulse over a steady tonal bed."
+      }
+    },
+    {
+      "name": "Threaded Reed",
+      "role": "Synthetic reed pulses provide a light woodwind-like rhythmic layer without sampled realism.",
+      "range": [
+        48,
+        84
+      ],
+      "tags": [
+        "reed",
+        "hybrid",
+        "light",
+        "pulse"
+      ],
+      "oscillators": [
+        {
+          "kind": "pulse",
+          "level": 0.58,
+          "shape": 0.37
+        },
+        {
+          "kind": "sine",
+          "level": 0.32,
+          "shape": 1,
+          "detune": -0.018
+        }
+      ],
+      "amp": [
+        0.018,
+        0.38,
+        0.7,
+        0.19
+      ],
+      "filter": {
+        "kind": "bp12",
+        "hz": 1350,
+        "resonance": 0.18,
+        "env": 6,
+        "keytrack": 0.6
+      },
+      "filter_env": [
+        0.008,
+        0.32,
+        0.12,
+        0.18
+      ],
+      "motion": {
+        "shape": "step",
+        "rate": 3,
+        "sync": true,
+        "depth": 12,
+        "amp": 6,
+        "pan": 0.04,
+        "steps": [
+          0.9,
+          -0.6,
+          0.2,
+          -0.8,
+          0.55,
+          -0.5,
+          0.15,
+          -0.9,
+          0.8,
+          -0.7,
+          0.3,
+          -0.6,
+          0.6,
+          -0.8,
+          0.1,
+          -0.95
+        ],
+        "pitch": 0
+      },
+      "drift": 0.012,
+      "velocity": 14,
+      "highpass": 90,
+      "reverb": 0.06,
+      "delay": 0.045,
+      "width": 0.5
+    },
+    {
+      "name": "Low Lantern",
+      "role": "A soft sub foundation breathes in measured accents beneath sparse drama or electronic music.",
+      "range": [
+        28,
+        60
+      ],
+      "tags": [
+        "sub",
+        "soft",
+        "bass",
+        "pulse"
+      ],
+      "oscillators": [
+        {
+          "kind": "sine",
+          "level": 0.71
+        },
+        {
+          "kind": "saw",
+          "level": 0.24
+        }
+      ],
+      "amp": [
+        0.035,
+        0.6,
+        0.92,
+        0.32
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 360,
+        "resonance": 0.08,
+        "env": 5,
+        "keytrack": 0.6
+      },
+      "filter_env": [
+        0.008,
+        0.32,
+        0.12,
+        0.18
+      ],
+      "motion": {
+        "shape": "step",
+        "rate": 2,
+        "sync": true,
+        "depth": 10,
+        "amp": 9,
+        "pan": 0.04,
+        "steps": [
+          1,
+          -0.7,
+          -0.7,
+          -0.7,
+          0.65,
+          -0.7,
+          -0.7,
+          -0.7,
+          1,
+          -0.7,
+          -0.7,
+          -0.7,
+          0.45,
+          -0.7,
+          -0.7,
+          -0.7
+        ],
+        "pitch": 0
+      },
+      "drift": 0.012,
+      "velocity": 14,
+      "highpass": 20,
+      "reverb": 0.025,
+      "delay": 0.015,
+      "width": 0.2,
+      "mono": true
+    },
+    {
+      "name": "Slate Meter",
+      "role": "A modeled-string onset blends into a muted continuous synth for measured, tactile ostinatos.",
+      "range": [
+        40,
+        76
+      ],
+      "tags": [
+        "hybrid",
+        "tactile",
+        "muted",
+        "ostinato"
+      ],
+      "oscillators": [
+        {
+          "kind": "modern",
+          "level": 0.59,
+          "saw": 0.12,
+          "pulse": 0.22,
+          "tri": 0.6
+        },
+        {
+          "kind": "string",
+          "level": 0.3,
+          "exciter": 1,
+          "decay": 0.79,
+          "stiffness": 0.08
+        }
+      ],
+      "amp": [
+        0.01,
+        0.55,
+        0.65,
+        0.2
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 1250,
+        "resonance": 0.15,
+        "env": 12,
+        "keytrack": 0.6
+      },
+      "filter_env": [
+        0.008,
+        0.32,
+        0.12,
+        0.18
+      ],
+      "motion": {
+        "shape": "step",
+        "rate": 4,
+        "sync": true,
+        "depth": 15,
+        "amp": 7,
+        "pan": 0.04,
+        "steps": [
+          1,
+          -0.9,
+          0.1,
+          -0.9,
+          -0.5,
+          0.6,
+          -0.9,
+          -0.2,
+          1,
+          -0.9,
+          0.3,
+          -0.9,
+          -0.4,
+          0.7,
+          -0.9,
+          -0.3
+        ],
+        "pitch": 0
+      },
+      "drift": 0.012,
+      "velocity": 14,
+      "highpass": 28,
+      "reverb": 0.06,
+      "delay": 0.035,
+      "width": 0.5
+    },
+    {
+      "name": "Orbit Dots",
+      "role": "Rounded harmonic bell tones take staggered accents for science, wonder and light rhythmic underscore.",
+      "range": [
+        48,
+        84
+      ],
+      "tags": [
+        "bell",
+        "harmonic",
+        "light",
+        "pulse"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm2",
+          "level": 0.62,
+          "fm_amount": 0.19,
+          "ratio": 4,
+          "fm_amount2": 0.05,
+          "ratio2": 2
+        },
+        {
+          "kind": "sine",
+          "level": 0.31,
+          "octave": -1
+        }
+      ],
+      "amp": [
+        0.009,
+        0.8,
+        0.55,
+        0.3
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 4200,
+        "resonance": 0.08,
+        "env": 5,
+        "keytrack": 0.6
+      },
+      "filter_env": [
+        0.008,
+        0.32,
+        0.12,
+        0.18
+      ],
+      "motion": {
+        "shape": "step",
+        "rate": 4,
+        "sync": true,
+        "depth": 9,
+        "amp": 8,
+        "pan": 0.04,
+        "steps": [
+          1,
+          -0.75,
+          -0.4,
+          0.5,
+          -0.85,
+          0.2,
+          -0.7,
+          -0.25,
+          0.8,
+          -0.7,
+          -0.3,
+          0.65,
+          -0.8,
+          0.1,
+          -0.6,
+          -0.4
+        ],
+        "pitch": 0
+      },
+      "drift": 0.012,
+      "velocity": 14,
+      "highpass": 80,
+      "reverb": 0.1,
+      "delay": 0.09,
+      "width": 0.5,
+      "variant_intents": {
+        "Soft": "Darker filter accents, gentler entrances and a reduced secondary layer suit dialogue and delicate accompaniment.",
+        "Glass": "A brighter, stronger secondary layer and longer decay make the pattern useful as an exposed melodic or harmonic feature."
+      }
+    },
+    {
+      "name": "Linen Motor",
+      "role": "Soft triangular layers sustain a gentle four-step rhythmic thread for contemporary drama.",
+      "range": [
+        42,
+        78
+      ],
+      "tags": [
+        "soft",
+        "warm",
+        "pulse",
+        "drama"
+      ],
+      "oscillators": [
+        {
+          "kind": "triangle",
+          "level": 0.63
+        },
+        {
+          "kind": "modern",
+          "level": 0.32,
+          "saw": 0.2,
+          "pulse": 0,
+          "tri": 0.7,
+          "detune": 0.025
+        }
+      ],
+      "amp": [
+        0.06,
+        0.48,
+        0.88,
+        0.3
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 850,
+        "resonance": 0.1,
+        "env": 4,
+        "keytrack": 0.6
+      },
+      "filter_env": [
+        0.008,
+        0.32,
+        0.12,
+        0.18
+      ],
+      "motion": {
+        "shape": "step",
+        "rate": 2,
+        "sync": true,
+        "depth": 11,
+        "amp": 8,
+        "pan": 0.04,
+        "steps": [
+          1,
+          0.25,
+          -0.65,
+          -0.9,
+          0.7,
+          0.05,
+          -0.6,
+          -0.9,
+          0.9,
+          0.2,
+          -0.7,
+          -0.9,
+          0.6,
+          0.1,
+          -0.55,
+          -0.9
+        ],
+        "pitch": 0
+      },
+      "drift": 0.012,
+      "velocity": 14,
+      "highpass": 28,
+      "reverb": 0.08,
+      "delay": 0.045,
+      "width": 0.5
+    },
+    {
+      "name": "Glass Repeater",
+      "role": "Harmonic FM shimmer adds a bright, compact rhythmic layer above sustained harmony.",
+      "range": [
+        52,
+        88
+      ],
+      "tags": [
+        "glass",
+        "FM",
+        "bright",
+        "pulse"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm3",
+          "level": 0.6,
+          "fm_amount": 0.2,
+          "ratio": 3,
+          "fm_amount2": 0.08,
+          "ratio2": 6
+        },
+        {
+          "kind": "sine",
+          "level": 0.3,
+          "octave": 1
+        }
+      ],
+      "amp": [
+        0.012,
+        0.6,
+        0.62,
+        0.24
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 5600,
+        "resonance": 0.07,
+        "env": 8,
+        "keytrack": 0.6
+      },
+      "filter_env": [
+        0.008,
+        0.32,
+        0.12,
+        0.18
+      ],
+      "motion": {
+        "shape": "step",
+        "rate": 4,
+        "sync": true,
+        "depth": 10,
+        "amp": 8,
+        "pan": 0.04,
+        "steps": [
+          1,
+          -0.8,
+          0.5,
+          -0.8,
+          0.25,
+          -0.8,
+          0.65,
+          -0.8,
+          0.9,
+          -0.8,
+          0.35,
+          -0.8,
+          0.2,
+          -0.8,
+          0.55,
+          -0.8
+        ],
+        "pitch": 0
+      },
+      "drift": 0.012,
+      "velocity": 14,
+      "highpass": 110,
+      "reverb": 0.1,
+      "delay": 0.07,
+      "width": 0.5
+    },
+    {
+      "name": "Tilted Grid",
+      "role": "Five-five-six timbral accents introduce an off-balance rhythmic feel while holding one harmony.",
+      "range": [
+        40,
+        76
+      ],
+      "tags": [
+        "asymmetric",
+        "pulse",
+        "analog",
+        "tension"
+      ],
+      "oscillators": [
+        {
+          "kind": "pulse",
+          "level": 0.54,
+          "shape": 0.3
+        },
+        {
+          "kind": "modern",
+          "level": 0.35,
+          "saw": 0.45,
+          "pulse": 0.15,
+          "tri": 0.2,
+          "detune": -0.03
+        }
+      ],
+      "amp": [
+        0.015,
+        0.34,
+        0.8,
+        0.16
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 1600,
+        "resonance": 0.22,
+        "env": 10,
+        "keytrack": 0.6
+      },
+      "filter_env": [
+        0.008,
+        0.32,
+        0.12,
+        0.18
+      ],
+      "motion": {
+        "shape": "step",
+        "rate": 4,
+        "sync": true,
+        "depth": 16,
+        "amp": 8,
+        "pan": 0.04,
+        "steps": [
+          1,
+          -0.8,
+          -0.7,
+          -0.8,
+          -0.6,
+          0.85,
+          -0.8,
+          -0.7,
+          -0.8,
+          -0.6,
+          0.95,
+          -0.8,
+          -0.7,
+          -0.8,
+          -0.6,
+          -0.9
+        ],
+        "pitch": 0
+      },
+      "drift": 0.012,
+      "velocity": 14,
+      "highpass": 28,
+      "reverb": 0.06,
+      "delay": 0.025,
+      "width": 0.5,
+      "variant_roles": {
+        "Sparse": "Two widely spaced timbral accents hold one harmony with room for an independent rhythm."
+      }
+    },
+    {
+      "name": "Velvet Spokes",
+      "role": "Warm sustained analog colors turn in a soft accent pattern for lyrical movement and electronic ballads.",
+      "range": [
+        45,
+        81
+      ],
+      "tags": [
+        "warm",
+        "analog",
+        "gentle",
+        "pulse"
+      ],
+      "oscillators": [
+        {
+          "kind": "saw",
+          "level": 0.56,
+          "detune": 0.025,
+          "unison": 2
+        },
+        {
+          "kind": "triangle",
+          "level": 0.35,
+          "detune": -0.025
+        }
+      ],
+      "amp": [
+        0.045,
+        0.7,
+        0.86,
+        0.38
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 1350,
+        "resonance": 0.12,
+        "env": 4,
+        "keytrack": 0.6
+      },
+      "filter_env": [
+        0.008,
+        0.32,
+        0.12,
+        0.18
+      ],
+      "motion": {
+        "shape": "step",
+        "rate": 2,
+        "sync": true,
+        "depth": 12,
+        "amp": 6,
+        "pan": 0.04,
+        "steps": [
+          0.85,
+          -0.5,
+          -0.3,
+          0.3,
+          -0.6,
+          -0.2,
+          0.65,
+          -0.5,
+          -0.3,
+          0.8,
+          -0.5,
+          -0.2,
+          0.4,
+          -0.55,
+          -0.3,
+          0.1
+        ],
+        "pitch": 0
+      },
+      "drift": 0.012,
+      "velocity": 14,
+      "highpass": 28,
+      "reverb": 0.09,
+      "delay": 0.06,
+      "width": 0.65
+    },
+    {
+      "name": "Breath Relay",
+      "role": "A faint noise veil and synthetic harmonics make airy rhythmic accents around dialogue.",
+      "range": [
+        50,
+        86
+      ],
+      "tags": [
+        "air",
+        "synthetic",
+        "pulse",
+        "restrained"
+      ],
+      "oscillators": [
+        {
+          "kind": "modern",
+          "level": 0.54,
+          "saw": 0.18,
+          "pulse": 0.08,
+          "tri": 0.5
+        },
+        {
+          "kind": "sine",
+          "level": 0.32,
+          "octave": 1,
+          "feedback": 0.03
+        }
+      ],
+      "amp": [
+        0.055,
+        0.45,
+        0.7,
+        0.28
+      ],
+      "filter": {
+        "kind": "bp12",
+        "hz": 3200,
+        "resonance": 0.14,
+        "env": 3,
+        "keytrack": 0.6
+      },
+      "filter_env": [
+        0.008,
+        0.32,
+        0.12,
+        0.18
+      ],
+      "motion": {
+        "shape": "step",
+        "rate": 4,
+        "sync": true,
+        "depth": 15,
+        "amp": 8,
+        "pan": 0.04,
+        "steps": [
+          1,
+          -0.9,
+          -0.6,
+          -0.2,
+          0.5,
+          -0.8,
+          -0.7,
+          -0.3,
+          0.85,
+          -0.9,
+          -0.5,
+          -0.1,
+          0.4,
+          -0.8,
+          -0.6,
+          -0.4
+        ],
+        "pitch": 0
+      },
+      "drift": 0.012,
+      "velocity": 14,
+      "highpass": 120,
+      "reverb": 0.11,
+      "delay": 0.045,
+      "width": 0.5,
+      "noise": 0.018,
+      "noise_color": -0.2
+    },
+    {
+      "name": "Timber Circuit",
+      "role": "A synthetic string attack and hollow pulse body supply woody, persistent rhythmic accompaniment.",
+      "range": [
+        40,
+        79
+      ],
+      "tags": [
+        "wooden",
+        "hybrid",
+        "string",
+        "pulse"
+      ],
+      "oscillators": [
+        {
+          "kind": "pulse",
+          "level": 0.52,
+          "shape": 0.48
+        },
+        {
+          "kind": "string",
+          "level": 0.34,
+          "exciter": 3,
+          "decay": 0.85,
+          "stiffness": -0.08
+        },
+        {
+          "kind": "sine",
+          "level": 0.16,
+          "octave": -1
+        }
+      ],
+      "amp": [
+        0.008,
+        0.52,
+        0.71,
+        0.21
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 1800,
+        "resonance": 0.16,
+        "env": 9,
+        "keytrack": 0.6
+      },
+      "filter_env": [
+        0.008,
+        0.32,
+        0.12,
+        0.18
+      ],
+      "motion": {
+        "shape": "step",
+        "rate": 4,
+        "sync": true,
+        "depth": 13,
+        "amp": 7,
+        "pan": 0.04,
+        "steps": [
+          1,
+          -0.85,
+          0.15,
+          -0.8,
+          0.45,
+          -0.75,
+          -0.3,
+          0.6,
+          1,
+          -0.8,
+          0.2,
+          -0.85,
+          0.35,
+          -0.8,
+          -0.4,
+          0.5
+        ],
+        "pitch": 0
+      },
+      "drift": 0.012,
+      "velocity": 14,
+      "highpass": 28,
+      "reverb": 0.055,
+      "delay": 0.045,
+      "width": 0.5
+    },
+    {
+      "name": "Nickel Steps",
+      "role": "Harmonic metallic partials give restrained industrial sequences a stable pitched center.",
+      "range": [
+        43,
+        79
+      ],
+      "tags": [
+        "metallic",
+        "harmonic",
+        "FM",
+        "pulse"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm2",
+          "level": 0.57,
+          "fm_amount": 0.3,
+          "ratio": 5,
+          "fm_amount2": 0.09,
+          "ratio2": 3,
+          "feedback": 0.025
+        },
+        {
+          "kind": "triangle",
+          "level": 0.35
+        },
+        {
+          "kind": "sine",
+          "level": 0.13,
+          "octave": 1
+        }
+      ],
+      "amp": [
+        0.006,
+        0.4,
+        0.67,
+        0.16
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 2800,
+        "resonance": 0.13,
+        "env": 12,
+        "keytrack": 0.6
+      },
+      "filter_env": [
+        0.008,
+        0.32,
+        0.12,
+        0.18
+      ],
+      "motion": {
+        "shape": "step",
+        "rate": 4,
+        "sync": true,
+        "depth": 14,
+        "amp": 9,
+        "pan": 0.04,
+        "steps": [
+          1,
+          -1,
+          -0.4,
+          0.5,
+          -0.95,
+          -0.3,
+          0.75,
+          -0.8,
+          1,
+          -1,
+          -0.45,
+          0.3,
+          -0.9,
+          -0.2,
+          0.6,
+          -0.85
+        ],
+        "pitch": 0
+      },
+      "drift": 0.012,
+      "velocity": 14,
+      "highpass": 60,
+      "reverb": 0.06,
+      "delay": 0.045,
+      "width": 0.5
+    },
+    {
+      "name": "Hollow Dispatch",
+      "role": "Hollow bandpass tones carry short, irregular timbral messages for mystery and economical underscore.",
+      "range": [
+        46,
+        82
+      ],
+      "tags": [
+        "hollow",
+        "mystery",
+        "pulse",
+        "bandpass"
+      ],
+      "oscillators": [
+        {
+          "kind": "pulse",
+          "level": 0.64,
+          "shape": 0.51
+        },
+        {
+          "kind": "sine",
+          "level": 0.28,
+          "shape": 1,
+          "octave": -1
+        }
+      ],
+      "amp": [
+        0.025,
+        0.28,
+        0.78,
+        0.14
+      ],
+      "filter": {
+        "kind": "bp12",
+        "hz": 1100,
+        "resonance": 0.27,
+        "env": 5,
+        "keytrack": 0.6
+      },
+      "filter_env": [
+        0.008,
+        0.32,
+        0.12,
+        0.18
+      ],
+      "motion": {
+        "shape": "step",
+        "rate": 3,
+        "sync": true,
+        "depth": 15,
+        "amp": 7,
+        "pan": 0.04,
+        "steps": [
+          0.9,
+          -0.7,
+          -0.3,
+          0.45,
+          -0.85,
+          -0.6,
+          0.2,
+          -0.9,
+          0.65,
+          -0.75,
+          0.1,
+          -0.85,
+          0.4,
+          -0.7,
+          -0.5,
+          -0.95
+        ],
+        "pitch": 0
+      },
+      "drift": 0.012,
+      "velocity": 14,
+      "highpass": 70,
+      "reverb": 0.065,
+      "delay": 0.045,
+      "width": 0.5,
+      "variant_intents": {
+        "Soft": "Darker filter accents, gentler entrances and a reduced secondary layer suit dialogue and delicate accompaniment.",
+        "Glass": "A brighter, stronger secondary layer and longer decay make the pattern useful as an exposed melodic or harmonic feature."
+      }
+    },
+    {
+      "name": "Distant Relay",
+      "role": "Slow filtered accents on a sustained hybrid tone support long camera moves and spacious song bridges.",
+      "range": [
+        36,
+        76
+      ],
+      "tags": [
+        "slow",
+        "hybrid",
+        "pulse",
+        "spacious"
+      ],
+      "oscillators": [
+        {
+          "kind": "saw",
+          "level": 0.52,
+          "detune": 0.02
+        },
+        {
+          "kind": "fm2",
+          "level": 0.37,
+          "fm_amount": 0.13,
+          "ratio": 2,
+          "fm_amount2": 0.035,
+          "ratio2": 4
+        }
+      ],
+      "amp": [
+        0.16,
+        0.9,
+        0.85,
+        0.65
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 1500,
+        "resonance": 0.1,
+        "env": 3,
+        "keytrack": 0.6
+      },
+      "filter_env": [
+        0.008,
+        0.32,
+        0.12,
+        0.18
+      ],
+      "motion": {
+        "shape": "step",
+        "rate": 1,
+        "sync": true,
+        "depth": 14,
+        "amp": 7,
+        "pan": 0.04,
+        "steps": [
+          1,
+          0.25,
+          -0.5,
+          -0.8,
+          0.1,
+          -0.5,
+          -0.8,
+          -0.6,
+          0.8,
+          0.1,
+          -0.65,
+          -0.8,
+          0.25,
+          -0.5,
+          -0.75,
+          -0.85
+        ],
+        "pitch": 0
+      },
+      "drift": 0.012,
+      "velocity": 14,
+      "highpass": 28,
+      "reverb": 0.15,
+      "delay": 0.1,
+      "width": 0.7
+    },
+    {
+      "name": "Amber Ladder",
+      "role": "A major-pentatonic pitch-modulation sequence offers bright movement from one held root; play single notes.",
+      "range": [
+        42,
+        78
+      ],
+      "tags": [
+        "sequence",
+        "pentatonic",
+        "major",
+        "tonal"
+      ],
+      "oscillators": [
+        {
+          "kind": "modern",
+          "level": 0.6,
+          "saw": 0.35,
+          "pulse": 0.12,
+          "tri": 0.35
+        },
+        {
+          "kind": "sine",
+          "level": 0.3,
+          "octave": -1
+        }
+      ],
+      "amp": [
+        0.012,
+        0.36,
+        0.78,
+        0.18
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 2400,
+        "resonance": 0.16,
+        "env": 8,
+        "keytrack": 0.6
+      },
+      "filter_env": [
+        0.008,
+        0.32,
+        0.12,
+        0.18
+      ],
+      "motion": {
+        "shape": "step",
+        "rate": 4,
+        "sync": true,
+        "depth": 8,
+        "amp": 5,
+        "pan": 0.04,
+        "steps": [
+          0.0,
+          0.1666666667,
+          0.3333333333,
+          0.5833333333,
+          0.75,
+          0.5833333333,
+          0.3333333333,
+          0.1666666667,
+          0.0,
+          0.3333333333,
+          0.5833333333,
+          0.75,
+          1.0,
+          0.75,
+          0.5833333333,
+          0.3333333333
+        ],
+        "pitch": 12
+      },
+      "drift": 0,
+      "velocity": 14,
+      "highpass": 28,
+      "reverb": 0.06,
+      "delay": 0.08,
+      "width": 0.5,
+      "mono": true,
+      "variant_roles": {
+        "Sparse": "Two widely spaced octave accents over the played root provide a sparse tonal sequence; the Sparse pattern replaces this family scale pattern."
+      },
+      "variant_changes": {
+        "Glass": {
+          "contour_amp": 0.65
+        }
+      },
+      "variant_intents": {
+        "Soft": "Darker filter accents, gentler entrances and a reduced secondary layer suit dialogue and delicate accompaniment.",
+        "Glass": "A brighter, stronger secondary layer and longer decay make the pattern useful as an exposed melodic or harmonic feature."
+      }
+    },
+    {
+      "name": "Night Thirds",
+      "role": "A minor-pentatonic pitch-modulation figure creates clear nocturnal motion from one held root.",
+      "range": [
+        40,
+        76
+      ],
+      "tags": [
+        "sequence",
+        "minor",
+        "pentatonic",
+        "nocturnal"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm2",
+          "level": 0.61,
+          "fm_amount": 0.17,
+          "ratio": 2,
+          "fm_amount2": 0.045,
+          "ratio2": 3
+        },
+        {
+          "kind": "triangle",
+          "level": 0.31
+        }
+      ],
+      "amp": [
+        0.018,
+        0.5,
+        0.8,
+        0.24
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 1800,
+        "resonance": 0.14,
+        "env": 7,
+        "keytrack": 0.6
+      },
+      "filter_env": [
+        0.008,
+        0.32,
+        0.12,
+        0.18
+      ],
+      "motion": {
+        "shape": "step",
+        "rate": 3,
+        "sync": true,
+        "depth": 9,
+        "amp": 5,
+        "pan": 0.04,
+        "steps": [
+          0.0,
+          0.25,
+          0.5833333333,
+          0.8333333333,
+          0.5833333333,
+          0.25,
+          0.0,
+          0.5833333333,
+          0.25,
+          0.4166666667,
+          0.8333333333,
+          1.0,
+          0.8333333333,
+          0.5833333333,
+          0.4166666667,
+          0.25
+        ],
+        "pitch": 12
+      },
+      "drift": 0,
+      "velocity": 14,
+      "highpass": 28,
+      "reverb": 0.075,
+      "delay": 0.045,
+      "width": 0.5,
+      "mono": true,
+      "variant_roles": {
+        "Sparse": "Two widely spaced octave accents over the played root provide a sparse tonal sequence; the Sparse pattern replaces this family scale pattern."
+      }
+    },
+    {
+      "name": "Open Fifths",
+      "role": "Root, fifth and octave pitch modulation gives held single notes an open, mode-neutral ostinato.",
+      "range": [
+        36,
+        72
+      ],
+      "tags": [
+        "sequence",
+        "fifths",
+        "open",
+        "ostinato"
+      ],
+      "oscillators": [
+        {
+          "kind": "pulse",
+          "level": 0.5,
+          "shape": 0.4
+        },
+        {
+          "kind": "triangle",
+          "level": 0.35
+        },
+        {
+          "kind": "sine",
+          "level": 0.12,
+          "octave": -1
+        }
+      ],
+      "amp": [
+        0.014,
+        0.43,
+        0.84,
+        0.2
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 2100,
+        "resonance": 0.17,
+        "env": 6,
+        "keytrack": 0.6
+      },
+      "filter_env": [
+        0.008,
+        0.32,
+        0.12,
+        0.18
+      ],
+      "motion": {
+        "shape": "step",
+        "rate": 4,
+        "sync": true,
+        "depth": 10,
+        "amp": 6,
+        "pan": 0.04,
+        "steps": [
+          0.0,
+          0.5833333333,
+          1.0,
+          0.5833333333,
+          0.0,
+          0.5833333333,
+          0.0,
+          1.0,
+          0.5833333333,
+          0.0,
+          1.0,
+          0.5833333333,
+          0.0,
+          0.5833333333,
+          1.0,
+          0.0
+        ],
+        "pitch": 12
+      },
+      "drift": 0,
+      "velocity": 14,
+      "highpass": 28,
+      "reverb": 0.06,
+      "delay": 0.055,
+      "width": 0.5,
+      "mono": true,
+      "variant_roles": {
+        "Sparse": "Two widely spaced octave accents over the played root provide a sparse tonal sequence; the Sparse pattern replaces this family scale pattern."
+      }
+    },
+    {
+      "name": "Prism Arcs",
+      "role": "A whole-tone pitch-modulation figure gives a held root floating, deliberately ambiguous harmonic motion.",
+      "range": [
+        48,
+        84
+      ],
+      "tags": [
+        "sequence",
+        "whole-tone",
+        "floating",
+        "FM"
+      ],
+      "oscillators": [
+        {
+          "kind": "fm3",
+          "level": 0.58,
+          "fm_amount": 0.16,
+          "ratio": 3,
+          "fm_amount2": 0.055,
+          "ratio2": 2
+        },
+        {
+          "kind": "sine",
+          "level": 0.32,
+          "octave": 1
+        }
+      ],
+      "amp": [
+        0.035,
+        0.65,
+        0.76,
+        0.38
+      ],
+      "filter": {
+        "kind": "lp12",
+        "hz": 3800,
+        "resonance": 0.09,
+        "env": 5,
+        "keytrack": 0.6
+      },
+      "filter_env": [
+        0.008,
+        0.32,
+        0.12,
+        0.18
+      ],
+      "motion": {
+        "shape": "step",
+        "rate": 2,
+        "sync": true,
+        "depth": 8,
+        "amp": 4,
+        "pan": 0.04,
+        "steps": [
+          0.0,
+          0.1666666667,
+          0.3333333333,
+          0.5,
+          0.6666666667,
+          0.8333333333,
+          0.6666666667,
+          0.5,
+          0.3333333333,
+          0.1666666667,
+          0.0,
+          0.3333333333,
+          0.6666666667,
+          1.0,
+          0.6666666667,
+          0.3333333333
+        ],
+        "pitch": 12
+      },
+      "drift": 0,
+      "velocity": 14,
+      "highpass": 85,
+      "reverb": 0.13,
+      "delay": 0.09,
+      "width": 0.5,
+      "mono": true,
+      "variant_roles": {
+        "Sparse": "Two widely spaced octave accents over the played root provide a sparse tonal sequence; the Sparse pattern replaces this family scale pattern."
+      }
+    }
+  ],
+  "variants": [
+    {
+      "name": "Soft",
+      "intent": "Darker filter accents, gentler entrances and a reduced upper layer suit dialogue and delicate accompaniment.",
+      "changes": {
+        "attack_scale": 1.8,
+        "decay_scale": 1.25,
+        "release_scale": 1.15,
+        "cutoff_scale": 0.64,
+        "second_level_scale": 0.72,
+        "motion_scale": 0.7,
+        "fm_scale": 0.7,
+        "fx_scale": 0.65
+      }
+    },
+    {
+      "name": "Drive",
+      "intent": "Sharper entrances, stronger spectral accents and a more present second layer support forward rhythmic cues.",
+      "changes": {
+        "attack_scale": 0.65,
+        "decay_scale": 0.75,
+        "release_scale": 0.72,
+        "cutoff_scale": 1.4,
+        "second_level_scale": 1.25,
+        "motion_scale": 1.3,
+        "fm_scale": 1.3,
+        "resonance_add": 0.045,
+        "fx_scale": 0.65
+      }
+    },
+    {
+      "name": "Sparse",
+      "intent": "Two widely spaced timbral or octave accents sit over a steadier bed; shortened tails leave room between hand-played notes.",
+      "changes": {
+        "attack_scale": 0.85,
+        "decay_scale": 0.6,
+        "sustain_scale": 0.62,
+        "release_scale": 0.55,
+        "cutoff_scale": 0.85,
+        "second_level_scale": 0.6,
+        "motion_scale": 1.15,
+        "fx_scale": 0.4,
+        "steps": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "Triplet",
+      "intent": "One-and-a-half-times the family motion speed adds a three-to-two acceleration; the exact subdivision follows the family base rate.",
+      "changes": {
+        "motion_rate_scale": 1.5,
+        "attack_scale": 1.4,
+        "decay_scale": 1.35,
+        "sustain_scale": 1.08,
+        "release_scale": 1.3,
+        "cutoff_scale": 0.9,
+        "second_level_scale": 1.15,
+        "fx_scale": 0.85
+      }
+    },
+    {
+      "name": "Glass",
+      "intent": "A brighter, stronger upper layer and longer decay make the pattern useful as an exposed melodic or harmonic feature.",
+      "changes": {
+        "attack_scale": 1.15,
+        "decay_scale": 1.65,
+        "release_scale": 1.65,
+        "cutoff_scale": 1.85,
+        "second_level_scale": 1.5,
+        "fm_scale": 1.55,
+        "motion_scale": 0.85,
+        "resonance_add": -0.035,
+        "fx_scale": 1.3
+      }
+    }
+  ]
+}

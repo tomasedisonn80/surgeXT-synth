@@ -1,0 +1,100 @@
+{
+  "schema": 1,
+  "reason": "Describe the changed supporting oscillator as a secondary layer when it is below the played note. Preserve every synthesis parameter.",
+  "before_manifest_sha256": "1ac91c8196f5d920e3d142ee6117c4c53ab22768dd446890e56ba62e3eab2ab4",
+  "changed_count": 10,
+  "changes": [
+    {
+      "id": "SC05-006",
+      "name": "Cedar Section Close",
+      "before_patch_sha256": "34c66acb5b57832753bee8d71271ade7666c8d9c5b753724170bcde956590957",
+      "sound_state_sha256": "ae5aec13f66b1ab4ebcd113907a6653eb0342736ac9fbeecbfefdc56e459173b",
+      "before_intent": "Tighter ensemble articulation and reduced upper-layer blend for dialogue and dense arrangements.",
+      "after_intent": "Tighter ensemble articulation and reduced secondary-layer blend for dialogue and dense arrangements.",
+      "after_patch_sha256": "b31ab11ede286a10efc3309bae2f181f73ed7d8fe3b41d0a725002c92211a773"
+    },
+    {
+      "id": "SC08-006",
+      "name": "Reed Lantern Near",
+      "before_patch_sha256": "824be5483115cab6aa74bf9aac7a396d98031c0fff2dad092fef67e0b1ec0c83",
+      "sound_state_sha256": "19658b6921bcdd7dd5abf44b931aaad3fe941b465978b8b1847b7c36f6dca858",
+      "before_intent": "Tight phrasing, compact decay and reduced upper-layer weight for exposed lines or busy mixes.",
+      "after_intent": "Tight phrasing, compact decay and reduced secondary-layer weight for exposed lines or busy mixes.",
+      "after_patch_sha256": "643007c8212a13068104fa3277d6151dec0295f2fecdb0ac9c5c7f94ffe6ad7e"
+    },
+    {
+      "id": "SC08-046",
+      "name": "Soft Voltage Near",
+      "before_patch_sha256": "d5a4f7c66734982f0046f1245bccb3281c9f7e05a313e72622a2bb832ac9d886",
+      "sound_state_sha256": "712a439b0d28ad2f91503ddfa403c8b8dc0b09a280f50c155a87f52bb80b3d68",
+      "before_intent": "Tight phrasing, compact decay and reduced upper-layer weight for exposed lines or busy mixes.",
+      "after_intent": "Tight phrasing, compact decay and reduced secondary-layer weight for exposed lines or busy mixes.",
+      "after_patch_sha256": "e07b83b875b1797bc249029c28ce8bed315a73ffffef3061fd6a873806edcfa0"
+    },
+    {
+      "id": "SC08-091",
+      "name": "Moonlit Triangle Near",
+      "before_patch_sha256": "1ebe471dbb6800be5ad46534b9082782fec943053b002de9c59071ccb3d03df0",
+      "sound_state_sha256": "5d43b68eafd2c956fbd1cf2a9a366d8b661124d2f12b9868e79e387e2b76a321",
+      "before_intent": "Tight phrasing, compact decay and reduced upper-layer weight for exposed lines or busy mixes.",
+      "after_intent": "Tight phrasing, compact decay and reduced secondary-layer weight for exposed lines or busy mixes.",
+      "after_patch_sha256": "3dd31f4d0ccbedc4e15da34fbf8c8df412c1a377b3caf28ea6a5aeacd5e77630"
+    },
+    {
+      "id": "SC09-031",
+      "name": "Orbit Dots Soft",
+      "before_patch_sha256": "de7b2e6c362dafea4f9b38d683b9de750ae15265d506d208be5c6c936bcbb411",
+      "sound_state_sha256": "ff9dd356f6e719474aac71fa9d73ed9ccffc8d8ab476be9c4822158e107d4b33",
+      "before_intent": "Darker filter accents, gentler entrances and a reduced upper layer suit dialogue and delicate accompaniment.",
+      "after_intent": "Darker filter accents, gentler entrances and a reduced secondary layer suit dialogue and delicate accompaniment.",
+      "after_patch_sha256": "06ea61697378b8ab4fc3223f8fb1ba155a3cea5ba7040a8136a5518e2b14c307"
+    },
+    {
+      "id": "SC09-035",
+      "name": "Orbit Dots Glass",
+      "before_patch_sha256": "14b6a4f9e8e2d948bfd3925870e126ecf65483198d3498abd1e66086b21fd508",
+      "sound_state_sha256": "f36c82115bcc4992684e6c9490cbba82ebde31b83558f640a9e626706a7b8c8e",
+      "before_intent": "A brighter, stronger upper layer and longer decay make the pattern useful as an exposed melodic or harmonic feature.",
+      "after_intent": "A brighter, stronger secondary layer and longer decay make the pattern useful as an exposed melodic or harmonic feature.",
+      "after_patch_sha256": "eafb02a7f1dc8f717b0bb0b6130b5718177165ae3115140457d860eb1298b0c7"
+    },
+    {
+      "id": "SC09-071",
+      "name": "Hollow Dispatch Soft",
+      "before_patch_sha256": "b1b72db494e99bb17ea75404c8ec8cdad87d32ed5143219eaf05ffbf9a927945",
+      "sound_state_sha256": "4ed5a39c9fb6354c90a8d6105f0f1a02d6bc7d062474e880d55369bdb6559ec2",
+      "before_intent": "Darker filter accents, gentler entrances and a reduced upper layer suit dialogue and delicate accompaniment.",
+      "after_intent": "Darker filter accents, gentler entrances and a reduced secondary layer suit dialogue and delicate accompaniment.",
+      "after_patch_sha256": "f70aa31080d926b249ee1526f1f83b511a956a570b957a32542db5d56c035946"
+    },
+    {
+      "id": "SC09-075",
+      "name": "Hollow Dispatch Glass",
+      "before_patch_sha256": "ab3abce563a41c91480d1266e1ed16fb8a2ebfde5946117c734a9262a06de341",
+      "sound_state_sha256": "2ee81a5d420165e22b18322a739199caeb0b4a195aaa4965bd96053e20ebc700",
+      "before_intent": "A brighter, stronger upper layer and longer decay make the pattern useful as an exposed melodic or harmonic feature.",
+      "after_intent": "A brighter, stronger secondary layer and longer decay make the pattern useful as an exposed melodic or harmonic feature.",
+      "after_patch_sha256": "9c575f268195ea3c770934fb8ac239b384f054cb806f9d6d71f17b0e1a47de6b"
+    },
+    {
+      "id": "SC09-081",
+      "name": "Amber Ladder Soft",
+      "before_patch_sha256": "d2f5ab87bdd86c5ada977c7484890e987b267569806b212e551214aba359cdb1",
+      "sound_state_sha256": "92984e6fda6c99d01f12644ec1841d849266cd72c9e0de32ae96eea1fd23b122",
+      "before_intent": "Darker filter accents, gentler entrances and a reduced upper layer suit dialogue and delicate accompaniment.",
+      "after_intent": "Darker filter accents, gentler entrances and a reduced secondary layer suit dialogue and delicate accompaniment.",
+      "after_patch_sha256": "4250826b50429aa0c0e9a7b3f22b33cef47120d92b321f6d8c9146bc752c5865"
+    },
+    {
+      "id": "SC09-085",
+      "name": "Amber Ladder Glass",
+      "before_patch_sha256": "91ae370d37795ef7de35be062938f0854636d8e3997d25333fd4f4cda6629b01",
+      "sound_state_sha256": "ca5872f63d3029554b79027a27f4fe366de85e2fda6bf5b73d94f6fb33b311ce",
+      "before_intent": "A brighter, stronger upper layer and longer decay make the pattern useful as an exposed melodic or harmonic feature.",
+      "after_intent": "A brighter, stronger secondary layer and longer decay make the pattern useful as an exposed melodic or harmonic feature.",
+      "after_patch_sha256": "68f85561b6ba6f6df7799764f67570de91f3dc555825b6ff26ec4bcb8f89263b"
+    }
+  ],
+  "after_manifest_sha256": "67bd4a5dc3fbf6f3794679b24b500f1ef37af83b7a47a863d10cb964a57314a2",
+  "native_sound_state_unchanged": true
+}

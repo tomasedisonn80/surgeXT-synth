@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "status": "pass",
+  "catalog_sha256": "67bd4a5dc3fbf6f3794679b24b500f1ef37af83b7a47a863d10cb964a57314a2",
+  "package_index_sha256": "f95b5caf6b92a02d5d57b57266437b0222110f7a39df83675ab653c612c62a0e",
+  "scope": "Current factory data staged through the CMake target and enumerated by the frozen native renderer; this is not a platform installer or DAW-host test.",
+  "renderer": {
+    "sha256_before": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361",
+    "sha256_after": "563b87243d493035ae1ccb6a71a18c01c261b3dd88aceef66285694be2043361"
+  },
+  "implementation_sha256": {
+    "cmake/scoring-bank.cmake": "6ccc7da73133f0999efed0fbd79a1c3c8f9e33292479c8471c4830ffc8824ed3",
+    "cmake/verify-scoring-bank.cmake": "c92efa7c0f6a59c28b6f9e24f18e7081ff0d99336e4a72ede218b52ea108437d",
+    "scripts/scoring/validate_bank.py": "6bd51fd4e14d6dcf54cdfba31f62fe4e0754c21737e94ac2a76bf3c06f7f08fa",
+    "resources/CMakeLists.txt": "c28e67262d45026ab8c52237ca0f5d26fde50457116b2fd52e68b62eef99ed69",
+    "src/cmake/lib.cmake": "4005535abecc4b11d45afb5eda665d0e14d3ef9478f0fef56a12890d47099290"
+  },
+  "staging": {
+    "cmake_target": "stage-scoring-bank",
+    "exit_code": 0,
+    "staged_hash_matches": 1000,
+    "category_counts": {
+      "01": 100,
+      "02": 100,
+      "03": 100,
+      "04": 100,
+      "05": 100,
+      "06": 100,
+      "07": 100,
+      "08": 100,
+      "09": 100,
+      "10": 100
+    }
+  },
+  "native_discovery": {
+    "unique_bank_paths": 1000,
+    "total_bank_paths": 1000,
+    "missing": 0,
+    "unexpected": 0,
+    "duplicates": 0
+  },
+  "raw_evidence_sha256": {
+    "discovery.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "native-discovery.json": "7907a3ce27f14ecfd3bc6b8e58a8023e019fbfdcf6ca0c836f54a2b4feade188",
+    "static.log": "5f72846af2a713762c7dd1f4a66ed8c2d0f3100dcacec3d5ef1b4887cf83c543",
+    "renderer-before.sha256": "055157a6c12e596d4bc158618100dba1f22ff95e55fa7438fc4a792e827b3d74",
+    "static.json": "4a3dbe65eed6e4dc92af5285fafeeb687f65e107cb71399d52202e8a38f47169",
+    "build.log": "85911c5a3348f8b2d51f32e9cab73bef7c07ff3b28c9b97961c1e01436f70fa7"
+  },
+  "musical_audition": "pending",
+  "composer_endorsement": "not_claimed"
+}

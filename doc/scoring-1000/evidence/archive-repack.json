@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "date": "2026-11-14",
+  "purpose": "Lossless evidence transport below the GitHub connector MCP 16 MiB request-body limit",
+  "source_snapshot": "13fdca858",
+  "original_archive": {
+    "sha256": "6e30b5f0d2ea19bf988786d7f9f0dce5c57eeb07cd16fd62f388d4356cb18eba",
+    "git_blob": "14bf9180368f73b696d8e2d199a9c1545a2ca37a",
+    "bytes": 15999542,
+    "compression": "ZIP_DEFLATED",
+    "member_layout": "presets/SCxx-xxx.json"
+  },
+  "current_archive": {
+    "sha256": "381a2dbfc431f9353fddc301a6ea1545c583e713d1210da0d5af426adcf53296",
+    "git_blob": "97b8102dcc5bc57291c77c7f96b8309ef090f538",
+    "bytes": 12579043,
+    "compression": "standard ZIP_LZMA",
+    "member_layout": "SCxx-xxx.json"
+  },
+  "encoder": {
+    "profiles": {
+      "preset": "9 | PRESET_EXTREME",
+      "dict_size": 262144,
+      "lc_candidates": [
+        0,
+        2,
+        3
+      ],
+      "lp": 0,
+      "pb": 0
+    },
+    "selection": "smallest encoded member; lower lc breaks an equal-size tie"
+  },
+  "verification": {
+    "reports": 1000,
+    "report_bytes": 87298484,
+    "all_original_json_bytes_unchanged": true,
+    "all_original_report_index_hashes_match": true,
+    "report_index_sha256": "9ea4eed5e6d6f11249437901613af8b53fc3cf4377c3fbc91aa7614ccc60ea5e",
+    "measurements_changed": false,
+    "new_audio_rendering_claimed": false
+  },
+  "reproduction": "python scripts/scoring/repack_evidence.py INPUT.zip OUTPUT.zip",
+  "reading": "Use Python zipfile. Primary report members now use SCxx-xxx.json at archive root; the separate sustain archive retains its original presets/ prefix.",
+  "historical_evidence": "Original archive hashes remain labelled as historical in prior audits; they are not silently relabelled as current."
+}

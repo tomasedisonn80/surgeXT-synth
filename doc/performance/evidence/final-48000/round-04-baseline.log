@@ -1,0 +1,10 @@
+idle: held 0.272703% realtime, repeat PCM identical
+init-1: held 0.574849% realtime, repeat PCM identical
+init-8: held 1.52611% realtime, repeat PCM identical
+init-16: held 2.1214% realtime, repeat PCM identical
+lowcut-steep: held 2.39166% realtime, repeat PCM identical
+unused-formula: held 4.09488% realtime, repeat PCM identical
+active-formula: held 27.9164% realtime, repeat PCM identical
+conditioner: held 1.44286% realtime, repeat PCM identical
+eq3: held 1.32217% realtime, repeat PCM identical
+eq11: held 1.50643% realtime, repeat PCM identical

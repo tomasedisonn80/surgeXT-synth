@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "implementation_commit": "ae551fa2a4bd95efe21633f1c41a9326c8ef5df0",
+  "baseline_commit": "0dcc076937974605095a9567dacd3f28a0b04fd8",
+  "recorded_utc": "2026-11-15T11:53:53.220406+00:00",
+  "harness_files": {
+    "src/performance/CpuBenchmark.cpp": "6622bb7b8ce5c739ccd303cd47d0d67b2ac41dbfc8d8c5e9e1928c6a4814bc22",
+    "scripts/performance/run_comparison.py": "998d2b3a6f1b0b0cb0ec2d09f80d8d1671bfde3f6689ebd52d6e261bd108e2ed",
+    "scripts/performance/thread_clock.py": "13f931cc4a1759da32d832c6ab0a990569cc746b6f8e9aff254656cc3c1e8427"
+  },
+  "matching_native_harness": true,
+  "binaries": {
+    "baseline": "9b3d798abb9550db1969e57405751f235f2254d6f16b9b78f218a0f15b7476a6",
+    "candidate": "689feb96c28f1fb1973d09b7366ec4b8dce417a554a523d043870b889f9bdf6d"
+  },
+  "production_source_unchanged_since_implementation": true,
+  "measurement_plan": {
+    "rounds": 8,
+    "held_seconds": 30,
+    "tail_seconds": 5,
+    "sample_rate": 48000,
+    "scenario": "all",
+    "cpu_affinity": "minimum allowed logical CPU",
+    "clock": "CLOCK_THREAD_CPUTIME_ID",
+    "scope": "Same windows as retained wall clock, plus clock-read overhead; no scheduler waits or other threads. Frequency/cache effects remain."
+  },
+  "earlier_build_provenance": "build-provenance.json",
+  "note": "Only benchmark harness/version metadata rebuilt; production source and effective build flags unchanged. Prior wall-clock experiments retained in initial-48000 and long-wall-48000."
+}

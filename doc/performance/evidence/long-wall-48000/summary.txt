@@ -1,0 +1,13 @@
+Paired offline comparison: 8 rounds, alternating AB/BA order.
+First-pair complete PCM verified; every round has the same recorded audio fingerprint.
+Positive reduction means less measured wall time; shared-machine noise remains possible.
+idle: held -3.245%, tail +0.670% median reduction
+init-1: held -6.582%, tail -8.803% median reduction
+init-8: held -3.378%, tail +3.079% median reduction
+init-16: held -7.001%, tail -5.733% median reduction
+lowcut-steep: held -7.277%, tail +9.006% median reduction
+unused-formula: held +0.053%, tail -0.122% median reduction
+active-formula: held -6.545%, tail -6.386% median reduction
+conditioner: held +8.183%, tail +6.493% median reduction
+eq3: held +1.116%, tail -2.181% median reduction
+eq11: held -6.147%, tail -3.501% median reduction

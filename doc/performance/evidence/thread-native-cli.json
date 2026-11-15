@@ -1,0 +1,502 @@
+{
+  "schema": 1,
+  "tool": "thread-native-cli-validation",
+  "agent": "w09_a49_thread_native_safety",
+  "recorded_utc": "2026-11-15T11:54:48.231460+00:00",
+  "binary": "/workspace/scratch/4185df6afb07/build-candidate/src/performance/surge-cpu-bench",
+  "binary_sha256": "689feb96c28f1fb1973d09b7366ec4b8dce417a554a523d043870b889f9bdf6d",
+  "source_sha256": "6622bb7b8ce5c739ccd303cd47d0d67b2ac41dbfc8d8c5e9e1928c6a4814bc22",
+  "validator_sha256": "13f931cc4a1759da32d832c6ab0a990569cc746b6f8e9aff254656cc3c1e8427",
+  "private_directory": "/workspace/scratch/4185df6afb07/w09-a49-thread-cli-blto8s81",
+  "case_count": 11,
+  "rejection_cases": 10,
+  "positive_cases": 1,
+  "all_passed": true,
+  "scope": "Sidecar CLI protection and one-build native clock/report/PCM integrity. No performance or baseline-equivalence claim.",
+  "cases": [
+    {
+      "name": "wall-direct",
+      "expected": "rejection before opening outputs",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-candidate/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w09-a49-thread-cli-blto8s81/wall-direct/wall.json",
+        "--thread-output",
+        "/workspace/scratch/4185df6afb07/w09-a49-thread-cli-blto8s81/wall-direct/wall.json",
+        "--pcm-dir",
+        "/workspace/scratch/4185df6afb07/w09-a49-thread-cli-blto8s81/wall-direct/pcm",
+        "--repetitions",
+        "2",
+        "--seconds",
+        "0.01",
+        "--tail-seconds",
+        "0.01",
+        "--sample-rate",
+        "48000",
+        "--scenario",
+        "idle"
+      ],
+      "returncode": 1,
+      "diagnostic": "surge-cpu-bench: Thread CPU report path aliases the wall report",
+      "before_sha256": {
+        "wall.json": "d3da0544407d3fd211f23e5aaa508f2dcb57e608643665d663fa0eec8258b464",
+        "input.fxp": "c33a9db3a7b4f19e6321788765c47122449165c9f18c8ed438cfa9e70cef3b6f",
+        "pcm/idle.f32": "adff999094e770133766a85185b807186e561497fd5c9e07a7478088f5b29dab"
+      },
+      "after_sha256": {
+        "wall.json": "d3da0544407d3fd211f23e5aaa508f2dcb57e608643665d663fa0eec8258b464",
+        "input.fxp": "c33a9db3a7b4f19e6321788765c47122449165c9f18c8ed438cfa9e70cef3b6f",
+        "pcm/idle.f32": "adff999094e770133766a85185b807186e561497fd5c9e07a7478088f5b29dab"
+      },
+      "protected_unchanged": true,
+      "passed": true
+    },
+    {
+      "name": "wall-hardlink",
+      "expected": "rejection before opening outputs",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-candidate/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w09-a49-thread-cli-blto8s81/wall-hardlink/wall.json",
+        "--thread-output",
+        "/workspace/scratch/4185df6afb07/w09-a49-thread-cli-blto8s81/wall-hardlink/thread.json",
+        "--pcm-dir",
+        "/workspace/scratch/4185df6afb07/w09-a49-thread-cli-blto8s81/wall-hardlink/pcm",
+        "--repetitions",
+        "2",
+        "--seconds",
+        "0.01",
+        "--tail-seconds",
+        "0.01",
+        "--sample-rate",
+        "48000",
+        "--scenario",
+        "idle"
+      ],
+      "returncode": 1,
+      "diagnostic": "surge-cpu-bench: Thread CPU report path aliases the wall report",
+      "before_sha256": {
+        "wall.json": "d3da0544407d3fd211f23e5aaa508f2dcb57e608643665d663fa0eec8258b464",
+        "input.fxp": "c33a9db3a7b4f19e6321788765c47122449165c9f18c8ed438cfa9e70cef3b6f",
+        "pcm/idle.f32": "adff999094e770133766a85185b807186e561497fd5c9e07a7478088f5b29dab"
+      },
+      "after_sha256": {
+        "wall.json": "d3da0544407d3fd211f23e5aaa508f2dcb57e608643665d663fa0eec8258b464",
+        "input.fxp": "c33a9db3a7b4f19e6321788765c47122449165c9f18c8ed438cfa9e70cef3b6f",
+        "pcm/idle.f32": "adff999094e770133766a85185b807186e561497fd5c9e07a7478088f5b29dab"
+      },
+      "protected_unchanged": true,
+      "passed": true
+    },
+    {
+      "name": "wall-symlink",
+      "expected": "rejection before opening outputs",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-candidate/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w09-a49-thread-cli-blto8s81/wall-symlink/wall.json",
+        "--thread-output",
+        "/workspace/scratch/4185df6afb07/w09-a49-thread-cli-blto8s81/wall-symlink/thread.json",
+        "--pcm-dir",
+        "/workspace/scratch/4185df6afb07/w09-a49-thread-cli-blto8s81/wall-symlink/pcm",
+        "--repetitions",
+        "2",
+        "--seconds",
+        "0.01",
+        "--tail-seconds",
+        "0.01",
+        "--sample-rate",
+        "48000",
+        "--scenario",
+        "idle"
+      ],
+      "returncode": 1,
+      "diagnostic": "surge-cpu-bench: Thread CPU report path aliases the wall report",
+      "before_sha256": {
+        "wall.json": "d3da0544407d3fd211f23e5aaa508f2dcb57e608643665d663fa0eec8258b464",
+        "input.fxp": "c33a9db3a7b4f19e6321788765c47122449165c9f18c8ed438cfa9e70cef3b6f",
+        "pcm/idle.f32": "adff999094e770133766a85185b807186e561497fd5c9e07a7478088f5b29dab"
+      },
+      "after_sha256": {
+        "wall.json": "d3da0544407d3fd211f23e5aaa508f2dcb57e608643665d663fa0eec8258b464",
+        "input.fxp": "c33a9db3a7b4f19e6321788765c47122449165c9f18c8ed438cfa9e70cef3b6f",
+        "pcm/idle.f32": "adff999094e770133766a85185b807186e561497fd5c9e07a7478088f5b29dab"
+      },
+      "protected_unchanged": true,
+      "passed": true
+    },
+    {
+      "name": "patch-direct",
+      "expected": "rejection before opening outputs",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-candidate/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w09-a49-thread-cli-blto8s81/patch-direct/wall.json",
+        "--thread-output",
+        "/workspace/scratch/4185df6afb07/w09-a49-thread-cli-blto8s81/patch-direct/input.fxp",
+        "--pcm-dir",
+        "/workspace/scratch/4185df6afb07/w09-a49-thread-cli-blto8s81/patch-direct/pcm",
+        "--repetitions",
+        "2",
+        "--seconds",
+        "0.01",
+        "--tail-seconds",
+        "0.01",
+        "--sample-rate",
+        "48000",
+        "--patch",
+        "/workspace/scratch/4185df6afb07/w09-a49-thread-cli-blto8s81/patch-direct/input.fxp"
+      ],
+      "returncode": 1,
+      "diagnostic": "surge-cpu-bench: Thread CPU report path aliases the input patch",
+      "before_sha256": {
+        "wall.json": "d3da0544407d3fd211f23e5aaa508f2dcb57e608643665d663fa0eec8258b464",
+        "input.fxp": "c33a9db3a7b4f19e6321788765c47122449165c9f18c8ed438cfa9e70cef3b6f",
+        "pcm/idle.f32": "adff999094e770133766a85185b807186e561497fd5c9e07a7478088f5b29dab"
+      },
+      "after_sha256": {
+        "wall.json": "d3da0544407d3fd211f23e5aaa508f2dcb57e608643665d663fa0eec8258b464",
+        "input.fxp": "c33a9db3a7b4f19e6321788765c47122449165c9f18c8ed438cfa9e70cef3b6f",
+        "pcm/idle.f32": "adff999094e770133766a85185b807186e561497fd5c9e07a7478088f5b29dab"
+      },
+      "protected_unchanged": true,
+      "passed": true
+    },
+    {
+      "name": "patch-hardlink",
+      "expected": "rejection before opening outputs",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-candidate/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w09-a49-thread-cli-blto8s81/patch-hardlink/wall.json",
+        "--thread-output",
+        "/workspace/scratch/4185df6afb07/w09-a49-thread-cli-blto8s81/patch-hardlink/thread.json",
+        "--pcm-dir",
+        "/workspace/scratch/4185df6afb07/w09-a49-thread-cli-blto8s81/patch-hardlink/pcm",
+        "--repetitions",
+        "2",
+        "--seconds",
+        "0.01",
+        "--tail-seconds",
+        "0.01",
+        "--sample-rate",
+        "48000",
+        "--patch",
+        "/workspace/scratch/4185df6afb07/w09-a49-thread-cli-blto8s81/patch-hardlink/input.fxp"
+      ],
+      "returncode": 1,
+      "diagnostic": "surge-cpu-bench: Thread CPU report path aliases the input patch",
+      "before_sha256": {
+        "wall.json": "d3da0544407d3fd211f23e5aaa508f2dcb57e608643665d663fa0eec8258b464",
+        "input.fxp": "c33a9db3a7b4f19e6321788765c47122449165c9f18c8ed438cfa9e70cef3b6f",
+        "pcm/idle.f32": "adff999094e770133766a85185b807186e561497fd5c9e07a7478088f5b29dab"
+      },
+      "after_sha256": {
+        "wall.json": "d3da0544407d3fd211f23e5aaa508f2dcb57e608643665d663fa0eec8258b464",
+        "input.fxp": "c33a9db3a7b4f19e6321788765c47122449165c9f18c8ed438cfa9e70cef3b6f",
+        "pcm/idle.f32": "adff999094e770133766a85185b807186e561497fd5c9e07a7478088f5b29dab"
+      },
+      "protected_unchanged": true,
+      "passed": true
+    },
+    {
+      "name": "patch-symlink",
+      "expected": "rejection before opening outputs",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-candidate/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w09-a49-thread-cli-blto8s81/patch-symlink/wall.json",
+        "--thread-output",
+        "/workspace/scratch/4185df6afb07/w09-a49-thread-cli-blto8s81/patch-symlink/thread.json",
+        "--pcm-dir",
+        "/workspace/scratch/4185df6afb07/w09-a49-thread-cli-blto8s81/patch-symlink/pcm",
+        "--repetitions",
+        "2",
+        "--seconds",
+        "0.01",
+        "--tail-seconds",
+        "0.01",
+        "--sample-rate",
+        "48000",
+        "--patch",
+        "/workspace/scratch/4185df6afb07/w09-a49-thread-cli-blto8s81/patch-symlink/input.fxp"
+      ],
+      "returncode": 1,
+      "diagnostic": "surge-cpu-bench: Thread CPU report path aliases the input patch",
+      "before_sha256": {
+        "wall.json": "d3da0544407d3fd211f23e5aaa508f2dcb57e608643665d663fa0eec8258b464",
+        "input.fxp": "c33a9db3a7b4f19e6321788765c47122449165c9f18c8ed438cfa9e70cef3b6f",
+        "pcm/idle.f32": "adff999094e770133766a85185b807186e561497fd5c9e07a7478088f5b29dab"
+      },
+      "after_sha256": {
+        "wall.json": "d3da0544407d3fd211f23e5aaa508f2dcb57e608643665d663fa0eec8258b464",
+        "input.fxp": "c33a9db3a7b4f19e6321788765c47122449165c9f18c8ed438cfa9e70cef3b6f",
+        "pcm/idle.f32": "adff999094e770133766a85185b807186e561497fd5c9e07a7478088f5b29dab"
+      },
+      "protected_unchanged": true,
+      "passed": true
+    },
+    {
+      "name": "pcm-direct",
+      "expected": "rejection before opening outputs",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-candidate/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w09-a49-thread-cli-blto8s81/pcm-direct/wall.json",
+        "--thread-output",
+        "/workspace/scratch/4185df6afb07/w09-a49-thread-cli-blto8s81/pcm-direct/pcm/idle.f32",
+        "--pcm-dir",
+        "/workspace/scratch/4185df6afb07/w09-a49-thread-cli-blto8s81/pcm-direct/pcm",
+        "--repetitions",
+        "2",
+        "--seconds",
+        "0.01",
+        "--tail-seconds",
+        "0.01",
+        "--sample-rate",
+        "48000",
+        "--scenario",
+        "idle"
+      ],
+      "returncode": 1,
+      "diagnostic": "surge-cpu-bench: Thread CPU report path aliases a PCM output",
+      "before_sha256": {
+        "wall.json": "d3da0544407d3fd211f23e5aaa508f2dcb57e608643665d663fa0eec8258b464",
+        "input.fxp": "c33a9db3a7b4f19e6321788765c47122449165c9f18c8ed438cfa9e70cef3b6f",
+        "pcm/idle.f32": "adff999094e770133766a85185b807186e561497fd5c9e07a7478088f5b29dab"
+      },
+      "after_sha256": {
+        "wall.json": "d3da0544407d3fd211f23e5aaa508f2dcb57e608643665d663fa0eec8258b464",
+        "input.fxp": "c33a9db3a7b4f19e6321788765c47122449165c9f18c8ed438cfa9e70cef3b6f",
+        "pcm/idle.f32": "adff999094e770133766a85185b807186e561497fd5c9e07a7478088f5b29dab"
+      },
+      "protected_unchanged": true,
+      "passed": true
+    },
+    {
+      "name": "pcm-hardlink",
+      "expected": "rejection before opening outputs",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-candidate/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w09-a49-thread-cli-blto8s81/pcm-hardlink/wall.json",
+        "--thread-output",
+        "/workspace/scratch/4185df6afb07/w09-a49-thread-cli-blto8s81/pcm-hardlink/thread.json",
+        "--pcm-dir",
+        "/workspace/scratch/4185df6afb07/w09-a49-thread-cli-blto8s81/pcm-hardlink/pcm",
+        "--repetitions",
+        "2",
+        "--seconds",
+        "0.01",
+        "--tail-seconds",
+        "0.01",
+        "--sample-rate",
+        "48000",
+        "--scenario",
+        "idle"
+      ],
+      "returncode": 1,
+      "diagnostic": "surge-cpu-bench: Thread CPU report path aliases a PCM output",
+      "before_sha256": {
+        "wall.json": "d3da0544407d3fd211f23e5aaa508f2dcb57e608643665d663fa0eec8258b464",
+        "input.fxp": "c33a9db3a7b4f19e6321788765c47122449165c9f18c8ed438cfa9e70cef3b6f",
+        "pcm/idle.f32": "adff999094e770133766a85185b807186e561497fd5c9e07a7478088f5b29dab"
+      },
+      "after_sha256": {
+        "wall.json": "d3da0544407d3fd211f23e5aaa508f2dcb57e608643665d663fa0eec8258b464",
+        "input.fxp": "c33a9db3a7b4f19e6321788765c47122449165c9f18c8ed438cfa9e70cef3b6f",
+        "pcm/idle.f32": "adff999094e770133766a85185b807186e561497fd5c9e07a7478088f5b29dab"
+      },
+      "protected_unchanged": true,
+      "passed": true
+    },
+    {
+      "name": "pcm-symlink",
+      "expected": "rejection before opening outputs",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-candidate/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w09-a49-thread-cli-blto8s81/pcm-symlink/wall.json",
+        "--thread-output",
+        "/workspace/scratch/4185df6afb07/w09-a49-thread-cli-blto8s81/pcm-symlink/thread.json",
+        "--pcm-dir",
+        "/workspace/scratch/4185df6afb07/w09-a49-thread-cli-blto8s81/pcm-symlink/pcm",
+        "--repetitions",
+        "2",
+        "--seconds",
+        "0.01",
+        "--tail-seconds",
+        "0.01",
+        "--sample-rate",
+        "48000",
+        "--scenario",
+        "idle"
+      ],
+      "returncode": 1,
+      "diagnostic": "surge-cpu-bench: Thread CPU report path aliases a PCM output",
+      "before_sha256": {
+        "wall.json": "d3da0544407d3fd211f23e5aaa508f2dcb57e608643665d663fa0eec8258b464",
+        "input.fxp": "c33a9db3a7b4f19e6321788765c47122449165c9f18c8ed438cfa9e70cef3b6f",
+        "pcm/idle.f32": "adff999094e770133766a85185b807186e561497fd5c9e07a7478088f5b29dab"
+      },
+      "after_sha256": {
+        "wall.json": "d3da0544407d3fd211f23e5aaa508f2dcb57e608643665d663fa0eec8258b464",
+        "input.fxp": "c33a9db3a7b4f19e6321788765c47122449165c9f18c8ed438cfa9e70cef3b6f",
+        "pcm/idle.f32": "adff999094e770133766a85185b807186e561497fd5c9e07a7478088f5b29dab"
+      },
+      "protected_unchanged": true,
+      "passed": true
+    },
+    {
+      "name": "empty-thread-output",
+      "expected": "rejection before opening outputs",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-candidate/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w09-a49-thread-cli-blto8s81/empty-thread-output/wall.json",
+        "--thread-output",
+        "",
+        "--scenario",
+        "idle",
+        "--seconds",
+        "0.01",
+        "--tail-seconds",
+        "0.01"
+      ],
+      "returncode": 1,
+      "diagnostic": "surge-cpu-bench: --thread-output requires a nonempty path",
+      "before_sha256": "18da6403d3400aabb56170c2dfb1c78173b40e43e8779c39f6beb9b58ee6f520",
+      "after_sha256": "18da6403d3400aabb56170c2dfb1c78173b40e43e8779c39f6beb9b58ee6f520",
+      "protected_unchanged": true,
+      "passed": true
+    },
+    {
+      "name": "valid-two-repeat-init-1",
+      "expected": "native success, positive finite CPU sidecar bound to wall/audio report",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-candidate/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w09-a49-thread-cli-blto8s81/valid/wall.json",
+        "--thread-output",
+        "/workspace/scratch/4185df6afb07/w09-a49-thread-cli-blto8s81/valid/thread.json",
+        "--pcm-dir",
+        "/workspace/scratch/4185df6afb07/w09-a49-thread-cli-blto8s81/valid/pcm",
+        "--scenario",
+        "init-1",
+        "--sample-rate",
+        "48000",
+        "--repetitions",
+        "2",
+        "--seconds",
+        "0.05",
+        "--tail-seconds",
+        "0.05"
+      ],
+      "returncode": 0,
+      "wall_report_sha256": "38b6b86abd0dea98a37e4464405f6944f87482cf91f5a2c9e4a269bb0dd51ceb",
+      "thread_report_sha256": "6c0a98dd756caecff4d1260e2ea00ba61340dff957367ffb4a7d0bacd33de3db",
+      "wall_report": {
+        "schema": 1,
+        "tool": "surge-cpu-bench",
+        "git": "ae551fa",
+        "engine": "1.4.main.ae551fa",
+        "compiler": "GNU-14.2.0",
+        "configuration": "Release",
+        "lua_requested": "puc",
+        "has_lua": true,
+        "lto_requested": true,
+        "sample_rate": 48000,
+        "block_size": 32,
+        "seed": 1701,
+        "warmup_blocks": 128,
+        "repetitions": 2,
+        "format": "f32le-interleaved",
+        "channels": 2,
+        "frames": 4800,
+        "pcm_hash_algorithm": "fnv1a64-f32le",
+        "fpu_guard": true,
+        "timing": "steady_clock wall time; engine + PCM copy + transport; excludes setup/events/I-O/hash",
+        "patch": "",
+        "scenarios": [
+          {
+            "name": "init-1",
+            "requested_notes": 1,
+            "deterministic": true,
+            "held": {
+              "wall_seconds": [
+                0.000255988,
+                0.000253234
+              ],
+              "median_seconds": 0.000254611,
+              "min_seconds": 0.000253234,
+              "max_seconds": 0.000255988,
+              "audio_seconds": 0.05,
+              "median_realtime_percent": 0.509222
+            },
+            "tail": {
+              "wall_seconds": [
+                0.000273303,
+                0.000405398
+              ],
+              "median_seconds": 0.0003393505,
+              "min_seconds": 0.000273303,
+              "max_seconds": 0.000405398,
+              "audio_seconds": 0.05,
+              "median_realtime_percent": 0.678701
+            },
+            "runs": [
+              {
+                "pcm_hash": "7ae21e87d37865fd",
+                "peak": 0.297100424767,
+                "rms": 0.0743609674416
+              },
+              {
+                "pcm_hash": "7ae21e87d37865fd",
+                "peak": 0.297100424767,
+                "rms": 0.0743609674416
+              }
+            ]
+          }
+        ],
+        "ok": true
+      },
+      "thread_report": {
+        "schema": 1,
+        "tool": "surge-cpu-bench-thread-clock",
+        "clock": "CLOCK_THREAD_CPUTIME_ID",
+        "sample_rate": 48000,
+        "repetitions": 2,
+        "frames": 4800,
+        "block_size": 32,
+        "channels": 2,
+        "seed": 1701,
+        "scenarios": [
+          {
+            "name": "init-1",
+            "held_audio_seconds": 0.05,
+            "tail_audio_seconds": 0.05,
+            "pcm_hashes": [
+              "7ae21e87d37865fd",
+              "7ae21e87d37865fd"
+            ],
+            "held_thread_cpu_seconds": [
+              0.000256741,
+              0.000253987
+            ],
+            "tail_thread_cpu_seconds": [
+              0.000273727,
+              0.000406384
+            ]
+          }
+        ],
+        "ok": true
+      },
+      "pcm_binding": {
+        "bytes_per_file": 38400,
+        "sha256": "2a3aba3ced4426951b2f1f41491ea7e47a1df940428934f32f34a3e7df9eebd2",
+        "identical": true
+      },
+      "passed": true
+    }
+  ]
+}

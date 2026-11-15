@@ -1,0 +1,82 @@
+{
+  "baseline": "0dcc076937974605095a9567dacd3f28a0b04fd8",
+  "checked_files": 1021,
+  "byte_changes": [],
+  "extra_files": [],
+  "missing_files": [],
+  "embedded_payload_sha256": "58267b4a52708a0136435eb2967a8667e951a609a30e9a1783edbf7dd6b2124a",
+  "categories": [
+    {
+      "category": "01 Keys",
+      "count": 100,
+      "patch": "/workspace/scratch/4185df6afb07/surgeXT-synth/resources/data/patches_factory/Scoring 1000/01 Keys/SC01-001 Felt Ember Close.fxp",
+      "sha256": "e2c1c70115366852998d7fbacce7e7e1a13e8ce8412347f17eb3b0dc33b0a9d2"
+    },
+    {
+      "category": "02 Plucks",
+      "count": 100,
+      "patch": "/workspace/scratch/4185df6afb07/surgeXT-synth/resources/data/patches_factory/Scoring 1000/02 Plucks/SC02-001 Silk Plectrum Close.fxp",
+      "sha256": "f61964c02147abd341bfb193d6ffe6b0cc016968f0c680aeafe0edfed5db04a8"
+    },
+    {
+      "category": "03 Bells and Mallets",
+      "count": 100,
+      "patch": "/workspace/scratch/4185df6afb07/surgeXT-synth/resources/data/patches_factory/Scoring 1000/03 Bells and Mallets/SC03-001 Amber Marimba Close.fxp",
+      "sha256": "d3576fb9f660a1f4fdd531e81f91b1c4a6cb7abb04ffe347290b17c03576cd37"
+    },
+    {
+      "category": "04 Pads",
+      "count": 100,
+      "patch": "/workspace/scratch/4185df6afb07/surgeXT-synth/resources/data/patches_factory/Scoring 1000/04 Pads/SC04-001 Amber Canopy Close.fxp",
+      "sha256": "2d09ea488f0c62808b50767c110570145bdad42453fdbdadaed824e907c01191"
+    },
+    {
+      "category": "05 Ensemble Hybrids",
+      "count": 100,
+      "patch": "/workspace/scratch/4185df6afb07/surgeXT-synth/resources/data/patches_factory/Scoring 1000/05 Ensemble Hybrids/SC05-001 Linen Bows Close.fxp",
+      "sha256": "435f79b88cb6d68bacae97a8a9ea2738e97f652cf6779c7b9924d33227b6fa38"
+    },
+    {
+      "category": "06 Drones and Air",
+      "count": 100,
+      "patch": "/workspace/scratch/4185df6afb07/surgeXT-synth/resources/data/patches_factory/Scoring 1000/06 Drones and Air/SC06-001 Quiet Horizon Near.fxp",
+      "sha256": "94aab5674afec6a0cafbcaa844c1a87a29aef09f4ae88bce147b9ff10209ee64"
+    },
+    {
+      "category": "07 Bass",
+      "count": 100,
+      "patch": "/workspace/scratch/4185df6afb07/surgeXT-synth/resources/data/patches_factory/Scoring 1000/07 Bass/SC07-001 Velvet Root Tight.fxp",
+      "sha256": "aaa7a0a762d880523766cdffffd8a34f373904a56a972ec0bb010ec8ee3d27c6"
+    },
+    {
+      "category": "08 Leads",
+      "count": 100,
+      "patch": "/workspace/scratch/4185df6afb07/surgeXT-synth/resources/data/patches_factory/Scoring 1000/08 Leads/SC08-001 Amber Ribbon Near.fxp",
+      "sha256": "80819795b1fd55aa0acde7ee6f1663b2033c55366b7a401a1f2f20785a8fcbe6"
+    },
+    {
+      "category": "09 Pulses and Sequences",
+      "count": 100,
+      "patch": "/workspace/scratch/4185df6afb07/surgeXT-synth/resources/data/patches_factory/Scoring 1000/09 Pulses and Sequences/SC09-001 Quiet Engine Soft.fxp",
+      "sha256": "59f20451d25f6a36f8419655912e7eadb345d5d7eba8b06ac02cfa720504a22b"
+    },
+    {
+      "category": "10 Percussion and Transitions",
+      "count": 100,
+      "patch": "/workspace/scratch/4185df6afb07/surgeXT-synth/resources/data/patches_factory/Scoring 1000/10 Percussion and Transitions/SC10-001 Felt Drum Close.fxp",
+      "sha256": "e73c2083ab4c2f76503173fbb7c7e808ed7381d629b1854e7ad1fdb07921c8fc"
+    }
+  ],
+  "skin_packages": [
+    "reference-01-obsidian.surge-skin",
+    "reference-02-ivory.surge-skin",
+    "reference-03-spectral.surge-skin",
+    "reference-04-bauhaus.surge-skin",
+    "reference-05-space.surge-skin",
+    "reference-06-tokyo.surge-skin",
+    "reference-07-aurora.surge-skin",
+    "reference-08-clear.surge-skin",
+    "reference-09-flow.surge-skin",
+    "reference-10-live.surge-skin"
+  ]
+}

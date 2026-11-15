@@ -1,0 +1,766 @@
+{
+  "schema": 1,
+  "tool": "surge-cpu-bench",
+  "git": "0dcc076",
+  "engine": "1.4.HEAD.0dcc076",
+  "compiler": "GNU-14.2.0",
+  "configuration": "Release",
+  "lua_requested": "puc",
+  "has_lua": true,
+  "lto_requested": true,
+  "sample_rate": 48000,
+  "block_size": 32,
+  "seed": 1701,
+  "warmup_blocks": 128,
+  "repetitions": 7,
+  "format": "f32le-interleaved",
+  "channels": 2,
+  "frames": 192000,
+  "pcm_hash_algorithm": "fnv1a64-f32le",
+  "fpu_guard": true,
+  "timing": "steady_clock wall time; engine + PCM copy + transport; excludes setup/events/I-O/hash",
+  "patch": "",
+  "scenarios": [
+    {
+      "name": "idle",
+      "requested_notes": 0,
+      "deterministic": true,
+      "held": {
+        "wall_seconds": [
+          0.00788297,
+          0.007196789,
+          0.007364215,
+          0.007246471,
+          0.007633293,
+          0.007260222,
+          0.007822792
+        ],
+        "median_seconds": 0.007364215,
+        "min_seconds": 0.007196789,
+        "max_seconds": 0.00788297,
+        "audio_seconds": 3,
+        "median_realtime_percent": 0.24547383333333336
+      },
+      "tail": {
+        "wall_seconds": [
+          0.002548189,
+          0.002439229,
+          0.00268404,
+          0.002526337,
+          0.002574028,
+          0.002421012,
+          0.002431687
+        ],
+        "median_seconds": 0.002526337,
+        "min_seconds": 0.002421012,
+        "max_seconds": 0.00268404,
+        "audio_seconds": 1,
+        "median_realtime_percent": 0.2526337
+      },
+      "runs": [
+        {
+          "pcm_hash": "41984fa61f1ee325",
+          "peak": 0,
+          "rms": 0
+        },
+        {
+          "pcm_hash": "41984fa61f1ee325",
+          "peak": 0,
+          "rms": 0
+        },
+        {
+          "pcm_hash": "41984fa61f1ee325",
+          "peak": 0,
+          "rms": 0
+        },
+        {
+          "pcm_hash": "41984fa61f1ee325",
+          "peak": 0,
+          "rms": 0
+        },
+        {
+          "pcm_hash": "41984fa61f1ee325",
+          "peak": 0,
+          "rms": 0
+        },
+        {
+          "pcm_hash": "41984fa61f1ee325",
+          "peak": 0,
+          "rms": 0
+        },
+        {
+          "pcm_hash": "41984fa61f1ee325",
+          "peak": 0,
+          "rms": 0
+        }
+      ]
+    },
+    {
+      "name": "init-1",
+      "requested_notes": 1,
+      "deterministic": true,
+      "held": {
+        "wall_seconds": [
+          0.015836776,
+          0.015785311,
+          0.01533145,
+          0.014909427,
+          0.015771992,
+          0.015419351,
+          0.016010282
+        ],
+        "median_seconds": 0.015771992,
+        "min_seconds": 0.014909427,
+        "max_seconds": 0.016010282,
+        "audio_seconds": 3,
+        "median_realtime_percent": 0.5257330666666666
+      },
+      "tail": {
+        "wall_seconds": [
+          0.002790867,
+          0.0026096,
+          0.003061426,
+          0.002558465,
+          0.002563402,
+          0.002600838,
+          0.00264993
+        ],
+        "median_seconds": 0.0026096,
+        "min_seconds": 0.002558465,
+        "max_seconds": 0.003061426,
+        "audio_seconds": 1,
+        "median_realtime_percent": 0.26096
+      },
+      "runs": [
+        {
+          "pcm_hash": "fa412073f9dc8465",
+          "peak": 0.297383487225,
+          "rms": 0.0868709724448
+        },
+        {
+          "pcm_hash": "fa412073f9dc8465",
+          "peak": 0.297383487225,
+          "rms": 0.0868709724448
+        },
+        {
+          "pcm_hash": "fa412073f9dc8465",
+          "peak": 0.297383487225,
+          "rms": 0.0868709724448
+        },
+        {
+          "pcm_hash": "fa412073f9dc8465",
+          "peak": 0.297383487225,
+          "rms": 0.0868709724448
+        },
+        {
+          "pcm_hash": "fa412073f9dc8465",
+          "peak": 0.297383487225,
+          "rms": 0.0868709724448
+        },
+        {
+          "pcm_hash": "fa412073f9dc8465",
+          "peak": 0.297383487225,
+          "rms": 0.0868709724448
+        },
+        {
+          "pcm_hash": "fa412073f9dc8465",
+          "peak": 0.297383487225,
+          "rms": 0.0868709724448
+        }
+      ]
+    },
+    {
+      "name": "init-8",
+      "requested_notes": 8,
+      "deterministic": true,
+      "held": {
+        "wall_seconds": [
+          0.037131133,
+          0.035521749,
+          0.035128588,
+          0.035446768,
+          0.035781154,
+          0.035444957,
+          0.040763214
+        ],
+        "median_seconds": 0.035521749,
+        "min_seconds": 0.035128588,
+        "max_seconds": 0.040763214,
+        "audio_seconds": 3,
+        "median_realtime_percent": 1.1840583
+      },
+      "tail": {
+        "wall_seconds": [
+          0.003341369,
+          0.003400638,
+          0.003411764,
+          0.003409791,
+          0.003314761,
+          0.003477931,
+          0.003390603
+        ],
+        "median_seconds": 0.003400638,
+        "min_seconds": 0.003314761,
+        "max_seconds": 0.003477931,
+        "audio_seconds": 1,
+        "median_realtime_percent": 0.3400638
+      },
+      "runs": [
+        {
+          "pcm_hash": "b032c00709b8c459",
+          "peak": 1.26462602615,
+          "rms": 0.246491039622
+        },
+        {
+          "pcm_hash": "b032c00709b8c459",
+          "peak": 1.26462602615,
+          "rms": 0.246491039622
+        },
+        {
+          "pcm_hash": "b032c00709b8c459",
+          "peak": 1.26462602615,
+          "rms": 0.246491039622
+        },
+        {
+          "pcm_hash": "b032c00709b8c459",
+          "peak": 1.26462602615,
+          "rms": 0.246491039622
+        },
+        {
+          "pcm_hash": "b032c00709b8c459",
+          "peak": 1.26462602615,
+          "rms": 0.246491039622
+        },
+        {
+          "pcm_hash": "b032c00709b8c459",
+          "peak": 1.26462602615,
+          "rms": 0.246491039622
+        },
+        {
+          "pcm_hash": "b032c00709b8c459",
+          "peak": 1.26462602615,
+          "rms": 0.246491039622
+        }
+      ]
+    },
+    {
+      "name": "init-16",
+      "requested_notes": 16,
+      "deterministic": true,
+      "held": {
+        "wall_seconds": [
+          0.062630764,
+          0.061995488,
+          0.060843448,
+          0.061667513,
+          0.060678189,
+          0.05973769,
+          0.061907872
+        ],
+        "median_seconds": 0.061667513,
+        "min_seconds": 0.05973769,
+        "max_seconds": 0.062630764,
+        "audio_seconds": 3,
+        "median_realtime_percent": 2.0555837666666665
+      },
+      "tail": {
+        "wall_seconds": [
+          0.004487221,
+          0.004117435,
+          0.004277642,
+          0.004101631,
+          0.004170072,
+          0.004146428,
+          0.004498637
+        ],
+        "median_seconds": 0.004170072,
+        "min_seconds": 0.004101631,
+        "max_seconds": 0.004498637,
+        "audio_seconds": 1,
+        "median_realtime_percent": 0.4170072
+      },
+      "runs": [
+        {
+          "pcm_hash": "838c36c285a90169",
+          "peak": 1.87334656715,
+          "rms": 0.349548402717
+        },
+        {
+          "pcm_hash": "838c36c285a90169",
+          "peak": 1.87334656715,
+          "rms": 0.349548402717
+        },
+        {
+          "pcm_hash": "838c36c285a90169",
+          "peak": 1.87334656715,
+          "rms": 0.349548402717
+        },
+        {
+          "pcm_hash": "838c36c285a90169",
+          "peak": 1.87334656715,
+          "rms": 0.349548402717
+        },
+        {
+          "pcm_hash": "838c36c285a90169",
+          "peak": 1.87334656715,
+          "rms": 0.349548402717
+        },
+        {
+          "pcm_hash": "838c36c285a90169",
+          "peak": 1.87334656715,
+          "rms": 0.349548402717
+        },
+        {
+          "pcm_hash": "838c36c285a90169",
+          "peak": 1.87334656715,
+          "rms": 0.349548402717
+        }
+      ]
+    },
+    {
+      "name": "lowcut-steep",
+      "requested_notes": 8,
+      "deterministic": true,
+      "held": {
+        "wall_seconds": [
+          0.070413277,
+          0.073416258,
+          0.073720156,
+          0.06940541,
+          0.070320807,
+          0.070621208,
+          0.071919143
+        ],
+        "median_seconds": 0.070621208,
+        "min_seconds": 0.06940541,
+        "max_seconds": 0.073720156,
+        "audio_seconds": 3,
+        "median_realtime_percent": 2.354040266666667
+      },
+      "tail": {
+        "wall_seconds": [
+          0.006465239,
+          0.006344141,
+          0.007151411,
+          0.006680186,
+          0.006287928,
+          0.006440342,
+          0.006856586
+        ],
+        "median_seconds": 0.006465239,
+        "min_seconds": 0.006287928,
+        "max_seconds": 0.007151411,
+        "audio_seconds": 1,
+        "median_realtime_percent": 0.6465239
+      },
+      "runs": [
+        {
+          "pcm_hash": "fcc948ce2d043569",
+          "peak": 1.09968352318,
+          "rms": 0.108161721056
+        },
+        {
+          "pcm_hash": "fcc948ce2d043569",
+          "peak": 1.09968352318,
+          "rms": 0.108161721056
+        },
+        {
+          "pcm_hash": "fcc948ce2d043569",
+          "peak": 1.09968352318,
+          "rms": 0.108161721056
+        },
+        {
+          "pcm_hash": "fcc948ce2d043569",
+          "peak": 1.09968352318,
+          "rms": 0.108161721056
+        },
+        {
+          "pcm_hash": "fcc948ce2d043569",
+          "peak": 1.09968352318,
+          "rms": 0.108161721056
+        },
+        {
+          "pcm_hash": "fcc948ce2d043569",
+          "peak": 1.09968352318,
+          "rms": 0.108161721056
+        },
+        {
+          "pcm_hash": "fcc948ce2d043569",
+          "peak": 1.09968352318,
+          "rms": 0.108161721056
+        }
+      ]
+    },
+    {
+      "name": "unused-formula",
+      "requested_notes": 16,
+      "deterministic": true,
+      "held": {
+        "wall_seconds": [
+          0.113606043,
+          0.117655718,
+          0.123074292,
+          0.114780816,
+          0.118525278,
+          0.112473069,
+          0.1132739
+        ],
+        "median_seconds": 0.114780816,
+        "min_seconds": 0.112473069,
+        "max_seconds": 0.123074292,
+        "audio_seconds": 3,
+        "median_realtime_percent": 3.8260272
+      },
+      "tail": {
+        "wall_seconds": [
+          0.004869244,
+          0.004868623,
+          0.005486365,
+          0.004860451,
+          0.005244908,
+          0.004936573,
+          0.00484582
+        ],
+        "median_seconds": 0.004869244,
+        "min_seconds": 0.00484582,
+        "max_seconds": 0.005486365,
+        "audio_seconds": 1,
+        "median_realtime_percent": 0.4869244
+      },
+      "runs": [
+        {
+          "pcm_hash": "838c36c285a90169",
+          "peak": 1.87334656715,
+          "rms": 0.349548402717
+        },
+        {
+          "pcm_hash": "838c36c285a90169",
+          "peak": 1.87334656715,
+          "rms": 0.349548402717
+        },
+        {
+          "pcm_hash": "838c36c285a90169",
+          "peak": 1.87334656715,
+          "rms": 0.349548402717
+        },
+        {
+          "pcm_hash": "838c36c285a90169",
+          "peak": 1.87334656715,
+          "rms": 0.349548402717
+        },
+        {
+          "pcm_hash": "838c36c285a90169",
+          "peak": 1.87334656715,
+          "rms": 0.349548402717
+        },
+        {
+          "pcm_hash": "838c36c285a90169",
+          "peak": 1.87334656715,
+          "rms": 0.349548402717
+        },
+        {
+          "pcm_hash": "838c36c285a90169",
+          "peak": 1.87334656715,
+          "rms": 0.349548402717
+        }
+      ]
+    },
+    {
+      "name": "active-formula",
+      "requested_notes": 16,
+      "deterministic": true,
+      "held": {
+        "wall_seconds": [
+          0.775538358,
+          0.783730041,
+          0.818370489,
+          0.749773254,
+          0.762102044,
+          0.907655425,
+          0.808108449
+        ],
+        "median_seconds": 0.783730041,
+        "min_seconds": 0.749773254,
+        "max_seconds": 0.907655425,
+        "audio_seconds": 3,
+        "median_realtime_percent": 26.124334700000002
+      },
+      "tail": {
+        "wall_seconds": [
+          0.012180992,
+          0.01222081,
+          0.011772489,
+          0.012256684,
+          0.011715286,
+          0.01259967,
+          0.013739362
+        ],
+        "median_seconds": 0.01222081,
+        "min_seconds": 0.011715286,
+        "max_seconds": 0.013739362,
+        "audio_seconds": 1,
+        "median_realtime_percent": 1.222081
+      },
+      "runs": [
+        {
+          "pcm_hash": "05eca6bfaeb98a91",
+          "peak": 1.89474415779,
+          "rms": 0.35005497813
+        },
+        {
+          "pcm_hash": "05eca6bfaeb98a91",
+          "peak": 1.89474415779,
+          "rms": 0.35005497813
+        },
+        {
+          "pcm_hash": "05eca6bfaeb98a91",
+          "peak": 1.89474415779,
+          "rms": 0.35005497813
+        },
+        {
+          "pcm_hash": "05eca6bfaeb98a91",
+          "peak": 1.89474415779,
+          "rms": 0.35005497813
+        },
+        {
+          "pcm_hash": "05eca6bfaeb98a91",
+          "peak": 1.89474415779,
+          "rms": 0.35005497813
+        },
+        {
+          "pcm_hash": "05eca6bfaeb98a91",
+          "peak": 1.89474415779,
+          "rms": 0.35005497813
+        },
+        {
+          "pcm_hash": "05eca6bfaeb98a91",
+          "peak": 1.89474415779,
+          "rms": 0.35005497813
+        }
+      ]
+    },
+    {
+      "name": "conditioner",
+      "requested_notes": 8,
+      "deterministic": true,
+      "held": {
+        "wall_seconds": [
+          0.040114044,
+          0.040428348,
+          0.039384858,
+          0.0399062,
+          0.039414334,
+          0.040610088,
+          0.048592505
+        ],
+        "median_seconds": 0.040114044,
+        "min_seconds": 0.039384858,
+        "max_seconds": 0.048592505,
+        "audio_seconds": 3,
+        "median_realtime_percent": 1.3371348
+      },
+      "tail": {
+        "wall_seconds": [
+          0.00352412,
+          0.003695012,
+          0.003562316,
+          0.003519293,
+          0.00361934,
+          0.003662664,
+          0.007617169
+        ],
+        "median_seconds": 0.00361934,
+        "min_seconds": 0.003519293,
+        "max_seconds": 0.007617169,
+        "audio_seconds": 1,
+        "median_realtime_percent": 0.361934
+      },
+      "runs": [
+        {
+          "pcm_hash": "af78b4dcbe572dd1",
+          "peak": 0.699067115784,
+          "rms": 0.156175830884
+        },
+        {
+          "pcm_hash": "af78b4dcbe572dd1",
+          "peak": 0.699067115784,
+          "rms": 0.156175830884
+        },
+        {
+          "pcm_hash": "af78b4dcbe572dd1",
+          "peak": 0.699067115784,
+          "rms": 0.156175830884
+        },
+        {
+          "pcm_hash": "af78b4dcbe572dd1",
+          "peak": 0.699067115784,
+          "rms": 0.156175830884
+        },
+        {
+          "pcm_hash": "af78b4dcbe572dd1",
+          "peak": 0.699067115784,
+          "rms": 0.156175830884
+        },
+        {
+          "pcm_hash": "af78b4dcbe572dd1",
+          "peak": 0.699067115784,
+          "rms": 0.156175830884
+        },
+        {
+          "pcm_hash": "af78b4dcbe572dd1",
+          "peak": 0.699067115784,
+          "rms": 0.156175830884
+        }
+      ]
+    },
+    {
+      "name": "eq3",
+      "requested_notes": 8,
+      "deterministic": true,
+      "held": {
+        "wall_seconds": [
+          0.037863693,
+          0.048688144,
+          0.037716887,
+          0.038766259,
+          0.036825334,
+          0.03707358,
+          0.040703546
+        ],
+        "median_seconds": 0.037863693,
+        "min_seconds": 0.036825334,
+        "max_seconds": 0.048688144,
+        "audio_seconds": 3,
+        "median_realtime_percent": 1.2621231
+      },
+      "tail": {
+        "wall_seconds": [
+          0.003938331,
+          0.003953002,
+          0.003927474,
+          0.004273895,
+          0.004231033,
+          0.004057386,
+          0.004102614
+        ],
+        "median_seconds": 0.004057386,
+        "min_seconds": 0.003927474,
+        "max_seconds": 0.004273895,
+        "audio_seconds": 1,
+        "median_realtime_percent": 0.40573859999999995
+      },
+      "runs": [
+        {
+          "pcm_hash": "8685c7643370e4d5",
+          "peak": 1.6145824194,
+          "rms": 0.307989195731
+        },
+        {
+          "pcm_hash": "8685c7643370e4d5",
+          "peak": 1.6145824194,
+          "rms": 0.307989195731
+        },
+        {
+          "pcm_hash": "8685c7643370e4d5",
+          "peak": 1.6145824194,
+          "rms": 0.307989195731
+        },
+        {
+          "pcm_hash": "8685c7643370e4d5",
+          "peak": 1.6145824194,
+          "rms": 0.307989195731
+        },
+        {
+          "pcm_hash": "8685c7643370e4d5",
+          "peak": 1.6145824194,
+          "rms": 0.307989195731
+        },
+        {
+          "pcm_hash": "8685c7643370e4d5",
+          "peak": 1.6145824194,
+          "rms": 0.307989195731
+        },
+        {
+          "pcm_hash": "8685c7643370e4d5",
+          "peak": 1.6145824194,
+          "rms": 0.307989195731
+        }
+      ]
+    },
+    {
+      "name": "eq11",
+      "requested_notes": 8,
+      "deterministic": true,
+      "held": {
+        "wall_seconds": [
+          0.040939993,
+          0.043362897,
+          0.042549727,
+          0.042804837,
+          0.040986133,
+          0.04182469,
+          0.0442102
+        ],
+        "median_seconds": 0.042549727,
+        "min_seconds": 0.040939993,
+        "max_seconds": 0.0442102,
+        "audio_seconds": 3,
+        "median_realtime_percent": 1.4183242333333335
+      },
+      "tail": {
+        "wall_seconds": [
+          0.005687442,
+          0.005569968,
+          0.005393888,
+          0.005471392,
+          0.005280491,
+          0.005302293,
+          0.005457112
+        ],
+        "median_seconds": 0.005457112,
+        "min_seconds": 0.005280491,
+        "max_seconds": 0.005687442,
+        "audio_seconds": 1,
+        "median_realtime_percent": 0.5457112
+      },
+      "runs": [
+        {
+          "pcm_hash": "52e92fba92dc778d",
+          "peak": 1.29593324661,
+          "rms": 0.26707996269
+        },
+        {
+          "pcm_hash": "52e92fba92dc778d",
+          "peak": 1.29593324661,
+          "rms": 0.26707996269
+        },
+        {
+          "pcm_hash": "52e92fba92dc778d",
+          "peak": 1.29593324661,
+          "rms": 0.26707996269
+        },
+        {
+          "pcm_hash": "52e92fba92dc778d",
+          "peak": 1.29593324661,
+          "rms": 0.26707996269
+        },
+        {
+          "pcm_hash": "52e92fba92dc778d",
+          "peak": 1.29593324661,
+          "rms": 0.26707996269
+        },
+        {
+          "pcm_hash": "52e92fba92dc778d",
+          "peak": 1.29593324661,
+          "rms": 0.26707996269
+        },
+        {
+          "pcm_hash": "52e92fba92dc778d",
+          "peak": 1.29593324661,
+          "rms": 0.26707996269
+        }
+      ]
+    }
+  ],
+  "ok": true
+}

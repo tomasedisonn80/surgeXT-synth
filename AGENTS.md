@@ -1,3 +1,49 @@
+# Current continuation: CPU efficiency
+
+The CPU-efficiency pass uses 60 actual systems-engineering and VST-specialist
+agents in ten waves of six. All assignments and their completion evidence are
+recorded in `doc/performance/AGENT_LEDGER.md`; all sixty assignments and the
+closing publication audit are complete. Count actual completed assignments, not
+planned agents, follow-up turns or benchmark processes.
+
+The final measured implementation is published on `main` as
+`489f0cf7bca2d3e129199b8779c7262a414d81f5`, preserving native-gallery parent
+`1b0af2109679256d5624e4464ca97e4310be71b1`. The original engine baseline is
+`0dcc076937974605095a9567dacd3f28a0b04fd8`. Read
+`doc/performance/RESULTS.md`, `doc/performance/README.md`, and
+`doc/performance/WORK_LOG.md` before continuing. The final eight-pair CPU/wall
+experiment is complete: effect fixtures show directional gains, overall results
+are mixed, and the eight-note init fixture has an adverse measured outcome.
+No broad CPU reduction or universal minimum has been established. Exact-commit
+CI status is timestamped separately; pending builds are not passes.
+
+- Use the guide's reproducible plugin/headless build, paired-benchmark and
+  complete-PCM comparison commands. Compare identical harnesses, pinned
+  dependencies, compiler options, Lua backends and fixtures against the original
+  baseline engine; retain source, executable and evidence hashes.
+- Preserve exact coefficient-input comparisons and invalidation for effect
+  initialization/reset, sample-rate changes, coefficient-table generations and
+  floating-point control changes. Keep live post-modulation inputs, existing
+  update cadence, coefficient smoothing, audio history and release processing.
+- Preserve sound quality, oversampling, voice limits, tails, controller timing,
+  portable CPU requirements and factory content. Do not introduce fast-math or
+  silently change these behaviors to obtain a lower CPU number. Release and LTO
+  were already enabled by the repository defaults.
+- Report all measured scenarios, including regressions and inconclusive changes.
+  Separate offline wall/thread-CPU results, complete PCM equivalence, native
+  callback tests and actual host/platform validation. Never turn pending, failed
+  or unexecuted checks into passes, or weaken a test to obtain a green result.
+- Keep immutable build/validation evidence unchanged. A later publication or
+  status update belongs in a separate binding or checkpoint record. Historical
+  pending language describes capture time; `RESULTS.md` carries final scope.
+- Publish by ordinary fast-forward updates to `main`; fetch and reconcile
+  concurrent work, including verified native-gallery commits, without
+  overwriting it. Future performance work should resolve concrete fixture/host
+  risks with controlled evidence, not repeatedly measure until a result improves.
+
+The following sections preserve the requirements of the earlier factory-bank
+and reference-workspace work. They remain applicable to those features.
+
 # Current continuation: Scoring 1000
 
 The current user goal adds a researched, original 1,000-preset factory bank in ten

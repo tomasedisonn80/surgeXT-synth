@@ -1,0 +1,965 @@
+{
+  "schema": 1,
+  "tool": "surge-cpu-ci-checkpoint",
+  "agent": "w09_a51_native_ci_results",
+  "implementation_commit": "ae551fa2a4bd95efe21633f1c41a9326c8ef5df0",
+  "observed_start_utc": "2026-11-15 11:54:19 UTC",
+  "observed_end_utc": "2026-11-15 11:54:53 UTC",
+  "repository": "tomasedisonn80/surgeXT-synth",
+  "workflows": [
+    {
+      "id": 43710220156,
+      "name": "CPU optimization correctness",
+      "head_sha": "ae551fa2a4bd95efe21633f1c41a9326c8ef5df0",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43710220156",
+      "jobs": [
+        {
+          "id": 132799944157,
+          "name": "Headless Release/LTO correctness gates",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43710220156/job/132799944157",
+          "steps": [
+            {
+              "number": 1,
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 2,
+              "name": "Check out exact source and dependencies",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 3,
+              "name": "Install headless build dependencies",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 4,
+              "name": "Record source and validation scope",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 5,
+              "name": "Check performance report validation tools",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 6,
+              "name": "Configure portable headless Release with LTO",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 7,
+              "name": "Build native correctness tools",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 8,
+              "name": "Run mask differential and deterministic native smoke gates",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 9,
+              "name": "Retain native reports and diagnostics",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 18,
+              "name": "Post Check out exact source and dependencies",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 19,
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 43710220189,
+      "name": "Native reference workspaces",
+      "head_sha": "ae551fa2a4bd95efe21633f1c41a9326c8ef5df0",
+      "status": "in_progress",
+      "conclusion": null,
+      "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43710220189",
+      "jobs": [
+        {
+          "id": 132799943789,
+          "name": "Linux native UI and parameter tests",
+          "status": "in_progress",
+          "conclusion": null,
+          "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43710220189/job/132799943789",
+          "steps": [
+            {
+              "number": 1,
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 2,
+              "name": "Check out the exact commit and dependencies",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 3,
+              "name": "Prepare native build dependencies",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 4,
+              "name": "Restore native compiler cache",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 5,
+              "name": "Record build and capture provenance",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 6,
+              "name": "Validate reference workspace packages",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 7,
+              "name": "Configure native test build",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 8,
+              "name": "Build the real synthesizer test executable",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 9,
+              "name": "Test live native controls and processor behavior",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 10,
+              "name": "Test embedded factory content in the CLAP host preset browser",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 11,
+              "name": "Capture all ten native workspaces and edited states",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 12,
+              "name": "Stress the independent audio display tap",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 13,
+              "name": "Compare retained references with actual native captures",
+              "status": "in_progress",
+              "conclusion": null
+            },
+            {
+              "number": 14,
+              "name": "Upload reference comparison sheets",
+              "status": "pending",
+              "conclusion": null
+            },
+            {
+              "number": 15,
+              "name": "Upload native screenshots and diagnostic evidence",
+              "status": "pending",
+              "conclusion": null
+            },
+            {
+              "number": 16,
+              "name": "Preserve compiled dependencies for the next verification pass",
+              "status": "pending",
+              "conclusion": null
+            },
+            {
+              "number": 32,
+              "name": "Post Check out the exact commit and dependencies",
+              "status": "pending",
+              "conclusion": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 43710220069,
+      "name": "Scoring 1000 native bank",
+      "head_sha": "ae551fa2a4bd95efe21633f1c41a9326c8ef5df0",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43710220069",
+      "jobs": [
+        {
+          "id": 132799943748,
+          "name": "Native DSP, definitions and staged factory discovery",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43710220069/job/132799943748",
+          "steps": [
+            {
+              "number": 1,
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 2,
+              "name": "Check out source and exact submodule revisions",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 3,
+              "name": "Install headless build and measurement dependencies",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 4,
+              "name": "Record source and measurement provenance",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 5,
+              "name": "Validate every source definition and exact regeneration",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 6,
+              "name": "Configure actual native DSP renderer",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 7,
+              "name": "Build native renderer and verified factory stage",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 8,
+              "name": "Verify compiled factory payload and automatic cache recovery",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 9,
+              "name": "Verify all installed paths and native factory discovery",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 10,
+              "name": "Measure native audio and all eight macro responses",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 11,
+              "name": "Verify native semantic save and reload",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 12,
+              "name": "Exercise complete slow cycles and sustained polyphony",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 13,
+              "name": "Upload measured evidence, including failures",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 26,
+              "name": "Post Check out source and exact submodule revisions",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 27,
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 43710220111,
+      "name": "Build release or nightly installer",
+      "head_sha": "ae551fa2a4bd95efe21633f1c41a9326c8ef5df0",
+      "status": "in_progress",
+      "conclusion": null,
+      "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43710220111",
+      "jobs": [
+        {
+          "id": 132799943689,
+          "name": "Set up Surge XT version",
+          "status": "completed",
+          "conclusion": "success",
+          "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43710220111/job/132799943689",
+          "steps": [
+            {
+              "number": 1,
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 2,
+              "name": "Checkout code",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 3,
+              "name": "Calculate version",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 6,
+              "name": "Post Checkout code",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 7,
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success"
+            }
+          ]
+        },
+        {
+          "id": 132800032184,
+          "name": "Ubuntu 20 Docker",
+          "status": "in_progress",
+          "conclusion": null,
+          "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43710220111/job/132800032184",
+          "steps": [
+            {
+              "number": 1,
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 2,
+              "name": "Checkout code",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 3,
+              "name": "Build in Docker",
+              "status": "in_progress",
+              "conclusion": null
+            },
+            {
+              "number": 4,
+              "name": "Show installer directory",
+              "status": "pending",
+              "conclusion": null
+            },
+            {
+              "number": 5,
+              "name": "Upload artifact",
+              "status": "pending",
+              "conclusion": null
+            },
+            {
+              "number": 9,
+              "name": "Post Build in Docker",
+              "status": "pending",
+              "conclusion": null
+            },
+            {
+              "number": 10,
+              "name": "Post Checkout code",
+              "status": "pending",
+              "conclusion": null
+            }
+          ]
+        },
+        {
+          "id": 132800032186,
+          "name": "Release - macOS",
+          "status": "in_progress",
+          "conclusion": null,
+          "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43710220111/job/132800032186",
+          "steps": [
+            {
+              "number": 1,
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 2,
+              "name": "Checkout code",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 3,
+              "name": "Revert JUCE",
+              "status": "completed",
+              "conclusion": "skipped"
+            },
+            {
+              "number": 4,
+              "name": "Resolve macOS signing mode",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 5,
+              "name": "Run apple-actions/import-codesign-certs@v3",
+              "status": "completed",
+              "conclusion": "skipped"
+            },
+            {
+              "number": 6,
+              "name": "Run surge-synthesizer/sst-githubactions/install-innosetup@main",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 7,
+              "name": "Prepare for JUCE",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 8,
+              "name": "Build release version",
+              "status": "in_progress",
+              "conclusion": null
+            },
+            {
+              "number": 9,
+              "name": "Label unsigned macOS development artifacts",
+              "status": "pending",
+              "conclusion": null
+            },
+            {
+              "number": 10,
+              "name": "Show installer directory",
+              "status": "pending",
+              "conclusion": null
+            },
+            {
+              "number": 11,
+              "name": "Upload artifact",
+              "status": "pending",
+              "conclusion": null
+            },
+            {
+              "number": 22,
+              "name": "Post Checkout code",
+              "status": "pending",
+              "conclusion": null
+            }
+          ]
+        },
+        {
+          "id": 132800032201,
+          "name": "Release - ubuntu-arm",
+          "status": "in_progress",
+          "conclusion": null,
+          "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43710220111/job/132800032201",
+          "steps": [
+            {
+              "number": 1,
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 2,
+              "name": "Checkout code",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 3,
+              "name": "Revert JUCE",
+              "status": "completed",
+              "conclusion": "skipped"
+            },
+            {
+              "number": 4,
+              "name": "Resolve macOS signing mode",
+              "status": "completed",
+              "conclusion": "skipped"
+            },
+            {
+              "number": 5,
+              "name": "Run apple-actions/import-codesign-certs@v3",
+              "status": "completed",
+              "conclusion": "skipped"
+            },
+            {
+              "number": 6,
+              "name": "Run surge-synthesizer/sst-githubactions/install-innosetup@main",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 7,
+              "name": "Prepare for JUCE",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 8,
+              "name": "Build release version",
+              "status": "in_progress",
+              "conclusion": null
+            },
+            {
+              "number": 9,
+              "name": "Label unsigned macOS development artifacts",
+              "status": "pending",
+              "conclusion": null
+            },
+            {
+              "number": 10,
+              "name": "Show installer directory",
+              "status": "pending",
+              "conclusion": null
+            },
+            {
+              "number": 11,
+              "name": "Upload artifact",
+              "status": "pending",
+              "conclusion": null
+            },
+            {
+              "number": 22,
+              "name": "Post Checkout code",
+              "status": "pending",
+              "conclusion": null
+            }
+          ]
+        },
+        {
+          "id": 132800032207,
+          "name": "Release - Windows ARM64",
+          "status": "in_progress",
+          "conclusion": null,
+          "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43710220111/job/132800032207",
+          "steps": [
+            {
+              "number": 1,
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 2,
+              "name": "Checkout code",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 3,
+              "name": "Revert JUCE",
+              "status": "completed",
+              "conclusion": "skipped"
+            },
+            {
+              "number": 4,
+              "name": "Resolve macOS signing mode",
+              "status": "completed",
+              "conclusion": "skipped"
+            },
+            {
+              "number": 5,
+              "name": "Run apple-actions/import-codesign-certs@v3",
+              "status": "completed",
+              "conclusion": "skipped"
+            },
+            {
+              "number": 6,
+              "name": "Run surge-synthesizer/sst-githubactions/install-innosetup@main",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 7,
+              "name": "Prepare for JUCE",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 8,
+              "name": "Build release version",
+              "status": "in_progress",
+              "conclusion": null
+            },
+            {
+              "number": 9,
+              "name": "Label unsigned macOS development artifacts",
+              "status": "pending",
+              "conclusion": null
+            },
+            {
+              "number": 10,
+              "name": "Show installer directory",
+              "status": "pending",
+              "conclusion": null
+            },
+            {
+              "number": 11,
+              "name": "Upload artifact",
+              "status": "pending",
+              "conclusion": null
+            },
+            {
+              "number": 22,
+              "name": "Post Checkout code",
+              "status": "pending",
+              "conclusion": null
+            }
+          ]
+        },
+        {
+          "id": 132800032211,
+          "name": "Release - Windows ARM64EC",
+          "status": "in_progress",
+          "conclusion": null,
+          "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43710220111/job/132800032211",
+          "steps": [
+            {
+              "number": 1,
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 2,
+              "name": "Checkout code",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 3,
+              "name": "Revert JUCE",
+              "status": "completed",
+              "conclusion": "skipped"
+            },
+            {
+              "number": 4,
+              "name": "Resolve macOS signing mode",
+              "status": "completed",
+              "conclusion": "skipped"
+            },
+            {
+              "number": 5,
+              "name": "Run apple-actions/import-codesign-certs@v3",
+              "status": "completed",
+              "conclusion": "skipped"
+            },
+            {
+              "number": 6,
+              "name": "Run surge-synthesizer/sst-githubactions/install-innosetup@main",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 7,
+              "name": "Prepare for JUCE",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 8,
+              "name": "Build release version",
+              "status": "in_progress",
+              "conclusion": null
+            },
+            {
+              "number": 9,
+              "name": "Label unsigned macOS development artifacts",
+              "status": "pending",
+              "conclusion": null
+            },
+            {
+              "number": 10,
+              "name": "Show installer directory",
+              "status": "pending",
+              "conclusion": null
+            },
+            {
+              "number": 11,
+              "name": "Upload artifact",
+              "status": "pending",
+              "conclusion": null
+            },
+            {
+              "number": 22,
+              "name": "Post Checkout code",
+              "status": "pending",
+              "conclusion": null
+            }
+          ]
+        },
+        {
+          "id": 132800032214,
+          "name": "Release - Windows MSVC JUCE 7",
+          "status": "in_progress",
+          "conclusion": null,
+          "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43710220111/job/132800032214",
+          "steps": [
+            {
+              "number": 1,
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 2,
+              "name": "Checkout code",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 3,
+              "name": "Revert JUCE",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 4,
+              "name": "Resolve macOS signing mode",
+              "status": "completed",
+              "conclusion": "skipped"
+            },
+            {
+              "number": 5,
+              "name": "Run apple-actions/import-codesign-certs@v3",
+              "status": "completed",
+              "conclusion": "skipped"
+            },
+            {
+              "number": 6,
+              "name": "Run surge-synthesizer/sst-githubactions/install-innosetup@main",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 7,
+              "name": "Prepare for JUCE",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 8,
+              "name": "Build release version",
+              "status": "in_progress",
+              "conclusion": null
+            },
+            {
+              "number": 9,
+              "name": "Label unsigned macOS development artifacts",
+              "status": "pending",
+              "conclusion": null
+            },
+            {
+              "number": 10,
+              "name": "Show installer directory",
+              "status": "pending",
+              "conclusion": null
+            },
+            {
+              "number": 11,
+              "name": "Upload artifact",
+              "status": "pending",
+              "conclusion": null
+            },
+            {
+              "number": 22,
+              "name": "Post Checkout code",
+              "status": "pending",
+              "conclusion": null
+            }
+          ]
+        },
+        {
+          "id": 132800032228,
+          "name": "Release - Windows 64-bit",
+          "status": "in_progress",
+          "conclusion": null,
+          "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43710220111/job/132800032228",
+          "steps": [
+            {
+              "number": 1,
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 2,
+              "name": "Checkout code",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 3,
+              "name": "Revert JUCE",
+              "status": "completed",
+              "conclusion": "skipped"
+            },
+            {
+              "number": 4,
+              "name": "Resolve macOS signing mode",
+              "status": "completed",
+              "conclusion": "skipped"
+            },
+            {
+              "number": 5,
+              "name": "Run apple-actions/import-codesign-certs@v3",
+              "status": "completed",
+              "conclusion": "skipped"
+            },
+            {
+              "number": 6,
+              "name": "Run surge-synthesizer/sst-githubactions/install-innosetup@main",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 7,
+              "name": "Prepare for JUCE",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "number": 8,
+              "name": "Build release version",
+              "status": "in_progress",
+              "conclusion": null
+            },
+            {
+              "number": 9,
+              "name": "Label unsigned macOS development artifacts",
+              "status": "pending",
+              "conclusion": null
+            },
+            {
+              "number": 10,
+              "name": "Show installer directory",
+              "status": "pending",
+              "conclusion": null
+            },
+            {
+              "number": 11,
+              "name": "Upload artifact",
+              "status": "pending",
+              "conclusion": null
+            },
+            {
+              "number": 22,
+              "name": "Post Checkout code",
+              "status": "pending",
+              "conclusion": null
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "native_callback_scope": {
+    "source": "src/surge-xt/xt-tests/XTTestCpuProcessing.cpp",
+    "selected_test_cases": 5,
+    "tags": [
+      "cpu-processing",
+      "reference-workspaces"
+    ],
+    "workflow_filter": "[reference-workspaces]~[reference-render]",
+    "build_step": "success",
+    "processor_behavior_step": "success",
+    "evidence_basis": "The five cases are registered in the compiled test target and selected by the successful native processor test step. Individual case assertion counts were not retrieved.",
+    "whole_workflow": "in_progress"
+  },
+  "completed_log_excerpts": {
+    "cpu": [
+      "2026-11-15T11:43:49.0289267Z Ran 63 tests in 3.380s",
+      "2026-11-15T11:49:04.4125543Z 1/2 Test #1: cpu-modulation-mask ..............   Passed    0.04 sec",
+      "2026-11-15T11:49:11.3495165Z 2/2 Test #2: cpu-smoke ........................   Passed    6.90 sec",
+      "2026-11-15T11:49:11.3498118Z 100% tests passed, 0 tests failed out of 2"
+    ],
+    "scoring": [
+      "2026-11-15T11:47:53.7309435Z PASS CMakeRC retrieval and source fixture identity",
+      "2026-11-15T11:47:53.7309843Z PASS complete installed content reuse without cache writes",
+      "2026-11-15T11:47:53.7310203Z PASS no-install fallback reproduces every preset and reference skin byte",
+      "2026-11-15T11:47:53.7310573Z PASS partial installed content is supplemented without overwriting installation files",
+      "2026-11-15T11:47:53.7310893Z PASS stable reuse and missing/damaged cache repair",
+      "2026-11-15T11:47:53.7311147Z PASS cache file symlink rejected without touching user data",
+      "2026-11-15T11:47:53.7311478Z PASS truncation, trailing data, version, path traversal, length and identifier rejection",
+      "2026-11-15T11:47:53.7311818Z PASS four concurrent initializations share complete content",
+      "2026-11-15T11:47:53.7312160Z PASS native factory discovery deduplicates the bank and preserves unrelated presets",
+      "2026-11-15T11:47:53.7312679Z PASS explicit missing data root retains installer-audit semantics",
+      "2026-11-15T11:47:53.7313028Z PASS case-variant stale bank suppression preserves legacy factory and user presets",
+      "2026-11-15T11:47:53.7313350Z All embedded factory content regression checks passed.",
+      "2026-11-15T11:47:53.8267942Z PASS ordinary implicit startup discovers 1000 factory presets and ten reference skins",
+      "2026-11-15T11:48:06.7924527Z 1/10 SC02-033 pass warnings=0 rendered",
+      "2026-11-15T11:48:45.3378749Z 10/10 SC10-048 pass warnings=0 rendered",
+      "2026-11-15T11:48:45.3484734Z   \"passed\": 10,",
+      "2026-11-15T11:48:45.3485490Z   \"failed\": 0,",
+      "2026-11-15T11:48:57.2707320Z   \"semantic_passes\": 10,",
+      "2026-11-15T11:48:59.9371364Z 1/10 SC02-033 pass warnings=0 peak=0.719896 rendered",
+      "2026-11-15T11:49:14.5913455Z 10/10 SC10-048 pass warnings=0 peak=0.128448 rendered",
+      "2026-11-15T11:49:14.5920402Z   \"passed\": 10,",
+      "2026-11-15T11:49:14.5920588Z   \"failed\": 0,"
+    ]
+  },
+  "limitations": [
+    "This checkpoint validates the published implementation commit, not later uncommitted thread-clock tooling.",
+    "CPU workflow ran the 63 Python tests present in this commit; later local tooling has additional tests.",
+    "Native processor tests, CLAP discovery, captures and audio-tap stress passed, but native workflow completion/gallery publication remained pending.",
+    "All seven distribution builds were still running; no platform build success is inferred from configuration or compilation starting.",
+    "No failed job or failed step was observed in these snapshots. Failed CMake feature probes in successful logs are not failed test gates.",
+    "Passing native processor tests is not a commercial-DAW compatibility or real-time deadline guarantee."
+  ]
+}

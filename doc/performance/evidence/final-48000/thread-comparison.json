@@ -1,0 +1,771 @@
+{
+  "schema": 1,
+  "tool": "surge-cpu-thread-comparison",
+  "ok": true,
+  "clock": "CLOCK_THREAD_CPUTIME_ID",
+  "rounds": 8,
+  "metadata": {
+    "sample_rate": 48000,
+    "frames": 1680000,
+    "block_size": 32,
+    "channels": 2,
+    "seed": 1701
+  },
+  "audio_fingerprints_bound": true,
+  "reduction": "100 * (1 - median(candidate) / median(baseline))",
+  "scope": "CPU charged to the rendering thread over matching held/released windows; includes engine work, preallocated PCM copies, transport advancement and clock-read overhead. Excludes time descheduled and other threads. Not hardware cycles, a DAW meter, or a real-time deadline guarantee.",
+  "scenarios": [
+    {
+      "name": "active-formula",
+      "held": {
+        "audio_seconds": 30,
+        "baseline_thread_cpu_seconds": [
+          7.736178118,
+          8.674147642,
+          8.168393156,
+          8.31432847,
+          8.971251528,
+          8.323130432,
+          8.501262538,
+          8.14612534
+        ],
+        "candidate_thread_cpu_seconds": [
+          8.171969745,
+          8.135288745,
+          8.349196247,
+          8.838448807,
+          7.878775531,
+          8.587280072,
+          8.253500939,
+          8.15379283
+        ],
+        "baseline_median_seconds": 8.318729451,
+        "candidate_median_seconds": 8.212735342,
+        "baseline_range_seconds": [
+          7.736178118,
+          8.971251528
+        ],
+        "candidate_range_seconds": [
+          7.878775531,
+          8.838448807
+        ],
+        "baseline_thread_realtime_percent": 27.729098169999997,
+        "candidate_thread_realtime_percent": 27.375784473333333,
+        "median_reduction_percent": 1.2741622338403813
+      },
+      "tail": {
+        "audio_seconds": 5,
+        "baseline_thread_cpu_seconds": [
+          0.022038226,
+          0.025449893,
+          0.02243821,
+          0.022733709,
+          0.022863822,
+          0.023079352,
+          0.022381155,
+          0.032350803
+        ],
+        "candidate_thread_cpu_seconds": [
+          0.026768351,
+          0.024247618,
+          0.032802375,
+          0.022973535,
+          0.023092961,
+          0.023929725,
+          0.021694374,
+          0.02222331
+        ],
+        "baseline_median_seconds": 0.0227987655,
+        "candidate_median_seconds": 0.023511342999999997,
+        "baseline_range_seconds": [
+          0.022038226,
+          0.032350803
+        ],
+        "candidate_range_seconds": [
+          0.021694374,
+          0.032802375
+        ],
+        "baseline_thread_realtime_percent": 0.45597531,
+        "candidate_thread_realtime_percent": 0.4702268599999999,
+        "median_reduction_percent": -3.1255091421507064
+      }
+    },
+    {
+      "name": "conditioner",
+      "held": {
+        "audio_seconds": 30,
+        "baseline_thread_cpu_seconds": [
+          0.388304269,
+          0.453193587,
+          0.413680012,
+          0.432274186,
+          0.426322563,
+          0.418898384,
+          0.418859978,
+          0.402329656
+        ],
+        "candidate_thread_cpu_seconds": [
+          0.382265963,
+          0.413806662,
+          0.385179345,
+          0.415704637,
+          0.406725384,
+          0.392762334,
+          0.421224035,
+          0.424759959
+        ],
+        "baseline_median_seconds": 0.418879181,
+        "candidate_median_seconds": 0.41026602300000004,
+        "baseline_range_seconds": [
+          0.388304269,
+          0.453193587
+        ],
+        "candidate_range_seconds": [
+          0.382265963,
+          0.424759959
+        ],
+        "baseline_thread_realtime_percent": 1.3962639366666667,
+        "candidate_thread_realtime_percent": 1.36755341,
+        "median_reduction_percent": 2.0562392190124013
+      },
+      "tail": {
+        "audio_seconds": 5,
+        "baseline_thread_cpu_seconds": [
+          0.013665248,
+          0.014742058,
+          0.013610687,
+          0.013562546,
+          0.014699725,
+          0.015222051,
+          0.014837449,
+          0.013742203
+        ],
+        "candidate_thread_cpu_seconds": [
+          0.013712087,
+          0.014521819,
+          0.014217248,
+          0.013460765,
+          0.013869502,
+          0.013584949,
+          0.014289576,
+          0.015597288
+        ],
+        "baseline_median_seconds": 0.014220964,
+        "candidate_median_seconds": 0.014043375,
+        "baseline_range_seconds": [
+          0.013562546,
+          0.015222051
+        ],
+        "candidate_range_seconds": [
+          0.013460765,
+          0.015597288
+        ],
+        "baseline_thread_realtime_percent": 0.28441927999999994,
+        "candidate_thread_realtime_percent": 0.2808675,
+        "median_reduction_percent": 1.248783134532927
+      }
+    },
+    {
+      "name": "eq11",
+      "held": {
+        "audio_seconds": 30,
+        "baseline_thread_cpu_seconds": [
+          0.45799808,
+          0.463475397,
+          0.435261731,
+          0.451420757,
+          0.497323155,
+          0.423191,
+          0.441078777,
+          0.437950784
+        ],
+        "candidate_thread_cpu_seconds": [
+          0.416278925,
+          0.432576705,
+          0.410509817,
+          0.414420212,
+          0.410011747,
+          0.477577316,
+          0.455207272,
+          0.437393213
+        ],
+        "baseline_median_seconds": 0.44624976699999996,
+        "candidate_median_seconds": 0.42442781500000004,
+        "baseline_range_seconds": [
+          0.423191,
+          0.497323155
+        ],
+        "candidate_range_seconds": [
+          0.410011747,
+          0.477577316
+        ],
+        "baseline_thread_realtime_percent": 1.4874992233333333,
+        "candidate_thread_realtime_percent": 1.4147593833333334,
+        "median_reduction_percent": 4.890075830560581
+      },
+      "tail": {
+        "audio_seconds": 5,
+        "baseline_thread_cpu_seconds": [
+          0.033437418,
+          0.030848631,
+          0.02274763,
+          0.022914867,
+          0.030105673,
+          0.023951257,
+          0.02389322,
+          0.025102407
+        ],
+        "candidate_thread_cpu_seconds": [
+          0.022123081,
+          0.024281377,
+          0.026063014,
+          0.02316983,
+          0.022226755,
+          0.02228407,
+          0.027633066,
+          0.022157963
+        ],
+        "baseline_median_seconds": 0.024526832,
+        "candidate_median_seconds": 0.02272695,
+        "baseline_range_seconds": [
+          0.02274763,
+          0.033437418
+        ],
+        "candidate_range_seconds": [
+          0.022123081,
+          0.027633066
+        ],
+        "baseline_thread_realtime_percent": 0.49053664,
+        "candidate_thread_realtime_percent": 0.454539,
+        "median_reduction_percent": 7.338420224837838
+      }
+    },
+    {
+      "name": "eq3",
+      "held": {
+        "audio_seconds": 30,
+        "baseline_thread_cpu_seconds": [
+          0.378623907,
+          0.396589826,
+          0.444133459,
+          0.387766985,
+          0.421311912,
+          0.403901433,
+          0.405315118,
+          0.419260849
+        ],
+        "candidate_thread_cpu_seconds": [
+          0.372327079,
+          0.410699102,
+          0.406877369,
+          0.382721547,
+          0.377917645,
+          0.38699827,
+          0.441307378,
+          0.394299855
+        ],
+        "baseline_median_seconds": 0.4046082755,
+        "candidate_median_seconds": 0.3906490625,
+        "baseline_range_seconds": [
+          0.378623907,
+          0.444133459
+        ],
+        "candidate_range_seconds": [
+          0.372327079,
+          0.441307378
+        ],
+        "baseline_thread_realtime_percent": 1.3486942516666667,
+        "candidate_thread_realtime_percent": 1.3021635416666666,
+        "median_reduction_percent": 3.4500562260496914
+      },
+      "tail": {
+        "audio_seconds": 5,
+        "baseline_thread_cpu_seconds": [
+          0.016107295,
+          0.01727076,
+          0.022221849,
+          0.017558361,
+          0.016881836,
+          0.017514315,
+          0.016518086,
+          0.018226513
+        ],
+        "candidate_thread_cpu_seconds": [
+          0.015684798,
+          0.019249814,
+          0.016006326,
+          0.016362515,
+          0.015682155,
+          0.016245781,
+          0.015897995,
+          0.015657147
+        ],
+        "baseline_median_seconds": 0.0173925375,
+        "candidate_median_seconds": 0.0159521605,
+        "baseline_range_seconds": [
+          0.016107295,
+          0.022221849
+        ],
+        "candidate_range_seconds": [
+          0.015657147,
+          0.019249814
+        ],
+        "baseline_thread_realtime_percent": 0.34785075,
+        "candidate_thread_realtime_percent": 0.31904320999999997,
+        "median_reduction_percent": 8.281580534180243
+      }
+    },
+    {
+      "name": "idle",
+      "held": {
+        "audio_seconds": 30,
+        "baseline_thread_cpu_seconds": [
+          0.073114793,
+          0.073748876,
+          0.075726893,
+          0.081697141,
+          0.073682446,
+          0.073769466,
+          0.080968128,
+          0.070527861
+        ],
+        "candidate_thread_cpu_seconds": [
+          0.105127765,
+          0.072489765,
+          0.074906976,
+          0.075241648,
+          0.075460687,
+          0.077658523,
+          0.076137313,
+          0.075169875
+        ],
+        "baseline_median_seconds": 0.07375917100000001,
+        "candidate_median_seconds": 0.0753511675,
+        "baseline_range_seconds": [
+          0.070527861,
+          0.081697141
+        ],
+        "candidate_range_seconds": [
+          0.072489765,
+          0.105127765
+        ],
+        "baseline_thread_realtime_percent": 0.24586390333333338,
+        "candidate_thread_realtime_percent": 0.2511705583333333,
+        "median_reduction_percent": -2.1583709231222103
+      },
+      "tail": {
+        "audio_seconds": 5,
+        "baseline_thread_cpu_seconds": [
+          0.01238767,
+          0.012457715,
+          0.011912605,
+          0.01361242,
+          0.012141746,
+          0.012141284,
+          0.014559236,
+          0.012086543
+        ],
+        "candidate_thread_cpu_seconds": [
+          0.017517981,
+          0.011554624,
+          0.012264458,
+          0.012584733,
+          0.012005864,
+          0.012288804,
+          0.012250026,
+          0.012277167
+        ],
+        "baseline_median_seconds": 0.012264708,
+        "candidate_median_seconds": 0.0122708125,
+        "baseline_range_seconds": [
+          0.011912605,
+          0.014559236
+        ],
+        "candidate_range_seconds": [
+          0.011554624,
+          0.017517981
+        ],
+        "baseline_thread_realtime_percent": 0.24529415999999998,
+        "candidate_thread_realtime_percent": 0.24541625000000003,
+        "median_reduction_percent": -0.049772893084787384
+      }
+    },
+    {
+      "name": "init-1",
+      "held": {
+        "audio_seconds": 30,
+        "baseline_thread_cpu_seconds": [
+          0.1537292,
+          0.168106223,
+          0.157101016,
+          0.172252817,
+          0.156123044,
+          0.157320722,
+          0.188550393,
+          0.151562197
+        ],
+        "candidate_thread_cpu_seconds": [
+          0.15683458,
+          0.154999955,
+          0.161478819,
+          0.165794699,
+          0.163766276,
+          0.167386482,
+          0.162438785,
+          0.152912263
+        ],
+        "baseline_median_seconds": 0.157210869,
+        "candidate_median_seconds": 0.161958802,
+        "baseline_range_seconds": [
+          0.151562197,
+          0.188550393
+        ],
+        "candidate_range_seconds": [
+          0.152912263,
+          0.167386482
+        ],
+        "baseline_thread_realtime_percent": 0.52403623,
+        "candidate_thread_realtime_percent": 0.5398626733333334,
+        "median_reduction_percent": -3.0201047994970365
+      },
+      "tail": {
+        "audio_seconds": 5,
+        "baseline_thread_cpu_seconds": [
+          0.013964362,
+          0.012719594,
+          0.013361076,
+          0.012219861,
+          0.012655889,
+          0.012527018,
+          0.01365338,
+          0.012282665
+        ],
+        "candidate_thread_cpu_seconds": [
+          0.012933851,
+          0.012391727,
+          0.01271706,
+          0.01322235,
+          0.016123089,
+          0.012482481,
+          0.013199236,
+          0.01192254
+        ],
+        "baseline_median_seconds": 0.0126877415,
+        "candidate_median_seconds": 0.0128254555,
+        "baseline_range_seconds": [
+          0.012219861,
+          0.013964362
+        ],
+        "candidate_range_seconds": [
+          0.01192254,
+          0.016123089
+        ],
+        "baseline_thread_realtime_percent": 0.25375483,
+        "candidate_thread_realtime_percent": 0.25650911,
+        "median_reduction_percent": -1.0854098816562407
+      }
+    },
+    {
+      "name": "init-16",
+      "held": {
+        "audio_seconds": 30,
+        "baseline_thread_cpu_seconds": [
+          0.627301212,
+          0.64592987,
+          0.664664191,
+          0.635781294,
+          0.688778953,
+          0.746793708,
+          0.655678662,
+          0.710854842
+        ],
+        "candidate_thread_cpu_seconds": [
+          0.656592902,
+          0.620101187,
+          0.672885398,
+          0.669183846,
+          0.62405975,
+          0.643071937,
+          0.653516754,
+          0.6638097
+        ],
+        "baseline_median_seconds": 0.6601714265,
+        "candidate_median_seconds": 0.6550548279999999,
+        "baseline_range_seconds": [
+          0.627301212,
+          0.746793708
+        ],
+        "candidate_range_seconds": [
+          0.620101187,
+          0.672885398
+        ],
+        "baseline_thread_realtime_percent": 2.200571421666667,
+        "candidate_thread_realtime_percent": 2.183516093333333,
+        "median_reduction_percent": 0.7750408900801031
+      },
+      "tail": {
+        "audio_seconds": 5,
+        "baseline_thread_cpu_seconds": [
+          0.014629571,
+          0.01667497,
+          0.015527955,
+          0.013645829,
+          0.018523895,
+          0.017851081,
+          0.014433379,
+          0.013829382
+        ],
+        "candidate_thread_cpu_seconds": [
+          0.017170565,
+          0.013233797,
+          0.014300481,
+          0.013337552,
+          0.013476207,
+          0.014442663,
+          0.014799664,
+          0.013491891
+        ],
+        "baseline_median_seconds": 0.015078762999999999,
+        "candidate_median_seconds": 0.013896186000000001,
+        "baseline_range_seconds": [
+          0.013645829,
+          0.018523895
+        ],
+        "candidate_range_seconds": [
+          0.013233797,
+          0.017170565
+        ],
+        "baseline_thread_realtime_percent": 0.30157526,
+        "candidate_thread_realtime_percent": 0.27792372000000004,
+        "median_reduction_percent": 7.842665873851839
+      }
+    },
+    {
+      "name": "init-8",
+      "held": {
+        "audio_seconds": 30,
+        "baseline_thread_cpu_seconds": [
+          0.368123405,
+          0.398667375,
+          0.367152886,
+          0.445543018,
+          0.37583183,
+          0.388278793,
+          0.366116831,
+          0.349900835
+        ],
+        "candidate_thread_cpu_seconds": [
+          0.363023588,
+          0.373179204,
+          0.387945165,
+          0.436823702,
+          0.405309665,
+          0.401466795,
+          0.393265607,
+          0.353140868
+        ],
+        "baseline_median_seconds": 0.3719776175,
+        "candidate_median_seconds": 0.390605386,
+        "baseline_range_seconds": [
+          0.349900835,
+          0.445543018
+        ],
+        "candidate_range_seconds": [
+          0.353140868,
+          0.436823702
+        ],
+        "baseline_thread_realtime_percent": 1.2399253916666668,
+        "candidate_thread_realtime_percent": 1.3020179533333334,
+        "median_reduction_percent": -5.007765957853616
+      },
+      "tail": {
+        "audio_seconds": 5,
+        "baseline_thread_cpu_seconds": [
+          0.013288249,
+          0.014045403,
+          0.017835833,
+          0.017636347,
+          0.013870593,
+          0.013497479,
+          0.012635969,
+          0.012866121
+        ],
+        "candidate_thread_cpu_seconds": [
+          0.01269013,
+          0.012587286,
+          0.014349194,
+          0.016753506,
+          0.012558234,
+          0.016033776,
+          0.015366119,
+          0.013413986
+        ],
+        "baseline_median_seconds": 0.013684036,
+        "candidate_median_seconds": 0.01388159,
+        "baseline_range_seconds": [
+          0.012635969,
+          0.017835833
+        ],
+        "candidate_range_seconds": [
+          0.012558234,
+          0.016753506
+        ],
+        "baseline_thread_realtime_percent": 0.27368072,
+        "candidate_thread_realtime_percent": 0.2776318,
+        "median_reduction_percent": -1.4436822586552545
+      }
+    },
+    {
+      "name": "lowcut-steep",
+      "held": {
+        "audio_seconds": 30,
+        "baseline_thread_cpu_seconds": [
+          0.827267139,
+          0.949887754,
+          0.755685841,
+          0.716839281,
+          0.751308877,
+          0.73969449,
+          0.788523827,
+          0.728597009
+        ],
+        "candidate_thread_cpu_seconds": [
+          0.754310645,
+          0.722567633,
+          0.803964625,
+          0.760486877,
+          0.759335007,
+          0.75538658,
+          0.745131562,
+          0.732513982
+        ],
+        "baseline_median_seconds": 0.753497359,
+        "candidate_median_seconds": 0.7548486125,
+        "baseline_range_seconds": [
+          0.716839281,
+          0.949887754
+        ],
+        "candidate_range_seconds": [
+          0.722567633,
+          0.803964625
+        ],
+        "baseline_thread_realtime_percent": 2.5116578633333333,
+        "candidate_thread_realtime_percent": 2.5161620416666666,
+        "median_reduction_percent": -0.17933088734289893
+      },
+      "tail": {
+        "audio_seconds": 5,
+        "baseline_thread_cpu_seconds": [
+          0.028502828,
+          0.029839613,
+          0.025545956,
+          0.024400634,
+          0.025332479,
+          0.025552565,
+          0.027435222,
+          0.025154735
+        ],
+        "candidate_thread_cpu_seconds": [
+          0.023378355,
+          0.02676714,
+          0.024260285,
+          0.025209697,
+          0.028215101,
+          0.023440048,
+          0.023134014,
+          0.025042678
+        ],
+        "baseline_median_seconds": 0.0255492605,
+        "candidate_median_seconds": 0.0246514815,
+        "baseline_range_seconds": [
+          0.024400634,
+          0.029839613
+        ],
+        "candidate_range_seconds": [
+          0.023134014,
+          0.028215101
+        ],
+        "baseline_thread_realtime_percent": 0.5109852100000001,
+        "candidate_thread_realtime_percent": 0.49302963,
+        "median_reduction_percent": 3.513913837153926
+      }
+    },
+    {
+      "name": "unused-formula",
+      "held": {
+        "audio_seconds": 30,
+        "baseline_thread_cpu_seconds": [
+          1.234553594,
+          1.533486168,
+          1.161161703,
+          1.218122946,
+          1.290484865,
+          1.25734922,
+          1.250143512,
+          1.301965977
+        ],
+        "candidate_thread_cpu_seconds": [
+          1.181279759,
+          1.123297853,
+          1.177423879,
+          1.277731985,
+          1.316877395,
+          1.168241416,
+          1.362535911,
+          1.183098371
+        ],
+        "baseline_median_seconds": 1.2537463660000001,
+        "candidate_median_seconds": 1.182189065,
+        "baseline_range_seconds": [
+          1.161161703,
+          1.533486168
+        ],
+        "candidate_range_seconds": [
+          1.123297853,
+          1.362535911
+        ],
+        "baseline_thread_realtime_percent": 4.179154553333334,
+        "candidate_thread_realtime_percent": 3.940630216666667,
+        "median_reduction_percent": 5.707478238066543
+      },
+      "tail": {
+        "audio_seconds": 5,
+        "baseline_thread_cpu_seconds": [
+          0.019317524,
+          0.020941186,
+          0.014908205,
+          0.015394036,
+          0.016492557,
+          0.016140144,
+          0.016035749,
+          0.020447783
+        ],
+        "candidate_thread_cpu_seconds": [
+          0.017700612,
+          0.014703641,
+          0.01576045,
+          0.015205917,
+          0.015056555,
+          0.014927353,
+          0.019616198,
+          0.017973778
+        ],
+        "baseline_median_seconds": 0.0163163505,
+        "candidate_median_seconds": 0.015483183499999999,
+        "baseline_range_seconds": [
+          0.014908205,
+          0.020941186
+        ],
+        "candidate_range_seconds": [
+          0.014703641,
+          0.019616198
+        ],
+        "baseline_thread_realtime_percent": 0.32632701000000003,
+        "candidate_thread_realtime_percent": 0.30966367,
+        "median_reduction_percent": 5.106331835663869
+      }
+    }
+  ],
+  "wall_comparison": "comparison.json",
+  "full_pcm_verified": true
+}

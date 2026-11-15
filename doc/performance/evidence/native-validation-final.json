@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "stage": "final-layout",
+  "source_provenance": "final-build-provenance.json",
+  "dsp_comparison": "dsp-regression-final-layout.json",
+  "dsp_fixtures": 63,
+  "pcm_bytes_per_side": 24772608,
+  "mask_cases": 59702,
+  "mask_flag_comparisons": 4895564,
+  "engine_tests": 36,
+  "engine_assertions": 4854298,
+  "engine_summary": "All tests passed (4854298 assertions in 36 test cases)",
+  "engine_full_log_sha256": "dde67b91e2bc8c91b697bf9117a1ef07cac7a9ab808cf2c86ae2de47f2cffa48",
+  "python_tests": 80,
+  "quality": "No production DSP operation, cadence, voice limit or oversampling changed during final relocation.",
+  "measurement": "Final balanced render-thread CPU experiment pending."
+}

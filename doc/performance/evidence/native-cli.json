@@ -1,0 +1,682 @@
+{
+  "agent": 29,
+  "tool": "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+  "binary_sha256": "855ce0849fed10c10cafc63ae5897541f0838844f8b196d6d97607c42a620379",
+  "cases": [
+    {
+      "name": "report-patch-direct",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/report-patch-direct/input.fxp",
+        "--pcm-dir",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/report-patch-direct/pcm",
+        "--scenario",
+        "patch",
+        "--seconds",
+        "0.002",
+        "--tail-seconds",
+        "0.002",
+        "--repetitions",
+        "1",
+        "--patch",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/report-patch-direct/input.fxp"
+      ],
+      "exit": 1,
+      "protected_files_unchanged": 1,
+      "stderr": "surge-cpu-bench: Report path aliases the input patch"
+    },
+    {
+      "name": "report-patch-hardlink",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/report-patch-hardlink/report.json",
+        "--pcm-dir",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/report-patch-hardlink/pcm",
+        "--scenario",
+        "patch",
+        "--seconds",
+        "0.002",
+        "--tail-seconds",
+        "0.002",
+        "--repetitions",
+        "1",
+        "--patch",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/report-patch-hardlink/input.fxp"
+      ],
+      "exit": 1,
+      "protected_files_unchanged": 2,
+      "stderr": "surge-cpu-bench: Report path aliases the input patch"
+    },
+    {
+      "name": "report-patch-symlink",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/report-patch-symlink/report.json",
+        "--pcm-dir",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/report-patch-symlink/pcm",
+        "--scenario",
+        "patch",
+        "--seconds",
+        "0.002",
+        "--tail-seconds",
+        "0.002",
+        "--repetitions",
+        "1",
+        "--patch",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/report-patch-symlink/input.fxp"
+      ],
+      "exit": 1,
+      "protected_files_unchanged": 2,
+      "stderr": "surge-cpu-bench: Report path aliases the input patch"
+    },
+    {
+      "name": "pcm-patch-direct",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/pcm-patch-direct/report.json",
+        "--pcm-dir",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/pcm-patch-direct/pcm",
+        "--scenario",
+        "patch",
+        "--seconds",
+        "0.002",
+        "--tail-seconds",
+        "0.002",
+        "--repetitions",
+        "1",
+        "--patch",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/pcm-patch-direct/pcm/patch.f32"
+      ],
+      "exit": 1,
+      "protected_files_unchanged": 2,
+      "stderr": "surge-cpu-bench: PCM output aliases the input patch"
+    },
+    {
+      "name": "pcm-patch-hardlink",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/pcm-patch-hardlink/report.json",
+        "--pcm-dir",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/pcm-patch-hardlink/pcm",
+        "--scenario",
+        "patch",
+        "--seconds",
+        "0.002",
+        "--tail-seconds",
+        "0.002",
+        "--repetitions",
+        "1",
+        "--patch",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/pcm-patch-hardlink/input.fxp"
+      ],
+      "exit": 1,
+      "protected_files_unchanged": 3,
+      "stderr": "surge-cpu-bench: PCM output aliases the input patch"
+    },
+    {
+      "name": "pcm-patch-symlink",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/pcm-patch-symlink/report.json",
+        "--pcm-dir",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/pcm-patch-symlink/pcm",
+        "--scenario",
+        "patch",
+        "--seconds",
+        "0.002",
+        "--tail-seconds",
+        "0.002",
+        "--repetitions",
+        "1",
+        "--patch",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/pcm-patch-symlink/input.fxp"
+      ],
+      "exit": 1,
+      "protected_files_unchanged": 3,
+      "stderr": "surge-cpu-bench: PCM output aliases the input patch"
+    },
+    {
+      "name": "report-pcm-direct",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/report-pcm-direct/pcm/idle.f32",
+        "--pcm-dir",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/report-pcm-direct/pcm",
+        "--scenario",
+        "idle",
+        "--seconds",
+        "0.002",
+        "--tail-seconds",
+        "0.002",
+        "--repetitions",
+        "1"
+      ],
+      "exit": 1,
+      "protected_files_unchanged": 2,
+      "stderr": "surge-cpu-bench: Report path aliases a PCM output"
+    },
+    {
+      "name": "report-pcm-hardlink",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/report-pcm-hardlink/report.json",
+        "--pcm-dir",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/report-pcm-hardlink/pcm",
+        "--scenario",
+        "idle",
+        "--seconds",
+        "0.002",
+        "--tail-seconds",
+        "0.002",
+        "--repetitions",
+        "1"
+      ],
+      "exit": 1,
+      "protected_files_unchanged": 3,
+      "stderr": "surge-cpu-bench: Report path aliases a PCM output"
+    },
+    {
+      "name": "report-pcm-symlink",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/report-pcm-symlink/report.json",
+        "--pcm-dir",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/report-pcm-symlink/pcm",
+        "--scenario",
+        "idle",
+        "--seconds",
+        "0.002",
+        "--tail-seconds",
+        "0.002",
+        "--repetitions",
+        "1"
+      ],
+      "exit": 1,
+      "protected_files_unchanged": 3,
+      "stderr": "surge-cpu-bench: Report path aliases a PCM output"
+    },
+    {
+      "name": "report-pcm-not-yet-existing-through-directory-symlink",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/canonical/alias/idle.f32",
+        "--pcm-dir",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/canonical/pcm",
+        "--scenario",
+        "idle"
+      ],
+      "exit": 1,
+      "protected_files_unchanged": 0,
+      "stderr": "surge-cpu-bench: Report path aliases a PCM output"
+    },
+    {
+      "name": "sample-rate-below",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/argument-validation.json",
+        "--sample-rate",
+        "11999"
+      ],
+      "exit": 1,
+      "protected_files_unchanged": 1,
+      "stderr": "surge-cpu-bench: Integer outside 12000..192000: 11999"
+    },
+    {
+      "name": "sample-rate-above",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/argument-validation.json",
+        "--sample-rate",
+        "192001"
+      ],
+      "exit": 1,
+      "protected_files_unchanged": 1,
+      "stderr": "surge-cpu-bench: Integer outside 12000..192000: 192001"
+    },
+    {
+      "name": "sample-rate-fractional",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/argument-validation.json",
+        "--sample-rate",
+        "48000.5"
+      ],
+      "exit": 1,
+      "protected_files_unchanged": 1,
+      "stderr": "surge-cpu-bench: Integer outside 12000..192000: 48000.5"
+    },
+    {
+      "name": "sample-rate-nan",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/argument-validation.json",
+        "--sample-rate",
+        "nan"
+      ],
+      "exit": 1,
+      "protected_files_unchanged": 1,
+      "stderr": "surge-cpu-bench: Expected a finite number: nan"
+    },
+    {
+      "name": "sample-rate-inf",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/argument-validation.json",
+        "--sample-rate",
+        "inf"
+      ],
+      "exit": 1,
+      "protected_files_unchanged": 1,
+      "stderr": "surge-cpu-bench: Expected a finite number: inf"
+    },
+    {
+      "name": "sample-rate-negative-inf",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/argument-validation.json",
+        "--sample-rate",
+        "-inf"
+      ],
+      "exit": 1,
+      "protected_files_unchanged": 1,
+      "stderr": "surge-cpu-bench: Expected a finite number: -inf"
+    },
+    {
+      "name": "repetitions-zero",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/argument-validation.json",
+        "--repetitions",
+        "0"
+      ],
+      "exit": 1,
+      "protected_files_unchanged": 1,
+      "stderr": "surge-cpu-bench: Integer outside 1..30: 0"
+    },
+    {
+      "name": "repetitions-negative",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/argument-validation.json",
+        "--repetitions",
+        "-1"
+      ],
+      "exit": 1,
+      "protected_files_unchanged": 1,
+      "stderr": "surge-cpu-bench: Integer outside 1..30: -1"
+    },
+    {
+      "name": "repetitions-above",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/argument-validation.json",
+        "--repetitions",
+        "31"
+      ],
+      "exit": 1,
+      "protected_files_unchanged": 1,
+      "stderr": "surge-cpu-bench: Integer outside 1..30: 31"
+    },
+    {
+      "name": "repetitions-fractional",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/argument-validation.json",
+        "--repetitions",
+        "1.5"
+      ],
+      "exit": 1,
+      "protected_files_unchanged": 1,
+      "stderr": "surge-cpu-bench: Integer outside 1..30: 1.5"
+    },
+    {
+      "name": "repetitions-nan",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/argument-validation.json",
+        "--repetitions",
+        "nan"
+      ],
+      "exit": 1,
+      "protected_files_unchanged": 1,
+      "stderr": "surge-cpu-bench: Expected a finite number: nan"
+    },
+    {
+      "name": "seconds-zero",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/argument-validation.json",
+        "--seconds",
+        "0"
+      ],
+      "exit": 1,
+      "protected_files_unchanged": 1,
+      "stderr": "surge-cpu-bench: Held and tail durations must be greater than zero and <= 30 s"
+    },
+    {
+      "name": "seconds-negative",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/argument-validation.json",
+        "--seconds",
+        "-1"
+      ],
+      "exit": 1,
+      "protected_files_unchanged": 1,
+      "stderr": "surge-cpu-bench: Held and tail durations must be greater than zero and <= 30 s"
+    },
+    {
+      "name": "seconds-above",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/argument-validation.json",
+        "--seconds",
+        "30.001"
+      ],
+      "exit": 1,
+      "protected_files_unchanged": 1,
+      "stderr": "surge-cpu-bench: Held and tail durations must be greater than zero and <= 30 s"
+    },
+    {
+      "name": "seconds-nan",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/argument-validation.json",
+        "--seconds",
+        "nan"
+      ],
+      "exit": 1,
+      "protected_files_unchanged": 1,
+      "stderr": "surge-cpu-bench: Expected a finite number: nan"
+    },
+    {
+      "name": "seconds-inf",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/argument-validation.json",
+        "--seconds",
+        "inf"
+      ],
+      "exit": 1,
+      "protected_files_unchanged": 1,
+      "stderr": "surge-cpu-bench: Expected a finite number: inf"
+    },
+    {
+      "name": "seconds-negative-inf",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/argument-validation.json",
+        "--seconds",
+        "-inf"
+      ],
+      "exit": 1,
+      "protected_files_unchanged": 1,
+      "stderr": "surge-cpu-bench: Expected a finite number: -inf"
+    },
+    {
+      "name": "tail-zero",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/argument-validation.json",
+        "--tail-seconds",
+        "0"
+      ],
+      "exit": 1,
+      "protected_files_unchanged": 1,
+      "stderr": "surge-cpu-bench: Held and tail durations must be greater than zero and <= 30 s"
+    },
+    {
+      "name": "tail-above",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/argument-validation.json",
+        "--tail-seconds",
+        "30.001"
+      ],
+      "exit": 1,
+      "protected_files_unchanged": 1,
+      "stderr": "surge-cpu-bench: Held and tail durations must be greater than zero and <= 30 s"
+    },
+    {
+      "name": "tail-nan",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/argument-validation.json",
+        "--tail-seconds",
+        "nan"
+      ],
+      "exit": 1,
+      "protected_files_unchanged": 1,
+      "stderr": "surge-cpu-bench: Expected a finite number: nan"
+    },
+    {
+      "name": "tail-inf",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/argument-validation.json",
+        "--tail-seconds",
+        "inf"
+      ],
+      "exit": 1,
+      "protected_files_unchanged": 1,
+      "stderr": "surge-cpu-bench: Expected a finite number: inf"
+    },
+    {
+      "name": "duplicate-output",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/argument-validation.json",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/argument-validation.json"
+      ],
+      "exit": 1,
+      "protected_files_unchanged": 1,
+      "stderr": "surge-cpu-bench: Missing value or duplicate option: --output"
+    },
+    {
+      "name": "duplicate-repetitions",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/argument-validation.json",
+        "--repetitions",
+        "1",
+        "--repetitions",
+        "2"
+      ],
+      "exit": 1,
+      "protected_files_unchanged": 1,
+      "stderr": "surge-cpu-bench: Missing value or duplicate option: --repetitions"
+    },
+    {
+      "name": "missing-value-at-end",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/argument-validation.json",
+        "--seconds"
+      ],
+      "exit": 1,
+      "protected_files_unchanged": 1,
+      "stderr": "surge-cpu-bench: Missing value or duplicate option: --seconds"
+    },
+    {
+      "name": "missing-value-before-option",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/argument-validation.json",
+        "--seconds",
+        "--tail-seconds",
+        "1"
+      ],
+      "exit": 1,
+      "protected_files_unchanged": 1,
+      "stderr": "surge-cpu-bench: Missing value or duplicate option: --seconds"
+    },
+    {
+      "name": "unknown-option",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/argument-validation.json",
+        "--surprise",
+        "1"
+      ],
+      "exit": 1,
+      "protected_files_unchanged": 1,
+      "stderr": "surge-cpu-bench: Unknown option: --surprise"
+    },
+    {
+      "name": "unknown-scenario",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/argument-validation.json",
+        "--scenario",
+        "does-not-exist"
+      ],
+      "exit": 1,
+      "protected_files_unchanged": 1,
+      "stderr": "surge-cpu-bench: Unknown scenario: does-not-exist"
+    },
+    {
+      "name": "missing-data-directory",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/argument-validation.json",
+        "--data",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/absent-data"
+      ],
+      "exit": 1,
+      "protected_files_unchanged": 1,
+      "stderr": "surge-cpu-bench: Data directory does not exist: /workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/absent-data"
+    },
+    {
+      "name": "missing-patch",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/argument-validation.json",
+        "--patch",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/absent-patch.fxp"
+      ],
+      "exit": 1,
+      "protected_files_unchanged": 1,
+      "stderr": "surge-cpu-bench: Patch does not exist: /workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/absent-patch.fxp"
+    },
+    {
+      "name": "numeric-suffix",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/argument-validation.json",
+        "--seconds",
+        "0.1suffix"
+      ],
+      "exit": 1,
+      "protected_files_unchanged": 1,
+      "stderr": "surge-cpu-bench: Expected a finite number: 0.1suffix"
+    },
+    {
+      "name": "missing-required-output",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--scenario",
+        "idle"
+      ],
+      "exit": 1,
+      "protected_files_unchanged": 1,
+      "stderr": "surge-cpu-bench: --output JSON is required (engine diagnostics use stdout)"
+    },
+    {
+      "name": "accepted-rate-boundary-12000",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/valid-12000.json",
+        "--pcm-dir",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/valid-12000-pcm",
+        "--scenario",
+        "idle",
+        "--sample-rate",
+        "12000",
+        "--repetitions",
+        "2",
+        "--seconds",
+        "0.002",
+        "--tail-seconds",
+        "0.002"
+      ],
+      "exit": 0,
+      "protected_files_unchanged": 0,
+      "stderr": "idle: held 0.08655% realtime, repeat PCM identical",
+      "report_validated": true,
+      "pcm_validated": true,
+      "frames": 64
+    },
+    {
+      "name": "accepted-rate-boundary-192000",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/valid-192000.json",
+        "--pcm-dir",
+        "/workspace/scratch/4185df6afb07/w05-a29-cli-un0uqze_/valid-192000-pcm",
+        "--scenario",
+        "idle",
+        "--sample-rate",
+        "192000",
+        "--repetitions",
+        "2",
+        "--seconds",
+        "0.002",
+        "--tail-seconds",
+        "0.002"
+      ],
+      "exit": 0,
+      "protected_files_unchanged": 0,
+      "stderr": "idle: held 0.96615% realtime, repeat PCM identical",
+      "report_validated": true,
+      "pcm_validated": true,
+      "frames": 768
+    }
+  ],
+  "total": 43,
+  "negative_cases": 41,
+  "positive_cases": 2,
+  "ok": true
+}

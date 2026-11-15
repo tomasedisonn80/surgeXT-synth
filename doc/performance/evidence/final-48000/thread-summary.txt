@@ -1,0 +1,13 @@
+Render-thread CPU comparison (CLOCK_THREAD_CPUTIME_ID):
+Positive reduction means less CPU time charged to the rendering thread.
+CPU frequency/cache effects remain; this is not a host-deadline measurement.
+active-formula: held +1.274%, tail -3.126% CPU median reduction
+conditioner: held +2.056%, tail +1.249% CPU median reduction
+eq11: held +4.890%, tail +7.338% CPU median reduction
+eq3: held +3.450%, tail +8.282% CPU median reduction
+idle: held -2.158%, tail -0.050% CPU median reduction
+init-1: held -3.020%, tail -1.085% CPU median reduction
+init-16: held +0.775%, tail +7.843% CPU median reduction
+init-8: held -5.008%, tail -1.444% CPU median reduction
+lowcut-steep: held -0.179%, tail +3.514% CPU median reduction
+unused-formula: held +5.707%, tail +5.106% CPU median reduction

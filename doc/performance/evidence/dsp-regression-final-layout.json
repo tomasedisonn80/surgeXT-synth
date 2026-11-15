@@ -1,0 +1,3033 @@
+{
+  "schema": 1,
+  "tool": "surge-dsp-regression-compare",
+  "ok": true,
+  "baseline_directory": "/workspace/scratch/4185df6afb07/evidence-regression-baseline-fp",
+  "candidate_directory": "/workspace/scratch/4185df6afb07/evidence-regression-final-layout",
+  "manifest_sha256": {
+    "baseline": "75793c724f337997e8b03b9b5723cfb1c3bc423b13d674e06e78b96cb67a660b",
+    "candidate": "75793c724f337997e8b03b9b5723cfb1c3bc423b13d674e06e78b96cb67a660b"
+  },
+  "metadata": {
+    "block_size": 32,
+    "blocks": 1536,
+    "channels": 2,
+    "effect_init_rounding": "FE_UPWARD, then restore callback mode",
+    "format": "f32le-interleaved",
+    "fpu_guard": true,
+    "hash_algorithm": "fnv1a64-f32le",
+    "ok": true,
+    "processing_rounding": "blocks [944,976): FE_UPWARD; [976,1008): FE_DOWNWARD; otherwise callback mode",
+    "release_block": 1024,
+    "schema": 1,
+    "seed": 1801,
+    "table_reset_rounding": "direct rate: FE_UPWARD; standard tuning: FE_DOWNWARD; restore callback mode",
+    "tool": "surge-dsp-regression"
+  },
+  "fixture_count": 63,
+  "full_pcm_verified": true,
+  "bytes_compared_per_side": 24772608,
+  "fixtures": [
+    {
+      "name": "conditioner-44100",
+      "file": "conditioner-44100.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "conditioner-44100",
+        "file": "conditioner-44100.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          512,
+          768
+        ],
+        "sample_rates": [
+          44100,
+          48000,
+          96000
+        ],
+        "peak": 0.700693130493,
+        "pcm_hash": "8b4b4f6a49328385",
+        "same_rate_reset_blocks": [
+          640
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          704
+        ],
+        "standard_tuning_table_reset_blocks": [
+          832
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "2b56a9220572f1b76c0e7b31f1303f70bbf742f69deac6cc73df897b5cccba41",
+      "pcm_hash": "8b4b4f6a49328385",
+      "peak": 0.7006931304931641,
+      "identical": true
+    },
+    {
+      "name": "conditioner-48000",
+      "file": "conditioner-48000.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "conditioner-48000",
+        "file": "conditioner-48000.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          512,
+          768
+        ],
+        "sample_rates": [
+          48000,
+          96000,
+          44100
+        ],
+        "peak": 0.651433706284,
+        "pcm_hash": "86cb26f84628cbd1",
+        "same_rate_reset_blocks": [
+          640
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          704
+        ],
+        "standard_tuning_table_reset_blocks": [
+          832
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "d198a07fb8fcccad60a12318e6e2cb8b862a3fe2955e316385aeec3528cdbef3",
+      "pcm_hash": "86cb26f84628cbd1",
+      "peak": 0.6514337062835693,
+      "identical": true
+    },
+    {
+      "name": "conditioner-96000",
+      "file": "conditioner-96000.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "conditioner-96000",
+        "file": "conditioner-96000.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          512,
+          768
+        ],
+        "sample_rates": [
+          96000,
+          44100,
+          48000
+        ],
+        "peak": 0.65660572052,
+        "pcm_hash": "ede24b952e024429",
+        "same_rate_reset_blocks": [
+          640
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          704
+        ],
+        "standard_tuning_table_reset_blocks": [
+          832
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "184fdaebf57404a2d0c34215965bd1727014618e007dddd002d710217b337f28",
+      "pcm_hash": "ede24b952e024429",
+      "peak": 0.6566057205200195,
+      "identical": true
+    },
+    {
+      "name": "eq11-44100-phase0",
+      "file": "eq11-44100-phase0.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq11-44100-phase0",
+        "file": "eq11-44100-phase0.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          512,
+          768
+        ],
+        "sample_rates": [
+          44100,
+          48000,
+          96000
+        ],
+        "peak": 1.04465603828,
+        "pcm_hash": "b5be439218557a9d",
+        "same_rate_reset_blocks": [
+          640
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          704
+        ],
+        "standard_tuning_table_reset_blocks": [
+          832
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "606f7c028e18e317043efc61d0ca6852498f3735d6ead9c2c8df73a4f499d06d",
+      "pcm_hash": "b5be439218557a9d",
+      "peak": 1.0446560382843018,
+      "identical": true
+    },
+    {
+      "name": "eq11-44100-phase1",
+      "file": "eq11-44100-phase1.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq11-44100-phase1",
+        "file": "eq11-44100-phase1.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          513,
+          769
+        ],
+        "sample_rates": [
+          44100,
+          48000,
+          96000
+        ],
+        "peak": 1.04465603828,
+        "pcm_hash": "9cc67d27d1b2046d",
+        "same_rate_reset_blocks": [
+          641
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          705
+        ],
+        "standard_tuning_table_reset_blocks": [
+          833
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "6f180e8fe14d17d712f3283c78a5bdaa34eda0c5d039a69a17474e4301077373",
+      "pcm_hash": "9cc67d27d1b2046d",
+      "peak": 1.0446560382843018,
+      "identical": true
+    },
+    {
+      "name": "eq11-44100-phase2",
+      "file": "eq11-44100-phase2.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq11-44100-phase2",
+        "file": "eq11-44100-phase2.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          514,
+          770
+        ],
+        "sample_rates": [
+          44100,
+          48000,
+          96000
+        ],
+        "peak": 1.04465603828,
+        "pcm_hash": "fc7c90f600a16a69",
+        "same_rate_reset_blocks": [
+          642
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          706
+        ],
+        "standard_tuning_table_reset_blocks": [
+          834
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "6a90cf24e6a5155f8088199db85d6b71ea3959915e81fbf4da2614cca12bd462",
+      "pcm_hash": "fc7c90f600a16a69",
+      "peak": 1.0446560382843018,
+      "identical": true
+    },
+    {
+      "name": "eq11-44100-phase3",
+      "file": "eq11-44100-phase3.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq11-44100-phase3",
+        "file": "eq11-44100-phase3.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          515,
+          771
+        ],
+        "sample_rates": [
+          44100,
+          48000,
+          96000
+        ],
+        "peak": 1.04465603828,
+        "pcm_hash": "c224ebafe4a07829",
+        "same_rate_reset_blocks": [
+          643
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          707
+        ],
+        "standard_tuning_table_reset_blocks": [
+          835
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "5b395e43b80aafc4bf1298a5a86df0beca52ce0a2e6e7bf8c09410dafe026f2a",
+      "pcm_hash": "c224ebafe4a07829",
+      "peak": 1.0446560382843018,
+      "identical": true
+    },
+    {
+      "name": "eq11-44100-phase4",
+      "file": "eq11-44100-phase4.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq11-44100-phase4",
+        "file": "eq11-44100-phase4.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          516,
+          772
+        ],
+        "sample_rates": [
+          44100,
+          48000,
+          96000
+        ],
+        "peak": 1.04465603828,
+        "pcm_hash": "7e926492971236b9",
+        "same_rate_reset_blocks": [
+          644
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          708
+        ],
+        "standard_tuning_table_reset_blocks": [
+          836
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "b00169ddfcaf34c76bb63ed7dd98fc29804531fd93dd405dd5e2b3a2f28bc392",
+      "pcm_hash": "7e926492971236b9",
+      "peak": 1.0446560382843018,
+      "identical": true
+    },
+    {
+      "name": "eq11-44100-phase5",
+      "file": "eq11-44100-phase5.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq11-44100-phase5",
+        "file": "eq11-44100-phase5.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          517,
+          773
+        ],
+        "sample_rates": [
+          44100,
+          48000,
+          96000
+        ],
+        "peak": 1.04465603828,
+        "pcm_hash": "d770f2f63ec3c549",
+        "same_rate_reset_blocks": [
+          645
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          709
+        ],
+        "standard_tuning_table_reset_blocks": [
+          837
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "aa97b65de5ae5cd2a2971df9b3eb0690f7735b4ff101c7ef0386fc2d6b61ba92",
+      "pcm_hash": "d770f2f63ec3c549",
+      "peak": 1.0446560382843018,
+      "identical": true
+    },
+    {
+      "name": "eq11-44100-phase6",
+      "file": "eq11-44100-phase6.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq11-44100-phase6",
+        "file": "eq11-44100-phase6.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          518,
+          774
+        ],
+        "sample_rates": [
+          44100,
+          48000,
+          96000
+        ],
+        "peak": 1.04465603828,
+        "pcm_hash": "1bfa618e31085d15",
+        "same_rate_reset_blocks": [
+          646
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          710
+        ],
+        "standard_tuning_table_reset_blocks": [
+          838
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "66b5e0c3508a5769b561fbb93dc665c25e4cbca907c51f7ffea4667615fc0c6c",
+      "pcm_hash": "1bfa618e31085d15",
+      "peak": 1.0446560382843018,
+      "identical": true
+    },
+    {
+      "name": "eq11-44100-phase7",
+      "file": "eq11-44100-phase7.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq11-44100-phase7",
+        "file": "eq11-44100-phase7.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          519,
+          775
+        ],
+        "sample_rates": [
+          44100,
+          48000,
+          96000
+        ],
+        "peak": 1.04465603828,
+        "pcm_hash": "4319b0064c8978e1",
+        "same_rate_reset_blocks": [
+          647
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          711
+        ],
+        "standard_tuning_table_reset_blocks": [
+          839
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "44ea13646f0cf6bd7195752f67bdcf8c507b4b030a5a0570e609c5099c8db252",
+      "pcm_hash": "4319b0064c8978e1",
+      "peak": 1.0446560382843018,
+      "identical": true
+    },
+    {
+      "name": "eq11-48000-phase0",
+      "file": "eq11-48000-phase0.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq11-48000-phase0",
+        "file": "eq11-48000-phase0.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          512,
+          768
+        ],
+        "sample_rates": [
+          48000,
+          96000,
+          44100
+        ],
+        "peak": 1.03267288208,
+        "pcm_hash": "34196b01a31fc59d",
+        "same_rate_reset_blocks": [
+          640
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          704
+        ],
+        "standard_tuning_table_reset_blocks": [
+          832
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "6aa38a64d75068b643c0a25a7d5be96d2cb13e5399d53592e13a9442072e1639",
+      "pcm_hash": "34196b01a31fc59d",
+      "peak": 1.0326728820800781,
+      "identical": true
+    },
+    {
+      "name": "eq11-48000-phase1",
+      "file": "eq11-48000-phase1.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq11-48000-phase1",
+        "file": "eq11-48000-phase1.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          513,
+          769
+        ],
+        "sample_rates": [
+          48000,
+          96000,
+          44100
+        ],
+        "peak": 1.03267288208,
+        "pcm_hash": "e50c987b5f4863b1",
+        "same_rate_reset_blocks": [
+          641
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          705
+        ],
+        "standard_tuning_table_reset_blocks": [
+          833
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "54ca56f320db0f68021b9d87710def2d59b6a97802d6c39f9b1418de1c6fa6c3",
+      "pcm_hash": "e50c987b5f4863b1",
+      "peak": 1.0326728820800781,
+      "identical": true
+    },
+    {
+      "name": "eq11-48000-phase2",
+      "file": "eq11-48000-phase2.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq11-48000-phase2",
+        "file": "eq11-48000-phase2.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          514,
+          770
+        ],
+        "sample_rates": [
+          48000,
+          96000,
+          44100
+        ],
+        "peak": 1.03267288208,
+        "pcm_hash": "bbf993e49d09eb71",
+        "same_rate_reset_blocks": [
+          642
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          706
+        ],
+        "standard_tuning_table_reset_blocks": [
+          834
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "775775336e79f75fb985e52b7b8655db374aa69679e8ec13b28b3414b7e4e2e7",
+      "pcm_hash": "bbf993e49d09eb71",
+      "peak": 1.0326728820800781,
+      "identical": true
+    },
+    {
+      "name": "eq11-48000-phase3",
+      "file": "eq11-48000-phase3.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq11-48000-phase3",
+        "file": "eq11-48000-phase3.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          515,
+          771
+        ],
+        "sample_rates": [
+          48000,
+          96000,
+          44100
+        ],
+        "peak": 1.03267288208,
+        "pcm_hash": "ef475a3190337cb1",
+        "same_rate_reset_blocks": [
+          643
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          707
+        ],
+        "standard_tuning_table_reset_blocks": [
+          835
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "4408b25162ef5cd1157f5944c21fcabd73d3ef5f8e197dfce400fd4f37bf7bdc",
+      "pcm_hash": "ef475a3190337cb1",
+      "peak": 1.0326728820800781,
+      "identical": true
+    },
+    {
+      "name": "eq11-48000-phase4",
+      "file": "eq11-48000-phase4.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq11-48000-phase4",
+        "file": "eq11-48000-phase4.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          516,
+          772
+        ],
+        "sample_rates": [
+          48000,
+          96000,
+          44100
+        ],
+        "peak": 1.03267288208,
+        "pcm_hash": "9dc23756572c1c31",
+        "same_rate_reset_blocks": [
+          644
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          708
+        ],
+        "standard_tuning_table_reset_blocks": [
+          836
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "7d06e704061ad3dfa477dca4b68ae75d1fd0c12f69466f152528771a9b1db4f0",
+      "pcm_hash": "9dc23756572c1c31",
+      "peak": 1.0326728820800781,
+      "identical": true
+    },
+    {
+      "name": "eq11-48000-phase5",
+      "file": "eq11-48000-phase5.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq11-48000-phase5",
+        "file": "eq11-48000-phase5.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          517,
+          773
+        ],
+        "sample_rates": [
+          48000,
+          96000,
+          44100
+        ],
+        "peak": 1.03267288208,
+        "pcm_hash": "beba08211d3d9541",
+        "same_rate_reset_blocks": [
+          645
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          709
+        ],
+        "standard_tuning_table_reset_blocks": [
+          837
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "91cde07585c809602a4bd0d2bfd23a625b92d4d2572de1c8bbb086a29e4bdf91",
+      "pcm_hash": "beba08211d3d9541",
+      "peak": 1.0326728820800781,
+      "identical": true
+    },
+    {
+      "name": "eq11-48000-phase6",
+      "file": "eq11-48000-phase6.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq11-48000-phase6",
+        "file": "eq11-48000-phase6.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          518,
+          774
+        ],
+        "sample_rates": [
+          48000,
+          96000,
+          44100
+        ],
+        "peak": 1.03267288208,
+        "pcm_hash": "20b6c4995f9f755d",
+        "same_rate_reset_blocks": [
+          646
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          710
+        ],
+        "standard_tuning_table_reset_blocks": [
+          838
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "cd9917e28cda5e43b861f757dd59398549bfa7acc270016fabb655533bddd10a",
+      "pcm_hash": "20b6c4995f9f755d",
+      "peak": 1.0326728820800781,
+      "identical": true
+    },
+    {
+      "name": "eq11-48000-phase7",
+      "file": "eq11-48000-phase7.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq11-48000-phase7",
+        "file": "eq11-48000-phase7.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          519,
+          775
+        ],
+        "sample_rates": [
+          48000,
+          96000,
+          44100
+        ],
+        "peak": 1.03267288208,
+        "pcm_hash": "e6168a31322cfbf1",
+        "same_rate_reset_blocks": [
+          647
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          711
+        ],
+        "standard_tuning_table_reset_blocks": [
+          839
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "3491183b2741e34b0ec83bb0ce818369738c8f8ed6419a831b95a64ee44aaf83",
+      "pcm_hash": "e6168a31322cfbf1",
+      "peak": 1.0326728820800781,
+      "identical": true
+    },
+    {
+      "name": "eq11-96000-phase0",
+      "file": "eq11-96000-phase0.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq11-96000-phase0",
+        "file": "eq11-96000-phase0.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          512,
+          768
+        ],
+        "sample_rates": [
+          96000,
+          44100,
+          48000
+        ],
+        "peak": 1.03147137165,
+        "pcm_hash": "64492e4e27fc8b81",
+        "same_rate_reset_blocks": [
+          640
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          704
+        ],
+        "standard_tuning_table_reset_blocks": [
+          832
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "64812d0d8bcff37f2b01a421cf9a6eaaa1c2ee61316c9f34aa63431b64ae4a5c",
+      "pcm_hash": "64492e4e27fc8b81",
+      "peak": 1.0314713716506958,
+      "identical": true
+    },
+    {
+      "name": "eq11-96000-phase1",
+      "file": "eq11-96000-phase1.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq11-96000-phase1",
+        "file": "eq11-96000-phase1.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          513,
+          769
+        ],
+        "sample_rates": [
+          96000,
+          44100,
+          48000
+        ],
+        "peak": 1.03147137165,
+        "pcm_hash": "27a206b1a80ae151",
+        "same_rate_reset_blocks": [
+          641
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          705
+        ],
+        "standard_tuning_table_reset_blocks": [
+          833
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "b87608787e7e0c1b163ee0b09be966bd3c2da35887398e931817f28d4d69c52f",
+      "pcm_hash": "27a206b1a80ae151",
+      "peak": 1.0314713716506958,
+      "identical": true
+    },
+    {
+      "name": "eq11-96000-phase2",
+      "file": "eq11-96000-phase2.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq11-96000-phase2",
+        "file": "eq11-96000-phase2.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          514,
+          770
+        ],
+        "sample_rates": [
+          96000,
+          44100,
+          48000
+        ],
+        "peak": 1.03147137165,
+        "pcm_hash": "861addb7eacba1bd",
+        "same_rate_reset_blocks": [
+          642
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          706
+        ],
+        "standard_tuning_table_reset_blocks": [
+          834
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "bd45d0b2f274e0adcc60987401a55f4056b755b14a75be97763b5272491f7861",
+      "pcm_hash": "861addb7eacba1bd",
+      "peak": 1.0314713716506958,
+      "identical": true
+    },
+    {
+      "name": "eq11-96000-phase3",
+      "file": "eq11-96000-phase3.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq11-96000-phase3",
+        "file": "eq11-96000-phase3.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          515,
+          771
+        ],
+        "sample_rates": [
+          96000,
+          44100,
+          48000
+        ],
+        "peak": 1.03147137165,
+        "pcm_hash": "9afae80a9b2a4d3d",
+        "same_rate_reset_blocks": [
+          643
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          707
+        ],
+        "standard_tuning_table_reset_blocks": [
+          835
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "f2b70cfad394748f2446ca43102d036daf45f8d3b688c85fa9a5b7e74fb8547f",
+      "pcm_hash": "9afae80a9b2a4d3d",
+      "peak": 1.0314713716506958,
+      "identical": true
+    },
+    {
+      "name": "eq11-96000-phase4",
+      "file": "eq11-96000-phase4.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq11-96000-phase4",
+        "file": "eq11-96000-phase4.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          516,
+          772
+        ],
+        "sample_rates": [
+          96000,
+          44100,
+          48000
+        ],
+        "peak": 1.03147137165,
+        "pcm_hash": "ef4e0e826afa5279",
+        "same_rate_reset_blocks": [
+          644
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          708
+        ],
+        "standard_tuning_table_reset_blocks": [
+          836
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "a28596a8b505ba699ad163b19f0969c217e1794d4caa23b9ada2d7c181627ad2",
+      "pcm_hash": "ef4e0e826afa5279",
+      "peak": 1.0314713716506958,
+      "identical": true
+    },
+    {
+      "name": "eq11-96000-phase5",
+      "file": "eq11-96000-phase5.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq11-96000-phase5",
+        "file": "eq11-96000-phase5.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          517,
+          773
+        ],
+        "sample_rates": [
+          96000,
+          44100,
+          48000
+        ],
+        "peak": 1.03147137165,
+        "pcm_hash": "7cfcc786553d9021",
+        "same_rate_reset_blocks": [
+          645
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          709
+        ],
+        "standard_tuning_table_reset_blocks": [
+          837
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "f339759a1f30fcfebeb0f2b81f33d5b2f355e94339d58ea5e495f5012a1d5fa8",
+      "pcm_hash": "7cfcc786553d9021",
+      "peak": 1.0314713716506958,
+      "identical": true
+    },
+    {
+      "name": "eq11-96000-phase6",
+      "file": "eq11-96000-phase6.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq11-96000-phase6",
+        "file": "eq11-96000-phase6.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          518,
+          774
+        ],
+        "sample_rates": [
+          96000,
+          44100,
+          48000
+        ],
+        "peak": 1.03147137165,
+        "pcm_hash": "cfc68a758a5670ad",
+        "same_rate_reset_blocks": [
+          646
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          710
+        ],
+        "standard_tuning_table_reset_blocks": [
+          838
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "44a2df9725357ebb28a6f7f9f4a16465ebcb852e3f7712c426fb505c4b9bd6d3",
+      "pcm_hash": "cfc68a758a5670ad",
+      "peak": 1.0314713716506958,
+      "identical": true
+    },
+    {
+      "name": "eq11-96000-phase7",
+      "file": "eq11-96000-phase7.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq11-96000-phase7",
+        "file": "eq11-96000-phase7.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          519,
+          775
+        ],
+        "sample_rates": [
+          96000,
+          44100,
+          48000
+        ],
+        "peak": 1.03147137165,
+        "pcm_hash": "78f4f957f3ab9d59",
+        "same_rate_reset_blocks": [
+          647
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          711
+        ],
+        "standard_tuning_table_reset_blocks": [
+          839
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "47c7d555c6b90541df54cc3f1fa41839b6025945f74381c80b1fd97ef3eae669",
+      "pcm_hash": "78f4f957f3ab9d59",
+      "peak": 1.0314713716506958,
+      "identical": true
+    },
+    {
+      "name": "eq3-44100-phase0",
+      "file": "eq3-44100-phase0.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq3-44100-phase0",
+        "file": "eq3-44100-phase0.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          512,
+          768
+        ],
+        "sample_rates": [
+          44100,
+          48000,
+          96000
+        ],
+        "peak": 1.19470274448,
+        "pcm_hash": "2b29290864e147b1",
+        "same_rate_reset_blocks": [
+          640
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          704
+        ],
+        "standard_tuning_table_reset_blocks": [
+          832
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "3d05497b0b5c81bb9ea529ff2d51c7fb89d6a0b230cb84bb6aed6ef2ccf467ed",
+      "pcm_hash": "2b29290864e147b1",
+      "peak": 1.1947027444839478,
+      "identical": true
+    },
+    {
+      "name": "eq3-44100-phase1",
+      "file": "eq3-44100-phase1.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq3-44100-phase1",
+        "file": "eq3-44100-phase1.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          513,
+          769
+        ],
+        "sample_rates": [
+          44100,
+          48000,
+          96000
+        ],
+        "peak": 1.19470274448,
+        "pcm_hash": "dcca14823090cd01",
+        "same_rate_reset_blocks": [
+          641
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          705
+        ],
+        "standard_tuning_table_reset_blocks": [
+          833
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "bcac153b2cece2d67a11aaf1b6c2522882816e1be4ac7672fd7fc5b52074958e",
+      "pcm_hash": "dcca14823090cd01",
+      "peak": 1.1947027444839478,
+      "identical": true
+    },
+    {
+      "name": "eq3-44100-phase2",
+      "file": "eq3-44100-phase2.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq3-44100-phase2",
+        "file": "eq3-44100-phase2.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          514,
+          770
+        ],
+        "sample_rates": [
+          44100,
+          48000,
+          96000
+        ],
+        "peak": 1.19470274448,
+        "pcm_hash": "e23c3c8c059879c1",
+        "same_rate_reset_blocks": [
+          642
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          706
+        ],
+        "standard_tuning_table_reset_blocks": [
+          834
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "6cd19359c62a8a80392176850e282d5ca2729e17a56fcacc0243ff91e0333f1c",
+      "pcm_hash": "e23c3c8c059879c1",
+      "peak": 1.1947027444839478,
+      "identical": true
+    },
+    {
+      "name": "eq3-44100-phase3",
+      "file": "eq3-44100-phase3.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq3-44100-phase3",
+        "file": "eq3-44100-phase3.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          515,
+          771
+        ],
+        "sample_rates": [
+          44100,
+          48000,
+          96000
+        ],
+        "peak": 1.19470274448,
+        "pcm_hash": "d0913ccc6ed88ae5",
+        "same_rate_reset_blocks": [
+          643
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          707
+        ],
+        "standard_tuning_table_reset_blocks": [
+          835
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "2353798e86f57dd98defa9bb18aa26ddfce9231112703bed9d036c18f1a955b1",
+      "pcm_hash": "d0913ccc6ed88ae5",
+      "peak": 1.1947027444839478,
+      "identical": true
+    },
+    {
+      "name": "eq3-44100-phase4",
+      "file": "eq3-44100-phase4.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq3-44100-phase4",
+        "file": "eq3-44100-phase4.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          516,
+          772
+        ],
+        "sample_rates": [
+          44100,
+          48000,
+          96000
+        ],
+        "peak": 1.19470274448,
+        "pcm_hash": "83cd1b96eec1eecd",
+        "same_rate_reset_blocks": [
+          644
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          708
+        ],
+        "standard_tuning_table_reset_blocks": [
+          836
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "9b8b8e4158a95930aadec11df233f45f4cc2fe6aff0ff68725f7e7fd511ade05",
+      "pcm_hash": "83cd1b96eec1eecd",
+      "peak": 1.1947027444839478,
+      "identical": true
+    },
+    {
+      "name": "eq3-44100-phase5",
+      "file": "eq3-44100-phase5.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq3-44100-phase5",
+        "file": "eq3-44100-phase5.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          517,
+          773
+        ],
+        "sample_rates": [
+          44100,
+          48000,
+          96000
+        ],
+        "peak": 1.19470274448,
+        "pcm_hash": "40390c0340eb5271",
+        "same_rate_reset_blocks": [
+          645
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          709
+        ],
+        "standard_tuning_table_reset_blocks": [
+          837
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "ce128e96b0080081f4be6f10f3db7a51582c9e3c2557234d81441cc6a35ea6a5",
+      "pcm_hash": "40390c0340eb5271",
+      "peak": 1.1947027444839478,
+      "identical": true
+    },
+    {
+      "name": "eq3-44100-phase6",
+      "file": "eq3-44100-phase6.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq3-44100-phase6",
+        "file": "eq3-44100-phase6.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          518,
+          774
+        ],
+        "sample_rates": [
+          44100,
+          48000,
+          96000
+        ],
+        "peak": 1.19470274448,
+        "pcm_hash": "626d6785d1f61f3d",
+        "same_rate_reset_blocks": [
+          646
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          710
+        ],
+        "standard_tuning_table_reset_blocks": [
+          838
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "7c0d776475bb5a023d530c00d92fb74befc33021aeaff19d1511a9553cc92806",
+      "pcm_hash": "626d6785d1f61f3d",
+      "peak": 1.1947027444839478,
+      "identical": true
+    },
+    {
+      "name": "eq3-44100-phase7",
+      "file": "eq3-44100-phase7.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq3-44100-phase7",
+        "file": "eq3-44100-phase7.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          519,
+          775
+        ],
+        "sample_rates": [
+          44100,
+          48000,
+          96000
+        ],
+        "peak": 1.19470274448,
+        "pcm_hash": "670ddf82bc1a8c19",
+        "same_rate_reset_blocks": [
+          647
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          711
+        ],
+        "standard_tuning_table_reset_blocks": [
+          839
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "379c172f0fe7d6a130d21461d990cda2ab6ce80adca70eb4504d9a4b8ea8d648",
+      "pcm_hash": "670ddf82bc1a8c19",
+      "peak": 1.1947027444839478,
+      "identical": true
+    },
+    {
+      "name": "eq3-48000-phase0",
+      "file": "eq3-48000-phase0.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq3-48000-phase0",
+        "file": "eq3-48000-phase0.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          512,
+          768
+        ],
+        "sample_rates": [
+          48000,
+          96000,
+          44100
+        ],
+        "peak": 1.28454446793,
+        "pcm_hash": "3ff1e1e21af1f71d",
+        "same_rate_reset_blocks": [
+          640
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          704
+        ],
+        "standard_tuning_table_reset_blocks": [
+          832
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "50b203f7e5c637703ceffba75733b0831dd90eac9633223b4099ffc8f6809bf7",
+      "pcm_hash": "3ff1e1e21af1f71d",
+      "peak": 1.2845444679260254,
+      "identical": true
+    },
+    {
+      "name": "eq3-48000-phase1",
+      "file": "eq3-48000-phase1.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq3-48000-phase1",
+        "file": "eq3-48000-phase1.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          513,
+          769
+        ],
+        "sample_rates": [
+          48000,
+          96000,
+          44100
+        ],
+        "peak": 1.28454446793,
+        "pcm_hash": "91a81165f1c15bc1",
+        "same_rate_reset_blocks": [
+          641
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          705
+        ],
+        "standard_tuning_table_reset_blocks": [
+          833
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "aa217cae71f2038c522f33f8f009ff2ab2e570b5ecf3b5ca553bcf1ed56e3757",
+      "pcm_hash": "91a81165f1c15bc1",
+      "peak": 1.2845444679260254,
+      "identical": true
+    },
+    {
+      "name": "eq3-48000-phase2",
+      "file": "eq3-48000-phase2.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq3-48000-phase2",
+        "file": "eq3-48000-phase2.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          514,
+          770
+        ],
+        "sample_rates": [
+          48000,
+          96000,
+          44100
+        ],
+        "peak": 1.28454446793,
+        "pcm_hash": "bd19d97a18c15d55",
+        "same_rate_reset_blocks": [
+          642
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          706
+        ],
+        "standard_tuning_table_reset_blocks": [
+          834
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "c5633d1073a9a005354c3828572459eef1f8f00c196d1e6e6d12631477e5b592",
+      "pcm_hash": "bd19d97a18c15d55",
+      "peak": 1.2845444679260254,
+      "identical": true
+    },
+    {
+      "name": "eq3-48000-phase3",
+      "file": "eq3-48000-phase3.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq3-48000-phase3",
+        "file": "eq3-48000-phase3.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          515,
+          771
+        ],
+        "sample_rates": [
+          48000,
+          96000,
+          44100
+        ],
+        "peak": 1.28454446793,
+        "pcm_hash": "553bf718848fdc11",
+        "same_rate_reset_blocks": [
+          643
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          707
+        ],
+        "standard_tuning_table_reset_blocks": [
+          835
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "8cd01d982b9ce35710cec8facbc3f32ab4cbfe21ecd331dae2bd973a7b2a7a51",
+      "pcm_hash": "553bf718848fdc11",
+      "peak": 1.2845444679260254,
+      "identical": true
+    },
+    {
+      "name": "eq3-48000-phase4",
+      "file": "eq3-48000-phase4.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq3-48000-phase4",
+        "file": "eq3-48000-phase4.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          516,
+          772
+        ],
+        "sample_rates": [
+          48000,
+          96000,
+          44100
+        ],
+        "peak": 1.28454446793,
+        "pcm_hash": "3da2f8ac73bd7c29",
+        "same_rate_reset_blocks": [
+          644
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          708
+        ],
+        "standard_tuning_table_reset_blocks": [
+          836
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "bb0e5dc1be51ebb64a260adb70bd92e811d94dee8d9ce72809e5ea7cc9d30032",
+      "pcm_hash": "3da2f8ac73bd7c29",
+      "peak": 1.2845444679260254,
+      "identical": true
+    },
+    {
+      "name": "eq3-48000-phase5",
+      "file": "eq3-48000-phase5.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq3-48000-phase5",
+        "file": "eq3-48000-phase5.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          517,
+          773
+        ],
+        "sample_rates": [
+          48000,
+          96000,
+          44100
+        ],
+        "peak": 1.28454446793,
+        "pcm_hash": "51894af04bdde869",
+        "same_rate_reset_blocks": [
+          645
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          709
+        ],
+        "standard_tuning_table_reset_blocks": [
+          837
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "2b04e21dca46a6679c908bee86ee165d2432186e4067043c9ad1558311c3c872",
+      "pcm_hash": "51894af04bdde869",
+      "peak": 1.2845444679260254,
+      "identical": true
+    },
+    {
+      "name": "eq3-48000-phase6",
+      "file": "eq3-48000-phase6.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq3-48000-phase6",
+        "file": "eq3-48000-phase6.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          518,
+          774
+        ],
+        "sample_rates": [
+          48000,
+          96000,
+          44100
+        ],
+        "peak": 1.28454446793,
+        "pcm_hash": "eea9bf215a759201",
+        "same_rate_reset_blocks": [
+          646
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          710
+        ],
+        "standard_tuning_table_reset_blocks": [
+          838
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "3cf50366b14b581f0048ca90ac0a522abe4097638bde2079147e852f860158cf",
+      "pcm_hash": "eea9bf215a759201",
+      "peak": 1.2845444679260254,
+      "identical": true
+    },
+    {
+      "name": "eq3-48000-phase7",
+      "file": "eq3-48000-phase7.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq3-48000-phase7",
+        "file": "eq3-48000-phase7.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          519,
+          775
+        ],
+        "sample_rates": [
+          48000,
+          96000,
+          44100
+        ],
+        "peak": 1.28454446793,
+        "pcm_hash": "576daf119ef44255",
+        "same_rate_reset_blocks": [
+          647
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          711
+        ],
+        "standard_tuning_table_reset_blocks": [
+          839
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "95eb107f94eba494b079adef2fa2e5630d0cfa849d4742606507bbc31d95aa38",
+      "pcm_hash": "576daf119ef44255",
+      "peak": 1.2845444679260254,
+      "identical": true
+    },
+    {
+      "name": "eq3-96000-phase0",
+      "file": "eq3-96000-phase0.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq3-96000-phase0",
+        "file": "eq3-96000-phase0.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          512,
+          768
+        ],
+        "sample_rates": [
+          96000,
+          44100,
+          48000
+        ],
+        "peak": 1.13437354565,
+        "pcm_hash": "41e5090a768f5cf9",
+        "same_rate_reset_blocks": [
+          640
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          704
+        ],
+        "standard_tuning_table_reset_blocks": [
+          832
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "ad266a69502e00fa1eb50151f74b3e7cf089d6becb3699555407f49175e737d5",
+      "pcm_hash": "41e5090a768f5cf9",
+      "peak": 1.1343735456466675,
+      "identical": true
+    },
+    {
+      "name": "eq3-96000-phase1",
+      "file": "eq3-96000-phase1.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq3-96000-phase1",
+        "file": "eq3-96000-phase1.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          513,
+          769
+        ],
+        "sample_rates": [
+          96000,
+          44100,
+          48000
+        ],
+        "peak": 1.13419401646,
+        "pcm_hash": "4cd802b956348151",
+        "same_rate_reset_blocks": [
+          641
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          705
+        ],
+        "standard_tuning_table_reset_blocks": [
+          833
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "a610a26a1761b35b9a267aa19db0f61e2734aa13902cf4286ec01fae5766771a",
+      "pcm_hash": "4cd802b956348151",
+      "peak": 1.134194016456604,
+      "identical": true
+    },
+    {
+      "name": "eq3-96000-phase2",
+      "file": "eq3-96000-phase2.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq3-96000-phase2",
+        "file": "eq3-96000-phase2.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          514,
+          770
+        ],
+        "sample_rates": [
+          96000,
+          44100,
+          48000
+        ],
+        "peak": 1.13419401646,
+        "pcm_hash": "82b7eb164bd92061",
+        "same_rate_reset_blocks": [
+          642
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          706
+        ],
+        "standard_tuning_table_reset_blocks": [
+          834
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "eaa9cb223dcb3169131badb20461fc4683f4b4ab2734deb6cc1642b99d7a8563",
+      "pcm_hash": "82b7eb164bd92061",
+      "peak": 1.134194016456604,
+      "identical": true
+    },
+    {
+      "name": "eq3-96000-phase3",
+      "file": "eq3-96000-phase3.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq3-96000-phase3",
+        "file": "eq3-96000-phase3.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          515,
+          771
+        ],
+        "sample_rates": [
+          96000,
+          44100,
+          48000
+        ],
+        "peak": 1.13647913933,
+        "pcm_hash": "20002f77d8256f75",
+        "same_rate_reset_blocks": [
+          643
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          707
+        ],
+        "standard_tuning_table_reset_blocks": [
+          835
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "bfc304282e4513736333919452a0672a8bc6bc950670b7b8df0a21d049ba52b9",
+      "pcm_hash": "20002f77d8256f75",
+      "peak": 1.136479139328003,
+      "identical": true
+    },
+    {
+      "name": "eq3-96000-phase4",
+      "file": "eq3-96000-phase4.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq3-96000-phase4",
+        "file": "eq3-96000-phase4.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          516,
+          772
+        ],
+        "sample_rates": [
+          96000,
+          44100,
+          48000
+        ],
+        "peak": 1.13419401646,
+        "pcm_hash": "a23a72f1233fde09",
+        "same_rate_reset_blocks": [
+          644
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          708
+        ],
+        "standard_tuning_table_reset_blocks": [
+          836
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "91056e67a6090412b458629cf49bee1f2b1054811c5b2079622d862ae2fac764",
+      "pcm_hash": "a23a72f1233fde09",
+      "peak": 1.134194016456604,
+      "identical": true
+    },
+    {
+      "name": "eq3-96000-phase5",
+      "file": "eq3-96000-phase5.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq3-96000-phase5",
+        "file": "eq3-96000-phase5.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          517,
+          773
+        ],
+        "sample_rates": [
+          96000,
+          44100,
+          48000
+        ],
+        "peak": 1.13419401646,
+        "pcm_hash": "9f9957c093443f79",
+        "same_rate_reset_blocks": [
+          645
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          709
+        ],
+        "standard_tuning_table_reset_blocks": [
+          837
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "08bbdd469476f44cdc8249b849168b3e323554a7786ece44dbb3e98b32e2785c",
+      "pcm_hash": "9f9957c093443f79",
+      "peak": 1.134194016456604,
+      "identical": true
+    },
+    {
+      "name": "eq3-96000-phase6",
+      "file": "eq3-96000-phase6.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq3-96000-phase6",
+        "file": "eq3-96000-phase6.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          518,
+          774
+        ],
+        "sample_rates": [
+          96000,
+          44100,
+          48000
+        ],
+        "peak": 1.13592553139,
+        "pcm_hash": "5bb7179ffe508e65",
+        "same_rate_reset_blocks": [
+          646
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          710
+        ],
+        "standard_tuning_table_reset_blocks": [
+          838
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "f02d6f9b72b2294ea46bf7131331a66b7dc8ae075cb68e794bbed76671603bcf",
+      "pcm_hash": "5bb7179ffe508e65",
+      "peak": 1.135925531387329,
+      "identical": true
+    },
+    {
+      "name": "eq3-96000-phase7",
+      "file": "eq3-96000-phase7.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "eq3-96000-phase7",
+        "file": "eq3-96000-phase7.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          519,
+          775
+        ],
+        "sample_rates": [
+          96000,
+          44100,
+          48000
+        ],
+        "peak": 1.13419401646,
+        "pcm_hash": "8f9f9058bc9cf6a9",
+        "same_rate_reset_blocks": [
+          647
+        ],
+        "outside_callback_init_blocks": [
+          448
+        ],
+        "direct_storage_rate_reset_blocks": [
+          711
+        ],
+        "standard_tuning_table_reset_blocks": [
+          839
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "a9f6777cc8dfc4393f42398b0fd4c4a4c3fd0d3ba0f59bf85285dc5e3989c386",
+      "pcm_hash": "8f9f9058bc9cf6a9",
+      "peak": 1.134194016456604,
+      "identical": true
+    },
+    {
+      "name": "lowcut-0-44100",
+      "file": "lowcut-0-44100.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "lowcut-0-44100",
+        "file": "lowcut-0-44100.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          512,
+          768
+        ],
+        "sample_rates": [
+          44100,
+          48000,
+          96000
+        ],
+        "peak": 1.15435445309,
+        "pcm_hash": "ac4a0f8ed686ab85",
+        "same_rate_reset_blocks": [
+          640
+        ],
+        "outside_callback_init_blocks": [],
+        "direct_storage_rate_reset_blocks": [
+          704
+        ],
+        "standard_tuning_table_reset_blocks": [
+          832
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "691bd39af0010c69ecc02ac37f66ecd9f0320a72aea07af15a833583dfd383c1",
+      "pcm_hash": "ac4a0f8ed686ab85",
+      "peak": 1.154354453086853,
+      "identical": true
+    },
+    {
+      "name": "lowcut-0-48000",
+      "file": "lowcut-0-48000.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "lowcut-0-48000",
+        "file": "lowcut-0-48000.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          512,
+          768
+        ],
+        "sample_rates": [
+          48000,
+          96000,
+          44100
+        ],
+        "peak": 1.1554248333,
+        "pcm_hash": "c265ee9b13769771",
+        "same_rate_reset_blocks": [
+          640
+        ],
+        "outside_callback_init_blocks": [],
+        "direct_storage_rate_reset_blocks": [
+          704
+        ],
+        "standard_tuning_table_reset_blocks": [
+          832
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "8694bf93bcd5a7dcbf7c85a5757efac543183e4344381c9d9d717a0a3860c392",
+      "pcm_hash": "c265ee9b13769771",
+      "peak": 1.1554248332977295,
+      "identical": true
+    },
+    {
+      "name": "lowcut-0-96000",
+      "file": "lowcut-0-96000.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "lowcut-0-96000",
+        "file": "lowcut-0-96000.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          512,
+          768
+        ],
+        "sample_rates": [
+          96000,
+          44100,
+          48000
+        ],
+        "peak": 1.39981639385,
+        "pcm_hash": "2294311b472217a5",
+        "same_rate_reset_blocks": [
+          640
+        ],
+        "outside_callback_init_blocks": [],
+        "direct_storage_rate_reset_blocks": [
+          704
+        ],
+        "standard_tuning_table_reset_blocks": [
+          832
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "c24005e9c05aefce83d007dce50cec9ad34bdb50effdd228d60b4b620e50811b",
+      "pcm_hash": "2294311b472217a5",
+      "peak": 1.3998163938522339,
+      "identical": true
+    },
+    {
+      "name": "lowcut-1-44100",
+      "file": "lowcut-1-44100.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "lowcut-1-44100",
+        "file": "lowcut-1-44100.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          512,
+          768
+        ],
+        "sample_rates": [
+          44100,
+          48000,
+          96000
+        ],
+        "peak": 1.15435445309,
+        "pcm_hash": "2a3b19ddc028fd49",
+        "same_rate_reset_blocks": [
+          640
+        ],
+        "outside_callback_init_blocks": [],
+        "direct_storage_rate_reset_blocks": [
+          704
+        ],
+        "standard_tuning_table_reset_blocks": [
+          832
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "1448f441e1f8a7e62dbcc48dfb3a9249b370a7462f695fbaf89873ceb0632f38",
+      "pcm_hash": "2a3b19ddc028fd49",
+      "peak": 1.154354453086853,
+      "identical": true
+    },
+    {
+      "name": "lowcut-1-48000",
+      "file": "lowcut-1-48000.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "lowcut-1-48000",
+        "file": "lowcut-1-48000.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          512,
+          768
+        ],
+        "sample_rates": [
+          48000,
+          96000,
+          44100
+        ],
+        "peak": 1.1554248333,
+        "pcm_hash": "1301774f160ffe21",
+        "same_rate_reset_blocks": [
+          640
+        ],
+        "outside_callback_init_blocks": [],
+        "direct_storage_rate_reset_blocks": [
+          704
+        ],
+        "standard_tuning_table_reset_blocks": [
+          832
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "06bd4bb955745c685a37afcd19e6185a2462bd06cda938568d05bd790fb1b393",
+      "pcm_hash": "1301774f160ffe21",
+      "peak": 1.1554248332977295,
+      "identical": true
+    },
+    {
+      "name": "lowcut-1-96000",
+      "file": "lowcut-1-96000.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "lowcut-1-96000",
+        "file": "lowcut-1-96000.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          512,
+          768
+        ],
+        "sample_rates": [
+          96000,
+          44100,
+          48000
+        ],
+        "peak": 1.39981639385,
+        "pcm_hash": "a27b242dfee43369",
+        "same_rate_reset_blocks": [
+          640
+        ],
+        "outside_callback_init_blocks": [],
+        "direct_storage_rate_reset_blocks": [
+          704
+        ],
+        "standard_tuning_table_reset_blocks": [
+          832
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "dfcb5852c145cf4e165d68b3190a999af0ce2a6af4c61c5bbd23b1231c55f704",
+      "pcm_hash": "a27b242dfee43369",
+      "peak": 1.3998163938522339,
+      "identical": true
+    },
+    {
+      "name": "lowcut-2-44100",
+      "file": "lowcut-2-44100.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "lowcut-2-44100",
+        "file": "lowcut-2-44100.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          512,
+          768
+        ],
+        "sample_rates": [
+          44100,
+          48000,
+          96000
+        ],
+        "peak": 1.15435445309,
+        "pcm_hash": "25e857bcf9c00aed",
+        "same_rate_reset_blocks": [
+          640
+        ],
+        "outside_callback_init_blocks": [],
+        "direct_storage_rate_reset_blocks": [
+          704
+        ],
+        "standard_tuning_table_reset_blocks": [
+          832
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "863eac42d3b92d2753df80f00441d2fffd5d8a003d63858b862ebc3cbd795958",
+      "pcm_hash": "25e857bcf9c00aed",
+      "peak": 1.154354453086853,
+      "identical": true
+    },
+    {
+      "name": "lowcut-2-48000",
+      "file": "lowcut-2-48000.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "lowcut-2-48000",
+        "file": "lowcut-2-48000.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          512,
+          768
+        ],
+        "sample_rates": [
+          48000,
+          96000,
+          44100
+        ],
+        "peak": 1.1554248333,
+        "pcm_hash": "3e78d78bcf08d12d",
+        "same_rate_reset_blocks": [
+          640
+        ],
+        "outside_callback_init_blocks": [],
+        "direct_storage_rate_reset_blocks": [
+          704
+        ],
+        "standard_tuning_table_reset_blocks": [
+          832
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "3d49cd535756e4b12f9edfc3e182423f7cfb19e04bc458cda51dfa0459363e0f",
+      "pcm_hash": "3e78d78bcf08d12d",
+      "peak": 1.1554248332977295,
+      "identical": true
+    },
+    {
+      "name": "lowcut-2-96000",
+      "file": "lowcut-2-96000.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "lowcut-2-96000",
+        "file": "lowcut-2-96000.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          512,
+          768
+        ],
+        "sample_rates": [
+          96000,
+          44100,
+          48000
+        ],
+        "peak": 1.39981639385,
+        "pcm_hash": "a14b8750430561a1",
+        "same_rate_reset_blocks": [
+          640
+        ],
+        "outside_callback_init_blocks": [],
+        "direct_storage_rate_reset_blocks": [
+          704
+        ],
+        "standard_tuning_table_reset_blocks": [
+          832
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "fd5f13e3b18065daea8e8b68ae6b32fcff80a123cf9ce1e7986e0376656a0d2b",
+      "pcm_hash": "a14b8750430561a1",
+      "peak": 1.3998163938522339,
+      "identical": true
+    },
+    {
+      "name": "lowcut-3-44100",
+      "file": "lowcut-3-44100.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "lowcut-3-44100",
+        "file": "lowcut-3-44100.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          512,
+          768
+        ],
+        "sample_rates": [
+          44100,
+          48000,
+          96000
+        ],
+        "peak": 1.15435445309,
+        "pcm_hash": "431c0a939b96b481",
+        "same_rate_reset_blocks": [
+          640
+        ],
+        "outside_callback_init_blocks": [],
+        "direct_storage_rate_reset_blocks": [
+          704
+        ],
+        "standard_tuning_table_reset_blocks": [
+          832
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "184a3b24885f42c08a5be68fd16bbdc5562fbc476aea0d2238a3ec4b174c5d16",
+      "pcm_hash": "431c0a939b96b481",
+      "peak": 1.154354453086853,
+      "identical": true
+    },
+    {
+      "name": "lowcut-3-48000",
+      "file": "lowcut-3-48000.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "lowcut-3-48000",
+        "file": "lowcut-3-48000.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          512,
+          768
+        ],
+        "sample_rates": [
+          48000,
+          96000,
+          44100
+        ],
+        "peak": 1.1554248333,
+        "pcm_hash": "06927cd37d78fded",
+        "same_rate_reset_blocks": [
+          640
+        ],
+        "outside_callback_init_blocks": [],
+        "direct_storage_rate_reset_blocks": [
+          704
+        ],
+        "standard_tuning_table_reset_blocks": [
+          832
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "31a2a43ce5e164020784fed4d68124773eb5a99580f50660e8cc3be90ee3b3dd",
+      "pcm_hash": "06927cd37d78fded",
+      "peak": 1.1554248332977295,
+      "identical": true
+    },
+    {
+      "name": "lowcut-3-96000",
+      "file": "lowcut-3-96000.f32",
+      "frames": 49152,
+      "metadata": {
+        "name": "lowcut-3-96000",
+        "file": "lowcut-3-96000.f32",
+        "frames": 49152,
+        "rate_change_blocks": [
+          512,
+          768
+        ],
+        "sample_rates": [
+          96000,
+          44100,
+          48000
+        ],
+        "peak": 1.39981639385,
+        "pcm_hash": "afb0637401351d19",
+        "same_rate_reset_blocks": [
+          640
+        ],
+        "outside_callback_init_blocks": [],
+        "direct_storage_rate_reset_blocks": [
+          704
+        ],
+        "standard_tuning_table_reset_blocks": [
+          832
+        ],
+        "processing_rounding_ranges": [
+          [
+            944,
+            976
+          ],
+          [
+            976,
+            1008
+          ]
+        ]
+      },
+      "bytes_per_file": 393216,
+      "sha256": "f210870611aca22bcbc37dc3591d6c6cbd9c0e868caeaf8969c11aafa48404f1",
+      "pcm_hash": "afb0637401351d19",
+      "peak": 1.3998163938522339,
+      "identical": true
+    }
+  ],
+  "scope": "Complete matching finite PCM bytes for the recorded lifecycle fixtures; no CPU or host claim."
+}

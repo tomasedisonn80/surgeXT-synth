@@ -1,0 +1,961 @@
+{
+  "schema": 1,
+  "agent": "/root/w10_a56_platform_status",
+  "observed_utc": "2026-11-15 12:01:40 UTC",
+  "implementation_sha": "ae551fa2a4bd95efe21633f1c41a9326c8ef5df0",
+  "runs": [
+    {
+      "id": 43710220156,
+      "name": "CPU optimization correctness",
+      "head_sha": "ae551fa2a4bd95efe21633f1c41a9326c8ef5df0",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43710220156",
+      "updated_at": "2026-11-15T11:49:14Z"
+    },
+    {
+      "id": 43710220189,
+      "name": "Native reference workspaces",
+      "head_sha": "ae551fa2a4bd95efe21633f1c41a9326c8ef5df0",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43710220189",
+      "updated_at": "2026-11-15T11:55:44Z"
+    },
+    {
+      "id": 43710220069,
+      "name": "Scoring 1000 native bank",
+      "head_sha": "ae551fa2a4bd95efe21633f1c41a9326c8ef5df0",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43710220069",
+      "updated_at": "2026-11-15T11:49:18Z"
+    },
+    {
+      "id": 43710220111,
+      "name": "Build release or nightly installer",
+      "head_sha": "ae551fa2a4bd95efe21633f1c41a9326c8ef5df0",
+      "status": "in_progress",
+      "conclusion": null,
+      "html_url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43710220111",
+      "updated_at": "2026-11-15T11:42:59Z"
+    }
+  ],
+  "native_jobs": [
+    {
+      "id": 132799943789,
+      "name": "Linux native UI and parameter tests",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43710220189/job/132799943789",
+      "started_at": "2026-11-15T11:42:34Z",
+      "completed_at": "2026-11-15T11:55:15Z",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:42:35Z",
+          "completed_at": "2026-11-15T11:42:36Z"
+        },
+        {
+          "name": "Check out the exact commit and dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:42:36Z",
+          "completed_at": "2026-11-15T11:43:25Z"
+        },
+        {
+          "name": "Prepare native build dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:43:25Z",
+          "completed_at": "2026-11-15T11:43:41Z"
+        },
+        {
+          "name": "Restore native compiler cache",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:43:41Z",
+          "completed_at": "2026-11-15T11:43:42Z"
+        },
+        {
+          "name": "Record build and capture provenance",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:43:42Z",
+          "completed_at": "2026-11-15T11:43:42Z"
+        },
+        {
+          "name": "Validate reference workspace packages",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:43:42Z",
+          "completed_at": "2026-11-15T11:43:42Z"
+        },
+        {
+          "name": "Configure native test build",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:43:42Z",
+          "completed_at": "2026-11-15T11:44:27Z"
+        },
+        {
+          "name": "Build the real synthesizer test executable",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:44:27Z",
+          "completed_at": "2026-11-15T11:54:08Z"
+        },
+        {
+          "name": "Test live native controls and processor behavior",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:54:08Z",
+          "completed_at": "2026-11-15T11:54:28Z"
+        },
+        {
+          "name": "Test embedded factory content in the CLAP host preset browser",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:54:28Z",
+          "completed_at": "2026-11-15T11:54:28Z"
+        },
+        {
+          "name": "Capture all ten native workspaces and edited states",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:54:28Z",
+          "completed_at": "2026-11-15T11:54:49Z"
+        },
+        {
+          "name": "Stress the independent audio display tap",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:54:49Z",
+          "completed_at": "2026-11-15T11:54:51Z"
+        },
+        {
+          "name": "Compare retained references with actual native captures",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:54:51Z",
+          "completed_at": "2026-11-15T11:55:06Z"
+        },
+        {
+          "name": "Upload reference comparison sheets",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:55:06Z",
+          "completed_at": "2026-11-15T11:55:08Z"
+        },
+        {
+          "name": "Upload native screenshots and diagnostic evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:55:08Z",
+          "completed_at": "2026-11-15T11:55:10Z"
+        },
+        {
+          "name": "Preserve compiled dependencies for the next verification pass",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:55:10Z",
+          "completed_at": "2026-11-15T11:55:13Z"
+        },
+        {
+          "name": "Post Check out the exact commit and dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:55:13Z",
+          "completed_at": "2026-11-15T11:55:13Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:55:13Z",
+          "completed_at": "2026-11-15T11:55:13Z"
+        }
+      ]
+    },
+    {
+      "id": 132803011615,
+      "name": "Commit verified native screenshot gallery",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43710220189/job/132803011615",
+      "started_at": "2026-11-15T11:55:17Z",
+      "completed_at": "2026-11-15T11:55:44Z",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:55:17Z",
+          "completed_at": "2026-11-15T11:55:18Z"
+        },
+        {
+          "name": "Check out the successfully tested source",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:55:18Z",
+          "completed_at": "2026-11-15T11:55:35Z"
+        },
+        {
+          "name": "Require the tested source to remain current on main",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:55:35Z",
+          "completed_at": "2026-11-15T11:55:36Z"
+        },
+        {
+          "name": "Download this successful run's native captures",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:55:36Z",
+          "completed_at": "2026-11-15T11:55:37Z"
+        },
+        {
+          "name": "Validate source, images and evidence; generate gallery",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:55:37Z",
+          "completed_at": "2026-11-15T11:55:37Z"
+        },
+        {
+          "name": "Commit only the current verified gallery",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:55:37Z",
+          "completed_at": "2026-11-15T11:55:41Z"
+        },
+        {
+          "name": "Post Check out the successfully tested source",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:55:41Z",
+          "completed_at": "2026-11-15T11:55:42Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:55:42Z",
+          "completed_at": "2026-11-15T11:55:42Z"
+        }
+      ]
+    }
+  ],
+  "release_jobs": [
+    {
+      "id": 132799943689,
+      "name": "Set up Surge XT version",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43710220111/job/132799943689",
+      "started_at": "2026-11-15T11:42:34Z",
+      "completed_at": "2026-11-15T11:42:54Z",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:42:35Z",
+          "completed_at": "2026-11-15T11:42:35Z"
+        },
+        {
+          "name": "Checkout code",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:42:35Z",
+          "completed_at": "2026-11-15T11:42:52Z"
+        },
+        {
+          "name": "Calculate version",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:42:52Z",
+          "completed_at": "2026-11-15T11:42:52Z"
+        },
+        {
+          "name": "Post Checkout code",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:42:52Z",
+          "completed_at": "2026-11-15T11:42:53Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:42:53Z",
+          "completed_at": "2026-11-15T11:42:53Z"
+        }
+      ]
+    },
+    {
+      "id": 132800032184,
+      "name": "Ubuntu 20 Docker",
+      "status": "in_progress",
+      "conclusion": null,
+      "html_url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43710220111/job/132800032184",
+      "started_at": "2026-11-15T11:42:57Z",
+      "completed_at": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:42:58Z",
+          "completed_at": "2026-11-15T11:43:00Z"
+        },
+        {
+          "name": "Checkout code",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:43:00Z",
+          "completed_at": "2026-11-15T11:43:58Z"
+        },
+        {
+          "name": "Build in Docker",
+          "status": "in_progress",
+          "conclusion": null,
+          "started_at": "2026-11-15T11:43:58Z",
+          "completed_at": null
+        },
+        {
+          "name": "Show installer directory",
+          "status": "pending",
+          "conclusion": null,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Upload artifact",
+          "status": "pending",
+          "conclusion": null,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Post Build in Docker",
+          "status": "pending",
+          "conclusion": null,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Post Checkout code",
+          "status": "pending",
+          "conclusion": null,
+          "started_at": null,
+          "completed_at": null
+        }
+      ]
+    },
+    {
+      "id": 132800032186,
+      "name": "Release - macOS",
+      "status": "in_progress",
+      "conclusion": null,
+      "html_url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43710220111/job/132800032186",
+      "started_at": "2026-11-15T11:42:57Z",
+      "completed_at": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:42:57Z",
+          "completed_at": "2026-11-15T11:42:59Z"
+        },
+        {
+          "name": "Checkout code",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:42:59Z",
+          "completed_at": "2026-11-15T11:44:12Z"
+        },
+        {
+          "name": "Revert JUCE",
+          "status": "completed",
+          "conclusion": "skipped",
+          "started_at": "2026-11-15T11:44:12Z",
+          "completed_at": "2026-11-15T11:44:12Z"
+        },
+        {
+          "name": "Resolve macOS signing mode",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:44:12Z",
+          "completed_at": "2026-11-15T11:44:13Z"
+        },
+        {
+          "name": "Run apple-actions/import-codesign-certs@v3",
+          "status": "completed",
+          "conclusion": "skipped",
+          "started_at": "2026-11-15T11:44:13Z",
+          "completed_at": "2026-11-15T11:44:13Z"
+        },
+        {
+          "name": "Run surge-synthesizer/sst-githubactions/install-innosetup@main",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:44:13Z",
+          "completed_at": "2026-11-15T11:44:13Z"
+        },
+        {
+          "name": "Prepare for JUCE",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:44:13Z",
+          "completed_at": "2026-11-15T11:44:13Z"
+        },
+        {
+          "name": "Build release version",
+          "status": "in_progress",
+          "conclusion": null,
+          "started_at": "2026-11-15T11:44:13Z",
+          "completed_at": null
+        },
+        {
+          "name": "Label unsigned macOS development artifacts",
+          "status": "pending",
+          "conclusion": null,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Show installer directory",
+          "status": "pending",
+          "conclusion": null,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Upload artifact",
+          "status": "pending",
+          "conclusion": null,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Post Checkout code",
+          "status": "pending",
+          "conclusion": null,
+          "started_at": null,
+          "completed_at": null
+        }
+      ]
+    },
+    {
+      "id": 132800032201,
+      "name": "Release - ubuntu-arm",
+      "status": "in_progress",
+      "conclusion": null,
+      "html_url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43710220111/job/132800032201",
+      "started_at": "2026-11-15T11:42:59Z",
+      "completed_at": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:42:59Z",
+          "completed_at": "2026-11-15T11:43:01Z"
+        },
+        {
+          "name": "Checkout code",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:43:01Z",
+          "completed_at": "2026-11-15T11:43:54Z"
+        },
+        {
+          "name": "Revert JUCE",
+          "status": "completed",
+          "conclusion": "skipped",
+          "started_at": "2026-11-15T11:43:54Z",
+          "completed_at": "2026-11-15T11:43:54Z"
+        },
+        {
+          "name": "Resolve macOS signing mode",
+          "status": "completed",
+          "conclusion": "skipped",
+          "started_at": "2026-11-15T11:43:54Z",
+          "completed_at": "2026-11-15T11:43:54Z"
+        },
+        {
+          "name": "Run apple-actions/import-codesign-certs@v3",
+          "status": "completed",
+          "conclusion": "skipped",
+          "started_at": "2026-11-15T11:43:54Z",
+          "completed_at": "2026-11-15T11:43:54Z"
+        },
+        {
+          "name": "Run surge-synthesizer/sst-githubactions/install-innosetup@main",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:43:54Z",
+          "completed_at": "2026-11-15T11:43:54Z"
+        },
+        {
+          "name": "Prepare for JUCE",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:43:54Z",
+          "completed_at": "2026-11-15T11:44:13Z"
+        },
+        {
+          "name": "Build release version",
+          "status": "in_progress",
+          "conclusion": null,
+          "started_at": "2026-11-15T11:44:13Z",
+          "completed_at": null
+        },
+        {
+          "name": "Label unsigned macOS development artifacts",
+          "status": "pending",
+          "conclusion": null,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Show installer directory",
+          "status": "pending",
+          "conclusion": null,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Upload artifact",
+          "status": "pending",
+          "conclusion": null,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Post Checkout code",
+          "status": "pending",
+          "conclusion": null,
+          "started_at": null,
+          "completed_at": null
+        }
+      ]
+    },
+    {
+      "id": 132800032207,
+      "name": "Release - Windows ARM64",
+      "status": "in_progress",
+      "conclusion": null,
+      "html_url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43710220111/job/132800032207",
+      "started_at": "2026-11-15T11:42:57Z",
+      "completed_at": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:42:58Z",
+          "completed_at": "2026-11-15T11:43:00Z"
+        },
+        {
+          "name": "Checkout code",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:43:00Z",
+          "completed_at": "2026-11-15T11:44:36Z"
+        },
+        {
+          "name": "Revert JUCE",
+          "status": "completed",
+          "conclusion": "skipped",
+          "started_at": "2026-11-15T11:44:36Z",
+          "completed_at": "2026-11-15T11:44:36Z"
+        },
+        {
+          "name": "Resolve macOS signing mode",
+          "status": "completed",
+          "conclusion": "skipped",
+          "started_at": "2026-11-15T11:44:36Z",
+          "completed_at": "2026-11-15T11:44:36Z"
+        },
+        {
+          "name": "Run apple-actions/import-codesign-certs@v3",
+          "status": "completed",
+          "conclusion": "skipped",
+          "started_at": "2026-11-15T11:44:36Z",
+          "completed_at": "2026-11-15T11:44:36Z"
+        },
+        {
+          "name": "Run surge-synthesizer/sst-githubactions/install-innosetup@main",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:44:36Z",
+          "completed_at": "2026-11-15T11:44:38Z"
+        },
+        {
+          "name": "Prepare for JUCE",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:44:38Z",
+          "completed_at": "2026-11-15T11:44:38Z"
+        },
+        {
+          "name": "Build release version",
+          "status": "in_progress",
+          "conclusion": null,
+          "started_at": "2026-11-15T11:44:38Z",
+          "completed_at": null
+        },
+        {
+          "name": "Label unsigned macOS development artifacts",
+          "status": "pending",
+          "conclusion": null,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Show installer directory",
+          "status": "pending",
+          "conclusion": null,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Upload artifact",
+          "status": "pending",
+          "conclusion": null,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Post Checkout code",
+          "status": "pending",
+          "conclusion": null,
+          "started_at": null,
+          "completed_at": null
+        }
+      ]
+    },
+    {
+      "id": 132800032211,
+      "name": "Release - Windows ARM64EC",
+      "status": "in_progress",
+      "conclusion": null,
+      "html_url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43710220111/job/132800032211",
+      "started_at": "2026-11-15T11:42:56Z",
+      "completed_at": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:42:57Z",
+          "completed_at": "2026-11-15T11:42:58Z"
+        },
+        {
+          "name": "Checkout code",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:42:58Z",
+          "completed_at": "2026-11-15T11:44:11Z"
+        },
+        {
+          "name": "Revert JUCE",
+          "status": "completed",
+          "conclusion": "skipped",
+          "started_at": "2026-11-15T11:44:11Z",
+          "completed_at": "2026-11-15T11:44:11Z"
+        },
+        {
+          "name": "Resolve macOS signing mode",
+          "status": "completed",
+          "conclusion": "skipped",
+          "started_at": "2026-11-15T11:44:11Z",
+          "completed_at": "2026-11-15T11:44:11Z"
+        },
+        {
+          "name": "Run apple-actions/import-codesign-certs@v3",
+          "status": "completed",
+          "conclusion": "skipped",
+          "started_at": "2026-11-15T11:44:11Z",
+          "completed_at": "2026-11-15T11:44:11Z"
+        },
+        {
+          "name": "Run surge-synthesizer/sst-githubactions/install-innosetup@main",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:44:11Z",
+          "completed_at": "2026-11-15T11:44:12Z"
+        },
+        {
+          "name": "Prepare for JUCE",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:44:12Z",
+          "completed_at": "2026-11-15T11:44:12Z"
+        },
+        {
+          "name": "Build release version",
+          "status": "in_progress",
+          "conclusion": null,
+          "started_at": "2026-11-15T11:44:12Z",
+          "completed_at": null
+        },
+        {
+          "name": "Label unsigned macOS development artifacts",
+          "status": "pending",
+          "conclusion": null,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Show installer directory",
+          "status": "pending",
+          "conclusion": null,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Upload artifact",
+          "status": "pending",
+          "conclusion": null,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Post Checkout code",
+          "status": "pending",
+          "conclusion": null,
+          "started_at": null,
+          "completed_at": null
+        }
+      ]
+    },
+    {
+      "id": 132800032214,
+      "name": "Release - Windows MSVC JUCE 7",
+      "status": "in_progress",
+      "conclusion": null,
+      "html_url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43710220111/job/132800032214",
+      "started_at": "2026-11-15T11:42:56Z",
+      "completed_at": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:42:57Z",
+          "completed_at": "2026-11-15T11:42:58Z"
+        },
+        {
+          "name": "Checkout code",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:42:58Z",
+          "completed_at": "2026-11-15T11:44:01Z"
+        },
+        {
+          "name": "Revert JUCE",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:44:01Z",
+          "completed_at": "2026-11-15T11:44:40Z"
+        },
+        {
+          "name": "Resolve macOS signing mode",
+          "status": "completed",
+          "conclusion": "skipped",
+          "started_at": "2026-11-15T11:44:40Z",
+          "completed_at": "2026-11-15T11:44:40Z"
+        },
+        {
+          "name": "Run apple-actions/import-codesign-certs@v3",
+          "status": "completed",
+          "conclusion": "skipped",
+          "started_at": "2026-11-15T11:44:40Z",
+          "completed_at": "2026-11-15T11:44:40Z"
+        },
+        {
+          "name": "Run surge-synthesizer/sst-githubactions/install-innosetup@main",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:44:40Z",
+          "completed_at": "2026-11-15T11:44:41Z"
+        },
+        {
+          "name": "Prepare for JUCE",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:44:41Z",
+          "completed_at": "2026-11-15T11:44:41Z"
+        },
+        {
+          "name": "Build release version",
+          "status": "in_progress",
+          "conclusion": null,
+          "started_at": "2026-11-15T11:44:41Z",
+          "completed_at": null
+        },
+        {
+          "name": "Label unsigned macOS development artifacts",
+          "status": "pending",
+          "conclusion": null,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Show installer directory",
+          "status": "pending",
+          "conclusion": null,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Upload artifact",
+          "status": "pending",
+          "conclusion": null,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Post Checkout code",
+          "status": "pending",
+          "conclusion": null,
+          "started_at": null,
+          "completed_at": null
+        }
+      ]
+    },
+    {
+      "id": 132800032228,
+      "name": "Release - Windows 64-bit",
+      "status": "in_progress",
+      "conclusion": null,
+      "html_url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43710220111/job/132800032228",
+      "started_at": "2026-11-15T11:42:56Z",
+      "completed_at": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:42:57Z",
+          "completed_at": "2026-11-15T11:42:58Z"
+        },
+        {
+          "name": "Checkout code",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:42:58Z",
+          "completed_at": "2026-11-15T11:44:20Z"
+        },
+        {
+          "name": "Revert JUCE",
+          "status": "completed",
+          "conclusion": "skipped",
+          "started_at": "2026-11-15T11:44:20Z",
+          "completed_at": "2026-11-15T11:44:20Z"
+        },
+        {
+          "name": "Resolve macOS signing mode",
+          "status": "completed",
+          "conclusion": "skipped",
+          "started_at": "2026-11-15T11:44:20Z",
+          "completed_at": "2026-11-15T11:44:20Z"
+        },
+        {
+          "name": "Run apple-actions/import-codesign-certs@v3",
+          "status": "completed",
+          "conclusion": "skipped",
+          "started_at": "2026-11-15T11:44:20Z",
+          "completed_at": "2026-11-15T11:44:20Z"
+        },
+        {
+          "name": "Run surge-synthesizer/sst-githubactions/install-innosetup@main",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:44:20Z",
+          "completed_at": "2026-11-15T11:44:21Z"
+        },
+        {
+          "name": "Prepare for JUCE",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-15T11:44:21Z",
+          "completed_at": "2026-11-15T11:44:21Z"
+        },
+        {
+          "name": "Build release version",
+          "status": "in_progress",
+          "conclusion": null,
+          "started_at": "2026-11-15T11:44:21Z",
+          "completed_at": null
+        },
+        {
+          "name": "Label unsigned macOS development artifacts",
+          "status": "pending",
+          "conclusion": null,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Show installer directory",
+          "status": "pending",
+          "conclusion": null,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Upload artifact",
+          "status": "pending",
+          "conclusion": null,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Post Checkout code",
+          "status": "pending",
+          "conclusion": null,
+          "started_at": null,
+          "completed_at": null
+        }
+      ]
+    }
+  ],
+  "branch_head": {
+    "sha": "1b0af2109679256d5624e4464ca97e4310be71b1",
+    "parents": [
+      "ae551fa2a4bd95efe21633f1c41a9326c8ef5df0"
+    ],
+    "message": "Publish native reference gallery for ae551fa2a4bd",
+    "html_url": "https://github.com/tomasedisonn80/surgeXT-synth/commit/1b0af2109679256d5624e4464ca97e4310be71b1",
+    "changed_files": [
+      "doc/reference-workspaces/native-gallery/05-space-age-1977-edited.png",
+      "doc/reference-workspaces/native-gallery/05-space-age-1977.png",
+      "doc/reference-workspaces/native-gallery/06-tokyo-industrial-edited.png",
+      "doc/reference-workspaces/native-gallery/06-tokyo-industrial.png",
+      "doc/reference-workspaces/native-gallery/07-liquid-aurora-edited.png",
+      "doc/reference-workspaces/native-gallery/07-liquid-aurora.png",
+      "doc/reference-workspaces/native-gallery/10-live-performance-deck-edited.png",
+      "doc/reference-workspaces/native-gallery/10-live-performance-deck.png",
+      "doc/reference-workspaces/native-gallery/README.md",
+      "doc/reference-workspaces/native-gallery/audio-tap-tsan.log",
+      "doc/reference-workspaces/native-gallery/audio-tap.log",
+      "doc/reference-workspaces/native-gallery/build-provenance.txt",
+      "doc/reference-workspaces/native-gallery/capture-evidence.json",
+      "doc/reference-workspaces/native-gallery/gallery-manifest.json",
+      "doc/reference-workspaces/native-gallery/index.html",
+      "doc/reference-workspaces/native-gallery/native-capture.log",
+      "doc/reference-workspaces/native-gallery/native-tests.log"
+    ]
+  },
+  "observed_failure_count": 0,
+  "limits": [
+    "Results apply only to the published implementation ae551fa2a4bd95efe21633f1c41a9326c8ef5df0, not the local append-only layout or thread-clock tooling changes.",
+    "All seven distribution jobs were still building; no cross-platform completion or commercial-host result is asserted.",
+    "Read-only snapshot; no workflow was restarted and no branch or remote content was modified."
+  ]
+}

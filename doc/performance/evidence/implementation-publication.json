@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "recorded_utc": "2026-11-15T12:06:01.345260+00:00",
+  "initial_implementation_commit": "ae551fa2a4bd95efe21633f1c41a9326c8ef5df0",
+  "preserved_gallery_parent": "1b0af2109679256d5624e4464ca97e4310be71b1",
+  "refined_implementation_commit": "489f0cf7bca2d3e129199b8779c7262a414d81f5",
+  "refined_tree": "31b413f1d3877b72b6dff3a7817ace6584de16a6",
+  "publication_method": "Non-force fast-forward with expected current head; remote tree matched staged local tree before updating main.",
+  "build_provenance": "final-build-provenance.json",
+  "audited_build_provenance_sha256": "da81a680b11961fcffd8eaccb747f5adf0c9c92f70ff55d5aae488dc0c105085",
+  "note": "The immutable build-provenance snapshot predates publication; this record maps it to the subsequently published matching production and harness source."
+}

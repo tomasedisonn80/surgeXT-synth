@@ -1,0 +1,879 @@
+{
+  "schema": 1,
+  "tool": "surge-cpu-compare",
+  "ok": true,
+  "baseline_git": "0dcc076",
+  "candidate_git": "0dcc076",
+  "metadata": {
+    "schema": 1,
+    "tool": "surge-cpu-bench",
+    "compiler": "GNU-14.2.0",
+    "configuration": "Release",
+    "lua_requested": "puc",
+    "has_lua": true,
+    "lto_requested": true,
+    "sample_rate": 48000,
+    "block_size": 32,
+    "seed": 1701,
+    "warmup_blocks": 128,
+    "repetitions": 8,
+    "format": "f32le-interleaved",
+    "channels": 2,
+    "frames": 1680000,
+    "pcm_hash_algorithm": "fnv1a64-f32le",
+    "fpu_guard": true,
+    "timing": "steady_clock wall time; engine + PCM copy + transport; excludes setup/events/I-O/hash",
+    "patch": ""
+  },
+  "audio_fingerprints_match": true,
+  "full_pcm_verified": true,
+  "max_regression_percent": null,
+  "interpretation": "Positive median_reduction_percent means less measured wall time.",
+  "limitations": [
+    "Offline wall timing includes bounded PCM copy and transport work; it is not a host deadline test.",
+    "Run on the same machine with matched build flags; shared-machine noise can exceed small changes.",
+    "PCM fingerprints are noncryptographic; full_pcm_verified requires complete matching PCM files."
+  ],
+  "scenarios": [
+    {
+      "name": "idle",
+      "requested_notes": 0,
+      "pcm_fingerprint": "73bede03e0c5b325",
+      "pcm": {
+        "bytes_per_file": 13440000,
+        "sha256": "6e1f7bb7325f16ba6edc0f5ba78390e965af929e51ebaf43f19ae79c960f5b7e",
+        "identical": true
+      },
+      "held": {
+        "baseline_wall_seconds": [
+          0.077281952,
+          0.077762103,
+          0.076398247,
+          0.077536136,
+          0.073819269,
+          0.081768253,
+          0.113455771,
+          0.081093125
+        ],
+        "candidate_wall_seconds": [
+          0.0824267,
+          0.077910322,
+          0.074971784,
+          0.075241631,
+          0.083309795,
+          0.084364629,
+          0.077674335,
+          0.082662131
+        ],
+        "baseline_median_seconds": 0.0776491195,
+        "candidate_median_seconds": 0.080168511,
+        "baseline_range_seconds": [
+          0.073819269,
+          0.113455771
+        ],
+        "candidate_range_seconds": [
+          0.074971784,
+          0.084364629
+        ],
+        "audio_seconds": 30,
+        "baseline_realtime_percent": 0.2588303983333333,
+        "candidate_realtime_percent": 0.26722837,
+        "median_reduction_percent": -3.2445847631279223,
+        "regression_threshold_passed": true
+      },
+      "tail": {
+        "baseline_wall_seconds": [
+          0.013270103,
+          0.012631928,
+          0.013599597,
+          0.012497292,
+          0.012504719,
+          0.01362745,
+          0.014212744,
+          0.013592198
+        ],
+        "candidate_wall_seconds": [
+          0.015397141,
+          0.012919552,
+          0.014041159,
+          0.012259911,
+          0.013107663,
+          0.0135746,
+          0.012354391,
+          0.014539756
+        ],
+        "baseline_median_seconds": 0.013431150499999999,
+        "candidate_median_seconds": 0.013341131499999999,
+        "baseline_range_seconds": [
+          0.012497292,
+          0.014212744
+        ],
+        "candidate_range_seconds": [
+          0.012259911,
+          0.015397141
+        ],
+        "audio_seconds": 5,
+        "baseline_realtime_percent": 0.26862301,
+        "candidate_realtime_percent": 0.26682262999999995,
+        "median_reduction_percent": 0.6702255328015272,
+        "regression_threshold_passed": true
+      }
+    },
+    {
+      "name": "init-1",
+      "requested_notes": 1,
+      "pcm_fingerprint": "05fd740f92ed877d",
+      "pcm": {
+        "bytes_per_file": 13440000,
+        "sha256": "4f85c8132dc36e7e17cf0df33c72647c8c1d80b4f31983e0bedc6679ed1ce66d",
+        "identical": true
+      },
+      "held": {
+        "baseline_wall_seconds": [
+          0.159385832,
+          0.165330834,
+          0.160408536,
+          0.22644408,
+          0.151376035,
+          0.170354178,
+          0.154531888,
+          0.156685555
+        ],
+        "candidate_wall_seconds": [
+          0.18834202,
+          0.174883569,
+          0.153556789,
+          0.159265711,
+          0.16446421,
+          0.174652773,
+          0.166189378,
+          0.176105446
+        ],
+        "baseline_median_seconds": 0.159897184,
+        "candidate_median_seconds": 0.17042107550000002,
+        "baseline_range_seconds": [
+          0.151376035,
+          0.22644408
+        ],
+        "candidate_range_seconds": [
+          0.153556789,
+          0.18834202
+        ],
+        "audio_seconds": 30,
+        "baseline_realtime_percent": 0.5329906133333333,
+        "candidate_realtime_percent": 0.5680702516666667,
+        "median_reduction_percent": -6.581661563220531,
+        "regression_threshold_passed": true
+      },
+      "tail": {
+        "baseline_wall_seconds": [
+          0.012472175,
+          0.012433865,
+          0.013039551,
+          0.014478896,
+          0.012059191,
+          0.013900463,
+          0.013020735,
+          0.012543961
+        ],
+        "candidate_wall_seconds": [
+          0.016198442,
+          0.016026941,
+          0.011939387,
+          0.012339007,
+          0.01395192,
+          0.013863316,
+          0.013219488,
+          0.017431093
+        ],
+        "baseline_median_seconds": 0.012782347999999999,
+        "candidate_median_seconds": 0.013907618,
+        "baseline_range_seconds": [
+          0.012059191,
+          0.014478896
+        ],
+        "candidate_range_seconds": [
+          0.011939387,
+          0.017431093
+        ],
+        "audio_seconds": 5,
+        "baseline_realtime_percent": 0.25564696,
+        "candidate_realtime_percent": 0.27815236,
+        "median_reduction_percent": -8.803312192720792,
+        "regression_threshold_passed": true
+      }
+    },
+    {
+      "name": "init-8",
+      "requested_notes": 8,
+      "pcm_fingerprint": "10b82ac8a2a34605",
+      "pcm": {
+        "bytes_per_file": 13440000,
+        "sha256": "d799e4ac34e6a9be36f5bfd46cf503dadaef9260abe3e4d4a1a4fc0eff6329eb",
+        "identical": true
+      },
+      "held": {
+        "baseline_wall_seconds": [
+          0.378863629,
+          0.370117021,
+          0.469609501,
+          0.365394307,
+          0.354682796,
+          0.392536579,
+          0.476906446,
+          0.392512925
+        ],
+        "candidate_wall_seconds": [
+          0.419486702,
+          0.429204774,
+          0.361488161,
+          0.382055919,
+          0.398842608,
+          0.3916164,
+          0.398592017,
+          0.510133253
+        ],
+        "baseline_median_seconds": 0.38568827699999997,
+        "candidate_median_seconds": 0.3987173125,
+        "baseline_range_seconds": [
+          0.354682796,
+          0.476906446
+        ],
+        "candidate_range_seconds": [
+          0.361488161,
+          0.510133253
+        ],
+        "audio_seconds": 30,
+        "baseline_realtime_percent": 1.28562759,
+        "candidate_realtime_percent": 1.3290577083333333,
+        "median_reduction_percent": -3.3781258796206526,
+        "regression_threshold_passed": true
+      },
+      "tail": {
+        "baseline_wall_seconds": [
+          0.014211271,
+          0.013869124,
+          0.016371178,
+          0.01296351,
+          0.013101901,
+          0.014758088,
+          0.015954946,
+          0.014518565
+        ],
+        "candidate_wall_seconds": [
+          0.014120106,
+          0.014193684,
+          0.013034993,
+          0.01309919,
+          0.013725254,
+          0.014612222,
+          0.015718605,
+          0.013322859
+        ],
+        "baseline_median_seconds": 0.014364918,
+        "candidate_median_seconds": 0.01392268,
+        "baseline_range_seconds": [
+          0.01296351,
+          0.016371178
+        ],
+        "candidate_range_seconds": [
+          0.013034993,
+          0.015718605
+        ],
+        "audio_seconds": 5,
+        "baseline_realtime_percent": 0.28729836,
+        "candidate_realtime_percent": 0.2784536,
+        "median_reduction_percent": 3.078597455272636,
+        "regression_threshold_passed": true
+      }
+    },
+    {
+      "name": "init-16",
+      "requested_notes": 16,
+      "pcm_fingerprint": "b9de29f9df2bdd0d",
+      "pcm": {
+        "bytes_per_file": 13440000,
+        "sha256": "ff40b8af1b5c49186ac1c238410255f77df22c802d576abcb53ea3afb620f079",
+        "identical": true
+      },
+      "held": {
+        "baseline_wall_seconds": [
+          0.648234142,
+          0.653527956,
+          0.649949669,
+          0.614350664,
+          0.612493685,
+          0.688459461,
+          0.651246956,
+          0.75312822
+        ],
+        "candidate_wall_seconds": [
+          0.685498839,
+          0.744968632,
+          0.719710843,
+          0.67241266,
+          0.646665996,
+          0.681141053,
+          0.764551058,
+          0.706800091
+        ],
+        "baseline_median_seconds": 0.6505983125,
+        "candidate_median_seconds": 0.696149465,
+        "baseline_range_seconds": [
+          0.612493685,
+          0.75312822
+        ],
+        "candidate_range_seconds": [
+          0.646665996,
+          0.764551058
+        ],
+        "audio_seconds": 30,
+        "baseline_realtime_percent": 2.1686610416666667,
+        "candidate_realtime_percent": 2.3204982166666666,
+        "median_reduction_percent": -7.0014249383716365,
+        "regression_threshold_passed": true
+      },
+      "tail": {
+        "baseline_wall_seconds": [
+          0.014909912,
+          0.015601339,
+          0.014688553,
+          0.016326693,
+          0.014534535,
+          0.014868822,
+          0.015407988,
+          0.017509238
+        ],
+        "candidate_wall_seconds": [
+          0.018073698,
+          0.016448665,
+          0.01706439,
+          0.014949169,
+          0.015304054,
+          0.015419252,
+          0.018697642,
+          0.015607381
+        ],
+        "baseline_median_seconds": 0.015158950000000001,
+        "candidate_median_seconds": 0.016028023000000002,
+        "baseline_range_seconds": [
+          0.014534535,
+          0.017509238
+        ],
+        "candidate_range_seconds": [
+          0.014949169,
+          0.018697642
+        ],
+        "audio_seconds": 5,
+        "baseline_realtime_percent": 0.303179,
+        "candidate_realtime_percent": 0.32056046000000005,
+        "median_reduction_percent": -5.733068583246204,
+        "regression_threshold_passed": true
+      }
+    },
+    {
+      "name": "lowcut-steep",
+      "requested_notes": 8,
+      "pcm_fingerprint": "fc0337462b2a7b75",
+      "pcm": {
+        "bytes_per_file": 13440000,
+        "sha256": "e957e078a248fcec2f8962556886bbea53344fd34009782089aa8dcc7474efc0",
+        "identical": true
+      },
+      "held": {
+        "baseline_wall_seconds": [
+          0.75948095,
+          0.852766957,
+          0.76477562,
+          0.697171107,
+          0.770892046,
+          0.834503615,
+          0.740110425,
+          0.778487197
+        ],
+        "candidate_wall_seconds": [
+          0.878661521,
+          0.851850688,
+          0.705632821,
+          0.795563218,
+          0.855758859,
+          0.91874015,
+          0.794731825,
+          0.786388623
+        ],
+        "baseline_median_seconds": 0.7678338330000001,
+        "candidate_median_seconds": 0.823706953,
+        "baseline_range_seconds": [
+          0.697171107,
+          0.852766957
+        ],
+        "candidate_range_seconds": [
+          0.705632821,
+          0.91874015
+        ],
+        "audio_seconds": 30,
+        "baseline_realtime_percent": 2.5594461100000006,
+        "candidate_realtime_percent": 2.745689843333333,
+        "median_reduction_percent": -7.276720248403001,
+        "regression_threshold_passed": true
+      },
+      "tail": {
+        "baseline_wall_seconds": [
+          0.026142318,
+          0.031398969,
+          0.033186102,
+          0.024467556,
+          0.02894031,
+          0.035004145,
+          0.026819027,
+          0.026148205
+        ],
+        "candidate_wall_seconds": [
+          0.031810477,
+          0.02470249,
+          0.024396829,
+          0.024600382,
+          0.028552271,
+          0.025515741,
+          0.029611843,
+          0.025221758
+        ],
+        "baseline_median_seconds": 0.0278796685,
+        "candidate_median_seconds": 0.025368749500000003,
+        "baseline_range_seconds": [
+          0.024467556,
+          0.035004145
+        ],
+        "candidate_range_seconds": [
+          0.024396829,
+          0.031810477
+        ],
+        "audio_seconds": 5,
+        "baseline_realtime_percent": 0.55759337,
+        "candidate_realtime_percent": 0.50737499,
+        "median_reduction_percent": 9.006272796966709,
+        "regression_threshold_passed": true
+      }
+    },
+    {
+      "name": "unused-formula",
+      "requested_notes": 16,
+      "pcm_fingerprint": "b9de29f9df2bdd0d",
+      "pcm": {
+        "bytes_per_file": 13440000,
+        "sha256": "ff40b8af1b5c49186ac1c238410255f77df22c802d576abcb53ea3afb620f079",
+        "identical": true
+      },
+      "held": {
+        "baseline_wall_seconds": [
+          1.233384257,
+          1.204862708,
+          1.271133815,
+          1.285599119,
+          1.154187621,
+          1.285680772,
+          1.302989428,
+          1.263667297
+        ],
+        "candidate_wall_seconds": [
+          1.528288494,
+          1.20097082,
+          1.251216257,
+          1.240024419,
+          1.325733592,
+          1.169997352,
+          1.292965506,
+          1.28224774
+        ],
+        "baseline_median_seconds": 1.2674005560000001,
+        "candidate_median_seconds": 1.2667319985,
+        "baseline_range_seconds": [
+          1.154187621,
+          1.302989428
+        ],
+        "candidate_range_seconds": [
+          1.169997352,
+          1.528288494
+        ],
+        "audio_seconds": 30,
+        "baseline_realtime_percent": 4.22466852,
+        "candidate_realtime_percent": 4.222439995,
+        "median_reduction_percent": 0.052750292465553184,
+        "regression_threshold_passed": true
+      },
+      "tail": {
+        "baseline_wall_seconds": [
+          0.017888538,
+          0.016227965,
+          0.017231926,
+          0.016773642,
+          0.01681973,
+          0.016469124,
+          0.017384485,
+          0.017464411
+        ],
+        "candidate_wall_seconds": [
+          0.029595078,
+          0.016134501,
+          0.020022754,
+          0.01511931,
+          0.017690444,
+          0.015305967,
+          0.017170559,
+          0.016922731
+        ],
+        "baseline_median_seconds": 0.017025828,
+        "candidate_median_seconds": 0.017046645,
+        "baseline_range_seconds": [
+          0.016227965,
+          0.017888538
+        ],
+        "candidate_range_seconds": [
+          0.01511931,
+          0.029595078
+        ],
+        "audio_seconds": 5,
+        "baseline_realtime_percent": 0.34051656,
+        "candidate_realtime_percent": 0.3409329,
+        "median_reduction_percent": -0.12226718136703063,
+        "regression_threshold_passed": true
+      }
+    },
+    {
+      "name": "active-formula",
+      "requested_notes": 16,
+      "pcm_fingerprint": "cdc0001af92e45b5",
+      "pcm": {
+        "bytes_per_file": 13440000,
+        "sha256": "57b434b92be1e3054dd538f90aa3f81dd46e980cafd23cbdfbed22a85b8f9522",
+        "identical": true
+      },
+      "held": {
+        "baseline_wall_seconds": [
+          8.263781093,
+          8.372631534,
+          8.780275939,
+          7.793429404,
+          7.85980462,
+          8.584302424,
+          8.342227273,
+          7.952136923
+        ],
+        "candidate_wall_seconds": [
+          8.590735516,
+          9.006064896,
+          8.403784864,
+          7.724815903,
+          9.264715932,
+          8.977251992,
+          9.208106839,
+          8.715695296
+        ],
+        "baseline_median_seconds": 8.303004183,
+        "candidate_median_seconds": 8.846473644,
+        "baseline_range_seconds": [
+          7.793429404,
+          8.780275939
+        ],
+        "candidate_range_seconds": [
+          7.724815903,
+          9.264715932
+        ],
+        "audio_seconds": 30,
+        "baseline_realtime_percent": 27.676680610000002,
+        "candidate_realtime_percent": 29.48824548,
+        "median_reduction_percent": -6.545455705210013,
+        "regression_threshold_passed": true
+      },
+      "tail": {
+        "baseline_wall_seconds": [
+          0.029150125,
+          0.028308123,
+          0.027369665,
+          0.02235597,
+          0.022421207,
+          0.053545443,
+          0.024396525,
+          0.023557008
+        ],
+        "candidate_wall_seconds": [
+          0.02923289,
+          0.049236309,
+          0.026439303,
+          0.02482255,
+          0.02832097,
+          0.025491517,
+          0.02709225,
+          0.027979608
+        ],
+        "baseline_median_seconds": 0.025883095000000002,
+        "candidate_median_seconds": 0.027535929,
+        "baseline_range_seconds": [
+          0.02235597,
+          0.053545443
+        ],
+        "candidate_range_seconds": [
+          0.02482255,
+          0.049236309
+        ],
+        "audio_seconds": 5,
+        "baseline_realtime_percent": 0.5176619,
+        "candidate_realtime_percent": 0.5507185800000001,
+        "median_reduction_percent": -6.385766462627429,
+        "regression_threshold_passed": true
+      }
+    },
+    {
+      "name": "conditioner",
+      "requested_notes": 8,
+      "pcm_fingerprint": "5e2ae168bd69a131",
+      "pcm": {
+        "bytes_per_file": 13440000,
+        "sha256": "f4d9438982b7dafcc9c91adb6ade0684b38552b085786e11126f042e1f669632",
+        "identical": true
+      },
+      "held": {
+        "baseline_wall_seconds": [
+          0.458117899,
+          0.481591298,
+          0.453191337,
+          0.397545443,
+          0.410827058,
+          0.444811293,
+          0.4838785,
+          0.400987976
+        ],
+        "candidate_wall_seconds": [
+          0.486490067,
+          0.486358499,
+          0.391416939,
+          0.418763142,
+          0.405754893,
+          0.402014965,
+          0.528088929,
+          0.402919641
+        ],
+        "baseline_median_seconds": 0.449001315,
+        "candidate_median_seconds": 0.4122590175,
+        "baseline_range_seconds": [
+          0.397545443,
+          0.4838785
+        ],
+        "candidate_range_seconds": [
+          0.391416939,
+          0.528088929
+        ],
+        "audio_seconds": 30,
+        "baseline_realtime_percent": 1.49667105,
+        "candidate_realtime_percent": 1.374196725,
+        "median_reduction_percent": 8.183115788870243,
+        "regression_threshold_passed": true
+      },
+      "tail": {
+        "baseline_wall_seconds": [
+          0.019113474,
+          0.015253209,
+          0.063856894,
+          0.013837547,
+          0.015138931,
+          0.013717683,
+          0.015768081,
+          0.014196127
+        ],
+        "candidate_wall_seconds": [
+          0.016607383,
+          0.014634743,
+          0.013455835,
+          0.013753745,
+          0.01378399,
+          0.014922961,
+          0.026934371,
+          0.013542564
+        ],
+        "baseline_median_seconds": 0.015196069999999999,
+        "candidate_median_seconds": 0.0142093665,
+        "baseline_range_seconds": [
+          0.013717683,
+          0.063856894
+        ],
+        "candidate_range_seconds": [
+          0.013455835,
+          0.026934371
+        ],
+        "audio_seconds": 5,
+        "baseline_realtime_percent": 0.3039214,
+        "candidate_realtime_percent": 0.28418733,
+        "median_reduction_percent": 6.493149215553751,
+        "regression_threshold_passed": true
+      }
+    },
+    {
+      "name": "eq3",
+      "requested_notes": 8,
+      "pcm_fingerprint": "eb211db5e6cf3ee9",
+      "pcm": {
+        "bytes_per_file": 13440000,
+        "sha256": "4f18de81d14120296266ea512e23a0a22eb02f7e75515d56986860cd1819ad7e",
+        "identical": true
+      },
+      "held": {
+        "baseline_wall_seconds": [
+          0.503067251,
+          0.413978063,
+          0.380264636,
+          0.381073113,
+          0.452170884,
+          0.440815785,
+          0.463688669,
+          0.39575151
+        ],
+        "candidate_wall_seconds": [
+          0.429922063,
+          0.435760874,
+          0.411774025,
+          0.393668325,
+          0.390377527,
+          0.415334407,
+          0.450170213,
+          0.498666902
+        ],
+        "baseline_median_seconds": 0.427396924,
+        "candidate_median_seconds": 0.422628235,
+        "baseline_range_seconds": [
+          0.380264636,
+          0.503067251
+        ],
+        "candidate_range_seconds": [
+          0.390377527,
+          0.498666902
+        ],
+        "audio_seconds": 30,
+        "baseline_realtime_percent": 1.4246564133333335,
+        "candidate_realtime_percent": 1.4087607833333335,
+        "median_reduction_percent": 1.1157518297908897,
+        "regression_threshold_passed": true
+      },
+      "tail": {
+        "baseline_wall_seconds": [
+          0.018770748,
+          0.017816571,
+          0.019521264,
+          0.016912536,
+          0.016828183,
+          0.017138311,
+          0.020155033,
+          0.017451089
+        ],
+        "candidate_wall_seconds": [
+          0.021299736,
+          0.017374114,
+          0.017976595,
+          0.017072663,
+          0.034652449,
+          0.017032374,
+          0.018060301,
+          0.018761646
+        ],
+        "baseline_median_seconds": 0.01763383,
+        "candidate_median_seconds": 0.018018448,
+        "baseline_range_seconds": [
+          0.016828183,
+          0.020155033
+        ],
+        "candidate_range_seconds": [
+          0.017032374,
+          0.034652449
+        ],
+        "audio_seconds": 5,
+        "baseline_realtime_percent": 0.3526766,
+        "candidate_realtime_percent": 0.36036896,
+        "median_reduction_percent": -2.181137053039528,
+        "regression_threshold_passed": true
+      }
+    },
+    {
+      "name": "eq11",
+      "requested_notes": 8,
+      "pcm_fingerprint": "c03d490686098d21",
+      "pcm": {
+        "bytes_per_file": 13440000,
+        "sha256": "56d23ac5564aa949762c9ed34b3f32b4b30513c6538e5f8d7aacf67d82c278f2",
+        "identical": true
+      },
+      "held": {
+        "baseline_wall_seconds": [
+          0.493850781,
+          0.478530601,
+          0.416887775,
+          0.449830019,
+          0.471238137,
+          0.436474098,
+          0.450136991,
+          0.434124178
+        ],
+        "candidate_wall_seconds": [
+          0.496090817,
+          0.473741433,
+          0.481550192,
+          0.431537927,
+          0.595744112,
+          0.46467827,
+          0.513091558,
+          0.4426743
+        ],
+        "baseline_median_seconds": 0.449983505,
+        "candidate_median_seconds": 0.4776458125,
+        "baseline_range_seconds": [
+          0.416887775,
+          0.493850781
+        ],
+        "candidate_range_seconds": [
+          0.431537927,
+          0.595744112
+        ],
+        "audio_seconds": 30,
+        "baseline_realtime_percent": 1.4999450166666668,
+        "candidate_realtime_percent": 1.5921527083333333,
+        "median_reduction_percent": -6.147404780981902,
+        "regression_threshold_passed": true
+      },
+      "tail": {
+        "baseline_wall_seconds": [
+          0.024774077,
+          0.025365841,
+          0.023366479,
+          0.025205837,
+          0.027442838,
+          0.023520209,
+          0.0243196,
+          0.026291347
+        ],
+        "candidate_wall_seconds": [
+          0.028258202,
+          0.034378954,
+          0.027512766,
+          0.022439824,
+          0.029402316,
+          0.024216796,
+          0.023289999,
+          0.023165134
+        ],
+        "baseline_median_seconds": 0.024989957,
+        "candidate_median_seconds": 0.025864781,
+        "baseline_range_seconds": [
+          0.023366479,
+          0.027442838
+        ],
+        "candidate_range_seconds": [
+          0.022439824,
+          0.034378954
+        ],
+        "audio_seconds": 5,
+        "baseline_realtime_percent": 0.49979914000000003,
+        "candidate_realtime_percent": 0.51729562,
+        "median_reduction_percent": -3.5007023021287997,
+        "regression_threshold_passed": true
+      }
+    }
+  ]
+}

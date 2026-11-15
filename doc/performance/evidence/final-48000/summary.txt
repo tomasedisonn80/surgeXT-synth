@@ -1,0 +1,27 @@
+Paired offline comparison: 8 rounds, alternating AB/BA order.
+First-pair complete PCM verified; every round has the same recorded audio fingerprint.
+Positive reduction means less measured wall time; shared-machine noise remains possible.
+idle: held -2.074%, tail -0.053% median reduction
+init-1: held -3.050%, tail -1.671% median reduction
+init-8: held -5.007%, tail -1.931% median reduction
+init-16: held +0.674%, tail +7.713% median reduction
+lowcut-steep: held +0.409%, tail +3.548% median reduction
+unused-formula: held +5.547%, tail +5.074% median reduction
+active-formula: held +0.947%, tail -3.121% median reduction
+conditioner: held +2.915%, tail +1.201% median reduction
+eq3: held +3.454%, tail +8.280% median reduction
+eq11: held +4.899%, tail +7.218% median reduction
+
+Render-thread CPU comparison (CLOCK_THREAD_CPUTIME_ID):
+Positive reduction means less CPU time charged to the rendering thread.
+CPU frequency/cache effects remain; this is not a host-deadline measurement.
+active-formula: held +1.274%, tail -3.126% CPU median reduction
+conditioner: held +2.056%, tail +1.249% CPU median reduction
+eq11: held +4.890%, tail +7.338% CPU median reduction
+eq3: held +3.450%, tail +8.282% CPU median reduction
+idle: held -2.158%, tail -0.050% CPU median reduction
+init-1: held -3.020%, tail -1.085% CPU median reduction
+init-16: held +0.775%, tail +7.843% CPU median reduction
+init-8: held -5.008%, tail -1.444% CPU median reduction
+lowcut-steep: held -0.179%, tail +3.514% CPU median reduction
+unused-formula: held +5.707%, tail +5.106% CPU median reduction

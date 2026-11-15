@@ -1,0 +1,437 @@
+{
+  "schema": 1,
+  "tool": "surge-cpu-paired-runner",
+  "ok": true,
+  "started_utc": "2026-11-15T11:42:50.134062+00:00",
+  "cwd": "/workspace/scratch/4185df6afb07/surgeXT-synth",
+  "machine": {
+    "system": "Linux",
+    "release": "6.18.57",
+    "machine": "x86_64",
+    "processor": "",
+    "logical_cpus_reported": 9,
+    "python": "3.12.14",
+    "process_cpu_affinity": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "cpuinfo_labels": {
+      "vendor_id": [
+        "AuthenticAMD"
+      ],
+      "cpu family": [
+        "25"
+      ],
+      "model": [
+        "17"
+      ],
+      "model name": [
+        "AMD EPYC 9V74 80-Core Processor"
+      ],
+      "stepping": [
+        "1"
+      ]
+    }
+  },
+  "binaries": {
+    "baseline": {
+      "path": "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+      "bytes": 8673416,
+      "sha256": "855ce0849fed10c10cafc63ae5897541f0838844f8b196d6d97607c42a620379"
+    },
+    "candidate": {
+      "path": "/workspace/scratch/4185df6afb07/build-candidate/src/performance/surge-cpu-bench",
+      "bytes": 8677400,
+      "sha256": "9db7bfce8f33ab9ea78234ba85f947fbe4c04a94da13944c5d163d4d2d61e5f6"
+    }
+  },
+  "patch": null,
+  "source": {
+    "root": "/workspace/scratch/4185df6afb07/surgeXT-synth",
+    "files": {
+      "src/performance/CpuBenchmark.cpp": {
+        "path": "/workspace/scratch/4185df6afb07/surgeXT-synth/src/performance/CpuBenchmark.cpp",
+        "bytes": 21467,
+        "sha256": "0c25c92bac2e6c537ec98c28f15b6b5f60b10afbec89e7c02dd847eba8fbaec0"
+      },
+      "src/performance/CMakeLists.txt": {
+        "path": "/workspace/scratch/4185df6afb07/surgeXT-synth/src/performance/CMakeLists.txt",
+        "bytes": 1666,
+        "sha256": "6a24b2dc7cf19a1fe8100071ae0358c6814e73bc8f952cd6adf3624ff61ba29a"
+      },
+      "scripts/performance/compare.py": {
+        "path": "/workspace/scratch/4185df6afb07/surgeXT-synth/scripts/performance/compare.py",
+        "bytes": 16427,
+        "sha256": "6306fb622e842dde682bc68e0221b6f74af832c7b7b9f3cb31aad7ca79c62685"
+      },
+      "scripts/performance/run_comparison.py": {
+        "path": "/workspace/scratch/4185df6afb07/surgeXT-synth/scripts/performance/run_comparison.py",
+        "bytes": 15937,
+        "sha256": "778db34e92bc63007b5948dee1abb6261eda662f3c467cb62fc62926c9f7c7eb"
+      }
+    },
+    "scope": "Current working-tree harness/scripts; these hashes do not attest binary build inputs.",
+    "git_head": "ae551fa2a4bd95efe21633f1c41a9326c8ef5df0",
+    "tracked_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tracked_diff_empty": true
+  },
+  "rounds": 7,
+  "commands": [
+    {
+      "round": 1,
+      "side": "baseline",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/paired-48000/round-01-baseline.json",
+        "--repetitions",
+        "1",
+        "--seconds",
+        "3.0",
+        "--tail-seconds",
+        "1.0",
+        "--sample-rate",
+        "48000",
+        "--scenario",
+        "all",
+        "--pcm-dir",
+        "/workspace/scratch/4185df6afb07/paired-48000/baseline-pcm"
+      ],
+      "log": "round-01-baseline.log",
+      "process_wall_seconds": 1.6686843869974837,
+      "returncode": 0
+    },
+    {
+      "round": 1,
+      "side": "candidate",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-candidate/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/paired-48000/round-01-candidate.json",
+        "--repetitions",
+        "1",
+        "--seconds",
+        "3.0",
+        "--tail-seconds",
+        "1.0",
+        "--sample-rate",
+        "48000",
+        "--scenario",
+        "all",
+        "--pcm-dir",
+        "/workspace/scratch/4185df6afb07/paired-48000/candidate-pcm"
+      ],
+      "log": "round-01-candidate.log",
+      "process_wall_seconds": 1.769630037000752,
+      "returncode": 0
+    },
+    {
+      "round": 2,
+      "side": "candidate",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-candidate/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/paired-48000/round-02-candidate.json",
+        "--repetitions",
+        "1",
+        "--seconds",
+        "3.0",
+        "--tail-seconds",
+        "1.0",
+        "--sample-rate",
+        "48000",
+        "--scenario",
+        "all"
+      ],
+      "log": "round-02-candidate.log",
+      "process_wall_seconds": 1.569040700000187,
+      "returncode": 0
+    },
+    {
+      "round": 2,
+      "side": "baseline",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/paired-48000/round-02-baseline.json",
+        "--repetitions",
+        "1",
+        "--seconds",
+        "3.0",
+        "--tail-seconds",
+        "1.0",
+        "--sample-rate",
+        "48000",
+        "--scenario",
+        "all"
+      ],
+      "log": "round-02-baseline.log",
+      "process_wall_seconds": 1.5694647490017815,
+      "returncode": 0
+    },
+    {
+      "round": 3,
+      "side": "baseline",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/paired-48000/round-03-baseline.json",
+        "--repetitions",
+        "1",
+        "--seconds",
+        "3.0",
+        "--tail-seconds",
+        "1.0",
+        "--sample-rate",
+        "48000",
+        "--scenario",
+        "all"
+      ],
+      "log": "round-03-baseline.log",
+      "process_wall_seconds": 1.5680015910038492,
+      "returncode": 0
+    },
+    {
+      "round": 3,
+      "side": "candidate",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-candidate/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/paired-48000/round-03-candidate.json",
+        "--repetitions",
+        "1",
+        "--seconds",
+        "3.0",
+        "--tail-seconds",
+        "1.0",
+        "--sample-rate",
+        "48000",
+        "--scenario",
+        "all"
+      ],
+      "log": "round-03-candidate.log",
+      "process_wall_seconds": 1.467684613999154,
+      "returncode": 0
+    },
+    {
+      "round": 4,
+      "side": "candidate",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-candidate/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/paired-48000/round-04-candidate.json",
+        "--repetitions",
+        "1",
+        "--seconds",
+        "3.0",
+        "--tail-seconds",
+        "1.0",
+        "--sample-rate",
+        "48000",
+        "--scenario",
+        "all"
+      ],
+      "log": "round-04-candidate.log",
+      "process_wall_seconds": 1.6196855200032587,
+      "returncode": 0
+    },
+    {
+      "round": 4,
+      "side": "baseline",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/paired-48000/round-04-baseline.json",
+        "--repetitions",
+        "1",
+        "--seconds",
+        "3.0",
+        "--tail-seconds",
+        "1.0",
+        "--sample-rate",
+        "48000",
+        "--scenario",
+        "all"
+      ],
+      "log": "round-04-baseline.log",
+      "process_wall_seconds": 1.5182848080003168,
+      "returncode": 0
+    },
+    {
+      "round": 5,
+      "side": "baseline",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/paired-48000/round-05-baseline.json",
+        "--repetitions",
+        "1",
+        "--seconds",
+        "3.0",
+        "--tail-seconds",
+        "1.0",
+        "--sample-rate",
+        "48000",
+        "--scenario",
+        "all"
+      ],
+      "log": "round-05-baseline.log",
+      "process_wall_seconds": 1.5178470259997994,
+      "returncode": 0
+    },
+    {
+      "round": 5,
+      "side": "candidate",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-candidate/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/paired-48000/round-05-candidate.json",
+        "--repetitions",
+        "1",
+        "--seconds",
+        "3.0",
+        "--tail-seconds",
+        "1.0",
+        "--sample-rate",
+        "48000",
+        "--scenario",
+        "all"
+      ],
+      "log": "round-05-candidate.log",
+      "process_wall_seconds": 1.518520361998526,
+      "returncode": 0
+    },
+    {
+      "round": 6,
+      "side": "candidate",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-candidate/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/paired-48000/round-06-candidate.json",
+        "--repetitions",
+        "1",
+        "--seconds",
+        "3.0",
+        "--tail-seconds",
+        "1.0",
+        "--sample-rate",
+        "48000",
+        "--scenario",
+        "all"
+      ],
+      "log": "round-06-candidate.log",
+      "process_wall_seconds": 1.6713838750001742,
+      "returncode": 0
+    },
+    {
+      "round": 6,
+      "side": "baseline",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/paired-48000/round-06-baseline.json",
+        "--repetitions",
+        "1",
+        "--seconds",
+        "3.0",
+        "--tail-seconds",
+        "1.0",
+        "--sample-rate",
+        "48000",
+        "--scenario",
+        "all"
+      ],
+      "log": "round-06-baseline.log",
+      "process_wall_seconds": 1.6721131949962,
+      "returncode": 0
+    },
+    {
+      "round": 7,
+      "side": "baseline",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/paired-48000/round-07-baseline.json",
+        "--repetitions",
+        "1",
+        "--seconds",
+        "3.0",
+        "--tail-seconds",
+        "1.0",
+        "--sample-rate",
+        "48000",
+        "--scenario",
+        "all"
+      ],
+      "log": "round-07-baseline.log",
+      "process_wall_seconds": 1.6705266799981473,
+      "returncode": 0
+    },
+    {
+      "round": 7,
+      "side": "candidate",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-candidate/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/paired-48000/round-07-candidate.json",
+        "--repetitions",
+        "1",
+        "--seconds",
+        "3.0",
+        "--tail-seconds",
+        "1.0",
+        "--sample-rate",
+        "48000",
+        "--scenario",
+        "all"
+      ],
+      "log": "round-07-candidate.log",
+      "process_wall_seconds": 1.518810666995705,
+      "returncode": 0
+    }
+  ],
+  "order": [
+    [
+      "baseline",
+      "candidate"
+    ],
+    [
+      "candidate",
+      "baseline"
+    ],
+    [
+      "baseline",
+      "candidate"
+    ],
+    [
+      "candidate",
+      "baseline"
+    ],
+    [
+      "baseline",
+      "candidate"
+    ],
+    [
+      "candidate",
+      "baseline"
+    ],
+    [
+      "baseline",
+      "candidate"
+    ]
+  ],
+  "limitations": [
+    "OS/CPU labels do not prove exclusive hardware or fixed clock frequency.",
+    "Ambient user defaults and external tuning services must be controlled by the operator.",
+    "Requested report flags are not a substitute for retaining effective build commands.",
+    "Only first-round PCM is retained; subsequent audio equality uses noncryptographic fingerprints."
+  ],
+  "finished_utc": "2026-11-15T11:43:15.971275+00:00"
+}

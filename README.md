@@ -1,5 +1,26 @@
 # Surge XT
 
+## This fork: CPU efficiency and reproducible evidence
+
+The CPU pass reuses unchanged Conditioner/EQ coefficient targets, simplifies
+modulation-mask preparation, shares lowcut frequency conversion, and caches
+output pointers within each plugin callback. Cache invalidation covers live
+inputs, resets, sample rate, table rebuilds and floating-point controls. Existing
+voice limits, oversampling, smoothing, effect tails, factory presets and skins
+are preserved. Release and LTO were already enabled; the new presets make the
+build configuration explicit.
+
+- [Measured results and validation scope](doc/performance/RESULTS.md)
+- [Plugin build and benchmark instructions](doc/performance/README.md)
+- [Actual specialist-agent ledger](doc/performance/AGENT_LEDGER.md)
+- [Engineering work log](doc/performance/WORK_LOG.md)
+
+Use `cmake --preset cpu-release` and `cmake --build --preset cpu-release`
+after installing the platform prerequisites below. The separate `cpu-headless`
+preset builds offline validation tools. Performance results are tied to the
+recorded fixtures and environment; the report retains unfavorable and
+inconclusive experiments as well as the final measurements.
+
 ## This fork: Scoring 1000 factory bank
 
 **Scoring 1000 adds 1,000 original, self-contained FXP presets in ten categories**:

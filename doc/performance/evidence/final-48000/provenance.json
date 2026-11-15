@@ -1,0 +1,548 @@
+{
+  "schema": 1,
+  "tool": "surge-cpu-paired-runner",
+  "ok": true,
+  "started_utc": "2026-11-15T12:05:37.681427+00:00",
+  "cwd": "/workspace/scratch/4185df6afb07/surgeXT-synth",
+  "machine": {
+    "system": "Linux",
+    "release": "6.18.57",
+    "machine": "x86_64",
+    "processor": "",
+    "logical_cpus_reported": 9,
+    "python": "3.12.14",
+    "process_cpu_affinity": [
+      0
+    ],
+    "cpuinfo_labels": {
+      "vendor_id": [
+        "AuthenticAMD"
+      ],
+      "cpu family": [
+        "25"
+      ],
+      "model": [
+        "17"
+      ],
+      "model name": [
+        "AMD EPYC 9V74 80-Core Processor"
+      ],
+      "stepping": [
+        "1"
+      ]
+    }
+  },
+  "binaries": {
+    "baseline": {
+      "path": "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+      "bytes": 8673960,
+      "sha256": "9b3d798abb9550db1969e57405751f235f2254d6f16b9b78f218a0f15b7476a6"
+    },
+    "candidate": {
+      "path": "/workspace/scratch/4185df6afb07/build-candidate/src/performance/surge-cpu-bench",
+      "bytes": 8682016,
+      "sha256": "292b64264545a58f285c3a95b18a3168a2ee01303e452b65ababe99e25199727"
+    }
+  },
+  "patch": null,
+  "source": {
+    "root": "/workspace/scratch/4185df6afb07/surgeXT-synth",
+    "files": {
+      "src/performance/CpuBenchmark.cpp": {
+        "path": "/workspace/scratch/4185df6afb07/surgeXT-synth/src/performance/CpuBenchmark.cpp",
+        "bytes": 26155,
+        "sha256": "6622bb7b8ce5c739ccd303cd47d0d67b2ac41dbfc8d8c5e9e1928c6a4814bc22"
+      },
+      "src/performance/CMakeLists.txt": {
+        "path": "/workspace/scratch/4185df6afb07/surgeXT-synth/src/performance/CMakeLists.txt",
+        "bytes": 1666,
+        "sha256": "6a24b2dc7cf19a1fe8100071ae0358c6814e73bc8f952cd6adf3624ff61ba29a"
+      },
+      "scripts/performance/compare.py": {
+        "path": "/workspace/scratch/4185df6afb07/surgeXT-synth/scripts/performance/compare.py",
+        "bytes": 16427,
+        "sha256": "6306fb622e842dde682bc68e0221b6f74af832c7b7b9f3cb31aad7ca79c62685"
+      },
+      "scripts/performance/run_comparison.py": {
+        "path": "/workspace/scratch/4185df6afb07/surgeXT-synth/scripts/performance/run_comparison.py",
+        "bytes": 17847,
+        "sha256": "998d2b3a6f1b0b0cb0ec2d09f80d8d1671bfde3f6689ebd52d6e261bd108e2ed"
+      },
+      "scripts/performance/thread_clock.py": {
+        "path": "/workspace/scratch/4185df6afb07/surgeXT-synth/scripts/performance/thread_clock.py",
+        "bytes": 7684,
+        "sha256": "13f931cc4a1759da32d832c6ab0a990569cc746b6f8e9aff254656cc3c1e8427"
+      }
+    },
+    "scope": "Current working-tree harness/scripts; these hashes do not attest binary build inputs.",
+    "git_head": "489f0cf7bca2d3e129199b8779c7262a414d81f5",
+    "tracked_diff_sha256": "ae1dd8f2df93c62e6c331828295fa1be36b519e29d85c3cb459b17f938225d16",
+    "tracked_diff_empty": false
+  },
+  "rounds": 8,
+  "commands": [
+    {
+      "round": 1,
+      "side": "baseline",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/paired-final-48000/round-01-baseline.json",
+        "--repetitions",
+        "1",
+        "--seconds",
+        "30.0",
+        "--tail-seconds",
+        "5.0",
+        "--sample-rate",
+        "48000",
+        "--scenario",
+        "all",
+        "--pcm-dir",
+        "/workspace/scratch/4185df6afb07/paired-final-48000/baseline-pcm",
+        "--thread-output",
+        "/workspace/scratch/4185df6afb07/paired-final-48000/round-01-baseline-thread.json"
+      ],
+      "log": "round-01-baseline.log",
+      "process_wall_seconds": 13.977948809995723,
+      "returncode": 0,
+      "thread_report": "round-01-baseline-thread.json",
+      "thread_report_sha256": "3e4066771a28b6ae82377f03e89b720a40c725f78008573f788d4a32d0d1d23f"
+    },
+    {
+      "round": 1,
+      "side": "candidate",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-candidate/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/paired-final-48000/round-01-candidate.json",
+        "--repetitions",
+        "1",
+        "--seconds",
+        "30.0",
+        "--tail-seconds",
+        "5.0",
+        "--sample-rate",
+        "48000",
+        "--scenario",
+        "all",
+        "--pcm-dir",
+        "/workspace/scratch/4185df6afb07/paired-final-48000/candidate-pcm",
+        "--thread-output",
+        "/workspace/scratch/4185df6afb07/paired-final-48000/round-01-candidate-thread.json"
+      ],
+      "log": "round-01-candidate.log",
+      "process_wall_seconds": 14.043032681001932,
+      "returncode": 0,
+      "thread_report": "round-01-candidate-thread.json",
+      "thread_report_sha256": "6f1158ee6248e50cbaf9b57df55a58e5718349a1eac9703b93e7310753dae4f0"
+    },
+    {
+      "round": 2,
+      "side": "candidate",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-candidate/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/paired-final-48000/round-02-candidate.json",
+        "--repetitions",
+        "1",
+        "--seconds",
+        "30.0",
+        "--tail-seconds",
+        "5.0",
+        "--sample-rate",
+        "48000",
+        "--scenario",
+        "all",
+        "--thread-output",
+        "/workspace/scratch/4185df6afb07/paired-final-48000/round-02-candidate-thread.json"
+      ],
+      "log": "round-02-candidate.log",
+      "process_wall_seconds": 13.27099484300561,
+      "returncode": 0,
+      "thread_report": "round-02-candidate-thread.json",
+      "thread_report_sha256": "1541a575178f3bcb96daea33fcca6d93bdf1cd4380bd372896a914665d525795"
+    },
+    {
+      "round": 2,
+      "side": "baseline",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/paired-final-48000/round-02-baseline.json",
+        "--repetitions",
+        "1",
+        "--seconds",
+        "30.0",
+        "--tail-seconds",
+        "5.0",
+        "--sample-rate",
+        "48000",
+        "--scenario",
+        "all",
+        "--thread-output",
+        "/workspace/scratch/4185df6afb07/paired-final-48000/round-02-baseline-thread.json"
+      ],
+      "log": "round-02-baseline.log",
+      "process_wall_seconds": 14.70346921899909,
+      "returncode": 0,
+      "thread_report": "round-02-baseline-thread.json",
+      "thread_report_sha256": "5f255f83f1e479e5a4fa55b0d49b39754a5e77f9cc29c7dde61a0436dbb833ec"
+    },
+    {
+      "round": 3,
+      "side": "baseline",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/paired-final-48000/round-03-baseline.json",
+        "--repetitions",
+        "1",
+        "--seconds",
+        "30.0",
+        "--tail-seconds",
+        "5.0",
+        "--sample-rate",
+        "48000",
+        "--scenario",
+        "all",
+        "--thread-output",
+        "/workspace/scratch/4185df6afb07/paired-final-48000/round-03-baseline-thread.json"
+      ],
+      "log": "round-03-baseline.log",
+      "process_wall_seconds": 13.424740401002055,
+      "returncode": 0,
+      "thread_report": "round-03-baseline-thread.json",
+      "thread_report_sha256": "4b1a21daa0dbf2b2b9a603ad66b01d5f9a3f4be2d5301896c2d6ee33c88bd389"
+    },
+    {
+      "round": 3,
+      "side": "candidate",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-candidate/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/paired-final-48000/round-03-candidate.json",
+        "--repetitions",
+        "1",
+        "--seconds",
+        "30.0",
+        "--tail-seconds",
+        "5.0",
+        "--sample-rate",
+        "48000",
+        "--scenario",
+        "all",
+        "--thread-output",
+        "/workspace/scratch/4185df6afb07/paired-final-48000/round-03-candidate-thread.json"
+      ],
+      "log": "round-03-candidate.log",
+      "process_wall_seconds": 13.720260258000053,
+      "returncode": 0,
+      "thread_report": "round-03-candidate-thread.json",
+      "thread_report_sha256": "337132d3f4ad64ed419edb83ef65ce26eff8ffb87adc0a9dc61f61ce66edded9"
+    },
+    {
+      "round": 4,
+      "side": "candidate",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-candidate/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/paired-final-48000/round-04-candidate.json",
+        "--repetitions",
+        "1",
+        "--seconds",
+        "30.0",
+        "--tail-seconds",
+        "5.0",
+        "--sample-rate",
+        "48000",
+        "--scenario",
+        "all",
+        "--thread-output",
+        "/workspace/scratch/4185df6afb07/paired-final-48000/round-04-candidate-thread.json"
+      ],
+      "log": "round-04-candidate.log",
+      "process_wall_seconds": 14.282224206996034,
+      "returncode": 0,
+      "thread_report": "round-04-candidate-thread.json",
+      "thread_report_sha256": "9b338a26f8dc6eb307120edbfaf11f507e0e2cbf5f059329891e5e55e7ebf7d6"
+    },
+    {
+      "round": 4,
+      "side": "baseline",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/paired-final-48000/round-04-baseline.json",
+        "--repetitions",
+        "1",
+        "--seconds",
+        "30.0",
+        "--tail-seconds",
+        "5.0",
+        "--sample-rate",
+        "48000",
+        "--scenario",
+        "all",
+        "--thread-output",
+        "/workspace/scratch/4185df6afb07/paired-final-48000/round-04-baseline-thread.json"
+      ],
+      "log": "round-04-baseline.log",
+      "process_wall_seconds": 13.675826740996854,
+      "returncode": 0,
+      "thread_report": "round-04-baseline-thread.json",
+      "thread_report_sha256": "1557c2541bc612bfbe06f34b35342e40d9d50a8bd73e3aceae5c916642d11a79"
+    },
+    {
+      "round": 5,
+      "side": "baseline",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/paired-final-48000/round-05-baseline.json",
+        "--repetitions",
+        "1",
+        "--seconds",
+        "30.0",
+        "--tail-seconds",
+        "5.0",
+        "--sample-rate",
+        "48000",
+        "--scenario",
+        "all",
+        "--thread-output",
+        "/workspace/scratch/4185df6afb07/paired-final-48000/round-05-baseline-thread.json"
+      ],
+      "log": "round-05-baseline.log",
+      "process_wall_seconds": 14.47825935799483,
+      "returncode": 0,
+      "thread_report": "round-05-baseline-thread.json",
+      "thread_report_sha256": "0da9ee038344856dc11575685dc88833ce0b494d9c2f20b15cfa3fb84a3094d6"
+    },
+    {
+      "round": 5,
+      "side": "candidate",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-candidate/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/paired-final-48000/round-05-candidate.json",
+        "--repetitions",
+        "1",
+        "--seconds",
+        "30.0",
+        "--tail-seconds",
+        "5.0",
+        "--sample-rate",
+        "48000",
+        "--scenario",
+        "all",
+        "--thread-output",
+        "/workspace/scratch/4185df6afb07/paired-final-48000/round-05-candidate-thread.json"
+      ],
+      "log": "round-05-candidate.log",
+      "process_wall_seconds": 13.238908865998383,
+      "returncode": 0,
+      "thread_report": "round-05-candidate-thread.json",
+      "thread_report_sha256": "c810a1a50a14447a3c1e76738d40b813acb46583bdb67be0f40de0c276d48837"
+    },
+    {
+      "round": 6,
+      "side": "candidate",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-candidate/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/paired-final-48000/round-06-candidate.json",
+        "--repetitions",
+        "1",
+        "--seconds",
+        "30.0",
+        "--tail-seconds",
+        "5.0",
+        "--sample-rate",
+        "48000",
+        "--scenario",
+        "all",
+        "--thread-output",
+        "/workspace/scratch/4185df6afb07/paired-final-48000/round-06-candidate-thread.json"
+      ],
+      "log": "round-06-candidate.log",
+      "process_wall_seconds": 13.946449885996117,
+      "returncode": 0,
+      "thread_report": "round-06-candidate-thread.json",
+      "thread_report_sha256": "bd7f5ddcaf8b6d68991b74f7cbe6ef15ff4956c5b34722540f5fb8a3dfd5ea68"
+    },
+    {
+      "round": 6,
+      "side": "baseline",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/paired-final-48000/round-06-baseline.json",
+        "--repetitions",
+        "1",
+        "--seconds",
+        "30.0",
+        "--tail-seconds",
+        "5.0",
+        "--sample-rate",
+        "48000",
+        "--scenario",
+        "all",
+        "--thread-output",
+        "/workspace/scratch/4185df6afb07/paired-final-48000/round-06-baseline-thread.json"
+      ],
+      "log": "round-06-baseline.log",
+      "process_wall_seconds": 13.79635743000108,
+      "returncode": 0,
+      "thread_report": "round-06-baseline-thread.json",
+      "thread_report_sha256": "eb0915713e25d972ea58162d2ed2e3c2e154606c92ca4fe93e8ca82288a47919"
+    },
+    {
+      "round": 7,
+      "side": "baseline",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/paired-final-48000/round-07-baseline.json",
+        "--repetitions",
+        "1",
+        "--seconds",
+        "30.0",
+        "--tail-seconds",
+        "5.0",
+        "--sample-rate",
+        "48000",
+        "--scenario",
+        "all",
+        "--thread-output",
+        "/workspace/scratch/4185df6afb07/paired-final-48000/round-07-baseline-thread.json"
+      ],
+      "log": "round-07-baseline.log",
+      "process_wall_seconds": 13.938768821004487,
+      "returncode": 0,
+      "thread_report": "round-07-baseline-thread.json",
+      "thread_report_sha256": "a73013320c5b787b238088a3255dec2c751058c1748544719796b55b97553ae2"
+    },
+    {
+      "round": 7,
+      "side": "candidate",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-candidate/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/paired-final-48000/round-07-candidate.json",
+        "--repetitions",
+        "1",
+        "--seconds",
+        "30.0",
+        "--tail-seconds",
+        "5.0",
+        "--sample-rate",
+        "48000",
+        "--scenario",
+        "all",
+        "--thread-output",
+        "/workspace/scratch/4185df6afb07/paired-final-48000/round-07-candidate-thread.json"
+      ],
+      "log": "round-07-candidate.log",
+      "process_wall_seconds": 13.837999389004835,
+      "returncode": 0,
+      "thread_report": "round-07-candidate-thread.json",
+      "thread_report_sha256": "e117f19b58ae8ddf9eef88f95cd30a55639856e6f62ba59f1881c02c6c1db86a"
+    },
+    {
+      "round": 8,
+      "side": "candidate",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-candidate/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/paired-final-48000/round-08-candidate.json",
+        "--repetitions",
+        "1",
+        "--seconds",
+        "30.0",
+        "--tail-seconds",
+        "5.0",
+        "--sample-rate",
+        "48000",
+        "--scenario",
+        "all",
+        "--thread-output",
+        "/workspace/scratch/4185df6afb07/paired-final-48000/round-08-candidate-thread.json"
+      ],
+      "log": "round-08-candidate.log",
+      "process_wall_seconds": 13.389449335998506,
+      "returncode": 0,
+      "thread_report": "round-08-candidate-thread.json",
+      "thread_report_sha256": "445d1e698190218ae4fa1ade77d21f5d36d9ee6fa342acbe2d480ed2aa908d0c"
+    },
+    {
+      "round": 8,
+      "side": "baseline",
+      "argv": [
+        "/workspace/scratch/4185df6afb07/build-baseline/src/performance/surge-cpu-bench",
+        "--output",
+        "/workspace/scratch/4185df6afb07/paired-final-48000/round-08-baseline.json",
+        "--repetitions",
+        "1",
+        "--seconds",
+        "30.0",
+        "--tail-seconds",
+        "5.0",
+        "--sample-rate",
+        "48000",
+        "--scenario",
+        "all",
+        "--thread-output",
+        "/workspace/scratch/4185df6afb07/paired-final-48000/round-08-baseline-thread.json"
+      ],
+      "log": "round-08-baseline.log",
+      "process_wall_seconds": 13.714341155995498,
+      "returncode": 0,
+      "thread_report": "round-08-baseline-thread.json",
+      "thread_report_sha256": "60c1473cdaffc1caafe6de923bd28d4ce09eb3449c71034e5130e71a0c77b8c5"
+    }
+  ],
+  "order": [
+    [
+      "baseline",
+      "candidate"
+    ],
+    [
+      "candidate",
+      "baseline"
+    ],
+    [
+      "baseline",
+      "candidate"
+    ],
+    [
+      "candidate",
+      "baseline"
+    ],
+    [
+      "baseline",
+      "candidate"
+    ],
+    [
+      "candidate",
+      "baseline"
+    ],
+    [
+      "baseline",
+      "candidate"
+    ],
+    [
+      "candidate",
+      "baseline"
+    ]
+  ],
+  "limitations": [
+    "OS/CPU labels do not prove exclusive hardware or fixed clock frequency.",
+    "Ambient user defaults and external tuning services must be controlled by the operator.",
+    "Requested report flags are not a substitute for retaining effective build commands.",
+    "Only first-round PCM is retained; subsequent audio equality uses noncryptographic fingerprints.",
+    "Render-thread CPU time excludes scheduling waits and other threads, but is not a cycle count."
+  ],
+  "thread_cpu_clock": "CLOCK_THREAD_CPUTIME_ID",
+  "finished_utc": "2026-11-15T12:09:47.934944+00:00"
+}

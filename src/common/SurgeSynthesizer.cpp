@@ -3880,64 +3880,46 @@ void SurgeSynthesizer::updateUsedState()
 
 void SurgeSynthesizer::prepareModsourceDoProcess(int scenemask)
 {
+    auto &patch = storage.getPatch();
     for (int scene = 0; scene < n_scenes; scene++)
     {
-        bool anyFormula{false};
-        for (auto &lfs : storage.getPatch().scene[scene].lfo)
+        // Inactive scenes retain their flags until they are processed again.
+        if (!((1 << scene) & scenemask))
+            continue;
+
+        auto &sc = patch.scene[scene];
+        auto &doProcess = sc.modsource_doprocess;
+        std::fill_n(doProcess, n_modsources, false);
+
+        // Triggering step sequences must run even without a modulation destination.
+        for (int i = 0; i < n_lfos_voice; i++)
         {
-            if (lfs.shape.val.i == lt_formula)
+            doProcess[ms_lfo1 + i] = sc.lfo[i].shape.val.i == lt_stepseq &&
+                                     patch.stepsequences[scene][i].trigmask != 0;
+        }
+
+        const bool anyFormula = std::any_of(sc.lfo, sc.lfo + n_lfos, [](const auto &lfo) {
+            return lfo.shape.val.i == lt_formula;
+        });
+        if (anyFormula)
+        {
+            for (auto source : {ms_pitchbend, ms_aftertouch, ms_modwheel, ms_breath, ms_expression,
+                                ms_sustain, ms_lowest_key, ms_highest_key, ms_latest_key})
             {
-                anyFormula = true;
+                doProcess[source] = true;
             }
         }
-        if ((1 << scene) & scenemask)
+
+        // Keep muted/zero-depth routes active, and apply global routes to each
+        // active scene: their modulators must retain the existing advancement cadence.
+        for (const auto *modlist :
+             {&patch.modulation_global, &sc.modulation_scene, &sc.modulation_voice})
         {
-            for (int i = 0; i < n_modsources; i++)
+            for (const auto &routing : *modlist)
             {
-                bool setTo = false;
-                if (i >= ms_lfo1 && i <= ms_lfo6)
-                {
-                    auto lf = &(storage.getPatch().scene[scene].lfo[i - ms_lfo1]);
-                    if (lf->shape.val.i == lt_stepseq)
-                    {
-                        auto ss = &(storage.getPatch().stepsequences[scene][i - ms_lfo1]);
-                        setTo = (ss->trigmask != 0);
-                    }
-                }
-                storage.getPatch().scene[scene].modsource_doprocess[i] = setTo;
-
-                if (i == ms_pitchbend || i == ms_aftertouch || i == ms_modwheel || i == ms_breath ||
-                    i == ms_expression || i == ms_sustain || i == ms_lowest_key ||
-                    i == ms_highest_key || i == ms_latest_key)
-                {
-                    storage.getPatch().scene[scene].modsource_doprocess[i] |= anyFormula;
-                }
-            }
-
-            for (int j = 0; j < 3; j++)
-            {
-                vector<ModulationRouting> *modlist;
-
-                switch (j)
-                {
-                case 0:
-                    modlist = &storage.getPatch().modulation_global;
-                    break;
-                case 1:
-                    modlist = &storage.getPatch().scene[scene].modulation_scene;
-                    break;
-                case 2:
-                    modlist = &storage.getPatch().scene[scene].modulation_voice;
-                    break;
-                }
-
-                int n = modlist->size();
-                for (int i = 0; i < n; i++)
-                {
-                    int id = modlist->at(i).source_id;
-                    assert((id > 0) && (id < n_modsources));
-                    storage.getPatch().scene[scene].modsource_doprocess[id] = true;
-                }
+                const int id = routing.source_id;
+                assert((id > 0) && (id < n_modsources));
+                doProcess[id] = true;
             }
         }
     }
@@ -5227,10 +5209,12 @@ void SurgeSynthesizer::process()
             storage.getPatch().scenedata[0][storage.getPatch().scene[0].lowcut.param_id_in_scene].f;
 
         auto slope = storage.getPatch().scene[0].lowcut.deform_type;
+        // Every cascade stage shares storage and this block's cutoff frequency.
+        const auto omega = hpA[0].calc_omega(freq / 12.0);
 
         for (int i = 0; i <= slope; i++)
         {
-            hpA[i].coeff_HP(hpA[i].calc_omega(freq / 12.0), 0.4); // var 0.707
+            hpA[i].coeff_HP(omega, 0.4);                        // var 0.707
             hpA[i].process_block(sceneout[0][0], sceneout[0][1]); // TODO: quadify
         }
     }
@@ -5241,10 +5225,11 @@ void SurgeSynthesizer::process()
             storage.getPatch().scenedata[1][storage.getPatch().scene[1].lowcut.param_id_in_scene].f;
 
         auto slope = storage.getPatch().scene[1].lowcut.deform_type;
+        const auto omega = hpB[0].calc_omega(freq / 12.0);
 
         for (int i = 0; i <= slope; i++)
         {
-            hpB[i].coeff_HP(hpB[i].calc_omega(freq / 12.0), 0.4); // var 0.707
+            hpB[i].coeff_HP(omega, 0.4);                        // var 0.707
             hpB[i].process_block(sceneout[1][0], sceneout[1][1]); // TODO: quadify
         }
     }

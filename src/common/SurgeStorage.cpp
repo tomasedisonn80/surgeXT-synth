@@ -3258,6 +3258,10 @@ void SurgeStorage::init_tables()
     vu_falloff = exp(-2 * M_PI * (60.f * samplerate_inv));
 
     cpu_falloff = exp(-2 * M_PI * (60.f * samplerate_inv));
+
+    // Also covers same-rate setSamplerate() and standard-tuning resets, which
+    // can rebuild coefficient sources without invoking an effect's reset hook.
+    coefficientTableGeneration.fetch_add(1, std::memory_order_relaxed);
 }
 
 float SurgeStorage::note_to_pitch(float x)

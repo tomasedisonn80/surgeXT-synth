@@ -21,6 +21,9 @@
  */
 
 #include "ConditionerEffect.h"
+#include "CoefficientCache.h"
+#include <bit>
+#include <cstdint>
 #include <vembertech/basic_dsp.h>
 #include "SurgeParamConfig.h"
 
@@ -69,17 +72,54 @@ void ConditionerEffect::init()
     vu[1][1] = 0.f; // unused, vu[1] is mono.
     vu[2][0] = 0.f;
     vu[2][1] = 0.f;
+
+    // init() can run outside the audio callback's floating-point environment.
+    // Recalculate targets on the first process call, as the uncached path did.
+    coefficientCacheValid = false;
 }
 
 void ConditionerEffect::setvars(bool init)
 {
-    band1.coeff_peakEQ(band1.calc_omega(-2.5), 2, *pd_float[cond_bass]);
-    band2.coeff_peakEQ(band2.calc_omega(4.75), 2, *pd_float[cond_treble]);
-    hp.coeff_HP(hp.calc_omega(*pd_float[cond_hpwidth] / 12.0), 0.4);
+    // These setters only replace coefficient targets after their first call;
+    // smoothing still advances in every filter's process_block(). Preserve exact
+    // input changes (including signed zero) and never treat NaN as a cache hit.
+    const auto unchanged = [](float current, float previous) {
+        return current == previous &&
+               std::bit_cast<std::uint32_t>(current) == std::bit_cast<std::uint32_t>(previous);
+    };
+    const double sampleRateInv = storage->dsamplerate_inv;
+    const auto tableGeneration =
+        storage->coefficientTableGeneration.load(std::memory_order_relaxed);
+    const auto fpEnvironment = Surge::DSP::coefficientCacheEnvironment();
+    const bool refreshAll =
+        init || !coefficientCacheValid || !fpEnvironment.supported ||
+        fpEnvironment.bits != cachedFpEnvironment || tableGeneration != cachedTableGeneration ||
+        sampleRateInv != cachedSampleRateInv ||
+        std::bit_cast<std::uint64_t>(sampleRateInv) !=
+            std::bit_cast<std::uint64_t>(cachedSampleRateInv);
+    const float bass = *pd_float[cond_bass];
+    const float treble = *pd_float[cond_treble];
+    const float highpass = *pd_float[cond_hpwidth];
 
-    if (init)
+    if (refreshAll || !unchanged(bass, cachedBass))
     {
+        band1.coeff_peakEQ(band1.calc_omega(-2.5), 2, bass);
+        cachedBass = bass;
     }
+    if (refreshAll || !unchanged(treble, cachedTreble))
+    {
+        band2.coeff_peakEQ(band2.calc_omega(4.75), 2, treble);
+        cachedTreble = treble;
+    }
+    if (refreshAll || !unchanged(highpass, cachedHighpass))
+    {
+        hp.coeff_HP(hp.calc_omega(highpass / 12.0), 0.4);
+        cachedHighpass = highpass;
+    }
+    cachedSampleRateInv = sampleRateInv;
+    cachedTableGeneration = tableGeneration;
+    cachedFpEnvironment = fpEnvironment.bits;
+    coefficientCacheValid = true;
 }
 
 void ConditionerEffect::process_only_control()

@@ -62,6 +62,7 @@ class ParametricEQ3BandEffect : public Effect
     virtual void init() override;
     virtual void process(float *dataL, float *dataR) override;
     virtual void suspend() override;
+    void sampleRateReset() override { coefficientCacheValid = false; }
     void setvars(bool init);
     virtual void init_ctrltypes() override;
     virtual void init_default_values() override;
@@ -73,6 +74,14 @@ class ParametricEQ3BandEffect : public Effect
 
   private:
     BiquadFilter band1, band2, band3;
+    struct CoefficientInputs
+    {
+        float frequency{0.f}, bandwidth{0.f}, gain{0.f};
+    } coefficientInputs[3]{};
+    double coefficientSampleRateInv{0.0};
+    std::uint64_t coefficientTableGeneration{0};
+    std::uint64_t coefficientFpEnvironment{0};
+    bool coefficientCacheValid{false};
     int bi; // block increment (to keep track of events not occurring every n blocks)
 };
 

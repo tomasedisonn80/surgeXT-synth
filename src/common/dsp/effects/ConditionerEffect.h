@@ -44,6 +44,7 @@ class ConditionerEffect : public Effect
     virtual void process(float *dataL, float *dataR) override;
     virtual int get_ringout_decay() override { return 100; }
     virtual void suspend() override;
+    void sampleRateReset() override { coefficientCacheValid = false; }
     void setvars(bool init);
     virtual void init_ctrltypes() override;
     virtual void init_default_values() override;
@@ -72,6 +73,12 @@ class ConditionerEffect : public Effect
 
   private:
     BiquadFilter band1, band2, hp;
+    // Reset, sample-rate, and source-table changes invalidate every band.
+    double cachedSampleRateInv{0.0};
+    std::uint64_t cachedTableGeneration{0};
+    std::uint64_t cachedFpEnvironment{0};
+    float cachedBass{0.f}, cachedTreble{0.f}, cachedHighpass{0.f};
+    bool coefficientCacheValid{false};
     float ef;
     lipol<float, true> a_rate, r_rate;
     float lamax[lookahead << 1];

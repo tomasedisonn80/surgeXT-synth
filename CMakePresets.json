@@ -1,0 +1,88 @@
+{
+  "version": 3,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 22,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "cpu-common",
+      "hidden": true,
+      "generator": "Ninja",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_POLICY_VERSION_MINIMUM": "3.5",
+        "ENABLE_LTO": true,
+        "SURGE_COPY_AFTER_BUILD": false
+      }
+    },
+    {
+      "name": "cpu-release",
+      "displayName": "Portable Release plugins with LTO",
+      "description": "Build the existing portable CPU targets with Release optimization and LTO; retain the default Lua backend and DSP quality.",
+      "inherits": "cpu-common",
+      "binaryDir": "${sourceDir}/build/cpu-release",
+      "cacheVariables": {
+        "SURGE_BUILD_XT": true,
+        "SURGE_BUILD_FX": true,
+        "SURGE_BUILD_CLAP": true,
+        "SURGE_BUILD_TESTRUNNER": false,
+        "SURGE_BUILD_SCORING_TOOLS": false,
+        "SURGE_BUILD_PERFORMANCE_TOOLS": false,
+        "SURGE_SKIP_JUCE_FOR_RACK": false,
+        "SURGE_LUA_IMPL": ""
+      }
+    },
+    {
+      "name": "cpu-headless",
+      "displayName": "Headless CPU benchmarks and engine tests",
+      "description": "Release/LTO validation without JUCE or desktop libraries; PUC Lua is selected explicitly for this validation configuration.",
+      "inherits": "cpu-common",
+      "binaryDir": "${sourceDir}/build/cpu-headless",
+      "cacheVariables": {
+        "SURGE_BUILD_XT": false,
+        "SURGE_BUILD_FX": false,
+        "SURGE_BUILD_CLAP": false,
+        "SURGE_BUILD_TESTRUNNER": true,
+        "SURGE_BUILD_SCORING_TOOLS": true,
+        "SURGE_BUILD_PERFORMANCE_TOOLS": true,
+        "SURGE_SKIP_JUCE_FOR_RACK": true,
+        "SURGE_LUA_IMPL": "puc"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "cpu-release",
+      "configurePreset": "cpu-release",
+      "jobs": 2
+    },
+    {
+      "name": "cpu-headless",
+      "configurePreset": "cpu-headless",
+      "jobs": 2,
+      "targets": [
+        "surge-cpu-bench",
+        "surge-dsp-regression",
+        "surge-modulation-mask-test",
+        "surge-testrunner",
+        "surge-scoring-render",
+        "surge-embedded-content-test"
+      ]
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "cpu-headless",
+      "configurePreset": "cpu-headless",
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "jobs": 2,
+        "noTestsAction": "error"
+      }
+    }
+  ]
+}

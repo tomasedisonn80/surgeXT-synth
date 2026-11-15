@@ -1,0 +1,123 @@
+name: CPU optimization correctness
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/cpu-performance.yml'
+      - '.gitmodules'
+      - 'CMakeLists.txt'
+      - 'CMakePresets.json'
+      - 'cmake/**'
+      - 'src/CMakeLists.txt'
+      - 'src/cmake/**'
+      - 'src/common/**'
+      - 'src/platform/**'
+      - 'src/lua/**'
+      - 'src/performance/**'
+      - 'scripts/performance/**'
+      - 'libs/**'
+      - 'resources/surge-shared/**'
+  pull_request:
+    paths:
+      - '.github/workflows/cpu-performance.yml'
+      - '.gitmodules'
+      - 'CMakeLists.txt'
+      - 'CMakePresets.json'
+      - 'cmake/**'
+      - 'src/CMakeLists.txt'
+      - 'src/cmake/**'
+      - 'src/common/**'
+      - 'src/platform/**'
+      - 'src/lua/**'
+      - 'src/performance/**'
+      - 'scripts/performance/**'
+      - 'libs/**'
+      - 'resources/surge-shared/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cpu-correctness-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  native-correctness:
+    name: Headless Release/LTO correctness gates
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - name: Check out exact source and dependencies
+        uses: actions/checkout@v6
+        with:
+          submodules: recursive
+          persist-credentials: false
+
+      - name: Install headless build dependencies
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends --yes \
+            build-essential cmake ninja-build pkg-config python3
+
+      - name: Record source and validation scope
+        run: |
+          set -euo pipefail
+          mkdir -p cpu-artifact
+          {
+            echo "Source commit: $GITHUB_SHA"
+            echo "Workflow: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+            echo "Single-build native correctness and deterministic audio smoke."
+            echo "This job does not compare two revisions or assert a CPU speedup."
+            cmake --version
+            c++ --version
+            python3 --version
+          } > cpu-artifact/provenance.txt
+
+      - name: Check performance report validation tools
+        run: |
+          set -euo pipefail
+          python3 -m unittest discover -s scripts/performance -p 'test_*.py' -v \
+            2>&1 | tee cpu-artifact/python-tests.log
+
+      - name: Configure portable headless Release with LTO
+        run: |
+          set -euo pipefail
+          cmake --preset cpu-headless \
+            -DSURGE_BUILD_TESTRUNNER=OFF -DSURGE_BUILD_SCORING_TOOLS=OFF \
+            2>&1 | tee cpu-artifact/configure.log
+
+      - name: Build native correctness tools
+        run: |
+          set -euo pipefail
+          cmake --build build/cpu-headless \
+            --target surge-cpu-bench surge-modulation-mask-test surge-dsp-regression \
+            --parallel 2 2>&1 | tee cpu-artifact/build.log
+          sha256sum build/cpu-headless/src/performance/surge-cpu-bench \
+            build/cpu-headless/src/performance/surge-modulation-mask-test \
+            build/cpu-headless/src/performance/surge-dsp-regression \
+            > cpu-artifact/binaries.sha256
+
+      - name: Run mask differential and deterministic native smoke gates
+        run: |
+          set -euo pipefail
+          ctest --test-dir build/cpu-headless --output-on-failure \
+            --no-tests=error -R '^cpu-' 2>&1 | tee cpu-artifact/ctest.log
+
+      - name: Retain native reports and diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cpu-correctness-${{ github.sha }}
+          path: |
+            cpu-artifact/
+            build/cpu-headless/src/performance/cpu-smoke-evidence/
+            build/cpu-headless/Testing/Temporary/LastTest.log
+          if-no-files-found: warn
+          retention-days: 14

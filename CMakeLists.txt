@@ -275,9 +275,15 @@ source_group("Surge FX JUCE" REGULAR_EXPRESSION "src/surge-fx/")
 
 # }}}
 option(SURGE_BUILD_TESTRUNNER "Build Surge unit test runner" ON)
+option(SURGE_BUILD_PERFORMANCE_TOOLS "Build deterministic offline CPU measurement tools" OFF)
 
-if(${SURGE_BUILD_TESTRUNNER})
+if(SURGE_BUILD_TESTRUNNER)
   message(STATUS "Enabling tests; compile with SURGE_BUILD_TESTRUNNER=OFF to skip")
+endif()
+
+# enable_testing() must run at the top level for ctest --test-dir <build> to
+# discover tests in the optional headless performance subdirectory.
+if(SURGE_BUILD_TESTRUNNER OR SURGE_BUILD_PERFORMANCE_TOOLS)
   enable_testing()
 endif()
 

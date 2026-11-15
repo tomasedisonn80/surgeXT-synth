@@ -36,13 +36,17 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
   surge-lua-src
   surge::catch2_v3
   surge::surge-common
-  juce::juce_audio_basics
 )
 
-target_compile_definitions(${PROJECT_NAME} PUBLIC
-  JUCE_WEB_BROWSER=0
-  JUCE_USE_CURL=0
-)
+# Retain the ordinary plugin-build dependency, but the test sources themselves
+# use only the common engine and can also run in the headless performance build.
+if(TARGET juce::juce_audio_basics)
+  target_link_libraries(${PROJECT_NAME} PRIVATE juce::juce_audio_basics)
+  target_compile_definitions(${PROJECT_NAME} PUBLIC
+    JUCE_WEB_BROWSER=0
+    JUCE_USE_CURL=0
+  )
+endif()
 
 message(STATUS "Using CatchDiscoverTests on ${PROJECT_NAME}" )
 catch_discover_tests(${PROJECT_NAME} WORKING_DIRECTORY ${SURGE_SOURCE_DIR})

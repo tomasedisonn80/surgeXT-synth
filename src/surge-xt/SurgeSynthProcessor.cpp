@@ -716,7 +716,19 @@ void SurgeSynthProcessor::processBlock(juce::AudioBuffer<float> &buffer,
         inputIsLatent = true;
     }
 
-    for (int i = 0; i < buffer.getNumSamples(); i++)
+    // Bus buffers and their channel pointers remain fixed for this callback. Acquire
+    // write pointers after clearing the scene buses, and leave zero-length buffers'
+    // clear state unchanged by avoiding getWritePointer when there are no samples.
+    auto *const outL = sc > 0 ? mainOutput.getWritePointer(0) : nullptr;
+    auto *const outR = sc > 0 ? mainOutput.getWritePointer(1) : nullptr;
+    const bool stereoSceneA = sc > 0 && sceneAOutput.getNumChannels() == 2;
+    const bool stereoSceneB = sc > 0 && sceneBOutput.getNumChannels() == 2;
+    auto *const sAL = stereoSceneA ? sceneAOutput.getWritePointer(0) : nullptr;
+    auto *const sAR = stereoSceneA ? sceneAOutput.getWritePointer(1) : nullptr;
+    auto *const sBL = stereoSceneB ? sceneBOutput.getWritePointer(0) : nullptr;
+    auto *const sBR = stereoSceneB ? sceneBOutput.getWritePointer(1) : nullptr;
+
+    for (int i = 0; i < sc; i++)
     {
         while (i == nextMidi)
         {
@@ -732,9 +744,6 @@ void SurgeSynthProcessor::processBlock(juce::AudioBuffer<float> &buffer,
                 nextMidi = (*midiIt).samplePosition;
             }
         }
-
-        auto outL = mainOutput.getWritePointer(0, i);
-        auto outR = mainOutput.getWritePointer(1, i);
 
         if (blockPos == 0 && incL && incR)
         {
@@ -772,33 +781,21 @@ void SurgeSynthProcessor::processBlock(juce::AudioBuffer<float> &buffer,
             inputLatentBuffer[1][blockPos] = incR[i];
         }
 
-        *outL = surge->output[0][blockPos];
-        *outR = surge->output[1][blockPos];
+        outL[i] = surge->output[0][blockPos];
+        outR[i] = surge->output[1][blockPos];
 
         if (surge->activateExtraOutputs)
         {
-            if (sceneAOutput.getNumChannels() == 2)
+            if (sAL && sAR)
             {
-                auto sAL = sceneAOutput.getWritePointer(0, i);
-                auto sAR = sceneAOutput.getWritePointer(1, i);
-
-                if (sAL && sAR)
-                {
-                    *sAL = surge->sceneout[0][0][blockPos];
-                    *sAR = surge->sceneout[0][1][blockPos];
-                }
+                sAL[i] = surge->sceneout[0][0][blockPos];
+                sAR[i] = surge->sceneout[0][1][blockPos];
             }
 
-            if (sceneBOutput.getNumChannels() == 2)
+            if (sBL && sBR)
             {
-                auto sBL = sceneBOutput.getWritePointer(0, i);
-                auto sBR = sceneBOutput.getWritePointer(1, i);
-
-                if (sBL && sBR)
-                {
-                    *sBL = surge->sceneout[1][0][blockPos];
-                    *sBR = surge->sceneout[1][1][blockPos];
-                }
+                sBL[i] = surge->sceneout[1][0][blockPos];
+                sBR[i] = surge->sceneout[1][1][blockPos];
             }
         }
 

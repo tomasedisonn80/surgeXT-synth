@@ -21,7 +21,21 @@
  */
 
 #include "ParametricEQ3BandEffect.h"
+#include "CoefficientCache.h"
 #include "sst/basic-blocks/mechanics/block-ops.h"
+
+#include <bit>
+#include <cstdint>
+
+namespace
+{
+bool sameCoefficientInput(float current, float previous)
+{
+    // Do not treat NaNs as stable inputs, or conflate the two signed zeros.
+    return current == previous &&
+           std::bit_cast<std::uint32_t>(current) == std::bit_cast<std::uint32_t>(previous);
+}
+} // namespace
 
 ParametricEQ3BandEffect::ParametricEQ3BandEffect(SurgeStorage *storage, FxStorage *fxdata,
                                                  pdata *pd)
@@ -50,6 +64,9 @@ void ParametricEQ3BandEffect::setvars(bool init)
 {
     if (init)
     {
+        // init() suspends the filters after this call, so the next control update
+        // must restore their coefficient targets even when the inputs are unchanged.
+        coefficientCacheValid = false;
         // Set the bands to 0dB so the EQ fades in init
         band1.coeff_peakEQ(band1.calc_omega(fxdata->p[eq3_freq1].val.f * (1.f / 12.f)),
                            fxdata->p[eq3_bw1].val.f, 1.f);
@@ -70,12 +87,37 @@ void ParametricEQ3BandEffect::setvars(bool init)
     }
     else
     {
-        band1.coeff_peakEQ(band1.calc_omega(*pd_float[eq3_freq1] * (1.f / 12.f)),
-                           *pd_float[eq3_bw1], *pd_float[eq3_gain1]);
-        band2.coeff_peakEQ(band2.calc_omega(*pd_float[eq3_freq2] * (1.f / 12.f)),
-                           *pd_float[eq3_bw2], *pd_float[eq3_gain2]);
-        band3.coeff_peakEQ(band3.calc_omega(*pd_float[eq3_freq3] * (1.f / 12.f)),
-                           *pd_float[eq3_bw3], *pd_float[eq3_gain3]);
+        const double sampleRateInv = storage->dsamplerate_inv;
+        const auto tableGeneration =
+            storage->coefficientTableGeneration.load(std::memory_order_relaxed);
+        const auto fpEnvironment = Surge::DSP::coefficientCacheEnvironment();
+        const bool refreshAll =
+            !coefficientCacheValid || !fpEnvironment.supported ||
+            fpEnvironment.bits != coefficientFpEnvironment ||
+            tableGeneration != coefficientTableGeneration ||
+            sampleRateInv != coefficientSampleRateInv;
+        const auto updateBand = [&](BiquadFilter &band, CoefficientInputs &previous,
+                                    int frequencyIndex, int bandwidthIndex, int gainIndex) {
+            const float frequency = *pd_float[frequencyIndex];
+            const float bandwidth = *pd_float[bandwidthIndex];
+            const float bandGain = *pd_float[gainIndex];
+            if (refreshAll || !sameCoefficientInput(frequency, previous.frequency) ||
+                !sameCoefficientInput(bandwidth, previous.bandwidth) ||
+                !sameCoefficientInput(bandGain, previous.gain))
+            {
+                band.coeff_peakEQ(band.calc_omega(frequency * (1.f / 12.f)), bandwidth, bandGain);
+                previous = {frequency, bandwidth, bandGain};
+            }
+        };
+        // Keep the existing control cadence, including for deactivated bands;
+        // only repeated target calculations are skipped, never filter smoothing.
+        updateBand(band1, coefficientInputs[0], eq3_freq1, eq3_bw1, eq3_gain1);
+        updateBand(band2, coefficientInputs[1], eq3_freq2, eq3_bw2, eq3_gain2);
+        updateBand(band3, coefficientInputs[2], eq3_freq3, eq3_bw3, eq3_gain3);
+        coefficientSampleRateInv = sampleRateInv;
+        coefficientTableGeneration = tableGeneration;
+        coefficientFpEnvironment = fpEnvironment.bits;
+        coefficientCacheValid = true;
     }
 }
 

@@ -21,6 +21,20 @@
  */
 
 #include "GraphicEQ11BandEffect.h"
+#include "CoefficientCache.h"
+
+#include <bit>
+#include <cstdint>
+
+namespace
+{
+bool sameCoefficientInput(float current, float previous)
+{
+    // Do not treat NaNs as stable inputs, or conflate the two signed zeros.
+    return current == previous &&
+           std::bit_cast<std::uint32_t>(current) == std::bit_cast<std::uint32_t>(previous);
+}
+} // namespace
 
 GraphicEQ11BandEffect::GraphicEQ11BandEffect(SurgeStorage *storage, FxStorage *fxdata, pdata *pd)
     : Effect(storage, fxdata, pd), band1(storage), band2(storage), band3(storage), band4(storage),
@@ -65,6 +79,9 @@ void GraphicEQ11BandEffect::setvars(bool init)
 {
     if (init)
     {
+        // init() suspends the filters after this call, so the next control update
+        // must restore their coefficient targets even when the inputs are unchanged.
+        coefficientCacheValid = false;
         // Set the bands to 0dB so the EQ fades in init
         band1.coeff_peakEQ(band1.calc_omega_from_Hz(30.f), 0.5, 1.f);
         band2.coeff_peakEQ(band2.calc_omega_from_Hz(60.f), 0.5, 1.f);
@@ -96,17 +113,40 @@ void GraphicEQ11BandEffect::setvars(bool init)
     }
     else
     {
-        band1.coeff_peakEQ(band1.calc_omega_from_Hz(30.f), 0.5, *pd_float[geq11_30]);
-        band2.coeff_peakEQ(band2.calc_omega_from_Hz(60.f), 0.5, *pd_float[geq11_60]);
-        band3.coeff_peakEQ(band3.calc_omega_from_Hz(120.f), 0.5, *pd_float[geq11_120]);
-        band4.coeff_peakEQ(band4.calc_omega_from_Hz(250.f), 0.5, *pd_float[geq11_250]);
-        band5.coeff_peakEQ(band5.calc_omega_from_Hz(500.f), 0.5, *pd_float[geq11_500]);
-        band6.coeff_peakEQ(band6.calc_omega_from_Hz(1000.f), 0.5, *pd_float[geq11_1k]);
-        band7.coeff_peakEQ(band7.calc_omega_from_Hz(2000.f), 0.5, *pd_float[geq11_2k]);
-        band8.coeff_peakEQ(band8.calc_omega_from_Hz(4000.f), 0.5, *pd_float[geq11_4k]);
-        band9.coeff_peakEQ(band9.calc_omega_from_Hz(8000.f), 0.5, *pd_float[geq11_8k]);
-        band10.coeff_peakEQ(band10.calc_omega_from_Hz(12000.f), 0.5, *pd_float[geq11_12k]);
-        band11.coeff_peakEQ(band11.calc_omega_from_Hz(16000.f), 0.5, *pd_float[geq11_16k]);
+        const double sampleRateInv = storage->dsamplerate_inv;
+        const auto tableGeneration =
+            storage->coefficientTableGeneration.load(std::memory_order_relaxed);
+        const auto fpEnvironment = Surge::DSP::coefficientCacheEnvironment();
+        const bool refreshAll =
+            !coefficientCacheValid || !fpEnvironment.supported ||
+            fpEnvironment.bits != coefficientFpEnvironment ||
+            tableGeneration != coefficientTableGeneration ||
+            sampleRateInv != coefficientSampleRateInv;
+        const auto updateBand = [&](BiquadFilter &band, int index) {
+            const float bandGain = *pd_float[index];
+            if (refreshAll || !sameCoefficientInput(bandGain, coefficientGains[index]))
+            {
+                band.coeff_peakEQ(band.calc_omega_from_Hz(freqs[index]), 0.5, bandGain);
+                coefficientGains[index] = bandGain;
+            }
+        };
+        // Only redundant target calculations are skipped. Every enabled band's
+        // per-sample coefficient smoothing and audio processing still run below.
+        updateBand(band1, geq11_30);
+        updateBand(band2, geq11_60);
+        updateBand(band3, geq11_120);
+        updateBand(band4, geq11_250);
+        updateBand(band5, geq11_500);
+        updateBand(band6, geq11_1k);
+        updateBand(band7, geq11_2k);
+        updateBand(band8, geq11_4k);
+        updateBand(band9, geq11_8k);
+        updateBand(band10, geq11_12k);
+        updateBand(band11, geq11_16k);
+        coefficientSampleRateInv = sampleRateInv;
+        coefficientTableGeneration = tableGeneration;
+        coefficientFpEnvironment = fpEnvironment.bits;
+        coefficientCacheValid = true;
     }
 }
 

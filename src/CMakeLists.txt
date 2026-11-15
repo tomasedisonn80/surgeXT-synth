@@ -171,7 +171,13 @@ if(SURGE_BUILD_SCORING_TOOLS)
   add_subdirectory(scoring-tools)
 endif()
 
-if(SURGE_BUILD_TESTRUNNER AND NOT SURGE_SKIP_JUCE_FOR_RACK)
+if(SURGE_BUILD_PERFORMANCE_TOOLS)
+  add_subdirectory(performance)
+endif()
+
+# The engine test sources do not depend on JUCE. Allow the performance build to
+# exercise them without desktop dependencies, while preserving the Rack default.
+if(SURGE_BUILD_TESTRUNNER AND (NOT SURGE_SKIP_JUCE_FOR_RACK OR SURGE_BUILD_PERFORMANCE_TOOLS))
   add_subdirectory(surge-testrunner)
 endif()
 

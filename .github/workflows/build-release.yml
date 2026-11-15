@@ -22,6 +22,10 @@ on:
       - 'doc/scoring-1000/**'
       - 'scripts/scoring/**'
       - 'src/scoring-tools/**'
+      # CPU reports and offline validators do not change plugin binaries.
+      - 'doc/performance/**'
+      - 'scripts/performance/**'
+      - 'src/performance/**'
       - 'README.md'
       - 'AGENTS.md'
 

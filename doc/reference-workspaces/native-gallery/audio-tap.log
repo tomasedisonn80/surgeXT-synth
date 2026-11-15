@@ -1,3 +1,3 @@
-continuous subscription: accepted=407710, consumed=407710, dropped=3592290
-subscription lifecycle: accepted=16746, consumed=1822, dropped=29121
+continuous subscription: accepted=384772, consumed=384772, dropped=3615228
+subscription lifecycle: accepted=30201, consumed=1123, dropped=36199
 PASS: AudioTap boundaries, wrap, stalls, stereo ordering, lifecycle, no audio allocations

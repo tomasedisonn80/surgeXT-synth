@@ -73,18 +73,18 @@ class ConditionerEffect : public Effect
 
   private:
     BiquadFilter band1, band2, hp;
-    // Reset, sample-rate, and source-table changes invalidate every band.
-    double cachedSampleRateInv{0.0};
-    std::uint64_t cachedTableGeneration{0};
-    std::uint64_t cachedFpEnvironment{0};
-    float cachedBass{0.f}, cachedTreble{0.f}, cachedHighpass{0.f};
-    bool coefficientCacheValid{false};
     float ef;
     lipol<float, true> a_rate, r_rate;
     float lamax[lookahead << 1];
     float delayed[2][lookahead];
     int bufpos;
     float filtered_lamax, filtered_lamax2, gain;
+    // Reset, sample-rate, and source-table changes invalidate every band.
+    double cachedSampleRateInv{0.0};
+    std::uint64_t cachedTableGeneration{0};
+    std::uint64_t cachedFpEnvironment{0};
+    float cachedBass{0.f}, cachedTreble{0.f}, cachedHighpass{0.f};
+    bool coefficientCacheValid{false};
 };
 
 #endif // SURGE_SRC_COMMON_DSP_EFFECTS_CONDITIONEREFFECT_H

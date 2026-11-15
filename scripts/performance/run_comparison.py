@@ -4,6 +4,8 @@
 Raw one-repetition reports and logs are retained. Complete PCM is saved for the
 first pair only, then verified against the merged, deterministic reports. The
 reported reduction describes offline wall time, not host deadline reliability.
+With --thread-cpu, separate Linux render-thread CPU reports and summaries are
+also retained; the wall-time and complete first-pair audio checks still run.
 """
 from __future__ import annotations
 
@@ -23,6 +25,7 @@ import time
 from typing import Any
 
 import compare
+import thread_clock
 
 
 class RunnerError(ValueError):
@@ -120,7 +123,8 @@ def machine_description() -> dict[str, Any]:
 def source_description() -> dict[str, Any]:
     root = Path(__file__).resolve().parents[2]
     paths = ["src/performance/CpuBenchmark.cpp", "src/performance/CMakeLists.txt",
-             "scripts/performance/compare.py", "scripts/performance/run_comparison.py"]
+             "scripts/performance/compare.py", "scripts/performance/run_comparison.py",
+             "scripts/performance/thread_clock.py"]
     result: dict[str, Any] = {
         "root": str(root),
         "files": {name: identity(root / name) for name in paths if (root / name).is_file()},
@@ -174,6 +178,8 @@ def parse(argv: list[str] | None) -> argparse.Namespace:
     parser.add_argument("--scenario", default="all")
     parser.add_argument("--data", type=Path)
     parser.add_argument("--patch", type=Path)
+    parser.add_argument("--thread-cpu", action="store_true",
+                        help="Also request and compare Linux render-thread CPU clock reports")
     return parser.parse_args(argv)
 
 
@@ -228,6 +234,7 @@ def validate_requested_fixture(report: dict[str, Any], args: argparse.Namespace)
 
 def run(args: argparse.Namespace) -> dict[str, Any]:
     binaries, output = prepare(args)
+    thread_enabled = getattr(args, "thread_cpu", False)
     records = {side: identity(binary) for side, binary in binaries.items()}
     patch_identity = identity(args.patch) if args.patch is not None else None
     provenance: dict[str, Any] = {
@@ -243,8 +250,13 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             "Only first-round PCM is retained; subsequent audio equality uses noncryptographic fingerprints.",
         ],
     }
+    if thread_enabled:
+        provenance["thread_cpu_clock"] = thread_clock.CLOCK_NAME
+        provenance["limitations"].append(
+            "Render-thread CPU time excludes scheduling waits and other threads, but is not a cycle count.")
     write_json(output / "provenance.json", provenance)
     reports: dict[str, list[dict[str, Any]]] = {"baseline": [], "candidate": []}
+    thread_reports: dict[str, list[dict[str, Any]]] = {"baseline": [], "candidate": []}
     try:
         for index in range(args.rounds):
             for side in execution_order(index):
@@ -262,6 +274,9 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
                     command += ["--data", str(args.data)]
                 if args.patch is not None:
                     command += ["--patch", str(args.patch)]
+                thread_path = output / f"{stem}-thread.json"
+                if thread_enabled:
+                    command += ["--thread-output", str(thread_path)]
                 entry: dict[str, Any] = {"round": index + 1, "side": side,
                                          "argv": command, "log": f"{stem}.log"}
                 provenance["commands"].append(entry)
@@ -280,6 +295,12 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
                 compare.validate_report(report, stem)
                 require(report["repetitions"] == 1, f"{stem}: expected exactly one repetition")
                 validate_requested_fixture(report, args)
+                if thread_enabled:
+                    thread_report = compare.read_report(thread_path)
+                    thread_clock.validate_report(thread_report, report, stem)
+                    thread_reports[side].append(thread_report)
+                    entry["thread_report"] = thread_path.name
+                    entry["thread_report_sha256"] = digest(thread_path)
                 reports[side].append(report)
                 # Fail promptly if a later process rendered different audio or metadata.
                 compare.compare_reports(reports[side][0], report)
@@ -295,6 +316,16 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
                                          candidate_pcm=output / "candidate-pcm")
         write_json(output / "comparison.json", result)
         text = summary_text(result, args.rounds)
+        if thread_enabled:
+            cpu_result = thread_clock.compare_reports(
+                thread_reports["baseline"], thread_reports["candidate"],
+                reports["baseline"], reports["candidate"])
+            cpu_result["wall_comparison"] = "comparison.json"
+            cpu_result["full_pcm_verified"] = result["full_pcm_verified"]
+            write_json(output / "thread-comparison.json", cpu_result)
+            cpu_text = thread_clock.summary_text(cpu_result)
+            (output / "thread-summary.txt").write_text(cpu_text, encoding="utf-8")
+            text += "\n" + cpu_text
         (output / "summary.txt").write_text(text, encoding="utf-8")
         provenance["ok"] = True
         provenance["finished_utc"] = datetime.now(timezone.utc).isoformat()

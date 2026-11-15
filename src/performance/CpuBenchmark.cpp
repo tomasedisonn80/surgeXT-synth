@@ -31,6 +31,10 @@
 #include <utility>
 #include <vector>
 
+#if defined(__linux__)
+#include <time.h>
+#endif
+
 namespace
 {
 namespace fsys = std::filesystem;
@@ -101,9 +105,24 @@ int boundedInteger(const std::string &s, int lower, int upper)
     return static_cast<int>(value);
 }
 
+double threadCpuSeconds()
+{
+#if defined(__linux__) && defined(CLOCK_THREAD_CPUTIME_ID)
+    timespec value{};
+    if (::clock_gettime(CLOCK_THREAD_CPUTIME_ID, &value) != 0)
+        throw std::runtime_error("Cannot read CLOCK_THREAD_CPUTIME_ID");
+    const double seconds = double(value.tv_sec) + double(value.tv_nsec) * 1e-9;
+    if (!std::isfinite(seconds) || seconds < 0)
+        throw std::runtime_error("Invalid CLOCK_THREAD_CPUTIME_ID reading");
+    return seconds;
+#else
+    throw std::runtime_error("--thread-output requires Linux CLOCK_THREAD_CPUTIME_ID");
+#endif
+}
+
 struct Options
 {
-    std::string data, output, pcmDir, scenario = "all", patch;
+    std::string data, output, threadOutput, pcmDir, scenario = "all", patch;
     int sampleRate = 48000, repetitions = 5;
     double seconds = 2.0, tailSeconds = 1.0;
 };
@@ -113,7 +132,7 @@ Options parse(int argc, char **argv)
     std::map<std::string, std::string> args;
     const std::vector<std::string> known = {"--data", "--output", "--pcm-dir", "--scenario",
                                           "--patch", "--sample-rate", "--repetitions",
-                                          "--seconds", "--tail-seconds"};
+                                          "--seconds", "--tail-seconds", "--thread-output"};
     for (int i = 1; i < argc; ++i)
     {
         const std::string key = argv[i];
@@ -130,6 +149,7 @@ Options parse(int argc, char **argv)
     Options result;
     result.data = get("--data", "");
     result.output = get("--output", "");
+    result.threadOutput = get("--thread-output", "");
     result.pcmDir = get("--pcm-dir", "");
     result.scenario = get("--scenario", "all");
     result.patch = get("--patch", "");
@@ -142,12 +162,17 @@ Options parse(int argc, char **argv)
         throw std::runtime_error("Held and tail durations must be greater than zero and <= 30 s");
     if (result.output.empty())
         throw std::runtime_error("--output JSON is required (engine diagnostics use stdout)");
+    if (args.contains("--thread-output") && result.threadOutput.empty())
+        throw std::runtime_error("--thread-output requires a nonempty path");
     if (!result.patch.empty() && result.scenario != "all" && result.scenario != "patch")
         throw std::runtime_error("--patch accepts only --scenario patch (or its default)");
     if (!result.data.empty() && !fsys::is_directory(result.data))
         throw std::runtime_error("Data directory does not exist: " + result.data);
     if (!result.patch.empty() && !fsys::is_regular_file(result.patch))
         throw std::runtime_error("Patch does not exist: " + result.patch);
+    // Check clock availability before opening or truncating any output.
+    if (!result.threadOutput.empty())
+        (void)threadCpuSeconds();
     return result;
 }
 
@@ -312,6 +337,13 @@ void validateOutputPaths(const Options &options, const std::vector<Scenario> &fi
     // the input patch or turn a PCM file into the JSON report (including hard links).
     if (!options.patch.empty() && sameFile(options.output, options.patch))
         throw std::runtime_error("Report path aliases the input patch");
+    if (!options.threadOutput.empty())
+    {
+        if (sameFile(options.threadOutput, options.output))
+            throw std::runtime_error("Thread CPU report path aliases the wall report");
+        if (!options.patch.empty() && sameFile(options.threadOutput, options.patch))
+            throw std::runtime_error("Thread CPU report path aliases the input patch");
+    }
     if (!options.pcmDir.empty())
     {
         for (const auto &fixture : fixtures)
@@ -321,6 +353,8 @@ void validateOutputPaths(const Options &options, const std::vector<Scenario> &fi
                 throw std::runtime_error("Report path aliases a PCM output");
             if (!options.patch.empty() && sameFile(options.patch, pcm))
                 throw std::runtime_error("PCM output aliases the input patch");
+            if (!options.threadOutput.empty() && sameFile(options.threadOutput, pcm))
+                throw std::runtime_error("Thread CPU report path aliases a PCM output");
         }
     }
 }
@@ -344,6 +378,7 @@ void writePcm(const fsys::path &path, const std::vector<float> &pcm)
 struct Run
 {
     double heldSeconds = 0, tailSeconds = 0, peak = 0, rms = 0;
+    double heldThreadCpuSeconds = 0, tailThreadCpuSeconds = 0;
     std::string hash;
 };
 
@@ -371,7 +406,11 @@ Run run(const Options &options, const Scenario &scenario, int heldBlocks, int ta
     errors.check();
 
     const double ppqStep = double(BLOCK_SIZE) / options.sampleRate * (tempo / 60.0);
-    const auto renderWindow = [&](int firstBlock, int blocks) {
+    const bool measureThreadCpu = !options.threadOutput.empty();
+    const auto renderWindow = [&](int firstBlock, int blocks, double &threadSeconds) {
+        // The optional thread clock encloses the same work and the two wall-clock
+        // reads. It excludes scheduler waiting and CPU consumed by other threads.
+        const double cpuStart = measureThreadCpu ? threadCpuSeconds() : 0;
         const auto start = std::chrono::steady_clock::now();
         for (int block = 0; block < blocks; ++block)
         {
@@ -384,13 +423,20 @@ Run run(const Options &options, const Scenario &scenario, int heldBlocks, int ta
             }
             synth->time_data.ppqPos += ppqStep;
         }
-        return std::chrono::duration<double>(std::chrono::steady_clock::now() - start).count();
+        const auto end = std::chrono::steady_clock::now();
+        if (measureThreadCpu)
+        {
+            threadSeconds = threadCpuSeconds() - cpuStart;
+            if (!std::isfinite(threadSeconds) || threadSeconds <= 0)
+                throw std::runtime_error("Thread CPU interval must be finite and positive");
+        }
+        return std::chrono::duration<double>(end - start).count();
     };
     Run result;
-    result.heldSeconds = renderWindow(0, heldBlocks);
+    result.heldSeconds = renderWindow(0, heldBlocks, result.heldThreadCpuSeconds);
     for (int i = 0; i < scenario.voices; ++i)
         synth->releaseNote(0, 48 + i, 0);
-    result.tailSeconds = renderWindow(heldBlocks, tailBlocks);
+    result.tailSeconds = renderWindow(heldBlocks, tailBlocks, result.tailThreadCpuSeconds);
     errors.check();
     double energy = 0;
     for (const float sample : pcm)
@@ -432,10 +478,12 @@ int main(int argc, char **argv)
         std::cout << "surge-cpu-bench --output JSON [--data DIR] [--pcm-dir DIR]\n"
                      "  [--scenario all|idle|init-1|init-8|init-16|lowcut-steep|unused-formula|active-formula|conditioner|eq3|eq11]\n"
                      "  [--patch FILE] [--sample-rate 48000] [--repetitions 5]\n"
-                     "  [--seconds 2] [--tail-seconds 1]\n"
+                     "  [--seconds 2] [--tail-seconds 1] [--thread-output JSON]\n"
                      "Durations round up to complete engine blocks. PCM is interleaved stereo f32le.\n"
                      "Wall timing includes process(), bounded PCM copies, and transport advancement;\n"
-                     "it excludes engine setup, note events, file I/O, hashing, and statistics.\n";
+                     "it excludes engine setup, note events, file I/O, hashing, and statistics.\n"
+                     "Optional Linux thread CPU sidecar measures the same windows plus wall-clock\n"
+                     "reads using CLOCK_THREAD_CPUTIME_ID; excludes waiting and other threads.\n";
         return 0;
     }
     try
@@ -452,6 +500,21 @@ int main(int argc, char **argv)
         std::ofstream report(options.output);
         if (!report)
             throw std::runtime_error("Cannot open report: " + options.output);
+        std::ofstream threadReport;
+        if (!options.threadOutput.empty())
+        {
+            ensureParent(options.threadOutput);
+            threadReport.open(options.threadOutput);
+            if (!threadReport)
+                throw std::runtime_error("Cannot open thread CPU report: " + options.threadOutput);
+            threadReport << std::setprecision(12)
+                         << "{\"schema\":1,\"tool\":\"surge-cpu-bench-thread-clock\""
+                         << ",\"clock\":\"CLOCK_THREAD_CPUTIME_ID\""
+                         << ",\"sample_rate\":" << options.sampleRate
+                         << ",\"repetitions\":" << options.repetitions
+                         << ",\"frames\":" << frames << ",\"block_size\":" << BLOCK_SIZE
+                         << ",\"channels\":2,\"seed\":" << seed << ",\"scenarios\":[";
+        }
         report << std::setprecision(12)
                << "{\"schema\":1,\"tool\":\"surge-cpu-bench\",\"git\":" << quote(Surge::Build::GitHash)
                << ",\"engine\":" << quote(Surge::Build::FullVersionStr)
@@ -504,6 +567,23 @@ int main(int argc, char **argv)
                        << ",\"peak\":" << runs[i].peak << ",\"rms\":" << runs[i].rms << '}';
             report << "]}";
             report.flush();
+            if (!options.threadOutput.empty())
+            {
+                threadReport << (index ? "," : "") << "{\"name\":" << quote(fixture.name)
+                             << ",\"held_audio_seconds\":" << heldAudioSeconds
+                             << ",\"tail_audio_seconds\":" << tailAudioSeconds
+                             << ",\"pcm_hashes\":[";
+                for (std::size_t i = 0; i < runs.size(); ++i)
+                    threadReport << (i ? "," : "") << quote(runs[i].hash);
+                threadReport << "],\"held_thread_cpu_seconds\":[";
+                for (std::size_t i = 0; i < runs.size(); ++i)
+                    threadReport << (i ? "," : "") << runs[i].heldThreadCpuSeconds;
+                threadReport << "],\"tail_thread_cpu_seconds\":[";
+                for (std::size_t i = 0; i < runs.size(); ++i)
+                    threadReport << (i ? "," : "") << runs[i].tailThreadCpuSeconds;
+                threadReport << "]}";
+                threadReport.flush();
+            }
             std::cerr << fixture.name << ": held " << 100.0 * median(heldTimes) / heldAudioSeconds
                       << "% realtime, repeat PCM " << (same ? "identical" : "DIFFERS") << '\n';
         }
@@ -511,6 +591,13 @@ int main(int argc, char **argv)
         report.close();
         if (!report)
             throw std::runtime_error("Failed writing benchmark report");
+        if (!options.threadOutput.empty())
+        {
+            threadReport << "],\"ok\":" << (deterministic ? "true" : "false") << "}\n";
+            threadReport.close();
+            if (!threadReport)
+                throw std::runtime_error("Failed writing thread CPU report");
+        }
         return deterministic ? 0 : 2;
     }
     catch (const std::exception &error)

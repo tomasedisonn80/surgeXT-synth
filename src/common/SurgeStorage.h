@@ -1535,10 +1535,6 @@ class alignas(16) SurgeStorage
     float table_dB alignas(16)[512], table_envrate_lpf alignas(16)[512],
         table_envrate_linear alignas(16)[512], table_glide_exp alignas(16)[512],
         table_glide_log alignas(16)[512];
-    // Initialized before the constructor's first init_tables(). This is cache
-    // invalidation, not table synchronization: callers must still serialize table
-    // mutation with DSP reads. No cache can practically survive 2^64 rebuilds.
-    std::atomic<std::uint64_t> coefficientTableGeneration{0};
     float samplerate{0}, samplerate_inv{1};
     double dsamplerate{0}, dsamplerate_inv{1};
     double dsamplerate_os{0}, dsamplerate_os_inv{1};
@@ -2229,6 +2225,10 @@ class alignas(16) SurgeStorage
     float envelope_rate_linear_nowrap(float);
     float glide_log(float);
     float glide_exp(float);
+    // Initialized before the constructor's first init_tables(). This is cache
+    // invalidation, not table synchronization: callers must still serialize table
+    // mutation with DSP reads. No cache can practically survive 2^64 rebuilds.
+    std::atomic<std::uint64_t> coefficientTableGeneration{0};
 };
 
 namespace Surge

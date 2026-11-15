@@ -74,6 +74,7 @@ class ParametricEQ3BandEffect : public Effect
 
   private:
     BiquadFilter band1, band2, band3;
+    int bi; // block increment (to keep track of events not occurring every n blocks)
     struct CoefficientInputs
     {
         float frequency{0.f}, bandwidth{0.f}, gain{0.f};
@@ -82,7 +83,6 @@ class ParametricEQ3BandEffect : public Effect
     std::uint64_t coefficientTableGeneration{0};
     std::uint64_t coefficientFpEnvironment{0};
     bool coefficientCacheValid{false};
-    int bi; // block increment (to keep track of events not occurring every n blocks)
 };
 
 #endif // SURGE_SRC_COMMON_DSP_EFFECTS_PARAMETRICEQ3BANDEFFECT_H

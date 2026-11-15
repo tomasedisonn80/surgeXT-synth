@@ -76,12 +76,12 @@ class GraphicEQ11BandEffect : public Effect
         "2 kHz", "4 kHz", "8 kHz",  "12 kHz", "16 kHz",
     };
     BiquadFilter band1, band2, band3, band4, band5, band6, band7, band8, band9, band10, band11;
+    int bi; // block increment (to keep track of events not occurring every n blocks)
     float coefficientGains[11]{};
     double coefficientSampleRateInv{0.0};
     std::uint64_t coefficientTableGeneration{0};
     std::uint64_t coefficientFpEnvironment{0};
     bool coefficientCacheValid{false};
-    int bi; // block increment (to keep track of events not occurring every n blocks)
 };
 
 #endif // SURGE_SRC_COMMON_DSP_EFFECTS_GRAPHICEQ11BANDEFFECT_H

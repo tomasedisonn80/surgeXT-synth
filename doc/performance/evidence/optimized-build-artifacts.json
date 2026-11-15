@@ -1,0 +1,220 @@
+{
+  "schema": 1,
+  "title": "CPU-optimized Surge XT platform build downloads",
+  "observed_at_utc": "2026-11-15T21:23:46.992Z",
+  "source_commit": "489f0cf7bca2d3e129199b8779c7262a414d81f5",
+  "source_tree": "31b413f1d3877b72b6dff3a7817ace6584de16a6",
+  "source_url": "https://github.com/tomasedisonn80/surgeXT-synth/commit/489f0cf7bca2d3e129199b8779c7262a414d81f5",
+  "source_scope": "Measured CPU-efficiency production implementation; later main commits contain documentation and verified native-gallery updates only.",
+  "workflow": {
+    "id": 43712040446,
+    "name": "Build release or nightly installer",
+    "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43712040446",
+    "head_sha": "489f0cf7bca2d3e129199b8779c7262a414d81f5",
+    "status": "completed",
+    "conclusion": "success",
+    "completed_at_utc": "2026-11-15T12:50:26Z",
+    "event": "push",
+    "artifact_platform_jobs": 7
+  },
+  "verification": {
+    "expected_artifact_count": 7,
+    "observed_artifact_count": 7,
+    "successful_platform_build_jobs": 7,
+    "failed_platform_build_jobs": 0,
+    "all_checked_out_exact_source": true,
+    "all_release_distribution_build_steps_passed": true,
+    "all_upload_steps_passed": true,
+    "all_artifact_source_shas_match": true,
+    "all_artifacts_unexpired_at_observation": true,
+    "distribution_optimization_binding": "All jobs check out the exact workflow head SHA and build surge-xt-distribution Release; every artifact metadata record identifies that source SHA.",
+    "github_release_or_nightly_published": false,
+    "github_release_publish_jobs_skipped_by_upstream_owner_conditions": true,
+    "archive_digest_provenance": "GitHub Actions API-reported SHA-256 of each artifact archive; no additional local archive-byte rehash is claimed.",
+    "installation_or_daw_host_certification_claimed": false
+  },
+  "platform_builds": [
+    {
+      "platform": "Windows x64",
+      "packages": "Setup EXE, portable ZIP, plugin-only ZIP",
+      "job": {
+        "id": 132806134298,
+        "name": "Release - Windows 64-bit",
+        "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43712040446/job/132806134298",
+        "status": "completed",
+        "conclusion": "success",
+        "build_step": "success",
+        "artifact_upload_step": "success"
+      },
+      "artifact": {
+        "id": 14162226913,
+        "name": "build-Windows 64-bit",
+        "archive_size_bytes": 654505257,
+        "github_reported_digest": "sha256:f650b888f643dc3105c4983927496179b856dc00fa8727ea95380e498ab261c0",
+        "created_at_utc": "2026-11-15T12:43:48Z",
+        "expires_at_utc": "2027-02-13T12:05:10Z",
+        "expired_at_observation": false,
+        "source_commit": "489f0cf7bca2d3e129199b8779c7262a414d81f5",
+        "html_url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43712040446/artifacts/14162226913",
+        "api_archive_url": "https://api.github.com/repos/tomasedisonn80/surgeXT-synth/actions/artifacts/14162226913/zip"
+      }
+    },
+    {
+      "platform": "Windows x64 JUCE7",
+      "packages": "Portable ZIP, plugin-only ZIP",
+      "job": {
+        "id": 132806134292,
+        "name": "Release - Windows MSVC JUCE 7",
+        "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43712040446/job/132806134292",
+        "status": "completed",
+        "conclusion": "success",
+        "build_step": "success",
+        "artifact_upload_step": "success"
+      },
+      "artifact": {
+        "id": 14161674500,
+        "name": "build-Windows MSVC JUCE 7",
+        "archive_size_bytes": 435754061,
+        "github_reported_digest": "sha256:2707098d6018d0163b1e7b2ca8a4055b6523bfc29a656a6a65bc6caf4ac28ee1",
+        "created_at_utc": "2026-11-15T12:36:15Z",
+        "expires_at_utc": "2027-02-13T12:05:10Z",
+        "expired_at_observation": false,
+        "source_commit": "489f0cf7bca2d3e129199b8779c7262a414d81f5",
+        "html_url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43712040446/artifacts/14161674500",
+        "api_archive_url": "https://api.github.com/repos/tomasedisonn80/surgeXT-synth/actions/artifacts/14161674500/zip"
+      }
+    },
+    {
+      "platform": "Windows ARM64",
+      "packages": "Portable ZIP, plugin-only ZIP",
+      "job": {
+        "id": 132806134296,
+        "name": "Release - Windows ARM64",
+        "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43712040446/job/132806134296",
+        "status": "completed",
+        "conclusion": "success",
+        "build_step": "success",
+        "artifact_upload_step": "success"
+      },
+      "artifact": {
+        "id": 14161902698,
+        "name": "build-Windows ARM64",
+        "archive_size_bytes": 436923399,
+        "github_reported_digest": "sha256:7c505a03fa3b1426207838e62558ef4322ae5355c9d8f0542d8856cd407d57de",
+        "created_at_utc": "2026-11-15T12:50:13Z",
+        "expires_at_utc": "2027-02-13T12:05:10Z",
+        "expired_at_observation": false,
+        "source_commit": "489f0cf7bca2d3e129199b8779c7262a414d81f5",
+        "html_url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43712040446/artifacts/14161902698",
+        "api_archive_url": "https://api.github.com/repos/tomasedisonn80/surgeXT-synth/actions/artifacts/14161902698/zip"
+      }
+    },
+    {
+      "platform": "Windows ARM64EC",
+      "packages": "Portable ZIP, plugin-only ZIP",
+      "job": {
+        "id": 132806134327,
+        "name": "Release - Windows ARM64EC",
+        "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43712040446/job/132806134327",
+        "status": "completed",
+        "conclusion": "success",
+        "build_step": "success",
+        "artifact_upload_step": "success"
+      },
+      "artifact": {
+        "id": 14161916718,
+        "name": "build-Windows ARM64EC",
+        "archive_size_bytes": 438639248,
+        "github_reported_digest": "sha256:32b170cd0b0bd5b46c89ebeee235237df9a63a283c39dfb41254ec456403cac0",
+        "created_at_utc": "2026-11-15T12:36:35Z",
+        "expires_at_utc": "2027-02-13T12:05:10Z",
+        "expired_at_observation": false,
+        "source_commit": "489f0cf7bca2d3e129199b8779c7262a414d81f5",
+        "html_url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43712040446/artifacts/14161916718",
+        "api_archive_url": "https://api.github.com/repos/tomasedisonn80/surgeXT-synth/actions/artifacts/14161916718/zip"
+      }
+    },
+    {
+      "platform": "macOS universal",
+      "packages": "Unsigned/unnotarized DMG, plugin-only ZIP",
+      "job": {
+        "id": 132806134309,
+        "name": "Release - macOS",
+        "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43712040446/job/132806134309",
+        "status": "completed",
+        "conclusion": "success",
+        "build_step": "success",
+        "artifact_upload_step": "success"
+      },
+      "artifact": {
+        "id": 14162181858,
+        "name": "build-macOS-unsigned",
+        "archive_size_bytes": 647087400,
+        "github_reported_digest": "sha256:d67efd6e97f301a558ddf2cfc954cdd304fb2d418dbaec129aa61fe418ad940b",
+        "created_at_utc": "2026-11-15T12:43:15Z",
+        "expires_at_utc": "2027-02-13T12:05:10Z",
+        "expired_at_observation": false,
+        "source_commit": "489f0cf7bca2d3e129199b8779c7262a414d81f5",
+        "html_url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43712040446/artifacts/14162181858",
+        "api_archive_url": "https://api.github.com/repos/tomasedisonn80/surgeXT-synth/actions/artifacts/14162181858/zip"
+      }
+    },
+    {
+      "platform": "Linux x64",
+      "packages": "DEB, RPM, full tarball, portable-content, plugin-only archive",
+      "job": {
+        "id": 132806134231,
+        "name": "Ubuntu 20 Docker",
+        "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43712040446/job/132806134231",
+        "status": "completed",
+        "conclusion": "success",
+        "build_step": "success",
+        "artifact_upload_step": "success"
+      },
+      "artifact": {
+        "id": 14161609955,
+        "name": "build-docker",
+        "archive_size_bytes": 1598602430,
+        "github_reported_digest": "sha256:cd9b3bd9feab795e5a0c999e3cf65a550566f89c0ad25d51fe81a778fcad3b07",
+        "created_at_utc": "2026-11-15T12:37:28Z",
+        "expires_at_utc": "2027-02-13T12:05:10Z",
+        "expired_at_observation": false,
+        "source_commit": "489f0cf7bca2d3e129199b8779c7262a414d81f5",
+        "html_url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43712040446/artifacts/14161609955",
+        "api_archive_url": "https://api.github.com/repos/tomasedisonn80/surgeXT-synth/actions/artifacts/14161609955/zip"
+      }
+    },
+    {
+      "platform": "Linux ARM64",
+      "packages": "DEB, full tarball, portable-content, plugin-only archive",
+      "job": {
+        "id": 132806134324,
+        "name": "Release - ubuntu-arm",
+        "url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43712040446/job/132806134324",
+        "status": "completed",
+        "conclusion": "success",
+        "build_step": "success",
+        "artifact_upload_step": "success"
+      },
+      "artifact": {
+        "id": 14161748094,
+        "name": "build-ubuntu-arm",
+        "archive_size_bytes": 1123396459,
+        "github_reported_digest": "sha256:746c73954e02f5b3b56bf6a0f8ebf3b27d93e369f25f72d771bbc4db5412b35b",
+        "created_at_utc": "2026-11-15T12:29:11Z",
+        "expires_at_utc": "2027-02-13T12:05:10Z",
+        "expired_at_observation": false,
+        "source_commit": "489f0cf7bca2d3e129199b8779c7262a414d81f5",
+        "html_url": "https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43712040446/artifacts/14161748094",
+        "api_archive_url": "https://api.github.com/repos/tomasedisonn80/surgeXT-synth/actions/artifacts/14161748094/zip"
+      }
+    }
+  ],
+  "limitations": [
+    "Actions artifact links may require GitHub sign-in and expire on 2027-02-13 at 12:05:10 UTC unless retention changes.",
+    "The artifacts are ZIP containers holding installer and portable products; extract the appropriate product for your platform.",
+    "The fork's Release and Nightly publishing jobs are restricted to the upstream repository owner and were skipped for this run.",
+    "Compiler/upload success plus source SHA binds distributions to the optimized source, but the seven large archives were not downloaded and independently reverse-inspected here.",
+    "CPU measurements are mixed across fixtures; these artifacts do not guarantee lower CPU for every patch or host."
+  ]
+}

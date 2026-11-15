@@ -14,6 +14,7 @@ build configuration explicit.
 - [Plugin build and benchmark instructions](doc/performance/README.md)
 - [Actual specialist-agent ledger](doc/performance/AGENT_LEDGER.md)
 - [Engineering work log](doc/performance/WORK_LOG.md)
+- [Download CPU-optimized synth builds for Windows, macOS and Linux](doc/scoring-1000/BUILT_IN_CONTENT.md#build-downloads)
 
 Use `cmake --preset cpu-release` and `cmake --build --preset cpu-release`
 after installing the platform prerequisites below. The separate `cpu-headless`

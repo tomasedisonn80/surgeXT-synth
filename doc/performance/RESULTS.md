@@ -287,6 +287,28 @@ voice modes can change the actual number of active voices.
 
 ## Reproduction and publication
 
+### Downloadable optimized builds
+
+After the timestamped CI observation above, the exact-implementation
+[release matrix](https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43712040446)
+completed successfully at **2026-11-15 12:50:26 UTC**. All seven platform
+jobs built and uploaded distributions from source
+`489f0cf7bca2d3e129199b8779c7262a414d81f5`. The successful configurations
+cover Windows x64, Windows x64 with JUCE 7, Windows ARM64, Windows ARM64EC,
+macOS universal, Linux x64 and Linux ARM64. All seven Actions artifacts were
+present and unexpired when checked. Their SHA-256 archive digests, sizes,
+successful job steps, source binding and expiry are in the
+[optimized build record](evidence/optimized-build-artifacts.json).
+
+The [platform download table](../scoring-1000/BUILT_IN_CONTENT.md#build-downloads)
+now points to those optimized binaries. The later publication commits only
+changed documentation and verified native gallery files; no additional DSP
+change separates the downloaded build source from the measured implementation.
+The GitHub Release/Nightly publication jobs were skipped under the fork's
+upstream-owner rules, so these downloads are expiring Actions artifacts.
+Compiled-platform success and offline correctness checks do not imply a
+performance improvement for every patch or DAW-host certification.
+
 The [reproduction guide](README.md) contains plugin/headless build commands,
 baseline preparation, paired CPU/wall measurement, full PCM comparison and
 platform qualifications. The offline tools are opt-in; ordinary plugin builds

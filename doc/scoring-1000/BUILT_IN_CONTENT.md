@@ -101,30 +101,49 @@ testing retain their separately reported scopes.
 
 ## Build downloads
 
-All seven platform build jobs for source `83a919356` completed successfully in
-[release run 43573848453](https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43573848453).
-Choose the artifact for your platform. Each artifact groups the platform's
-installer and/or portable/plugin-only packages; the embedded factory payload
-travels with the synth binaries in each applicable package.
+**Current CPU-optimized downloads:** all seven platform build and artifact-upload
+jobs completed successfully in
+[run 43712040446](https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43712040446)
+on **15 November 2026**. Every artifact is bound by GitHub Actions to source
+[`489f0cf7`](https://github.com/tomasedisonn80/surgeXT-synth/commit/489f0cf7bca2d3e129199b8779c7262a414d81f5),
+which includes the CPU-efficiency implementation. The workflow checks out that
+source with recursive dependencies, builds the Release
+`surge-xt-distribution` target, and uploads the resulting packages. The later
+documentation/gallery commits on `main` do not change the compiled source.
 
-| Platform | Actions artifact | Package selection |
+Select the artifact for your platform, then choose its installer, portable or
+plugin-only package. Each Actions artifact ZIP contains the listed platform's
+distribution files; the synth binaries include the compiled optimization and
+the unchanged embedded Scoring 1000 bank and reference skins.
+
+| Platform | Download build artifact | Package selection |
 |---|---|---|
-| Windows x64 | `build-Windows 64-bit` | Setup EXE, portable ZIP, or plugin-only ZIP |
-| Windows x64 with JUCE7 | `build-Windows MSVC JUCE 7` | Portable ZIP or plugin-only ZIP |
-| Windows ARM64 | `build-Windows ARM64` | Portable ZIP or plugin-only ZIP |
-| Windows ARM64EC | `build-Windows ARM64EC` | Portable ZIP or plugin-only ZIP |
-| macOS universal, Intel and Apple Silicon | `build-macOS-unsigned` | DMG containing the installer, or plugin-only ZIP; unsigned and unnotarized development build |
-| Linux x64 | `build-docker` | DEB, RPM, full tarball, portable-content, or plugin-only archive |
-| Linux ARM64 | `build-ubuntu-arm` | DEB, full tarball, portable-content, or plugin-only archive |
+| Windows x64 | [build-Windows 64-bit](https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43712040446/artifacts/14162226913) | Setup EXE, portable ZIP, or plugin-only ZIP |
+| Windows x64 with JUCE 7 | [build-Windows MSVC JUCE 7](https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43712040446/artifacts/14161674500) | Portable ZIP or plugin-only ZIP |
+| Windows ARM64 | [build-Windows ARM64](https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43712040446/artifacts/14161902698) | Portable ZIP or plugin-only ZIP |
+| Windows ARM64EC | [build-Windows ARM64EC](https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43712040446/artifacts/14161916718) | Portable ZIP or plugin-only ZIP |
+| macOS universal (Intel and Apple Silicon) | [build-macOS-unsigned](https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43712040446/artifacts/14162181858) | DMG or plugin-only ZIP; unsigned and unnotarized development build |
+| Linux x64 | [build-docker](https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43712040446/artifacts/14161609955) | DEB, RPM, full tarball, portable-content, or plugin-only archive |
+| Linux ARM64 | [build-ubuntu-arm](https://github.com/tomasedisonn80/surgeXT-synth/actions/runs/43712040446/artifacts/14161748094) | DEB, full tarball, portable-content, or plugin-only archive |
 
-The macOS signing state is explicit in the produced artifact and build logs.
-Build success does not imply signing or a DAW-host compatibility certification.
-The [hosted release record](embedded-evidence/hosted-release.json) binds every
-artifact to its source commit, successful build job, size, and SHA-256 digest.
-These Actions artifacts currently expire on 12 February 2027; the committed
-source and embedded payload remain reproducible after that retention period.
-Use the [verification record](VERIFICATION.md) for the exact scope of native
-testing and shipped-archive inspection.
+All seven artifacts were present and unexpired at verification. Their GitHub
+reported SHA-256 archive digests, sizes, source bindings, successful build/upload
+jobs, and exact expiry are retained in the
+[optimized build artifact record](../performance/evidence/optimized-build-artifacts.json).
+They expire on **13 February 2027 at 12:05 UTC** unless retention changes;
+GitHub sign-in may be required to download Actions artifacts. This fork's
+workflow publishes build artifacts, while its GitHub Release and Nightly jobs
+are skipped by the existing upstream-owner conditions. These links are therefore
+Actions downloads, not permanent GitHub Release assets.
+
+The macOS signing state is explicit in the package and logs. Successful builds
+do not establish signing, notarization, real-world DAW compatibility or a
+universal CPU speedup. The [CPU measurement report](../performance/RESULTS.md)
+records the mixed timing results and sound-equivalence checks. The older
+[hosted artifact record](embedded-evidence/hosted-release.json) remains historical
+evidence for source `83a919356`; it must not be used to identify these newer
+optimized archives. See the [verification record](VERIFICATION.md) for the
+distinct scope of shipped-archive inspection and native host tests.
 
 ## Reproduction and maintenance
 

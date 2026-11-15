@@ -5,6 +5,11 @@ preserving DSP quality and existing processing behavior. The implementation and
 validation tools are separate: ordinary plugin builds do not include the offline
 benchmark executables.
 
+The [CPU-optimized platform downloads](../scoring-1000/BUILT_IN_CONTENT.md#build-downloads)
+were built successfully from the measured implementation on all seven release
+matrix configurations. The download record identifies the source SHA, artifact
+checksums, package selection and retention period.
+
 **Measured outcome:** the final experiment shows directional improvements in
 three effect fixtures and mixed results overall, including an unfavorable
 8-note init result. [RESULTS.md](RESULTS.md) retains every scenario, both clocks,
